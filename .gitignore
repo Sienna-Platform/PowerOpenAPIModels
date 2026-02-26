@@ -39,6 +39,9 @@ Manifest.toml
 .vscode
 *.h5
 
+# Generated stubs (cleaned up by scripts/reorganize_stubs.sh)
+generated/
+
 ################################################################################
 #                              Operating systems                               #
 ################################################################################

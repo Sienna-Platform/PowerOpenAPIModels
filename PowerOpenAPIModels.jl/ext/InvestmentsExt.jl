@@ -1,0 +1,5 @@
+module InvestmentsExt
+using PowerOpenAPIModels
+using Reexport
+@reexport using PowerInvestmentsOpenAPIModels
+end

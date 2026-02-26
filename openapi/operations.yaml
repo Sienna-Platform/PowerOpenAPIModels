@@ -1,0 +1,8 @@
+openapi: "3.0.3"
+info:
+  title: Power Operations API
+  description: Operations domain API stubs for power systems.
+  version: "0.1.0"
+paths: {}
+components:
+  schemas: {}
