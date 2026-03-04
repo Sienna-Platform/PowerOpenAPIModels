@@ -21,7 +21,7 @@ generate-docker:
 	  ghcr.io/nrel-sienna/power-codegen:latest
 
 clean:
-	rm -rf generated/ */src/models */src/apis
+	rm -rf generated/ */src/models */src/apis */docs
 
 validate:
 	julia test/validate.jl

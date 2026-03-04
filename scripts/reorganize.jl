@@ -5,12 +5,13 @@
 const REPO = dirname(@__DIR__)
 const GENERATED = joinpath(REPO, "generated")
 const CORE_MODELS = joinpath(REPO, "PowerCoreOpenAPIModels.jl", "src", "models")
+const CORE_DOCS = joinpath(REPO, "PowerCoreOpenAPIModels.jl", "docs")
 
 const DOMAINS = [
-    "core"        => "PowerCoreOpenAPIModels.jl",
-    "operations"  => "PowerOperationsOpenAPIModels.jl",
+    "core" => "PowerCoreOpenAPIModels.jl",
+    "operations" => "PowerOperationsOpenAPIModels.jl",
     "investments" => "PowerInvestmentsOpenAPIModels.jl",
-    "dynamics"    => "PowerDynamicsOpenAPIModels.jl",
+    "dynamics" => "PowerDynamicsOpenAPIModels.jl",
 ]
 
 for (domain, pkg) in DOMAINS
@@ -21,8 +22,11 @@ for (domain, pkg) in DOMAINS
     # Clean and create directories
     rm(joinpath(dest, "models"), force=true, recursive=true)
     rm(joinpath(dest, "apis"), force=true, recursive=true)
+    docs_dest = joinpath(REPO, pkg, "docs")
+    rm(docs_dest, force=true, recursive=true)
     mkpath(joinpath(dest, "models"))
     mkpath(joinpath(dest, "apis"))
+    mkpath(docs_dest)
 
     # Copy models (skip Core duplicates for domain packages)
     for f in readdir(joinpath(gen, "src", "models"), join=true)
@@ -41,10 +45,23 @@ for (domain, pkg) in DOMAINS
         end
     end
 
+    # Copy docs (skip Core duplicates for domain packages)
+    docs_dir = joinpath(gen, "docs")
+    if isdir(docs_dir)
+        for f in readdir(docs_dir, join=true)
+            endswith(f, ".md") || continue
+            name = basename(f)
+            domain != "core" && isfile(joinpath(CORE_DOCS, name)) && continue
+            cp(f, joinpath(docs_dest, name))
+        end
+    end
+
     # Generate module file
     mod = replace(pkg, ".jl" => "")
-    models = sort([basename(f) for f in readdir(joinpath(dest, "models")) if endswith(f, ".jl")])
-    apis = sort([basename(f) for f in readdir(joinpath(dest, "apis")) if endswith(f, ".jl")])
+    models =
+        sort([basename(f) for f in readdir(joinpath(dest, "models")) if endswith(f, ".jl")])
+    apis =
+        sort([basename(f) for f in readdir(joinpath(dest, "apis")) if endswith(f, ".jl")])
 
     # Extract exported type names from files
     exports = Set{String}()
@@ -55,7 +72,9 @@ for (domain, pkg) in DOMAINS
                 m = match(r"^mutable struct ([A-Za-z0-9_]+)", line)
                 m !== nothing && push!(exports, m.captures[1])
                 m = match(r"^const ([A-Z][A-Za-z0-9_]*)", line)
-                m !== nothing && !startswith(m.captures[1], "_") && push!(exports, m.captures[1])
+                m !== nothing &&
+                    !startswith(m.captures[1], "_") &&
+                    push!(exports, m.captures[1])
             end
         end
     end
@@ -66,13 +85,22 @@ for (domain, pkg) in DOMAINS
         println(io, "using OpenAPI, JSON3, HTTP")
         domain != "core" && println(io, "using PowerCoreOpenAPIModels")
         println(io)
-        for f in models; println(io, "include(\"models/$f\")"); end
-        for f in apis; println(io, "include(\"apis/$f\")"); end
+        for f in models
+            println(io, "include(\"models/$f\")")
+        end
+        for f in apis
+            println(io, "include(\"apis/$f\")")
+        end
         println(io)
-        for name in sort(collect(exports)); println(io, "export $name"); end
+        for name in sort(collect(exports))
+            println(io, "export $name")
+        end
         if domain != "core"
             println(io)
-            println(io, "for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export \$n; end")
+            println(
+                io,
+                "for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export \$n; end",
+            )
         end
         println(io)
         println(io, "end")
