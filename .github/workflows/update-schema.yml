@@ -47,14 +47,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Regenerate Julia types via codegen container
+      - name: Regenerate types
         if: steps.schema.outputs.changed == 'true'
         run: |
           docker run --rm \
             -v /tmp/schemas:/schemas:ro \
             -v ${{ github.workspace }}:/output \
-            $CODEGEN_IMAGE \
-            --target julia --schemas /schemas --output /output
+            $CODEGEN_IMAGE
           echo "${{ steps.schema.outputs.latest }}" > .schema-version
 
       - uses: julia-actions/setup-julia@v2
@@ -62,20 +61,9 @@ jobs:
         with:
           version: "1"
 
-      - name: Run tests
+      - name: Validate
         if: steps.schema.outputs.changed == 'true'
-        run: |
-          julia -e '
-            using Pkg
-            Pkg.develop([
-              PackageSpec(path="PowerCoreOpenAPIModels.jl"),
-              PackageSpec(path="PowerOperationsOpenAPIModels.jl"),
-              PackageSpec(path="PowerInvestmentsOpenAPIModels.jl"),
-              PackageSpec(path="PowerDynamicsOpenAPIModels.jl"),
-              PackageSpec(path="PowerOpenAPIModels.jl"),
-            ])
-            Pkg.test("PowerOpenAPIModels")
-          '
+        run: make validate
 
       - name: Open Pull Request
         if: steps.schema.outputs.changed == 'true'
