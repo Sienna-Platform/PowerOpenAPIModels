@@ -35,8 +35,41 @@ include("models/model_SupplyTechnologyOperationCosts.jl")
 include("models/model_TopologyMapping.jl")
 include("models/model_Zone.jl")
 
+export ACTransportTechnology
+export AggregateRetirementPotential
+export AggregateRetrofitPotential
+export AggregateTransportTechnology
+export CapacityReserveMargin
+export CarbonCaps
+export CarbonTax
+export ColocatedSupplyStorageTechnology
+export CurtailableDemandSideTechnology
+export DemandRequirement
+export DemandSideTechnology
+export EnergyShareRequirements
+export ExistingCapacity
+export FlexibleDemandTechnology
+export HVDCTransportTechnology
+export HourlyMatching
+export InvestmentScheduleResults
+export InvestmentScheduleResultsResultsInner
+export MaximumCapacityRequirements
+export MinimumCapacityRequirements
+export NodalACTransportTechnology
+export NodalHVDCTransportTechnology
+export Node
+export PortfolioFinancialData
+export RetirementPotential
+export RetrofitPotential
+export StorageTechnology
+export SupplyTechnology
 export SupplyTechnologyOperationCosts
+export TopologyMapping
+export Zone
 
-for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export $n; end
+for n in names(PowerCoreOpenAPIModels)
+    n === :PowerCoreOpenAPIModels && continue
+    @eval export $n
+end
 
 end

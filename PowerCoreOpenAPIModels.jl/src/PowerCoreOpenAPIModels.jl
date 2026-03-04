@@ -63,16 +63,46 @@ include("models/model_WindingCategory.jl")
 include("models/model_WindingGroupNumber.jl")
 include("models/model_XYCoords.jl")
 
+export AverageRateCurve
 export AverageRateCurveFunctionData
+export ComplexNumber
+export CostCurve
+export DbdPnts
+export FdbdPnts
+export FromTo
+export FromToToFrom
+export FuelCurve
 export FuelCurveFuelCost
 export FunctionData
+export HydroGenerationCost
+export HydroReservoirCost
 export HydroStorageGenerationCost
+export ImportExportCost
+export InOut
+export IncrementalCurve
 export IncrementalCurveFunctionData
+export InputOutputCurve
 export InputOutputCurveFunctionData
+export LinearFunctionData
+export LoadCost
+export MinMax
+export PiecewiseLinearData
+export PiecewiseStepData
 export ProductionVariableCostCurve
+export QuadraticFunctionData
+export RenewableGenerationCost
+export StartUpShutDown
+export StartUpStages
+export StorageCost
 export StorageCostStartUp
+export StorageCostStartUpOneOf
+export TechnologyFinancialData
+export ThermalGenerationCost
 export ThermalGenerationCostStartUp
+export TurbinePump
 export TwoTerminalLoss
+export UpDown
 export ValueCurve
+export XYCoords
 
 end

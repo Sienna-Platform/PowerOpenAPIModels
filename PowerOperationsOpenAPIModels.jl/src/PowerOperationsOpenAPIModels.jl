@@ -50,7 +50,56 @@ include("models/model_TwoTerminalVSCLine.jl")
 include("models/model_VariableReserve.jl")
 include("models/model_VariableReserveNonSpinning.jl")
 
+export ACBus
+export AGC
+export Arc
+export Area
+export AreaInterchange
+export ConstantReserve
+export ConstantReserveGroup
+export ConstantReserveNonSpinning
+export DCBus
+export DiscreteControlledACBranch
+export EnergyReservoirStorage
+export ExponentialLoad
+export FACTSControlDevice
+export FixedAdmittance
+export HydroDispatch
+export HydroPumpTurbine
+export HydroReservoir
+export HydroTurbine
+export InterconnectingConverter
+export InterruptiblePowerLoad
+export InterruptibleStandardLoad
+export Line
+export LoadZone
+export MonitoredLine
+export MotorLoad
+export PhaseShiftingTransformer
+export PhaseShiftingTransformer3W
+export PowerLoad
+export RenewableDispatch
+export RenewableNonDispatch
+export ShiftablePowerLoad
+export Source
+export StandardLoad
+export SwitchedAdmittance
+export SynchronousCondenser
+export TModelHVDCLine
+export TapTransformer
+export ThermalMultiStart
+export ThermalStandard
+export Transformer2W
+export Transformer3W
+export TwoTerminalGenericHVDCLine
+export TwoTerminalLCCLine
+export TwoTerminalVSCLine
+export VariableReserve
+export VariableReserveNonSpinning
 
-for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export $n; end
+for n in names(PowerCoreOpenAPIModels)
+    n === :PowerCoreOpenAPIModels && continue
+    @eval export $n
+end
 
 end
