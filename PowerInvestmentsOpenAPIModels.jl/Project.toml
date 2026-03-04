@@ -4,7 +4,7 @@ authors = ["NREL-Sienna"]
 version = "0.1.0"
 
 [deps]
-OpenAPI = "d5e62ea6-8fe1-4b60-82b0-5e798758ee55"
+OpenAPI = "d5e62ea6-ddf3-4d43-8e4c-ad5e6c8bfd7d"
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 PowerCoreOpenAPIModels = "b7b40286-e793-417d-a9a0-b1583e4da1cb"

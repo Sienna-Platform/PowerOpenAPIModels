@@ -1,30 +1,21 @@
-CODEGEN_IMAGE := ghcr.io/nrel-sienna/power-codegen:latest
-
+SCHEMA_DIR ?= ../SiennaSchemas
 DOMAINS := core operations investments dynamics
 
-.PHONY: generate generate-stubs reorganize clean
+.PHONY: generate clean validate
 
-generate: generate-stubs reorganize
-
-generate-stubs:
-	@for domain in $(DOMAINS); do \
-	  echo "==> Generating $$domain stubs"; \
-	  openapi-generator-cli generate \
-	    -i openapi/$$domain.yaml \
-	    -g julia-client \
-	    -o generated/$$domain \
-	    --additional-properties=packageName=Power$$(echo $$domain | sed 's/^./\U&/')OpenAPIModels; \
+generate:
+	@for d in $(DOMAINS); do \
+	  echo "Generating $$d"; \
+	  cd $(SCHEMA_DIR) && openapi-generator generate \
+	    -c openapi-config-$$d.json -g julia-client \
+	    -o $(CURDIR)/generated/$$d \
+	    --additional-properties=packageName=Power$$(echo $$d | sed 's/./\U&/')OpenAPIModels \
+	    > /dev/null; \
 	done
-
-reorganize:
-	bash scripts/reorganize_stubs.sh
-
-generate-docker:
-	docker run --rm \
-	  -v $(CURDIR)/openapi:/schemas:ro \
-	  -v $(CURDIR):/output \
-	  $(CODEGEN_IMAGE) \
-	  --target julia --schemas /schemas --output /output
+	julia scripts/reorganize.jl
 
 clean:
-	rm -rf generated/
+	rm -rf generated/ */src/models */src/apis
+
+validate:
+	julia test/validate.jl
