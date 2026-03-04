@@ -9,7 +9,7 @@ generate:
 	  cd $(SCHEMA_DIR) && openapi-generator generate \
 	    -c openapi-config-$$d.json -g julia-client \
 	    -o $(CURDIR)/generated/$$d \
-	    --additional-properties=packageName=Power$$(echo $$d | sed 's/./\U&/')OpenAPIModels \
+	    --additional-properties=packageName=Power$$(echo $$d | awk '{print toupper(substr($$1,1,1)) substr($$1,2)}')OpenAPIModels \
 	    > /dev/null; \
 	done
 	julia scripts/reorganize.jl
