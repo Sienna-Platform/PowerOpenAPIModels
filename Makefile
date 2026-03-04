@@ -1,4 +1,5 @@
 SCHEMA_DIR ?= ../SiennaSchemas
+CODEGEN_IMAGE ?= ghcr.io/nrel-sienna/power-codegen:latest
 DOMAINS := core operations investments dynamics
 
 .PHONY: generate generate-docker clean validate
@@ -18,7 +19,7 @@ generate-docker:
 	docker run --rm \
 	  -v $(abspath $(SCHEMA_DIR)):/schemas:ro \
 	  -v $(CURDIR):/output \
-	  ghcr.io/nrel-sienna/power-codegen:latest
+	  $(CODEGEN_IMAGE)
 
 clean:
 	rm -rf generated/ */src/models */src/apis */docs
