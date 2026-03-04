@@ -10,11 +10,6 @@ PowerInvestmentsOpenAPIModels = "33cb4396-f4d9-4f59-8585-787ebb56cb1b"
 PowerOperationsOpenAPIModels = "a372b6d7-45a2-44c2-8199-6a724b72e8ff"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 
-[extensions]
-DynamicsExt = "PowerDynamicsOpenAPIModels"
-InvestmentsExt = "PowerInvestmentsOpenAPIModels"
-OperationsExt = "PowerOperationsOpenAPIModels"
-
 [compat]
 julia = "^1.10"
 
