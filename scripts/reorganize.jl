@@ -69,7 +69,7 @@ for (domain, pkg) in DOMAINS
         for f in readdir(dir, join=true)
             endswith(f, ".jl") || continue
             for line in eachline(f)
-                m = match(r"^mutable struct ([A-Za-z0-9_]+)", line)
+                m = match(r"mutable struct ([A-Za-z0-9_]+)", line)
                 m !== nothing && push!(exports, m.captures[1])
                 m = match(r"^const ([A-Z][A-Za-z0-9_]*)", line)
                 m !== nothing &&
