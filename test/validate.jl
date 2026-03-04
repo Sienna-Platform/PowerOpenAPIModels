@@ -20,8 +20,12 @@ Pkg.develop([
 end
 
 @testset "No duplicate type definitions" begin
-    pkgs = [PowerCoreOpenAPIModels, PowerOperationsOpenAPIModels,
-            PowerInvestmentsOpenAPIModels, PowerDynamicsOpenAPIModels]
+    pkgs = [
+        PowerCoreOpenAPIModels,
+        PowerOperationsOpenAPIModels,
+        PowerInvestmentsOpenAPIModels,
+        PowerDynamicsOpenAPIModels,
+    ]
     seen = Dict{Symbol, Module}()
     for pkg in pkgs
         for name in names(pkg)
