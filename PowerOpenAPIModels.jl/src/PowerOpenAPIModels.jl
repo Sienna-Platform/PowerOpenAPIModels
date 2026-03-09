@@ -1,4 +1,7 @@
 module PowerOpenAPIModels
 using Reexport
 @reexport using PowerCoreOpenAPIModels
+@reexport using PowerOperationsOpenAPIModels
+@reexport using PowerInvestmentsOpenAPIModels
+@reexport using PowerDynamicsOpenAPIModels
 end

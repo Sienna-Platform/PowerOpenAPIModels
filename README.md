@@ -6,30 +6,25 @@ Auto-generated Julia types from NREL-Sienna power system OpenAPI schemas.
 
 This repository contains five Julia packages:
 
-| Package | Role |
-|---------|------|
-| `PowerCoreOpenAPIModels.jl` | Shared types, enums, base models |
-| `PowerOperationsOpenAPIModels.jl` | Operations API stubs |
-| `PowerInvestmentsOpenAPIModels.jl` | Investments API stubs |
-| `PowerDynamicsOpenAPIModels.jl` | Dynamics API stubs |
-| `PowerOpenAPIModels.jl` | Umbrella package (weak dependencies) |
+| Package                            | Role                             |
+| ---------------------------------- | -------------------------------- |
+| `PowerCoreOpenAPIModels.jl`        | Shared types, enums, base models |
+| `PowerOperationsOpenAPIModels.jl`  | Operations API stubs             |
+| `PowerInvestmentsOpenAPIModels.jl` | Investments API stubs            |
+| `PowerDynamicsOpenAPIModels.jl`    | Dynamics API stubs               |
+| `PowerOpenAPIModels.jl`            | Umbrella package                 |
 
 ## Installation
 
 ```julia
 using Pkg
 
-# Load only operations (core is always included)
-Pkg.add(["PowerOpenAPIModels", "PowerOperationsOpenAPIModels"])
-using PowerOpenAPIModels  # loads core + operations extension
+# Load only operations
+Pkg.add("PowerOperationsOpenAPIModels")
+using PowerOperationsOpenAPIModels
 
 # Load everything
-Pkg.add([
-  "PowerOpenAPIModels",
-  "PowerOperationsOpenAPIModels",
-  "PowerInvestmentsOpenAPIModels",
-  "PowerDynamicsOpenAPIModels",
-])
+Pkg.add("PowerOpenAPIModels")
 using PowerOpenAPIModels
 ```
 
@@ -37,44 +32,48 @@ using PowerOpenAPIModels
 
 Models are auto-generated from OpenAPI schemas in [SiennaSchemas](https://github.com/NREL-Sienna/SiennaSchemas). There are two ways to regenerate locally:
 
-### Via pre-built image (pulls from GHCR)
+### Via local openapi-generator
 
 ```bash
-make generate
+# Uses ../SiennaSchemas by default
+make generate SCHEMA_DIR=/path/to/SiennaSchemas
 ```
 
-### Via local Docker build
+### Via Docker build
 
 ```bash
-make generate-local
+make generate-docker
 ```
 
 ### Manual Docker commands
 
 ```bash
 # Build the codegen image
-docker build -t poweropenapi-models-codegen .
+docker build -t power-codegen .
 
 # Run generation (mount schemas and repo root)
-docker run --rm \
-  -v $(pwd)/openapi:/schemas:ro \
-  -v $(pwd):/output \
-  poweropenapi-models-codegen \
-  /schemas /output
+make generate-docker CODEGEN_IMAGE=power-codegen
 ```
 
-## Development
+## Testing
+
+Either `make validate` or
 
 ```bash
-julia -e '
-  using Pkg
+julia test/validate.jl
+```
+
+## Loading all models for testing
+
+Dev and instantiate all models
+
+```bash
+julia --project=PowerOpenAPIModels.jl -e 'using Pkg
   Pkg.develop([
     PackageSpec(path="PowerCoreOpenAPIModels.jl"),
     PackageSpec(path="PowerOperationsOpenAPIModels.jl"),
     PackageSpec(path="PowerInvestmentsOpenAPIModels.jl"),
     PackageSpec(path="PowerDynamicsOpenAPIModels.jl"),
-    PackageSpec(path="PowerOpenAPIModels.jl"),
   ])
-  Pkg.test("PowerOpenAPIModels")
-'
+  Pkg.instantiate()'
 ```

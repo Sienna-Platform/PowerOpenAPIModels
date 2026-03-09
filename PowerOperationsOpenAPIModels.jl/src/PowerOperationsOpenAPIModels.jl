@@ -1,14 +1,105 @@
 module PowerOperationsOpenAPIModels
 
-using OpenAPI
-using JSON3
-using HTTP
+using OpenAPI, JSON3, HTTP
 using PowerCoreOpenAPIModels
 
-# --- Models ---
+include("models/model_ACBus.jl")
+include("models/model_AGC.jl")
+include("models/model_Arc.jl")
+include("models/model_Area.jl")
+include("models/model_AreaInterchange.jl")
+include("models/model_ConstantReserve.jl")
+include("models/model_ConstantReserveGroup.jl")
+include("models/model_ConstantReserveNonSpinning.jl")
+include("models/model_DCBus.jl")
+include("models/model_DiscreteControlledACBranch.jl")
+include("models/model_EnergyReservoirStorage.jl")
+include("models/model_ExponentialLoad.jl")
+include("models/model_FACTSControlDevice.jl")
+include("models/model_FixedAdmittance.jl")
+include("models/model_HydroDispatch.jl")
+include("models/model_HydroPumpTurbine.jl")
+include("models/model_HydroReservoir.jl")
+include("models/model_HydroTurbine.jl")
+include("models/model_InterconnectingConverter.jl")
+include("models/model_InterruptiblePowerLoad.jl")
+include("models/model_InterruptibleStandardLoad.jl")
+include("models/model_Line.jl")
+include("models/model_LoadZone.jl")
+include("models/model_MonitoredLine.jl")
+include("models/model_MotorLoad.jl")
+include("models/model_PhaseShiftingTransformer.jl")
+include("models/model_PhaseShiftingTransformer3W.jl")
+include("models/model_PowerLoad.jl")
+include("models/model_RenewableDispatch.jl")
+include("models/model_RenewableNonDispatch.jl")
+include("models/model_ShiftablePowerLoad.jl")
+include("models/model_Source.jl")
+include("models/model_StandardLoad.jl")
+include("models/model_SwitchedAdmittance.jl")
+include("models/model_SynchronousCondenser.jl")
+include("models/model_TModelHVDCLine.jl")
+include("models/model_TapTransformer.jl")
+include("models/model_ThermalMultiStart.jl")
+include("models/model_ThermalStandard.jl")
+include("models/model_Transformer2W.jl")
+include("models/model_Transformer3W.jl")
+include("models/model_TwoTerminalGenericHVDCLine.jl")
+include("models/model_TwoTerminalLCCLine.jl")
+include("models/model_TwoTerminalVSCLine.jl")
+include("models/model_VariableReserve.jl")
+include("models/model_VariableReserveNonSpinning.jl")
 
-# --- APIs ---
+export ACBus
+export AGC
+export Arc
+export Area
+export AreaInterchange
+export ConstantReserve
+export ConstantReserveGroup
+export ConstantReserveNonSpinning
+export DCBus
+export DiscreteControlledACBranch
+export EnergyReservoirStorage
+export ExponentialLoad
+export FACTSControlDevice
+export FixedAdmittance
+export HydroDispatch
+export HydroPumpTurbine
+export HydroReservoir
+export HydroTurbine
+export InterconnectingConverter
+export InterruptiblePowerLoad
+export InterruptibleStandardLoad
+export Line
+export LoadZone
+export MonitoredLine
+export MotorLoad
+export PhaseShiftingTransformer
+export PhaseShiftingTransformer3W
+export PowerLoad
+export RenewableDispatch
+export RenewableNonDispatch
+export ShiftablePowerLoad
+export Source
+export StandardLoad
+export SwitchedAdmittance
+export SynchronousCondenser
+export TModelHVDCLine
+export TapTransformer
+export ThermalMultiStart
+export ThermalStandard
+export Transformer2W
+export Transformer3W
+export TwoTerminalGenericHVDCLine
+export TwoTerminalLCCLine
+export TwoTerminalVSCLine
+export VariableReserve
+export VariableReserveNonSpinning
 
-# --- Exports ---
+for n in names(PowerCoreOpenAPIModels)
+    n === :PowerCoreOpenAPIModels && continue
+    @eval export $n
+end
 
-end # module
+end

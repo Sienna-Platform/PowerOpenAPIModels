@@ -1,5 +1,0 @@
-module OperationsExt
-using PowerOpenAPIModels
-using Reexport
-@reexport using PowerOperationsOpenAPIModels
-end

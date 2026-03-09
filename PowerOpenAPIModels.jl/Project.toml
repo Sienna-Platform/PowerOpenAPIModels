@@ -1,21 +1,20 @@
 name = "PowerOpenAPIModels"
 uuid = "bed98974-b02a-5e2f-9ee0-a103f5c450dd"
-authors = ["NREL-Sienna"]
 version = "0.1.0"
+authors = ["NREL-Sienna"]
 
 [deps]
 PowerCoreOpenAPIModels = "b7b40286-e793-417d-a9a0-b1583e4da1cb"
-Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
-
-[weakdeps]
-PowerOperationsOpenAPIModels = "a372b6d7-45a2-44c2-8199-6a724b72e8ff"
-PowerInvestmentsOpenAPIModels = "33cb4396-f4d9-4f59-8585-787ebb56cb1b"
 PowerDynamicsOpenAPIModels = "044a0b22-31f8-4ef6-8282-c9a61b3013f6"
-
-[extensions]
-OperationsExt = "PowerOperationsOpenAPIModels"
-InvestmentsExt = "PowerInvestmentsOpenAPIModels"
-DynamicsExt = "PowerDynamicsOpenAPIModels"
+PowerInvestmentsOpenAPIModels = "33cb4396-f4d9-4f59-8585-787ebb56cb1b"
+PowerOperationsOpenAPIModels = "a372b6d7-45a2-44c2-8199-6a724b72e8ff"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 
 [compat]
 julia = "^1.10"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
