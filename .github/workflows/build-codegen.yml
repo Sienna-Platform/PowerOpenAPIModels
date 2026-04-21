@@ -13,7 +13,7 @@ permissions:
   packages: write
 
 env:
-  CODEGEN_IMAGE: ghcr.io/nrel-sienna/power-codegen:latest
+  CODEGEN_IMAGE: ghcr.io/sienna-platform/power-codegen:latest
 
 jobs:
   build-and-push:

@@ -1,5 +1,5 @@
 SCHEMA_DIR ?= ../SiennaSchemas
-CODEGEN_IMAGE ?= ghcr.io/nrel-sienna/power-codegen:latest
+CODEGEN_IMAGE ?= ghcr.io/sienna-platform/power-codegen:latest
 DOMAINS := core operations investments dynamics
 
 .PHONY: generate generate-docker clean validate
