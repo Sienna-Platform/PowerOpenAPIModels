@@ -1,6 +1,6 @@
 name = "PowerDynamicsOpenAPIModels"
 uuid = "044a0b22-31f8-4ef6-8282-c9a61b3013f6"
-authors = ["NREL-Sienna"]
+authors = ["Sienna-Platform"]
 version = "0.1.0"
 
 [deps]

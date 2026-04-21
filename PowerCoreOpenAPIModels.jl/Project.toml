@@ -1,6 +1,6 @@
 name = "PowerCoreOpenAPIModels"
 uuid = "b7b40286-e793-417d-a9a0-b1583e4da1cb"
-authors = ["NREL-Sienna"]
+authors = ["Sienna-Platform"]
 version = "0.1.0"
 
 [deps]

@@ -1,6 +1,6 @@
 # PowerOpenAPIModels.jl
 
-Auto-generated Julia types from NREL-Sienna power system OpenAPI schemas.
+Auto-generated Julia types from Sienna-Platform power system OpenAPI schemas.
 
 ## Monorepo Structure
 
@@ -30,7 +30,7 @@ using PowerOpenAPIModels
 
 ## Regenerating Stubs
 
-Models are auto-generated from OpenAPI schemas in [SiennaSchemas](https://github.com/NREL-Sienna/SiennaSchemas). There are two ways to regenerate locally:
+Models are auto-generated from OpenAPI schemas in [SiennaSchemas](https://github.com/Sienna-Platform/SiennaSchemas). There are two ways to regenerate locally:
 
 ### Via local openapi-generator
 
