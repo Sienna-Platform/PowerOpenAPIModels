@@ -1,7 +1,7 @@
 # ColocatedSupplyStorageTechnology
 
-
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`name`** | **`String`** |  | [default to nothing]
@@ -37,7 +37,4 @@ Name | Type | Description | Notes
 **`inverter_efficiency`** | **`Float64`** |  | [optional] [default to nothing]
 **`inverter_supply_ratio`** | **`Float64`** |  | [optional] [default to nothing]
 
-
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
