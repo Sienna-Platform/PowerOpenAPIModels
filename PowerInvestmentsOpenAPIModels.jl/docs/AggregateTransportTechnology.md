@@ -1,7 +1,7 @@
 # AggregateTransportTechnology
 
-## Properties
 
+## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`name`** | **`String`** |  | [default to nothing]
@@ -16,4 +16,7 @@ Name | Type | Description | Notes
 **`unit_size`** | **`Float64`** |  | [optional] [default to nothing]
 **`financial_data`** | [**`*TechnologyFinancialData`**](TechnologyFinancialData.md) |  | [optional] [default to nothing]
 
+
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
+
+
