@@ -56,7 +56,7 @@ include("models/model_ThermalFuels.jl")
 include("models/model_ThermalGenerationCost.jl")
 include("models/model_ThermalGenerationCostStartUp.jl")
 include("models/model_ThermalRenewableGenerationCost.jl")
-include("models/model_TimeSeriesAssociation.jl")
+# include("models/model_TimeSeriesAssociation.jl")
 include("models/model_TransformerControlObjective.jl")
 include("models/model_TurbinePump.jl")
 include("models/model_TwoTerminalLoss.jl")
@@ -79,6 +79,7 @@ export FromToToFrom
 export FuelCurve
 export FuelCurveFuelCost
 export FunctionData
+export GenericOperationCost
 export GeographicInfo
 export HydroGenerationCost
 export HydroReservoirCost

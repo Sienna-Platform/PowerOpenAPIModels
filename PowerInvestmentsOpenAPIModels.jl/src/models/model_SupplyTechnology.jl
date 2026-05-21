@@ -38,7 +38,7 @@
     - cofire_start_limits::Dict{String, MinMax}
     - cofire_level_limits::Dict{String, MinMax}
     - capital_costs::ValueCurve
-    - operation_costs::ThermalRenewableGenerationCost
+    - operation_costs::GenericOperationCost
     - unit_size::Float64
     - capacity_limits::MinMax
     - outage_factor::Float64
@@ -61,7 +61,7 @@ Base.@kwdef mutable struct SupplyTechnology <: OpenAPI.APIModel
     cofire_start_limits::Union{Nothing, Dict} = nothing # spec type: Union{ Nothing, Dict{String, MinMax} }
     cofire_level_limits::Union{Nothing, Dict} = nothing # spec type: Union{ Nothing, Dict{String, MinMax} }
     capital_costs = nothing # spec type: Union{ Nothing, ValueCurve }
-    operation_costs = nothing # spec type: Union{ Nothing, ThermalRenewableGenerationCost }
+    operation_costs = nothing # spec type: Union{ Nothing, GenericOperationCost }
     unit_size::Union{Nothing, Float64} = 0.0
     capacity_limits = nothing # spec type: Union{ Nothing, MinMax }
     outage_factor::Union{Nothing, Float64} = 1.0
@@ -135,7 +135,7 @@ const _property_types_SupplyTechnology = Dict{Symbol, String}(
     Symbol("cofire_start_limits")=>"Dict{String, MinMax}",
     Symbol("cofire_level_limits")=>"Dict{String, MinMax}",
     Symbol("capital_costs")=>"ValueCurve",
-    Symbol("operation_costs")=>"ThermalRenewableGenerationCost",
+    Symbol("operation_costs")=>"GenericOperationCost",
     Symbol("unit_size")=>"Float64",
     Symbol("capacity_limits")=>"MinMax",
     Symbol("outage_factor")=>"Float64",

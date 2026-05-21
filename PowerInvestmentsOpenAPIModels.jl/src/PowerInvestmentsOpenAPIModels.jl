@@ -3,7 +3,6 @@ module PowerInvestmentsOpenAPIModels
 using OpenAPI, JSON3, HTTP
 using PowerCoreOpenAPIModels
 
-include("models/model_ACTransportTechnology.jl")
 include("models/model_AggregateRetirementPotential.jl")
 include("models/model_AggregateRetrofitPotential.jl")
 include("models/model_AggregateTransportTechnology.jl")
@@ -11,13 +10,10 @@ include("models/model_CapacityReserveMargin.jl")
 include("models/model_CarbonCaps.jl")
 include("models/model_CarbonTax.jl")
 include("models/model_ColocatedSupplyStorageTechnology.jl")
-include("models/model_CurtailableDemandSideTechnology.jl")
 include("models/model_DemandRequirement.jl")
 include("models/model_DemandSideTechnology.jl")
 include("models/model_EnergyShareRequirements.jl")
 include("models/model_ExistingCapacity.jl")
-include("models/model_FlexibleDemandTechnology.jl")
-include("models/model_HVDCTransportTechnology.jl")
 include("models/model_HourlyMatching.jl")
 include("models/model_InvestmentScheduleResults.jl")
 include("models/model_InvestmentScheduleResultsResultsInner.jl")
@@ -31,11 +27,9 @@ include("models/model_RetirementPotential.jl")
 include("models/model_RetrofitPotential.jl")
 include("models/model_StorageTechnology.jl")
 include("models/model_SupplyTechnology.jl")
-include("models/model_SupplyTechnologyOperationCosts.jl")
 include("models/model_TopologyMapping.jl")
 include("models/model_Zone.jl")
 
-export ACTransportTechnology
 export AggregateRetirementPotential
 export AggregateRetrofitPotential
 export AggregateTransportTechnology
@@ -43,16 +37,13 @@ export CapacityReserveMargin
 export CarbonCaps
 export CarbonTax
 export ColocatedSupplyStorageTechnology
-export CurtailableDemandSideTechnology
 export DemandRequirement
 export DemandSideTechnology
 export EnergyShareRequirements
 export ExistingCapacity
-export FlexibleDemandTechnology
 export HVDCTransportTechnology
 export HourlyMatching
 export InvestmentScheduleResults
-export InvestmentScheduleResultsResultsInner
 export MaximumCapacityRequirements
 export MinimumCapacityRequirements
 export NodalACTransportTechnology
@@ -63,7 +54,6 @@ export RetirementPotential
 export RetrofitPotential
 export StorageTechnology
 export SupplyTechnology
-export SupplyTechnologyOperationCosts
 export TopologyMapping
 export Zone
 
