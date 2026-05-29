@@ -17,7 +17,7 @@ function OpenAPI.property_type(
     json::Dict{String, Any},
 )
     discriminator = json["cost_type"]
-    if discriminator == "HYDRO"
+    if discriminator == "HYDRO_GEN"
         return eval(Base.Meta.parse("HydroGenerationCost"))
     elseif discriminator == "RENEWABLE"
         return eval(Base.Meta.parse("RenewableGenerationCost"))
