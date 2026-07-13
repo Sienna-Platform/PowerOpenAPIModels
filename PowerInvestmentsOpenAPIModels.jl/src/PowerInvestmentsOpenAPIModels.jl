@@ -13,7 +13,7 @@ include("models/model_ColocatedSupplyStorageTechnology.jl")
 include("models/model_DemandRequirement.jl")
 include("models/model_DemandSideTechnology.jl")
 include("models/model_EnergyShareRequirements.jl")
-include("models/model_ExistingCapacity.jl")
+include("models/model_ExistingDevices.jl")
 include("models/model_HourlyMatching.jl")
 include("models/model_InvestmentScheduleResults.jl")
 include("models/model_InvestmentScheduleResultsResultsInner.jl")
@@ -40,7 +40,7 @@ export ColocatedSupplyStorageTechnology
 export DemandRequirement
 export DemandSideTechnology
 export EnergyShareRequirements
-export ExistingCapacity
+export ExistingDevices
 export HVDCTransportTechnology
 export HourlyMatching
 export InvestmentScheduleResults
