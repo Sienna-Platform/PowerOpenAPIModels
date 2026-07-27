@@ -30,10 +30,10 @@ Base.@kwdef mutable struct RenewableGenerationCost <: OpenAPI.APIModel
 end # type RenewableGenerationCost
 
 const _property_types_RenewableGenerationCost = Dict{Symbol, String}(
-    Symbol("cost_type") => "String",
-    Symbol("curtailment_cost") => "CostCurve",
-    Symbol("variable") => "CostCurve",
-    Symbol("fixed") => "Float64",
+    Symbol("cost_type")=>"String",
+    Symbol("curtailment_cost")=>"CostCurve",
+    Symbol("variable")=>"CostCurve",
+    Symbol("fixed")=>"Float64",
 )
 OpenAPI.property_type(::Type{RenewableGenerationCost}, name::Symbol) =
     Union{Nothing, eval(Base.Meta.parse(_property_types_RenewableGenerationCost[name]))}
@@ -57,9 +57,5 @@ end
 function OpenAPI.validate_property(::Type{RenewableGenerationCost}, name::Symbol, val)
     if name === Symbol("cost_type")
         OpenAPI.validate_param(name, "RenewableGenerationCost", :enum, val, ["RENEWABLE"])
-    end
-
-    if name === Symbol("fixed")
-        OpenAPI.validate_param(name, "RenewableGenerationCost", :enum, val, [0.0])
     end
 end

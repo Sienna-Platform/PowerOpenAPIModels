@@ -4,11 +4,11 @@
 @doc raw"""SupplyTechnology
 
     SupplyTechnology(;
+        id=nothing,
         name=nothing,
+        available=nothing,
         power_systems_type=nothing,
         region=nothing,
-        id=nothing,
-        available=nothing,
         prime_mover_type="OT",
         fuel=nothing,
         co2=nothing,
@@ -27,18 +27,18 @@
         financial_data=nothing,
     )
 
+    - id::Int64
     - name::String
+    - available::Bool
     - power_systems_type::String
     - region::Vector{Int64}
-    - id::Int64
-    - available::Bool
     - prime_mover_type::String
     - fuel::Vector{String}
     - co2::Dict{String, Float64}
     - cofire_start_limits::Dict{String, MinMax}
     - cofire_level_limits::Dict{String, MinMax}
     - capital_costs::ValueCurve
-    - operation_costs::SupplyTechnologyOperationCosts
+    - operation_costs::GenericOperationCost
     - unit_size::Float64
     - capacity_limits::MinMax
     - outage_factor::Float64
@@ -50,18 +50,18 @@
     - financial_data::TechnologyFinancialData
 """
 Base.@kwdef mutable struct SupplyTechnology <: OpenAPI.APIModel
+    id::Union{Nothing, Int64} = nothing
     name::Union{Nothing, String} = nothing
+    available::Union{Nothing, Bool} = nothing
     power_systems_type::Union{Nothing, String} = nothing
     region::Union{Nothing, Vector{Int64}} = nothing
-    id::Union{Nothing, Int64} = nothing
-    available::Union{Nothing, Bool} = nothing
     prime_mover_type::Union{Nothing, String} = "OT"
     fuel::Union{Nothing, Vector{String}} = nothing
     co2::Union{Nothing, Dict{String, Float64}} = nothing
     cofire_start_limits::Union{Nothing, Dict} = nothing # spec type: Union{ Nothing, Dict{String, MinMax} }
     cofire_level_limits::Union{Nothing, Dict} = nothing # spec type: Union{ Nothing, Dict{String, MinMax} }
     capital_costs = nothing # spec type: Union{ Nothing, ValueCurve }
-    operation_costs = nothing # spec type: Union{ Nothing, SupplyTechnologyOperationCosts }
+    operation_costs = nothing # spec type: Union{ Nothing, GenericOperationCost }
     unit_size::Union{Nothing, Float64} = 0.0
     capacity_limits = nothing # spec type: Union{ Nothing, MinMax }
     outage_factor::Union{Nothing, Float64} = 1.0
@@ -73,11 +73,11 @@ Base.@kwdef mutable struct SupplyTechnology <: OpenAPI.APIModel
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
 
     function SupplyTechnology(
+        id,
         name,
+        available,
         power_systems_type,
         region,
-        id,
-        available,
         prime_mover_type,
         fuel,
         co2,
@@ -96,11 +96,11 @@ Base.@kwdef mutable struct SupplyTechnology <: OpenAPI.APIModel
         financial_data,
     )
         o = new(
+            id,
             name,
+            available,
             power_systems_type,
             region,
-            id,
-            available,
             prime_mover_type,
             fuel,
             co2,
@@ -124,48 +124,60 @@ Base.@kwdef mutable struct SupplyTechnology <: OpenAPI.APIModel
 end # type SupplyTechnology
 
 const _property_types_SupplyTechnology = Dict{Symbol, String}(
-    Symbol("name") => "String",
-    Symbol("power_systems_type") => "String",
-    Symbol("region") => "Vector{Int64}",
-    Symbol("id") => "Int64",
-    Symbol("available") => "Bool",
-    Symbol("prime_mover_type") => "String",
-    Symbol("fuel") => "Vector{String}",
-    Symbol("co2") => "Dict{String, Float64}",
-    Symbol("cofire_start_limits") => "Dict{String, MinMax}",
-    Symbol("cofire_level_limits") => "Dict{String, MinMax}",
-    Symbol("capital_costs") => "ValueCurve",
-    Symbol("operation_costs") => "SupplyTechnologyOperationCosts",
-    Symbol("unit_size") => "Float64",
-    Symbol("capacity_limits") => "MinMax",
-    Symbol("outage_factor") => "Float64",
-    Symbol("min_generation_fraction") => "Float64",
-    Symbol("ramp_limits") => "UpDown",
-    Symbol("time_limits") => "UpDown",
-    Symbol("start_fuel_mmbtu_per_mw") => "Float64",
-    Symbol("lifetime") => "Int64",
-    Symbol("financial_data") => "TechnologyFinancialData",
+    Symbol("id")=>"Int64",
+    Symbol("name")=>"String",
+    Symbol("available")=>"Bool",
+    Symbol("power_systems_type")=>"String",
+    Symbol("region")=>"Vector{Int64}",
+    Symbol("prime_mover_type")=>"String",
+    Symbol("fuel")=>"Vector{String}",
+    Symbol("co2")=>"Dict{String, Float64}",
+    Symbol("cofire_start_limits")=>"Dict{String, MinMax}",
+    Symbol("cofire_level_limits")=>"Dict{String, MinMax}",
+    Symbol("capital_costs")=>"ValueCurve",
+    Symbol("operation_costs")=>"GenericOperationCost",
+    Symbol("unit_size")=>"Float64",
+    Symbol("capacity_limits")=>"MinMax",
+    Symbol("outage_factor")=>"Float64",
+    Symbol("min_generation_fraction")=>"Float64",
+    Symbol("ramp_limits")=>"UpDown",
+    Symbol("time_limits")=>"UpDown",
+    Symbol("start_fuel_mmbtu_per_mw")=>"Float64",
+    Symbol("lifetime")=>"Int64",
+    Symbol("financial_data")=>"TechnologyFinancialData",
 )
 OpenAPI.property_type(::Type{SupplyTechnology}, name::Symbol) =
     Union{Nothing, eval(Base.Meta.parse(_property_types_SupplyTechnology[name]))}
 
 function OpenAPI.check_required(o::SupplyTechnology)
+    o.id === nothing && (return false)
     o.name === nothing && (return false)
-    o.power_systems_type === nothing && (return false)
     o.available === nothing && (return false)
+    o.power_systems_type === nothing && (return false)
+    o.region === nothing && (return false)
+    o.fuel === nothing && (return false)
+    o.co2 === nothing && (return false)
+    o.cofire_start_limits === nothing && (return false)
+    o.cofire_level_limits === nothing && (return false)
+    o.capital_costs === nothing && (return false)
+    o.operation_costs === nothing && (return false)
+    o.capacity_limits === nothing && (return false)
+    o.ramp_limits === nothing && (return false)
+    o.time_limits === nothing && (return false)
+    o.financial_data === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::SupplyTechnology)
+    OpenAPI.validate_property(SupplyTechnology, Symbol("id"), o.id)
     OpenAPI.validate_property(SupplyTechnology, Symbol("name"), o.name)
+    OpenAPI.validate_property(SupplyTechnology, Symbol("available"), o.available)
     OpenAPI.validate_property(
         SupplyTechnology,
         Symbol("power_systems_type"),
         o.power_systems_type,
     )
     OpenAPI.validate_property(SupplyTechnology, Symbol("region"), o.region)
-    OpenAPI.validate_property(SupplyTechnology, Symbol("id"), o.id)
-    OpenAPI.validate_property(SupplyTechnology, Symbol("available"), o.available)
     OpenAPI.validate_property(
         SupplyTechnology,
         Symbol("prime_mover_type"),

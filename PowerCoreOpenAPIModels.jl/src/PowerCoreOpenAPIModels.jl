@@ -17,6 +17,8 @@ include("models/model_FromToToFrom.jl")
 include("models/model_FuelCurve.jl")
 include("models/model_FuelCurveFuelCost.jl")
 include("models/model_FunctionData.jl")
+include("models/model_GenericOperationCost.jl")
+include("models/model_GeographicInfo.jl")
 include("models/model_HydroGenerationCost.jl")
 include("models/model_HydroReservoirCost.jl")
 include("models/model_HydroStorageGenerationCost.jl")
@@ -74,6 +76,8 @@ export FromToToFrom
 export FuelCurve
 export FuelCurveFuelCost
 export FunctionData
+export GenericOperationCost
+export GeographicInfo
 export HydroGenerationCost
 export HydroReservoirCost
 export HydroStorageGenerationCost
