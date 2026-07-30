@@ -1,14 +1,18 @@
 # FixedAdmittance
 
-## Properties
 
+## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** |  | [default to nothing]
-**`name`** | **`String`** |  | [default to nothing]
-**`available`** | **`Bool`** |  | [default to nothing]
-**`bus`** | **`Int64`** |  | [default to nothing]
+**`id`** | **`Int64`** | Unique integer identifier for this component. | [default to nothing]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations. | [default to nothing]
+**`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [default to nothing]
+**`admittance_units`** | **`String`** | Unit basis for the shunt admittance Y. DEVICE_MVAR is PSS/E RAW native (Mvar/MW at unity voltage). | [optional] [default to "DEVICE_MVAR"]
 **`Y`** | [**`*ComplexNumber`**](ComplexNumber.md) |  | [default to nothing]
-**`dynamic_injector`** | **`Any`** |  | [optional] [default to nothing]
+**`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection model for admittance, if any. | [optional] [default to nothing]
+
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
+
+

@@ -1,7 +1,7 @@
 # NodalACTransportTechnology
 
-## Properties
 
+## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`name`** | **`String`** |  | [default to nothing]
@@ -12,10 +12,13 @@ Name | Type | Description | Notes
 **`end_node`** | **`Int64`** |  | [optional] [default to nothing]
 **`capacity_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`capital_costs`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
-**`resistance`** | **`Float64`** |  | [optional] [default to 0.0]
-**`voltage`** | **`Float64`** |  | [optional] [default to 0.0]
-**`unit_size`** | **`Float64`** |  | [optional] [default to 0.0]
-**`reactance`** | **`Float64`** |  | [optional] [default to 0.0]
+**`resistance`** | **`Float64`** | Units: pu. | [optional] [default to 0.0]
+**`voltage`** | **`Float64`** | Units: kV. | [optional] [default to 0.0]
+**`unit_size`** | **`Float64`** | Units: MW. | [optional] [default to 0.0]
+**`reactance`** | **`Float64`** | Units: pu. | [optional] [default to 0.0]
 **`financial_data`** | [**`*TechnologyFinancialData`**](TechnologyFinancialData.md) |  | [optional] [default to nothing]
 
+
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
+
+

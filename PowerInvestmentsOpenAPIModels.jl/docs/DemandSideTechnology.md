@@ -1,7 +1,7 @@
 # DemandSideTechnology
 
-## Properties
 
+## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`name`** | **`String`** |  | [default to nothing]
@@ -9,10 +9,10 @@ Name | Type | Description | Notes
 **`available`** | **`Bool`** |  | [default to nothing]
 **`region`** | **`Vector{Int64}`** |  | [optional] [default to nothing]
 **`power_systems_type`** | **`String`** |  | [default to nothing]
-**`technology_efficiency`** | **`Float64`** |  | [optional] [default to 0.0]
+**`technology_efficiency`** | **`Float64`** | Units: 1. | [optional] [default to 0.0]
 **`price_per_unit`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
-**`min_power`** | **`Float64`** |  | [optional] [default to 0.0]
-**`peak_demand_mw`** | **`Float64`** |  | [optional] [default to 0.0]
+**`min_power`** | **`Float64`** | Units: MW. | [optional] [default to 0.0]
+**`peak_demand_mw`** | **`Float64`** | Units: MW. | [optional] [default to 0.0]
 **`max_demand_delay`** | **`Float64`** |  | [optional] [default to nothing]
 **`max_demand_advance`** | **`Float64`** |  | [optional] [default to nothing]
 **`demand_energy_efficiency`** | **`Float64`** |  | [optional] [default to nothing]
@@ -20,4 +20,7 @@ Name | Type | Description | Notes
 **`curtailment_cost`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
 **`max_demand_curtailment`** | **`Float64`** |  | [optional] [default to nothing]
 
+
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
+
+

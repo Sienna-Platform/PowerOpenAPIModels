@@ -79,10 +79,19 @@ for (domain, pkg) in DOMAINS
         end
     end
 
+    # openapi-generator's julia-client template emits ZonedDateTime for
+    # date-time formatted fields but never imports TimeZones for it.
+    needs_timezones = any(
+        occursin("ZonedDateTime", read(joinpath(dest, "models", f), String)) for
+        f in models
+    )
+
     open(joinpath(dest, "$mod.jl"), "w") do io
         println(io, "module $mod")
         println(io)
-        println(io, "using OpenAPI, JSON3, HTTP")
+        print(io, "using OpenAPI, JSON3, HTTP")
+        needs_timezones && print(io, ", TimeZones")
+        println(io)
         domain != "core" && println(io, "using PowerCoreOpenAPIModels")
         println(io)
         for f in models
