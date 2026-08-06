@@ -10,5 +10,9 @@ RUN curl -fsSL -o /usr/local/bin/openapi-generator-cli.jar \
     printf '#!/bin/sh\nexec java -jar /usr/local/bin/openapi-generator-cli.jar "$@"\n' > /usr/local/bin/openapi-generator && \
     chmod +x /usr/local/bin/openapi-generator
 
+# reorganize.jl reads the SiennaSchemas bundles to emit units.jl, so JSON must be
+# in the depot before the repo is mounted at /output.
+RUN julia -e 'using Pkg; Pkg.add(name="JSON", version="1")'
+
 WORKDIR /output
 ENTRYPOINT ["make", "generate", "SCHEMA_DIR=/schemas"]
