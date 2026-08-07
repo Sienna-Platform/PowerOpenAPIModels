@@ -18,6 +18,11 @@ generate:
 	rm -f scripts/Manifest.toml
 	julia --project=scripts -e 'using Pkg; Pkg.instantiate()'
 	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/reorganize.jl
+	@# openapi-generator's julia-client drops object/array schema defaults (see
+	@# PATCHES.md); this reads the same SiennaSchemas bundles reorganize.jl's
+	@# unit emission does and rewrites the affected field initializers in
+	@# place, after the model files have reached their final package location.
+	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/materialize_defaults.jl
 
 generate-docker:
 	docker run --rm \
