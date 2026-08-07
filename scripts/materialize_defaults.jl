@@ -68,10 +68,17 @@ function collect_composite_defaults(schema_dir)
     # data error, not something to paper over by picking one arbitrarily.
     for domain in keys(DOMAIN_TO_PKG)
         bundle = joinpath(schema_dir, "dist", "openapi-$domain-bundled.json")
-        if !isfile(bundle)
-            @warn "No bundled spec for $domain at $bundle; skipping"
-            continue
-        end
+        # A missing bundle means this domain's composite defaults are entirely
+        # invisible to the sweep below -- silently skipping it would leave
+        # every one of that domain's fields unmaterialized without a trace.
+        # `make generate` now rebuilds these right before this script runs
+        # (see Makefile); if one is still missing here, that rebuild step
+        # itself is broken and must not be treated as "no defaults to fix".
+        isfile(bundle) || error(
+            "No bundled spec for domain \"$domain\" at $bundle. Run " *
+            "`python3 scripts/bundle_specs.py` in $schema_dir (or let " *
+            "`make generate` do it) before materialize_defaults.jl.",
+        )
         spec = JSON.parsefile(bundle)
         # A type reused by more than one other schema (MinMax, CostCurve,
         # RenewableGenerationCost, ...) is bundled once under the legacy
@@ -199,74 +206,145 @@ end
 #    field is untyped with the type only in a trailing comment
 #    (`prop = nothing # spec type: Union{ Nothing, MinMax }`) -- are matched
 #    exactly, without guessing at every container type spelling.
+#
+# Every line is classified into exactly one of three outcomes -- there is no
+# fourth "skip and warn" outcome. A field whose current text is neither the
+# unpatched `nothing` nor already exactly the rendered default is a sign this
+# script's assumptions about the generator's output shape no longer hold, and
+# that must stop the run, not print a warning next to an exit code of 0: that
+# is precisely the silent-divergence failure mode this whole effort exists to
+# eliminate.
+#   :applied     -- was `nothing`; now holds `rendered` (line mutated).
+#   :already_ok  -- already holds exactly `rendered` (idempotent re-run).
+#   :mismatch    -- holds some OTHER expression (unexpected; hard error).
+#   :not_found   -- no line in the file matches the field pattern at all
+#                   (unexpected; hard error).
 # --------------------------------------------------------------------------- #
+
+function match_and_classify!(lines, regex, value_idx, rendered; skip_if=(_ -> false))
+    for i in eachindex(lines)
+        skip_if(lines[i]) && continue
+        m = match(regex, lines[i])
+        m === nothing && continue
+        current = strip(m.captures[value_idx])
+        if current == "nothing"
+            groups = [g === nothing ? "" : g for g in m.captures]
+            groups[value_idx] = rendered
+            lines[i] = join(groups)
+            return :applied
+        elseif current == rendered
+            return :already_ok
+        else
+            return :mismatch
+        end
+    end
+    return :not_found
+end
 
 function patch_field_default!(path, prop_name, rendered)
     lines = split(read(path, String), '\n')
-    changed = false
 
     # The annotation itself can nest braces (`Vector{Int64}`, `Dict{String,
     # MinMax}`), so it is matched greedily rather than with a `[^}]*`
     # character class, which would stop at the first, inner, closing brace.
-    body_re = Regex(
-        "^(\\s*" * prop_name * ")(::Union\\{.*\\})?(\\s*=\\s*)nothing(\\s*(?:#.*)?)\$",
+    # Group 4 (the current default expression) is intentionally non-greedy so
+    # backtracking hands the trailing `# spec type: ...` comment, if any, to
+    # group 5 instead of swallowing it into the value.
+    body_re =
+        Regex("^(\\s*" * prop_name * ")(::Union\\{.*\\})?(\\s*=\\s*)(.*?)(\\s*(?:#.*)?)\$")
+    doc_re = Regex("^(\\s*" * prop_name * "=)(.*?)(,)\$")
+
+    # A rendered composite default is itself a comma-bearing expression (e.g.
+    # `MinMax(; min=0.9, max=1.1)`), so once group 4 above is allowed to match
+    # anything (needed to detect "already correct", not just literal
+    # `nothing`), `body_re` alone can no longer tell its own trailing-comment
+    # tail apart from the docstring line's trailing `,` -- both would let
+    # group 4 swallow up to end-of-line. The docstring line always ends in a
+    # bare comma and the struct-body line never does, so skip any
+    # comma-terminated line in the body scan; `doc_re` is what that line
+    # belongs to.
+    body_status = match_and_classify!(
+        lines,
+        body_re,
+        4,
+        rendered;
+        skip_if=line -> endswith(rstrip(line), ","),
     )
-    doc_re = Regex("^(\\s*" * prop_name * "=)nothing(,)\$")
+    doc_status = match_and_classify!(lines, doc_re, 2, rendered)
 
-    for i in eachindex(lines)
-        m = match(body_re, lines[i])
-        if m !== nothing
-            typeann = m.captures[2] === nothing ? "" : m.captures[2]
-            trailing = m.captures[4] === nothing ? "" : m.captures[4]
-            lines[i] = m.captures[1] * typeann * m.captures[3] * rendered * trailing
-            changed = true
-            continue
-        end
-        m2 = match(doc_re, lines[i])
-        if m2 !== nothing
-            lines[i] = m2.captures[1] * rendered * m2.captures[2]
-            changed = true
-        end
+    if body_status === :applied || doc_status === :applied
+        write(path, join(lines, '\n'))
     end
-
-    changed && write(path, join(lines, '\n'))
-    return changed
+    return (body=body_status, doc=doc_status)
 end
 
 # --------------------------------------------------------------------------- #
 # Entry point
 # --------------------------------------------------------------------------- #
 
+const OK_STATUSES = (:applied, :already_ok)
+
 function patch_all(repo_root, defaults)
     # `load_all_models` ran via `include()` inside `main`'s own call frame, so
     # the methods those files add (every struct's `property_type`) exist in a
     # world age newer than the one `main`'s compiled body was specialized
     # against. `invokelatest` re-dispatches against the current world age.
-    patched = 0
+    applied = 0
+    already_ok = 0
     for (type_name, prop_name, json_default) in defaults
         path = find_model_file(repo_root, type_name)
-        if isnothing(path)
-            @warn "No generated model_$type_name.jl for a composite default on $type_name.$prop_name; skipping"
-            continue
-        end
+        isnothing(path) && error(
+            "$type_name.$prop_name: no generated model_$type_name.jl found " *
+            "under any package's src/models -- the generator did not emit " *
+            "this type (renamed? domain config changed?), so its composite " *
+            "default cannot be materialized.",
+        )
         T = getfield(Main, Symbol(type_name))
         ftype = _unwrap(OpenAPI.property_type(T, Symbol(prop_name)))
         rendered = render_default(ftype, json_default)
-        if patch_field_default!(path, prop_name, rendered)
-            patched += 1
+        status = patch_field_default!(path, prop_name, rendered)
+        if !(status.body in OK_STATUSES) || !(status.doc in OK_STATUSES)
+            error(
+                "$type_name.$prop_name in $path: could not account for this " *
+                "field's default. Expected its current text to be either the " *
+                "unpatched literal `nothing` (then rewritten to `$rendered`) " *
+                "or already exactly `$rendered` (idempotent re-run). Got " *
+                "struct-body status=$(status.body), docstring status=" *
+                "$(status.doc). The generator's output shape likely changed, " *
+                "or this file was hand-edited -- this is not safe to paper " *
+                "over with a warning.",
+            )
+        end
+        if status.body === :applied || status.doc === :applied
+            applied += 1
         else
-            @warn "$type_name.$prop_name: expected pattern not found in $path (already patched, or generator output changed shape)"
+            already_ok += 1
         end
     end
-    @info "Materialized $patched / $(length(defaults)) composite defaults"
+    total = applied + already_ok
+    if total != length(defaults)
+        error(
+            "Accounted for $total/$(length(defaults)) composite defaults but " *
+            "expected all of them -- this indicates a bug in this script's " *
+            "own bookkeeping, not a data problem, since every iteration " *
+            "above either errors or increments one of the two counters.",
+        )
+    end
+    @info "Composite defaults: $applied newly applied, $already_ok already " *
+          "correct, $total/$(length(defaults)) accounted for"
     return
 end
 
 function main(repo_root, schema_dir)
     defaults = collect_composite_defaults(schema_dir)
     if isempty(defaults)
-        @info "No composite/array defaults found; nothing to materialize"
-        return
+        error(
+            "No composite/array defaults found in the SiennaSchemas bundles " *
+            "-- expected at least the known TransformerCircuit/Source/" *
+            "*.requirements cases. An empty result here is far more likely " *
+            "to mean the bundled specs are missing or stale than that the " *
+            "defect this script exists to fix has disappeared.",
+        )
     end
 
     load_all_models(repo_root)

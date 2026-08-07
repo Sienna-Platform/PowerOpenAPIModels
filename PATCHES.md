@@ -170,17 +170,23 @@ a Java-side fix will eventually need two changes for, per above).
 - `julia test/validate.jl` passes (packages load, no duplicate types,
   `SystemDocument` still matches its schema, every registered type is an
   `APIModel`).
-- Constructing with no arguments now matches the schema default, e.g.
-  `TransformerCircuit().control_limits == MinMax(0.9, 1.1)`,
-  `Source().active_power_limits == MinMax(0.0, 0.0)`,
-  `SupplyTechnology().requirements == Int64[]`.
+- Constructing with no arguments now matches the schema default at the field
+  level (`MinMax` is a mutable struct, so `==` between two instances is
+  reference identity, not a value comparison — the check has to compare
+  fields, not whole-struct equality):
+  `TransformerCircuit().control_limits.min == 0.9 &&
+  TransformerCircuit().control_limits.max == 1.1`,
+  `Source().active_power_limits.min == 0.0 &&
+  Source().active_power_limits.max == 0.0`,
+  `SupplyTechnology().requirements == Int64[]` (a `Vector` **is** compared
+  by value, so `==` is fine there).
 - `power-openapi-models/scripts/check_cross_language.py --julia
   <this repo>`: the *values* now agree — every field this patch touches
   round-trips to the same MW/kV/etc. numbers pydantic produces. The script
   itself still reports a textual divergence on those fields, because its
   `normalize_default` compares `str(python_default)` against the literal
   Julia source text after `=`: `str({'min': 0.9, 'max': 1.1})` (a Python
-  dict repr) can never equal `"MinMax(; min=0.9, max=1.1)"` (valid Julia; a
+  dict repr) can never equal `"MinMax(; max=1.1, min=0.9)"` (valid Julia; a
   `{...}` dict literal is not — Julia's curly braces are type-parameter
   syntax) as *strings*, no matter how the value is rendered. This is a
   known limitation of that checker's text-based comparison, not of this

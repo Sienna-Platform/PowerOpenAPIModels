@@ -5,6 +5,18 @@ DOMAINS := core operations investments dynamics
 .PHONY: generate generate-docker clean validate schema-version
 
 generate:
+	@# scripts/materialize_defaults.jl and reorganize.jl's unit emission both
+	@# read dist/openapi-<domain>-bundled.json, not the SiennaSchemas source
+	@# files directly, and neither one can tell a stale bundle from a fresh
+	@# one -- a schema edit without a `bundle_specs.py` re-run would
+	@# materialize/emit against yesterday's defaults with no error. --check
+	@# is read-only (recomputes the bundle in memory and diffs it against
+	@# dist/, never writes), which matters because $(SCHEMA_DIR) is mounted
+	@# read-only under generate-docker; rebuilding in place would fail there.
+	@# CI runs the writing form of this same script in SiennaSchemas' own
+	@# validate-schemas.yml, so a real drift is a SiennaSchemas-side bug this
+	@# should surface, not paper over by regenerating a local copy here.
+	cd $(SCHEMA_DIR) && python3 scripts/bundle_specs.py --check
 	@for d in $(DOMAINS); do \
 	  echo "Generating $$d"; \
 	  cd $(SCHEMA_DIR) && openapi-generator generate \
