@@ -3,7 +3,7 @@
 
 
 @doc raw"""RenewablePowerPlant
-Attribute to represent renewable power plants. Point of common coupling (PCC) connections between units are recorded as PlantAssociation rows with role&#x3D;&#39;pcc&#39;.
+Attribute to represent renewable power plants. Point of common coupling (PCC) connections between units are recorded as SupplementalAttributeAssociation rows, with group_index the PCC number.
 
     RenewablePowerPlant(;
         id=nothing,

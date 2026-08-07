@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **`X_c`** | **`Float64`** | Line drop compensation reactance (used when VC_Flag &#x3D; 1). | [default to nothing]
 **`K_c`** | **`Float64`** | Reactive current compensation gain (used when VC_Flag &#x3D; 0). | [default to nothing]
 **`e_lim`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`dbd_pnts`** | [**`*DbdPnts1`**](DbdPnts1.md) |  | [default to nothing]
+**`dbd_pnts`** | [**`*DbdPnts`**](DbdPnts.md) |  | [default to nothing]
 **`Q_lim`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
 **`T_p`** | **`Float64`** | Active power lag time constant in REECB. Used only when PF_Flag &#x3D; 1. Units: s. | [default to nothing]
 **`Q_lim_inner`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]

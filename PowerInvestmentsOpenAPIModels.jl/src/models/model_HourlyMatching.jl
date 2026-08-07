@@ -5,53 +5,44 @@
 @doc raw"""HourlyMatching
 
     HourlyMatching(;
-        name=nothing,
         id=nothing,
+        name=nothing,
         available=nothing,
-        eligible_resources=nothing,
-        eligible_demand=nothing,
     )
 
-    - name::String
-    - id::Int64
-    - available::Bool
-    - eligible_resources::Vector{Int64}
-    - eligible_demand::Vector{Int64}
+    - id::Int64 : ID for individual component.
+    - name::String : Name of the component.
+    - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;).
 """
 Base.@kwdef mutable struct HourlyMatching <: OpenAPI.APIModel
-    name::Union{Nothing, String} = nothing
     id::Union{Nothing, Int64} = nothing
+    name::Union{Nothing, String} = nothing
     available::Union{Nothing, Bool} = nothing
-    eligible_resources::Union{Nothing, Vector{Int64}} = nothing
-    eligible_demand::Union{Nothing, Vector{Int64}} = nothing
 
-    function HourlyMatching(name, id, available, eligible_resources, eligible_demand, )
-        o = new(name, id, available, eligible_resources, eligible_demand, )
+    function HourlyMatching(id, name, available, )
+        o = new(id, name, available, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type HourlyMatching
 
-const _property_types_HourlyMatching = Dict{Symbol,String}(Symbol("name")=>"String", Symbol("id")=>"Int64", Symbol("available")=>"Bool", Symbol("eligible_resources")=>"Vector{Int64}", Symbol("eligible_demand")=>"Vector{Int64}", )
+const _property_types_HourlyMatching = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", )
 OpenAPI.property_type(::Type{ HourlyMatching }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_HourlyMatching[name]))}
 
 function OpenAPI.check_required(o::HourlyMatching)
+    o.id === nothing && (return false)
     o.name === nothing && (return false)
     o.available === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::HourlyMatching)
-    OpenAPI.validate_property(HourlyMatching, Symbol("name"), o.name)
     OpenAPI.validate_property(HourlyMatching, Symbol("id"), o.id)
+    OpenAPI.validate_property(HourlyMatching, Symbol("name"), o.name)
     OpenAPI.validate_property(HourlyMatching, Symbol("available"), o.available)
-    OpenAPI.validate_property(HourlyMatching, Symbol("eligible_resources"), o.eligible_resources)
-    OpenAPI.validate_property(HourlyMatching, Symbol("eligible_demand"), o.eligible_demand)
 end
 
 function OpenAPI.validate_property(::Type{ HourlyMatching }, name::Symbol, val)
-
-
 
 
 

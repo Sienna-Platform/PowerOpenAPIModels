@@ -33,7 +33,7 @@ An interruptible, voltage-dependent ZIP load whose demand can be curtailed throu
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
     - base_power::Float64 : Base power of the load for per unitization. Units: MVA.
-    - operation_cost::LoadCost
+    - operation_cost::InterruptiblePowerLoadOperationCost
     - conformity::String : Indicates whether the specified load is conforming or non-conforming.
     - constant_active_power::Float64 : Constant active power demand (P_P). Units: MW.
     - constant_reactive_power::Float64 : Constant reactive power demand (Q_P). Units: MVAr.
@@ -55,7 +55,7 @@ Base.@kwdef mutable struct InterruptibleStandardLoad <: OpenAPI.APIModel
     available::Union{Nothing, Bool} = nothing
     bus::Union{Nothing, Int64} = nothing
     base_power::Union{Nothing, Float64} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, LoadCost }
+    operation_cost = nothing # spec type: Union{ Nothing, InterruptiblePowerLoadOperationCost }
     conformity::Union{Nothing, String} = "UNDEFINED"
     constant_active_power::Union{Nothing, Float64} = 0.0
     constant_reactive_power::Union{Nothing, Float64} = 0.0
@@ -78,7 +78,7 @@ Base.@kwdef mutable struct InterruptibleStandardLoad <: OpenAPI.APIModel
     end
 end # type InterruptibleStandardLoad
 
-const _property_types_InterruptibleStandardLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"LoadCost", Symbol("conformity")=>"String", Symbol("constant_active_power")=>"Float64", Symbol("constant_reactive_power")=>"Float64", Symbol("impedance_active_power")=>"Float64", Symbol("impedance_reactive_power")=>"Float64", Symbol("current_active_power")=>"Float64", Symbol("current_reactive_power")=>"Float64", Symbol("max_constant_active_power")=>"Float64", Symbol("max_constant_reactive_power")=>"Float64", Symbol("max_impedance_active_power")=>"Float64", Symbol("max_impedance_reactive_power")=>"Float64", Symbol("max_current_active_power")=>"Float64", Symbol("max_current_reactive_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_InterruptibleStandardLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"InterruptiblePowerLoadOperationCost", Symbol("conformity")=>"String", Symbol("constant_active_power")=>"Float64", Symbol("constant_reactive_power")=>"Float64", Symbol("impedance_active_power")=>"Float64", Symbol("impedance_reactive_power")=>"Float64", Symbol("current_active_power")=>"Float64", Symbol("current_reactive_power")=>"Float64", Symbol("max_constant_active_power")=>"Float64", Symbol("max_constant_reactive_power")=>"Float64", Symbol("max_impedance_active_power")=>"Float64", Symbol("max_impedance_reactive_power")=>"Float64", Symbol("max_current_active_power")=>"Float64", Symbol("max_current_reactive_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ InterruptibleStandardLoad }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_InterruptibleStandardLoad[name]))}
 
 function OpenAPI.check_required(o::InterruptibleStandardLoad)

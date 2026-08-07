@@ -47,6 +47,7 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
         reactive_power_limits_from=nothing,
         reactive_power_limits_to=nothing,
         loss=nothing,
+        base_power=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
@@ -55,41 +56,42 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
     - arc::Int64 : An Arc defining this line &#x60;from&#x60; a rectifier bus &#x60;to&#x60; an inverter bus. The rectifier bus must be specified in the &#x60;from&#x60; bus and inverter bus in the &#x60;to&#x60; bus.
     - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: MW.
     - parameter_units::String : Unit basis for this line&#39;s impedance fields (r, rectifier/inverter rc/xc, capacitor reactances, compounding_resistance).
-    - r::Float64 : Series resistance of the DC line. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
+    - r::Float64 : Series resistance of the DC line. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
     - transfer_setpoint::Float64 : Desired set-point of power. If &#x60;power_mode &#x3D; true&#x60; this value is in MW units, and if &#x60;power_mode &#x3D; false&#x60; is in Amperes units. This parameter must not be specified in per-unit. A positive value represents the desired consumed power at the rectifier bus, while a negative value represents the desired power at the inverter bus (i.e. the absolute value of &#x60;transfer_setpoint&#x60; is the generated power at the inverter bus). Units: per power_mode — true: MW, false: A .
-    - dc_voltage_units::String : Unit basis for the DC voltage fields (scheduled_dc_voltage, switch_mode_voltage, min_compounding_voltage). SYSTEM_BASE: per-unit on the bus base voltage. NATURAL_UNITS: kV.
-    - scheduled_dc_voltage::Float64 : Scheduled compounded DC voltage. By default this parameter is the scheduled DC voltage in the inverter bus. This parameter must not be specified in per-unit. Units: kV. Units: per dc_voltage_units — SYSTEM_BASE: pu, NATURAL_UNITS: kV .
+    - dc_voltage_units::String : Unit basis for the DC voltage fields (scheduled_dc_voltage, switch_mode_voltage, min_compounding_voltage).
+    - scheduled_dc_voltage::Float64 : Scheduled compounded DC voltage. By default this parameter is the scheduled DC voltage in the inverter bus. This parameter must not be specified in per-unit. Units: kV. Units: per dc_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu .
     - rectifier_bridges::Int64 : Number of bridges in series in the rectifier side.
     - rectifier_delay_angle_limits::MinMax
-    - rectifier_rc::Float64 : Rectifier commutating transformer resistance per bridge. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
-    - rectifier_xc::Float64 : Rectifier commutating transformer reactance per bridge. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
+    - rectifier_rc::Float64 : Rectifier commutating transformer resistance per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - rectifier_xc::Float64 : Rectifier commutating transformer reactance per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
     - rectifier_base_voltage::Float64 : Rectifier primary base AC voltage, entered in kV. Units: kV.
     - inverter_bridges::Int64 : Number of bridges in series in the inverter side.
     - inverter_extinction_angle_limits::MinMax
-    - inverter_rc::Float64 : Inverter commutating transformer resistance per bridge. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
-    - inverter_xc::Float64 : Inverter commutating transformer reactance per bridge. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
+    - inverter_rc::Float64 : Inverter commutating transformer resistance per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - inverter_xc::Float64 : Inverter commutating transformer reactance per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
     - inverter_base_voltage::Float64 : Inverter primary base AC voltage, entered in kV. Units: kV.
     - power_mode::Bool : Boolean flag to identify if the LCC line is in power mode or current mode. If &#x60;power_mode &#x3D; true&#x60;, setpoint values must be specified in MW, and if &#x60;power_mode &#x3D; false&#x60; setpoint values must be specified in Amperes.
-    - switch_mode_voltage::Float64 : Mode switch DC voltage. This parameter must not be added in per-unit. If LCC line is in power mode control, and DC voltage falls below this value, the line switch to current mode control. Units: kV. Units: per dc_voltage_units — SYSTEM_BASE: pu, NATURAL_UNITS: kV .
-    - compounding_resistance::Float64 : Compounding Resistance. This parameter is for control of the DC voltage in the rectifier or inverter end. For inverter DC voltage control, the parameter is set to zero; for rectifier DC voltage control, the parameter is set to the DC line resistance; otherwise, set to a fraction of the DC line resistance. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
-    - min_compounding_voltage::Float64 : Minimum compounded voltage. This parameter must not be added in per-unit. Only used in constant gamma operation (gamma_min &#x3D; gamma_max), and the AC transformer is used to control the DC voltage. Units: kV. Units: per dc_voltage_units — SYSTEM_BASE: pu, NATURAL_UNITS: kV .
+    - switch_mode_voltage::Float64 : Mode switch DC voltage. This parameter must not be added in per-unit. If LCC line is in power mode control, and DC voltage falls below this value, the line switch to current mode control. Units: kV. Units: per dc_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu .
+    - compounding_resistance::Float64 : Compounding Resistance. This parameter is for control of the DC voltage in the rectifier or inverter end. For inverter DC voltage control, the parameter is set to zero; for rectifier DC voltage control, the parameter is set to the DC line resistance; otherwise, set to a fraction of the DC line resistance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - min_compounding_voltage::Float64 : Minimum compounded voltage. This parameter must not be added in per-unit. Only used in constant gamma operation (gamma_min &#x3D; gamma_max), and the AC transformer is used to control the DC voltage. Units: kV. Units: per dc_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu .
     - rectifier_transformer_ratio::Float64 : Rectifier transformer ratio between the primary and secondary side AC voltages. Units: 1.
     - rectifier_tap_setting::Float64 : Rectifier transformer tap setting. Units: 1.
     - rectifier_tap_limits::MinMax
     - rectifier_tap_step::Float64 : Rectifier transformer tap step value. Units: 1.
     - rectifier_delay_angle::Float64 : Rectifier firing delay angle (alpha). Units: rad.
-    - rectifier_capacitor_reactance::Float64 : Commutating rectifier capacitor reactance magnitude per bridge. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
+    - rectifier_capacitor_reactance::Float64 : Commutating rectifier capacitor reactance magnitude per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
     - inverter_transformer_ratio::Float64 : Inverter transformer ratio between the primary and secondary side AC voltages. Units: 1.
     - inverter_tap_setting::Float64 : Inverter transformer tap setting. Units: 1.
     - inverter_tap_limits::MinMax
     - inverter_tap_step::Float64 : Inverter transformer tap step value. Units: 1.
     - inverter_extinction_angle::Float64 : Inverter extinction angle (gamma). Units: rad.
-    - inverter_capacitor_reactance::Float64 : Commutating inverter capacitor reactance magnitude per bridge. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
+    - inverter_capacitor_reactance::Float64 : Commutating inverter capacitor reactance magnitude per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
     - active_power_limits_from::MinMax
     - active_power_limits_to::MinMax
     - reactive_power_limits_from::MinMax
     - reactive_power_limits_to::MinMax
-    - loss::TwoTerminalLoss1
+    - loss::TwoTerminalLoss
+    - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
 """
 Base.@kwdef mutable struct TwoTerminalLCCLine <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -132,16 +134,17 @@ Base.@kwdef mutable struct TwoTerminalLCCLine <: OpenAPI.APIModel
     active_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_from = nothing # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
-    loss = nothing # spec type: Union{ Nothing, TwoTerminalLoss1 }
+    loss = nothing # spec type: Union{ Nothing, TwoTerminalLoss }
+    base_power::Union{Nothing, Float64} = nothing
 
-    function TwoTerminalLCCLine(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, )
-        o = new(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, )
+    function TwoTerminalLCCLine(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )
+        o = new(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type TwoTerminalLCCLine
 
-const _property_types_TwoTerminalLCCLine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("arc")=>"Int64", Symbol("active_power_flow")=>"Float64", Symbol("parameter_units")=>"String", Symbol("r")=>"Float64", Symbol("transfer_setpoint")=>"Float64", Symbol("dc_voltage_units")=>"String", Symbol("scheduled_dc_voltage")=>"Float64", Symbol("rectifier_bridges")=>"Int64", Symbol("rectifier_delay_angle_limits")=>"MinMax", Symbol("rectifier_rc")=>"Float64", Symbol("rectifier_xc")=>"Float64", Symbol("rectifier_base_voltage")=>"Float64", Symbol("inverter_bridges")=>"Int64", Symbol("inverter_extinction_angle_limits")=>"MinMax", Symbol("inverter_rc")=>"Float64", Symbol("inverter_xc")=>"Float64", Symbol("inverter_base_voltage")=>"Float64", Symbol("power_mode")=>"Bool", Symbol("switch_mode_voltage")=>"Float64", Symbol("compounding_resistance")=>"Float64", Symbol("min_compounding_voltage")=>"Float64", Symbol("rectifier_transformer_ratio")=>"Float64", Symbol("rectifier_tap_setting")=>"Float64", Symbol("rectifier_tap_limits")=>"MinMax", Symbol("rectifier_tap_step")=>"Float64", Symbol("rectifier_delay_angle")=>"Float64", Symbol("rectifier_capacitor_reactance")=>"Float64", Symbol("inverter_transformer_ratio")=>"Float64", Symbol("inverter_tap_setting")=>"Float64", Symbol("inverter_tap_limits")=>"MinMax", Symbol("inverter_tap_step")=>"Float64", Symbol("inverter_extinction_angle")=>"Float64", Symbol("inverter_capacitor_reactance")=>"Float64", Symbol("active_power_limits_from")=>"MinMax", Symbol("active_power_limits_to")=>"MinMax", Symbol("reactive_power_limits_from")=>"MinMax", Symbol("reactive_power_limits_to")=>"MinMax", Symbol("loss")=>"TwoTerminalLoss1", )
+const _property_types_TwoTerminalLCCLine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("arc")=>"Int64", Symbol("active_power_flow")=>"Float64", Symbol("parameter_units")=>"String", Symbol("r")=>"Float64", Symbol("transfer_setpoint")=>"Float64", Symbol("dc_voltage_units")=>"String", Symbol("scheduled_dc_voltage")=>"Float64", Symbol("rectifier_bridges")=>"Int64", Symbol("rectifier_delay_angle_limits")=>"MinMax", Symbol("rectifier_rc")=>"Float64", Symbol("rectifier_xc")=>"Float64", Symbol("rectifier_base_voltage")=>"Float64", Symbol("inverter_bridges")=>"Int64", Symbol("inverter_extinction_angle_limits")=>"MinMax", Symbol("inverter_rc")=>"Float64", Symbol("inverter_xc")=>"Float64", Symbol("inverter_base_voltage")=>"Float64", Symbol("power_mode")=>"Bool", Symbol("switch_mode_voltage")=>"Float64", Symbol("compounding_resistance")=>"Float64", Symbol("min_compounding_voltage")=>"Float64", Symbol("rectifier_transformer_ratio")=>"Float64", Symbol("rectifier_tap_setting")=>"Float64", Symbol("rectifier_tap_limits")=>"MinMax", Symbol("rectifier_tap_step")=>"Float64", Symbol("rectifier_delay_angle")=>"Float64", Symbol("rectifier_capacitor_reactance")=>"Float64", Symbol("inverter_transformer_ratio")=>"Float64", Symbol("inverter_tap_setting")=>"Float64", Symbol("inverter_tap_limits")=>"MinMax", Symbol("inverter_tap_step")=>"Float64", Symbol("inverter_extinction_angle")=>"Float64", Symbol("inverter_capacitor_reactance")=>"Float64", Symbol("active_power_limits_from")=>"MinMax", Symbol("active_power_limits_to")=>"MinMax", Symbol("reactive_power_limits_from")=>"MinMax", Symbol("reactive_power_limits_to")=>"MinMax", Symbol("loss")=>"TwoTerminalLoss", Symbol("base_power")=>"Float64", )
 OpenAPI.property_type(::Type{ TwoTerminalLCCLine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TwoTerminalLCCLine[name]))}
 
 function OpenAPI.check_required(o::TwoTerminalLCCLine)
@@ -163,6 +166,7 @@ function OpenAPI.check_required(o::TwoTerminalLCCLine)
     o.inverter_rc === nothing && (return false)
     o.inverter_xc === nothing && (return false)
     o.inverter_base_voltage === nothing && (return false)
+    o.base_power === nothing && (return false)
     true
 end
 
@@ -208,6 +212,7 @@ function OpenAPI.validate_properties(o::TwoTerminalLCCLine)
     OpenAPI.validate_property(TwoTerminalLCCLine, Symbol("reactive_power_limits_from"), o.reactive_power_limits_from)
     OpenAPI.validate_property(TwoTerminalLCCLine, Symbol("reactive_power_limits_to"), o.reactive_power_limits_to)
     OpenAPI.validate_property(TwoTerminalLCCLine, Symbol("loss"), o.loss)
+    OpenAPI.validate_property(TwoTerminalLCCLine, Symbol("base_power"), o.base_power)
 end
 
 function OpenAPI.validate_property(::Type{ TwoTerminalLCCLine }, name::Symbol, val)
@@ -218,15 +223,16 @@ function OpenAPI.validate_property(::Type{ TwoTerminalLCCLine }, name::Symbol, v
 
 
     if name === Symbol("parameter_units")
-        OpenAPI.validate_param(name, "TwoTerminalLCCLine", :enum, val, ["SYSTEM_BASE", "NATURAL_UNITS"])
+        OpenAPI.validate_param(name, "TwoTerminalLCCLine", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
     end
 
 
 
 
     if name === Symbol("dc_voltage_units")
-        OpenAPI.validate_param(name, "TwoTerminalLCCLine", :enum, val, ["SYSTEM_BASE", "NATURAL_UNITS"])
+        OpenAPI.validate_param(name, "TwoTerminalLCCLine", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
     end
+
 
 
 

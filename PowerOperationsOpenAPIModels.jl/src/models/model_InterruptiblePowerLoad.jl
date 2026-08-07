@@ -29,7 +29,7 @@ A static power load that can be compensated for temporary or continuous interrup
     - max_active_power::Float64 : Maximum active power that this load can demand. Units: MW.
     - max_reactive_power::Float64 : Maximum reactive power that this load can demand. Units: MVAr.
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
-    - operation_cost::LoadCost
+    - operation_cost::InterruptiblePowerLoadOperationCost
     - conformity::String : Indicates whether the specified load is conforming or non-conforming.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
@@ -43,7 +43,7 @@ Base.@kwdef mutable struct InterruptiblePowerLoad <: OpenAPI.APIModel
     max_active_power::Union{Nothing, Float64} = nothing
     max_reactive_power::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, LoadCost }
+    operation_cost = nothing # spec type: Union{ Nothing, InterruptiblePowerLoadOperationCost }
     conformity::Union{Nothing, String} = "UNDEFINED"
     dynamic_injector::Union{Nothing, Int64} = nothing
 
@@ -54,7 +54,7 @@ Base.@kwdef mutable struct InterruptiblePowerLoad <: OpenAPI.APIModel
     end
 end # type InterruptiblePowerLoad
 
-const _property_types_InterruptiblePowerLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("max_active_power")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"LoadCost", Symbol("conformity")=>"String", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_InterruptiblePowerLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("max_active_power")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"InterruptiblePowerLoadOperationCost", Symbol("conformity")=>"String", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ InterruptiblePowerLoad }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_InterruptiblePowerLoad[name]))}
 
 function OpenAPI.check_required(o::InterruptiblePowerLoad)

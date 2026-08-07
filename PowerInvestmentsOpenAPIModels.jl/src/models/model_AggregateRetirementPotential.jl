@@ -5,33 +5,38 @@
 @doc raw"""AggregateRetirementPotential
 
     AggregateRetirementPotential(;
+        id=nothing,
         retirement_potential=0.0,
     )
 
-    - retirement_potential::Float64
+    - id::Int64 : ID for individual component.
+    - retirement_potential::Float64 : Amount of pre-existing capacity for a technology that is eligible for retirement. Units: MW.
 """
 Base.@kwdef mutable struct AggregateRetirementPotential <: OpenAPI.APIModel
+    id::Union{Nothing, Int64} = nothing
     retirement_potential::Union{Nothing, Float64} = 0.0
 
-    function AggregateRetirementPotential(retirement_potential, )
-        o = new(retirement_potential, )
+    function AggregateRetirementPotential(id, retirement_potential, )
+        o = new(id, retirement_potential, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type AggregateRetirementPotential
 
-const _property_types_AggregateRetirementPotential = Dict{Symbol,String}(Symbol("retirement_potential")=>"Float64", )
+const _property_types_AggregateRetirementPotential = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("retirement_potential")=>"Float64", )
 OpenAPI.property_type(::Type{ AggregateRetirementPotential }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_AggregateRetirementPotential[name]))}
 
 function OpenAPI.check_required(o::AggregateRetirementPotential)
-    o.retirement_potential === nothing && (return false)
+    o.id === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::AggregateRetirementPotential)
+    OpenAPI.validate_property(AggregateRetirementPotential, Symbol("id"), o.id)
     OpenAPI.validate_property(AggregateRetirementPotential, Symbol("retirement_potential"), o.retirement_potential)
 end
 
 function OpenAPI.validate_property(::Type{ AggregateRetirementPotential }, name::Symbol, val)
+
 
 end

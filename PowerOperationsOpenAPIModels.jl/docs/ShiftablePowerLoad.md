@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **`max_reactive_power`** | **`Float64`** | Maximum reactive power that this load can demand. Units: MVAr. | [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [default to nothing]
 **`load_balance_time_horizon`** | **`Int64`** | Number of time periods over which load must be balanced. | [default to nothing]
-**`operation_cost`** | [**`*LoadCost`**](LoadCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*InterruptiblePowerLoadOperationCost`**](InterruptiblePowerLoadOperationCost.md) |  | [default to nothing]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 
 

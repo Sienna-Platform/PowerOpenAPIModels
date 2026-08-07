@@ -13,6 +13,7 @@ An energy storage device, modeled as a generic energy reservoir.  This is suitab
         prime_mover_type=nothing,
         storage_technology_type=nothing,
         storage_capacity=nothing,
+        energy_units="MWH",
         storage_level_limits=nothing,
         initial_storage_capacity_level=nothing,
         rating=nothing,
@@ -39,7 +40,8 @@ An energy storage device, modeled as a generic energy reservoir.  This is suitab
     - bus::Int64 : ID of the bus that this component is connected to.
     - prime_mover_type::String : Prime mover technology according to EIA 923.
     - storage_technology_type::String : Storage Technology Complementary to EIA 923.
-    - storage_capacity::Float64 : Maximum storage capacity (can be in units of, e.g., MWh for batteries or liters for hydrogen). When in MWh, this value divided by base_power gives an approximate duration in hours, assuming unity power factor. Units: MWh.
+    - storage_capacity::Float64 : Maximum storage capacity (can be in units of, e.g., MWh for batteries or liters for hydrogen). Divided by base_power this gives an approximate duration, assuming unity power factor: in hours under MWH, in minutes under MWMIN. Units: per energy_units — MWH: MWh, MWMIN: MWmin .
+    - energy_units::String : Unit basis for &#x60;storage_capacity&#x60;. MWH is the default interchange form; MWMIN records the same energy on the minutes basis used by operational durations.
     - storage_level_limits::MinMax
     - initial_storage_capacity_level::Float64 : Initial storage capacity level as a ratio [0, 1.0] of &#x60;storage_capacity&#x60;. Units: 1.
     - rating::Float64 : Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: MVA.
@@ -50,12 +52,12 @@ An energy storage device, modeled as a generic energy reservoir.  This is suitab
     - reactive_power::Float64 : Initial reactive power set point of the unit. Units: MVAr.
     - reactive_power_limits::MinMax
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
-    - operation_cost::StorageCost
+    - operation_cost::EnergyReservoirStorageOperationCost
     - conversion_factor::Float64 : Conversion factor of &#x60;storage_capacity&#x60; to MWh, if different than 1.0. For example, X MWh/liter hydrogen. Units: 1.
     - storage_target::Float64 : Storage target at the end of simulation as ratio of storage capacity. Units: 1.
     - cycle_limits::Int64 : Storage Maximum number of cycles per year. Units: 1.
     - ramp_limits::UpDown
-    - self_discharge::Float64 : Self-discharge (leakage loss) as a fraction of the stored energy lost per hour (pu/hr of storage_capacity), modeled as E[t] &#x3D; (1 - self_discharge * dt) * E[t-1]. Units: 1.
+    - self_discharge::Float64 : Self-discharge (leakage loss) as a fraction of the stored energy lost per minute (pu/min of storage_capacity), modeled as E[t] &#x3D; (1 - self_discharge * dt) * E[t-1]; dt must be on the same minutes basis. Units: 1/min.
     - standing_loss::Float64 : Constant standing-loss power drawn by the storage system. Reduces the effective charging power (p_in - standing_loss) and increases the power drawn from the storage when discharging (p_out + standing_loss). Units: MW.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
@@ -67,6 +69,7 @@ Base.@kwdef mutable struct EnergyReservoirStorage <: OpenAPI.APIModel
     prime_mover_type::Union{Nothing, String} = nothing
     storage_technology_type::Union{Nothing, String} = nothing
     storage_capacity::Union{Nothing, Float64} = nothing
+    energy_units::Union{Nothing, String} = "MWH"
     storage_level_limits = nothing # spec type: Union{ Nothing, MinMax }
     initial_storage_capacity_level::Union{Nothing, Float64} = nothing
     rating::Union{Nothing, Float64} = nothing
@@ -77,7 +80,7 @@ Base.@kwdef mutable struct EnergyReservoirStorage <: OpenAPI.APIModel
     reactive_power::Union{Nothing, Float64} = nothing
     reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     base_power::Union{Nothing, Float64} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, StorageCost }
+    operation_cost = nothing # spec type: Union{ Nothing, EnergyReservoirStorageOperationCost }
     conversion_factor::Union{Nothing, Float64} = 1.0
     storage_target::Union{Nothing, Float64} = 0.0
     cycle_limits::Union{Nothing, Int64} = 10000
@@ -86,14 +89,14 @@ Base.@kwdef mutable struct EnergyReservoirStorage <: OpenAPI.APIModel
     standing_loss::Union{Nothing, Float64} = 0.0
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function EnergyReservoirStorage(id, name, available, bus, prime_mover_type, storage_technology_type, storage_capacity, storage_level_limits, initial_storage_capacity_level, rating, active_power, input_active_power_limits, output_active_power_limits, efficiency, reactive_power, reactive_power_limits, base_power, operation_cost, conversion_factor, storage_target, cycle_limits, ramp_limits, self_discharge, standing_loss, dynamic_injector, )
-        o = new(id, name, available, bus, prime_mover_type, storage_technology_type, storage_capacity, storage_level_limits, initial_storage_capacity_level, rating, active_power, input_active_power_limits, output_active_power_limits, efficiency, reactive_power, reactive_power_limits, base_power, operation_cost, conversion_factor, storage_target, cycle_limits, ramp_limits, self_discharge, standing_loss, dynamic_injector, )
+    function EnergyReservoirStorage(id, name, available, bus, prime_mover_type, storage_technology_type, storage_capacity, energy_units, storage_level_limits, initial_storage_capacity_level, rating, active_power, input_active_power_limits, output_active_power_limits, efficiency, reactive_power, reactive_power_limits, base_power, operation_cost, conversion_factor, storage_target, cycle_limits, ramp_limits, self_discharge, standing_loss, dynamic_injector, )
+        o = new(id, name, available, bus, prime_mover_type, storage_technology_type, storage_capacity, energy_units, storage_level_limits, initial_storage_capacity_level, rating, active_power, input_active_power_limits, output_active_power_limits, efficiency, reactive_power, reactive_power_limits, base_power, operation_cost, conversion_factor, storage_target, cycle_limits, ramp_limits, self_discharge, standing_loss, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type EnergyReservoirStorage
 
-const _property_types_EnergyReservoirStorage = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("prime_mover_type")=>"String", Symbol("storage_technology_type")=>"String", Symbol("storage_capacity")=>"Float64", Symbol("storage_level_limits")=>"MinMax", Symbol("initial_storage_capacity_level")=>"Float64", Symbol("rating")=>"Float64", Symbol("active_power")=>"Float64", Symbol("input_active_power_limits")=>"MinMax", Symbol("output_active_power_limits")=>"MinMax", Symbol("efficiency")=>"InOut", Symbol("reactive_power")=>"Float64", Symbol("reactive_power_limits")=>"MinMax", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"StorageCost", Symbol("conversion_factor")=>"Float64", Symbol("storage_target")=>"Float64", Symbol("cycle_limits")=>"Int64", Symbol("ramp_limits")=>"UpDown", Symbol("self_discharge")=>"Float64", Symbol("standing_loss")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_EnergyReservoirStorage = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("prime_mover_type")=>"String", Symbol("storage_technology_type")=>"String", Symbol("storage_capacity")=>"Float64", Symbol("energy_units")=>"String", Symbol("storage_level_limits")=>"MinMax", Symbol("initial_storage_capacity_level")=>"Float64", Symbol("rating")=>"Float64", Symbol("active_power")=>"Float64", Symbol("input_active_power_limits")=>"MinMax", Symbol("output_active_power_limits")=>"MinMax", Symbol("efficiency")=>"InOut", Symbol("reactive_power")=>"Float64", Symbol("reactive_power_limits")=>"MinMax", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"EnergyReservoirStorageOperationCost", Symbol("conversion_factor")=>"Float64", Symbol("storage_target")=>"Float64", Symbol("cycle_limits")=>"Int64", Symbol("ramp_limits")=>"UpDown", Symbol("self_discharge")=>"Float64", Symbol("standing_loss")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ EnergyReservoirStorage }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_EnergyReservoirStorage[name]))}
 
 function OpenAPI.check_required(o::EnergyReservoirStorage)
@@ -125,6 +128,7 @@ function OpenAPI.validate_properties(o::EnergyReservoirStorage)
     OpenAPI.validate_property(EnergyReservoirStorage, Symbol("prime_mover_type"), o.prime_mover_type)
     OpenAPI.validate_property(EnergyReservoirStorage, Symbol("storage_technology_type"), o.storage_technology_type)
     OpenAPI.validate_property(EnergyReservoirStorage, Symbol("storage_capacity"), o.storage_capacity)
+    OpenAPI.validate_property(EnergyReservoirStorage, Symbol("energy_units"), o.energy_units)
     OpenAPI.validate_property(EnergyReservoirStorage, Symbol("storage_level_limits"), o.storage_level_limits)
     OpenAPI.validate_property(EnergyReservoirStorage, Symbol("initial_storage_capacity_level"), o.initial_storage_capacity_level)
     OpenAPI.validate_property(EnergyReservoirStorage, Symbol("rating"), o.rating)
@@ -160,6 +164,11 @@ function OpenAPI.validate_property(::Type{ EnergyReservoirStorage }, name::Symbo
         OpenAPI.validate_param(name, "EnergyReservoirStorage", :enum, val, ["PTES", "LIB", "LAB", "FLWB", "SIB", "ZIB", "HGS", "LAES", "OTHER_CHEM", "OTHER_MECH", "OTHER_THERM"])
     end
 
+
+
+    if name === Symbol("energy_units")
+        OpenAPI.validate_param(name, "EnergyReservoirStorage", :enum, val, ["MWH", "MWMIN"])
+    end
 
 
 

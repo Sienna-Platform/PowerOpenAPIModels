@@ -3,7 +3,7 @@
 
 
 @doc raw"""ThermalPowerPlant
-Attribute to represent ThermalGen power plants with synchronous generation. Shared shafts between units are recorded as PlantAssociation rows with role&#x3D;&#39;shaft&#39;.
+Attribute to represent ThermalGen power plants with synchronous generation. Shared shafts between units are recorded as SupplementalAttributeAssociation rows, with group_index the shaft number.
 
     ThermalPowerPlant(;
         id=nothing,

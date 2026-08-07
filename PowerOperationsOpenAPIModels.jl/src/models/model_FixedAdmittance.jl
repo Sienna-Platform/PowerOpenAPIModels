@@ -68,7 +68,7 @@ function OpenAPI.validate_property(::Type{ FixedAdmittance }, name::Symbol, val)
 
 
     if name === Symbol("admittance_units")
-        OpenAPI.validate_param(name, "FixedAdmittance", :enum, val, ["SYSTEM_BASE", "NATURAL_UNITS", "DEVICE_MVAR"])
+        OpenAPI.validate_param(name, "FixedAdmittance", :enum, val, ["NATURAL_UNITS", "DEVICE_MVAR"])
     end
 
 

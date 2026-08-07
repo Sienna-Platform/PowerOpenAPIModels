@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
 **`peak_active_power`** | **`Float64`** | Peak active power in the zone. Units: MW. | [default to nothing]
 **`peak_reactive_power`** | **`Float64`** | Peak reactive power in the zone. Units: MVAr. | [default to nothing]
+**`base_power`** | **`Float64`** | System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

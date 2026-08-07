@@ -21,9 +21,9 @@ Name | Type | Description | Notes
 **`time_limits`** | [**`*UpDown`**](UpDown.md) |  | [optional] [default to nothing]
 **`start_time_limits`** | [**`*StartUpStages`**](StartUpStages.md) |  | [optional] [default to nothing]
 **`start_types`** | **`Int64`** | Number of start-up based on turbine temperature, where &#x60;1&#x60; &#x3D; *hot*, &#x60;2&#x60; &#x3D; *warm*, and &#x60;3&#x60; &#x3D; *cold*. | [default to nothing]
-**`operation_cost`** | [**`*ThermalGenerationCost`**](ThermalGenerationCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*ThermalMultiStartOperationCost`**](ThermalMultiStartOperationCost.md) |  | [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [default to nothing]
-**`time_at_status`** | **`Float64`** | Time the generator has been on or off, as indicated by &#x60;status&#x60;. Units: h. | [optional] [default to 10000.0]
+**`time_at_status`** | **`Float64`** | Time the generator has been on or off, as indicated by &#x60;status&#x60;. Units: min. | [optional] [default to 600000.0]
 **`must_run`** | **`Bool`** | Set to &#x60;true&#x60; if the unit is must run. | [optional] [default to false]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 

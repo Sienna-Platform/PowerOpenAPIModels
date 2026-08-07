@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **`from_area`** | **`Int64`** | Area from which the power is extracted. | [default to nothing]
 **`to_area`** | **`Int64`** | Area to which the power is injected. | [default to nothing]
 **`flow_limits`** | [**`*FromToToFrom`**](FromToToFrom.md) |  | [default to nothing]
+**`base_power`** | **`Float64`** | System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

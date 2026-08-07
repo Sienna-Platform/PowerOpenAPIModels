@@ -7,13 +7,15 @@
     FuelCurve(;
         fuel_cost=nothing,
         power_units=nothing,
+        startup_fuel_offtake=nothing,
         value_curve=nothing,
         variable_cost_type="FUEL",
         vom_cost=nothing,
     )
 
     - fuel_cost::FuelCurveFuelCost
-    - power_units::String
+    - power_units::String : Unit basis curve power values are stored in. DEVICE_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as DEVICE_BASE.
+    - startup_fuel_offtake::InputOutputCurve
     - value_curve::ValueCurve
     - variable_cost_type::String
     - vom_cost::InputOutputCurve
@@ -21,18 +23,19 @@
 Base.@kwdef mutable struct FuelCurve <: OpenAPI.APIModel
     fuel_cost = nothing # spec type: Union{ Nothing, FuelCurveFuelCost }
     power_units::Union{Nothing, String} = nothing
+    startup_fuel_offtake = nothing # spec type: Union{ Nothing, InputOutputCurve }
     value_curve = nothing # spec type: Union{ Nothing, ValueCurve }
     variable_cost_type::Union{Nothing, String} = "FUEL"
     vom_cost = nothing # spec type: Union{ Nothing, InputOutputCurve }
 
-    function FuelCurve(fuel_cost, power_units, value_curve, variable_cost_type, vom_cost, )
-        o = new(fuel_cost, power_units, value_curve, variable_cost_type, vom_cost, )
+    function FuelCurve(fuel_cost, power_units, startup_fuel_offtake, value_curve, variable_cost_type, vom_cost, )
+        o = new(fuel_cost, power_units, startup_fuel_offtake, value_curve, variable_cost_type, vom_cost, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type FuelCurve
 
-const _property_types_FuelCurve = Dict{Symbol,String}(Symbol("fuel_cost")=>"FuelCurveFuelCost", Symbol("power_units")=>"String", Symbol("value_curve")=>"ValueCurve", Symbol("variable_cost_type")=>"String", Symbol("vom_cost")=>"InputOutputCurve", )
+const _property_types_FuelCurve = Dict{Symbol,String}(Symbol("fuel_cost")=>"FuelCurveFuelCost", Symbol("power_units")=>"String", Symbol("startup_fuel_offtake")=>"InputOutputCurve", Symbol("value_curve")=>"ValueCurve", Symbol("variable_cost_type")=>"String", Symbol("vom_cost")=>"InputOutputCurve", )
 OpenAPI.property_type(::Type{ FuelCurve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FuelCurve[name]))}
 
 function OpenAPI.check_required(o::FuelCurve)
@@ -47,6 +50,7 @@ end
 function OpenAPI.validate_properties(o::FuelCurve)
     OpenAPI.validate_property(FuelCurve, Symbol("fuel_cost"), o.fuel_cost)
     OpenAPI.validate_property(FuelCurve, Symbol("power_units"), o.power_units)
+    OpenAPI.validate_property(FuelCurve, Symbol("startup_fuel_offtake"), o.startup_fuel_offtake)
     OpenAPI.validate_property(FuelCurve, Symbol("value_curve"), o.value_curve)
     OpenAPI.validate_property(FuelCurve, Symbol("variable_cost_type"), o.variable_cost_type)
     OpenAPI.validate_property(FuelCurve, Symbol("vom_cost"), o.vom_cost)
@@ -56,8 +60,9 @@ function OpenAPI.validate_property(::Type{ FuelCurve }, name::Symbol, val)
 
 
     if name === Symbol("power_units")
-        OpenAPI.validate_param(name, "FuelCurve", :enum, val, ["SYSTEM_BASE", "DEVICE_BASE", "NATURAL_UNITS"])
+        OpenAPI.validate_param(name, "FuelCurve", :enum, val, ["DEVICE_BASE", "NATURAL_UNITS"])
     end
+
 
 
 

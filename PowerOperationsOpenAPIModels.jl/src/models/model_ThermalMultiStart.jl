@@ -25,7 +25,7 @@ A thermal generator, such as a fossil fuel or nuclear generator, that can start-
         start_types=nothing,
         operation_cost=nothing,
         base_power=nothing,
-        time_at_status=10000.0,
+        time_at_status=600000.0,
         must_run=false,
         dynamic_injector=nothing,
     )
@@ -47,9 +47,9 @@ A thermal generator, such as a fossil fuel or nuclear generator, that can start-
     - time_limits::UpDown
     - start_time_limits::StartUpStages
     - start_types::Int64 : Number of start-up based on turbine temperature, where &#x60;1&#x60; &#x3D; *hot*, &#x60;2&#x60; &#x3D; *warm*, and &#x60;3&#x60; &#x3D; *cold*.
-    - operation_cost::ThermalGenerationCost
+    - operation_cost::ThermalMultiStartOperationCost
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
-    - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. Units: h.
+    - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. Units: min.
     - must_run::Bool : Set to &#x60;true&#x60; if the unit is must run.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
@@ -71,9 +71,9 @@ Base.@kwdef mutable struct ThermalMultiStart <: OpenAPI.APIModel
     time_limits = nothing # spec type: Union{ Nothing, UpDown }
     start_time_limits = nothing # spec type: Union{ Nothing, StartUpStages }
     start_types::Union{Nothing, Int64} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, ThermalGenerationCost }
+    operation_cost = nothing # spec type: Union{ Nothing, ThermalMultiStartOperationCost }
     base_power::Union{Nothing, Float64} = nothing
-    time_at_status::Union{Nothing, Float64} = 10000.0
+    time_at_status::Union{Nothing, Float64} = 600000.0
     must_run::Union{Nothing, Bool} = false
     dynamic_injector::Union{Nothing, Int64} = nothing
 
@@ -84,7 +84,7 @@ Base.@kwdef mutable struct ThermalMultiStart <: OpenAPI.APIModel
     end
 end # type ThermalMultiStart
 
-const _property_types_ThermalMultiStart = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("status")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("prime_mover_type")=>"String", Symbol("fuel")=>"String", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power_limits")=>"MinMax", Symbol("ramp_limits")=>"UpDown", Symbol("power_trajectory")=>"StartUpShutDown", Symbol("time_limits")=>"UpDown", Symbol("start_time_limits")=>"StartUpStages", Symbol("start_types")=>"Int64", Symbol("operation_cost")=>"ThermalGenerationCost", Symbol("base_power")=>"Float64", Symbol("time_at_status")=>"Float64", Symbol("must_run")=>"Bool", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_ThermalMultiStart = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("status")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("prime_mover_type")=>"String", Symbol("fuel")=>"String", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power_limits")=>"MinMax", Symbol("ramp_limits")=>"UpDown", Symbol("power_trajectory")=>"StartUpShutDown", Symbol("time_limits")=>"UpDown", Symbol("start_time_limits")=>"StartUpStages", Symbol("start_types")=>"Int64", Symbol("operation_cost")=>"ThermalMultiStartOperationCost", Symbol("base_power")=>"Float64", Symbol("time_at_status")=>"Float64", Symbol("must_run")=>"Bool", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ ThermalMultiStart }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ThermalMultiStart[name]))}
 
 function OpenAPI.check_required(o::ThermalMultiStart)

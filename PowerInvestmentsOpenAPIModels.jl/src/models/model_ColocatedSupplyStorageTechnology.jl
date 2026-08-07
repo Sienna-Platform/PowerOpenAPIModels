@@ -5,14 +5,12 @@
 @doc raw"""ColocatedSupplyStorageTechnology
 
     ColocatedSupplyStorageTechnology(;
-        name=nothing,
         id=nothing,
+        name=nothing,
+        available=nothing,
         power_systems_type=nothing,
-        base_year=nothing,
         region=nothing,
         financial_data=nothing,
-        available=nothing,
-        balancing_topology=nothing,
         capital_costs_solar=nothing,
         operation_costs_solar=nothing,
         capacity_limits_solar=nothing,
@@ -37,24 +35,23 @@
         operation_costs_inverter=nothing,
         inverter_efficiency=nothing,
         inverter_supply_ratio=nothing,
+        requirements=nothing,
     )
 
-    - name::String
-    - id::Int64
-    - power_systems_type::String
-    - base_year::Int64
-    - region::Vector{Int64}
+    - id::Int64 : ID for individual component.
+    - name::String : Name of the component.
+    - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;).
+    - power_systems_type::String : Corresponding type to be used in PCM modeling.
+    - region::Vector{Int64} : Location where the component applies. Can be a zone or node.
     - financial_data::TechnologyFinancialData
-    - available::Bool
-    - balancing_topology::String
     - capital_costs_solar::ValueCurve
     - operation_costs_solar::RenewableGenerationCost
     - capacity_limits_solar::MinMax
-    - lifetime_solar::Int64 : Units: yr.
+    - lifetime_solar::Int64 : Maximum number of years the solar component can be active once installed. Units: yr.
     - capital_costs_wind::ValueCurve
     - operation_costs_wind::RenewableGenerationCost
     - capacity_limits_wind::MinMax
-    - lifetime_wind::Int64 : Units: yr.
+    - lifetime_wind::Int64 : Maximum number of years the wind component can be active once installed. Units: yr.
     - capital_costs_energy::ValueCurve
     - capital_costs_power::ValueCurve
     - operation_costs_energy::StorageCost
@@ -63,24 +60,23 @@
     - capacity_energy_limits::MinMax
     - duration_limits::MinMax
     - efficiency_storage::InOut
-    - losses_storage::Float64 : Units: 1.
-    - lifetime_storage::Int64 : Units: yr.
-    - max_inverter_capacity::Float64 : Units: MW.
-    - min_inverter_capacity::Float64 : Units: MW.
+    - losses_storage::Float64 : Self-discharge of storage (fraction of stored energy per hour). Units: 1.
+    - lifetime_storage::Int64 : Maximum number of years the storage component can be active once installed. Units: yr.
+    - max_inverter_capacity::Float64 : Limit on inverter capacity. Units: MW.
+    - min_inverter_capacity::Float64 : Minimum inverter capacity. Units: MW.
     - capital_costs_inverter::ValueCurve
     - operation_costs_inverter::ProductionVariableCostCurve
-    - inverter_efficiency::Float64 : Units: 1.
-    - inverter_supply_ratio::Float64
+    - inverter_efficiency::Float64 : Efficiency of AC to DC conversion of inverter. Units: 1.
+    - inverter_supply_ratio::Float64 : Ratio of generation capacity to grid connection capacity. Units: 1.
+    - requirements::Vector{Int64} : List of requirement IDs associated with the component.
 """
 Base.@kwdef mutable struct ColocatedSupplyStorageTechnology <: OpenAPI.APIModel
-    name::Union{Nothing, String} = nothing
     id::Union{Nothing, Int64} = nothing
+    name::Union{Nothing, String} = nothing
+    available::Union{Nothing, Bool} = nothing
     power_systems_type::Union{Nothing, String} = nothing
-    base_year::Union{Nothing, Int64} = nothing
     region::Union{Nothing, Vector{Int64}} = nothing
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
-    available::Union{Nothing, Bool} = nothing
-    balancing_topology::Union{Nothing, String} = nothing
     capital_costs_solar = nothing # spec type: Union{ Nothing, ValueCurve }
     operation_costs_solar = nothing # spec type: Union{ Nothing, RenewableGenerationCost }
     capacity_limits_solar = nothing # spec type: Union{ Nothing, MinMax }
@@ -105,33 +101,37 @@ Base.@kwdef mutable struct ColocatedSupplyStorageTechnology <: OpenAPI.APIModel
     operation_costs_inverter = nothing # spec type: Union{ Nothing, ProductionVariableCostCurve }
     inverter_efficiency::Union{Nothing, Float64} = nothing
     inverter_supply_ratio::Union{Nothing, Float64} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = nothing
 
-    function ColocatedSupplyStorageTechnology(name, id, power_systems_type, base_year, region, financial_data, available, balancing_topology, capital_costs_solar, operation_costs_solar, capacity_limits_solar, lifetime_solar, capital_costs_wind, operation_costs_wind, capacity_limits_wind, lifetime_wind, capital_costs_energy, capital_costs_power, operation_costs_energy, operation_costs_power, capacity_power_limits, capacity_energy_limits, duration_limits, efficiency_storage, losses_storage, lifetime_storage, max_inverter_capacity, min_inverter_capacity, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, )
-        o = new(name, id, power_systems_type, base_year, region, financial_data, available, balancing_topology, capital_costs_solar, operation_costs_solar, capacity_limits_solar, lifetime_solar, capital_costs_wind, operation_costs_wind, capacity_limits_wind, lifetime_wind, capital_costs_energy, capital_costs_power, operation_costs_energy, operation_costs_power, capacity_power_limits, capacity_energy_limits, duration_limits, efficiency_storage, losses_storage, lifetime_storage, max_inverter_capacity, min_inverter_capacity, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, )
+    function ColocatedSupplyStorageTechnology(id, name, available, power_systems_type, region, financial_data, capital_costs_solar, operation_costs_solar, capacity_limits_solar, lifetime_solar, capital_costs_wind, operation_costs_wind, capacity_limits_wind, lifetime_wind, capital_costs_energy, capital_costs_power, operation_costs_energy, operation_costs_power, capacity_power_limits, capacity_energy_limits, duration_limits, efficiency_storage, losses_storage, lifetime_storage, max_inverter_capacity, min_inverter_capacity, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, requirements, )
+        o = new(id, name, available, power_systems_type, region, financial_data, capital_costs_solar, operation_costs_solar, capacity_limits_solar, lifetime_solar, capital_costs_wind, operation_costs_wind, capacity_limits_wind, lifetime_wind, capital_costs_energy, capital_costs_power, operation_costs_energy, operation_costs_power, capacity_power_limits, capacity_energy_limits, duration_limits, efficiency_storage, losses_storage, lifetime_storage, max_inverter_capacity, min_inverter_capacity, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, requirements, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type ColocatedSupplyStorageTechnology
 
-const _property_types_ColocatedSupplyStorageTechnology = Dict{Symbol,String}(Symbol("name")=>"String", Symbol("id")=>"Int64", Symbol("power_systems_type")=>"String", Symbol("base_year")=>"Int64", Symbol("region")=>"Vector{Int64}", Symbol("financial_data")=>"TechnologyFinancialData", Symbol("available")=>"Bool", Symbol("balancing_topology")=>"String", Symbol("capital_costs_solar")=>"ValueCurve", Symbol("operation_costs_solar")=>"RenewableGenerationCost", Symbol("capacity_limits_solar")=>"MinMax", Symbol("lifetime_solar")=>"Int64", Symbol("capital_costs_wind")=>"ValueCurve", Symbol("operation_costs_wind")=>"RenewableGenerationCost", Symbol("capacity_limits_wind")=>"MinMax", Symbol("lifetime_wind")=>"Int64", Symbol("capital_costs_energy")=>"ValueCurve", Symbol("capital_costs_power")=>"ValueCurve", Symbol("operation_costs_energy")=>"StorageCost", Symbol("operation_costs_power")=>"StorageCost", Symbol("capacity_power_limits")=>"MinMax", Symbol("capacity_energy_limits")=>"MinMax", Symbol("duration_limits")=>"MinMax", Symbol("efficiency_storage")=>"InOut", Symbol("losses_storage")=>"Float64", Symbol("lifetime_storage")=>"Int64", Symbol("max_inverter_capacity")=>"Float64", Symbol("min_inverter_capacity")=>"Float64", Symbol("capital_costs_inverter")=>"ValueCurve", Symbol("operation_costs_inverter")=>"ProductionVariableCostCurve", Symbol("inverter_efficiency")=>"Float64", Symbol("inverter_supply_ratio")=>"Float64", )
+const _property_types_ColocatedSupplyStorageTechnology = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("power_systems_type")=>"String", Symbol("region")=>"Vector{Int64}", Symbol("financial_data")=>"TechnologyFinancialData", Symbol("capital_costs_solar")=>"ValueCurve", Symbol("operation_costs_solar")=>"RenewableGenerationCost", Symbol("capacity_limits_solar")=>"MinMax", Symbol("lifetime_solar")=>"Int64", Symbol("capital_costs_wind")=>"ValueCurve", Symbol("operation_costs_wind")=>"RenewableGenerationCost", Symbol("capacity_limits_wind")=>"MinMax", Symbol("lifetime_wind")=>"Int64", Symbol("capital_costs_energy")=>"ValueCurve", Symbol("capital_costs_power")=>"ValueCurve", Symbol("operation_costs_energy")=>"StorageCost", Symbol("operation_costs_power")=>"StorageCost", Symbol("capacity_power_limits")=>"MinMax", Symbol("capacity_energy_limits")=>"MinMax", Symbol("duration_limits")=>"MinMax", Symbol("efficiency_storage")=>"InOut", Symbol("losses_storage")=>"Float64", Symbol("lifetime_storage")=>"Int64", Symbol("max_inverter_capacity")=>"Float64", Symbol("min_inverter_capacity")=>"Float64", Symbol("capital_costs_inverter")=>"ValueCurve", Symbol("operation_costs_inverter")=>"ProductionVariableCostCurve", Symbol("inverter_efficiency")=>"Float64", Symbol("inverter_supply_ratio")=>"Float64", Symbol("requirements")=>"Vector{Int64}", )
 OpenAPI.property_type(::Type{ ColocatedSupplyStorageTechnology }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ColocatedSupplyStorageTechnology[name]))}
 
 function OpenAPI.check_required(o::ColocatedSupplyStorageTechnology)
+    o.id === nothing && (return false)
     o.name === nothing && (return false)
     o.power_systems_type === nothing && (return false)
-    o.available === nothing && (return false)
+    o.financial_data === nothing && (return false)
+    o.capital_costs_inverter === nothing && (return false)
+    o.operation_costs_inverter === nothing && (return false)
+    o.inverter_efficiency === nothing && (return false)
+    o.inverter_supply_ratio === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::ColocatedSupplyStorageTechnology)
-    OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("name"), o.name)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("id"), o.id)
+    OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("name"), o.name)
+    OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("available"), o.available)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("power_systems_type"), o.power_systems_type)
-    OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("base_year"), o.base_year)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("region"), o.region)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("financial_data"), o.financial_data)
-    OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("available"), o.available)
-    OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("balancing_topology"), o.balancing_topology)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("capital_costs_solar"), o.capital_costs_solar)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("operation_costs_solar"), o.operation_costs_solar)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("capacity_limits_solar"), o.capacity_limits_solar)
@@ -156,10 +156,10 @@ function OpenAPI.validate_properties(o::ColocatedSupplyStorageTechnology)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("operation_costs_inverter"), o.operation_costs_inverter)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("inverter_efficiency"), o.inverter_efficiency)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("inverter_supply_ratio"), o.inverter_supply_ratio)
+    OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("requirements"), o.requirements)
 end
 
 function OpenAPI.validate_property(::Type{ ColocatedSupplyStorageTechnology }, name::Symbol, val)
-
 
 
 

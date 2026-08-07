@@ -32,7 +32,7 @@ A static power load that can be partially or completed shifted to later time per
     - max_reactive_power::Float64 : Maximum reactive power that this load can demand. Units: MVAr.
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
     - load_balance_time_horizon::Int64 : Number of time periods over which load must be balanced.
-    - operation_cost::LoadCost
+    - operation_cost::InterruptiblePowerLoadOperationCost
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
 Base.@kwdef mutable struct ShiftablePowerLoad <: OpenAPI.APIModel
@@ -47,7 +47,7 @@ Base.@kwdef mutable struct ShiftablePowerLoad <: OpenAPI.APIModel
     max_reactive_power::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
     load_balance_time_horizon::Union{Nothing, Int64} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, LoadCost }
+    operation_cost = nothing # spec type: Union{ Nothing, InterruptiblePowerLoadOperationCost }
     dynamic_injector::Union{Nothing, Int64} = nothing
 
     function ShiftablePowerLoad(id, name, available, bus, active_power, active_power_limits, reactive_power, max_active_power, max_reactive_power, base_power, load_balance_time_horizon, operation_cost, dynamic_injector, )
@@ -57,7 +57,7 @@ Base.@kwdef mutable struct ShiftablePowerLoad <: OpenAPI.APIModel
     end
 end # type ShiftablePowerLoad
 
-const _property_types_ShiftablePowerLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power")=>"Float64", Symbol("max_active_power")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("base_power")=>"Float64", Symbol("load_balance_time_horizon")=>"Int64", Symbol("operation_cost")=>"LoadCost", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_ShiftablePowerLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power")=>"Float64", Symbol("max_active_power")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("base_power")=>"Float64", Symbol("load_balance_time_horizon")=>"Int64", Symbol("operation_cost")=>"InterruptiblePowerLoadOperationCost", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ ShiftablePowerLoad }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ShiftablePowerLoad[name]))}
 
 function OpenAPI.check_required(o::ShiftablePowerLoad)

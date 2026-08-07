@@ -12,13 +12,13 @@
     )
 
     - curve_type::String
-    - function_data::AverageRateCurveFunctionData
+    - function_data::IncrementalCurveFunctionData
     - initial_input::Float64
     - input_at_zero::Float64
 """
 Base.@kwdef mutable struct AverageRateCurve <: OpenAPI.APIModel
     curve_type::Union{Nothing, String} = "AVERAGE_RATE"
-    function_data = nothing # spec type: Union{ Nothing, AverageRateCurveFunctionData }
+    function_data = nothing # spec type: Union{ Nothing, IncrementalCurveFunctionData }
     initial_input::Union{Nothing, Float64} = nothing
     input_at_zero::Union{Nothing, Float64} = nothing
 
@@ -29,7 +29,7 @@ Base.@kwdef mutable struct AverageRateCurve <: OpenAPI.APIModel
     end
 end # type AverageRateCurve
 
-const _property_types_AverageRateCurve = Dict{Symbol,String}(Symbol("curve_type")=>"String", Symbol("function_data")=>"AverageRateCurveFunctionData", Symbol("initial_input")=>"Float64", Symbol("input_at_zero")=>"Float64", )
+const _property_types_AverageRateCurve = Dict{Symbol,String}(Symbol("curve_type")=>"String", Symbol("function_data")=>"IncrementalCurveFunctionData", Symbol("initial_input")=>"Float64", Symbol("input_at_zero")=>"Float64", )
 OpenAPI.property_type(::Type{ AverageRateCurve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_AverageRateCurve[name]))}
 
 function OpenAPI.check_required(o::AverageRateCurve)

@@ -79,7 +79,7 @@ function OpenAPI.validate_property(::Type{ EmissionsData }, name::Symbol, val)
 
 
     if name === Symbol("pollutant")
-        OpenAPI.validate_param(name, "EmissionsData", :enum, val, ["CO2", "CO2E", "CH4", "N2O", "NOX", "SO2", "PM25", "PM10", "HG", "HAP", "CUSTOM"])
+        OpenAPI.validate_param(name, "EmissionsData", :enum, val, ["CO2", "CO2E", "CH4", "N2O", "NOX", "SO2", "CO", "VOC", "PM25", "PM10", "HG", "HAP", "CUSTOM"])
     end
 
 

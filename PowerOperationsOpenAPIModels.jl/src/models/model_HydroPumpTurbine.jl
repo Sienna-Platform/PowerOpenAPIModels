@@ -22,7 +22,7 @@ A hydropower pumped turbine that needs to have two &#x60;HydroReservoir&#x60;s a
         time_limits=nothing,
         base_power=nothing,
         status="OFF",
-        time_at_status=10000.0,
+        time_at_status=600000.0,
         operation_cost=nothing,
         active_power_pump=0.0,
         efficiency=nothing,
@@ -51,13 +51,13 @@ A hydropower pumped turbine that needs to have two &#x60;HydroReservoir&#x60;s a
     - time_limits::UpDown
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
     - status::String : Initial Operating status of a pumped-storage hydro unit. See &#x60;PumpHydroStatus&#x60; for reference.
-    - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is psy const INFINITE_TIME &#x3D; 1e4 Units: h.
-    - operation_cost::HydroGenerationCost
+    - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is PowerSystems.jl&#39;s INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
+    - operation_cost::HydroDispatchOperationCost
     - active_power_pump::Float64 : Initial active power set point of the pump unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: MW.
     - efficiency::TurbinePump
     - transition_time::TurbinePump
     - minimum_time::TurbinePump
-    - travel_time::Float64 : Downstream (from reservoir into turbine) travel time. Units: h.
+    - travel_time::Float64 : Downstream (from reservoir into turbine) travel time. Set to &#x60;null&#x60; if not applicable. Units: min.
     - conversion_factor::Float64 : Conversion factor from flow/volume to energy: m^3 -&gt; p.u-hr. Units: 1.
     - must_run::Bool : Whether the unit must run (i.e., cannot be curtailed).
     - prime_mover_type::String : Prime mover technology according to EIA 923.
@@ -80,8 +80,8 @@ Base.@kwdef mutable struct HydroPumpTurbine <: OpenAPI.APIModel
     time_limits = nothing # spec type: Union{ Nothing, UpDown }
     base_power::Union{Nothing, Float64} = nothing
     status::Union{Nothing, String} = "OFF"
-    time_at_status::Union{Nothing, Float64} = 10000.0
-    operation_cost = nothing # spec type: Union{ Nothing, HydroGenerationCost }
+    time_at_status::Union{Nothing, Float64} = 600000.0
+    operation_cost = nothing # spec type: Union{ Nothing, HydroDispatchOperationCost }
     active_power_pump::Union{Nothing, Float64} = 0.0
     efficiency = nothing # spec type: Union{ Nothing, TurbinePump }
     transition_time = nothing # spec type: Union{ Nothing, TurbinePump }
@@ -99,7 +99,7 @@ Base.@kwdef mutable struct HydroPumpTurbine <: OpenAPI.APIModel
     end
 end # type HydroPumpTurbine
 
-const _property_types_HydroPumpTurbine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power_limits")=>"MinMax", Symbol("active_power_limits_pump")=>"MinMax", Symbol("outflow_limits")=>"MinMax", Symbol("powerhouse_elevation")=>"Float64", Symbol("ramp_limits")=>"UpDown", Symbol("time_limits")=>"UpDown", Symbol("base_power")=>"Float64", Symbol("status")=>"String", Symbol("time_at_status")=>"Float64", Symbol("operation_cost")=>"HydroGenerationCost", Symbol("active_power_pump")=>"Float64", Symbol("efficiency")=>"TurbinePump", Symbol("transition_time")=>"TurbinePump", Symbol("minimum_time")=>"TurbinePump", Symbol("travel_time")=>"Float64", Symbol("conversion_factor")=>"Float64", Symbol("must_run")=>"Bool", Symbol("prime_mover_type")=>"String", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_HydroPumpTurbine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power_limits")=>"MinMax", Symbol("active_power_limits_pump")=>"MinMax", Symbol("outflow_limits")=>"MinMax", Symbol("powerhouse_elevation")=>"Float64", Symbol("ramp_limits")=>"UpDown", Symbol("time_limits")=>"UpDown", Symbol("base_power")=>"Float64", Symbol("status")=>"String", Symbol("time_at_status")=>"Float64", Symbol("operation_cost")=>"HydroDispatchOperationCost", Symbol("active_power_pump")=>"Float64", Symbol("efficiency")=>"TurbinePump", Symbol("transition_time")=>"TurbinePump", Symbol("minimum_time")=>"TurbinePump", Symbol("travel_time")=>"Float64", Symbol("conversion_factor")=>"Float64", Symbol("must_run")=>"Bool", Symbol("prime_mover_type")=>"String", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ HydroPumpTurbine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_HydroPumpTurbine[name]))}
 
 function OpenAPI.check_required(o::HydroPumpTurbine)

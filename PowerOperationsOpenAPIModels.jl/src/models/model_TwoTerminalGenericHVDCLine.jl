@@ -16,6 +16,7 @@ A High Voltage DC line, which must be connected to an ACBus on each end. This mo
         reactive_power_limits_from=nothing,
         reactive_power_limits_to=nothing,
         loss=nothing,
+        base_power=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
@@ -28,6 +29,7 @@ A High Voltage DC line, which must be connected to an ACBus on each end. This mo
     - reactive_power_limits_from::MinMax
     - reactive_power_limits_to::MinMax
     - loss::TwoTerminalLoss
+    - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
 """
 Base.@kwdef mutable struct TwoTerminalGenericHVDCLine <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -40,15 +42,16 @@ Base.@kwdef mutable struct TwoTerminalGenericHVDCLine <: OpenAPI.APIModel
     reactive_power_limits_from = nothing # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
     loss = nothing # spec type: Union{ Nothing, TwoTerminalLoss }
+    base_power::Union{Nothing, Float64} = nothing
 
-    function TwoTerminalGenericHVDCLine(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, )
-        o = new(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, )
+    function TwoTerminalGenericHVDCLine(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )
+        o = new(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type TwoTerminalGenericHVDCLine
 
-const _property_types_TwoTerminalGenericHVDCLine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("arc")=>"Int64", Symbol("active_power_limits_from")=>"MinMax", Symbol("active_power_limits_to")=>"MinMax", Symbol("reactive_power_limits_from")=>"MinMax", Symbol("reactive_power_limits_to")=>"MinMax", Symbol("loss")=>"TwoTerminalLoss", )
+const _property_types_TwoTerminalGenericHVDCLine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("arc")=>"Int64", Symbol("active_power_limits_from")=>"MinMax", Symbol("active_power_limits_to")=>"MinMax", Symbol("reactive_power_limits_from")=>"MinMax", Symbol("reactive_power_limits_to")=>"MinMax", Symbol("loss")=>"TwoTerminalLoss", Symbol("base_power")=>"Float64", )
 OpenAPI.property_type(::Type{ TwoTerminalGenericHVDCLine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TwoTerminalGenericHVDCLine[name]))}
 
 function OpenAPI.check_required(o::TwoTerminalGenericHVDCLine)
@@ -61,6 +64,7 @@ function OpenAPI.check_required(o::TwoTerminalGenericHVDCLine)
     o.active_power_limits_to === nothing && (return false)
     o.reactive_power_limits_from === nothing && (return false)
     o.reactive_power_limits_to === nothing && (return false)
+    o.base_power === nothing && (return false)
     true
 end
 
@@ -75,9 +79,11 @@ function OpenAPI.validate_properties(o::TwoTerminalGenericHVDCLine)
     OpenAPI.validate_property(TwoTerminalGenericHVDCLine, Symbol("reactive_power_limits_from"), o.reactive_power_limits_from)
     OpenAPI.validate_property(TwoTerminalGenericHVDCLine, Symbol("reactive_power_limits_to"), o.reactive_power_limits_to)
     OpenAPI.validate_property(TwoTerminalGenericHVDCLine, Symbol("loss"), o.loss)
+    OpenAPI.validate_property(TwoTerminalGenericHVDCLine, Symbol("base_power"), o.base_power)
 end
 
 function OpenAPI.validate_property(::Type{ TwoTerminalGenericHVDCLine }, name::Symbol, val)
+
 
 
 

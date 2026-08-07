@@ -13,10 +13,8 @@ include("models/model_ColocatedSupplyStorageTechnology.jl")
 include("models/model_DemandRequirement.jl")
 include("models/model_DemandSideTechnology.jl")
 include("models/model_EnergyShareRequirements.jl")
-include("models/model_ExistingCapacity.jl")
+include("models/model_ExistingDevices.jl")
 include("models/model_HourlyMatching.jl")
-include("models/model_InvestmentScheduleResults.jl")
-include("models/model_InvestmentScheduleResultsResultsInner.jl")
 include("models/model_MaximumCapacityRequirements.jl")
 include("models/model_MinimumCapacityRequirements.jl")
 include("models/model_NodalACTransportTechnology.jl")
@@ -29,6 +27,8 @@ include("models/model_StorageTechnology.jl")
 include("models/model_SupplyTechnology.jl")
 include("models/model_TopologyMapping.jl")
 include("models/model_Zone.jl")
+include("units.jl")
+include("register.jl")
 
 export AggregateRetirementPotential
 export AggregateRetrofitPotential
@@ -40,10 +40,8 @@ export ColocatedSupplyStorageTechnology
 export DemandRequirement
 export DemandSideTechnology
 export EnergyShareRequirements
-export ExistingCapacity
+export ExistingDevices
 export HourlyMatching
-export InvestmentScheduleResults
-export InvestmentScheduleResultsResultsInner
 export MaximumCapacityRequirements
 export MinimumCapacityRequirements
 export NodalACTransportTechnology

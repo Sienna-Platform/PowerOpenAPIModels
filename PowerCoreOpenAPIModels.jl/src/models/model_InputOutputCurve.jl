@@ -3,6 +3,7 @@
 
 
 @doc raw"""InputOutputCurve
+Fuel consumed during startup, as a curve in the unit&#39;s fuel units.
 
     InputOutputCurve(;
         curve_type="INPUT_OUTPUT",

@@ -39,7 +39,7 @@ A hydropower generator that must have a &#x60;HydroReservoir&#x60; attached, sui
     - active_power_limits::MinMax
     - reactive_power_limits::MinMax
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
-    - operation_cost::HydroGenerationCost
+    - operation_cost::HydroDispatchOperationCost
     - powerhouse_elevation::Float64 : Height level above the sea level of the powerhouse on which the turbine is installed. Units: m.
     - ramp_limits::UpDown
     - time_limits::UpDown
@@ -48,7 +48,7 @@ A hydropower generator that must have a &#x60;HydroReservoir&#x60; attached, sui
     - turbine_type::String : Type of the turbine.
     - conversion_factor::Float64 : Conversion factor from flow/volume to energy: m^3 -&gt; p.u-hr. Units: 1.
     - prime_mover_type::String : Prime mover technology according to EIA 923.
-    - travel_time::Float64 : Downstream (from reservoir into turbine) travel time. Units: h.
+    - travel_time::Float64 : Downstream (from reservoir into turbine) travel time. Set to &#x60;null&#x60; if not applicable. Units: min.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
 Base.@kwdef mutable struct HydroTurbine <: OpenAPI.APIModel
@@ -62,7 +62,7 @@ Base.@kwdef mutable struct HydroTurbine <: OpenAPI.APIModel
     active_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     base_power::Union{Nothing, Float64} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, HydroGenerationCost }
+    operation_cost = nothing # spec type: Union{ Nothing, HydroDispatchOperationCost }
     powerhouse_elevation::Union{Nothing, Float64} = 0.0
     ramp_limits = nothing # spec type: Union{ Nothing, UpDown }
     time_limits = nothing # spec type: Union{ Nothing, UpDown }
@@ -81,7 +81,7 @@ Base.@kwdef mutable struct HydroTurbine <: OpenAPI.APIModel
     end
 end # type HydroTurbine
 
-const _property_types_HydroTurbine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power_limits")=>"MinMax", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"HydroGenerationCost", Symbol("powerhouse_elevation")=>"Float64", Symbol("ramp_limits")=>"UpDown", Symbol("time_limits")=>"UpDown", Symbol("outflow_limits")=>"MinMax", Symbol("efficiency")=>"Float64", Symbol("turbine_type")=>"String", Symbol("conversion_factor")=>"Float64", Symbol("prime_mover_type")=>"String", Symbol("travel_time")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_HydroTurbine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power_limits")=>"MinMax", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"HydroDispatchOperationCost", Symbol("powerhouse_elevation")=>"Float64", Symbol("ramp_limits")=>"UpDown", Symbol("time_limits")=>"UpDown", Symbol("outflow_limits")=>"MinMax", Symbol("efficiency")=>"Float64", Symbol("turbine_type")=>"String", Symbol("conversion_factor")=>"Float64", Symbol("prime_mover_type")=>"String", Symbol("travel_time")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ HydroTurbine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_HydroTurbine[name]))}
 
 function OpenAPI.check_required(o::HydroTurbine)
