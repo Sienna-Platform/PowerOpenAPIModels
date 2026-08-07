@@ -1,7 +1,10 @@
 # Generated from SiennaSchemas x-unit annotations. Do not edit.
 
 const UNIT_VOCABULARY = Dict{Tuple{String, String}, Float64}(
+    ("ActivePower", "GW") => 1000.0,
     ("ActivePower", "MW") => 1.0,
+    ("ActivePower", "TW") => 1.0e6,
+    ("ActivePower", "kW") => 0.001,
     ("ActivePowerChangeRate", "MW/min") => 1.0,
     ("Angle", "deg") => 0.017453292519943295,
     ("Angle", "rad") => 1.0,
@@ -20,9 +23,12 @@ const UNIT_VOCABULARY = Dict{Tuple{String, String}, Float64}(
     ("CurrentFlow", "kA") => 1.0,
     ("Dimensionless", "1") => 1.0,
     ("Duration", "s") => 1.0,
+    ("ElectricalEnergy", "GWh") => 1000.0,
     ("ElectricalEnergy", "MJ") => 0.0002777777777777778,
     ("ElectricalEnergy", "MWh") => 1.0,
     ("ElectricalEnergy", "MWmin") => 0.016666666666666666,
+    ("ElectricalEnergy", "TWh") => 1.0e6,
+    ("ElectricalEnergy", "kWh") => 0.001,
     ("Elevation", "m") => 1.0,
     ("EmissionRate", "Mt/MWh") => 1.0e6,
     ("EmissionRate", "t/MWh") => 1.0,

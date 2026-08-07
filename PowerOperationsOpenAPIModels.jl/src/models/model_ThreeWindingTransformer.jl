@@ -23,7 +23,7 @@ A three-winding transformer, modeled as an equivalent star: each referenced &#x6
         base_power_23=nothing,
         base_power_31=nothing,
         admittance_units="DEVICE_BASE",
-        magnetizing_shunt=nothing,
+        magnetizing_shunt=ComplexNumber(; real=0.0, imag=0.0),
         shunt_location="PRIMARY",
     )
 
@@ -65,7 +65,7 @@ Base.@kwdef mutable struct ThreeWindingTransformer <: OpenAPI.APIModel
     base_power_23::Union{Nothing, Float64} = nothing
     base_power_31::Union{Nothing, Float64} = nothing
     admittance_units::Union{Nothing, String} = "DEVICE_BASE"
-    magnetizing_shunt = nothing # spec type: Union{ Nothing, ComplexNumber }
+    magnetizing_shunt = ComplexNumber(; real=0.0, imag=0.0) # spec type: Union{ Nothing, ComplexNumber }
     shunt_location::Union{Nothing, String} = "PRIMARY"
 
     function ThreeWindingTransformer(id, name, primary_circuit, secondary_circuit, tertiary_circuit, star_bus, parameter_units, r_12, x_12, r_23, x_23, r_31, x_31, base_power_12, base_power_23, base_power_31, admittance_units, magnetizing_shunt, shunt_location, )

@@ -108,6 +108,25 @@ end
     end
 end
 
+@testset "SystemDocument reads a document with no ext key" begin
+    # `ext` is optional in the schema (Core/SystemDocument.json's `required` list omits
+    # it); a producer that mapped every field is allowed to omit the key entirely.
+    doc = PowerCoreOpenAPIModels.SystemDocument(100.0)
+    bus_id = PowerCoreOpenAPIModels.next_id!(doc)
+    PowerCoreOpenAPIModels.add_component!(
+        doc,
+        PowerOperationsOpenAPIModels.ACBus(;
+            id = bus_id, name = "b1", number = 1, bustype = "REF", available = true,
+        ),
+    )
+    raw = PowerCoreOpenAPIModels.JSON.parse(
+        PowerCoreOpenAPIModels.JSON.json(PowerCoreOpenAPIModels.document_tree(doc)),
+    )
+    delete!(raw, "ext")
+    back = PowerCoreOpenAPIModels.document_from_json(raw)
+    @test isempty(PowerCoreOpenAPIModels.get_ext(back, bus_id))
+end
+
 @testset "SystemDocument rejects malformed input" begin
     @test_throws PowerCoreOpenAPIModels.DocumentFormatError PowerCoreOpenAPIModels.SystemDocument(
         100.0; unit_system = "SYSTEM_BASE",

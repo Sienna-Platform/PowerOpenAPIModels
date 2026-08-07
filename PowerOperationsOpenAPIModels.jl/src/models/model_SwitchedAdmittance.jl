@@ -15,7 +15,7 @@ A switched admittance, with discrete steps to adjust the admittance.  Most often
         initial_status=nothing,
         number_of_steps=nothing,
         Y_increase=nothing,
-        admittance_limits=nothing,
+        admittance_limits=MinMax(; max=1.0, min=1.0),
         control_mode="FIXED",
         regulated_bus_number=0,
         dynamic_injector=nothing,
@@ -45,7 +45,7 @@ Base.@kwdef mutable struct SwitchedAdmittance <: OpenAPI.APIModel
     initial_status::Union{Nothing, Vector{Int64}} = nothing
     number_of_steps::Union{Nothing, Vector{Int64}} = nothing
     Y_increase::Union{Nothing, Vector} = nothing # spec type: Union{ Nothing, Vector{ComplexNumber} }
-    admittance_limits = nothing # spec type: Union{ Nothing, MinMax }
+    admittance_limits = MinMax(; max=1.0, min=1.0) # spec type: Union{ Nothing, MinMax }
     control_mode::Union{Nothing, String} = "FIXED"
     regulated_bus_number::Union{Nothing, Int64} = 0
     dynamic_injector::Union{Nothing, Int64} = nothing

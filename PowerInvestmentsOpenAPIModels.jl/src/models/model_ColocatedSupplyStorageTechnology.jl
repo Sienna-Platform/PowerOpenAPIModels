@@ -35,7 +35,7 @@
         operation_costs_inverter=nothing,
         inverter_efficiency=nothing,
         inverter_supply_ratio=nothing,
-        requirements=nothing,
+        requirements=Int64[],
     )
 
     - id::Int64 : ID for individual component.
@@ -101,7 +101,7 @@ Base.@kwdef mutable struct ColocatedSupplyStorageTechnology <: OpenAPI.APIModel
     operation_costs_inverter = nothing # spec type: Union{ Nothing, ProductionVariableCostCurve }
     inverter_efficiency::Union{Nothing, Float64} = nothing
     inverter_supply_ratio::Union{Nothing, Float64} = nothing
-    requirements::Union{Nothing, Vector{Int64}} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = Int64[]
 
     function ColocatedSupplyStorageTechnology(id, name, available, power_systems_type, region, financial_data, capital_costs_solar, operation_costs_solar, capacity_limits_solar, lifetime_solar, capital_costs_wind, operation_costs_wind, capacity_limits_wind, lifetime_wind, capital_costs_energy, capital_costs_power, operation_costs_energy, operation_costs_power, capacity_power_limits, capacity_energy_limits, duration_limits, efficiency_storage, losses_storage, lifetime_storage, max_inverter_capacity, min_inverter_capacity, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, requirements, )
         o = new(id, name, available, power_systems_type, region, financial_data, capital_costs_solar, operation_costs_solar, capacity_limits_solar, lifetime_solar, capital_costs_wind, operation_costs_wind, capacity_limits_wind, lifetime_wind, capital_costs_energy, capital_costs_power, operation_costs_energy, operation_costs_power, capacity_power_limits, capacity_energy_limits, duration_limits, efficiency_storage, losses_storage, lifetime_storage, max_inverter_capacity, min_inverter_capacity, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, requirements, )

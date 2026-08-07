@@ -20,7 +20,7 @@
         shift_variable_cost=nothing,
         curtailment_cost=nothing,
         max_demand_curtailment=nothing,
-        requirements=nothing,
+        requirements=Int64[],
     )
 
     - id::Int64 : ID for individual component.
@@ -56,7 +56,7 @@ Base.@kwdef mutable struct DemandSideTechnology <: OpenAPI.APIModel
     shift_variable_cost = nothing # spec type: Union{ Nothing, ValueCurve }
     curtailment_cost = nothing # spec type: Union{ Nothing, ValueCurve }
     max_demand_curtailment::Union{Nothing, Float64} = nothing
-    requirements::Union{Nothing, Vector{Int64}} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = Int64[]
 
     function DemandSideTechnology(id, name, available, region, power_systems_type, technology_efficiency, price_per_unit, min_power, peak_demand_mw, max_demand_delay, max_demand_advance, demand_energy_efficiency, shift_variable_cost, curtailment_cost, max_demand_curtailment, requirements, )
         o = new(id, name, available, region, power_systems_type, technology_efficiency, price_per_unit, min_power, peak_demand_mw, max_demand_delay, max_demand_advance, demand_energy_efficiency, shift_variable_cost, curtailment_cost, max_demand_curtailment, requirements, )

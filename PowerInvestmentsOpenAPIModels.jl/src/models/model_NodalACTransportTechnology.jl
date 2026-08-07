@@ -17,7 +17,7 @@
         voltage=0.0,
         unit_size=0.0,
         reactance=0.0,
-        requirements=nothing,
+        requirements=Int64[],
         financial_data=nothing,
     )
 
@@ -49,7 +49,7 @@ Base.@kwdef mutable struct NodalACTransportTechnology <: OpenAPI.APIModel
     voltage::Union{Nothing, Float64} = 0.0
     unit_size::Union{Nothing, Float64} = 0.0
     reactance::Union{Nothing, Float64} = 0.0
-    requirements::Union{Nothing, Vector{Int64}} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = Int64[]
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
 
     function NodalACTransportTechnology(id, name, available, power_systems_type, start_node, end_node, capacity_limits, capital_costs, resistance, voltage, unit_size, reactance, requirements, financial_data, )

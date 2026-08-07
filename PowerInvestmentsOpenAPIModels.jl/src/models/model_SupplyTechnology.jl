@@ -25,7 +25,7 @@
         time_limits=nothing,
         start_fuel_mmbtu_per_mw=0.0,
         lifetime=100,
-        requirements=nothing,
+        requirements=Int64[],
         financial_data=nothing,
     )
 
@@ -73,7 +73,7 @@ Base.@kwdef mutable struct SupplyTechnology <: OpenAPI.APIModel
     time_limits = nothing # spec type: Union{ Nothing, UpDown }
     start_fuel_mmbtu_per_mw::Union{Nothing, Float64} = 0.0
     lifetime::Union{Nothing, Int64} = 100
-    requirements::Union{Nothing, Vector{Int64}} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = Int64[]
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
 
     function SupplyTechnology(id, name, available, power_systems_type, region, prime_mover_type, fuel, co2, cofire_start_limits, cofire_level_limits, capital_costs, operation_costs, unit_size, capacity_limits, outage_factor, min_generation_fraction, ramp_limits, time_limits, start_fuel_mmbtu_per_mw, lifetime, requirements, financial_data, )

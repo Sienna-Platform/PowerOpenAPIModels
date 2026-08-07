@@ -564,7 +564,9 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
         _rows(TimeSeriesAssociation, _require(raw, "time_series_associations", source)),
     )
 
-    for (id, extras) in _require(raw, "ext", source)
+    # `ext` is optional in the schema (an absent `ext` means the producer mapped every
+    # field), unlike the other bucket fields above which the schema does mark required.
+    for (id, extras) in get(raw, "ext", Dict{String, Any}())
         set_ext!(doc, parse(Int, String(id)), extras)
     end
 

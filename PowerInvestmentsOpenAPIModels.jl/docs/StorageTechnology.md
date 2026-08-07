@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **`capital_costs_discharge`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
 **`operation_costs`** | [**`*StorageCost`**](StorageCost.md) |  | [optional] [default to nothing]
 **`unit_size_discharge`** | **`Float64`** | Used for discrete investment decisions. Size of each unit of discharging capacity being built. Units: MW. | [optional] [default to 0.0]
-**`unit_size_charge`** | **`Float64`** | Used for discrete investment decisions. Unit size of charging capacity. Units: MW. | [optional] [default to 0.0]
+**`unit_size_charge`** | **`Float64`** | Used for discrete investment decisions. Unit size of charging capacity. Units: MW. | [optional] [default to nothing]
 **`unit_size_energy`** | **`Float64`** | Used for discrete investment decisions. Size of each unit of energy capacity being built. Units: MWh. | [optional] [default to 0.0]
 **`capacity_limits_charge`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`capacity_limits_discharge`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]

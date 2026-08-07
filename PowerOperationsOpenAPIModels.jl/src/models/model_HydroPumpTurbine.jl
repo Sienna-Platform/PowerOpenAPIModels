@@ -25,9 +25,9 @@ A hydropower pumped turbine that needs to have two &#x60;HydroReservoir&#x60;s a
         time_at_status=600000.0,
         operation_cost=nothing,
         active_power_pump=0.0,
-        efficiency=nothing,
-        transition_time=nothing,
-        minimum_time=nothing,
+        efficiency=TurbinePump(; turbine=1.0, pump=1.0),
+        transition_time=TurbinePump(; turbine=0.0, pump=0.0),
+        minimum_time=TurbinePump(; turbine=0.0, pump=0.0),
         travel_time=nothing,
         conversion_factor=1.0,
         must_run=false,
@@ -83,9 +83,9 @@ Base.@kwdef mutable struct HydroPumpTurbine <: OpenAPI.APIModel
     time_at_status::Union{Nothing, Float64} = 600000.0
     operation_cost = nothing # spec type: Union{ Nothing, HydroDispatchOperationCost }
     active_power_pump::Union{Nothing, Float64} = 0.0
-    efficiency = nothing # spec type: Union{ Nothing, TurbinePump }
-    transition_time = nothing # spec type: Union{ Nothing, TurbinePump }
-    minimum_time = nothing # spec type: Union{ Nothing, TurbinePump }
+    efficiency = TurbinePump(; turbine=1.0, pump=1.0) # spec type: Union{ Nothing, TurbinePump }
+    transition_time = TurbinePump(; turbine=0.0, pump=0.0) # spec type: Union{ Nothing, TurbinePump }
+    minimum_time = TurbinePump(; turbine=0.0, pump=0.0) # spec type: Union{ Nothing, TurbinePump }
     travel_time::Union{Nothing, Float64} = nothing
     conversion_factor::Union{Nothing, Float64} = 1.0
     must_run::Union{Nothing, Bool} = false

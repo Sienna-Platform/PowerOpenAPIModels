@@ -8,7 +8,7 @@
         id=nothing,
         mean_time_to_recovery=0,
         outage_transition_probability=0.0,
-        monitored_components=nothing,
+        monitored_components=Int64[],
     )
 
     - id::Int64
@@ -20,7 +20,7 @@ Base.@kwdef mutable struct GeometricDistributionForcedOutage <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     mean_time_to_recovery::Union{Nothing, Int64} = 0
     outage_transition_probability::Union{Nothing, Float64} = 0.0
-    monitored_components::Union{Nothing, Vector{Int64}} = nothing
+    monitored_components::Union{Nothing, Vector{Int64}} = Int64[]
 
     function GeometricDistributionForcedOutage(id, mean_time_to_recovery, outage_transition_probability, monitored_components, )
         o = new(id, mean_time_to_recovery, outage_transition_probability, monitored_components, )

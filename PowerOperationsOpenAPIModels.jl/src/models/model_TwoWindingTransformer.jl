@@ -10,7 +10,7 @@ A two-winding transformer connecting two buses.  All series electrical data — 
         name=nothing,
         circuit=nothing,
         admittance_units="DEVICE_BASE",
-        magnetizing_shunt=nothing,
+        magnetizing_shunt=ComplexNumber(; real=0.0, imag=0.0),
         shunt_location="PRIMARY",
     )
 
@@ -26,7 +26,7 @@ Base.@kwdef mutable struct TwoWindingTransformer <: OpenAPI.APIModel
     name::Union{Nothing, String} = nothing
     circuit::Union{Nothing, Int64} = nothing
     admittance_units::Union{Nothing, String} = "DEVICE_BASE"
-    magnetizing_shunt = nothing # spec type: Union{ Nothing, ComplexNumber }
+    magnetizing_shunt = ComplexNumber(; real=0.0, imag=0.0) # spec type: Union{ Nothing, ComplexNumber }
     shunt_location::Union{Nothing, String} = "PRIMARY"
 
     function TwoWindingTransformer(id, name, circuit, admittance_units, magnetizing_shunt, shunt_location, )

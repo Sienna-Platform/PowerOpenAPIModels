@@ -15,7 +15,7 @@
         capital_costs=nothing,
         line_loss=nothing,
         unit_size=nothing,
-        requirements=nothing,
+        requirements=Int64[],
         financial_data=nothing,
     )
 
@@ -43,7 +43,7 @@ Base.@kwdef mutable struct NodalHVDCTransportTechnology <: OpenAPI.APIModel
     capital_costs = nothing # spec type: Union{ Nothing, ValueCurve }
     line_loss = nothing # spec type: Union{ Nothing, ValueCurve }
     unit_size::Union{Nothing, Float64} = nothing
-    requirements::Union{Nothing, Vector{Int64}} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = Int64[]
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
 
     function NodalHVDCTransportTechnology(id, name, available, power_systems_type, start_node, end_node, capacity_limits, capital_costs, line_loss, unit_size, requirements, financial_data, )

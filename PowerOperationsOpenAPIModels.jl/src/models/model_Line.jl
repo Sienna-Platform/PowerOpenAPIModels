@@ -20,7 +20,7 @@ An AC transmission line.
         rating_b=nothing,
         rating_c=nothing,
         angle_limits=nothing,
-        g=nothing,
+        g=FromTo(; from=0.0, to=0.0),
     )
 
     - id::Int64 : Unique integer identifier for this component.
@@ -54,7 +54,7 @@ Base.@kwdef mutable struct Line <: OpenAPI.APIModel
     rating_b::Union{Nothing, Float64} = nothing
     rating_c::Union{Nothing, Float64} = nothing
     angle_limits = nothing # spec type: Union{ Nothing, MinMax }
-    g = nothing # spec type: Union{ Nothing, FromTo }
+    g = FromTo(; from=0.0, to=0.0) # spec type: Union{ Nothing, FromTo }
 
     function Line(id, name, available, active_power_flow, reactive_power_flow, arc, r, x, base_power, b, rating, rating_b, rating_c, angle_limits, g, )
         o = new(id, name, available, active_power_flow, reactive_power_flow, arc, r, x, base_power, b, rating, rating_b, rating_c, angle_limits, g, )

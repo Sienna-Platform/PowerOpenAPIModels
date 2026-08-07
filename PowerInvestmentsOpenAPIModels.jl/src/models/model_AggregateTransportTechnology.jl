@@ -15,7 +15,7 @@
         capital_costs=nothing,
         line_loss=nothing,
         unit_size=nothing,
-        requirements=nothing,
+        requirements=Int64[],
         financial_data=nothing,
     )
 
@@ -43,7 +43,7 @@ Base.@kwdef mutable struct AggregateTransportTechnology <: OpenAPI.APIModel
     capital_costs = nothing # spec type: Union{ Nothing, ValueCurve }
     line_loss::Union{Nothing, Float64} = nothing
     unit_size::Union{Nothing, Float64} = nothing
-    requirements::Union{Nothing, Vector{Int64}} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = Int64[]
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
 
     function AggregateTransportTechnology(id, name, available, power_systems_type, start_region, end_region, capacity_limits, capital_costs, line_loss, unit_size, requirements, financial_data, )

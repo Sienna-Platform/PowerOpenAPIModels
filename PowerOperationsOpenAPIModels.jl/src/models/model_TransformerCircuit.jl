@@ -16,8 +16,8 @@ The data defining one modeled arc of a transformer.  A &#x60;TwoWindingTransform
         x=0.0,
         control_objective="UNDEFINED",
         regulated_bus_number=0,
-        control_limits=nothing,
-        controlled_quantity_limits=nothing,
+        control_limits=MinMax(; max=1.1, min=0.9),
+        controlled_quantity_limits=MinMax(; max=1.1, min=0.9),
         number_of_tap_positions=33,
         rating=nothing,
         rating_b=nothing,
@@ -62,8 +62,8 @@ Base.@kwdef mutable struct TransformerCircuit <: OpenAPI.APIModel
     x::Union{Nothing, Float64} = 0.0
     control_objective::Union{Nothing, String} = "UNDEFINED"
     regulated_bus_number::Union{Nothing, Int64} = 0
-    control_limits = nothing # spec type: Union{ Nothing, MinMax }
-    controlled_quantity_limits = nothing # spec type: Union{ Nothing, MinMax }
+    control_limits = MinMax(; max=1.1, min=0.9) # spec type: Union{ Nothing, MinMax }
+    controlled_quantity_limits = MinMax(; max=1.1, min=0.9) # spec type: Union{ Nothing, MinMax }
     number_of_tap_positions::Union{Nothing, Int64} = 33
     rating::Union{Nothing, Float64} = nothing
     rating_b::Union{Nothing, Float64} = nothing

@@ -8,7 +8,7 @@
         power_units="NATURAL_UNITS",
         value_curve=nothing,
         variable_cost_type="COST",
-        vom_cost=nothing,
+        vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0),
     )
 
     - power_units::String : Unit basis curve power values are stored in. DEVICE_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as DEVICE_BASE.
@@ -20,7 +20,7 @@ Base.@kwdef mutable struct CostCurve <: OpenAPI.APIModel
     power_units::Union{Nothing, String} = "NATURAL_UNITS"
     value_curve = nothing # spec type: Union{ Nothing, ValueCurve }
     variable_cost_type::Union{Nothing, String} = "COST"
-    vom_cost = nothing # spec type: Union{ Nothing, InputOutputCurve }
+    vom_cost = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0) # spec type: Union{ Nothing, InputOutputCurve }
 
     function CostCurve(power_units, value_curve, variable_cost_type, vom_cost, )
         o = new(power_units, value_curve, variable_cost_type, vom_cost, )

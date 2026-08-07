@@ -12,8 +12,8 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
         bus=nothing,
         active_power=0.0,
         reactive_power=0.0,
-        active_power_limits=nothing,
-        reactive_power_limits=nothing,
+        active_power_limits=MinMax(; max=0.0, min=0.0),
+        reactive_power_limits=MinMax(; max=0.0, min=0.0),
         parameter_units="DEVICE_BASE",
         R_th=0.0,
         X_th=0.0,
@@ -21,7 +21,7 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
         internal_angle=0.0,
         base_voltage=nothing,
         base_power=100.0,
-        operation_cost=nothing,
+        operation_cost=ImportExportCost(; import_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)), export_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)), energy_import_weekly_limit=1.0e6, energy_export_weekly_limit=1.0e6),
         dynamic_injector=nothing,
     )
 
@@ -50,8 +50,8 @@ Base.@kwdef mutable struct Source <: OpenAPI.APIModel
     bus::Union{Nothing, Int64} = nothing
     active_power::Union{Nothing, Float64} = 0.0
     reactive_power::Union{Nothing, Float64} = 0.0
-    active_power_limits = nothing # spec type: Union{ Nothing, MinMax }
-    reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
+    active_power_limits = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
+    reactive_power_limits = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
     parameter_units::Union{Nothing, String} = "DEVICE_BASE"
     R_th::Union{Nothing, Float64} = 0.0
     X_th::Union{Nothing, Float64} = 0.0
@@ -59,7 +59,7 @@ Base.@kwdef mutable struct Source <: OpenAPI.APIModel
     internal_angle::Union{Nothing, Float64} = 0.0
     base_voltage::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = 100.0
-    operation_cost = nothing # spec type: Union{ Nothing, ImportExportCost }
+    operation_cost = ImportExportCost(; import_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)), export_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)), energy_import_weekly_limit=1.0e6, energy_export_weekly_limit=1.0e6) # spec type: Union{ Nothing, ImportExportCost }
     dynamic_injector::Union{Nothing, Int64} = nothing
 
     function Source(id, name, available, bus, active_power, reactive_power, active_power_limits, reactive_power_limits, parameter_units, R_th, X_th, internal_voltage, internal_angle, base_voltage, base_power, operation_cost, dynamic_injector, )

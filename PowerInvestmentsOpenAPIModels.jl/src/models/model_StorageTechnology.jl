@@ -18,7 +18,7 @@
         capital_costs_discharge=nothing,
         operation_costs=nothing,
         unit_size_discharge=0.0,
-        unit_size_charge=0.0,
+        unit_size_charge=nothing,
         unit_size_energy=0.0,
         capacity_limits_charge=nothing,
         capacity_limits_discharge=nothing,
@@ -27,7 +27,7 @@
         efficiency=nothing,
         losses=1.0,
         lifetime=100,
-        requirements=nothing,
+        requirements=Int64[],
         financial_data=nothing,
     )
 
@@ -70,7 +70,7 @@ Base.@kwdef mutable struct StorageTechnology <: OpenAPI.APIModel
     capital_costs_discharge = nothing # spec type: Union{ Nothing, ValueCurve }
     operation_costs = nothing # spec type: Union{ Nothing, StorageCost }
     unit_size_discharge::Union{Nothing, Float64} = 0.0
-    unit_size_charge::Union{Nothing, Float64} = 0.0
+    unit_size_charge::Union{Nothing, Float64} = nothing
     unit_size_energy::Union{Nothing, Float64} = 0.0
     capacity_limits_charge = nothing # spec type: Union{ Nothing, MinMax }
     capacity_limits_discharge = nothing # spec type: Union{ Nothing, MinMax }
@@ -79,7 +79,7 @@ Base.@kwdef mutable struct StorageTechnology <: OpenAPI.APIModel
     efficiency = nothing # spec type: Union{ Nothing, InOut }
     losses::Union{Nothing, Float64} = 1.0
     lifetime::Union{Nothing, Int64} = 100
-    requirements::Union{Nothing, Vector{Int64}} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = Int64[]
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
 
     function StorageTechnology(id, name, available, region, power_systems_type, min_discharge_fraction, prime_mover_type, storage_tech, capital_costs_energy, capital_costs_charge, capital_costs_discharge, operation_costs, unit_size_discharge, unit_size_charge, unit_size_energy, capacity_limits_charge, capacity_limits_discharge, capacity_limits_energy, duration_limits, efficiency, losses, lifetime, requirements, financial_data, )

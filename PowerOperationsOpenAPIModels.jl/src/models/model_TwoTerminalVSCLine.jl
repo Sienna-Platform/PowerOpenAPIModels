@@ -22,25 +22,25 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
         ac_control_from="AC_VOLTAGE",
         dc_setpoint_from=0.0,
         ac_setpoint_from=1.0,
-        converter_loss_from=nothing,
+        converter_loss_from=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0),
         max_dc_current_from=100000000,
         rating_from=100000000,
-        reactive_power_limits_from=nothing,
+        reactive_power_limits_from=MinMax(; max=0.0, min=0.0),
         power_factor_weighting_fraction_from=1.0,
         voltage_units="NATURAL_UNITS",
-        voltage_limits_from=nothing,
+        voltage_limits_from=MinMax(; max=999.9, min=0.0),
         dc_voltage_droop_from=0.0,
         reactive_power_to=0.0,
         dc_control_to="DC_VOLTAGE",
         ac_control_to="AC_VOLTAGE",
         dc_setpoint_to=0.0,
         ac_setpoint_to=1.0,
-        converter_loss_to=nothing,
+        converter_loss_to=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0),
         max_dc_current_to=100000000,
         rating_to=100000000,
-        reactive_power_limits_to=nothing,
+        reactive_power_limits_to=MinMax(; max=0.0, min=0.0),
         power_factor_weighting_fraction_to=1.0,
-        voltage_limits_to=nothing,
+        voltage_limits_to=MinMax(; max=999.9, min=0.0),
         dc_voltage_droop_to=0.0,
         rated_dc_voltage=0.0,
         remote_bus_control_from=nothing,
@@ -110,25 +110,25 @@ Base.@kwdef mutable struct TwoTerminalVSCLine <: OpenAPI.APIModel
     ac_control_from::Union{Nothing, String} = "AC_VOLTAGE"
     dc_setpoint_from::Union{Nothing, Float64} = 0.0
     ac_setpoint_from::Union{Nothing, Float64} = 1.0
-    converter_loss_from = nothing # spec type: Union{ Nothing, InputOutputCurve }
+    converter_loss_from = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0) # spec type: Union{ Nothing, InputOutputCurve }
     max_dc_current_from::Union{Nothing, Float64} = 100000000
     rating_from::Union{Nothing, Float64} = 100000000
-    reactive_power_limits_from = nothing # spec type: Union{ Nothing, MinMax }
+    reactive_power_limits_from = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
     power_factor_weighting_fraction_from::Union{Nothing, Float64} = 1.0
     voltage_units::Union{Nothing, String} = "NATURAL_UNITS"
-    voltage_limits_from = nothing # spec type: Union{ Nothing, MinMax }
+    voltage_limits_from = MinMax(; max=999.9, min=0.0) # spec type: Union{ Nothing, MinMax }
     dc_voltage_droop_from::Union{Nothing, Float64} = 0.0
     reactive_power_to::Union{Nothing, Float64} = 0.0
     dc_control_to::Union{Nothing, String} = "DC_VOLTAGE"
     ac_control_to::Union{Nothing, String} = "AC_VOLTAGE"
     dc_setpoint_to::Union{Nothing, Float64} = 0.0
     ac_setpoint_to::Union{Nothing, Float64} = 1.0
-    converter_loss_to = nothing # spec type: Union{ Nothing, InputOutputCurve }
+    converter_loss_to = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0) # spec type: Union{ Nothing, InputOutputCurve }
     max_dc_current_to::Union{Nothing, Float64} = 100000000
     rating_to::Union{Nothing, Float64} = 100000000
-    reactive_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
+    reactive_power_limits_to = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
     power_factor_weighting_fraction_to::Union{Nothing, Float64} = 1.0
-    voltage_limits_to = nothing # spec type: Union{ Nothing, MinMax }
+    voltage_limits_to = MinMax(; max=999.9, min=0.0) # spec type: Union{ Nothing, MinMax }
     dc_voltage_droop_to::Union{Nothing, Float64} = 0.0
     rated_dc_voltage::Union{Nothing, Float64} = 0.0
     remote_bus_control_from::Union{Nothing, Int64} = nothing

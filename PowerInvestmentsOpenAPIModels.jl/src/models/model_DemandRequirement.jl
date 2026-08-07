@@ -16,7 +16,7 @@
         region=nothing,
         value_of_lost_load=nothing,
         unserved_demand_curve=nothing,
-        requirements=nothing,
+        requirements=Int64[],
     )
 
     - id::Int64 : ID for individual component.
@@ -44,7 +44,7 @@ Base.@kwdef mutable struct DemandRequirement <: OpenAPI.APIModel
     region::Union{Nothing, Vector{Int64}} = nothing
     value_of_lost_load::Union{Nothing, Float64} = nothing
     unserved_demand_curve = nothing # spec type: Union{ Nothing, ValueCurve }
-    requirements::Union{Nothing, Vector{Int64}} = nothing
+    requirements::Union{Nothing, Vector{Int64}} = Int64[]
 
     function DemandRequirement(id, name, available, power_systems_type, conformity, growth_rate, new_demand_mw, new_construction_year, region, value_of_lost_load, unserved_demand_curve, requirements, )
         o = new(id, name, available, power_systems_type, conformity, growth_rate, new_demand_mw, new_construction_year, region, value_of_lost_load, unserved_demand_curve, requirements, )
