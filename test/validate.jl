@@ -162,3 +162,5 @@ end
         @test string(nameof(T)) == name
     end
 end
+
+include("serde_fixture.jl")
