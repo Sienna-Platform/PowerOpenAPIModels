@@ -114,11 +114,15 @@ const QUANTITY_OVERRIDES = Dict(
     ("HydroTurbine", "conversion_factor") => "Dimensionless",
     ("HydroTurbine", "powerhouse_elevation") => "Elevation",
 
-    # Only the AC_REACTIVE_POWER branch (unit "1") ever reaches this override:
-    # the AC_VOLTAGE branch is a nested discriminator, which emit_discriminated
-    # already skips rather than flattening. Its own description calls the
-    # AC_REACTIVE_POWER value a "power factor setpoint".
-    ("InterconnectingConverter", "ac_setpoint") => "PowerFactor",
+    # Nested discriminator, same shape as TwoTerminalVSCLine.ac_setpoint_from
+    # above: "1" (AC_REACTIVE_POWER) is a power factor, "pu" (AC_VOLTAGE +
+    # DEVICE_BASE) is a per-unit voltage — two different target quantities for
+    # the two ambiguous units on this one property.
+    ("InterconnectingConverter", "ac_setpoint") =>
+        Dict("1" => "PowerFactor", "pu" => "Voltage"),
+    # dc_setpoint's only ambiguous branch is "pu" (DC_VOLTAGE/DC_VOLTAGE_DROOP +
+    # DEVICE_BASE); "MW" (DC_POWER) is unambiguous.
+    ("InterconnectingConverter", "dc_setpoint") => "Voltage",
     # DC-voltage droop gain (dV/dP); modeled on the same pu base as a series
     # resistance, matching the "droop resistance" convention in DC-grid droop
     # control literature.
@@ -241,10 +245,18 @@ const QUANTITY_OVERRIDES = Dict(
     ("TwoTerminalLCCLine", "scheduled_dc_voltage") => "Voltage",
     ("TwoTerminalLCCLine", "switch_mode_voltage") => "Voltage",
 
-    # Same nested-discriminator situation as InterconnectingConverter.ac_setpoint
-    # above: only the AC_REACTIVE_POWER ("1") branch reaches this override.
-    ("TwoTerminalVSCLine", "ac_setpoint_from") => "PowerFactor",
-    ("TwoTerminalVSCLine", "ac_setpoint_to") => "PowerFactor",
+    # Nested discriminator with two differently-ambiguous branches: "1"
+    # (AC_REACTIVE_POWER) reads as a power factor, "pu" (AC_VOLTAGE +
+    # DEVICE_BASE) reads as a per-unit voltage. One quantity per property is not
+    # enough here, so the value is a per-unit-string map instead of a bare name.
+    ("TwoTerminalVSCLine", "ac_setpoint_from") =>
+        Dict("1" => "PowerFactor", "pu" => "Voltage"),
+    ("TwoTerminalVSCLine", "ac_setpoint_to") =>
+        Dict("1" => "PowerFactor", "pu" => "Voltage"),
+    # dc_setpoint_from/to's only ambiguous branch is "pu" (DC_VOLTAGE/
+    # DC_VOLTAGE_DROOP + DEVICE_BASE); "MW" (DC_POWER) is unambiguous.
+    ("TwoTerminalVSCLine", "dc_setpoint_from") => "Voltage",
+    ("TwoTerminalVSCLine", "dc_setpoint_to") => "Voltage",
     # DC-voltage droop gain (dV/dP); same convention as
     # InterconnectingConverter.dc_voltage_droop above.
     ("TwoTerminalVSCLine", "dc_voltage_droop_from") => "Resistance",
@@ -303,12 +315,34 @@ function resolve_quantity(by_unit, type_name, prop, unit)
     # own.
     key = (String(type_name), String(prop))
     if haskey(QUANTITY_OVERRIDES, key)
-        return QUANTITY_OVERRIDES[key]
+        return resolve_override(QUANTITY_OVERRIDES[key], type_name, prop, unit)
     end
     error(
         "$type_name.$prop declares ambiguous x-unit=\"$unit\" across quantities " *
         "[$(join(quantities, ", "))]. " *
         "Add (\"$type_name\", \"$prop\") to QUANTITY_OVERRIDES.",
+    )
+end
+
+"""
+A `QUANTITY_OVERRIDES` entry is either a single quantity name -- every
+ambiguous unit on that property means the same quantity -- or a
+`Dict{String, String}` from ambiguous unit to quantity, for a property whose
+branches disagree: a VSC setpoint reads as a power factor on one control mode
+and a per-unit voltage on another, so "1" and "pu" need different answers on
+the same property.
+"""
+function resolve_override(override::AbstractString, type_name, prop, unit)
+    return override
+end
+
+function resolve_override(override::AbstractDict, type_name, prop, unit)
+    if haskey(override, unit)
+        return override[unit]
+    end
+    error(
+        "$type_name.$prop declares ambiguous x-unit=\"$unit\" with no override entry " *
+        "for that unit (existing entries cover $(join(sort(collect(keys(override))), ", "))).",
     )
 end
 
@@ -375,37 +409,95 @@ function emit_fixed(io, prefix, type_name, prop, unit, quantity)
 end
 
 """
-Emit instance-dispatched unit and quantity accessors for an `x-units` property.
+One resolved `x-units` branch: either a leaf (a concrete unit/quantity pair)
+or a nested branch (its own discriminator sibling with its own set of leaf or
+further-nested branches). The VSC converter setpoints are the two-level case
+in the schema today, but the walk below does not assume a depth of two --
+`x-units` values are resolved recursively to whatever depth the schema uses.
+"""
+struct LeafBranch
+    key::String
+    unit::String
+    quantity::String
+end
 
-Both vary with the discriminator, not just the unit: TransformerCircuit's
-controlled_quantity_limits maps to pu / MVAr / MW, which are Voltage,
-ReactivePower and ActivePower respectively.
+struct NestedBranch
+    key::String
+    discriminator::String
+    branches::Vector{Any}
+end
+
+build_branch(by_unit, type_name, prop, key, unit::AbstractString) = LeafBranch(
+    key,
+    String(unit),
+    resolve_quantity(by_unit, type_name, prop, String(unit)),
+)
+
+function build_branch(by_unit, type_name, prop, key, nested::AbstractDict)
+    disc = nested["x-unit-discriminator"]
+    return NestedBranch(
+        key,
+        disc,
+        build_branches(by_unit, type_name, prop, nested["x-units"]),
+    )
+end
+
+function build_branches(by_unit, type_name, prop, xunits)
+    branches = Any[]
+    for (key, value) in pairs(xunits)
+        push!(branches, build_branch(by_unit, type_name, prop, String(key), value))
+    end
+    return branches
+end
+
+leaf_value(b::LeafBranch, ::Val{:unit}) = b.unit
+leaf_value(b::LeafBranch, ::Val{:quantity}) = b.quantity
+
+function emit_branch_interior(io, type_name, prop, b::LeafBranch, kind, level)
+    pad = "    "^level
+    println(io, "$(pad)return \"$(leaf_value(b, kind))\"")
+    return
+end
+
+function emit_branch_interior(io, type_name, prop, b::NestedBranch, kind, level)
+    emit_branches(io, type_name, prop, b.branches, b.discriminator, kind, level)
+    pad = "    "^level
+    println(
+        io,
+        "$(pad)error(\"$type_name.$prop: no unit declared for $(b.discriminator)=\$(o.$(b.discriminator))\")",
+    )
+    return
+end
+
+function emit_branches(io, type_name, prop, branches, disc, kind, level)
+    pad = "    "^level
+    for b in branches
+        println(io, "$(pad)if string(o.$disc) == \"$(b.key)\"")
+        emit_branch_interior(io, type_name, prop, b, kind, level + 1)
+        println(io, "$(pad)end")
+    end
+    return
+end
+
+"""
+Emit instance-dispatched unit and quantity accessors for an `x-units`
+property, recursing through any nested discriminators. TransformerCircuit's
+controlled_quantity_limits (flat) maps pu / MVAr / MW to Voltage,
+ReactivePower and ActivePower; a VSC converter setpoint (nested) additionally
+resolves an inner voltage-basis discriminator for its voltage-control
+branches.
 """
 function emit_discriminated(io, prefix, by_unit, type_name, prop, spec)
     disc = spec["x-unit-discriminator"]
-    branches = Tuple{String, String, String}[]
-    for (key, unit) in pairs(spec["x-units"])
-        # Nested discriminators are not flattened. Leaving them out means the
-        # generated if-chain falls through to an error, which is correct: we
-        # cannot determine the unit without resolving the inner discriminator.
-        if !(unit isa AbstractString)
-            continue
-        end
-        quantity = resolve_quantity(by_unit, type_name, prop, String(unit))
-        push!(branches, (String(key), String(unit), quantity))
-    end
+    branches = build_branches(by_unit, type_name, prop, spec["x-units"])
     if isempty(branches)
         return false
     end
 
     println(io, "$(prefix)has_declared_unit(::Type{$type_name}, ::Val{:$prop}) = true")
-    for (accessor, index) in (("declared_unit", 2), ("declared_quantity", 3))
+    for (accessor, kind) in (("declared_unit", Val(:unit)), ("declared_quantity", Val(:quantity)))
         println(io, "function $(prefix)$(accessor)(o::$type_name, ::Val{:$prop})")
-        for branch in branches
-            println(io, "    if string(o.$disc) == \"$(branch[1])\"")
-            println(io, "        return \"$(branch[index])\"")
-            println(io, "    end")
-        end
+        emit_branches(io, type_name, prop, branches, disc, kind, 1)
         println(
             io,
             "    error(\"$type_name.$prop: no unit declared for $disc=\$(o.$disc)\")",
