@@ -115,7 +115,7 @@ const QUANTITY_OVERRIDES = Dict(
     ("HydroTurbine", "powerhouse_elevation") => "Elevation",
 
     # Nested discriminator, same shape as TwoTerminalVSCLine.ac_setpoint_from
-    # above: "1" (AC_REACTIVE_POWER) is a power factor, "pu" (AC_VOLTAGE +
+    # below: "1" (AC_REACTIVE_POWER) is a power factor, "pu" (AC_VOLTAGE +
     # DEVICE_BASE) is a per-unit voltage — two different target quantities for
     # the two ambiguous units on this one property.
     ("InterconnectingConverter", "ac_setpoint") =>
@@ -409,11 +409,11 @@ function emit_fixed(io, prefix, type_name, prop, unit, quantity)
 end
 
 """
-One resolved `x-units` branch: either a leaf (a concrete unit/quantity pair)
-or a nested branch (its own discriminator sibling with its own set of leaf or
-further-nested branches). The VSC converter setpoints are the two-level case
-in the schema today, but the walk below does not assume a depth of two --
-`x-units` values are resolved recursively to whatever depth the schema uses.
+One resolved `x-units` branch that bottoms out at a concrete unit/quantity
+pair, keyed by its own discriminator value. Paired with `NestedBranch` below;
+together they let the walk resolve an `x-units` map recursively to whatever
+depth the schema uses (two levels for every property today, but the walk
+does not assume that).
 """
 struct LeafBranch
     key::String
@@ -421,6 +421,13 @@ struct LeafBranch
     quantity::String
 end
 
+"""
+One resolved `x-units` branch whose value is itself a nested
+`{x-unit-discriminator, x-units}` object rather than a leaf unit string --
+the VSC converter setpoints are the schema's current example, where the
+control-mode discriminator selects a further `voltage_units` discriminator
+for its voltage-control branches.
+"""
 struct NestedBranch
     key::String
     discriminator::String
