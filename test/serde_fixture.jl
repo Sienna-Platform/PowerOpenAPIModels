@@ -64,3 +64,33 @@ const SERDE_FIXTURES = (
         end
     end
 end
+
+@testset "DEVICE_BASE actually converts from NATURAL_UNITS" begin
+    # Regression for the gap this vendoring round fixed: the previously-vendored
+    # DEVICE_BASE fixture was byte-identical to NATURAL_UNITS except for the
+    # `unit_system` tag itself, so nothing above (which reads one fixture at a time)
+    # would have caught a regression back to that state. Line.rating (ApparentPower,
+    # MVA, no per-field unit-basis discriminator) is genuinely per-unit-on-own-base_power
+    # in DEVICE_BASE: assert the documented physical relationship directly, across
+    # every line, and that at least one actually differs numerically.
+    natural = PowerCoreOpenAPIModels.read_document(
+        joinpath(SERDE_FIXTURE_DIR, "case14_operations.NATURAL_UNITS.json"),
+    )
+    device = PowerCoreOpenAPIModels.read_document(
+        joinpath(SERDE_FIXTURE_DIR, "case14_operations.DEVICE_BASE.json"),
+    )
+    natural_lines =
+        Dict(l.id => l for l in PowerCoreOpenAPIModels.get_components(natural, "Line"))
+    device_lines =
+        Dict(l.id => l for l in PowerCoreOpenAPIModels.get_components(device, "Line"))
+    @test keys(natural_lines) == keys(device_lines)
+    differed = 0
+    for (id, nat) in natural_lines
+        dev = device_lines[id]
+        @test dev.rating ≈ nat.rating / nat.base_power
+        if dev.rating != nat.rating
+            differed += 1
+        end
+    end
+    @test differed > 0
+end
