@@ -325,12 +325,10 @@ function resolve_quantity(by_unit, type_name, prop, unit)
 end
 
 """
-A `QUANTITY_OVERRIDES` entry is either a single quantity name -- every
-ambiguous unit on that property means the same quantity -- or a
-`Dict{String, String}` from ambiguous unit to quantity, for a property whose
-branches disagree: a VSC setpoint reads as a power factor on one control mode
-and a per-unit voltage on another, so "1" and "pu" need different answers on
-the same property.
+A `QUANTITY_OVERRIDES` entry is either a single quantity name — every ambiguous
+unit on that property means the same quantity — or a unit-to-quantity `Dict`,
+for a property whose branches disagree: a VSC setpoint reads as a power factor
+on one control mode and a per-unit voltage on another.
 """
 function resolve_override(override::AbstractString, type_name, prop, unit)
     return override
@@ -410,10 +408,9 @@ end
 
 """
 One resolved `x-units` branch that bottoms out at a concrete unit/quantity
-pair, keyed by its own discriminator value. Paired with `NestedBranch` below;
-together they let the walk resolve an `x-units` map recursively to whatever
-depth the schema uses (two levels for every property today, but the walk
-does not assume that).
+pair, keyed by its own discriminator value. With `NestedBranch` below, this
+lets the walk resolve an `x-units` map to any depth, not just the two levels
+every property uses today.
 """
 struct LeafBranch
     key::String
@@ -423,10 +420,9 @@ end
 
 """
 One resolved `x-units` branch whose value is itself a nested
-`{x-unit-discriminator, x-units}` object rather than a leaf unit string --
-the VSC converter setpoints are the schema's current example, where the
-control-mode discriminator selects a further `voltage_units` discriminator
-for its voltage-control branches.
+`{x-unit-discriminator, x-units}` object rather than a leaf unit string — the
+VSC converter setpoints being the schema's current example, where control mode
+selects a further `voltage_units` discriminator on its voltage-control branches.
 """
 struct NestedBranch
     key::String

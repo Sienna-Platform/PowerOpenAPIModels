@@ -122,15 +122,13 @@ Vector} = nothing`. Pydantic on the same document: `limits.default ==
 
 ## Local mechanism: post-processing script (not a template override)
 
-A template-only fix is not viable here, and this is the reason: by the time
-`model.mustache` sees a `$ref`-typed property, `{{defaultValue}}` has already
-been collapsed to the literal string `"nothing"` by
-`AbstractJuliaCodegen.toDefaultValue` (a Java method, run before templating),
-and the schema's actual default object was already dropped from
-`CodegenProperty` before that. No mustache variable on that property (`jsonSchema`,
-`vendorExtensions`, `defaultValue`) carries the composite value forward. A
-template override can only rearrange what the generator's template data
-already contains; it cannot recover data the Java layer discarded first.
+A template-only fix is not viable: by the time `model.mustache` sees a
+`$ref`-typed property, `{{defaultValue}}` has already been collapsed to the
+literal string `"nothing"` by `AbstractJuliaCodegen.toDefaultValue` (Java, run
+before templating), and the schema's actual default object was dropped from
+`CodegenProperty` before that. No mustache variable on that property
+(`jsonSchema`, `vendorExtensions`, `defaultValue`) carries the composite value
+forward, and a template override cannot recover data the Java layer discarded.
 
 So the fix lives in `scripts/materialize_defaults.jl`, run by `make generate`
 immediately after `scripts/reorganize.jl` (same target, so `make generate`
