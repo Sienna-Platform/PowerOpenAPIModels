@@ -392,7 +392,7 @@ function validate_document(doc::SystemDocument)
     all_ids = union(component_ids, attribute_ids)
 
     # attribute_id names a supplemental attribute for a plain-attribute or plant/combined-cycle
-    # row, and a service *component* for a membership row (D10) — so it is checked against the
+    # row, and a service *component* for a membership row — so it is checked against the
     # union, not just attribute_ids. entity_id always names a component: the thing described,
     # or the member contributing to the service.
     for assoc in doc.supplemental_attribute_associations

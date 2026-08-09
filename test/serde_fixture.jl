@@ -1,9 +1,8 @@
 #!/usr/bin/env julia
-# Serde against real PowerFlowFileParser-emitted documents, vendored from SiennaSchemas'
-# schema gap assessment fixtures (byte-identical copies, verified by sha256 at vendor time).
-# Both fixtures are the same 14-bus operations-only case in the two document unit
-# conventions; each has 119 components across 15 type buckets (observed on read, asserted
-# below).
+# Serde against real PowerFlowFileParser-emitted documents, vendored from SiennaSchemas as
+# byte-identical copies (verified by sha256 at vendor time). Both fixtures are the same
+# 14-bus operations-only case in the two document unit conventions; each has 119 components
+# across 15 type buckets (observed on read, asserted below).
 
 const SERDE_FIXTURE_DIR = joinpath(@__DIR__, "fixtures")
 const SERDE_FIXTURE_COMPONENT_COUNT = 119
@@ -66,13 +65,12 @@ const SERDE_FIXTURES = (
 end
 
 @testset "DEVICE_BASE actually converts from NATURAL_UNITS" begin
-    # Regression for the gap this vendoring round fixed: the previously-vendored
-    # DEVICE_BASE fixture was byte-identical to NATURAL_UNITS except for the
-    # `unit_system` tag itself, so nothing above (which reads one fixture at a time)
-    # would have caught a regression back to that state. Line.rating (ApparentPower,
-    # MVA, no per-field unit-basis discriminator) is genuinely per-unit-on-own-base_power
-    # in DEVICE_BASE: assert the documented physical relationship directly, across
-    # every line, and that at least one actually differs numerically.
+    # The two fixtures must differ in more than the `unit_system` tag. Nothing above reads
+    # both at once, so a DEVICE_BASE fixture that is a byte-identical copy of NATURAL_UNITS
+    # would pass every test so far. Line.rating (ApparentPower, MVA, no per-field
+    # unit-basis discriminator) is genuinely per-unit-on-own-base_power in DEVICE_BASE:
+    # assert that physical relationship directly, across every line, and that at least one
+    # line actually differs numerically.
     natural = PowerCoreOpenAPIModels.read_document(
         joinpath(SERDE_FIXTURE_DIR, "case14_operations.NATURAL_UNITS.json"),
     )

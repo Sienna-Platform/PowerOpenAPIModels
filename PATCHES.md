@@ -178,16 +178,11 @@ a Java-side fix will eventually need two changes for, per above).
   Source().active_power_limits.max == 0.0`,
   `SupplyTechnology().requirements == Int64[]` (a `Vector` **is** compared
   by value, so `==` is fine there).
-- `power-openapi-models/scripts/check_cross_language.py --julia
-  <this repo>`: the *values* now agree — every field this patch touches
-  round-trips to the same MW/kV/etc. numbers pydantic produces. The script
-  itself still reports a textual divergence on those fields, because its
-  `normalize_default` compares `str(python_default)` against the literal
-  Julia source text after `=`: `str({'min': 0.9, 'max': 1.1})` (a Python
-  dict repr) can never equal `"MinMax(; max=1.1, min=0.9)"` (valid Julia; a
-  `{...}` dict literal is not — Julia's curly braces are type-parameter
-  syntax) as *strings*, no matter how the value is rendered. This is a
-  known limitation of that checker's text-based comparison, not of this
-  fix; retiring it fully needs a structural (parse-both-sides-into-JSON)
-  comparison in `check_cross_language.py` itself, which lives in the
-  `power-openapi-models` repo and is out of this task's scope.
+- `power-openapi-models/scripts/check_cross_language.py --julia <this repo>`
+  agrees on defaults for every field this patch touches. That checker parses
+  the Julia default source expression into a JSON-comparable value
+  (`parse_julia_expr`) and compares it structurally against pydantic's
+  `model_dump()`, so a rendered `MinMax(; max=1.1, min=0.9)` compares equal
+  to `{'min': 0.9, 'max': 1.1}`. A purely textual comparison could not: a
+  `{...}` dict literal is not valid Julia, since curly braces are
+  type-parameter syntax there.

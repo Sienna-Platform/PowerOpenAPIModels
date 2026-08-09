@@ -12,13 +12,12 @@ Pkg.develop([
     PackageSpec(path="PowerOpenAPIModels.jl"),
 ])
 
-@testset "Packages load" begin
-    @test (using PowerCoreOpenAPIModels; true)
-    @test (using PowerOperationsOpenAPIModels; true)
-    @test (using PowerInvestmentsOpenAPIModels; true)
-    @test (using PowerDynamicsOpenAPIModels; true)
-    @test (using PowerOpenAPIModels; true)
-end
+# A failed `using` throws, so loading the packages is itself the load check.
+using PowerCoreOpenAPIModels
+using PowerOperationsOpenAPIModels
+using PowerInvestmentsOpenAPIModels
+using PowerDynamicsOpenAPIModels
+using PowerOpenAPIModels
 
 @testset "No duplicate type definitions" begin
     pkgs = [
@@ -28,18 +27,19 @@ end
         PowerDynamicsOpenAPIModels,
     ]
     seen = Dict{Symbol, Module}()
+    duplicates = String[]
     for pkg in pkgs
         for name in names(pkg)
             isdefined(pkg, name) || continue
             val = getfield(pkg, name)
             (val isa Type && parentmodule(val) == pkg) || continue
             if haskey(seen, name)
-                error("Type $name defined in both $(seen[name]) and $pkg")
+                push!(duplicates, "$name in both $(seen[name]) and $pkg")
             end
             seen[name] = pkg
         end
     end
-    @test true
+    @test isempty(duplicates)
 end
 
 const SCHEMA_DIR = get(ENV, "SCHEMA_DIR", joinpath(dirname(@__DIR__), "..", "SiennaSchemas"))
