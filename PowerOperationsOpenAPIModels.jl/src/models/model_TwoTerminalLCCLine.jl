@@ -46,7 +46,7 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
         active_power_limits_to=MinMax(; max=0.0, min=0.0),
         reactive_power_limits_from=MinMax(; max=0.0, min=0.0),
         reactive_power_limits_to=MinMax(; max=0.0, min=0.0),
-        loss=TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)),
+        loss=TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))),
         base_power=nothing,
     )
 
@@ -134,7 +134,7 @@ Base.@kwdef mutable struct TwoTerminalLCCLine <: OpenAPI.APIModel
     active_power_limits_to = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_from = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_to = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
-    loss = TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)) # spec type: Union{ Nothing, TwoTerminalLoss }
+    loss = TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))) # spec type: Union{ Nothing, TwoTerminalLoss }
     base_power::Union{Nothing, Float64} = nothing
 
     function TwoTerminalLCCLine(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )

@@ -15,7 +15,7 @@ A High Voltage DC line, which must be connected to an ACBus on each end. This mo
         active_power_limits_to=nothing,
         reactive_power_limits_from=nothing,
         reactive_power_limits_to=nothing,
-        loss=TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)),
+        loss=TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))),
         base_power=nothing,
     )
 
@@ -41,7 +41,7 @@ Base.@kwdef mutable struct TwoTerminalGenericHVDCLine <: OpenAPI.APIModel
     active_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_from = nothing # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
-    loss = TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0)) # spec type: Union{ Nothing, TwoTerminalLoss }
+    loss = TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))) # spec type: Union{ Nothing, TwoTerminalLoss }
     base_power::Union{Nothing, Float64} = nothing
 
     function TwoTerminalGenericHVDCLine(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )

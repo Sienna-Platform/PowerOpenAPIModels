@@ -18,7 +18,7 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
         reactive_power_limits=nothing,
         dc_current=0.0,
         max_dc_current=100000000,
-        loss_function=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0),
+        loss_function=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
         dc_control="DC_VOLTAGE",
         ac_control="AC_REACTIVE_POWER",
         voltage_setpoint_units="DEVICE_BASE",
@@ -70,7 +70,7 @@ Base.@kwdef mutable struct InterconnectingConverter <: OpenAPI.APIModel
     reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     dc_current::Union{Nothing, Float64} = 0.0
     max_dc_current::Union{Nothing, Float64} = 100000000
-    loss_function = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0) # spec type: Union{ Nothing, InputOutputCurve }
+    loss_function = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
     dc_control::Union{Nothing, String} = "DC_VOLTAGE"
     ac_control::Union{Nothing, String} = "AC_REACTIVE_POWER"
     voltage_setpoint_units::Union{Nothing, String} = "DEVICE_BASE"

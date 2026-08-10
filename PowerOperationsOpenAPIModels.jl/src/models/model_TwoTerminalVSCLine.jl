@@ -22,7 +22,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
         ac_control_from="AC_VOLTAGE",
         dc_setpoint_from=0.0,
         ac_setpoint_from=1.0,
-        converter_loss_from=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0),
+        converter_loss_from=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
         max_dc_current_from=100000000,
         rating_from=100000000,
         reactive_power_limits_from=MinMax(; max=0.0, min=0.0),
@@ -35,7 +35,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
         ac_control_to="AC_VOLTAGE",
         dc_setpoint_to=0.0,
         ac_setpoint_to=1.0,
-        converter_loss_to=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0),
+        converter_loss_to=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
         max_dc_current_to=100000000,
         rating_to=100000000,
         reactive_power_limits_to=MinMax(; max=0.0, min=0.0),
@@ -110,7 +110,7 @@ Base.@kwdef mutable struct TwoTerminalVSCLine <: OpenAPI.APIModel
     ac_control_from::Union{Nothing, String} = "AC_VOLTAGE"
     dc_setpoint_from::Union{Nothing, Float64} = 0.0
     ac_setpoint_from::Union{Nothing, Float64} = 1.0
-    converter_loss_from = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0) # spec type: Union{ Nothing, InputOutputCurve }
+    converter_loss_from = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
     max_dc_current_from::Union{Nothing, Float64} = 100000000
     rating_from::Union{Nothing, Float64} = 100000000
     reactive_power_limits_from = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
@@ -123,7 +123,7 @@ Base.@kwdef mutable struct TwoTerminalVSCLine <: OpenAPI.APIModel
     ac_control_to::Union{Nothing, String} = "AC_VOLTAGE"
     dc_setpoint_to::Union{Nothing, Float64} = 0.0
     ac_setpoint_to::Union{Nothing, Float64} = 1.0
-    converter_loss_to = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0) # spec type: Union{ Nothing, InputOutputCurve }
+    converter_loss_to = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
     max_dc_current_to::Union{Nothing, Float64} = 100000000
     rating_to::Union{Nothing, Float64} = 100000000
     reactive_power_limits_to = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }

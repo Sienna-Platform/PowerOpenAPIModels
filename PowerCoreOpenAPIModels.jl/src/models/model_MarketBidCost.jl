@@ -7,9 +7,9 @@ Cost representation for static (non-time-varying) market bids of energy and anci
 
     MarketBidCost(;
         cost_type="MARKET_BID",
-        no_load_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0),
+        no_load_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
         start_up=nothing,
-        shut_down=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0),
+        shut_down=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
         incremental_offer_curves=nothing,
         decremental_offer_curves=nothing,
         ancillary_service_offers=nothing,
@@ -25,9 +25,9 @@ Cost representation for static (non-time-varying) market bids of energy and anci
 """
 Base.@kwdef mutable struct MarketBidCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "MARKET_BID"
-    no_load_cost = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0) # spec type: Union{ Nothing, InputOutputCurve }
+    no_load_cost = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
     start_up = nothing # spec type: Union{ Nothing, StartUpStages }
-    shut_down = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)), input_at_zero=0.0) # spec type: Union{ Nothing, InputOutputCurve }
+    shut_down = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
     incremental_offer_curves = nothing # spec type: Union{ Nothing, CostCurve }
     decremental_offer_curves = nothing # spec type: Union{ Nothing, CostCurve }
     ancillary_service_offers::Union{Nothing, Vector{Int64}} = nothing
