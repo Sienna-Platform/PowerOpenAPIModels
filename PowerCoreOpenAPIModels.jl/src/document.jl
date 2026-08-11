@@ -106,6 +106,14 @@ type — which is why a bus number cannot double as an id.
 document omits them; the schema marks all four optional, and a consumer with its own default
 (PowerSystems' `System` frequency, for instance) should apply it rather than have this
 container invent one.
+
+`plant_associations`, `combined_cycle_associations`, and `service_associations` are untyped
+`Vector{OpenAPI.APIModel}`, like `components`: `PlantAssociation`, `CombinedCycleAssociation`,
+and `ServiceAssociation` are Operations-layer generated types, and this Core package cannot
+depend on Operations. Callers construct the concrete row and hand it to
+[`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref), or
+[`add_service_association!`](@ref); deserialization resolves the concrete type through the
+same [`model_type`](@ref) registry `components` uses.
 """
 struct SystemDocument
     base_power::Float64
@@ -116,6 +124,9 @@ struct SystemDocument
     components::Dict{String, Vector}
     supplemental_attributes::Vector{OpenAPI.APIModel}
     supplemental_attribute_associations::Vector{SupplementalAttributeAssociation}
+    plant_associations::Vector{OpenAPI.APIModel}
+    combined_cycle_associations::Vector{OpenAPI.APIModel}
+    service_associations::Vector{OpenAPI.APIModel}
     time_series_associations::Vector{TimeSeriesAssociation}
     ext::Dict{Int, Dict{String, Any}}
     time_series_storage_file::Union{Nothing, String}
@@ -156,6 +167,9 @@ function SystemDocument(
         Dict{String, Vector}(),
         Vector{OpenAPI.APIModel}(),
         Vector{SupplementalAttributeAssociation}(),
+        Vector{OpenAPI.APIModel}(),
+        Vector{OpenAPI.APIModel}(),
+        Vector{OpenAPI.APIModel}(),
         Vector{TimeSeriesAssociation}(),
         Dict{Int, Dict{String, Any}}(),
         _optional_string(time_series_storage_file),
@@ -167,8 +181,6 @@ _optional_float(::Nothing) = nothing
 _optional_float(value::Real) = Float64(value)
 _optional_string(::Nothing) = nothing
 _optional_string(value::AbstractString) = String(value)
-_optional_int(::Nothing) = nothing
-_optional_int(value::Integer) = Int(value)
 
 get_base_power(doc::SystemDocument) = doc.base_power
 get_unit_system(doc::SystemDocument) = doc.unit_system
@@ -247,17 +259,15 @@ Attributes are held in one flat list rather than bucketed by type: nothing itera
 type, and the association carries both the link and the `attribute_type` a reader needs to
 pick a converter.
 
-`group_index` and `role` cover the plant-family and service-membership shapes that used to be
-separate tables (`PlantAssociation`, `CombinedCycleAssociation`, `ServiceAssociation`): the
-shaft/penstock/PCC/HRSG/exclusion-group number and the CT/CA role, when the attribute needs
-them. Both stay `nothing` for a plain attribute like `EmissionsData` or `GeographicInfo`.
+Plant-family groupings (shaft/penstock/PCC/exclusion-group) and combined-cycle HRSG
+assignments are recorded separately, via [`add_plant_association!`](@ref) and
+[`add_combined_cycle_association!`](@ref); service membership via
+[`add_service_association!`](@ref). None of the three reuses this table.
 """
 function add_supplemental_attribute!(
     doc::SystemDocument,
     attribute::OpenAPI.APIModel,
-    entity_id::Integer;
-    group_index::Union{Nothing, Integer}=nothing,
-    role::Union{Nothing, AbstractString}=nothing,
+    entity_id::Integer,
 )
     push!(doc.supplemental_attributes, attribute)
     push!(
@@ -266,10 +276,62 @@ function add_supplemental_attribute!(
             attribute_id=_model_id(attribute),
             entity_id=Int(entity_id),
             attribute_type=string(nameof(typeof(attribute))),
-            group_index=_optional_int(group_index),
-            role=_optional_string(role),
         ),
     )
+    return nothing
+end
+
+"""
+Record a plant-family group membership: `assoc` is a caller-constructed `PlantAssociation`
+naming the shaft (ThermalPowerPlant), penstock (HydroPowerPlant), PCC (RenewablePowerPlant),
+or exclusion group (CombinedCycleFractional) an entity belongs to.
+
+Generic over `T <: OpenAPI.APIModel`, like [`add_component!`](@ref): `PlantAssociation` is an
+Operations-layer type this Core package does not depend on, so the caller — which does —
+builds the row.
+"""
+function add_plant_association!(doc::SystemDocument, assoc::T) where {T <: OpenAPI.APIModel}
+    push!(doc.plant_associations, assoc)
+    return nothing
+end
+
+"""
+Record that a CT or CA unit feeds one HRSG within a CombinedCycleBlock plant: `assoc` is a
+caller-constructed `CombinedCycleAssociation`.
+
+Generic over `T <: OpenAPI.APIModel`, for the same reason as [`add_plant_association!`](@ref).
+"""
+function add_combined_cycle_association!(
+    doc::SystemDocument,
+    assoc::T,
+) where {T <: OpenAPI.APIModel}
+    push!(doc.combined_cycle_associations, assoc)
+    return nothing
+end
+
+"""
+Record that `assoc` (a caller-constructed `ServiceAssociation`) links a service to one
+member contributing to it: a Device, a Branch, or another Service.
+
+One row per (service, member) pair. Duplicate pairs are rejected rather than collapsed:
+eligibility rules overlap, so the same device matching one reserve twice means a malformed
+rule set rather than something to silently merge. Generic over `T <: OpenAPI.APIModel` for the
+same reason as [`add_plant_association!`](@ref); `service_id`/`entity_id` are read by
+property access rather than a concrete type annotation.
+"""
+function add_service_association!(doc::SystemDocument, assoc::T) where {T <: OpenAPI.APIModel}
+    service_id = assoc.service_id
+    entity_id = assoc.entity_id
+    for existing in doc.service_associations
+        if existing.service_id == service_id && existing.entity_id == entity_id
+            throw(
+                DocumentFormatError(
+                    "duplicate service membership: service_id=$service_id entity_id=$entity_id",
+                ),
+            )
+        end
+    end
+    push!(doc.service_associations, assoc)
     return nothing
 end
 
@@ -391,13 +453,9 @@ function validate_document(doc::SystemDocument)
     end
     all_ids = union(component_ids, attribute_ids)
 
-    # attribute_id names a supplemental attribute for a plain-attribute or plant/combined-cycle
-    # row, and a service *component* for a membership row — so it is checked against the
-    # union, not just attribute_ids. entity_id always names a component: the thing described,
-    # or the member contributing to the service.
     for assoc in doc.supplemental_attribute_associations
         _check_ref(
-            all_ids,
+            attribute_ids,
             assoc.attribute_id,
             "SupplementalAttributeAssociation",
             "entity_id=$(assoc.entity_id)",
@@ -407,6 +465,54 @@ function validate_document(doc::SystemDocument)
             assoc.entity_id,
             "SupplementalAttributeAssociation",
             "attribute_id=$(assoc.attribute_id)",
+        )
+    end
+
+    for assoc in doc.plant_associations
+        _check_ref(
+            attribute_ids,
+            assoc.plant_id,
+            "PlantAssociation",
+            "entity_id=$(assoc.entity_id)",
+        )
+        _check_ref(
+            component_ids,
+            assoc.entity_id,
+            "PlantAssociation",
+            "plant_id=$(assoc.plant_id)",
+        )
+    end
+
+    for assoc in doc.combined_cycle_associations
+        _check_ref(
+            attribute_ids,
+            assoc.plant_id,
+            "CombinedCycleAssociation",
+            "entity_id=$(assoc.entity_id)",
+        )
+        _check_ref(
+            component_ids,
+            assoc.entity_id,
+            "CombinedCycleAssociation",
+            "plant_id=$(assoc.plant_id)",
+        )
+    end
+
+    # service_id and entity_id both name components: services are components (AGC,
+    # OnlineReserve, GroupReserve, ...), and entity_id may be a Device, a Branch, or another
+    # Service, none of which is a supplemental attribute.
+    for assoc in doc.service_associations
+        _check_ref(
+            component_ids,
+            assoc.service_id,
+            "ServiceAssociation",
+            "entity_id=$(assoc.entity_id)",
+        )
+        _check_ref(
+            component_ids,
+            assoc.entity_id,
+            "ServiceAssociation",
+            "service_id=$(assoc.service_id)",
         )
     end
 
@@ -457,6 +563,9 @@ function document_tree(doc::SystemDocument)
         "supplemental_attributes" => doc.supplemental_attributes,
         "supplemental_attribute_associations" =>
             doc.supplemental_attribute_associations,
+        "plant_associations" => doc.plant_associations,
+        "combined_cycle_associations" => doc.combined_cycle_associations,
+        "service_associations" => doc.service_associations,
         "time_series_associations" => doc.time_series_associations,
         # Keyed by component id, which is unique across every type.
         "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
@@ -558,6 +667,24 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
             SupplementalAttributeAssociation,
             _require(raw, "supplemental_attribute_associations", source),
         ),
+    )
+    # PlantAssociation/CombinedCycleAssociation/ServiceAssociation are Operations-layer
+    # types this Core package cannot name directly, so the concrete type is resolved through
+    # the same runtime registry `components` uses.
+    append!(
+        doc.plant_associations,
+        _rows(model_type("PlantAssociation"), _require(raw, "plant_associations", source)),
+    )
+    append!(
+        doc.combined_cycle_associations,
+        _rows(
+            model_type("CombinedCycleAssociation"),
+            _require(raw, "combined_cycle_associations", source),
+        ),
+    )
+    append!(
+        doc.service_associations,
+        _rows(model_type("ServiceAssociation"), _require(raw, "service_associations", source)),
     )
     append!(
         doc.time_series_associations,

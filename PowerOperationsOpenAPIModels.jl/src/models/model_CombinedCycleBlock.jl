@@ -3,7 +3,7 @@
 
 
 @doc raw"""CombinedCycleBlock
-Attribute to represent combined cycle generation by block configuration that shares heat recovery conversions. CT and CA unit assignments to HRSGs are recorded as SupplementalAttributeAssociation rows, with group_index the HRSG index and role CT or CA.
+Attribute to represent combined cycle generation by block configuration that shares heat recovery conversions. CT and CA unit assignments to HRSGs are recorded as CombinedCycleAssociation rows.
 
     CombinedCycleBlock(;
         id=nothing,

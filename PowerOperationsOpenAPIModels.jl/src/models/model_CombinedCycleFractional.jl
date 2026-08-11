@@ -3,7 +3,7 @@
 
 
 @doc raw"""CombinedCycleFractional
-Attribute to represent combined cycle generation when each unit represents a specific configuration and aggregate heat rate. Operation exclusion groups (only units in the same group can operate simultaneously) are recorded as SupplementalAttributeAssociation rows, with group_index the exclusion group number.
+Attribute to represent combined cycle generation when each unit represents a specific configuration and aggregate heat rate. Operation exclusion groups (only units in the same group can operate simultaneously) are recorded as PlantAssociation rows with role&#x3D;&#39;exclusion&#39;.
 
     CombinedCycleFractional(;
         id=nothing,

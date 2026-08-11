@@ -3,7 +3,7 @@
 
 
 @doc raw"""HydroPowerPlant
-Attribute to represent hydro power plants. Shared penstocks between units are recorded as SupplementalAttributeAssociation rows, with group_index the penstock number.
+Attribute to represent hydro power plants. Shared penstocks between units are recorded as PlantAssociation rows with role&#x3D;&#39;penstock&#39;.
 
     HydroPowerPlant(;
         id=nothing,
