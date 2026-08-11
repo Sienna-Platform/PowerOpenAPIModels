@@ -10,6 +10,7 @@ A reserve product met by a group of individual reserves. The group requirement i
         name=nothing,
         available=nothing,
         requirement=nothing,
+        variable=nothing,
         reserve_direction=nothing,
     )
 
@@ -17,6 +18,7 @@ A reserve product met by a group of individual reserves. The group requirement i
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - requirement::Float64 : The value of required reserves. Units: MW.
+    - variable::CostCurve
     - reserve_direction::String : Whether the reserve is an upward, downward, or symmetric reserve product.
 """
 Base.@kwdef mutable struct GroupReserve <: OpenAPI.APIModel
@@ -24,16 +26,17 @@ Base.@kwdef mutable struct GroupReserve <: OpenAPI.APIModel
     name::Union{Nothing, String} = nothing
     available::Union{Nothing, Bool} = nothing
     requirement::Union{Nothing, Float64} = nothing
+    variable = nothing # spec type: Union{ Nothing, CostCurve }
     reserve_direction::Union{Nothing, String} = nothing
 
-    function GroupReserve(id, name, available, requirement, reserve_direction, )
-        o = new(id, name, available, requirement, reserve_direction, )
+    function GroupReserve(id, name, available, requirement, variable, reserve_direction, )
+        o = new(id, name, available, requirement, variable, reserve_direction, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type GroupReserve
 
-const _property_types_GroupReserve = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("requirement")=>"Float64", Symbol("reserve_direction")=>"String", )
+const _property_types_GroupReserve = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("requirement")=>"Float64", Symbol("variable")=>"CostCurve", Symbol("reserve_direction")=>"String", )
 OpenAPI.property_type(::Type{ GroupReserve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_GroupReserve[name]))}
 
 function OpenAPI.check_required(o::GroupReserve)
@@ -50,10 +53,12 @@ function OpenAPI.validate_properties(o::GroupReserve)
     OpenAPI.validate_property(GroupReserve, Symbol("name"), o.name)
     OpenAPI.validate_property(GroupReserve, Symbol("available"), o.available)
     OpenAPI.validate_property(GroupReserve, Symbol("requirement"), o.requirement)
+    OpenAPI.validate_property(GroupReserve, Symbol("variable"), o.variable)
     OpenAPI.validate_property(GroupReserve, Symbol("reserve_direction"), o.reserve_direction)
 end
 
 function OpenAPI.validate_property(::Type{ GroupReserve }, name::Symbol, val)
+
 
 
 
