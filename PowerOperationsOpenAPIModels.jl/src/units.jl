@@ -212,6 +212,9 @@ PowerCoreOpenAPIModels.declared_quantity(::Type{FACTSControlDevice}, ::Val{:reac
 PowerCoreOpenAPIModels.has_declared_unit(::Type{FACTSControlDevice}, ::Val{:regulated_bus_number}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{FACTSControlDevice}, ::Val{:regulated_bus_number}) = "1"
 PowerCoreOpenAPIModels.declared_quantity(::Type{FACTSControlDevice}, ::Val{:regulated_bus_number}) = "Dimensionless"
+PowerCoreOpenAPIModels.has_declared_unit(::Type{FACTSControlDevice}, ::Val{:base_power}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{FACTSControlDevice}, ::Val{:base_power}) = "MVA"
+PowerCoreOpenAPIModels.declared_quantity(::Type{FACTSControlDevice}, ::Val{:base_power}) = "ApparentPower"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{FixedAdmittance}, ::Val{:Y}) = true
 function PowerCoreOpenAPIModels.declared_unit(o::FixedAdmittance, ::Val{:Y})
     if string(o.admittance_units) == "NATURAL_UNITS"
@@ -231,6 +234,9 @@ function PowerCoreOpenAPIModels.declared_quantity(o::FixedAdmittance, ::Val{:Y})
     end
     error("FixedAdmittance.Y: no unit declared for admittance_units=$(o.admittance_units)")
 end
+PowerCoreOpenAPIModels.has_declared_unit(::Type{FixedAdmittance}, ::Val{:base_power}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{FixedAdmittance}, ::Val{:base_power}) = "MVA"
+PowerCoreOpenAPIModels.declared_quantity(::Type{FixedAdmittance}, ::Val{:base_power}) = "ApparentPower"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{GroupReserve}, ::Val{:requirement}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{GroupReserve}, ::Val{:requirement}) = "MW"
 PowerCoreOpenAPIModels.declared_quantity(::Type{GroupReserve}, ::Val{:requirement}) = "ActivePower"

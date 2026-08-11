@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [default to nothing]
 **`admittance_units`** | **`String`** | Unit basis for the shunt admittance Y. DEVICE_MVAR is PSS/E RAW native (Mvar/MW at unity voltage). | [optional] [default to "DEVICE_MVAR"]
 **`Y`** | [**`*ComplexNumber`**](ComplexNumber.md) |  | [default to nothing]
+**`base_power`** | **`Float64`** | System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [default to nothing]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection model for admittance, if any. | [optional] [default to nothing]
 
 

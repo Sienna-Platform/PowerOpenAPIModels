@@ -18,6 +18,7 @@ Facts control devices.  Most often used in AC power flow studies as a control of
         max_reactive_power=9999.0,
         shunt_control_type="STATCOM",
         regulated_bus_number=0,
+        base_power=nothing,
         dynamic_injector=nothing,
     )
 
@@ -33,6 +34,7 @@ Facts control devices.  Most often used in AC power flow studies as a control of
     - max_reactive_power::Float64 : Independent maximum reactive power ceiling; the device reactive limit is min(the current/susceptance law on max_shunt_current, this value). Non-binding at the 9999.0 default.
     - shunt_control_type::String : Device class selecting the reactive-limit law (SVC vs STATCOM).
     - regulated_bus_number::Int64 : Bus whose voltage this device regulates; 0 means local (sending) bus (PSS/E FCREG). Units: 1.
+    - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection model for FACTS control device, if any.
 """
 Base.@kwdef mutable struct FACTSControlDevice <: OpenAPI.APIModel
@@ -48,16 +50,17 @@ Base.@kwdef mutable struct FACTSControlDevice <: OpenAPI.APIModel
     max_reactive_power::Union{Nothing, Float64} = 9999.0
     shunt_control_type::Union{Nothing, String} = "STATCOM"
     regulated_bus_number::Union{Nothing, Int64} = 0
+    base_power::Union{Nothing, Float64} = nothing
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function FACTSControlDevice(name, id, available, bus, control_mode, voltage_setpoint_units, voltage_setpoint, max_shunt_current, reactive_power_required, max_reactive_power, shunt_control_type, regulated_bus_number, dynamic_injector, )
-        o = new(name, id, available, bus, control_mode, voltage_setpoint_units, voltage_setpoint, max_shunt_current, reactive_power_required, max_reactive_power, shunt_control_type, regulated_bus_number, dynamic_injector, )
+    function FACTSControlDevice(name, id, available, bus, control_mode, voltage_setpoint_units, voltage_setpoint, max_shunt_current, reactive_power_required, max_reactive_power, shunt_control_type, regulated_bus_number, base_power, dynamic_injector, )
+        o = new(name, id, available, bus, control_mode, voltage_setpoint_units, voltage_setpoint, max_shunt_current, reactive_power_required, max_reactive_power, shunt_control_type, regulated_bus_number, base_power, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type FACTSControlDevice
 
-const _property_types_FACTSControlDevice = Dict{Symbol,String}(Symbol("name")=>"String", Symbol("id")=>"Int64", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("control_mode")=>"String", Symbol("voltage_setpoint_units")=>"String", Symbol("voltage_setpoint")=>"Float64", Symbol("max_shunt_current")=>"Float64", Symbol("reactive_power_required")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("shunt_control_type")=>"String", Symbol("regulated_bus_number")=>"Int64", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_FACTSControlDevice = Dict{Symbol,String}(Symbol("name")=>"String", Symbol("id")=>"Int64", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("control_mode")=>"String", Symbol("voltage_setpoint_units")=>"String", Symbol("voltage_setpoint")=>"Float64", Symbol("max_shunt_current")=>"Float64", Symbol("reactive_power_required")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("shunt_control_type")=>"String", Symbol("regulated_bus_number")=>"Int64", Symbol("base_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ FACTSControlDevice }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FACTSControlDevice[name]))}
 
 function OpenAPI.check_required(o::FACTSControlDevice)
@@ -68,6 +71,7 @@ function OpenAPI.check_required(o::FACTSControlDevice)
     o.voltage_setpoint === nothing && (return false)
     o.max_shunt_current === nothing && (return false)
     o.reactive_power_required === nothing && (return false)
+    o.base_power === nothing && (return false)
     true
 end
 
@@ -84,6 +88,7 @@ function OpenAPI.validate_properties(o::FACTSControlDevice)
     OpenAPI.validate_property(FACTSControlDevice, Symbol("max_reactive_power"), o.max_reactive_power)
     OpenAPI.validate_property(FACTSControlDevice, Symbol("shunt_control_type"), o.shunt_control_type)
     OpenAPI.validate_property(FACTSControlDevice, Symbol("regulated_bus_number"), o.regulated_bus_number)
+    OpenAPI.validate_property(FACTSControlDevice, Symbol("base_power"), o.base_power)
     OpenAPI.validate_property(FACTSControlDevice, Symbol("dynamic_injector"), o.dynamic_injector)
 end
 
@@ -110,6 +115,7 @@ function OpenAPI.validate_property(::Type{ FACTSControlDevice }, name::Symbol, v
     if name === Symbol("shunt_control_type")
         OpenAPI.validate_param(name, "FACTSControlDevice", :enum, val, ["SVC", "STATCOM"])
     end
+
 
 
 

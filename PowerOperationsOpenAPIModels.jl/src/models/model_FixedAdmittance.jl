@@ -12,6 +12,7 @@ A fixed admittance.  Most often used in dynamics or AC power flow studies as a s
         bus=nothing,
         admittance_units="DEVICE_MVAR",
         Y=nothing,
+        base_power=nothing,
         dynamic_injector=nothing,
     )
 
@@ -21,6 +22,7 @@ A fixed admittance.  Most often used in dynamics or AC power flow studies as a s
     - bus::Int64 : ID of the bus that this component is connected to.
     - admittance_units::String : Unit basis for the shunt admittance Y. DEVICE_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
     - Y::ComplexNumber
+    - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection model for admittance, if any.
 """
 Base.@kwdef mutable struct FixedAdmittance <: OpenAPI.APIModel
@@ -30,16 +32,17 @@ Base.@kwdef mutable struct FixedAdmittance <: OpenAPI.APIModel
     bus::Union{Nothing, Int64} = nothing
     admittance_units::Union{Nothing, String} = "DEVICE_MVAR"
     Y = nothing # spec type: Union{ Nothing, ComplexNumber }
+    base_power::Union{Nothing, Float64} = nothing
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function FixedAdmittance(id, name, available, bus, admittance_units, Y, dynamic_injector, )
-        o = new(id, name, available, bus, admittance_units, Y, dynamic_injector, )
+    function FixedAdmittance(id, name, available, bus, admittance_units, Y, base_power, dynamic_injector, )
+        o = new(id, name, available, bus, admittance_units, Y, base_power, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type FixedAdmittance
 
-const _property_types_FixedAdmittance = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("admittance_units")=>"String", Symbol("Y")=>"ComplexNumber", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_FixedAdmittance = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("admittance_units")=>"String", Symbol("Y")=>"ComplexNumber", Symbol("base_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ FixedAdmittance }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FixedAdmittance[name]))}
 
 function OpenAPI.check_required(o::FixedAdmittance)
@@ -48,6 +51,7 @@ function OpenAPI.check_required(o::FixedAdmittance)
     o.available === nothing && (return false)
     o.bus === nothing && (return false)
     o.Y === nothing && (return false)
+    o.base_power === nothing && (return false)
     true
 end
 
@@ -58,6 +62,7 @@ function OpenAPI.validate_properties(o::FixedAdmittance)
     OpenAPI.validate_property(FixedAdmittance, Symbol("bus"), o.bus)
     OpenAPI.validate_property(FixedAdmittance, Symbol("admittance_units"), o.admittance_units)
     OpenAPI.validate_property(FixedAdmittance, Symbol("Y"), o.Y)
+    OpenAPI.validate_property(FixedAdmittance, Symbol("base_power"), o.base_power)
     OpenAPI.validate_property(FixedAdmittance, Symbol("dynamic_injector"), o.dynamic_injector)
 end
 
@@ -70,6 +75,7 @@ function OpenAPI.validate_property(::Type{ FixedAdmittance }, name::Symbol, val)
     if name === Symbol("admittance_units")
         OpenAPI.validate_param(name, "FixedAdmittance", :enum, val, ["NATURAL_UNITS", "DEVICE_MVAR"])
     end
+
 
 
 
