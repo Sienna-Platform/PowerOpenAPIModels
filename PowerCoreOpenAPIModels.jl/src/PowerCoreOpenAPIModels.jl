@@ -7,6 +7,7 @@ include("models/model_AdmittanceUnitBasis.jl")
 include("models/model_AverageRateCurve.jl")
 include("models/model_ComplexNumber.jl")
 include("models/model_CostCurve.jl")
+include("models/model_DataSource.jl")
 include("models/model_DbdPnts.jl")
 include("models/model_EmissionBasis.jl")
 include("models/model_EnergyUnit.jl")
@@ -69,6 +70,7 @@ include("register.jl")
 export AverageRateCurve
 export ComplexNumber
 export CostCurve
+export DataSource
 export DbdPnts
 export FdbdPnts
 export FeatureValue
