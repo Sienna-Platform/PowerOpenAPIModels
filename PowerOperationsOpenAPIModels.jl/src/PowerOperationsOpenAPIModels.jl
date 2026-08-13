@@ -8,6 +8,7 @@ include("models/model_AGC.jl")
 include("models/model_Arc.jl")
 include("models/model_Area.jl")
 include("models/model_AreaInterchange.jl")
+include("models/model_CombinedCycleAssociation.jl")
 include("models/model_CombinedCycleBlock.jl")
 include("models/model_CombinedCycleConfiguration.jl")
 include("models/model_CombinedCycleFractional.jl")
@@ -44,12 +45,14 @@ include("models/model_MotorLoad.jl")
 include("models/model_OfflineReserve.jl")
 include("models/model_OnlineReserve.jl")
 include("models/model_PlannedOutage.jl")
+include("models/model_PlantAssociation.jl")
 include("models/model_PowerLoad.jl")
 include("models/model_RenewableDispatch.jl")
 include("models/model_RenewableDispatchOperationCost.jl")
 include("models/model_RenewableNonDispatch.jl")
 include("models/model_RenewablePowerPlant.jl")
 include("models/model_ReserveDirection.jl")
+include("models/model_ServiceAssociation.jl")
 include("models/model_ShiftablePowerLoad.jl")
 include("models/model_Source.jl")
 include("models/model_StandardLoad.jl")
@@ -83,6 +86,7 @@ export AGC
 export Arc
 export Area
 export AreaInterchange
+export CombinedCycleAssociation
 export CombinedCycleBlock
 export CombinedCycleFractional
 export DCBus
@@ -117,11 +121,13 @@ export MotorLoad
 export OfflineReserve
 export OnlineReserve
 export PlannedOutage
+export PlantAssociation
 export PowerLoad
 export RenewableDispatch
 export RenewableDispatchOperationCost
 export RenewableNonDispatch
 export RenewablePowerPlant
+export ServiceAssociation
 export ShiftablePowerLoad
 export Source
 export StandardLoad

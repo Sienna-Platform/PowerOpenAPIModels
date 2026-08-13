@@ -3,7 +3,7 @@
 
 
 @doc raw"""GroupReserve
-A reserve product met by a group of individual reserves. The group requirement is additional to each member&#39;s own requirement, and a device contributing to a member reserve also counts toward the group. Membership is carried by &#x60;SupplementalAttributeAssociation&#x60; rows, not by a field here.
+A reserve product met by a group of individual reserves. The group requirement is additional to each member&#39;s own requirement, and a device contributing to a member reserve also counts toward the group. Membership is carried by &#x60;ServiceAssociation&#x60; rows, not by a field here.
 
     GroupReserve(;
         id=nothing,

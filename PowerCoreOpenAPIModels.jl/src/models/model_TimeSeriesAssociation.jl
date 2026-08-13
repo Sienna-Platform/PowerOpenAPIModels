@@ -23,6 +23,8 @@ Metadata linking a time series dataset to a component.
         scaling_factor_multiplier=nothing,
         metadata_uuid=nothing,
         units=nothing,
+        quantity_type=nothing,
+        unit_system=nothing,
     )
 
     - id::Int64
@@ -41,7 +43,9 @@ Metadata linking a time series dataset to a component.
     - features::Vector{Dict{String, FeatureValue}}
     - scaling_factor_multiplier::String : Dot-encoded function name like PowerSystems.get_max_active_power.
     - metadata_uuid::String : Usually unique for each association, but not necessarily
-    - units::String : Unit string for the series values; must be a unit from the Core/units.json vocabulary for the series&#39; quantity type.
+    - units::String : Unit string for the series values; must be a unit from the Core/units.json vocabulary allowed for &#x60;quantity_type&#x60;. Absent when the series declares no unit, and meaningless on its own when &#x60;unit_system&#x60; is a per-unit basis, where the values are dimensionless.
+    - quantity_type::String : Kind of physical quantity the values measure; must be a &#x60;quantity_types&#x60; name from the Core/units.json vocabulary (e.g. ActivePower, ReactivePower, ElectricalEnergy). Not an enum here because Core/units.json is the single source of truth for the vocabulary and duplicating it would give it two homes. It is coarser than &#x60;units&#x60; but finer than a dimension: ActivePower, ReactivePower, and ApparentPower share the dimension {M:1,L:2,T:-3}, so a dimension cannot tell them apart and a quantity type can. It is also the only record of what the values measure when &#x60;unit_system&#x60; is a per-unit basis and they are therefore dimensionless.
+    - unit_system::String : Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a DEVICE_BASE series back to natural units needs the owning component&#39;s base_power — as with every other per-unit quantity, system-base data records its base there and rides as DEVICE_BASE. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS: a series that never declared a basis must not be read as though someone had said its values were natural.
 """
 Base.@kwdef mutable struct TimeSeriesAssociation <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -61,15 +65,17 @@ Base.@kwdef mutable struct TimeSeriesAssociation <: OpenAPI.APIModel
     scaling_factor_multiplier::Union{Nothing, String} = nothing
     metadata_uuid::Union{Nothing, String} = nothing
     units::Union{Nothing, String} = nothing
+    quantity_type::Union{Nothing, String} = nothing
+    unit_system::Union{Nothing, String} = nothing
 
-    function TimeSeriesAssociation(id, time_series_uuid, time_series_type, initial_timestamp, resolution, horizon, interval, window_count, length, name, owner_id, owner_type, owner_category, features, scaling_factor_multiplier, metadata_uuid, units, )
-        o = new(id, time_series_uuid, time_series_type, initial_timestamp, resolution, horizon, interval, window_count, length, name, owner_id, owner_type, owner_category, features, scaling_factor_multiplier, metadata_uuid, units, )
+    function TimeSeriesAssociation(id, time_series_uuid, time_series_type, initial_timestamp, resolution, horizon, interval, window_count, length, name, owner_id, owner_type, owner_category, features, scaling_factor_multiplier, metadata_uuid, units, quantity_type, unit_system, )
+        o = new(id, time_series_uuid, time_series_type, initial_timestamp, resolution, horizon, interval, window_count, length, name, owner_id, owner_type, owner_category, features, scaling_factor_multiplier, metadata_uuid, units, quantity_type, unit_system, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type TimeSeriesAssociation
 
-const _property_types_TimeSeriesAssociation = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("time_series_uuid")=>"String", Symbol("time_series_type")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("horizon")=>"String", Symbol("interval")=>"String", Symbol("window_count")=>"Int64", Symbol("length")=>"Int64", Symbol("name")=>"String", Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("features")=>"Vector{Dict{String, FeatureValue}}", Symbol("scaling_factor_multiplier")=>"String", Symbol("metadata_uuid")=>"String", Symbol("units")=>"String", )
+const _property_types_TimeSeriesAssociation = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("time_series_uuid")=>"String", Symbol("time_series_type")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("horizon")=>"String", Symbol("interval")=>"String", Symbol("window_count")=>"Int64", Symbol("length")=>"Int64", Symbol("name")=>"String", Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("features")=>"Vector{Dict{String, FeatureValue}}", Symbol("scaling_factor_multiplier")=>"String", Symbol("metadata_uuid")=>"String", Symbol("units")=>"String", Symbol("quantity_type")=>"String", Symbol("unit_system")=>"String", )
 OpenAPI.property_type(::Type{ TimeSeriesAssociation }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TimeSeriesAssociation[name]))}
 
 function OpenAPI.check_required(o::TimeSeriesAssociation)
@@ -105,6 +111,8 @@ function OpenAPI.validate_properties(o::TimeSeriesAssociation)
     OpenAPI.validate_property(TimeSeriesAssociation, Symbol("scaling_factor_multiplier"), o.scaling_factor_multiplier)
     OpenAPI.validate_property(TimeSeriesAssociation, Symbol("metadata_uuid"), o.metadata_uuid)
     OpenAPI.validate_property(TimeSeriesAssociation, Symbol("units"), o.units)
+    OpenAPI.validate_property(TimeSeriesAssociation, Symbol("quantity_type"), o.quantity_type)
+    OpenAPI.validate_property(TimeSeriesAssociation, Symbol("unit_system"), o.unit_system)
 end
 
 function OpenAPI.validate_property(::Type{ TimeSeriesAssociation }, name::Symbol, val)
@@ -136,6 +144,12 @@ function OpenAPI.validate_property(::Type{ TimeSeriesAssociation }, name::Symbol
 
     if name === Symbol("metadata_uuid")
         OpenAPI.validate_param(name, "TimeSeriesAssociation", :format, val, "uuid")
+    end
+
+
+
+    if name === Symbol("unit_system")
+        OpenAPI.validate_param(name, "TimeSeriesAssociation", :enum, val, ["DEVICE_BASE", "NATURAL_UNITS"])
     end
 
 end
