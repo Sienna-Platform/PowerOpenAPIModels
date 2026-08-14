@@ -116,6 +116,13 @@ struct SystemDocument
     components::Dict{String, Vector}
     supplemental_attributes::Vector{OpenAPI.APIModel}
     supplemental_attribute_associations::Vector{SupplementalAttributeAssociation}
+    # The plant/combined-cycle/service row types are generated into
+    # PowerOperationsOpenAPIModels, which depends on this package rather than the other way
+    # round, so these cannot be typed concretely here. `supplemental_attributes` already sets
+    # the precedent; rows are resolved by registered name on read.
+    plant_associations::Vector{OpenAPI.APIModel}
+    combined_cycle_associations::Vector{OpenAPI.APIModel}
+    service_associations::Vector{OpenAPI.APIModel}
     time_series_associations::Vector{TimeSeriesAssociation}
     ext::Dict{Int, Dict{String, Any}}
     time_series_storage_file::Union{Nothing, String}
@@ -156,6 +163,9 @@ function SystemDocument(
         Dict{String, Vector}(),
         Vector{OpenAPI.APIModel}(),
         Vector{SupplementalAttributeAssociation}(),
+        Vector{OpenAPI.APIModel}(),
+        Vector{OpenAPI.APIModel}(),
+        Vector{OpenAPI.APIModel}(),
         Vector{TimeSeriesAssociation}(),
         Dict{Int, Dict{String, Any}}(),
         _optional_string(time_series_storage_file),
@@ -167,8 +177,6 @@ _optional_float(::Nothing) = nothing
 _optional_float(value::Real) = Float64(value)
 _optional_string(::Nothing) = nothing
 _optional_string(value::AbstractString) = String(value)
-_optional_int(::Nothing) = nothing
-_optional_int(value::Integer) = Int(value)
 
 get_base_power(doc::SystemDocument) = doc.base_power
 get_unit_system(doc::SystemDocument) = doc.unit_system
@@ -247,17 +255,15 @@ Attributes are held in one flat list rather than bucketed by type: nothing itera
 type, and the association carries both the link and the `attribute_type` a reader needs to
 pick a converter.
 
-`group_index` and `role` cover the plant-family and service-membership shapes that used to be
-separate tables (`PlantAssociation`, `CombinedCycleAssociation`, `ServiceAssociation`): the
-shaft/penstock/PCC/HRSG/exclusion-group number and the CT/CA role, when the attribute needs
-them. Both stay `nothing` for a plain attribute like `EmissionsData` or `GeographicInfo`.
+This row carries the link and the type discriminator only. Plant, combined-cycle, and
+service memberships have their own tables — [`add_plant_association!`](@ref),
+[`add_combined_cycle_association!`](@ref), and [`add_service_association!`](@ref) — because
+the group number and CT/CA role belong to those shapes rather than to every attribute.
 """
 function add_supplemental_attribute!(
     doc::SystemDocument,
     attribute::OpenAPI.APIModel,
-    entity_id::Integer;
-    group_index::Union{Nothing, Integer}=nothing,
-    role::Union{Nothing, AbstractString}=nothing,
+    entity_id::Integer,
 )
     push!(doc.supplemental_attributes, attribute)
     push!(
@@ -266,10 +272,34 @@ function add_supplemental_attribute!(
             attribute_id=_model_id(attribute),
             entity_id=Int(entity_id),
             attribute_type=string(nameof(typeof(attribute))),
-            group_index=_optional_int(group_index),
-            role=_optional_string(role),
         ),
     )
+    return nothing
+end
+
+"""
+Record which group of a power plant a generating unit belongs to: a shaft, penstock, PCC, or
+exclusion group. The plant attribute itself is recorded by
+[`add_supplemental_attribute!`](@ref); this only adds the membership row.
+"""
+function add_plant_association!(doc::SystemDocument, assoc::OpenAPI.APIModel)
+    push!(doc.plant_associations, assoc)
+    return nothing
+end
+
+"""
+Record which HRSG of a `CombinedCycleBlock` a CT or CA unit feeds into or receives from.
+"""
+function add_combined_cycle_association!(doc::SystemDocument, assoc::OpenAPI.APIModel)
+    push!(doc.combined_cycle_associations, assoc)
+    return nothing
+end
+
+"""
+Record one component's contribution to a service. One row per (service, member) pair.
+"""
+function add_service_association!(doc::SystemDocument, assoc::OpenAPI.APIModel)
+    push!(doc.service_associations, assoc)
     return nothing
 end
 
@@ -391,13 +421,13 @@ function validate_document(doc::SystemDocument)
     end
     all_ids = union(component_ids, attribute_ids)
 
-    # attribute_id names a supplemental attribute for a plain-attribute or plant/combined-cycle
-    # row, and a service *component* for a membership row — so it is checked against the
-    # union, not just attribute_ids. entity_id always names a component: the thing described,
-    # or the member contributing to the service.
+    # `entity_id` always names a component: the thing described, the unit in the plant, or
+    # the member contributing to the service. The other end differs per table —
+    # `attribute_id`/`plant_id` name a supplemental attribute, while a service is itself a
+    # component — so each is checked against the set it can legally point into.
     for assoc in doc.supplemental_attribute_associations
         _check_ref(
-            all_ids,
+            attribute_ids,
             assoc.attribute_id,
             "SupplementalAttributeAssociation",
             "entity_id=$(assoc.entity_id)",
@@ -408,6 +438,23 @@ function validate_document(doc::SystemDocument)
             "SupplementalAttributeAssociation",
             "attribute_id=$(assoc.attribute_id)",
         )
+    end
+
+    for (rows, what, owner_field, owner_ids) in (
+        (doc.plant_associations, "PlantAssociation", :plant_id, attribute_ids),
+        (
+            doc.combined_cycle_associations,
+            "CombinedCycleAssociation",
+            :plant_id,
+            attribute_ids,
+        ),
+        (doc.service_associations, "ServiceAssociation", :service_id, component_ids),
+    )
+        for assoc in rows
+            owner = getproperty(assoc, owner_field)
+            _check_ref(owner_ids, owner, what, "entity_id=$(assoc.entity_id)")
+            _check_ref(component_ids, assoc.entity_id, what, "$owner_field=$owner")
+        end
     end
 
     for assoc in doc.time_series_associations
@@ -457,6 +504,9 @@ function document_tree(doc::SystemDocument)
         "supplemental_attributes" => doc.supplemental_attributes,
         "supplemental_attribute_associations" =>
             doc.supplemental_attribute_associations,
+        "plant_associations" => doc.plant_associations,
+        "combined_cycle_associations" => doc.combined_cycle_associations,
+        "service_associations" => doc.service_associations,
         "time_series_associations" => doc.time_series_associations,
         # Keyed by component id, which is unique across every type.
         "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
@@ -559,6 +609,19 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
             _require(raw, "supplemental_attribute_associations", source),
         ),
     )
+    # Resolved by registered name: the row types are generated into
+    # PowerOperationsOpenAPIModels, which this package cannot name directly.
+    for (key, type_name) in (
+        ("plant_associations", "PlantAssociation"),
+        ("combined_cycle_associations", "CombinedCycleAssociation"),
+        ("service_associations", "ServiceAssociation"),
+    )
+        append!(
+            getproperty(doc, Symbol(key)),
+            _rows(model_type(type_name), _require(raw, key, source)),
+        )
+    end
+
     append!(
         doc.time_series_associations,
         _rows(TimeSeriesAssociation, _require(raw, "time_series_associations", source)),
