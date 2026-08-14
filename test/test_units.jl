@@ -36,7 +36,10 @@ end
 
 @testset "discriminated x-units read the instance" begin
     line = PO.TwoTerminalLCCLine()
-    line.parameter_units = "SYSTEM_BASE"
+    # DEVICE_BASE, not SYSTEM_BASE: the schemas carry no system-base option — per-unit data
+    # historically on the system base records that base in the component's own `base_power`
+    # and rides as DEVICE_BASE.
+    line.parameter_units = "DEVICE_BASE"
     @test PC.declared_unit(line, Val(:r)) == "pu"
     line.parameter_units = "NATURAL_UNITS"
     @test PC.declared_unit(line, Val(:r)) == "ohm"
@@ -48,7 +51,12 @@ end
     @test PC.conversion_factor("ElectricalEnergy", "MJ") ≈ 0.0002777777777777778
     @test PC.conversion_factor("Length", "m") ≈ 0.001
     @test PC.conversion_factor("Elevation", "m") == 1.0
-    @test !PC.has_conversion_factor("ActivePower", "kW")
+    # Keyed by the pair, so a unit real for one quantity is absent for another: MJ resolves
+    # under ElectricalEnergy above but not here. (This asserted `kW` until the vocabulary
+    # grew SI prefixes — kW is now a valid ActivePower unit at 0.001.)
+    @test PC.has_conversion_factor("ActivePower", "kW")
+    @test PC.conversion_factor("ActivePower", "kW") ≈ 0.001
+    @test !PC.has_conversion_factor("ActivePower", "MJ")
 end
 
 @testset "Angle supports both rad and deg" begin
