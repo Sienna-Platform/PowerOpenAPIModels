@@ -53,7 +53,7 @@ Parameters of Reactive Power Controller including REPCA1 and REECB1.
     - X_c::Float64 : Line drop compensation reactance (used when VC_Flag &#x3D; 1).
     - K_c::Float64 : Reactive current compensation gain (used when VC_Flag &#x3D; 0).
     - e_lim::MinMax
-    - dbd_pnts::DbdPnts1
+    - dbd_pnts::DbdPnts
     - Q_lim::MinMax
     - T_p::Float64 : Active power lag time constant in REECB. Used only when PF_Flag &#x3D; 1. Units: s.
     - Q_lim_inner::MinMax
@@ -82,7 +82,7 @@ Base.@kwdef mutable struct ReactiveRenewableControllerAB <: OpenAPI.APIModel
     X_c::Union{Nothing, Float64} = nothing
     K_c::Union{Nothing, Float64} = nothing
     e_lim = nothing # spec type: Union{ Nothing, MinMax }
-    dbd_pnts = nothing # spec type: Union{ Nothing, DbdPnts1 }
+    dbd_pnts = nothing # spec type: Union{ Nothing, DbdPnts }
     Q_lim = nothing # spec type: Union{ Nothing, MinMax }
     T_p::Union{Nothing, Float64} = nothing
     Q_lim_inner = nothing # spec type: Union{ Nothing, MinMax }
@@ -99,7 +99,7 @@ Base.@kwdef mutable struct ReactiveRenewableControllerAB <: OpenAPI.APIModel
     end
 end # type ReactiveRenewableControllerAB
 
-const _property_types_ReactiveRenewableControllerAB = Dict{Symbol,String}(Symbol("bus_control")=>"Int64", Symbol("from_branch_control")=>"Int64", Symbol("to_branch_control")=>"Int64", Symbol("branch_id_control")=>"String", Symbol("VC_Flag")=>"Bool", Symbol("Ref_Flag")=>"Bool", Symbol("PF_Flag")=>"Bool", Symbol("V_Flag")=>"Bool", Symbol("T_fltr")=>"Float64", Symbol("K_p")=>"Float64", Symbol("K_i")=>"Float64", Symbol("T_ft")=>"Float64", Symbol("T_fv")=>"Float64", Symbol("V_frz")=>"Float64", Symbol("R_c")=>"Float64", Symbol("X_c")=>"Float64", Symbol("K_c")=>"Float64", Symbol("e_lim")=>"MinMax", Symbol("dbd_pnts")=>"DbdPnts1", Symbol("Q_lim")=>"MinMax", Symbol("T_p")=>"Float64", Symbol("Q_lim_inner")=>"MinMax", Symbol("V_lim")=>"MinMax", Symbol("K_qp")=>"Float64", Symbol("K_qi")=>"Float64", Symbol("Q_ref")=>"Float64", Symbol("V_ref")=>"Float64", )
+const _property_types_ReactiveRenewableControllerAB = Dict{Symbol,String}(Symbol("bus_control")=>"Int64", Symbol("from_branch_control")=>"Int64", Symbol("to_branch_control")=>"Int64", Symbol("branch_id_control")=>"String", Symbol("VC_Flag")=>"Bool", Symbol("Ref_Flag")=>"Bool", Symbol("PF_Flag")=>"Bool", Symbol("V_Flag")=>"Bool", Symbol("T_fltr")=>"Float64", Symbol("K_p")=>"Float64", Symbol("K_i")=>"Float64", Symbol("T_ft")=>"Float64", Symbol("T_fv")=>"Float64", Symbol("V_frz")=>"Float64", Symbol("R_c")=>"Float64", Symbol("X_c")=>"Float64", Symbol("K_c")=>"Float64", Symbol("e_lim")=>"MinMax", Symbol("dbd_pnts")=>"DbdPnts", Symbol("Q_lim")=>"MinMax", Symbol("T_p")=>"Float64", Symbol("Q_lim_inner")=>"MinMax", Symbol("V_lim")=>"MinMax", Symbol("K_qp")=>"Float64", Symbol("K_qi")=>"Float64", Symbol("Q_ref")=>"Float64", Symbol("V_ref")=>"Float64", )
 OpenAPI.property_type(::Type{ ReactiveRenewableControllerAB }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ReactiveRenewableControllerAB[name]))}
 
 function OpenAPI.check_required(o::ReactiveRenewableControllerAB)

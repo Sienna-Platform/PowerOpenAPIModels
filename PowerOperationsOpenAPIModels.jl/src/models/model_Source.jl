@@ -12,16 +12,16 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
         bus=nothing,
         active_power=0.0,
         reactive_power=0.0,
-        active_power_limits=nothing,
-        reactive_power_limits=nothing,
-        parameter_units="SYSTEM_BASE",
+        active_power_limits=MinMax(; max=0.0, min=0.0),
+        reactive_power_limits=MinMax(; max=0.0, min=0.0),
+        parameter_units="DEVICE_BASE",
         R_th=0.0,
         X_th=0.0,
         internal_voltage=1.0,
         internal_angle=0.0,
         base_voltage=nothing,
         base_power=100.0,
-        operation_cost=nothing,
+        operation_cost=ImportExportCost(; import_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), export_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), energy_import_weekly_limit=1.0e6, energy_export_weekly_limit=1.0e6),
         dynamic_injector=nothing,
     )
 
@@ -34,8 +34,8 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
     - active_power_limits::MinMax
     - reactive_power_limits::MinMax
     - parameter_units::String : Unit basis for this source&#39;s impedance fields (R_th, X_th).
-    - R_th::Float64 : Source Thevenin resistance. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
-    - X_th::Float64 : Source Thevenin reactance. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
+    - R_th::Float64 : Source Thevenin resistance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - X_th::Float64 : Source Thevenin reactance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
     - internal_voltage::Float64 : Internal voltage. Units: pu.
     - internal_angle::Float64 : Internal angle. Units: rad.
     - base_voltage::Float64 : The base voltage. Units: kV.
@@ -50,16 +50,16 @@ Base.@kwdef mutable struct Source <: OpenAPI.APIModel
     bus::Union{Nothing, Int64} = nothing
     active_power::Union{Nothing, Float64} = 0.0
     reactive_power::Union{Nothing, Float64} = 0.0
-    active_power_limits = nothing # spec type: Union{ Nothing, MinMax }
-    reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
-    parameter_units::Union{Nothing, String} = "SYSTEM_BASE"
+    active_power_limits = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
+    reactive_power_limits = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
+    parameter_units::Union{Nothing, String} = "DEVICE_BASE"
     R_th::Union{Nothing, Float64} = 0.0
     X_th::Union{Nothing, Float64} = 0.0
     internal_voltage::Union{Nothing, Float64} = 1.0
     internal_angle::Union{Nothing, Float64} = 0.0
     base_voltage::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = 100.0
-    operation_cost = nothing # spec type: Union{ Nothing, ImportExportCost }
+    operation_cost = ImportExportCost(; import_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), export_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), energy_import_weekly_limit=1.0e6, energy_export_weekly_limit=1.0e6) # spec type: Union{ Nothing, ImportExportCost }
     dynamic_injector::Union{Nothing, Int64} = nothing
 
     function Source(id, name, available, bus, active_power, reactive_power, active_power_limits, reactive_power_limits, parameter_units, R_th, X_th, internal_voltage, internal_angle, base_voltage, base_power, operation_cost, dynamic_injector, )
@@ -112,7 +112,7 @@ function OpenAPI.validate_property(::Type{ Source }, name::Symbol, val)
 
 
     if name === Symbol("parameter_units")
-        OpenAPI.validate_param(name, "Source", :enum, val, ["SYSTEM_BASE", "NATURAL_UNITS"])
+        OpenAPI.validate_param(name, "Source", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
     end
 
 

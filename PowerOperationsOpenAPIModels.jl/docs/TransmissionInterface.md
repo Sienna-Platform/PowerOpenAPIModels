@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **`active_power_flow_limits`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
 **`violation_penalty`** | **`Float64`** | Penalty cost for violating the flow limits in the interface. | [optional] [default to nothing]
 **`direction_mapping`** | **`Dict{String, Int64}`** | Dictionary of the line &#x60;name&#x60;s in the interface and their direction of flow (1 or -1) relative to the flow of the interface. | [optional] [default to nothing]
+**`base_power`** | **`Float64`** | System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

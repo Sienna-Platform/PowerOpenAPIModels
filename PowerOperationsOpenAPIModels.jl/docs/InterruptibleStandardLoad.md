@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations. | [default to nothing]
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the load for per unitization. Units: MVA. | [default to nothing]
-**`operation_cost`** | [**`*LoadCost`**](LoadCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*InterruptiblePowerLoadOperationCost`**](InterruptiblePowerLoadOperationCost.md) |  | [default to nothing]
 **`conformity`** | **`String`** | Indicates whether the specified load is conforming or non-conforming. | [optional] [default to "UNDEFINED"]
 **`constant_active_power`** | **`Float64`** | Constant active power demand (P_P). Units: MW. | [optional] [default to 0.0]
 **`constant_reactive_power`** | **`Float64`** | Constant reactive power demand (Q_P). Units: MVAr. | [optional] [default to 0.0]

@@ -15,13 +15,13 @@ Name | Type | Description | Notes
 **`active_power_limits`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
 **`reactive_power_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`ramp_limits`** | [**`*UpDown`**](UpDown.md) |  | [optional] [default to nothing]
-**`operation_cost`** | [**`*ThermalGenerationCost`**](ThermalGenerationCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*ThermalStandardOperationCost`**](ThermalStandardOperationCost.md) |  | [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Must be positive; a zero base would make per-unit conversion undefined. Units: MVA. | [default to nothing]
 **`time_limits`** | [**`*UpDown`**](UpDown.md) |  | [optional] [default to nothing]
 **`must_run`** | **`Bool`** | Set to &#x60;true&#x60; if the unit is must run. | [optional] [default to false]
 **`prime_mover_type`** | **`String`** | Prime mover technology according to EIA 923. | [optional] [default to "OT"]
 **`fuel`** | **`String`** | Prime mover fuel according to EIA 923. | [optional] [default to "OTHER"]
-**`time_at_status`** | **`Float64`** | Time the generator has been on or off, as indicated by &#x60;status&#x60;. Units: h. | [optional] [default to 10000.0]
+**`time_at_status`** | **`Float64`** | Time the generator has been on or off, as indicated by &#x60;status&#x60;. Units: min. | [optional] [default to 600000.0]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 
 

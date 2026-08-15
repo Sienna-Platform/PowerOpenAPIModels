@@ -7,7 +7,7 @@
     PlannedOutage(;
         id=nothing,
         outage_schedule=nothing,
-        monitored_components=nothing,
+        monitored_components=Int64[],
     )
 
     - id::Int64
@@ -17,7 +17,7 @@
 Base.@kwdef mutable struct PlannedOutage <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     outage_schedule::Union{Nothing, String} = nothing
-    monitored_components::Union{Nothing, Vector{Int64}} = nothing
+    monitored_components::Union{Nothing, Vector{Int64}} = Int64[]
 
     function PlannedOutage(id, outage_schedule, monitored_components, )
         o = new(id, outage_schedule, monitored_components, )

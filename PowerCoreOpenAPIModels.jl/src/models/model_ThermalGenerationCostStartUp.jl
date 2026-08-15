@@ -3,7 +3,7 @@
 
 
 
-@doc raw"""ThermalGenerationCost_start_up
+@doc raw"""ThermalGenerationCostStartUp
 Start-up cost can take linear or multi-stage cost
 
     ThermalGenerationCostStartUp(; value=nothing)

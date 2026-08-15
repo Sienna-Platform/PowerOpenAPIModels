@@ -31,7 +31,7 @@ A renewable (e.g., wind or solar) generator whose output can be curtailed to sat
     - prime_mover_type::String : Prime mover technology according to EIA 923.
     - reactive_power_limits::MinMax
     - power_factor::Float64 : Power factor [0, 1] set-point, used in some production cost modeling and in load flow if the unit is connected to a &#x60;PQ&#x60; bus. Units: 1.
-    - operation_cost::RenewableGenerationCost
+    - operation_cost::RenewableDispatchOperationCost
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
@@ -46,7 +46,7 @@ Base.@kwdef mutable struct RenewableDispatch <: OpenAPI.APIModel
     prime_mover_type::Union{Nothing, String} = nothing
     reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     power_factor::Union{Nothing, Float64} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, RenewableGenerationCost }
+    operation_cost = nothing # spec type: Union{ Nothing, RenewableDispatchOperationCost }
     base_power::Union{Nothing, Float64} = nothing
     dynamic_injector::Union{Nothing, Int64} = nothing
 
@@ -57,7 +57,7 @@ Base.@kwdef mutable struct RenewableDispatch <: OpenAPI.APIModel
     end
 end # type RenewableDispatch
 
-const _property_types_RenewableDispatch = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("prime_mover_type")=>"String", Symbol("reactive_power_limits")=>"MinMax", Symbol("power_factor")=>"Float64", Symbol("operation_cost")=>"RenewableGenerationCost", Symbol("base_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
+const _property_types_RenewableDispatch = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("prime_mover_type")=>"String", Symbol("reactive_power_limits")=>"MinMax", Symbol("power_factor")=>"Float64", Symbol("operation_cost")=>"RenewableDispatchOperationCost", Symbol("base_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
 OpenAPI.property_type(::Type{ RenewableDispatch }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RenewableDispatch[name]))}
 
 function OpenAPI.check_required(o::RenewableDispatch)

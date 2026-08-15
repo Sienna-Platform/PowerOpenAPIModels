@@ -4,16 +4,16 @@ using OpenAPI, JSON3, HTTP
 using PowerCoreOpenAPIModels
 
 include("models/model_ActiveRenewableControllerAB.jl")
-include("models/model_DbdPnts1.jl")
 include("models/model_RECurrentControlB.jl")
 include("models/model_ReactiveRenewableControllerAB.jl")
 include("models/model_RenewableEnergyConverterTypeA.jl")
 include("models/model_RoundRotorMachine.jl")
 include("models/model_SEXS.jl")
 include("models/model_SteamTurbineGov1.jl")
+include("units.jl")
+include("register.jl")
 
 export ActiveRenewableControllerAB
-export DbdPnts1
 export RECurrentControlB
 export ReactiveRenewableControllerAB
 export RenewableEnergyConverterTypeA

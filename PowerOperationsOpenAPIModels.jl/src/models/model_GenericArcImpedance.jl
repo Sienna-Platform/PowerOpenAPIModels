@@ -14,7 +14,7 @@ A generic branch defined by a series impedance on an &#x60;Arc&#x60; between two
         max_flow=nothing,
         arc=nothing,
         base_power=nothing,
-        parameter_units="SYSTEM_BASE",
+        parameter_units="DEVICE_BASE",
         r=nothing,
         x=nothing,
     )
@@ -24,12 +24,12 @@ A generic branch defined by a series impedance on an &#x60;Arc&#x60; between two
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: MW.
     - reactive_power_flow::Float64 : Initial condition of reactive power flow on the line. Units: MVAr.
-    - max_flow::Float64 : Maximum allowable flow on the generic impedance. Per-unit on system base. Units: pu.
+    - max_flow::Float64 : Maximum allowable flow on the generic impedance. Units: MW.
     - arc::Int64 : An &#x60;Arc&#x60; defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus.
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
-    - parameter_units::String : Unit basis for r and x. SYSTEM_BASE: per-unit on the system base. NATURAL_UNITS: physical ohms.
-    - r::Float64 : Resistance. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
-    - x::Float64 : Reactance. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm .
+    - parameter_units::String : Unit basis for r and x. DEVICE_BASE is per-unit on this component&#39;s base_power, which records the system base.
+    - r::Float64 : Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - x::Float64 : Reactance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
 """
 Base.@kwdef mutable struct GenericArcImpedance <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -40,7 +40,7 @@ Base.@kwdef mutable struct GenericArcImpedance <: OpenAPI.APIModel
     max_flow::Union{Nothing, Float64} = nothing
     arc::Union{Nothing, Int64} = nothing
     base_power::Union{Nothing, Float64} = nothing
-    parameter_units::Union{Nothing, String} = "SYSTEM_BASE"
+    parameter_units::Union{Nothing, String} = "DEVICE_BASE"
     r::Union{Nothing, Float64} = nothing
     x::Union{Nothing, Float64} = nothing
 
@@ -93,7 +93,7 @@ function OpenAPI.validate_property(::Type{ GenericArcImpedance }, name::Symbol, 
 
 
     if name === Symbol("parameter_units")
-        OpenAPI.validate_param(name, "GenericArcImpedance", :enum, val, ["SYSTEM_BASE", "NATURAL_UNITS"])
+        OpenAPI.validate_param(name, "GenericArcImpedance", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
     end
 
 

@@ -7,7 +7,7 @@ Cost representation for renewable generation units
 
     RenewableGenerationCost(;
         cost_type="RENEWABLE",
-        curtailment_cost=nothing,
+        curtailment_cost=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))),
         variable=nothing,
         fixed=0.0,
     )
@@ -19,7 +19,7 @@ Cost representation for renewable generation units
 """
 Base.@kwdef mutable struct RenewableGenerationCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "RENEWABLE"
-    curtailment_cost = nothing # spec type: Union{ Nothing, CostCurve }
+    curtailment_cost = CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))) # spec type: Union{ Nothing, CostCurve }
     variable = nothing # spec type: Union{ Nothing, CostCurve }
     fixed::Union{Nothing, Float64} = 0.0
 

@@ -1,7 +1,7 @@
 FROM julia:1.11-bookworm
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends default-jre-headless make curl ca-certificates && \
+    apt-get install -y --no-install-recommends default-jre-headless make curl ca-certificates python3 && \
     rm -rf /var/lib/apt/lists/*
 
 ARG OPENAPI_GENERATOR_VERSION=7.20.0

@@ -7,7 +7,7 @@
     FixedForcedOutage(;
         id=nothing,
         outage_status=nothing,
-        monitored_components=nothing,
+        monitored_components=Int64[],
     )
 
     - id::Int64
@@ -17,7 +17,7 @@
 Base.@kwdef mutable struct FixedForcedOutage <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     outage_status::Union{Nothing, Float64} = nothing
-    monitored_components::Union{Nothing, Vector{Int64}} = nothing
+    monitored_components::Union{Nothing, Vector{Int64}} = Int64[]
 
     function FixedForcedOutage(id, outage_status, monitored_components, )
         o = new(id, outage_status, monitored_components, )

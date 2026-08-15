@@ -6,6 +6,13 @@ const REPO = dirname(@__DIR__)
 const GENERATED = joinpath(REPO, "generated")
 const CORE_MODELS = joinpath(REPO, "PowerCoreOpenAPIModels.jl", "src", "models")
 const CORE_DOCS = joinpath(REPO, "PowerCoreOpenAPIModels.jl", "docs")
+const SCHEMA_DIR = get(ENV, "SCHEMA_DIR", joinpath(dirname(REPO), "SiennaSchemas"))
+
+include(joinpath(@__DIR__, "emit_units.jl"))
+include(joinpath(@__DIR__, "emit_registry.jl"))
+const UNIT_VOCAB = load_unit_vocabulary(joinpath(SCHEMA_DIR, "Core", "units.json"))
+const UNIT_FACTORS = UNIT_VOCAB[1]
+const UNIT_BY_UNIT = UNIT_VOCAB[2]
 
 const DOMAINS = [
     "core" => "PowerCoreOpenAPIModels.jl",
@@ -86,10 +93,23 @@ for (domain, pkg) in DOMAINS
         f in models
     )
 
+    # Units must be emitted before the module file so the include below is valid.
+    has_units = emit_units_for(domain, dest, SCHEMA_DIR, UNIT_FACTORS, UNIT_BY_UNIT)
+    # Same ordering reason: register.jl is included below, so it must exist first.
+    has_registry = emit_registry_for(domain, dest)
+    # Hand-written, not emitted -- the one file in these packages that is not generated.
+    # Included only where it lives (Core), and only if present, so a checkout that predates
+    # it still reorganizes cleanly.
+    has_document = domain == "core" && isfile(joinpath(dest, "document.jl"))
+
     open(joinpath(dest, "$mod.jl"), "w") do io
         println(io, "module $mod")
         println(io)
         print(io, "using OpenAPI, JSON3, HTTP")
+        # document.jl encodes a whole document in one pass and relies on
+        # JSON.lower(::OpenAPI.APIModel) to skip unset fields, which is JSON.jl behavior
+        # that JSON3 does not provide.
+        has_document && print(io, ", JSON")
         needs_timezones && print(io, ", TimeZones")
         println(io)
         domain != "core" && println(io, "using PowerCoreOpenAPIModels")
@@ -100,9 +120,21 @@ for (domain, pkg) in DOMAINS
         for f in apis
             println(io, "include(\"apis/$f\")")
         end
+        # units.jl extends Core's accessors for the types just included, so it
+        # has to come after every model include.
+        has_units && println(io, "include(\"units.jl\")")
+        # document.jl holds the association tables as typed fields, so it needs those model
+        # types defined, and register.jl calls into it -- hence document before registry.
+        has_document && println(io, "include(\"document.jl\")")
+        has_registry && println(io, "include(\"register.jl\")")
         println(io)
         for name in sort(collect(exports))
             println(io, "export $name")
+        end
+        if domain == "core"
+            for name in UNIT_EXPORTS
+                println(io, "export $name")
+            end
         end
         if domain != "core"
             println(io)

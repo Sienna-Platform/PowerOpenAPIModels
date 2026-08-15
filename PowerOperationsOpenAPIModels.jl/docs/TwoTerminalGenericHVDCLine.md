@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **`reactive_power_limits_from`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
 **`reactive_power_limits_to`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
 **`loss`** | [**`*TwoTerminalLoss`**](TwoTerminalLoss.md) |  | [optional] [default to nothing]
+**`base_power`** | **`Float64`** | System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

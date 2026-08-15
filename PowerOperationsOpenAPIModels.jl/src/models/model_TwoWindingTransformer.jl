@@ -9,31 +9,34 @@ A two-winding transformer connecting two buses.  All series electrical data — 
         id=nothing,
         name=nothing,
         circuit=nothing,
-        magnetizing_shunt=nothing,
+        admittance_units="DEVICE_BASE",
+        magnetizing_shunt=ComplexNumber(; real=0.0, imag=0.0),
         shunt_location="PRIMARY",
     )
 
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - circuit::Int64 : The &#x60;TransformerCircuit&#x60; carrying this transformer&#39;s series electrical data.
-    - magnetizing_shunt::ComplexNumber4
+    - admittance_units::String : Unit basis for the magnetizing_shunt admittance.
+    - magnetizing_shunt::ComplexNumber
     - shunt_location::String : Placement of &#x60;magnetizing_shunt&#x60; on the two sides of the circuit arc.
 """
 Base.@kwdef mutable struct TwoWindingTransformer <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     name::Union{Nothing, String} = nothing
     circuit::Union{Nothing, Int64} = nothing
-    magnetizing_shunt = nothing # spec type: Union{ Nothing, ComplexNumber4 }
+    admittance_units::Union{Nothing, String} = "DEVICE_BASE"
+    magnetizing_shunt = ComplexNumber(; real=0.0, imag=0.0) # spec type: Union{ Nothing, ComplexNumber }
     shunt_location::Union{Nothing, String} = "PRIMARY"
 
-    function TwoWindingTransformer(id, name, circuit, magnetizing_shunt, shunt_location, )
-        o = new(id, name, circuit, magnetizing_shunt, shunt_location, )
+    function TwoWindingTransformer(id, name, circuit, admittance_units, magnetizing_shunt, shunt_location, )
+        o = new(id, name, circuit, admittance_units, magnetizing_shunt, shunt_location, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type TwoWindingTransformer
 
-const _property_types_TwoWindingTransformer = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("circuit")=>"Int64", Symbol("magnetizing_shunt")=>"ComplexNumber4", Symbol("shunt_location")=>"String", )
+const _property_types_TwoWindingTransformer = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("circuit")=>"Int64", Symbol("admittance_units")=>"String", Symbol("magnetizing_shunt")=>"ComplexNumber", Symbol("shunt_location")=>"String", )
 OpenAPI.property_type(::Type{ TwoWindingTransformer }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TwoWindingTransformer[name]))}
 
 function OpenAPI.check_required(o::TwoWindingTransformer)
@@ -47,6 +50,7 @@ function OpenAPI.validate_properties(o::TwoWindingTransformer)
     OpenAPI.validate_property(TwoWindingTransformer, Symbol("id"), o.id)
     OpenAPI.validate_property(TwoWindingTransformer, Symbol("name"), o.name)
     OpenAPI.validate_property(TwoWindingTransformer, Symbol("circuit"), o.circuit)
+    OpenAPI.validate_property(TwoWindingTransformer, Symbol("admittance_units"), o.admittance_units)
     OpenAPI.validate_property(TwoWindingTransformer, Symbol("magnetizing_shunt"), o.magnetizing_shunt)
     OpenAPI.validate_property(TwoWindingTransformer, Symbol("shunt_location"), o.shunt_location)
 end
@@ -54,6 +58,11 @@ end
 function OpenAPI.validate_property(::Type{ TwoWindingTransformer }, name::Symbol, val)
 
 
+
+
+    if name === Symbol("admittance_units")
+        OpenAPI.validate_param(name, "TwoWindingTransformer", :enum, val, ["NATURAL_UNITS", "DEVICE_MVAR", "DEVICE_BASE"])
+    end
 
 
 

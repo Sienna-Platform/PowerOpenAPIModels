@@ -10,27 +10,30 @@ A load zone for electricity price analysis. The load zone can be specified when 
         name=nothing,
         peak_active_power=nothing,
         peak_reactive_power=nothing,
+        base_power=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - peak_active_power::Float64 : Peak active power in the zone. Units: MW.
     - peak_reactive_power::Float64 : Peak reactive power in the zone. Units: MVAr.
+    - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
 """
 Base.@kwdef mutable struct LoadZone <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     name::Union{Nothing, String} = nothing
     peak_active_power::Union{Nothing, Float64} = nothing
     peak_reactive_power::Union{Nothing, Float64} = nothing
+    base_power::Union{Nothing, Float64} = nothing
 
-    function LoadZone(id, name, peak_active_power, peak_reactive_power, )
-        o = new(id, name, peak_active_power, peak_reactive_power, )
+    function LoadZone(id, name, peak_active_power, peak_reactive_power, base_power, )
+        o = new(id, name, peak_active_power, peak_reactive_power, base_power, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type LoadZone
 
-const _property_types_LoadZone = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("peak_active_power")=>"Float64", Symbol("peak_reactive_power")=>"Float64", )
+const _property_types_LoadZone = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("peak_active_power")=>"Float64", Symbol("peak_reactive_power")=>"Float64", Symbol("base_power")=>"Float64", )
 OpenAPI.property_type(::Type{ LoadZone }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_LoadZone[name]))}
 
 function OpenAPI.check_required(o::LoadZone)
@@ -38,6 +41,7 @@ function OpenAPI.check_required(o::LoadZone)
     o.name === nothing && (return false)
     o.peak_active_power === nothing && (return false)
     o.peak_reactive_power === nothing && (return false)
+    o.base_power === nothing && (return false)
     true
 end
 
@@ -46,9 +50,11 @@ function OpenAPI.validate_properties(o::LoadZone)
     OpenAPI.validate_property(LoadZone, Symbol("name"), o.name)
     OpenAPI.validate_property(LoadZone, Symbol("peak_active_power"), o.peak_active_power)
     OpenAPI.validate_property(LoadZone, Symbol("peak_reactive_power"), o.peak_reactive_power)
+    OpenAPI.validate_property(LoadZone, Symbol("base_power"), o.base_power)
 end
 
 function OpenAPI.validate_property(::Type{ LoadZone }, name::Symbol, val)
+
 
 
 

@@ -3,44 +3,44 @@
 
 
 @doc raw"""Arc
-A topological directed edge connecting two buses. Arcs are used to define the &#x60;from&#x60; and &#x60;to&#x60; buses when defining a line or transformer.
+A topological directed edge connecting two buses. Arcs are used to define the &#x60;from_id&#x60; and &#x60;to_id&#x60; endpoints when defining a line or transformer.
 
     Arc(;
         id=nothing,
-        from=nothing,
-        to=nothing,
+        from_id=nothing,
+        to_id=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
-    - from::Int64 : ID of the initial bus.
-    - to::Int64 : ID of the terminal bus.
+    - from_id::Int64 : ID of the initial bus.
+    - to_id::Int64 : ID of the terminal bus.
 """
 Base.@kwdef mutable struct Arc <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
-    from::Union{Nothing, Int64} = nothing
-    to::Union{Nothing, Int64} = nothing
+    from_id::Union{Nothing, Int64} = nothing
+    to_id::Union{Nothing, Int64} = nothing
 
-    function Arc(id, from, to, )
-        o = new(id, from, to, )
+    function Arc(id, from_id, to_id, )
+        o = new(id, from_id, to_id, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type Arc
 
-const _property_types_Arc = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("from")=>"Int64", Symbol("to")=>"Int64", )
+const _property_types_Arc = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("from_id")=>"Int64", Symbol("to_id")=>"Int64", )
 OpenAPI.property_type(::Type{ Arc }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_Arc[name]))}
 
 function OpenAPI.check_required(o::Arc)
     o.id === nothing && (return false)
-    o.from === nothing && (return false)
-    o.to === nothing && (return false)
+    o.from_id === nothing && (return false)
+    o.to_id === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::Arc)
     OpenAPI.validate_property(Arc, Symbol("id"), o.id)
-    OpenAPI.validate_property(Arc, Symbol("from"), o.from)
-    OpenAPI.validate_property(Arc, Symbol("to"), o.to)
+    OpenAPI.validate_property(Arc, Symbol("from_id"), o.from_id)
+    OpenAPI.validate_property(Arc, Symbol("to_id"), o.to_id)
 end
 
 function OpenAPI.validate_property(::Type{ Arc }, name::Symbol, val)

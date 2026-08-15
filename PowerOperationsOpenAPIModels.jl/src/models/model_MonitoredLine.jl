@@ -21,7 +21,7 @@ An AC transmission line with additional power flow constraints specified by the 
         rating_b=nothing,
         rating_c=nothing,
         angle_limits=nothing,
-        g=nothing,
+        g=FromTo(; from=0.0, to=0.0),
     )
 
     - id::Int64 : Unique integer identifier for this component.
@@ -30,16 +30,16 @@ An AC transmission line with additional power flow constraints specified by the 
     - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: MW.
     - reactive_power_flow::Float64 : Initial condition of reactive power flow on the line. Units: MVAr.
     - arc::Int64 : An &#x60;Arc&#x60; defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus.
-    - r::Float64 : Resistance. Per-unit on system base. Units: pu.
-    - x::Float64 : Reactance. Per-unit on system base. Units: pu.
+    - r::Float64 : Resistance. Per-unit on &#x60;base_power&#x60;, which records the system base. Units: pu.
+    - x::Float64 : Reactance. Per-unit on &#x60;base_power&#x60;, which records the system base. Units: pu.
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
     - b::FromTo
-    - flow_limits::FromToToFrom1
+    - flow_limits::FromToToFrom
     - rating::Float64 : Thermal rating. Flow through the transformer must be between -&#x60;rating&#x60; and &#x60;rating&#x60;. Units: MVA.
     - rating_b::Float64 : Second current rating. Units: MVA.
     - rating_c::Float64 : Third current rating. Units: MVA.
     - angle_limits::MinMax
-    - g::FromTo1
+    - g::FromTo
 """
 Base.@kwdef mutable struct MonitoredLine <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -52,12 +52,12 @@ Base.@kwdef mutable struct MonitoredLine <: OpenAPI.APIModel
     x::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
     b = nothing # spec type: Union{ Nothing, FromTo }
-    flow_limits = nothing # spec type: Union{ Nothing, FromToToFrom1 }
+    flow_limits = nothing # spec type: Union{ Nothing, FromToToFrom }
     rating::Union{Nothing, Float64} = nothing
     rating_b::Union{Nothing, Float64} = nothing
     rating_c::Union{Nothing, Float64} = nothing
     angle_limits = nothing # spec type: Union{ Nothing, MinMax }
-    g = nothing # spec type: Union{ Nothing, FromTo1 }
+    g = FromTo(; from=0.0, to=0.0) # spec type: Union{ Nothing, FromTo }
 
     function MonitoredLine(id, name, available, active_power_flow, reactive_power_flow, arc, r, x, base_power, b, flow_limits, rating, rating_b, rating_c, angle_limits, g, )
         o = new(id, name, available, active_power_flow, reactive_power_flow, arc, r, x, base_power, b, flow_limits, rating, rating_b, rating_c, angle_limits, g, )
@@ -66,7 +66,7 @@ Base.@kwdef mutable struct MonitoredLine <: OpenAPI.APIModel
     end
 end # type MonitoredLine
 
-const _property_types_MonitoredLine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("reactive_power_flow")=>"Float64", Symbol("arc")=>"Int64", Symbol("r")=>"Float64", Symbol("x")=>"Float64", Symbol("base_power")=>"Float64", Symbol("b")=>"FromTo", Symbol("flow_limits")=>"FromToToFrom1", Symbol("rating")=>"Float64", Symbol("rating_b")=>"Float64", Symbol("rating_c")=>"Float64", Symbol("angle_limits")=>"MinMax", Symbol("g")=>"FromTo1", )
+const _property_types_MonitoredLine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("reactive_power_flow")=>"Float64", Symbol("arc")=>"Int64", Symbol("r")=>"Float64", Symbol("x")=>"Float64", Symbol("base_power")=>"Float64", Symbol("b")=>"FromTo", Symbol("flow_limits")=>"FromToToFrom", Symbol("rating")=>"Float64", Symbol("rating_b")=>"Float64", Symbol("rating_c")=>"Float64", Symbol("angle_limits")=>"MinMax", Symbol("g")=>"FromTo", )
 OpenAPI.property_type(::Type{ MonitoredLine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_MonitoredLine[name]))}
 
 function OpenAPI.check_required(o::MonitoredLine)

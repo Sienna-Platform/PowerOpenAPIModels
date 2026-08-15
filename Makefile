@@ -5,6 +5,12 @@ DOMAINS := core operations investments dynamics
 .PHONY: generate generate-docker clean validate schema-version
 
 generate:
+	@# materialize_defaults.jl and reorganize.jl's unit emission read
+	@# dist/openapi-<domain>-bundled.json rather than the SiennaSchemas sources, and
+	@# neither can tell a stale bundle from a fresh one. --check is read-only, which
+	@# matters because $(SCHEMA_DIR) is mounted read-only under generate-docker; drift
+	@# is a SiennaSchemas-side bug to surface, not to fix by regenerating a copy here.
+	cd $(SCHEMA_DIR) && python3 scripts/bundle_specs.py --check
 	@for d in $(DOMAINS); do \
 	  echo "Generating $$d"; \
 	  cd $(SCHEMA_DIR) && openapi-generator generate \
@@ -18,6 +24,10 @@ generate:
 	rm -f scripts/Manifest.toml
 	julia --project=scripts -e 'using Pkg; Pkg.instantiate()'
 	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/reorganize.jl
+	@# openapi-generator's julia-client drops object/array schema defaults (see
+	@# PATCHES.md); this rewrites the affected field initializers in place, after the
+	@# model files have reached their final package location.
+	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/materialize_defaults.jl
 
 generate-docker:
 	docker run --rm \

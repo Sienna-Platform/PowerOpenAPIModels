@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **`active_power_limits`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
 **`reactive_power_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [default to nothing]
-**`operation_cost`** | [**`*HydroGenerationCost`**](HydroGenerationCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*HydroDispatchOperationCost`**](HydroDispatchOperationCost.md) |  | [default to nothing]
 **`powerhouse_elevation`** | **`Float64`** | Height level above the sea level of the powerhouse on which the turbine is installed. Units: m. | [optional] [default to 0.0]
 **`ramp_limits`** | [**`*UpDown`**](UpDown.md) |  | [optional] [default to nothing]
 **`time_limits`** | [**`*UpDown`**](UpDown.md) |  | [optional] [default to nothing]
@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **`turbine_type`** | **`String`** | Type of the turbine. | [optional] [default to "UNKNOWN"]
 **`conversion_factor`** | **`Float64`** | Conversion factor from flow/volume to energy: m^3 -&gt; p.u-hr. Units: 1. | [optional] [default to 1.0]
 **`prime_mover_type`** | **`String`** | Prime mover technology according to EIA 923. | [optional] [default to "HY"]
-**`travel_time`** | **`Float64`** | Downstream (from reservoir into turbine) travel time. Units: h. | [optional] [default to nothing]
+**`travel_time`** | **`Float64`** | Downstream (from reservoir into turbine) travel time. Set to &#x60;null&#x60; if not applicable. Units: min. | [optional] [default to nothing]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 
 

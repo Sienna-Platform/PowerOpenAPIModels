@@ -18,17 +18,17 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
         reactive_power_limits=nothing,
         dc_current=0.0,
         max_dc_current=100000000,
-        loss_function=nothing,
+        loss_function=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
         dc_control="DC_VOLTAGE",
         ac_control="AC_REACTIVE_POWER",
-        voltage_setpoint_units="SYSTEM_BASE",
+        voltage_setpoint_units="DEVICE_BASE",
         dc_setpoint=0.0,
         ac_setpoint=1.0,
         dc_voltage_droop=0.0,
         remote_bus_control=nothing,
         rmpct=100.0,
         power_factor_weighting_fraction=1.0,
-        voltage_limits=nothing,
+        voltage_limits=MinMax(; max=999.9, min=0.0),
         dynamic_injector=nothing,
     )
 
@@ -48,8 +48,8 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
     - dc_control::String : DC-side control mode of the converter.
     - ac_control::String : AC-side control mode of the converter.
     - voltage_setpoint_units::String : Unit basis for the DC/AC voltage setpoints.
-    - dc_setpoint::Float64 : DC-voltage target (when &#x60;dc_control&#x60; regulates DC voltage) or active-power order (otherwise). Units: per dc_control — DC_POWER: MW, DC_VOLTAGE: (per voltage_setpoint_units — SYSTEM_BASE: pu, NATURAL_UNITS: kV), DC_VOLTAGE_DROOP: (per voltage_setpoint_units — SYSTEM_BASE: pu, NATURAL_UNITS: kV) .
-    - ac_setpoint::Float64 : AC-voltage magnitude target (when &#x60;ac_control&#x60; regulates AC voltage) or power factor setpoint (otherwise). Units: per ac_control — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per voltage_setpoint_units — SYSTEM_BASE: pu, NATURAL_UNITS: kV) .
+    - dc_setpoint::Float64 : DC-voltage target (when &#x60;dc_control&#x60; regulates DC voltage) or active-power order (otherwise). Units: per dc_control — DC_POWER: MW, DC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, DEVICE_BASE: pu), DC_VOLTAGE_DROOP: (per voltage_setpoint_units — NATURAL_UNITS: kV, DEVICE_BASE: pu) .
+    - ac_setpoint::Float64 : AC-voltage magnitude target (when &#x60;ac_control&#x60; regulates AC voltage) or power factor setpoint (otherwise). Units: per ac_control — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, DEVICE_BASE: pu) .
     - dc_voltage_droop::Float64 : DC-voltage droop gain relating DC voltage to converter active power as &#x60;V_dc &#x3D; dc_setpoint - dc_voltage_droop * P_c&#x60;. A value of 0.0 disables droop. Units: pu.
     - remote_bus_control::Int64 : Number of the AC bus whose voltage the converter regulates when &#x60;ac_control&#x60; is &#x60;AC_VOLTAGE&#x60;; null regulates its own terminal bus.
     - rmpct::Float64 : Percent of the total Mvar required to hold the voltage at the bus regulated by this converter that is contributed by this converter. Units: 1.
@@ -70,17 +70,17 @@ Base.@kwdef mutable struct InterconnectingConverter <: OpenAPI.APIModel
     reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     dc_current::Union{Nothing, Float64} = 0.0
     max_dc_current::Union{Nothing, Float64} = 100000000
-    loss_function = nothing # spec type: Union{ Nothing, InputOutputCurve }
+    loss_function = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
     dc_control::Union{Nothing, String} = "DC_VOLTAGE"
     ac_control::Union{Nothing, String} = "AC_REACTIVE_POWER"
-    voltage_setpoint_units::Union{Nothing, String} = "SYSTEM_BASE"
+    voltage_setpoint_units::Union{Nothing, String} = "DEVICE_BASE"
     dc_setpoint::Union{Nothing, Float64} = 0.0
     ac_setpoint::Union{Nothing, Float64} = 1.0
     dc_voltage_droop::Union{Nothing, Float64} = 0.0
     remote_bus_control::Union{Nothing, Int64} = nothing
     rmpct::Union{Nothing, Float64} = 100.0
     power_factor_weighting_fraction::Union{Nothing, Float64} = 1.0
-    voltage_limits = nothing # spec type: Union{ Nothing, MinMax }
+    voltage_limits = MinMax(; max=999.9, min=0.0) # spec type: Union{ Nothing, MinMax }
     dynamic_injector::Union{Nothing, Int64} = nothing
 
     function InterconnectingConverter(id, name, available, bus, dc_bus, active_power, rating, active_power_limits, base_power, reactive_power_limits, dc_current, max_dc_current, loss_function, dc_control, ac_control, voltage_setpoint_units, dc_setpoint, ac_setpoint, dc_voltage_droop, remote_bus_control, rmpct, power_factor_weighting_fraction, voltage_limits, dynamic_injector, )
@@ -159,7 +159,7 @@ function OpenAPI.validate_property(::Type{ InterconnectingConverter }, name::Sym
 
 
     if name === Symbol("voltage_setpoint_units")
-        OpenAPI.validate_param(name, "InterconnectingConverter", :enum, val, ["SYSTEM_BASE", "NATURAL_UNITS"])
+        OpenAPI.validate_param(name, "InterconnectingConverter", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
     end
 
 

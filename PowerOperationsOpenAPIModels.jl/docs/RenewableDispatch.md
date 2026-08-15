@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **`prime_mover_type`** | **`String`** | Prime mover technology according to EIA 923. | [default to nothing]
 **`reactive_power_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`power_factor`** | **`Float64`** | Power factor [0, 1] set-point, used in some production cost modeling and in load flow if the unit is connected to a &#x60;PQ&#x60; bus. Units: 1. | [default to nothing]
-**`operation_cost`** | [**`*RenewableGenerationCost`**](RenewableGenerationCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*RenewableDispatchOperationCost`**](RenewableDispatchOperationCost.md) |  | [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [default to nothing]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 

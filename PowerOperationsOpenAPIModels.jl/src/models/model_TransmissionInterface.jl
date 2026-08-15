@@ -12,6 +12,7 @@ A collection of transmission branches whose combined flow is monitored and const
         active_power_flow_limits=nothing,
         violation_penalty=nothing,
         direction_mapping=nothing,
+        base_power=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
@@ -20,6 +21,7 @@ A collection of transmission branches whose combined flow is monitored and const
     - active_power_flow_limits::MinMax
     - violation_penalty::Float64 : Penalty cost for violating the flow limits in the interface.
     - direction_mapping::Dict{String, Int64} : Dictionary of the line &#x60;name&#x60;s in the interface and their direction of flow (1 or -1) relative to the flow of the interface.
+    - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
 """
 Base.@kwdef mutable struct TransmissionInterface <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -28,15 +30,16 @@ Base.@kwdef mutable struct TransmissionInterface <: OpenAPI.APIModel
     active_power_flow_limits = nothing # spec type: Union{ Nothing, MinMax }
     violation_penalty::Union{Nothing, Float64} = nothing
     direction_mapping::Union{Nothing, Dict{String, Int64}} = nothing
+    base_power::Union{Nothing, Float64} = nothing
 
-    function TransmissionInterface(id, name, available, active_power_flow_limits, violation_penalty, direction_mapping, )
-        o = new(id, name, available, active_power_flow_limits, violation_penalty, direction_mapping, )
+    function TransmissionInterface(id, name, available, active_power_flow_limits, violation_penalty, direction_mapping, base_power, )
+        o = new(id, name, available, active_power_flow_limits, violation_penalty, direction_mapping, base_power, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type TransmissionInterface
 
-const _property_types_TransmissionInterface = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow_limits")=>"MinMax", Symbol("violation_penalty")=>"Float64", Symbol("direction_mapping")=>"Dict{String, Int64}", )
+const _property_types_TransmissionInterface = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow_limits")=>"MinMax", Symbol("violation_penalty")=>"Float64", Symbol("direction_mapping")=>"Dict{String, Int64}", Symbol("base_power")=>"Float64", )
 OpenAPI.property_type(::Type{ TransmissionInterface }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TransmissionInterface[name]))}
 
 function OpenAPI.check_required(o::TransmissionInterface)
@@ -44,6 +47,7 @@ function OpenAPI.check_required(o::TransmissionInterface)
     o.name === nothing && (return false)
     o.available === nothing && (return false)
     o.active_power_flow_limits === nothing && (return false)
+    o.base_power === nothing && (return false)
     true
 end
 
@@ -54,9 +58,11 @@ function OpenAPI.validate_properties(o::TransmissionInterface)
     OpenAPI.validate_property(TransmissionInterface, Symbol("active_power_flow_limits"), o.active_power_flow_limits)
     OpenAPI.validate_property(TransmissionInterface, Symbol("violation_penalty"), o.violation_penalty)
     OpenAPI.validate_property(TransmissionInterface, Symbol("direction_mapping"), o.direction_mapping)
+    OpenAPI.validate_property(TransmissionInterface, Symbol("base_power"), o.base_power)
 end
 
 function OpenAPI.validate_property(::Type{ TransmissionInterface }, name::Symbol, val)
+
 
 
 

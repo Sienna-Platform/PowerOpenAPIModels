@@ -10,9 +10,10 @@ Name | Type | Description | Notes
 **`active_power_flow`** | **`Float64`** | Initial condition of active power flow on the line. Units: MW. | [default to nothing]
 **`arc`** | **`Int64`** | An &#x60;Arc&#x60; defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus. | [default to nothing]
 **`parameter_units`** | **`String`** | Unit basis for this line&#39;s impedance field (r). | [optional] [default to "NATURAL_UNITS"]
-**`r`** | **`Float64`** | Total series resistance, split equally on both sides of the shunt capacitance. Per-unit on system base. Units: pu. Units: per parameter_units — SYSTEM_BASE: pu, NATURAL_UNITS: ohm . | [default to nothing]
-**`l`** | **`Float64`** | Total series inductance, split equally on both sides of the shunt capacitance. Per-unit on system base. Units: pu. | [default to nothing]
-**`c`** | **`Float64`** | Shunt capacitance. Per-unit on system base. Units: pu. | [default to nothing]
+**`base_current`** | **`Float64`** | Base current for per-unitization of this line&#39;s per-unit fields — this DC line per-unitizes against a current base, not a power base. Units: A. | [default to nothing]
+**`r`** | **`Float64`** | Total series resistance, split equally on both sides of the shunt capacitance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu . | [default to nothing]
+**`l`** | **`Float64`** | Total series inductance, split equally on both sides of the shunt capacitance. Per-unit on this line&#39;s &#x60;base_current&#x60;. Units: pu. | [default to nothing]
+**`c`** | **`Float64`** | Shunt capacitance. Per-unit on this line&#39;s &#x60;base_current&#x60;. Units: pu. | [default to nothing]
 **`active_power_limits_from`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
 **`active_power_limits_to`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
 

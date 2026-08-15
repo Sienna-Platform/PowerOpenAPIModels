@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **`max_active_power`** | **`Float64`** | Maximum active power that this load can demand. Units: MW. | [default to nothing]
 **`max_reactive_power`** | **`Float64`** | Maximum reactive power that this load can demand. Units: MVAr. | [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [default to nothing]
-**`operation_cost`** | [**`*LoadCost`**](LoadCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*InterruptiblePowerLoadOperationCost`**](InterruptiblePowerLoadOperationCost.md) |  | [default to nothing]
 **`conformity`** | **`String`** | Indicates whether the specified load is conforming or non-conforming. | [optional] [default to "UNDEFINED"]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 

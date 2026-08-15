@@ -5,57 +5,52 @@
 @doc raw"""MinimumCapacityRequirements
 
     MinimumCapacityRequirements(;
-        name=nothing,
         id=nothing,
+        name=nothing,
         available=nothing,
         target_year=nothing,
-        eligible_resources=nothing,
         min_capacity_mw=nothing,
     )
 
-    - name::String
-    - id::Int64
-    - available::Bool
-    - target_year::Int64
-    - eligible_resources::Vector{Int64}
-    - min_capacity_mw::Float64 : Units: MW.
+    - id::Int64 : ID for individual component.
+    - name::String : Name of the component.
+    - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;).
+    - target_year::Int64 : Year in which this requirement is applied.
+    - min_capacity_mw::Float64 : Minimum total capacity across all eligible resources. Units: MW.
 """
 Base.@kwdef mutable struct MinimumCapacityRequirements <: OpenAPI.APIModel
-    name::Union{Nothing, String} = nothing
     id::Union{Nothing, Int64} = nothing
+    name::Union{Nothing, String} = nothing
     available::Union{Nothing, Bool} = nothing
     target_year::Union{Nothing, Int64} = nothing
-    eligible_resources::Union{Nothing, Vector{Int64}} = nothing
     min_capacity_mw::Union{Nothing, Float64} = nothing
 
-    function MinimumCapacityRequirements(name, id, available, target_year, eligible_resources, min_capacity_mw, )
-        o = new(name, id, available, target_year, eligible_resources, min_capacity_mw, )
+    function MinimumCapacityRequirements(id, name, available, target_year, min_capacity_mw, )
+        o = new(id, name, available, target_year, min_capacity_mw, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type MinimumCapacityRequirements
 
-const _property_types_MinimumCapacityRequirements = Dict{Symbol,String}(Symbol("name")=>"String", Symbol("id")=>"Int64", Symbol("available")=>"Bool", Symbol("target_year")=>"Int64", Symbol("eligible_resources")=>"Vector{Int64}", Symbol("min_capacity_mw")=>"Float64", )
+const _property_types_MinimumCapacityRequirements = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("target_year")=>"Int64", Symbol("min_capacity_mw")=>"Float64", )
 OpenAPI.property_type(::Type{ MinimumCapacityRequirements }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_MinimumCapacityRequirements[name]))}
 
 function OpenAPI.check_required(o::MinimumCapacityRequirements)
+    o.id === nothing && (return false)
     o.name === nothing && (return false)
     o.available === nothing && (return false)
-    o.eligible_resources === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::MinimumCapacityRequirements)
-    OpenAPI.validate_property(MinimumCapacityRequirements, Symbol("name"), o.name)
     OpenAPI.validate_property(MinimumCapacityRequirements, Symbol("id"), o.id)
+    OpenAPI.validate_property(MinimumCapacityRequirements, Symbol("name"), o.name)
     OpenAPI.validate_property(MinimumCapacityRequirements, Symbol("available"), o.available)
     OpenAPI.validate_property(MinimumCapacityRequirements, Symbol("target_year"), o.target_year)
-    OpenAPI.validate_property(MinimumCapacityRequirements, Symbol("eligible_resources"), o.eligible_resources)
     OpenAPI.validate_property(MinimumCapacityRequirements, Symbol("min_capacity_mw"), o.min_capacity_mw)
 end
 
 function OpenAPI.validate_property(::Type{ MinimumCapacityRequirements }, name::Symbol, val)
-
 
 
 
