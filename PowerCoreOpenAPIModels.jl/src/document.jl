@@ -106,6 +106,14 @@ type — which is why a bus number cannot double as an id.
 document omits them; the schema marks all four optional, and a consumer with its own default
 (PowerSystems' `System` frequency, for instance) should apply it rather than have this
 container invent one.
+
+`plant_associations`, `combined_cycle_associations`, and `service_associations` are untyped
+`Vector{OpenAPI.APIModel}`, like `components`: `PlantAssociation`, `CombinedCycleAssociation`,
+and `ServiceAssociation` are Operations-layer generated types, and this Core package cannot
+depend on Operations. Callers construct the concrete row and hand it to
+[`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref), or
+[`add_service_association!`](@ref); deserialization resolves the concrete type through the
+same [`model_type`](@ref) registry `components` uses.
 """
 struct SystemDocument
     base_power::Float64
@@ -278,9 +286,13 @@ function add_supplemental_attribute!(
 end
 
 """
-Record which group of a power plant a generating unit belongs to: a shaft, penstock, PCC, or
-exclusion group. The plant attribute itself is recorded by
+Record which group of a power plant a generating unit belongs to: a shaft
+(ThermalPowerPlant), penstock (HydroPowerPlant), PCC (RenewablePowerPlant), or exclusion
+group (CombinedCycleFractional). The plant attribute itself is recorded by
 [`add_supplemental_attribute!`](@ref); this only adds the membership row.
+
+`assoc` is a caller-constructed `PlantAssociation`: it is an Operations-layer type this Core
+package does not depend on, so the caller — which does — builds the row.
 """
 function add_plant_association!(doc::SystemDocument, assoc::OpenAPI.APIModel)
     push!(doc.plant_associations, assoc)
@@ -289,6 +301,8 @@ end
 
 """
 Record which HRSG of a `CombinedCycleBlock` a CT or CA unit feeds into or receives from.
+`assoc` is a caller-constructed `CombinedCycleAssociation`, for the same reason as
+[`add_plant_association!`](@ref).
 """
 function add_combined_cycle_association!(doc::SystemDocument, assoc::OpenAPI.APIModel)
     push!(doc.combined_cycle_associations, assoc)
@@ -296,9 +310,27 @@ function add_combined_cycle_association!(doc::SystemDocument, assoc::OpenAPI.API
 end
 
 """
-Record one component's contribution to a service. One row per (service, member) pair.
+Record one component's contribution to a service: `assoc` is a caller-constructed
+`ServiceAssociation` — for the same reason as [`add_plant_association!`](@ref) — naming a
+Device, a Branch, or another Service as the member.
+
+One row per (service, member) pair. Duplicate pairs are rejected rather than collapsed:
+eligibility rules overlap, so the same device matching one reserve twice means a malformed
+rule set rather than something to silently merge. `service_id`/`entity_id` are read by
+property access rather than a concrete type annotation.
 """
 function add_service_association!(doc::SystemDocument, assoc::OpenAPI.APIModel)
+    service_id = assoc.service_id
+    entity_id = assoc.entity_id
+    for existing in doc.service_associations
+        if existing.service_id == service_id && existing.entity_id == entity_id
+            throw(
+                DocumentFormatError(
+                    "duplicate service membership: service_id=$service_id entity_id=$entity_id",
+                ),
+            )
+        end
+    end
     push!(doc.service_associations, assoc)
     return nothing
 end
@@ -424,7 +456,8 @@ function validate_document(doc::SystemDocument)
     # `entity_id` always names a component: the thing described, the unit in the plant, or
     # the member contributing to the service. The other end differs per table —
     # `attribute_id`/`plant_id` name a supplemental attribute, while a service is itself a
-    # component — so each is checked against the set it can legally point into.
+    # component (AGC, OnlineReserve, GroupReserve, ...) — so each is checked against the set
+    # it can legally point into.
     for assoc in doc.supplemental_attribute_associations
         _check_ref(
             attribute_ids,

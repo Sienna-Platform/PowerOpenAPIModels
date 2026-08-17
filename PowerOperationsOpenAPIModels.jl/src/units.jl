@@ -1983,22 +1983,22 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:dc_s
         return "MW"
     end
     if string(o.dc_control_from) == "DC_VOLTAGE"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "pu"
         end
-        error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     if string(o.dc_control_from) == "DC_VOLTAGE_DROOP"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "pu"
         end
-        error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for dc_control_from=$(o.dc_control_from)")
 end
@@ -2007,22 +2007,22 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         return "ActivePower"
     end
     if string(o.dc_control_from) == "DC_VOLTAGE"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "Voltage"
         end
-        error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     if string(o.dc_control_from) == "DC_VOLTAGE_DROOP"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "Voltage"
         end
-        error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for dc_control_from=$(o.dc_control_from)")
 end
@@ -2032,13 +2032,13 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:ac_s
         return "1"
     end
     if string(o.ac_control_from) == "AC_VOLTAGE"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "pu"
         end
-        error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for ac_control_from=$(o.ac_control_from)")
 end
@@ -2047,13 +2047,13 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         return "PowerFactor"
     end
     if string(o.ac_control_from) == "AC_VOLTAGE"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "Voltage"
         end
-        error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for ac_control_from=$(o.ac_control_from)")
 end
@@ -2100,22 +2100,22 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:dc_s
         return "MW"
     end
     if string(o.dc_control_to) == "DC_VOLTAGE"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "pu"
         end
-        error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     if string(o.dc_control_to) == "DC_VOLTAGE_DROOP"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "pu"
         end
-        error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for dc_control_to=$(o.dc_control_to)")
 end
@@ -2124,22 +2124,22 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         return "ActivePower"
     end
     if string(o.dc_control_to) == "DC_VOLTAGE"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "Voltage"
         end
-        error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     if string(o.dc_control_to) == "DC_VOLTAGE_DROOP"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "Voltage"
         end
-        error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for dc_control_to=$(o.dc_control_to)")
 end
@@ -2149,13 +2149,13 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:ac_s
         return "1"
     end
     if string(o.ac_control_to) == "AC_VOLTAGE"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "pu"
         end
-        error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for ac_control_to=$(o.ac_control_to)")
 end
@@ -2164,13 +2164,13 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         return "PowerFactor"
     end
     if string(o.ac_control_to) == "AC_VOLTAGE"
-        if string(o.voltage_units) == "NATURAL_UNITS"
+        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
             return "Voltage"
         end
-        error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for voltage_units=$(o.voltage_units)")
+        error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for ac_control_to=$(o.ac_control_to)")
 end

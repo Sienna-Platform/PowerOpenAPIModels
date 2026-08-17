@@ -50,7 +50,7 @@ A hydropower pumped turbine that needs to have two &#x60;HydroReservoir&#x60;s a
     - ramp_limits::UpDown
     - time_limits::UpDown
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
-    - status::String : Initial Operating status of a pumped-storage hydro unit. See &#x60;PumpHydroStatus&#x60; for reference.
+    - status::String : Initial Operating status of a pumped-storage hydro unit. See &#x60;HydroPumpTurbineStatus&#x60; for reference.
     - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is PowerSystems.jl&#39;s INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
     - operation_cost::HydroDispatchOperationCost
     - active_power_pump::Float64 : Initial active power set point of the pump unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: MW.
