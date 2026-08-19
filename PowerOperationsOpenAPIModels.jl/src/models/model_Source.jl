@@ -14,7 +14,7 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
         reactive_power=0.0,
         active_power_limits=MinMax(; max=0.0, min=0.0),
         reactive_power_limits=MinMax(; max=0.0, min=0.0),
-        parameter_units="DEVICE_BASE",
+        parameter_units="COMPONENT_BASE",
         R_th=0.0,
         X_th=0.0,
         internal_voltage=1.0,
@@ -34,8 +34,8 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
     - active_power_limits::MinMax
     - reactive_power_limits::MinMax
     - parameter_units::String : Unit basis for this source&#39;s impedance fields (R_th, X_th).
-    - R_th::Float64 : Source Thevenin resistance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
-    - X_th::Float64 : Source Thevenin reactance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - R_th::Float64 : Source Thevenin resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - X_th::Float64 : Source Thevenin reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
     - internal_voltage::Float64 : Internal voltage. Units: pu.
     - internal_angle::Float64 : Internal angle. Units: rad.
     - base_voltage::Float64 : The base voltage. Units: kV.
@@ -52,7 +52,7 @@ Base.@kwdef mutable struct Source <: OpenAPI.APIModel
     reactive_power::Union{Nothing, Float64} = 0.0
     active_power_limits = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
     reactive_power_limits = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
-    parameter_units::Union{Nothing, String} = "DEVICE_BASE"
+    parameter_units::Union{Nothing, String} = "COMPONENT_BASE"
     R_th::Union{Nothing, Float64} = 0.0
     X_th::Union{Nothing, Float64} = 0.0
     internal_voltage::Union{Nothing, Float64} = 1.0
@@ -112,7 +112,7 @@ function OpenAPI.validate_property(::Type{ Source }, name::Symbol, val)
 
 
     if name === Symbol("parameter_units")
-        OpenAPI.validate_param(name, "Source", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "Source", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
     end
 
 

@@ -9,7 +9,7 @@ A two-winding transformer connecting two buses.  All series electrical data — 
         id=nothing,
         name=nothing,
         circuit=nothing,
-        admittance_units="DEVICE_BASE",
+        admittance_units="COMPONENT_BASE",
         magnetizing_shunt=ComplexNumber(; real=0.0, imag=0.0),
         shunt_location="PRIMARY",
     )
@@ -25,7 +25,7 @@ Base.@kwdef mutable struct TwoWindingTransformer <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     name::Union{Nothing, String} = nothing
     circuit::Union{Nothing, Int64} = nothing
-    admittance_units::Union{Nothing, String} = "DEVICE_BASE"
+    admittance_units::Union{Nothing, String} = "COMPONENT_BASE"
     magnetizing_shunt = ComplexNumber(; real=0.0, imag=0.0) # spec type: Union{ Nothing, ComplexNumber }
     shunt_location::Union{Nothing, String} = "PRIMARY"
 
@@ -61,7 +61,7 @@ function OpenAPI.validate_property(::Type{ TwoWindingTransformer }, name::Symbol
 
 
     if name === Symbol("admittance_units")
-        OpenAPI.validate_param(name, "TwoWindingTransformer", :enum, val, ["NATURAL_UNITS", "DEVICE_MVAR", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "TwoWindingTransformer", :enum, val, ["NATURAL_UNITS", "COMPONENT_MVAR", "COMPONENT_BASE"])
     end
 
 

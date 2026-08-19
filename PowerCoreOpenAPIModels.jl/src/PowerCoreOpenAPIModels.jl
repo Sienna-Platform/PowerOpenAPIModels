@@ -13,7 +13,6 @@ include("models/model_EmissionBasis.jl")
 include("models/model_EnergyUnit.jl")
 include("models/model_EnergyUnitBasis.jl")
 include("models/model_FdbdPnts.jl")
-include("models/model_FeatureValue.jl")
 include("models/model_FromTo.jl")
 include("models/model_FromToToFrom.jl")
 include("models/model_FuelCurve.jl")
@@ -56,7 +55,6 @@ include("models/model_TechnologyFinancialData.jl")
 include("models/model_ThermalFuels.jl")
 include("models/model_ThermalGenerationCost.jl")
 include("models/model_ThermalGenerationCostStartUp.jl")
-include("models/model_TimeSeriesAssociation.jl")
 include("models/model_TurbinePump.jl")
 include("models/model_TwoTerminalLoss.jl")
 include("models/model_UnitSystem.jl")
@@ -73,7 +71,6 @@ export CostCurve
 export DataSource
 export DbdPnts
 export FdbdPnts
-export FeatureValue
 export FromTo
 export FromToToFrom
 export FuelCurve
@@ -108,7 +105,6 @@ export SupplementalAttributeAssociation
 export TechnologyFinancialData
 export ThermalGenerationCost
 export ThermalGenerationCostStartUp
-export TimeSeriesAssociation
 export TurbinePump
 export TwoTerminalLoss
 export UpDown

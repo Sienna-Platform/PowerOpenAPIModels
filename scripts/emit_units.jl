@@ -116,12 +116,12 @@ const QUANTITY_OVERRIDES = Dict(
 
     # Nested discriminator, same shape as TwoTerminalVSCLine.ac_setpoint_from
     # below: "1" (AC_REACTIVE_POWER) is a power factor, "pu" (AC_VOLTAGE +
-    # DEVICE_BASE) is a per-unit voltage — two different target quantities for
+    # COMPONENT_BASE) is a per-unit voltage — two different target quantities for
     # the two ambiguous units on this one property.
     ("InterconnectingConverter", "ac_setpoint") =>
         Dict("1" => "PowerFactor", "pu" => "Voltage"),
     # dc_setpoint's only ambiguous branch is "pu" (DC_VOLTAGE/DC_VOLTAGE_DROOP +
-    # DEVICE_BASE); "MW" (DC_POWER) is unambiguous.
+    # COMPONENT_BASE); "MW" (DC_POWER) is unambiguous.
     ("InterconnectingConverter", "dc_setpoint") => "Voltage",
     # DC-voltage droop gain (dV/dP); modeled on the same pu base as a series
     # resistance, matching the "droop resistance" convention in DC-grid droop
@@ -247,14 +247,14 @@ const QUANTITY_OVERRIDES = Dict(
 
     # Nested discriminator with two differently-ambiguous branches: "1"
     # (AC_REACTIVE_POWER) reads as a power factor, "pu" (AC_VOLTAGE +
-    # DEVICE_BASE) reads as a per-unit voltage. One quantity per property is not
+    # COMPONENT_BASE) reads as a per-unit voltage. One quantity per property is not
     # enough here, so the value is a per-unit-string map instead of a bare name.
     ("TwoTerminalVSCLine", "ac_setpoint_from") =>
         Dict("1" => "PowerFactor", "pu" => "Voltage"),
     ("TwoTerminalVSCLine", "ac_setpoint_to") =>
         Dict("1" => "PowerFactor", "pu" => "Voltage"),
     # dc_setpoint_from/to's only ambiguous branch is "pu" (DC_VOLTAGE/
-    # DC_VOLTAGE_DROOP + DEVICE_BASE); "MW" (DC_POWER) is unambiguous.
+    # DC_VOLTAGE_DROOP + COMPONENT_BASE); "MW" (DC_POWER) is unambiguous.
     ("TwoTerminalVSCLine", "dc_setpoint_from") => "Voltage",
     ("TwoTerminalVSCLine", "dc_setpoint_to") => "Voltage",
     # DC-voltage droop gain (dV/dP); same convention as

@@ -36,10 +36,10 @@ end
 
 @testset "discriminated x-units read the instance" begin
     line = PO.TwoTerminalLCCLine()
-    # DEVICE_BASE, not SYSTEM_BASE: the schemas carry no system-base option — per-unit data
+    # COMPONENT_BASE, not SYSTEM_BASE: the schemas carry no system-base option — per-unit data
     # historically on the system base records that base in the component's own `base_power`
-    # and rides as DEVICE_BASE.
-    line.parameter_units = "DEVICE_BASE"
+    # and rides as COMPONENT_BASE.
+    line.parameter_units = "COMPONENT_BASE"
     @test PC.declared_unit(line, Val(:r)) == "pu"
     line.parameter_units = "NATURAL_UNITS"
     @test PC.declared_unit(line, Val(:r)) == "ohm"

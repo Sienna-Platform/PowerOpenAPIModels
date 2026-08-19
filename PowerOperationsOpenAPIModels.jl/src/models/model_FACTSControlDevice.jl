@@ -11,7 +11,7 @@ Facts control devices.  Most often used in AC power flow studies as a control of
         available=nothing,
         bus=nothing,
         control_mode=nothing,
-        voltage_setpoint_units="DEVICE_BASE",
+        voltage_setpoint_units="COMPONENT_BASE",
         voltage_setpoint=nothing,
         max_shunt_current=nothing,
         reactive_power_required=nothing,
@@ -27,8 +27,8 @@ Facts control devices.  Most often used in AC power flow studies as a control of
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : Sending end bus number.
     - control_mode::String : Control mode. Used to describe the behavior of the control device. in psy5 a required param with an option to be nothing
-    - voltage_setpoint_units::String : Unit basis for voltage_setpoint. DEVICE_BASE (pu on the bus base voltage) is PSS/E RAW native (VSET).
-    - voltage_setpoint::Float64 : Voltage setpoint at the sending end bus in kV, it has to be a &#x60;PV&#x60; bus. Units: kV. Units: per voltage_setpoint_units — NATURAL_UNITS: kV, DEVICE_BASE: pu .
+    - voltage_setpoint_units::String : Unit basis for voltage_setpoint. COMPONENT_BASE (pu on the bus base voltage) is PSS/E RAW native (VSET).
+    - voltage_setpoint::Float64 : Voltage setpoint at the sending end bus in kV, it has to be a &#x60;PV&#x60; bus. Units: kV. Units: per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
     - max_shunt_current::Float64 : Maximum shunt current at the sending end bus; entered at unity voltage. Units: MVA.
     - reactive_power_required::Float64 : Total reactive power required to hold voltage at sending bus, as a fraction in the range 0-1. Units: 1.
     - max_reactive_power::Float64 : Independent maximum reactive power ceiling; the device reactive limit is min(the current/susceptance law on max_shunt_current, this value). Non-binding at the 9999.0 default.
@@ -43,7 +43,7 @@ Base.@kwdef mutable struct FACTSControlDevice <: OpenAPI.APIModel
     available::Union{Nothing, Bool} = nothing
     bus::Union{Nothing, Int64} = nothing
     control_mode::Union{Nothing, String} = nothing
-    voltage_setpoint_units::Union{Nothing, String} = "DEVICE_BASE"
+    voltage_setpoint_units::Union{Nothing, String} = "COMPONENT_BASE"
     voltage_setpoint::Union{Nothing, Float64} = nothing
     max_shunt_current::Union{Nothing, Float64} = nothing
     reactive_power_required::Union{Nothing, Float64} = nothing
@@ -104,7 +104,7 @@ function OpenAPI.validate_property(::Type{ FACTSControlDevice }, name::Symbol, v
 
 
     if name === Symbol("voltage_setpoint_units")
-        OpenAPI.validate_param(name, "FACTSControlDevice", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "FACTSControlDevice", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
     end
 
 

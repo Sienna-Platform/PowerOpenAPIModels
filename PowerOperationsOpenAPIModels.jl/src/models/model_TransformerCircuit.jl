@@ -11,7 +11,7 @@ The data defining one modeled arc of a transformer.  A &#x60;TwoWindingTransform
         arc=nothing,
         tap=1.0,
         alpha=0.0,
-        parameter_units="DEVICE_BASE",
+        parameter_units="COMPONENT_BASE",
         r=0.0,
         x=0.0,
         control_objective="UNDEFINED",
@@ -35,8 +35,8 @@ The data defining one modeled arc of a transformer.  A &#x60;TwoWindingTransform
     - tap::Float64 : Normalized tap changer position for voltage control, varying between 0 and 2, with 1 centered at the nominal voltage. Units: 1.
     - alpha::Float64 : Initial condition of phase shift across this circuit. Units: rad.
     - parameter_units::String : Unit basis for this circuit&#39;s impedance fields (r, x).
-    - r::Float64 : Circuit resistance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
-    - x::Float64 : Circuit reactance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - r::Float64 : Circuit resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - x::Float64 : Circuit reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
     - control_objective::String : Tap-changer / phase-shifter control objective (PSS/E COD). &#x60;UNDEFINED&#x60; means this circuit has no control block.
     - regulated_bus_number::Int64 : Controlled bus number (PSS/E CONT; sign &#x3D; regulation side).
     - control_limits::MinMax
@@ -57,7 +57,7 @@ Base.@kwdef mutable struct TransformerCircuit <: OpenAPI.APIModel
     arc::Union{Nothing, Int64} = nothing
     tap::Union{Nothing, Float64} = 1.0
     alpha::Union{Nothing, Float64} = 0.0
-    parameter_units::Union{Nothing, String} = "DEVICE_BASE"
+    parameter_units::Union{Nothing, String} = "COMPONENT_BASE"
     r::Union{Nothing, Float64} = 0.0
     x::Union{Nothing, Float64} = 0.0
     control_objective::Union{Nothing, String} = "UNDEFINED"
@@ -123,7 +123,7 @@ function OpenAPI.validate_property(::Type{ TransformerCircuit }, name::Symbol, v
 
 
     if name === Symbol("parameter_units")
-        OpenAPI.validate_param(name, "TransformerCircuit", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "TransformerCircuit", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
     end
 
 

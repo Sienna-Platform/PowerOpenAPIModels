@@ -14,7 +14,7 @@
     )
 
     - fuel_cost::FuelCurveFuelCost
-    - power_units::String : Unit basis curve power values are stored in. DEVICE_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as DEVICE_BASE.
+    - power_units::String : Unit basis curve power values are stored in. COMPONENT_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as COMPONENT_BASE.
     - startup_fuel_offtake::InputOutputCurve
     - value_curve::ValueCurve
     - variable_cost_type::String
@@ -60,7 +60,7 @@ function OpenAPI.validate_property(::Type{ FuelCurve }, name::Symbol, val)
 
 
     if name === Symbol("power_units")
-        OpenAPI.validate_param(name, "FuelCurve", :enum, val, ["DEVICE_BASE", "NATURAL_UNITS"])
+        OpenAPI.validate_param(name, "FuelCurve", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
     end
 
 

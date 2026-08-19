@@ -34,6 +34,7 @@ const DOMAIN_TO_PKG = Dict(
     "operations" => "PowerOperationsOpenAPIModels.jl",
     "investments" => "PowerInvestmentsOpenAPIModels.jl",
     "dynamics" => "PowerDynamicsOpenAPIModels.jl",
+    "timeseries" => "PowerTimeSeriesOpenAPIModels.jl"
 )
 
 # --------------------------------------------------------------------------- #
@@ -45,8 +46,9 @@ const DOMAIN_TO_PKG = Dict(
 # The `property_type` methods emitted for oneOf wrappers are typed
 # `::Dict{String,Any}` exactly, so JSON.jl's own `JSON.Object` has to be
 # converted before it reaches them.
-to_plain(x::AbstractDict) =
+function to_plain(x::AbstractDict)
     Dict{String, Any}(String(k) => to_plain(v) for (k, v) in pairs(x))
+end
 to_plain(x::AbstractVector) = Any[to_plain(v) for v in x]
 to_plain(x) = x
 
@@ -71,7 +73,7 @@ function collect_composite_defaults(schema_dir)
         # holding only a `$ref` to it, so both buckets have to be swept.
         schema_maps = (
             get(spec, "components", Dict())["schemas"],
-            get(spec, "definitions", Dict{String, Any}()),
+            get(spec, "definitions", Dict{String, Any}())
         )
         for schemas in schema_maps
             for (type_name, schema) in pairs(schemas)
@@ -109,6 +111,7 @@ end
 module OpenAPI
 abstract type APIModel end
 abstract type OneOfAPIModel end
+abstract type AnyOfAPIModel end
 validate_properties(::Any) = nothing
 validate_property(::Any, ::Any, ::Any) = nothing
 check_required(::Any) = true
@@ -219,8 +222,8 @@ function patch_field_default!(path, prop_name, rendered)
     # The annotation can nest braces (`Vector{Int64}`), so it is matched greedily
     # rather than with `[^}]*`, which would stop at the inner closing brace. Group 4
     # is non-greedy so a trailing `# spec type: ...` comment lands in group 5.
-    body_re =
-        Regex("^(\\s*" * prop_name * ")(::Union\\{.*\\})?(\\s*=\\s*)(.*?)(\\s*(?:#.*)?)\$")
+    body_re = Regex("^(\\s*" * prop_name *
+                    ")(::Union\\{.*\\})?(\\s*=\\s*)(.*?)(\\s*(?:#.*)?)\$")
     doc_re = Regex("^(\\s*" * prop_name * "=)(.*?)(,)\$")
 
     # A rendered composite default is itself comma-bearing (`MinMax(; min=0.9,
@@ -233,7 +236,7 @@ function patch_field_default!(path, prop_name, rendered)
         body_re,
         4,
         rendered;
-        skip_if=line -> endswith(rstrip(line), ","),
+        skip_if=line -> endswith(rstrip(line), ",")
     )
     doc_status = match_and_classify!(lines, doc_re, 2, rendered)
 

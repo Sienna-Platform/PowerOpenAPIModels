@@ -19,6 +19,7 @@ const DOMAINS = [
     "operations" => "PowerOperationsOpenAPIModels.jl",
     "investments" => "PowerInvestmentsOpenAPIModels.jl",
     "dynamics" => "PowerDynamicsOpenAPIModels.jl",
+    "timeseries" => "PowerTimeSeriesOpenAPIModels.jl"
 ]
 
 for (domain, pkg) in DOMAINS
@@ -65,10 +66,9 @@ for (domain, pkg) in DOMAINS
 
     # Generate module file
     mod = replace(pkg, ".jl" => "")
-    models =
-        sort([basename(f) for f in readdir(joinpath(dest, "models")) if endswith(f, ".jl")])
-    apis =
-        sort([basename(f) for f in readdir(joinpath(dest, "apis")) if endswith(f, ".jl")])
+    models = sort([basename(f)
+                   for f in readdir(joinpath(dest, "models")) if endswith(f, ".jl")])
+    apis = sort([basename(f) for f in readdir(joinpath(dest, "apis")) if endswith(f, ".jl")])
 
     # Extract exported type names from files
     exports = Set{String}()
@@ -89,8 +89,9 @@ for (domain, pkg) in DOMAINS
     # openapi-generator's julia-client template emits ZonedDateTime for
     # date-time formatted fields but never imports TimeZones for it.
     needs_timezones = any(
-        occursin("ZonedDateTime", read(joinpath(dest, "models", f), String)) for
-        f in models
+        occursin("ZonedDateTime", read(joinpath(dest, "models", f), String))
+    for
+    f in models
     )
 
     # Units must be emitted before the module file so the include below is valid.
@@ -140,7 +141,7 @@ for (domain, pkg) in DOMAINS
             println(io)
             println(
                 io,
-                "for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export \$n; end",
+                "for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export \$n; end"
             )
         end
         println(io)

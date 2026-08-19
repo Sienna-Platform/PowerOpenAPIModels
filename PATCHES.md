@@ -24,7 +24,7 @@ control_limits = nothing # spec type: Union{ Nothing, MinMax }
 
 `TransformerCircuit()` in Julia therefore has `control_limits === nothing`;
 the same document loaded in Python has `control_limits == {"min": 0.9, "max":
-1.1}`. Scalar defaults (`tap=1.0`, `parameter_units="DEVICE_BASE"`, ...) are
+1.1}`. Scalar defaults (`tap=1.0`, `parameter_units="COMPONENT_BASE"`, ...) are
 unaffected and already round-trip correctly — only two schema kinds are lost:
 an object default on a `$ref`-typed property (`control_limits`,
 `Source.active_power_limits`, ...) and an array default (`*.requirements:

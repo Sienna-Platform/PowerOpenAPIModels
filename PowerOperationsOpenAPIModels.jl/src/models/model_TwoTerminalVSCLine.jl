@@ -60,14 +60,14 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
     - active_power_limits_from::MinMax
     - active_power_limits_to::MinMax
     - admittance_units::String : Unit basis for the series conductance g.
-    - g::Float64 : Series conductance of the DC line. Units: per admittance_units — NATURAL_UNITS: S, DEVICE_MVAR: MW, DEVICE_BASE: pu .
+    - g::Float64 : Series conductance of the DC line. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MW, COMPONENT_BASE: pu .
     - dc_current::Float64 : DC current on the converter flowing in the DC line, from &#x60;from&#x60; bus to &#x60;to&#x60; bus. Units: A.
     - reactive_power_from::Float64 : Initial condition of reactive power flowing into the from-bus. Units: MVAr.
     - dc_control_from::String : DC-side control mode of the &#x60;from&#x60; converter.
     - ac_control_from::String : AC-side control mode of the &#x60;from&#x60; converter.
     - setpoint_voltage_units::String : Unit basis for the DC_VOLTAGE/DC_VOLTAGE_DROOP/AC_VOLTAGE branches of dc_setpoint_from/to and ac_setpoint_from/to. Independent of voltage_units, which covers voltage_limits_from/to only.
-    - dc_setpoint_from::Float64 : Converter DC setpoint in the &#x60;from&#x60; bus converter. When &#x60;dc_control_from&#x60; regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the &#x60;from&#x60; bus; if negative, the converter is withdrawing power from the AC network at the &#x60;from&#x60; bus. Units: per dc_control_from — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu) .
-    - ac_setpoint_from::Float64 : Converter AC setpoint in the &#x60;from&#x60; bus converter. When &#x60;ac_control_from&#x60; regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_from — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu) .
+    - dc_setpoint_from::Float64 : Converter DC setpoint in the &#x60;from&#x60; bus converter. When &#x60;dc_control_from&#x60; regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the &#x60;from&#x60; bus; if negative, the converter is withdrawing power from the AC network at the &#x60;from&#x60; bus. Units: per dc_control_from — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
+    - ac_setpoint_from::Float64 : Converter AC setpoint in the &#x60;from&#x60; bus converter. When &#x60;ac_control_from&#x60; regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_from — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
     - converter_loss_from::InputOutputCurve
     - max_dc_current_from::Float64 : Maximum stable dc current limits. Units: A.
     - rating_from::Float64 : Converter rating in the &#x60;from&#x60; bus. Units: MVA.
@@ -79,8 +79,8 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
     - reactive_power_to::Float64 : Initial condition of reactive power flowing into the to-bus. Units: MVAr.
     - dc_control_to::String : DC-side control mode of the &#x60;to&#x60; converter.
     - ac_control_to::String : AC-side control mode of the &#x60;to&#x60; converter.
-    - dc_setpoint_to::Float64 : Converter DC setpoint in the &#x60;to&#x60; bus converter. When &#x60;dc_control_to&#x60; regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the &#x60;to&#x60; bus; if negative, the converter is withdrawing power from the AC network at the &#x60;to&#x60; bus. Units: per dc_control_to — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu) .
-    - ac_setpoint_to::Float64 : Converter AC setpoint in the &#x60;to&#x60; bus converter. When &#x60;ac_control_to&#x60; regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_to — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, DEVICE_BASE: pu) .
+    - dc_setpoint_to::Float64 : Converter DC setpoint in the &#x60;to&#x60; bus converter. When &#x60;dc_control_to&#x60; regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the &#x60;to&#x60; bus; if negative, the converter is withdrawing power from the AC network at the &#x60;to&#x60; bus. Units: per dc_control_to — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
+    - ac_setpoint_to::Float64 : Converter AC setpoint in the &#x60;to&#x60; bus converter. When &#x60;ac_control_to&#x60; regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_to — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
     - converter_loss_to::InputOutputCurve
     - max_dc_current_to::Float64 : Maximum stable dc current limits. Units: A.
     - rating_to::Float64 : Converter rating in the &#x60;to&#x60; bus. Units: MVA.
@@ -220,7 +220,7 @@ function OpenAPI.validate_property(::Type{ TwoTerminalVSCLine }, name::Symbol, v
 
 
     if name === Symbol("admittance_units")
-        OpenAPI.validate_param(name, "TwoTerminalVSCLine", :enum, val, ["NATURAL_UNITS", "DEVICE_MVAR", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "TwoTerminalVSCLine", :enum, val, ["NATURAL_UNITS", "COMPONENT_MVAR", "COMPONENT_BASE"])
     end
 
 
@@ -238,7 +238,7 @@ function OpenAPI.validate_property(::Type{ TwoTerminalVSCLine }, name::Symbol, v
 
 
     if name === Symbol("setpoint_voltage_units")
-        OpenAPI.validate_param(name, "TwoTerminalVSCLine", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "TwoTerminalVSCLine", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
     end
 
 
@@ -250,7 +250,7 @@ function OpenAPI.validate_property(::Type{ TwoTerminalVSCLine }, name::Symbol, v
 
 
     if name === Symbol("voltage_units")
-        OpenAPI.validate_param(name, "TwoTerminalVSCLine", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "TwoTerminalVSCLine", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
     end
 
 
