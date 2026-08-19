@@ -480,8 +480,11 @@ function validate_document(doc::SystemDocument)
         )
     end
 
+    # `.value` because `TimeSeriesAssociation` is the oneOf wrapper: the six per-type
+    # structs hold the columns, and `OpenAPI.OneOfAPIModel` forwards no field access.
     for assoc in doc.time_series_associations
-        _check_ref(all_ids, assoc.owner_id, "TimeSeriesAssociation", "name=$(assoc.name)")
+        row = assoc.value
+        _check_ref(all_ids, row.owner_id, "TimeSeriesAssociation", "name=$(row.name)")
     end
 
     for id in sort(collect(keys(doc.ext)))
