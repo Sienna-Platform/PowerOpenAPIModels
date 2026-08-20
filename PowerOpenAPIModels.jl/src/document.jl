@@ -206,11 +206,13 @@ function add_component!(doc::SystemDocument, component::T) where {T <: OpenAPI.A
 end
 
 """
-Record a supplemental attribute and the entity it describes.
+Record a supplemental attribute and the component it describes.
 
 Attributes are held in one flat list rather than bucketed by type: nothing iterates them per
 type, and the association carries both the link and the `attribute_type` a reader needs to
-pick a converter.
+pick a converter. The row mirrors infrastore's `supplemental_attribute_associations` catalog
+row field-for-field, so it also carries the component's type name as a denormalized label —
+resolved from the document, which is why the component must be added before its attribute.
 
 Plant-family groupings (shaft/penstock/PCC/exclusion-group) and combined-cycle HRSG
 assignments are recorded separately, via [`add_plant_association!`](@ref) and
@@ -220,14 +222,24 @@ assignments are recorded separately, via [`add_plant_association!`](@ref) and
 function add_supplemental_attribute!(
     doc::SystemDocument,
     attribute::OpenAPI.APIModel,
-    entity_id::Integer,
+    component_id::Integer,
 )
+    component_types = _component_types_by_id(doc)
+    if !haskey(component_types, Int(component_id))
+        throw(
+            PowerCoreOpenAPIModels.DocumentFormatError(
+                "add_supplemental_attribute!: component id $(component_id) is not in the " *
+                "document — add the component before associating an attribute with it",
+            ),
+        )
+    end
     push!(doc.supplemental_attributes, attribute)
     push!(
         doc.supplemental_attribute_associations,
         SupplementalAttributeAssociation(;
+            component_id=Int(component_id),
+            component_type=component_types[Int(component_id)],
             attribute_id=_model_id(attribute),
-            entity_id=Int(entity_id),
             attribute_type=string(nameof(typeof(attribute))),
         ),
     )
@@ -368,6 +380,18 @@ function _component_ids(doc::SystemDocument)
     return ids
 end
 
+# id → type-name map used to fill and check the association rows' denormalized
+# `component_type` label. Duplicate ids are `_component_ids`'s concern, not this map's.
+function _component_types_by_id(doc::SystemDocument)
+    types = Dict{Int, String}()
+    for type_name in component_type_names(doc)
+        for component in doc.components[type_name]
+            types[_model_id(component)] = type_name
+        end
+    end
+    return types
+end
+
 function _attribute_ids(doc::SystemDocument)
     ids = Set{Int}()
     for attribute in doc.supplemental_attributes
@@ -417,19 +441,32 @@ function validate_document(doc::SystemDocument)
     end
     all_ids = union(component_ids, attribute_ids)
 
+    component_types = _component_types_by_id(doc)
     for assoc in doc.supplemental_attribute_associations
         _check_ref(
             attribute_ids,
             assoc.attribute_id,
             "SupplementalAttributeAssociation",
-            "entity_id=$(assoc.entity_id)",
+            "component_id=$(assoc.component_id)",
         )
         _check_ref(
             component_ids,
-            assoc.entity_id,
+            assoc.component_id,
             "SupplementalAttributeAssociation",
             "attribute_id=$(assoc.attribute_id)",
         )
+        # The denormalized label must agree with the bucket actually holding the component:
+        # infrastore filters on it, so a drifted label silently changes query results there.
+        expected_type = component_types[assoc.component_id]
+        if assoc.component_type != expected_type
+            throw(
+                PowerCoreOpenAPIModels.DocumentFormatError(
+                    "SupplementalAttributeAssociation attribute_id=$(assoc.attribute_id): " *
+                    "component_type \"$(assoc.component_type)\" does not match the type " *
+                    "\"$(expected_type)\" holding component_id=$(assoc.component_id)",
+                ),
+            )
+        end
     end
 
     for assoc in doc.plant_associations
@@ -728,6 +765,12 @@ function _highest_id(doc::SystemDocument)
     end
     for attribute in doc.supplemental_attributes
         highest = max(highest, _model_id(attribute))
+    end
+    # `TimeSeriesAssociation` is a oneOf wrapper with only a `.value` field; the id
+    # lives on the wrapped row. Written last, these rows are typically the highest
+    # ids in a document, so omitting them here under-reserves ids on read_document.
+    for assoc in doc.time_series_associations
+        highest = max(highest, _model_id(assoc.value))
     end
     return highest
 end

@@ -1892,7 +1892,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.210002566077499e6,
+        "rating": 1210002.566077499,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -1919,7 +1919,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.210002566077499e6,
+        "rating": 1210002.566077499,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -1946,7 +1946,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.210002566077499e6,
+        "rating": 1210002.566077499,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -1973,7 +1973,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.0e6,
+        "rating": 1000000.0,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -2000,7 +2000,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.0e6,
+        "rating": 1000000.0,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -2027,7 +2027,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.0e6,
+        "rating": 1000000.0,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -2054,7 +2054,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.0e6,
+        "rating": 1000000.0,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -2081,7 +2081,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.0e6,
+        "rating": 1000000.0,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -2108,7 +2108,7 @@
           "min": 0.9
         },
         "number_of_tap_positions": 33,
-        "rating": 1.0e6,
+        "rating": 1000000.0,
         "active_power_flow": 0.0,
         "reactive_power_flow": 0.0,
         "base_power": 100.0,
@@ -2632,48 +2632,57 @@
   },
   "supplemental_attribute_associations": [
     {
+      "component_id": 86,
+      "component_type": "TwoWindingTransformer",
       "attribute_id": 120,
-      "entity_id": 86,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 89,
+      "component_type": "TwoWindingTransformer",
       "attribute_id": 121,
-      "entity_id": 89,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 92,
+      "component_type": "TwoWindingTransformer",
       "attribute_id": 122,
-      "entity_id": 92,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 99,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 123,
-      "entity_id": 99,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 99,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 124,
-      "entity_id": 99,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 99,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 125,
-      "entity_id": 99,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 106,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 126,
-      "entity_id": 106,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 106,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 124,
-      "entity_id": 106,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 106,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 127,
-      "entity_id": 106,
       "attribute_type": "ImpedanceCorrectionData"
     }
   ],

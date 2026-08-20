@@ -20,6 +20,8 @@ using PowerInvestmentsOpenAPIModels
 using PowerDynamicsOpenAPIModels
 using PowerTimeSeriesOpenAPIModels
 using PowerOpenAPIModels
+using Dates
+using TimeZones
 
 @testset "No duplicate type definitions" begin
     pkgs = [
@@ -120,6 +122,54 @@ end
     end
 end
 
+@testset "_highest_id reserves ids from time series association rows" begin
+    # Time series association rows are written last, so they typically carry the
+    # highest ids in a document; `_highest_id` must walk them too or a read document's
+    # id counter under-reserves and `next_id!` can mint a colliding id.
+    doc = PowerOpenAPIModels.SystemDocument(
+        100.0;
+        time_series_storage_file="fixture_time_series_storage.h5",
+    )
+    bus_id = PowerOpenAPIModels.next_id!(doc)
+    PowerOpenAPIModels.add_component!(
+        doc,
+        PowerOperationsOpenAPIModels.ACBus(;
+            id=bus_id,
+            name="b1",
+            number=1,
+            bustype="REF",
+            available=true,
+        ),
+    )
+    ts_id = PowerOpenAPIModels.next_id!(doc)
+    @test ts_id > bus_id
+    ts = PowerTimeSeriesOpenAPIModels.SingleTimeSeries(;
+        id=ts_id,
+        owner_id=bus_id,
+        owner_type="ACBus",
+        owner_category="Component",
+        name="max_active_power",
+        features=Dict{String, Any}(),
+        address="fixture_time_series_storage.h5",
+        element_type="Float64",
+        element_shape=Int64[],
+        initial_timestamp=ZonedDateTime(DateTime(2024, 1, 1), tz"UTC"),
+        resolution="PT1H",
+        length=24,
+    )
+    PowerOpenAPIModels.add_time_series_association!(
+        doc,
+        PowerTimeSeriesOpenAPIModels.TimeSeriesAssociation(ts),
+    )
+
+    mktempdir() do dir
+        path = joinpath(dir, "system_ts.json")
+        PowerOpenAPIModels.write_document(doc, path)
+        back = PowerOpenAPIModels.read_document(path)
+        @test PowerOpenAPIModels.next_id!(back) > ts_id
+    end
+end
+
 @testset "SystemDocument reads a document with no ext key" begin
     # `ext` is optional in the schema (Core/SystemDocument.json's `required` list omits
     # it); a producer that mapped every field is allowed to omit the key entirely.
@@ -168,8 +218,9 @@ end
     push!(
         doc.supplemental_attribute_associations,
         PowerCoreOpenAPIModels.SupplementalAttributeAssociation(;
+            component_id=bus_id,
+            component_type="ACBus",
             attribute_id=9999,
-            entity_id=bus_id,
             attribute_type="OnlineReserve",
         ),
     )

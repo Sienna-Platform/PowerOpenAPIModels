@@ -2632,48 +2632,57 @@
   },
   "supplemental_attribute_associations": [
     {
+      "component_id": 86,
+      "component_type": "TwoWindingTransformer",
       "attribute_id": 120,
-      "entity_id": 86,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 89,
+      "component_type": "TwoWindingTransformer",
       "attribute_id": 121,
-      "entity_id": 89,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 92,
+      "component_type": "TwoWindingTransformer",
       "attribute_id": 122,
-      "entity_id": 92,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 99,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 123,
-      "entity_id": 99,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 99,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 124,
-      "entity_id": 99,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 99,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 125,
-      "entity_id": 99,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 106,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 126,
-      "entity_id": 106,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 106,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 124,
-      "entity_id": 106,
       "attribute_type": "ImpedanceCorrectionData"
     },
     {
+      "component_id": 106,
+      "component_type": "ThreeWindingTransformer",
       "attribute_id": 127,
-      "entity_id": 106,
       "attribute_type": "ImpedanceCorrectionData"
     }
   ],
