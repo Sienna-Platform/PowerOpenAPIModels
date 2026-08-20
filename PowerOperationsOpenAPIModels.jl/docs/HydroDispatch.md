@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **`time_limits`** | [**`*UpDown`**](UpDown.md) |  | [optional] [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [default to nothing]
 **`status`** | **`Bool`** | Initial commitment condition at the start of a simulation (&#x60;true&#x60; &#x3D; on or &#x60;false&#x60; &#x3D; off). | [optional] [default to false]
-**`time_at_status`** | **`Float64`** | Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is PowerSystems.jl&#39;s INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min. | [optional] [default to 600000.0]
+**`time_at_status`** | **`Float64`** | Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min. | [optional] [default to 600000.0]
 **`operation_cost`** | [**`*HydroDispatchOperationCost`**](HydroDispatchOperationCost.md) |  | [default to nothing]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 

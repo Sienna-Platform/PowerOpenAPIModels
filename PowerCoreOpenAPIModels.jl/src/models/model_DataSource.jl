@@ -3,7 +3,7 @@
 
 
 @doc raw"""DataSource
-Records data provenance for a component&#39;s field values: which organization or dataset the data came from, the URL it was retrieved from, and when it was retrieved. Mirrors the &#x60;DataSource&#x60; supplemental attribute from InfrastructureSystems.jl, with two deliberate divergences: &#x60;organization&#x60; is optional here although it is required upstream, and &#x60;extra&#x60; is narrowed from an any-valued map to a string-valued one. Linked to the entity it describes through Core/Associations/SupplementalAttributeAssociation.json with attribute_type: \&quot;DataSource\&quot;.
+Records data provenance for a component&#39;s field values: which organization or dataset the data came from, the URL it was retrieved from, and when it was retrieved. Mirrors the &#x60;DataSource&#x60; supplemental attribute from the upstream data layer, with two deliberate divergences: &#x60;organization&#x60; is optional here although it is required upstream, and &#x60;extra&#x60; is narrowed from an any-valued map to a string-valued one. Linked to the entity it describes through Core/Associations/SupplementalAttributeAssociation.json with attribute_type: \&quot;DataSource\&quot;.
 
     DataSource(;
         id=nothing,

@@ -39,7 +39,7 @@ A hydropower generator without a reservoir, suitable for modeling run-of-river h
     - time_limits::UpDown
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
     - status::Bool : Initial commitment condition at the start of a simulation (&#x60;true&#x60; &#x3D; on or &#x60;false&#x60; &#x3D; off).
-    - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is PowerSystems.jl&#39;s INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
+    - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
     - operation_cost::HydroDispatchOperationCost
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
