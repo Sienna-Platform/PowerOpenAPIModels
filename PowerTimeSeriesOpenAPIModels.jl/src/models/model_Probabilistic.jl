@@ -6,7 +6,6 @@
 A probabilistic forecast: per-percentile, per-window horizon arrays. Adds a percentile axis in front of the deterministic layout.
 
     Probabilistic(;
-        id=nothing,
         owner_id=nothing,
         owner_type=nothing,
         owner_category=nothing,
@@ -30,7 +29,6 @@ A probabilistic forecast: per-percentile, per-window horizon arrays. Adds a perc
         percentiles=nothing,
     )
 
-    - id::Int64 : Surrogate primary key of the association row, the store&#39;s catalog row. Not part of the uniqueness tuple, which is (owner_id, owner_category, time_series_type, name, resolution, interval, features).
     - owner_id::Int64 : ID of the owning component or supplemental attribute. The producing data layer allocates both from one id stream, so an &#x60;owner_id&#x60; never collides across the two categories; &#x60;owner_category&#x60; remains required because the store&#39;s catalog contract still supports independent streams from other producers, and it is still the store&#39;s disambiguator.
     - owner_type::String : Type name of the owning entity. Descriptive, not part of the series&#39; identity.
     - owner_category::String : Whether the owner is a component or a supplemental attribute.
@@ -54,7 +52,6 @@ A probabilistic forecast: per-percentile, per-window horizon arrays. Adds a perc
     - percentiles::Vector{Float64} : The percentiles this forecast carries, one per leading axis entry of the stored array.
 """
 Base.@kwdef mutable struct Probabilistic <: OpenAPI.APIModel
-    id::Union{Nothing, Int64} = nothing
     owner_id::Union{Nothing, Int64} = nothing
     owner_type::Union{Nothing, String} = nothing
     owner_category::Union{Nothing, String} = nothing
@@ -77,18 +74,17 @@ Base.@kwdef mutable struct Probabilistic <: OpenAPI.APIModel
     count::Union{Nothing, Int64} = nothing
     percentiles::Union{Nothing, Vector{Float64}} = nothing
 
-    function Probabilistic(id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, percentiles, )
-        o = new(id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, percentiles, )
+    function Probabilistic(owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, percentiles, )
+        o = new(owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, percentiles, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type Probabilistic
 
-const _property_types_Probabilistic = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("time_series_type")=>"String", Symbol("name")=>"String", Symbol("features")=>"Dict{String, TimeSeriesFeatureValue}", Symbol("uri")=>"String", Symbol("data_hash")=>"String", Symbol("element_type")=>"String", Symbol("element_shape")=>"Vector{Int64}", Symbol("units")=>"String", Symbol("quantity_kind")=>"String", Symbol("unit_system")=>"String", Symbol("component_field")=>"String", Symbol("application_data")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("horizon")=>"String", Symbol("interval")=>"String", Symbol("count")=>"Int64", Symbol("percentiles")=>"Vector{Float64}", )
+const _property_types_Probabilistic = Dict{Symbol,String}(Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("time_series_type")=>"String", Symbol("name")=>"String", Symbol("features")=>"Dict{String, TimeSeriesFeatureValue}", Symbol("uri")=>"String", Symbol("data_hash")=>"String", Symbol("element_type")=>"String", Symbol("element_shape")=>"Vector{Int64}", Symbol("units")=>"String", Symbol("quantity_kind")=>"String", Symbol("unit_system")=>"String", Symbol("component_field")=>"String", Symbol("application_data")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("horizon")=>"String", Symbol("interval")=>"String", Symbol("count")=>"Int64", Symbol("percentiles")=>"Vector{Float64}", )
 OpenAPI.property_type(::Type{ Probabilistic }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_Probabilistic[name]))}
 
 function OpenAPI.check_required(o::Probabilistic)
-    o.id === nothing && (return false)
     o.owner_id === nothing && (return false)
     o.owner_type === nothing && (return false)
     o.owner_category === nothing && (return false)
@@ -108,7 +104,6 @@ function OpenAPI.check_required(o::Probabilistic)
 end
 
 function OpenAPI.validate_properties(o::Probabilistic)
-    OpenAPI.validate_property(Probabilistic, Symbol("id"), o.id)
     OpenAPI.validate_property(Probabilistic, Symbol("owner_id"), o.owner_id)
     OpenAPI.validate_property(Probabilistic, Symbol("owner_type"), o.owner_type)
     OpenAPI.validate_property(Probabilistic, Symbol("owner_category"), o.owner_category)
@@ -133,7 +128,6 @@ function OpenAPI.validate_properties(o::Probabilistic)
 end
 
 function OpenAPI.validate_property(::Type{ Probabilistic }, name::Symbol, val)
-
 
 
 

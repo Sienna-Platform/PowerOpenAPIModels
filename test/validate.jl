@@ -122,10 +122,10 @@ end
     end
 end
 
-@testset "_highest_id reserves ids from time series association rows" begin
-    # Time series association rows are written last, so they typically carry the
-    # highest ids in a document; `_highest_id` must walk them too or a read document's
-    # id counter under-reserves and `next_id!` can mint a colliding id.
+@testset "_highest_id reserves ids from components" begin
+    # Components carry ids that must be reserved when reading a document;
+    # `_highest_id` must walk them or a read document's id counter under-reserves
+    # and `next_id!` can mint a colliding id.
     doc = PowerOpenAPIModels.SystemDocument(
         100.0;
         time_series_storage_file="fixture_time_series_storage.h5",
@@ -141,10 +141,7 @@ end
             available=true,
         ),
     )
-    ts_id = PowerOpenAPIModels.next_id!(doc)
-    @test ts_id > bus_id
     ts = PowerTimeSeriesOpenAPIModels.SingleTimeSeries(;
-        id=ts_id,
         owner_id=bus_id,
         owner_type="ACBus",
         owner_category="Component",
@@ -166,7 +163,7 @@ end
         path = joinpath(dir, "system_ts.json")
         PowerOpenAPIModels.write_document(doc, path)
         back = PowerOpenAPIModels.read_document(path)
-        @test PowerOpenAPIModels.next_id!(back) > ts_id
+        @test PowerOpenAPIModels.next_id!(back) > bus_id
     end
 end
 

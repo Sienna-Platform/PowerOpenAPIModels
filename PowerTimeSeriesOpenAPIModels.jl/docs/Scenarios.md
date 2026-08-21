@@ -4,7 +4,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Surrogate primary key of the association row, the store&#39;s catalog row. Not part of the uniqueness tuple, which is (owner_id, owner_category, time_series_type, name, resolution, interval, features). | [default to nothing]
 **`owner_id`** | **`Int64`** | ID of the owning component or supplemental attribute. The producing data layer allocates both from one id stream, so an &#x60;owner_id&#x60; never collides across the two categories; &#x60;owner_category&#x60; remains required because the store&#39;s catalog contract still supports independent streams from other producers, and it is still the store&#39;s disambiguator. | [default to nothing]
 **`owner_type`** | **`String`** | Type name of the owning entity. Descriptive, not part of the series&#39; identity. | [default to nothing]
 **`owner_category`** | **`String`** | Whether the owner is a component or a supplemental attribute. | [default to nothing]

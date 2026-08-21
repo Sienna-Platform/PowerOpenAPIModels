@@ -6,7 +6,6 @@
 A static time series on a regular grid: values at &#x60;initial_timestamp + k * resolution&#x60;. One of a closed set of six canonical time series types owned by the data layer. This schema records the association and its metadata; the dense values live in the store named by &#x60;uri&#x60;.
 
     SingleTimeSeries(;
-        id=nothing,
         owner_id=nothing,
         owner_type=nothing,
         owner_category=nothing,
@@ -27,7 +26,6 @@ A static time series on a regular grid: values at &#x60;initial_timestamp + k * 
         length=nothing,
     )
 
-    - id::Int64 : Surrogate primary key of the association row, the store&#39;s catalog row. Not part of the uniqueness tuple, which is (owner_id, owner_category, time_series_type, name, resolution, interval, features).
     - owner_id::Int64 : ID of the owning component or supplemental attribute. The producing data layer allocates both from one id stream, so an &#x60;owner_id&#x60; never collides across the two categories; &#x60;owner_category&#x60; remains required because the store&#39;s catalog contract still supports independent streams from other producers, and it is still the store&#39;s disambiguator.
     - owner_type::String : Type name of the owning entity. Descriptive, not part of the series&#39; identity.
     - owner_category::String : Whether the owner is a component or a supplemental attribute.
@@ -48,7 +46,6 @@ A static time series on a regular grid: values at &#x60;initial_timestamp + k * 
     - length::Int64 : Number of timesteps.
 """
 Base.@kwdef mutable struct SingleTimeSeries <: OpenAPI.APIModel
-    id::Union{Nothing, Int64} = nothing
     owner_id::Union{Nothing, Int64} = nothing
     owner_type::Union{Nothing, String} = nothing
     owner_category::Union{Nothing, String} = nothing
@@ -68,18 +65,17 @@ Base.@kwdef mutable struct SingleTimeSeries <: OpenAPI.APIModel
     resolution::Union{Nothing, String} = nothing
     length::Union{Nothing, Int64} = nothing
 
-    function SingleTimeSeries(id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, length, )
-        o = new(id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, length, )
+    function SingleTimeSeries(owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, length, )
+        o = new(owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, length, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type SingleTimeSeries
 
-const _property_types_SingleTimeSeries = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("time_series_type")=>"String", Symbol("name")=>"String", Symbol("features")=>"Dict{String, TimeSeriesFeatureValue}", Symbol("uri")=>"String", Symbol("data_hash")=>"String", Symbol("element_type")=>"String", Symbol("element_shape")=>"Vector{Int64}", Symbol("units")=>"String", Symbol("quantity_kind")=>"String", Symbol("unit_system")=>"String", Symbol("component_field")=>"String", Symbol("application_data")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("length")=>"Int64", )
+const _property_types_SingleTimeSeries = Dict{Symbol,String}(Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("time_series_type")=>"String", Symbol("name")=>"String", Symbol("features")=>"Dict{String, TimeSeriesFeatureValue}", Symbol("uri")=>"String", Symbol("data_hash")=>"String", Symbol("element_type")=>"String", Symbol("element_shape")=>"Vector{Int64}", Symbol("units")=>"String", Symbol("quantity_kind")=>"String", Symbol("unit_system")=>"String", Symbol("component_field")=>"String", Symbol("application_data")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("length")=>"Int64", )
 OpenAPI.property_type(::Type{ SingleTimeSeries }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SingleTimeSeries[name]))}
 
 function OpenAPI.check_required(o::SingleTimeSeries)
-    o.id === nothing && (return false)
     o.owner_id === nothing && (return false)
     o.owner_type === nothing && (return false)
     o.owner_category === nothing && (return false)
@@ -96,7 +92,6 @@ function OpenAPI.check_required(o::SingleTimeSeries)
 end
 
 function OpenAPI.validate_properties(o::SingleTimeSeries)
-    OpenAPI.validate_property(SingleTimeSeries, Symbol("id"), o.id)
     OpenAPI.validate_property(SingleTimeSeries, Symbol("owner_id"), o.owner_id)
     OpenAPI.validate_property(SingleTimeSeries, Symbol("owner_type"), o.owner_type)
     OpenAPI.validate_property(SingleTimeSeries, Symbol("owner_category"), o.owner_category)
@@ -118,7 +113,6 @@ function OpenAPI.validate_properties(o::SingleTimeSeries)
 end
 
 function OpenAPI.validate_property(::Type{ SingleTimeSeries }, name::Symbol, val)
-
 
 
 

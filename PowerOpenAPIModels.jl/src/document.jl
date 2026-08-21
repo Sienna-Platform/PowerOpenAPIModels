@@ -766,12 +766,6 @@ function _highest_id(doc::SystemDocument)
     for attribute in doc.supplemental_attributes
         highest = max(highest, _model_id(attribute))
     end
-    # `TimeSeriesAssociation` is a oneOf wrapper with only a `.value` field; the id
-    # lives on the wrapped row. Written last, these rows are typically the highest
-    # ids in a document, so omitting them here under-reserves ids on read_document.
-    for assoc in doc.time_series_associations
-        highest = max(highest, _model_id(assoc.value))
-    end
     return highest
 end
 

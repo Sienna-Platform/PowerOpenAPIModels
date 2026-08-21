@@ -6,7 +6,6 @@
 A synthetic deterministic forecast derived from a SingleTimeSeries by &#x60;transform_single_time_series&#x60;. Field-identical to Deterministic, and it reads back as one; it stays a distinct type because the catalog records which rows are synthetic, and a request for Deterministic matches both while a request for this type narrows to the synthetic ones alone.
 
     DeterministicSingleTimeSeries(;
-        id=nothing,
         owner_id=nothing,
         owner_type=nothing,
         owner_category=nothing,
@@ -29,7 +28,6 @@ A synthetic deterministic forecast derived from a SingleTimeSeries by &#x60;tran
         count=nothing,
     )
 
-    - id::Int64 : Surrogate primary key of the association row, the store&#39;s catalog row. Not part of the uniqueness tuple, which is (owner_id, owner_category, time_series_type, name, resolution, interval, features).
     - owner_id::Int64 : ID of the owning component or supplemental attribute. The producing data layer allocates both from one id stream, so an &#x60;owner_id&#x60; never collides across the two categories; &#x60;owner_category&#x60; remains required because the store&#39;s catalog contract still supports independent streams from other producers, and it is still the store&#39;s disambiguator.
     - owner_type::String : Type name of the owning entity. Descriptive, not part of the series&#39; identity.
     - owner_category::String : Whether the owner is a component or a supplemental attribute.
@@ -52,7 +50,6 @@ A synthetic deterministic forecast derived from a SingleTimeSeries by &#x60;tran
     - count::Int64 : Number of forecast windows. Descriptive, not part of the series&#39; identity.
 """
 Base.@kwdef mutable struct DeterministicSingleTimeSeries <: OpenAPI.APIModel
-    id::Union{Nothing, Int64} = nothing
     owner_id::Union{Nothing, Int64} = nothing
     owner_type::Union{Nothing, String} = nothing
     owner_category::Union{Nothing, String} = nothing
@@ -74,18 +71,17 @@ Base.@kwdef mutable struct DeterministicSingleTimeSeries <: OpenAPI.APIModel
     interval::Union{Nothing, String} = nothing
     count::Union{Nothing, Int64} = nothing
 
-    function DeterministicSingleTimeSeries(id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, )
-        o = new(id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, )
+    function DeterministicSingleTimeSeries(owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, )
+        o = new(owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type DeterministicSingleTimeSeries
 
-const _property_types_DeterministicSingleTimeSeries = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("time_series_type")=>"String", Symbol("name")=>"String", Symbol("features")=>"Dict{String, TimeSeriesFeatureValue}", Symbol("uri")=>"String", Symbol("data_hash")=>"String", Symbol("element_type")=>"String", Symbol("element_shape")=>"Vector{Int64}", Symbol("units")=>"String", Symbol("quantity_kind")=>"String", Symbol("unit_system")=>"String", Symbol("component_field")=>"String", Symbol("application_data")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("horizon")=>"String", Symbol("interval")=>"String", Symbol("count")=>"Int64", )
+const _property_types_DeterministicSingleTimeSeries = Dict{Symbol,String}(Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("time_series_type")=>"String", Symbol("name")=>"String", Symbol("features")=>"Dict{String, TimeSeriesFeatureValue}", Symbol("uri")=>"String", Symbol("data_hash")=>"String", Symbol("element_type")=>"String", Symbol("element_shape")=>"Vector{Int64}", Symbol("units")=>"String", Symbol("quantity_kind")=>"String", Symbol("unit_system")=>"String", Symbol("component_field")=>"String", Symbol("application_data")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("horizon")=>"String", Symbol("interval")=>"String", Symbol("count")=>"Int64", )
 OpenAPI.property_type(::Type{ DeterministicSingleTimeSeries }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_DeterministicSingleTimeSeries[name]))}
 
 function OpenAPI.check_required(o::DeterministicSingleTimeSeries)
-    o.id === nothing && (return false)
     o.owner_id === nothing && (return false)
     o.owner_type === nothing && (return false)
     o.owner_category === nothing && (return false)
@@ -104,7 +100,6 @@ function OpenAPI.check_required(o::DeterministicSingleTimeSeries)
 end
 
 function OpenAPI.validate_properties(o::DeterministicSingleTimeSeries)
-    OpenAPI.validate_property(DeterministicSingleTimeSeries, Symbol("id"), o.id)
     OpenAPI.validate_property(DeterministicSingleTimeSeries, Symbol("owner_id"), o.owner_id)
     OpenAPI.validate_property(DeterministicSingleTimeSeries, Symbol("owner_type"), o.owner_type)
     OpenAPI.validate_property(DeterministicSingleTimeSeries, Symbol("owner_category"), o.owner_category)
@@ -128,7 +123,6 @@ function OpenAPI.validate_properties(o::DeterministicSingleTimeSeries)
 end
 
 function OpenAPI.validate_property(::Type{ DeterministicSingleTimeSeries }, name::Symbol, val)
-
 
 
 
