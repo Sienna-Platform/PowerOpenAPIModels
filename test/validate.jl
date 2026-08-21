@@ -150,7 +150,7 @@ end
         owner_category="Component",
         name="max_active_power",
         features=Dict{String, Any}(),
-        address="fixture_time_series_storage.h5",
+        uri="fixture_time_series_storage.h5",
         element_type="Float64",
         element_shape=Int64[],
         initial_timestamp=ZonedDateTime(DateTime(2024, 1, 1), tz"UTC"),
