@@ -51,8 +51,8 @@ Base.@kwdef mutable struct DataSource <: OpenAPI.APIModel
     end
 end # type DataSource
 
-const _property_types_DataSource = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("organization")=>"String", Symbol("retrieved_at")=>"ZonedDateTime", Symbol("dataset")=>"String", Symbol("url")=>"String", Symbol("version")=>"String", Symbol("published_at")=>"ZonedDateTime", Symbol("confidence")=>"String", Symbol("recorded_by")=>"String", Symbol("fields")=>"Vector{String}", Symbol("extra")=>"Dict{String, String}", )
-OpenAPI.property_type(::Type{ DataSource }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_DataSource[name]))}
+const _property_types_DataSource = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("organization")=>Union{Nothing, String}, Symbol("retrieved_at")=>Union{Nothing, ZonedDateTime}, Symbol("dataset")=>Union{Nothing, String}, Symbol("url")=>Union{Nothing, String}, Symbol("version")=>Union{Nothing, String}, Symbol("published_at")=>Union{Nothing, ZonedDateTime}, Symbol("confidence")=>Union{Nothing, String}, Symbol("recorded_by")=>Union{Nothing, String}, Symbol("fields")=>Union{Nothing, Vector{String}}, Symbol("extra")=>Union{Nothing, Dict{String, String}}, )
+OpenAPI.property_type(::Type{ DataSource }, name::Symbol) = _property_types_DataSource[name]
 
 function OpenAPI.check_required(o::DataSource)
     o.id === nothing && (return false)

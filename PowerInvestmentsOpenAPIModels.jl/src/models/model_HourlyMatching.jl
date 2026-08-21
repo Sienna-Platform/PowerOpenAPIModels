@@ -26,8 +26,8 @@ Base.@kwdef mutable struct HourlyMatching <: OpenAPI.APIModel
     end
 end # type HourlyMatching
 
-const _property_types_HourlyMatching = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", )
-OpenAPI.property_type(::Type{ HourlyMatching }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_HourlyMatching[name]))}
+const _property_types_HourlyMatching = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, )
+OpenAPI.property_type(::Type{ HourlyMatching }, name::Symbol) = _property_types_HourlyMatching[name]
 
 function OpenAPI.check_required(o::HourlyMatching)
     o.id === nothing && (return false)

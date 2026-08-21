@@ -48,8 +48,8 @@ Base.@kwdef mutable struct EmissionsData <: OpenAPI.APIModel
     end
 end # type EmissionsData
 
-const _property_types_EmissionsData = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("pollutant")=>"String", Symbol("emission_rate")=>"ValueCurve", Symbol("basis")=>"String", Symbol("start_up_adder")=>"Float64", Symbol("mass_unit")=>"String", Symbol("energy_unit")=>"String", Symbol("gwp")=>"Float64", Symbol("available")=>"Bool", )
-OpenAPI.property_type(::Type{ EmissionsData }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_EmissionsData[name]))}
+const _property_types_EmissionsData = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("pollutant")=>Union{Nothing, String}, Symbol("emission_rate")=>Union{Nothing, ValueCurve}, Symbol("basis")=>Union{Nothing, String}, Symbol("start_up_adder")=>Union{Nothing, Float64}, Symbol("mass_unit")=>Union{Nothing, String}, Symbol("energy_unit")=>Union{Nothing, String}, Symbol("gwp")=>Union{Nothing, Float64}, Symbol("available")=>Union{Nothing, Bool}, )
+OpenAPI.property_type(::Type{ EmissionsData }, name::Symbol) = _property_types_EmissionsData[name]
 
 function OpenAPI.check_required(o::EmissionsData)
     o.id === nothing && (return false)

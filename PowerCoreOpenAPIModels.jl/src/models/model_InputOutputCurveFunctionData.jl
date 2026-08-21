@@ -16,11 +16,11 @@ end # type InputOutputCurveFunctionData
 function OpenAPI.property_type(::Type{ InputOutputCurveFunctionData }, name::Symbol, json::Dict{String,Any})
     discriminator = json["function_type"]
     if discriminator == "LINEAR"
-        return eval(Base.Meta.parse("LinearFunctionData"))
+        return (LinearFunctionData)
     elseif discriminator == "PIECEWISE_LINEAR"
-        return eval(Base.Meta.parse("PiecewiseLinearData"))
+        return (PiecewiseLinearData)
     elseif discriminator == "QUADRATIC"
-        return eval(Base.Meta.parse("QuadraticFunctionData"))
+        return (QuadraticFunctionData)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for InputOutputCurveFunctionData"))
 end

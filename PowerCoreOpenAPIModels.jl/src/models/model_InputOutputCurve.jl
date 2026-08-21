@@ -27,8 +27,8 @@ Base.@kwdef mutable struct InputOutputCurve <: OpenAPI.APIModel
     end
 end # type InputOutputCurve
 
-const _property_types_InputOutputCurve = Dict{Symbol,String}(Symbol("curve_type")=>"String", Symbol("function_data")=>"InputOutputCurveFunctionData", Symbol("input_at_zero")=>"Float64", )
-OpenAPI.property_type(::Type{ InputOutputCurve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_InputOutputCurve[name]))}
+const _property_types_InputOutputCurve = Dict{Symbol,Type}(Symbol("curve_type")=>Union{Nothing, String}, Symbol("function_data")=>Union{Nothing, InputOutputCurveFunctionData}, Symbol("input_at_zero")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ InputOutputCurve }, name::Symbol) = _property_types_InputOutputCurve[name]
 
 function OpenAPI.check_required(o::InputOutputCurve)
     o.curve_type === nothing && (return false)

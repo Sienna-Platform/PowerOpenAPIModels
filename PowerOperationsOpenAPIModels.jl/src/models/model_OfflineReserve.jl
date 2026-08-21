@@ -48,8 +48,8 @@ Base.@kwdef mutable struct OfflineReserve <: OpenAPI.APIModel
     end
 end # type OfflineReserve
 
-const _property_types_OfflineReserve = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("time_frame")=>"Float64", Symbol("requirement")=>"Float64", Symbol("variable")=>"CostCurve", Symbol("sustained_time")=>"Float64", Symbol("max_output_fraction")=>"Float64", Symbol("max_participation_factor")=>"Float64", Symbol("deployed_fraction")=>"Float64", )
-OpenAPI.property_type(::Type{ OfflineReserve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_OfflineReserve[name]))}
+const _property_types_OfflineReserve = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("time_frame")=>Union{Nothing, Float64}, Symbol("requirement")=>Union{Nothing, Float64}, Symbol("variable")=>Union{Nothing, CostCurve}, Symbol("sustained_time")=>Union{Nothing, Float64}, Symbol("max_output_fraction")=>Union{Nothing, Float64}, Symbol("max_participation_factor")=>Union{Nothing, Float64}, Symbol("deployed_fraction")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ OfflineReserve }, name::Symbol) = _property_types_OfflineReserve[name]
 
 function OpenAPI.check_required(o::OfflineReserve)
     o.id === nothing && (return false)

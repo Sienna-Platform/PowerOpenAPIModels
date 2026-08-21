@@ -17,9 +17,9 @@ end # type InterruptiblePowerLoadOperationCost
 function OpenAPI.property_type(::Type{ InterruptiblePowerLoadOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
     if discriminator == "LOAD"
-        return eval(Base.Meta.parse("LoadCost"))
+        return (LoadCost)
     elseif discriminator == "MARKET_BID"
-        return eval(Base.Meta.parse("MarketBidCost"))
+        return (MarketBidCost)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for InterruptiblePowerLoadOperationCost"))
 end

@@ -23,8 +23,8 @@ Base.@kwdef mutable struct Zone <: OpenAPI.APIModel
     end
 end # type Zone
 
-const _property_types_Zone = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", )
-OpenAPI.property_type(::Type{ Zone }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_Zone[name]))}
+const _property_types_Zone = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ Zone }, name::Symbol) = _property_types_Zone[name]
 
 function OpenAPI.check_required(o::Zone)
     o.id === nothing && (return false)

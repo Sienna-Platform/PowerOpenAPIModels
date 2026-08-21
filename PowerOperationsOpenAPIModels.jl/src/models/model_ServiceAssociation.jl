@@ -24,8 +24,8 @@ Base.@kwdef mutable struct ServiceAssociation <: OpenAPI.APIModel
     end
 end # type ServiceAssociation
 
-const _property_types_ServiceAssociation = Dict{Symbol,String}(Symbol("service_id")=>"Int64", Symbol("entity_id")=>"Int64", )
-OpenAPI.property_type(::Type{ ServiceAssociation }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ServiceAssociation[name]))}
+const _property_types_ServiceAssociation = Dict{Symbol,Type}(Symbol("service_id")=>Union{Nothing, Int64}, Symbol("entity_id")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ ServiceAssociation }, name::Symbol) = _property_types_ServiceAssociation[name]
 
 function OpenAPI.check_required(o::ServiceAssociation)
     o.service_id === nothing && (return false)

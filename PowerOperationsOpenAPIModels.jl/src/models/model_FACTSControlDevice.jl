@@ -60,8 +60,8 @@ Base.@kwdef mutable struct FACTSControlDevice <: OpenAPI.APIModel
     end
 end # type FACTSControlDevice
 
-const _property_types_FACTSControlDevice = Dict{Symbol,String}(Symbol("name")=>"String", Symbol("id")=>"Int64", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("control_mode")=>"String", Symbol("voltage_setpoint_units")=>"String", Symbol("voltage_setpoint")=>"Float64", Symbol("max_shunt_current")=>"Float64", Symbol("reactive_power_required")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("shunt_control_type")=>"String", Symbol("regulated_bus_number")=>"Int64", Symbol("base_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ FACTSControlDevice }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FACTSControlDevice[name]))}
+const _property_types_FACTSControlDevice = Dict{Symbol,Type}(Symbol("name")=>Union{Nothing, String}, Symbol("id")=>Union{Nothing, Int64}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("control_mode")=>Union{Nothing, String}, Symbol("voltage_setpoint_units")=>Union{Nothing, String}, Symbol("voltage_setpoint")=>Union{Nothing, Float64}, Symbol("max_shunt_current")=>Union{Nothing, Float64}, Symbol("reactive_power_required")=>Union{Nothing, Float64}, Symbol("max_reactive_power")=>Union{Nothing, Float64}, Symbol("shunt_control_type")=>Union{Nothing, String}, Symbol("regulated_bus_number")=>Union{Nothing, Int64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ FACTSControlDevice }, name::Symbol) = _property_types_FACTSControlDevice[name]
 
 function OpenAPI.check_required(o::FACTSControlDevice)
     o.name === nothing && (return false)

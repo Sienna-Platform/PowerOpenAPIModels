@@ -32,8 +32,8 @@ Base.@kwdef mutable struct ImportExportCost <: OpenAPI.APIModel
     end
 end # type ImportExportCost
 
-const _property_types_ImportExportCost = Dict{Symbol,String}(Symbol("cost_type")=>"String", Symbol("import_offer_curves")=>"CostCurve", Symbol("export_offer_curves")=>"CostCurve", Symbol("energy_import_weekly_limit")=>"Float64", Symbol("energy_export_weekly_limit")=>"Float64", )
-OpenAPI.property_type(::Type{ ImportExportCost }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ImportExportCost[name]))}
+const _property_types_ImportExportCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("import_offer_curves")=>Union{Nothing, CostCurve}, Symbol("export_offer_curves")=>Union{Nothing, CostCurve}, Symbol("energy_import_weekly_limit")=>Union{Nothing, Float64}, Symbol("energy_export_weekly_limit")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ ImportExportCost }, name::Symbol) = _property_types_ImportExportCost[name]
 
 function OpenAPI.check_required(o::ImportExportCost)
     o.energy_import_weekly_limit === nothing && (return false)

@@ -29,8 +29,8 @@ Base.@kwdef mutable struct StartUpStages <: OpenAPI.APIModel
     end
 end # type StartUpStages
 
-const _property_types_StartUpStages = Dict{Symbol,String}(Symbol("startup_stages_type")=>"String", Symbol("cold")=>"Float64", Symbol("hot")=>"Float64", Symbol("warm")=>"Float64", )
-OpenAPI.property_type(::Type{ StartUpStages }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_StartUpStages[name]))}
+const _property_types_StartUpStages = Dict{Symbol,Type}(Symbol("startup_stages_type")=>Union{Nothing, String}, Symbol("cold")=>Union{Nothing, Float64}, Symbol("hot")=>Union{Nothing, Float64}, Symbol("warm")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ StartUpStages }, name::Symbol) = _property_types_StartUpStages[name]
 
 function OpenAPI.check_required(o::StartUpStages)
     o.cold === nothing && (return false)

@@ -26,8 +26,8 @@ Base.@kwdef mutable struct Node <: OpenAPI.APIModel
     end
 end # type Node
 
-const _property_types_Node = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("bus_type")=>"String", )
-OpenAPI.property_type(::Type{ Node }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_Node[name]))}
+const _property_types_Node = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("bus_type")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ Node }, name::Symbol) = _property_types_Node[name]
 
 function OpenAPI.check_required(o::Node)
     o.id === nothing && (return false)

@@ -57,8 +57,8 @@ Base.@kwdef mutable struct SwitchedAdmittance <: OpenAPI.APIModel
     end
 end # type SwitchedAdmittance
 
-const _property_types_SwitchedAdmittance = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("admittance_units")=>"String", Symbol("Y")=>"ComplexNumber", Symbol("initial_status")=>"Vector{Int64}", Symbol("number_of_steps")=>"Vector{Int64}", Symbol("Y_increase")=>"Vector{ComplexNumber}", Symbol("admittance_limits")=>"MinMax", Symbol("control_mode")=>"String", Symbol("regulated_bus_number")=>"Int64", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ SwitchedAdmittance }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SwitchedAdmittance[name]))}
+const _property_types_SwitchedAdmittance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("Y")=>Union{Nothing, ComplexNumber}, Symbol("initial_status")=>Union{Nothing, Vector{Int64}}, Symbol("number_of_steps")=>Union{Nothing, Vector{Int64}}, Symbol("Y_increase")=>Union{Nothing, Vector{ComplexNumber}}, Symbol("admittance_limits")=>Union{Nothing, MinMax}, Symbol("control_mode")=>Union{Nothing, String}, Symbol("regulated_bus_number")=>Union{Nothing, Int64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ SwitchedAdmittance }, name::Symbol) = _property_types_SwitchedAdmittance[name]
 
 function OpenAPI.check_required(o::SwitchedAdmittance)
     o.id === nothing && (return false)

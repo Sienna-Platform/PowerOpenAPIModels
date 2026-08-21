@@ -23,8 +23,8 @@ Base.@kwdef mutable struct ComplexNumber <: OpenAPI.APIModel
     end
 end # type ComplexNumber
 
-const _property_types_ComplexNumber = Dict{Symbol,String}(Symbol("real")=>"Float64", Symbol("imag")=>"Float64", )
-OpenAPI.property_type(::Type{ ComplexNumber }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ComplexNumber[name]))}
+const _property_types_ComplexNumber = Dict{Symbol,Type}(Symbol("real")=>Union{Nothing, Float64}, Symbol("imag")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ ComplexNumber }, name::Symbol) = _property_types_ComplexNumber[name]
 
 function OpenAPI.check_required(o::ComplexNumber)
     true

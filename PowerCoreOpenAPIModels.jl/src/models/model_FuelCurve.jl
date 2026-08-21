@@ -35,8 +35,8 @@ Base.@kwdef mutable struct FuelCurve <: OpenAPI.APIModel
     end
 end # type FuelCurve
 
-const _property_types_FuelCurve = Dict{Symbol,String}(Symbol("fuel_cost")=>"FuelCurveFuelCost", Symbol("power_units")=>"String", Symbol("startup_fuel_offtake")=>"InputOutputCurve", Symbol("value_curve")=>"ValueCurve", Symbol("variable_cost_type")=>"String", Symbol("vom_cost")=>"InputOutputCurve", )
-OpenAPI.property_type(::Type{ FuelCurve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FuelCurve[name]))}
+const _property_types_FuelCurve = Dict{Symbol,Type}(Symbol("fuel_cost")=>Union{Nothing, FuelCurveFuelCost}, Symbol("power_units")=>Union{Nothing, String}, Symbol("startup_fuel_offtake")=>Union{Nothing, InputOutputCurve}, Symbol("value_curve")=>Union{Nothing, ValueCurve}, Symbol("variable_cost_type")=>Union{Nothing, String}, Symbol("vom_cost")=>Union{Nothing, InputOutputCurve}, )
+OpenAPI.property_type(::Type{ FuelCurve }, name::Symbol) = _property_types_FuelCurve[name]
 
 function OpenAPI.check_required(o::FuelCurve)
     o.fuel_cost === nothing && (return false)

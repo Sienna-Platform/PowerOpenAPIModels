@@ -17,9 +17,9 @@ end # type HydroDispatchOperationCost
 function OpenAPI.property_type(::Type{ HydroDispatchOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
     if discriminator == "HYDRO_GEN"
-        return eval(Base.Meta.parse("HydroGenerationCost"))
+        return (HydroGenerationCost)
     elseif discriminator == "MARKET_BID"
-        return eval(Base.Meta.parse("MarketBidCost"))
+        return (MarketBidCost)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for HydroDispatchOperationCost"))
 end

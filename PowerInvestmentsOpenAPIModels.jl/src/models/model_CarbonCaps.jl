@@ -35,8 +35,8 @@ Base.@kwdef mutable struct CarbonCaps <: OpenAPI.APIModel
     end
 end # type CarbonCaps
 
-const _property_types_CarbonCaps = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("target_year")=>"Int64", Symbol("max_tons_mwh")=>"Float64", Symbol("max_mtons")=>"Float64", )
-OpenAPI.property_type(::Type{ CarbonCaps }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_CarbonCaps[name]))}
+const _property_types_CarbonCaps = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("target_year")=>Union{Nothing, Int64}, Symbol("max_tons_mwh")=>Union{Nothing, Float64}, Symbol("max_mtons")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ CarbonCaps }, name::Symbol) = _property_types_CarbonCaps[name]
 
 function OpenAPI.check_required(o::CarbonCaps)
     o.id === nothing && (return false)

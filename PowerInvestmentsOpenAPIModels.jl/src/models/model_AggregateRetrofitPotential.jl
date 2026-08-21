@@ -29,8 +29,8 @@ Base.@kwdef mutable struct AggregateRetrofitPotential <: OpenAPI.APIModel
     end
 end # type AggregateRetrofitPotential
 
-const _property_types_AggregateRetrofitPotential = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("retrofit_id")=>"Int64", Symbol("retrofit_potential")=>"Float64", Symbol("retrofit_fraction")=>"Float64", )
-OpenAPI.property_type(::Type{ AggregateRetrofitPotential }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_AggregateRetrofitPotential[name]))}
+const _property_types_AggregateRetrofitPotential = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("retrofit_id")=>Union{Nothing, Int64}, Symbol("retrofit_potential")=>Union{Nothing, Float64}, Symbol("retrofit_fraction")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ AggregateRetrofitPotential }, name::Symbol) = _property_types_AggregateRetrofitPotential[name]
 
 function OpenAPI.check_required(o::AggregateRetrofitPotential)
     o.id === nothing && (return false)

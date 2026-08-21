@@ -51,8 +51,8 @@ Base.@kwdef mutable struct GenericArcImpedance <: OpenAPI.APIModel
     end
 end # type GenericArcImpedance
 
-const _property_types_GenericArcImpedance = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("reactive_power_flow")=>"Float64", Symbol("max_flow")=>"Float64", Symbol("arc")=>"Int64", Symbol("base_power")=>"Float64", Symbol("parameter_units")=>"String", Symbol("r")=>"Float64", Symbol("x")=>"Float64", )
-OpenAPI.property_type(::Type{ GenericArcImpedance }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_GenericArcImpedance[name]))}
+const _property_types_GenericArcImpedance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("max_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ GenericArcImpedance }, name::Symbol) = _property_types_GenericArcImpedance[name]
 
 function OpenAPI.check_required(o::GenericArcImpedance)
     o.id === nothing && (return false)

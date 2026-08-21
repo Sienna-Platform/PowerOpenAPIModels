@@ -72,8 +72,8 @@ Base.@kwdef mutable struct ActiveRenewableControllerAB <: OpenAPI.APIModel
     end
 end # type ActiveRenewableControllerAB
 
-const _property_types_ActiveRenewableControllerAB = Dict{Symbol,String}(Symbol("bus_control")=>"Int64", Symbol("from_branch_control")=>"Int64", Symbol("to_branch_control")=>"Int64", Symbol("branch_id_control")=>"Int64", Symbol("Freq_Flag")=>"Bool", Symbol("K_pg")=>"Float64", Symbol("K_ig")=>"Float64", Symbol("T_p")=>"Float64", Symbol("fdbd_pnts")=>"FdbdPnts", Symbol("fe_lim")=>"MinMax", Symbol("P_lim")=>"MinMax", Symbol("T_g")=>"Float64", Symbol("D_dn")=>"Float64", Symbol("D_up")=>"Float64", Symbol("dP_lim")=>"MinMax", Symbol("P_lim_inner")=>"MinMax", Symbol("T_pord")=>"Float64", Symbol("P_ref")=>"Float64", )
-OpenAPI.property_type(::Type{ ActiveRenewableControllerAB }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ActiveRenewableControllerAB[name]))}
+const _property_types_ActiveRenewableControllerAB = Dict{Symbol,Type}(Symbol("bus_control")=>Union{Nothing, Int64}, Symbol("from_branch_control")=>Union{Nothing, Int64}, Symbol("to_branch_control")=>Union{Nothing, Int64}, Symbol("branch_id_control")=>Union{Nothing, Int64}, Symbol("Freq_Flag")=>Union{Nothing, Bool}, Symbol("K_pg")=>Union{Nothing, Float64}, Symbol("K_ig")=>Union{Nothing, Float64}, Symbol("T_p")=>Union{Nothing, Float64}, Symbol("fdbd_pnts")=>Union{Nothing, FdbdPnts}, Symbol("fe_lim")=>Union{Nothing, MinMax}, Symbol("P_lim")=>Union{Nothing, MinMax}, Symbol("T_g")=>Union{Nothing, Float64}, Symbol("D_dn")=>Union{Nothing, Float64}, Symbol("D_up")=>Union{Nothing, Float64}, Symbol("dP_lim")=>Union{Nothing, MinMax}, Symbol("P_lim_inner")=>Union{Nothing, MinMax}, Symbol("T_pord")=>Union{Nothing, Float64}, Symbol("P_ref")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ ActiveRenewableControllerAB }, name::Symbol) = _property_types_ActiveRenewableControllerAB[name]
 
 function OpenAPI.check_required(o::ActiveRenewableControllerAB)
     o.bus_control === nothing && (return false)

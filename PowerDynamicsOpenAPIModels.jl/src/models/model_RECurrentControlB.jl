@@ -54,8 +54,8 @@ Base.@kwdef mutable struct RECurrentControlB <: OpenAPI.APIModel
     end
 end # type RECurrentControlB
 
-const _property_types_RECurrentControlB = Dict{Symbol,String}(Symbol("Q_Flag")=>"Bool", Symbol("PQ_Flag")=>"Bool", Symbol("Vdip_lim")=>"MinMax", Symbol("T_rv")=>"Float64", Symbol("dbd_pnts")=>"DbdPnts", Symbol("K_qv")=>"Float64", Symbol("Iqinj_lim")=>"MinMax", Symbol("V_ref0")=>"Float64", Symbol("K_vp")=>"Float64", Symbol("K_vi")=>"Float64", Symbol("T_iq")=>"Float64", Symbol("I_max")=>"Float64", )
-OpenAPI.property_type(::Type{ RECurrentControlB }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RECurrentControlB[name]))}
+const _property_types_RECurrentControlB = Dict{Symbol,Type}(Symbol("Q_Flag")=>Union{Nothing, Bool}, Symbol("PQ_Flag")=>Union{Nothing, Bool}, Symbol("Vdip_lim")=>Union{Nothing, MinMax}, Symbol("T_rv")=>Union{Nothing, Float64}, Symbol("dbd_pnts")=>Union{Nothing, DbdPnts}, Symbol("K_qv")=>Union{Nothing, Float64}, Symbol("Iqinj_lim")=>Union{Nothing, MinMax}, Symbol("V_ref0")=>Union{Nothing, Float64}, Symbol("K_vp")=>Union{Nothing, Float64}, Symbol("K_vi")=>Union{Nothing, Float64}, Symbol("T_iq")=>Union{Nothing, Float64}, Symbol("I_max")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ RECurrentControlB }, name::Symbol) = _property_types_RECurrentControlB[name]
 
 function OpenAPI.check_required(o::RECurrentControlB)
     o.Q_Flag === nothing && (return false)

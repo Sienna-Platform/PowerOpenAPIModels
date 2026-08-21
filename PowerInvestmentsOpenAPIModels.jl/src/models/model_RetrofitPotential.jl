@@ -23,8 +23,8 @@ Base.@kwdef mutable struct RetrofitPotential <: OpenAPI.APIModel
     end
 end # type RetrofitPotential
 
-const _property_types_RetrofitPotential = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("eligible_generators")=>"Vector{String}", )
-OpenAPI.property_type(::Type{ RetrofitPotential }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RetrofitPotential[name]))}
+const _property_types_RetrofitPotential = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("eligible_generators")=>Union{Nothing, Vector{String}}, )
+OpenAPI.property_type(::Type{ RetrofitPotential }, name::Symbol) = _property_types_RetrofitPotential[name]
 
 function OpenAPI.check_required(o::RetrofitPotential)
     o.id === nothing && (return false)

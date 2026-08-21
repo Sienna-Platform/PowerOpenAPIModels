@@ -23,8 +23,8 @@ Base.@kwdef mutable struct FromToToFrom <: OpenAPI.APIModel
     end
 end # type FromToToFrom
 
-const _property_types_FromToToFrom = Dict{Symbol,String}(Symbol("from_to")=>"Float64", Symbol("to_from")=>"Float64", )
-OpenAPI.property_type(::Type{ FromToToFrom }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FromToToFrom[name]))}
+const _property_types_FromToToFrom = Dict{Symbol,Type}(Symbol("from_to")=>Union{Nothing, Float64}, Symbol("to_from")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ FromToToFrom }, name::Symbol) = _property_types_FromToToFrom[name]
 
 function OpenAPI.check_required(o::FromToToFrom)
     true

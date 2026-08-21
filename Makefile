@@ -38,6 +38,12 @@ generate:
 	@# PATCHES.md); this rewrites the affected field initializers in place, after the
 	@# model files have reached their final package location.
 	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/materialize_defaults.jl
+	@# Replaces the per-call eval(Base.Meta.parse(...)) OpenAPI.property_type mechanism
+	@# with a precomputed Dict{Symbol,Type} lookup (see PowerOpenAPIModels#7). Must run
+	@# last: it flips property-type resolution from lazy/order-agnostic to eager/
+	@# order-sensitive, so it also depends on materialize_defaults.jl having already run
+	@# its own defaults pass against the original (still order-agnostic) mechanism.
+	julia --project=scripts scripts/fix_property_types.jl
 
 generate-docker:
 	docker run --rm \

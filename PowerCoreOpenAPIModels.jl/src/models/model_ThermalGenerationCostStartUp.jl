@@ -17,7 +17,7 @@ end # type ThermalGenerationCostStartUp
 function OpenAPI.property_type(::Type{ ThermalGenerationCostStartUp }, name::Symbol, json::Dict{String,Any})
     discriminator = json["startup_stages_type"]
     if discriminator == "STAGES"
-        return eval(Base.Meta.parse("StartUpStages"))
+        return (StartUpStages)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for ThermalGenerationCostStartUp"))
 end

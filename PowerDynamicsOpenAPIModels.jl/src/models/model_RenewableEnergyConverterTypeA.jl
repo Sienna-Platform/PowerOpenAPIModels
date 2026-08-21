@@ -66,8 +66,8 @@ Base.@kwdef mutable struct RenewableEnergyConverterTypeA <: OpenAPI.APIModel
     end
 end # type RenewableEnergyConverterTypeA
 
-const _property_types_RenewableEnergyConverterTypeA = Dict{Symbol,String}(Symbol("T_g")=>"Float64", Symbol("Rrpwr")=>"Float64", Symbol("Brkpt")=>"Float64", Symbol("Zerox")=>"Float64", Symbol("Lvpl1")=>"Float64", Symbol("Vo_lim")=>"Float64", Symbol("Lv_pnts")=>"MinMax", Symbol("Io_lim")=>"Float64", Symbol("T_fltr")=>"Float64", Symbol("K_hv")=>"Float64", Symbol("Iqr_lims")=>"MinMax", Symbol("Accel")=>"Float64", Symbol("Lvpl_sw")=>"Bool", Symbol("Q_ref")=>"Float64", Symbol("R_source")=>"Float64", Symbol("X_source")=>"Float64", )
-OpenAPI.property_type(::Type{ RenewableEnergyConverterTypeA }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RenewableEnergyConverterTypeA[name]))}
+const _property_types_RenewableEnergyConverterTypeA = Dict{Symbol,Type}(Symbol("T_g")=>Union{Nothing, Float64}, Symbol("Rrpwr")=>Union{Nothing, Float64}, Symbol("Brkpt")=>Union{Nothing, Float64}, Symbol("Zerox")=>Union{Nothing, Float64}, Symbol("Lvpl1")=>Union{Nothing, Float64}, Symbol("Vo_lim")=>Union{Nothing, Float64}, Symbol("Lv_pnts")=>Union{Nothing, MinMax}, Symbol("Io_lim")=>Union{Nothing, Float64}, Symbol("T_fltr")=>Union{Nothing, Float64}, Symbol("K_hv")=>Union{Nothing, Float64}, Symbol("Iqr_lims")=>Union{Nothing, MinMax}, Symbol("Accel")=>Union{Nothing, Float64}, Symbol("Lvpl_sw")=>Union{Nothing, Bool}, Symbol("Q_ref")=>Union{Nothing, Float64}, Symbol("R_source")=>Union{Nothing, Float64}, Symbol("X_source")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ RenewableEnergyConverterTypeA }, name::Symbol) = _property_types_RenewableEnergyConverterTypeA[name]
 
 function OpenAPI.check_required(o::RenewableEnergyConverterTypeA)
     o.T_g === nothing && (return false)

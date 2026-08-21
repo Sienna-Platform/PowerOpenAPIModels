@@ -42,8 +42,8 @@ Base.@kwdef mutable struct FixedAdmittance <: OpenAPI.APIModel
     end
 end # type FixedAdmittance
 
-const _property_types_FixedAdmittance = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("admittance_units")=>"String", Symbol("Y")=>"ComplexNumber", Symbol("base_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ FixedAdmittance }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FixedAdmittance[name]))}
+const _property_types_FixedAdmittance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("Y")=>Union{Nothing, ComplexNumber}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ FixedAdmittance }, name::Symbol) = _property_types_FixedAdmittance[name]
 
 function OpenAPI.check_required(o::FixedAdmittance)
     o.id === nothing && (return false)

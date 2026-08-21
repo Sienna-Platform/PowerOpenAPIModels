@@ -32,8 +32,8 @@ Base.@kwdef mutable struct MaximumCapacityRequirements <: OpenAPI.APIModel
     end
 end # type MaximumCapacityRequirements
 
-const _property_types_MaximumCapacityRequirements = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("target_year")=>"Int64", Symbol("max_capacity_mw")=>"Float64", )
-OpenAPI.property_type(::Type{ MaximumCapacityRequirements }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_MaximumCapacityRequirements[name]))}
+const _property_types_MaximumCapacityRequirements = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("target_year")=>Union{Nothing, Int64}, Symbol("max_capacity_mw")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ MaximumCapacityRequirements }, name::Symbol) = _property_types_MaximumCapacityRequirements[name]
 
 function OpenAPI.check_required(o::MaximumCapacityRequirements)
     o.id === nothing && (return false)

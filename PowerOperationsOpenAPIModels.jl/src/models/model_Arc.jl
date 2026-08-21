@@ -27,8 +27,8 @@ Base.@kwdef mutable struct Arc <: OpenAPI.APIModel
     end
 end # type Arc
 
-const _property_types_Arc = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("from_id")=>"Int64", Symbol("to_id")=>"Int64", )
-OpenAPI.property_type(::Type{ Arc }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_Arc[name]))}
+const _property_types_Arc = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("from_id")=>Union{Nothing, Int64}, Symbol("to_id")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ Arc }, name::Symbol) = _property_types_Arc[name]
 
 function OpenAPI.check_required(o::Arc)
     o.id === nothing && (return false)

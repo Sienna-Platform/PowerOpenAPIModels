@@ -30,8 +30,8 @@ Base.@kwdef mutable struct SupplementalAttributeAssociation <: OpenAPI.APIModel
     end
 end # type SupplementalAttributeAssociation
 
-const _property_types_SupplementalAttributeAssociation = Dict{Symbol,String}(Symbol("component_id")=>"Int64", Symbol("component_type")=>"String", Symbol("attribute_id")=>"Int64", Symbol("attribute_type")=>"String", )
-OpenAPI.property_type(::Type{ SupplementalAttributeAssociation }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SupplementalAttributeAssociation[name]))}
+const _property_types_SupplementalAttributeAssociation = Dict{Symbol,Type}(Symbol("component_id")=>Union{Nothing, Int64}, Symbol("component_type")=>Union{Nothing, String}, Symbol("attribute_id")=>Union{Nothing, Int64}, Symbol("attribute_type")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ SupplementalAttributeAssociation }, name::Symbol) = _property_types_SupplementalAttributeAssociation[name]
 
 function OpenAPI.check_required(o::SupplementalAttributeAssociation)
     o.component_id === nothing && (return false)

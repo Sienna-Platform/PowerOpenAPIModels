@@ -26,8 +26,8 @@ Base.@kwdef mutable struct PlannedOutage <: OpenAPI.APIModel
     end
 end # type PlannedOutage
 
-const _property_types_PlannedOutage = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("outage_schedule")=>"String", Symbol("monitored_components")=>"Vector{Int64}", )
-OpenAPI.property_type(::Type{ PlannedOutage }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_PlannedOutage[name]))}
+const _property_types_PlannedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("outage_schedule")=>Union{Nothing, String}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, )
+OpenAPI.property_type(::Type{ PlannedOutage }, name::Symbol) = _property_types_PlannedOutage[name]
 
 function OpenAPI.check_required(o::PlannedOutage)
     o.id === nothing && (return false)

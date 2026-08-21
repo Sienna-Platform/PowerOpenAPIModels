@@ -30,8 +30,8 @@ Base.@kwdef mutable struct CombinedCycleAssociation <: OpenAPI.APIModel
     end
 end # type CombinedCycleAssociation
 
-const _property_types_CombinedCycleAssociation = Dict{Symbol,String}(Symbol("plant_id")=>"Int64", Symbol("entity_id")=>"Int64", Symbol("role")=>"String", Symbol("hrsg_index")=>"Int64", )
-OpenAPI.property_type(::Type{ CombinedCycleAssociation }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_CombinedCycleAssociation[name]))}
+const _property_types_CombinedCycleAssociation = Dict{Symbol,Type}(Symbol("plant_id")=>Union{Nothing, Int64}, Symbol("entity_id")=>Union{Nothing, Int64}, Symbol("role")=>Union{Nothing, String}, Symbol("hrsg_index")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ CombinedCycleAssociation }, name::Symbol) = _property_types_CombinedCycleAssociation[name]
 
 function OpenAPI.check_required(o::CombinedCycleAssociation)
     o.plant_id === nothing && (return false)

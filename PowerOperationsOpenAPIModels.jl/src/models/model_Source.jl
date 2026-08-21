@@ -69,8 +69,8 @@ Base.@kwdef mutable struct Source <: OpenAPI.APIModel
     end
 end # type Source
 
-const _property_types_Source = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power_limits")=>"MinMax", Symbol("parameter_units")=>"String", Symbol("R_th")=>"Float64", Symbol("X_th")=>"Float64", Symbol("internal_voltage")=>"Float64", Symbol("internal_angle")=>"Float64", Symbol("base_voltage")=>"Float64", Symbol("base_power")=>"Float64", Symbol("operation_cost")=>"ImportExportCost", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ Source }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_Source[name]))}
+const _property_types_Source = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("R_th")=>Union{Nothing, Float64}, Symbol("X_th")=>Union{Nothing, Float64}, Symbol("internal_voltage")=>Union{Nothing, Float64}, Symbol("internal_angle")=>Union{Nothing, Float64}, Symbol("base_voltage")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("operation_cost")=>Union{Nothing, ImportExportCost}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ Source }, name::Symbol) = _property_types_Source[name]
 
 function OpenAPI.check_required(o::Source)
     o.id === nothing && (return false)

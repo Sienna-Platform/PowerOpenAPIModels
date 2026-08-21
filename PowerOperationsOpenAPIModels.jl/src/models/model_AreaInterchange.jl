@@ -42,8 +42,8 @@ Base.@kwdef mutable struct AreaInterchange <: OpenAPI.APIModel
     end
 end # type AreaInterchange
 
-const _property_types_AreaInterchange = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("from_area")=>"Int64", Symbol("to_area")=>"Int64", Symbol("flow_limits")=>"FromToToFrom", Symbol("base_power")=>"Float64", )
-OpenAPI.property_type(::Type{ AreaInterchange }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_AreaInterchange[name]))}
+const _property_types_AreaInterchange = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("from_area")=>Union{Nothing, Int64}, Symbol("to_area")=>Union{Nothing, Int64}, Symbol("flow_limits")=>Union{Nothing, FromToToFrom}, Symbol("base_power")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ AreaInterchange }, name::Symbol) = _property_types_AreaInterchange[name]
 
 function OpenAPI.check_required(o::AreaInterchange)
     o.id === nothing && (return false)

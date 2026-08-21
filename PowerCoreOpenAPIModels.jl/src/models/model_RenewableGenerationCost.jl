@@ -30,8 +30,8 @@ Base.@kwdef mutable struct RenewableGenerationCost <: OpenAPI.APIModel
     end
 end # type RenewableGenerationCost
 
-const _property_types_RenewableGenerationCost = Dict{Symbol,String}(Symbol("cost_type")=>"String", Symbol("curtailment_cost")=>"CostCurve", Symbol("variable")=>"CostCurve", Symbol("fixed")=>"Float64", )
-OpenAPI.property_type(::Type{ RenewableGenerationCost }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RenewableGenerationCost[name]))}
+const _property_types_RenewableGenerationCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("curtailment_cost")=>Union{Nothing, CostCurve}, Symbol("variable")=>Union{Nothing, CostCurve}, Symbol("fixed")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ RenewableGenerationCost }, name::Symbol) = _property_types_RenewableGenerationCost[name]
 
 function OpenAPI.check_required(o::RenewableGenerationCost)
     o.variable === nothing && (return false)

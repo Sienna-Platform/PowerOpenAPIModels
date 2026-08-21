@@ -54,8 +54,8 @@ Base.@kwdef mutable struct TModelHVDCLine <: OpenAPI.APIModel
     end
 end # type TModelHVDCLine
 
-const _property_types_TModelHVDCLine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("arc")=>"Int64", Symbol("parameter_units")=>"String", Symbol("base_current")=>"Float64", Symbol("r")=>"Float64", Symbol("l")=>"Float64", Symbol("c")=>"Float64", Symbol("active_power_limits_from")=>"MinMax", Symbol("active_power_limits_to")=>"MinMax", )
-OpenAPI.property_type(::Type{ TModelHVDCLine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TModelHVDCLine[name]))}
+const _property_types_TModelHVDCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("base_current")=>Union{Nothing, Float64}, Symbol("r")=>Union{Nothing, Float64}, Symbol("l")=>Union{Nothing, Float64}, Symbol("c")=>Union{Nothing, Float64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, )
+OpenAPI.property_type(::Type{ TModelHVDCLine }, name::Symbol) = _property_types_TModelHVDCLine[name]
 
 function OpenAPI.check_required(o::TModelHVDCLine)
     o.id === nothing && (return false)

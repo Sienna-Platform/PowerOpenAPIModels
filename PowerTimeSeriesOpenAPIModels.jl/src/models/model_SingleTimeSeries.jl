@@ -72,8 +72,8 @@ Base.@kwdef mutable struct SingleTimeSeries <: OpenAPI.APIModel
     end
 end # type SingleTimeSeries
 
-const _property_types_SingleTimeSeries = Dict{Symbol,String}(Symbol("owner_id")=>"Int64", Symbol("owner_type")=>"String", Symbol("owner_category")=>"String", Symbol("time_series_type")=>"String", Symbol("name")=>"String", Symbol("features")=>"Dict{String, TimeSeriesFeatureValue}", Symbol("uri")=>"String", Symbol("data_hash")=>"String", Symbol("element_type")=>"String", Symbol("element_shape")=>"Vector{Int64}", Symbol("units")=>"String", Symbol("quantity_kind")=>"String", Symbol("unit_system")=>"String", Symbol("component_field")=>"String", Symbol("application_data")=>"String", Symbol("initial_timestamp")=>"ZonedDateTime", Symbol("resolution")=>"String", Symbol("length")=>"Int64", )
-OpenAPI.property_type(::Type{ SingleTimeSeries }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SingleTimeSeries[name]))}
+const _property_types_SingleTimeSeries = Dict{Symbol,Type}(Symbol("owner_id")=>Union{Nothing, Int64}, Symbol("owner_type")=>Union{Nothing, String}, Symbol("owner_category")=>Union{Nothing, String}, Symbol("time_series_type")=>Union{Nothing, String}, Symbol("name")=>Union{Nothing, String}, Symbol("features")=>Union{Nothing, Dict{String, TimeSeriesFeatureValue}}, Symbol("uri")=>Union{Nothing, String}, Symbol("data_hash")=>Union{Nothing, String}, Symbol("element_type")=>Union{Nothing, String}, Symbol("element_shape")=>Union{Nothing, Vector{Int64}}, Symbol("units")=>Union{Nothing, String}, Symbol("quantity_kind")=>Union{Nothing, String}, Symbol("unit_system")=>Union{Nothing, String}, Symbol("component_field")=>Union{Nothing, String}, Symbol("application_data")=>Union{Nothing, String}, Symbol("initial_timestamp")=>Union{Nothing, ZonedDateTime}, Symbol("resolution")=>Union{Nothing, String}, Symbol("length")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ SingleTimeSeries }, name::Symbol) = _property_types_SingleTimeSeries[name]
 
 function OpenAPI.check_required(o::SingleTimeSeries)
     o.owner_id === nothing && (return false)

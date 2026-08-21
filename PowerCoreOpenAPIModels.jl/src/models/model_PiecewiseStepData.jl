@@ -26,8 +26,8 @@ Base.@kwdef mutable struct PiecewiseStepData <: OpenAPI.APIModel
     end
 end # type PiecewiseStepData
 
-const _property_types_PiecewiseStepData = Dict{Symbol,String}(Symbol("function_type")=>"String", Symbol("x_coords")=>"Vector{Float64}", Symbol("y_coords")=>"Vector{Float64}", )
-OpenAPI.property_type(::Type{ PiecewiseStepData }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_PiecewiseStepData[name]))}
+const _property_types_PiecewiseStepData = Dict{Symbol,Type}(Symbol("function_type")=>Union{Nothing, String}, Symbol("x_coords")=>Union{Nothing, Vector{Float64}}, Symbol("y_coords")=>Union{Nothing, Vector{Float64}}, )
+OpenAPI.property_type(::Type{ PiecewiseStepData }, name::Symbol) = _property_types_PiecewiseStepData[name]
 
 function OpenAPI.check_required(o::PiecewiseStepData)
     o.function_type === nothing && (return false)

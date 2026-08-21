@@ -23,8 +23,8 @@ Base.@kwdef mutable struct XYCoords <: OpenAPI.APIModel
     end
 end # type XYCoords
 
-const _property_types_XYCoords = Dict{Symbol,String}(Symbol("x")=>"Float64", Symbol("y")=>"Float64", )
-OpenAPI.property_type(::Type{ XYCoords }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_XYCoords[name]))}
+const _property_types_XYCoords = Dict{Symbol,Type}(Symbol("x")=>Union{Nothing, Float64}, Symbol("y")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ XYCoords }, name::Symbol) = _property_types_XYCoords[name]
 
 function OpenAPI.check_required(o::XYCoords)
     o.x === nothing && (return false)

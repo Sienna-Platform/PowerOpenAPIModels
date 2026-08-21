@@ -16,9 +16,9 @@ end # type IncrementalCurveFunctionData
 function OpenAPI.property_type(::Type{ IncrementalCurveFunctionData }, name::Symbol, json::Dict{String,Any})
     discriminator = json["function_type"]
     if discriminator == "LINEAR"
-        return eval(Base.Meta.parse("LinearFunctionData"))
+        return (LinearFunctionData)
     elseif discriminator == "PIECEWISE_STEP"
-        return eval(Base.Meta.parse("PiecewiseStepData"))
+        return (PiecewiseStepData)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for IncrementalCurveFunctionData"))
 end

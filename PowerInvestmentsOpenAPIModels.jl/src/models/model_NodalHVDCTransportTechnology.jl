@@ -53,8 +53,8 @@ Base.@kwdef mutable struct NodalHVDCTransportTechnology <: OpenAPI.APIModel
     end
 end # type NodalHVDCTransportTechnology
 
-const _property_types_NodalHVDCTransportTechnology = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("power_systems_type")=>"String", Symbol("start_node")=>"Int64", Symbol("end_node")=>"Int64", Symbol("capacity_limits")=>"MinMax", Symbol("capital_costs")=>"ValueCurve", Symbol("line_loss")=>"ValueCurve", Symbol("unit_size")=>"Float64", Symbol("requirements")=>"Vector{Int64}", Symbol("financial_data")=>"TechnologyFinancialData", )
-OpenAPI.property_type(::Type{ NodalHVDCTransportTechnology }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_NodalHVDCTransportTechnology[name]))}
+const _property_types_NodalHVDCTransportTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("start_node")=>Union{Nothing, Int64}, Symbol("end_node")=>Union{Nothing, Int64}, Symbol("capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs")=>Union{Nothing, ValueCurve}, Symbol("line_loss")=>Union{Nothing, ValueCurve}, Symbol("unit_size")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
+OpenAPI.property_type(::Type{ NodalHVDCTransportTechnology }, name::Symbol) = _property_types_NodalHVDCTransportTechnology[name]
 
 function OpenAPI.check_required(o::NodalHVDCTransportTechnology)
     o.id === nothing && (return false)

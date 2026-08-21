@@ -23,8 +23,8 @@ Base.@kwdef mutable struct PiecewiseLinearData <: OpenAPI.APIModel
     end
 end # type PiecewiseLinearData
 
-const _property_types_PiecewiseLinearData = Dict{Symbol,String}(Symbol("function_type")=>"String", Symbol("points")=>"Vector{XYCoords}", )
-OpenAPI.property_type(::Type{ PiecewiseLinearData }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_PiecewiseLinearData[name]))}
+const _property_types_PiecewiseLinearData = Dict{Symbol,Type}(Symbol("function_type")=>Union{Nothing, String}, Symbol("points")=>Union{Nothing, Vector{XYCoords}}, )
+OpenAPI.property_type(::Type{ PiecewiseLinearData }, name::Symbol) = _property_types_PiecewiseLinearData[name]
 
 function OpenAPI.check_required(o::PiecewiseLinearData)
     o.function_type === nothing && (return false)

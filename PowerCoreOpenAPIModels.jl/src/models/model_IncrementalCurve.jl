@@ -29,8 +29,8 @@ Base.@kwdef mutable struct IncrementalCurve <: OpenAPI.APIModel
     end
 end # type IncrementalCurve
 
-const _property_types_IncrementalCurve = Dict{Symbol,String}(Symbol("curve_type")=>"String", Symbol("function_data")=>"IncrementalCurveFunctionData", Symbol("initial_input")=>"Float64", Symbol("input_at_zero")=>"Float64", )
-OpenAPI.property_type(::Type{ IncrementalCurve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_IncrementalCurve[name]))}
+const _property_types_IncrementalCurve = Dict{Symbol,Type}(Symbol("curve_type")=>Union{Nothing, String}, Symbol("function_data")=>Union{Nothing, IncrementalCurveFunctionData}, Symbol("initial_input")=>Union{Nothing, Float64}, Symbol("input_at_zero")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ IncrementalCurve }, name::Symbol) = _property_types_IncrementalCurve[name]
 
 function OpenAPI.check_required(o::IncrementalCurve)
     o.curve_type === nothing && (return false)

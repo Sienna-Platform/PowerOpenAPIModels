@@ -36,8 +36,8 @@ Base.@kwdef mutable struct TwoWindingTransformer <: OpenAPI.APIModel
     end
 end # type TwoWindingTransformer
 
-const _property_types_TwoWindingTransformer = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("circuit")=>"Int64", Symbol("admittance_units")=>"String", Symbol("magnetizing_shunt")=>"ComplexNumber", Symbol("shunt_location")=>"String", )
-OpenAPI.property_type(::Type{ TwoWindingTransformer }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TwoWindingTransformer[name]))}
+const _property_types_TwoWindingTransformer = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("circuit")=>Union{Nothing, Int64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("magnetizing_shunt")=>Union{Nothing, ComplexNumber}, Symbol("shunt_location")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ TwoWindingTransformer }, name::Symbol) = _property_types_TwoWindingTransformer[name]
 
 function OpenAPI.check_required(o::TwoWindingTransformer)
     o.id === nothing && (return false)

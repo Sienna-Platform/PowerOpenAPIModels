@@ -65,8 +65,8 @@ Base.@kwdef mutable struct DemandSideTechnology <: OpenAPI.APIModel
     end
 end # type DemandSideTechnology
 
-const _property_types_DemandSideTechnology = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("region")=>"Vector{Int64}", Symbol("power_systems_type")=>"String", Symbol("technology_efficiency")=>"Float64", Symbol("price_per_unit")=>"ValueCurve", Symbol("min_power")=>"Float64", Symbol("peak_demand_mw")=>"Float64", Symbol("max_demand_delay")=>"Float64", Symbol("max_demand_advance")=>"Float64", Symbol("demand_energy_efficiency")=>"Float64", Symbol("shift_variable_cost")=>"ValueCurve", Symbol("curtailment_cost")=>"ValueCurve", Symbol("max_demand_curtailment")=>"Float64", Symbol("requirements")=>"Vector{Int64}", )
-OpenAPI.property_type(::Type{ DemandSideTechnology }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_DemandSideTechnology[name]))}
+const _property_types_DemandSideTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("technology_efficiency")=>Union{Nothing, Float64}, Symbol("price_per_unit")=>Union{Nothing, ValueCurve}, Symbol("min_power")=>Union{Nothing, Float64}, Symbol("peak_demand_mw")=>Union{Nothing, Float64}, Symbol("max_demand_delay")=>Union{Nothing, Float64}, Symbol("max_demand_advance")=>Union{Nothing, Float64}, Symbol("demand_energy_efficiency")=>Union{Nothing, Float64}, Symbol("shift_variable_cost")=>Union{Nothing, ValueCurve}, Symbol("curtailment_cost")=>Union{Nothing, ValueCurve}, Symbol("max_demand_curtailment")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, )
+OpenAPI.property_type(::Type{ DemandSideTechnology }, name::Symbol) = _property_types_DemandSideTechnology[name]
 
 function OpenAPI.check_required(o::DemandSideTechnology)
     o.id === nothing && (return false)

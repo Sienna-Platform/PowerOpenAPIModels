@@ -17,17 +17,17 @@ end # type TimeSeriesAssociation
 function OpenAPI.property_type(::Type{ TimeSeriesAssociation }, name::Symbol, json::Dict{String,Any})
     discriminator = json["time_series_type"]
     if discriminator == "Deterministic"
-        return eval(Base.Meta.parse("Deterministic"))
+        return (Deterministic)
     elseif discriminator == "DeterministicSingleTimeSeries"
-        return eval(Base.Meta.parse("DeterministicSingleTimeSeries"))
+        return (DeterministicSingleTimeSeries)
     elseif discriminator == "NonSequentialTimeSeries"
-        return eval(Base.Meta.parse("NonSequentialTimeSeries"))
+        return (NonSequentialTimeSeries)
     elseif discriminator == "Probabilistic"
-        return eval(Base.Meta.parse("Probabilistic"))
+        return (Probabilistic)
     elseif discriminator == "Scenarios"
-        return eval(Base.Meta.parse("Scenarios"))
+        return (Scenarios)
     elseif discriminator == "SingleTimeSeries"
-        return eval(Base.Meta.parse("SingleTimeSeries"))
+        return (SingleTimeSeries)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for TimeSeriesAssociation"))
 end

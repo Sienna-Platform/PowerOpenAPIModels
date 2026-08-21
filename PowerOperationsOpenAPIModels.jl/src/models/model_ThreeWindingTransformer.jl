@@ -75,8 +75,8 @@ Base.@kwdef mutable struct ThreeWindingTransformer <: OpenAPI.APIModel
     end
 end # type ThreeWindingTransformer
 
-const _property_types_ThreeWindingTransformer = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("primary_circuit")=>"Int64", Symbol("secondary_circuit")=>"Int64", Symbol("tertiary_circuit")=>"Int64", Symbol("star_bus")=>"Int64", Symbol("parameter_units")=>"String", Symbol("r_12")=>"Float64", Symbol("x_12")=>"Float64", Symbol("r_23")=>"Float64", Symbol("x_23")=>"Float64", Symbol("r_31")=>"Float64", Symbol("x_31")=>"Float64", Symbol("base_power_12")=>"Float64", Symbol("base_power_23")=>"Float64", Symbol("base_power_31")=>"Float64", Symbol("admittance_units")=>"String", Symbol("magnetizing_shunt")=>"ComplexNumber", Symbol("shunt_location")=>"String", )
-OpenAPI.property_type(::Type{ ThreeWindingTransformer }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ThreeWindingTransformer[name]))}
+const _property_types_ThreeWindingTransformer = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("primary_circuit")=>Union{Nothing, Int64}, Symbol("secondary_circuit")=>Union{Nothing, Int64}, Symbol("tertiary_circuit")=>Union{Nothing, Int64}, Symbol("star_bus")=>Union{Nothing, Int64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r_12")=>Union{Nothing, Float64}, Symbol("x_12")=>Union{Nothing, Float64}, Symbol("r_23")=>Union{Nothing, Float64}, Symbol("x_23")=>Union{Nothing, Float64}, Symbol("r_31")=>Union{Nothing, Float64}, Symbol("x_31")=>Union{Nothing, Float64}, Symbol("base_power_12")=>Union{Nothing, Float64}, Symbol("base_power_23")=>Union{Nothing, Float64}, Symbol("base_power_31")=>Union{Nothing, Float64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("magnetizing_shunt")=>Union{Nothing, ComplexNumber}, Symbol("shunt_location")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ ThreeWindingTransformer }, name::Symbol) = _property_types_ThreeWindingTransformer[name]
 
 function OpenAPI.check_required(o::ThreeWindingTransformer)
     o.id === nothing && (return false)

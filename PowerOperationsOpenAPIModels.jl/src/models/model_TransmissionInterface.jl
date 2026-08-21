@@ -39,8 +39,8 @@ Base.@kwdef mutable struct TransmissionInterface <: OpenAPI.APIModel
     end
 end # type TransmissionInterface
 
-const _property_types_TransmissionInterface = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow_limits")=>"MinMax", Symbol("violation_penalty")=>"Float64", Symbol("direction_mapping")=>"Dict{String, Int64}", Symbol("base_power")=>"Float64", )
-OpenAPI.property_type(::Type{ TransmissionInterface }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TransmissionInterface[name]))}
+const _property_types_TransmissionInterface = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow_limits")=>Union{Nothing, MinMax}, Symbol("violation_penalty")=>Union{Nothing, Float64}, Symbol("direction_mapping")=>Union{Nothing, Dict{String, Int64}}, Symbol("base_power")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ TransmissionInterface }, name::Symbol) = _property_types_TransmissionInterface[name]
 
 function OpenAPI.check_required(o::TransmissionInterface)
     o.id === nothing && (return false)

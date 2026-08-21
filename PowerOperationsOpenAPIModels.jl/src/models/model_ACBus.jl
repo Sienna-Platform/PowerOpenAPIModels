@@ -51,8 +51,8 @@ Base.@kwdef mutable struct ACBus <: OpenAPI.APIModel
     end
 end # type ACBus
 
-const _property_types_ACBus = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("number")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bustype")=>"String", Symbol("angle")=>"Float64", Symbol("magnitude")=>"Float64", Symbol("voltage_limits")=>"MinMax", Symbol("base_voltage")=>"Float64", Symbol("area")=>"Int64", Symbol("load_zone")=>"Int64", )
-OpenAPI.property_type(::Type{ ACBus }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ACBus[name]))}
+const _property_types_ACBus = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("number")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bustype")=>Union{Nothing, String}, Symbol("angle")=>Union{Nothing, Float64}, Symbol("magnitude")=>Union{Nothing, Float64}, Symbol("voltage_limits")=>Union{Nothing, MinMax}, Symbol("base_voltage")=>Union{Nothing, Float64}, Symbol("area")=>Union{Nothing, Int64}, Symbol("load_zone")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ ACBus }, name::Symbol) = _property_types_ACBus[name]
 
 function OpenAPI.check_required(o::ACBus)
     o.id === nothing && (return false)

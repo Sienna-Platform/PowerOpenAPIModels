@@ -16,13 +16,13 @@ end # type FunctionData
 function OpenAPI.property_type(::Type{ FunctionData }, name::Symbol, json::Dict{String,Any})
     discriminator = json["function_type"]
     if discriminator == "LINEAR"
-        return eval(Base.Meta.parse("LinearFunctionData"))
+        return (LinearFunctionData)
     elseif discriminator == "PIECEWISE_LINEAR"
-        return eval(Base.Meta.parse("PiecewiseLinearData"))
+        return (PiecewiseLinearData)
     elseif discriminator == "PIECEWISE_STEP"
-        return eval(Base.Meta.parse("PiecewiseStepData"))
+        return (PiecewiseStepData)
     elseif discriminator == "QUADRATIC"
-        return eval(Base.Meta.parse("QuadraticFunctionData"))
+        return (QuadraticFunctionData)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for FunctionData"))
 end

@@ -36,8 +36,8 @@ Base.@kwdef mutable struct Area <: OpenAPI.APIModel
     end
 end # type Area
 
-const _property_types_Area = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("peak_active_power")=>"Float64", Symbol("peak_reactive_power")=>"Float64", Symbol("load_response")=>"Float64", Symbol("base_power")=>"Float64", )
-OpenAPI.property_type(::Type{ Area }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_Area[name]))}
+const _property_types_Area = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("peak_active_power")=>Union{Nothing, Float64}, Symbol("peak_reactive_power")=>Union{Nothing, Float64}, Symbol("load_response")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ Area }, name::Symbol) = _property_types_Area[name]
 
 function OpenAPI.check_required(o::Area)
     o.id === nothing && (return false)

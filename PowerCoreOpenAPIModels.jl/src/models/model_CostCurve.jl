@@ -29,8 +29,8 @@ Base.@kwdef mutable struct CostCurve <: OpenAPI.APIModel
     end
 end # type CostCurve
 
-const _property_types_CostCurve = Dict{Symbol,String}(Symbol("power_units")=>"String", Symbol("value_curve")=>"ValueCurve", Symbol("variable_cost_type")=>"String", Symbol("vom_cost")=>"InputOutputCurve", )
-OpenAPI.property_type(::Type{ CostCurve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_CostCurve[name]))}
+const _property_types_CostCurve = Dict{Symbol,Type}(Symbol("power_units")=>Union{Nothing, String}, Symbol("value_curve")=>Union{Nothing, ValueCurve}, Symbol("variable_cost_type")=>Union{Nothing, String}, Symbol("vom_cost")=>Union{Nothing, InputOutputCurve}, )
+OpenAPI.property_type(::Type{ CostCurve }, name::Symbol) = _property_types_CostCurve[name]
 
 function OpenAPI.check_required(o::CostCurve)
     o.power_units === nothing && (return false)

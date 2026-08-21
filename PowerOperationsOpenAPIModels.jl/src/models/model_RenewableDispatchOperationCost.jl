@@ -17,9 +17,9 @@ end # type RenewableDispatchOperationCost
 function OpenAPI.property_type(::Type{ RenewableDispatchOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
     if discriminator == "MARKET_BID"
-        return eval(Base.Meta.parse("MarketBidCost"))
+        return (MarketBidCost)
     elseif discriminator == "RENEWABLE"
-        return eval(Base.Meta.parse("RenewableGenerationCost"))
+        return (RenewableGenerationCost)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for RenewableDispatchOperationCost"))
 end

@@ -23,8 +23,8 @@ Base.@kwdef mutable struct ExistingDevices <: OpenAPI.APIModel
     end
 end # type ExistingDevices
 
-const _property_types_ExistingDevices = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("existing_devices")=>"Vector{String}", )
-OpenAPI.property_type(::Type{ ExistingDevices }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ExistingDevices[name]))}
+const _property_types_ExistingDevices = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("existing_devices")=>Union{Nothing, Vector{String}}, )
+OpenAPI.property_type(::Type{ ExistingDevices }, name::Symbol) = _property_types_ExistingDevices[name]
 
 function OpenAPI.check_required(o::ExistingDevices)
     o.id === nothing && (return false)

@@ -45,8 +45,8 @@ Base.@kwdef mutable struct DCBus <: OpenAPI.APIModel
     end
 end # type DCBus
 
-const _property_types_DCBus = Dict{Symbol,String}(Symbol("area")=>"Int64", Symbol("available")=>"Bool", Symbol("base_voltage")=>"Float64", Symbol("id")=>"Int64", Symbol("load_zone")=>"Int64", Symbol("magnitude")=>"Float64", Symbol("name")=>"String", Symbol("number")=>"Float64", Symbol("voltage_limits")=>"MinMax", )
-OpenAPI.property_type(::Type{ DCBus }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_DCBus[name]))}
+const _property_types_DCBus = Dict{Symbol,Type}(Symbol("area")=>Union{Nothing, Int64}, Symbol("available")=>Union{Nothing, Bool}, Symbol("base_voltage")=>Union{Nothing, Float64}, Symbol("id")=>Union{Nothing, Int64}, Symbol("load_zone")=>Union{Nothing, Int64}, Symbol("magnitude")=>Union{Nothing, Float64}, Symbol("name")=>Union{Nothing, String}, Symbol("number")=>Union{Nothing, Float64}, Symbol("voltage_limits")=>Union{Nothing, MinMax}, )
+OpenAPI.property_type(::Type{ DCBus }, name::Symbol) = _property_types_DCBus[name]
 
 function OpenAPI.check_required(o::DCBus)
     o.available === nothing && (return false)
