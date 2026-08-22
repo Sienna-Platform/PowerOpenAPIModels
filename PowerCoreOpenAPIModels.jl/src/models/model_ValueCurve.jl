@@ -16,11 +16,11 @@ end # type ValueCurve
 function OpenAPI.property_type(::Type{ ValueCurve }, name::Symbol, json::Dict{String,Any})
     discriminator = json["curve_type"]
     if discriminator == "AVERAGE_RATE"
-        return eval(Base.Meta.parse("AverageRateCurve"))
+        return (AverageRateCurve)
     elseif discriminator == "INCREMENTAL"
-        return eval(Base.Meta.parse("IncrementalCurve"))
+        return (IncrementalCurve)
     elseif discriminator == "INPUT_OUTPUT"
-        return eval(Base.Meta.parse("InputOutputCurve"))
+        return (InputOutputCurve)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for ValueCurve"))
 end

@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **`arc`** | **`Int64`** | An &#x60;Arc&#x60; defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus. | [default to nothing]
 **`parameter_units`** | **`String`** | Unit basis for this line&#39;s impedance field (r). | [optional] [default to "NATURAL_UNITS"]
 **`base_current`** | **`Float64`** | Base current for per-unitization of this line&#39;s per-unit fields — this DC line per-unitizes against a current base, not a power base. Units: A. | [default to nothing]
-**`r`** | **`Float64`** | Total series resistance, split equally on both sides of the shunt capacitance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu . | [default to nothing]
+**`r`** | **`Float64`** | Total series resistance, split equally on both sides of the shunt capacitance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [default to nothing]
 **`l`** | **`Float64`** | Total series inductance, split equally on both sides of the shunt capacitance. Per-unit on this line&#39;s &#x60;base_current&#x60;. Units: pu. | [default to nothing]
 **`c`** | **`Float64`** | Shunt capacitance. Per-unit on this line&#39;s &#x60;base_current&#x60;. Units: pu. | [default to nothing]
 **`active_power_limits_from`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]

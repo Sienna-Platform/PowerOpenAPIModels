@@ -57,8 +57,8 @@ Base.@kwdef mutable struct ExponentialLoad <: OpenAPI.APIModel
     end
 end # type ExponentialLoad
 
-const _property_types_ExponentialLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("alpha")=>"Float64", Symbol("beta")=>"Float64", Symbol("base_power")=>"Float64", Symbol("max_active_power")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("conformity")=>"String", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ ExponentialLoad }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ExponentialLoad[name]))}
+const _property_types_ExponentialLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("alpha")=>Union{Nothing, Float64}, Symbol("beta")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("max_active_power")=>Union{Nothing, Float64}, Symbol("max_reactive_power")=>Union{Nothing, Float64}, Symbol("conformity")=>Union{Nothing, String}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ ExponentialLoad }, name::Symbol) = _property_types_ExponentialLoad[name]
 
 function OpenAPI.check_required(o::ExponentialLoad)
     o.id === nothing && (return false)

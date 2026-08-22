@@ -27,8 +27,8 @@ Base.@kwdef mutable struct HydroGenerationCost <: OpenAPI.APIModel
     end
 end # type HydroGenerationCost
 
-const _property_types_HydroGenerationCost = Dict{Symbol,String}(Symbol("cost_type")=>"String", Symbol("fixed")=>"Float64", Symbol("variable")=>"ProductionVariableCostCurve", )
-OpenAPI.property_type(::Type{ HydroGenerationCost }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_HydroGenerationCost[name]))}
+const _property_types_HydroGenerationCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("fixed")=>Union{Nothing, Float64}, Symbol("variable")=>Union{Nothing, ProductionVariableCostCurve}, )
+OpenAPI.property_type(::Type{ HydroGenerationCost }, name::Symbol) = _property_types_HydroGenerationCost[name]
 
 function OpenAPI.check_required(o::HydroGenerationCost)
     o.variable === nothing && (return false)

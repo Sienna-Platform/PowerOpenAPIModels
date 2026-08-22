@@ -32,8 +32,8 @@ Base.@kwdef mutable struct PortfolioFinancialData <: OpenAPI.APIModel
     end
 end # type PortfolioFinancialData
 
-const _property_types_PortfolioFinancialData = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("discount_rate")=>"Float64", Symbol("inflation_rate")=>"Float64", Symbol("interest_rate")=>"Float64", Symbol("base_year")=>"Int64", )
-OpenAPI.property_type(::Type{ PortfolioFinancialData }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_PortfolioFinancialData[name]))}
+const _property_types_PortfolioFinancialData = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("discount_rate")=>Union{Nothing, Float64}, Symbol("inflation_rate")=>Union{Nothing, Float64}, Symbol("interest_rate")=>Union{Nothing, Float64}, Symbol("base_year")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ PortfolioFinancialData }, name::Symbol) = _property_types_PortfolioFinancialData[name]
 
 function OpenAPI.check_required(o::PortfolioFinancialData)
     o.id === nothing && (return false)

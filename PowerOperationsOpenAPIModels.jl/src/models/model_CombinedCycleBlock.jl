@@ -30,8 +30,8 @@ Base.@kwdef mutable struct CombinedCycleBlock <: OpenAPI.APIModel
     end
 end # type CombinedCycleBlock
 
-const _property_types_CombinedCycleBlock = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("configuration")=>"String", Symbol("heat_recovery_to_steam_factor")=>"Float64", )
-OpenAPI.property_type(::Type{ CombinedCycleBlock }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_CombinedCycleBlock[name]))}
+const _property_types_CombinedCycleBlock = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("configuration")=>Union{Nothing, String}, Symbol("heat_recovery_to_steam_factor")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ CombinedCycleBlock }, name::Symbol) = _property_types_CombinedCycleBlock[name]
 
 function OpenAPI.check_required(o::CombinedCycleBlock)
     o.id === nothing && (return false)

@@ -26,8 +26,8 @@ Base.@kwdef mutable struct FixedForcedOutage <: OpenAPI.APIModel
     end
 end # type FixedForcedOutage
 
-const _property_types_FixedForcedOutage = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("outage_status")=>"Float64", Symbol("monitored_components")=>"Vector{Int64}", )
-OpenAPI.property_type(::Type{ FixedForcedOutage }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FixedForcedOutage[name]))}
+const _property_types_FixedForcedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("outage_status")=>Union{Nothing, Float64}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, )
+OpenAPI.property_type(::Type{ FixedForcedOutage }, name::Symbol) = _property_types_FixedForcedOutage[name]
 
 function OpenAPI.check_required(o::FixedForcedOutage)
     o.id === nothing && (return false)

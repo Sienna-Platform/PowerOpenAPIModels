@@ -32,8 +32,8 @@ Base.@kwdef mutable struct ImpedanceCorrectionData <: OpenAPI.APIModel
     end
 end # type ImpedanceCorrectionData
 
-const _property_types_ImpedanceCorrectionData = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("table_number")=>"Int64", Symbol("impedance_correction_curve")=>"PiecewiseLinearData", Symbol("transformer_winding")=>"String", Symbol("transformer_control_mode")=>"String", )
-OpenAPI.property_type(::Type{ ImpedanceCorrectionData }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ImpedanceCorrectionData[name]))}
+const _property_types_ImpedanceCorrectionData = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("table_number")=>Union{Nothing, Int64}, Symbol("impedance_correction_curve")=>Union{Nothing, PiecewiseLinearData}, Symbol("transformer_winding")=>Union{Nothing, String}, Symbol("transformer_control_mode")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ ImpedanceCorrectionData }, name::Symbol) = _property_types_ImpedanceCorrectionData[name]
 
 function OpenAPI.check_required(o::ImpedanceCorrectionData)
     o.id === nothing && (return false)

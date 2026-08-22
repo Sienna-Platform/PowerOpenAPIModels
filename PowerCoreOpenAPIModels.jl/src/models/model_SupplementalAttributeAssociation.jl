@@ -3,47 +3,53 @@
 
 
 @doc raw"""SupplementalAttributeAssociation
-Links a supplemental attribute to the entity it describes. The type of either side is resolved through the entity registry rather than duplicated here, matching GridDB&#39;s &#x60;supplemental_attributes_association&#x60; table. Lives in Core because either side may be a Core or an Operations type. Unlike &#x60;components&#x60;, &#x60;supplemental_attributes&#x60; is a flat, untyped array, so &#x60;attribute_type&#x60; is this record&#39;s only per-row type discriminator.
+Links a supplemental attribute to the component it describes — the JSON form of a row in the store&#39;s &#x60;supplemental_attribute_associations&#x60; catalog table, field-for-field. &#x60;component_type&#x60; and &#x60;attribute_type&#x60; are denormalized labels carried for filtering and reporting, not identity: identity is the &#x60;(component_id, attribute_id)&#x60; pair. Lives in Core because either side may be a Core or an Operations type. Unlike &#x60;components&#x60;, &#x60;supplemental_attributes&#x60; is a flat, untyped array, so &#x60;attribute_type&#x60; is this record&#39;s only per-row type discriminator.
 
     SupplementalAttributeAssociation(;
+        component_id=nothing,
+        component_type=nothing,
         attribute_id=nothing,
-        entity_id=nothing,
         attribute_type=nothing,
     )
 
+    - component_id::Int64 : ID of the component the attribute describes.
+    - component_type::String : Type name of the component the attribute describes. A denormalized label matching the relational mirror&#39;s column, used for filtering; not part of the row&#39;s identity, which is the &#x60;(component_id, attribute_id)&#x60; pair.
     - attribute_id::Int64 : ID of the supplemental attribute.
-    - entity_id::Int64 : ID of the component the attribute describes.
     - attribute_type::String : Schema title of the referenced supplemental attribute (e.g. \&quot;EmissionsData\&quot;, \&quot;GeographicInfo\&quot;). A free-form string, not an enum: new attribute types are added elsewhere in this repo continuously, and a closed enum here would go stale.
 """
 Base.@kwdef mutable struct SupplementalAttributeAssociation <: OpenAPI.APIModel
+    component_id::Union{Nothing, Int64} = nothing
+    component_type::Union{Nothing, String} = nothing
     attribute_id::Union{Nothing, Int64} = nothing
-    entity_id::Union{Nothing, Int64} = nothing
     attribute_type::Union{Nothing, String} = nothing
 
-    function SupplementalAttributeAssociation(attribute_id, entity_id, attribute_type, )
-        o = new(attribute_id, entity_id, attribute_type, )
+    function SupplementalAttributeAssociation(component_id, component_type, attribute_id, attribute_type, )
+        o = new(component_id, component_type, attribute_id, attribute_type, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type SupplementalAttributeAssociation
 
-const _property_types_SupplementalAttributeAssociation = Dict{Symbol,String}(Symbol("attribute_id")=>"Int64", Symbol("entity_id")=>"Int64", Symbol("attribute_type")=>"String", )
-OpenAPI.property_type(::Type{ SupplementalAttributeAssociation }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SupplementalAttributeAssociation[name]))}
+const _property_types_SupplementalAttributeAssociation = Dict{Symbol,Type}(Symbol("component_id")=>Union{Nothing, Int64}, Symbol("component_type")=>Union{Nothing, String}, Symbol("attribute_id")=>Union{Nothing, Int64}, Symbol("attribute_type")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ SupplementalAttributeAssociation }, name::Symbol) = _property_types_SupplementalAttributeAssociation[name]
 
 function OpenAPI.check_required(o::SupplementalAttributeAssociation)
+    o.component_id === nothing && (return false)
+    o.component_type === nothing && (return false)
     o.attribute_id === nothing && (return false)
-    o.entity_id === nothing && (return false)
     o.attribute_type === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::SupplementalAttributeAssociation)
+    OpenAPI.validate_property(SupplementalAttributeAssociation, Symbol("component_id"), o.component_id)
+    OpenAPI.validate_property(SupplementalAttributeAssociation, Symbol("component_type"), o.component_type)
     OpenAPI.validate_property(SupplementalAttributeAssociation, Symbol("attribute_id"), o.attribute_id)
-    OpenAPI.validate_property(SupplementalAttributeAssociation, Symbol("entity_id"), o.entity_id)
     OpenAPI.validate_property(SupplementalAttributeAssociation, Symbol("attribute_type"), o.attribute_type)
 end
 
 function OpenAPI.validate_property(::Type{ SupplementalAttributeAssociation }, name::Symbol, val)
+
 
 
 

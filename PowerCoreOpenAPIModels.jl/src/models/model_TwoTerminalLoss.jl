@@ -16,9 +16,9 @@ end # type TwoTerminalLoss
 function OpenAPI.property_type(::Type{ TwoTerminalLoss }, name::Symbol, json::Dict{String,Any})
     discriminator = json["curve_type"]
     if discriminator == "INCREMENTAL"
-        return eval(Base.Meta.parse("IncrementalCurve"))
+        return (IncrementalCurve)
     elseif discriminator == "INPUT_OUTPUT"
-        return eval(Base.Meta.parse("InputOutputCurve"))
+        return (InputOutputCurve)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for TwoTerminalLoss"))
 end

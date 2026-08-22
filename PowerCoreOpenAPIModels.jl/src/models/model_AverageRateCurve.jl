@@ -29,8 +29,8 @@ Base.@kwdef mutable struct AverageRateCurve <: OpenAPI.APIModel
     end
 end # type AverageRateCurve
 
-const _property_types_AverageRateCurve = Dict{Symbol,String}(Symbol("curve_type")=>"String", Symbol("function_data")=>"IncrementalCurveFunctionData", Symbol("initial_input")=>"Float64", Symbol("input_at_zero")=>"Float64", )
-OpenAPI.property_type(::Type{ AverageRateCurve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_AverageRateCurve[name]))}
+const _property_types_AverageRateCurve = Dict{Symbol,Type}(Symbol("curve_type")=>Union{Nothing, String}, Symbol("function_data")=>Union{Nothing, IncrementalCurveFunctionData}, Symbol("initial_input")=>Union{Nothing, Float64}, Symbol("input_at_zero")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ AverageRateCurve }, name::Symbol) = _property_types_AverageRateCurve[name]
 
 function OpenAPI.check_required(o::AverageRateCurve)
     o.curve_type === nothing && (return false)

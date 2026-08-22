@@ -27,8 +27,8 @@ Base.@kwdef mutable struct PlantAssociation <: OpenAPI.APIModel
     end
 end # type PlantAssociation
 
-const _property_types_PlantAssociation = Dict{Symbol,String}(Symbol("plant_id")=>"Int64", Symbol("entity_id")=>"Int64", Symbol("group_index")=>"Int64", )
-OpenAPI.property_type(::Type{ PlantAssociation }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_PlantAssociation[name]))}
+const _property_types_PlantAssociation = Dict{Symbol,Type}(Symbol("plant_id")=>Union{Nothing, Int64}, Symbol("entity_id")=>Union{Nothing, Int64}, Symbol("group_index")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ PlantAssociation }, name::Symbol) = _property_types_PlantAssociation[name]
 
 function OpenAPI.check_required(o::PlantAssociation)
     o.plant_id === nothing && (return false)

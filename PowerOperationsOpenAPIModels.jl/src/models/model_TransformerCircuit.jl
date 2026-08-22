@@ -11,7 +11,7 @@ The data defining one modeled arc of a transformer.  A &#x60;TwoWindingTransform
         arc=nothing,
         tap=1.0,
         alpha=0.0,
-        parameter_units="DEVICE_BASE",
+        parameter_units="COMPONENT_BASE",
         r=0.0,
         x=0.0,
         control_objective="UNDEFINED",
@@ -35,8 +35,8 @@ The data defining one modeled arc of a transformer.  A &#x60;TwoWindingTransform
     - tap::Float64 : Normalized tap changer position for voltage control, varying between 0 and 2, with 1 centered at the nominal voltage. Units: 1.
     - alpha::Float64 : Initial condition of phase shift across this circuit. Units: rad.
     - parameter_units::String : Unit basis for this circuit&#39;s impedance fields (r, x).
-    - r::Float64 : Circuit resistance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
-    - x::Float64 : Circuit reactance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - r::Float64 : Circuit resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - x::Float64 : Circuit reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
     - control_objective::String : Tap-changer / phase-shifter control objective (PSS/E COD). &#x60;UNDEFINED&#x60; means this circuit has no control block.
     - regulated_bus_number::Int64 : Controlled bus number (PSS/E CONT; sign &#x3D; regulation side).
     - control_limits::MinMax
@@ -57,7 +57,7 @@ Base.@kwdef mutable struct TransformerCircuit <: OpenAPI.APIModel
     arc::Union{Nothing, Int64} = nothing
     tap::Union{Nothing, Float64} = 1.0
     alpha::Union{Nothing, Float64} = 0.0
-    parameter_units::Union{Nothing, String} = "DEVICE_BASE"
+    parameter_units::Union{Nothing, String} = "COMPONENT_BASE"
     r::Union{Nothing, Float64} = 0.0
     x::Union{Nothing, Float64} = 0.0
     control_objective::Union{Nothing, String} = "UNDEFINED"
@@ -81,8 +81,8 @@ Base.@kwdef mutable struct TransformerCircuit <: OpenAPI.APIModel
     end
 end # type TransformerCircuit
 
-const _property_types_TransformerCircuit = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("available")=>"Bool", Symbol("arc")=>"Int64", Symbol("tap")=>"Float64", Symbol("alpha")=>"Float64", Symbol("parameter_units")=>"String", Symbol("r")=>"Float64", Symbol("x")=>"Float64", Symbol("control_objective")=>"String", Symbol("regulated_bus_number")=>"Int64", Symbol("control_limits")=>"MinMax", Symbol("controlled_quantity_limits")=>"MinMax", Symbol("number_of_tap_positions")=>"Int64", Symbol("rating")=>"Float64", Symbol("rating_b")=>"Float64", Symbol("rating_c")=>"Float64", Symbol("active_power_flow")=>"Float64", Symbol("reactive_power_flow")=>"Float64", Symbol("base_power")=>"Float64", Symbol("base_voltage_primary")=>"Float64", Symbol("base_voltage_secondary")=>"Float64", )
-OpenAPI.property_type(::Type{ TransformerCircuit }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TransformerCircuit[name]))}
+const _property_types_TransformerCircuit = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("available")=>Union{Nothing, Bool}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("tap")=>Union{Nothing, Float64}, Symbol("alpha")=>Union{Nothing, Float64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, Symbol("control_objective")=>Union{Nothing, String}, Symbol("regulated_bus_number")=>Union{Nothing, Int64}, Symbol("control_limits")=>Union{Nothing, MinMax}, Symbol("controlled_quantity_limits")=>Union{Nothing, MinMax}, Symbol("number_of_tap_positions")=>Union{Nothing, Int64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("rating_b")=>Union{Nothing, Float64}, Symbol("rating_c")=>Union{Nothing, Float64}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("base_voltage_primary")=>Union{Nothing, Float64}, Symbol("base_voltage_secondary")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ TransformerCircuit }, name::Symbol) = _property_types_TransformerCircuit[name]
 
 function OpenAPI.check_required(o::TransformerCircuit)
     o.id === nothing && (return false)
@@ -123,7 +123,7 @@ function OpenAPI.validate_property(::Type{ TransformerCircuit }, name::Symbol, v
 
 
     if name === Symbol("parameter_units")
-        OpenAPI.validate_param(name, "TransformerCircuit", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "TransformerCircuit", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
     end
 
 

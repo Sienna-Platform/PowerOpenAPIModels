@@ -53,8 +53,8 @@ Base.@kwdef mutable struct DemandRequirement <: OpenAPI.APIModel
     end
 end # type DemandRequirement
 
-const _property_types_DemandRequirement = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("power_systems_type")=>"String", Symbol("conformity")=>"String", Symbol("growth_rate")=>"Float64", Symbol("new_demand_mw")=>"Float64", Symbol("new_construction_year")=>"Int64", Symbol("region")=>"Vector{Int64}", Symbol("value_of_lost_load")=>"Float64", Symbol("unserved_demand_curve")=>"ValueCurve", Symbol("requirements")=>"Vector{Int64}", )
-OpenAPI.property_type(::Type{ DemandRequirement }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_DemandRequirement[name]))}
+const _property_types_DemandRequirement = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("conformity")=>Union{Nothing, String}, Symbol("growth_rate")=>Union{Nothing, Float64}, Symbol("new_demand_mw")=>Union{Nothing, Float64}, Symbol("new_construction_year")=>Union{Nothing, Int64}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("value_of_lost_load")=>Union{Nothing, Float64}, Symbol("unserved_demand_curve")=>Union{Nothing, ValueCurve}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, )
+OpenAPI.property_type(::Type{ DemandRequirement }, name::Symbol) = _property_types_DemandRequirement[name]
 
 function OpenAPI.check_required(o::DemandRequirement)
     o.id === nothing && (return false)

@@ -10,7 +10,7 @@ A fixed admittance.  Most often used in dynamics or AC power flow studies as a s
         name=nothing,
         available=nothing,
         bus=nothing,
-        admittance_units="DEVICE_MVAR",
+        admittance_units="COMPONENT_MVAR",
         Y=nothing,
         base_power=nothing,
         dynamic_injector=nothing,
@@ -20,7 +20,7 @@ A fixed admittance.  Most often used in dynamics or AC power flow studies as a s
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
-    - admittance_units::String : Unit basis for the shunt admittance Y. DEVICE_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
+    - admittance_units::String : Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
     - Y::ComplexNumber
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection model for admittance, if any.
@@ -30,7 +30,7 @@ Base.@kwdef mutable struct FixedAdmittance <: OpenAPI.APIModel
     name::Union{Nothing, String} = nothing
     available::Union{Nothing, Bool} = nothing
     bus::Union{Nothing, Int64} = nothing
-    admittance_units::Union{Nothing, String} = "DEVICE_MVAR"
+    admittance_units::Union{Nothing, String} = "COMPONENT_MVAR"
     Y = nothing # spec type: Union{ Nothing, ComplexNumber }
     base_power::Union{Nothing, Float64} = nothing
     dynamic_injector::Union{Nothing, Int64} = nothing
@@ -42,8 +42,8 @@ Base.@kwdef mutable struct FixedAdmittance <: OpenAPI.APIModel
     end
 end # type FixedAdmittance
 
-const _property_types_FixedAdmittance = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("admittance_units")=>"String", Symbol("Y")=>"ComplexNumber", Symbol("base_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ FixedAdmittance }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FixedAdmittance[name]))}
+const _property_types_FixedAdmittance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("Y")=>Union{Nothing, ComplexNumber}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ FixedAdmittance }, name::Symbol) = _property_types_FixedAdmittance[name]
 
 function OpenAPI.check_required(o::FixedAdmittance)
     o.id === nothing && (return false)
@@ -73,7 +73,7 @@ function OpenAPI.validate_property(::Type{ FixedAdmittance }, name::Symbol, val)
 
 
     if name === Symbol("admittance_units")
-        OpenAPI.validate_param(name, "FixedAdmittance", :enum, val, ["NATURAL_UNITS", "DEVICE_MVAR"])
+        OpenAPI.validate_param(name, "FixedAdmittance", :enum, val, ["NATURAL_UNITS", "COMPONENT_MVAR"])
     end
 
 

@@ -57,8 +57,8 @@ Base.@kwdef mutable struct ShiftablePowerLoad <: OpenAPI.APIModel
     end
 end # type ShiftablePowerLoad
 
-const _property_types_ShiftablePowerLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power")=>"Float64", Symbol("max_active_power")=>"Float64", Symbol("max_reactive_power")=>"Float64", Symbol("base_power")=>"Float64", Symbol("load_balance_time_horizon")=>"Int64", Symbol("operation_cost")=>"InterruptiblePowerLoadOperationCost", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ ShiftablePowerLoad }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ShiftablePowerLoad[name]))}
+const _property_types_ShiftablePowerLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("max_active_power")=>Union{Nothing, Float64}, Symbol("max_reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("load_balance_time_horizon")=>Union{Nothing, Int64}, Symbol("operation_cost")=>Union{Nothing, InterruptiblePowerLoadOperationCost}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ ShiftablePowerLoad }, name::Symbol) = _property_types_ShiftablePowerLoad[name]
 
 function OpenAPI.check_required(o::ShiftablePowerLoad)
     o.id === nothing && (return false)

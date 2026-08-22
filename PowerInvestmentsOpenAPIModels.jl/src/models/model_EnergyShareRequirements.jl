@@ -32,8 +32,8 @@ Base.@kwdef mutable struct EnergyShareRequirements <: OpenAPI.APIModel
     end
 end # type EnergyShareRequirements
 
-const _property_types_EnergyShareRequirements = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("target_year")=>"Int64", Symbol("generation_fraction_requirement")=>"Float64", )
-OpenAPI.property_type(::Type{ EnergyShareRequirements }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_EnergyShareRequirements[name]))}
+const _property_types_EnergyShareRequirements = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("target_year")=>Union{Nothing, Int64}, Symbol("generation_fraction_requirement")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ EnergyShareRequirements }, name::Symbol) = _property_types_EnergyShareRequirements[name]
 
 function OpenAPI.check_required(o::EnergyShareRequirements)
     o.id === nothing && (return false)

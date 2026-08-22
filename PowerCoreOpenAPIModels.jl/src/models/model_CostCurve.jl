@@ -11,7 +11,7 @@
         vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
     )
 
-    - power_units::String : Unit basis curve power values are stored in. DEVICE_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as DEVICE_BASE.
+    - power_units::String : Unit basis curve power values are stored in. COMPONENT_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as COMPONENT_BASE.
     - value_curve::ValueCurve
     - variable_cost_type::String
     - vom_cost::InputOutputCurve
@@ -29,8 +29,8 @@ Base.@kwdef mutable struct CostCurve <: OpenAPI.APIModel
     end
 end # type CostCurve
 
-const _property_types_CostCurve = Dict{Symbol,String}(Symbol("power_units")=>"String", Symbol("value_curve")=>"ValueCurve", Symbol("variable_cost_type")=>"String", Symbol("vom_cost")=>"InputOutputCurve", )
-OpenAPI.property_type(::Type{ CostCurve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_CostCurve[name]))}
+const _property_types_CostCurve = Dict{Symbol,Type}(Symbol("power_units")=>Union{Nothing, String}, Symbol("value_curve")=>Union{Nothing, ValueCurve}, Symbol("variable_cost_type")=>Union{Nothing, String}, Symbol("vom_cost")=>Union{Nothing, InputOutputCurve}, )
+OpenAPI.property_type(::Type{ CostCurve }, name::Symbol) = _property_types_CostCurve[name]
 
 function OpenAPI.check_required(o::CostCurve)
     o.power_units === nothing && (return false)
@@ -50,7 +50,7 @@ end
 function OpenAPI.validate_property(::Type{ CostCurve }, name::Symbol, val)
 
     if name === Symbol("power_units")
-        OpenAPI.validate_param(name, "CostCurve", :enum, val, ["DEVICE_BASE", "NATURAL_UNITS"])
+        OpenAPI.validate_param(name, "CostCurve", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
     end
 
 

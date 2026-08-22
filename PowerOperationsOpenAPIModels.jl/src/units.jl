@@ -189,7 +189,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::FACTSControlDevice, ::Val{:volt
     if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
         return "kV"
     end
-    if string(o.voltage_setpoint_units) == "DEVICE_BASE"
+    if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("FACTSControlDevice.voltage_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)")
@@ -198,7 +198,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::FACTSControlDevice, ::Val{:
     if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
         return "Voltage"
     end
-    if string(o.voltage_setpoint_units) == "DEVICE_BASE"
+    if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
         return "Voltage"
     end
     error("FACTSControlDevice.voltage_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)")
@@ -220,7 +220,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::FixedAdmittance, ::Val{:Y})
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "S"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "MVAr"
     end
     error("FixedAdmittance.Y: no unit declared for admittance_units=$(o.admittance_units)")
@@ -229,7 +229,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::FixedAdmittance, ::Val{:Y})
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "Susceptance"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ReactivePower"
     end
     error("FixedAdmittance.Y: no unit declared for admittance_units=$(o.admittance_units)")
@@ -257,7 +257,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::GenericArcImpedance, ::Val{:r})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("GenericArcImpedance.r: no unit declared for parameter_units=$(o.parameter_units)")
@@ -266,7 +266,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::GenericArcImpedance, ::Val{
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("GenericArcImpedance.r: no unit declared for parameter_units=$(o.parameter_units)")
@@ -276,7 +276,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::GenericArcImpedance, ::Val{:x})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("GenericArcImpedance.x: no unit declared for parameter_units=$(o.parameter_units)")
@@ -285,7 +285,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::GenericArcImpedance, ::Val{
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("GenericArcImpedance.x: no unit declared for parameter_units=$(o.parameter_units)")
@@ -653,7 +653,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::InterconnectingConverter, ::Val
         if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_setpoint_units) == "DEVICE_BASE"
+        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("InterconnectingConverter.dc_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)")
@@ -662,7 +662,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::InterconnectingConverter, ::Val
         if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_setpoint_units) == "DEVICE_BASE"
+        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("InterconnectingConverter.dc_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)")
@@ -677,7 +677,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::InterconnectingConverter, :
         if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_setpoint_units) == "DEVICE_BASE"
+        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("InterconnectingConverter.dc_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)")
@@ -686,7 +686,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::InterconnectingConverter, :
         if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_setpoint_units) == "DEVICE_BASE"
+        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("InterconnectingConverter.dc_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)")
@@ -702,7 +702,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::InterconnectingConverter, ::Val
         if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.voltage_setpoint_units) == "DEVICE_BASE"
+        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("InterconnectingConverter.ac_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)")
@@ -717,7 +717,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::InterconnectingConverter, :
         if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.voltage_setpoint_units) == "DEVICE_BASE"
+        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("InterconnectingConverter.ac_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)")
@@ -987,7 +987,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::Source, ::Val{:R_th})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("Source.R_th: no unit declared for parameter_units=$(o.parameter_units)")
@@ -996,7 +996,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::Source, ::Val{:R_th})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("Source.R_th: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1006,7 +1006,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::Source, ::Val{:X_th})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("Source.X_th: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1015,7 +1015,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::Source, ::Val{:X_th})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("Source.X_th: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1081,7 +1081,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::SwitchedAdmittance, ::Val{:Y})
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "S"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "MVAr"
     end
     error("SwitchedAdmittance.Y: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1090,7 +1090,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::SwitchedAdmittance, ::Val{:
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "Susceptance"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ReactivePower"
     end
     error("SwitchedAdmittance.Y: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1100,7 +1100,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::SwitchedAdmittance, ::Val{:Y_in
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "S"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "MVAr"
     end
     error("SwitchedAdmittance.Y_increase: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1109,7 +1109,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::SwitchedAdmittance, ::Val{:
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "Susceptance"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ReactivePower"
     end
     error("SwitchedAdmittance.Y_increase: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1119,7 +1119,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::SwitchedAdmittance, ::Val{:admi
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "S"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "MVAr"
     end
     error("SwitchedAdmittance.admittance_limits: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1128,7 +1128,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::SwitchedAdmittance, ::Val{:
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "Susceptance"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ReactivePower"
     end
     error("SwitchedAdmittance.admittance_limits: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1162,7 +1162,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TModelHVDCLine, ::Val{:r})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TModelHVDCLine.r: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1171,7 +1171,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TModelHVDCLine, ::Val{:r})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("TModelHVDCLine.r: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1253,7 +1253,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::ThreeWindingTransformer, ::Val{
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("ThreeWindingTransformer.r_12: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1262,7 +1262,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::ThreeWindingTransformer, ::
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("ThreeWindingTransformer.r_12: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1272,7 +1272,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::ThreeWindingTransformer, ::Val{
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("ThreeWindingTransformer.x_12: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1281,7 +1281,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::ThreeWindingTransformer, ::
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("ThreeWindingTransformer.x_12: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1291,7 +1291,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::ThreeWindingTransformer, ::Val{
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("ThreeWindingTransformer.r_23: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1300,7 +1300,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::ThreeWindingTransformer, ::
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("ThreeWindingTransformer.r_23: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1310,7 +1310,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::ThreeWindingTransformer, ::Val{
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("ThreeWindingTransformer.x_23: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1319,7 +1319,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::ThreeWindingTransformer, ::
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("ThreeWindingTransformer.x_23: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1329,7 +1329,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::ThreeWindingTransformer, ::Val{
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("ThreeWindingTransformer.r_31: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1338,7 +1338,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::ThreeWindingTransformer, ::
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("ThreeWindingTransformer.r_31: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1348,7 +1348,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::ThreeWindingTransformer, ::Val{
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("ThreeWindingTransformer.x_31: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1357,7 +1357,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::ThreeWindingTransformer, ::
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("ThreeWindingTransformer.x_31: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1376,10 +1376,10 @@ function PowerCoreOpenAPIModels.declared_unit(o::ThreeWindingTransformer, ::Val{
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "S"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "MVAr"
     end
-    if string(o.admittance_units) == "DEVICE_BASE"
+    if string(o.admittance_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("ThreeWindingTransformer.magnetizing_shunt: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1388,10 +1388,10 @@ function PowerCoreOpenAPIModels.declared_quantity(o::ThreeWindingTransformer, ::
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "Susceptance"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ReactivePower"
     end
-    if string(o.admittance_units) == "DEVICE_BASE"
+    if string(o.admittance_units) == "COMPONENT_BASE"
         return "Susceptance"
     end
     error("ThreeWindingTransformer.magnetizing_shunt: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1407,7 +1407,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TransformerCircuit, ::Val{:r})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TransformerCircuit.r: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1416,7 +1416,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TransformerCircuit, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("TransformerCircuit.r: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1426,7 +1426,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TransformerCircuit, ::Val{:x})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TransformerCircuit.x: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1435,7 +1435,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TransformerCircuit, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("TransformerCircuit.x: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1654,7 +1654,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:r})
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.r: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1663,7 +1663,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("TwoTerminalLCCLine.r: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1692,7 +1692,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:sche
     if string(o.dc_voltage_units) == "NATURAL_UNITS"
         return "kV"
     end
-    if string(o.dc_voltage_units) == "DEVICE_BASE"
+    if string(o.dc_voltage_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.scheduled_dc_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)")
@@ -1701,7 +1701,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.dc_voltage_units) == "NATURAL_UNITS"
         return "Voltage"
     end
-    if string(o.dc_voltage_units) == "DEVICE_BASE"
+    if string(o.dc_voltage_units) == "COMPONENT_BASE"
         return "Voltage"
     end
     error("TwoTerminalLCCLine.scheduled_dc_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)")
@@ -1714,7 +1714,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:rect
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.rectifier_rc: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1723,7 +1723,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("TwoTerminalLCCLine.rectifier_rc: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1733,7 +1733,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:rect
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.rectifier_xc: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1742,7 +1742,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("TwoTerminalLCCLine.rectifier_xc: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1758,7 +1758,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:inve
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.inverter_rc: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1767,7 +1767,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("TwoTerminalLCCLine.inverter_rc: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1777,7 +1777,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:inve
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.inverter_xc: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1786,7 +1786,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("TwoTerminalLCCLine.inverter_xc: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1799,7 +1799,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:swit
     if string(o.dc_voltage_units) == "NATURAL_UNITS"
         return "kV"
     end
-    if string(o.dc_voltage_units) == "DEVICE_BASE"
+    if string(o.dc_voltage_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.switch_mode_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)")
@@ -1808,7 +1808,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.dc_voltage_units) == "NATURAL_UNITS"
         return "Voltage"
     end
-    if string(o.dc_voltage_units) == "DEVICE_BASE"
+    if string(o.dc_voltage_units) == "COMPONENT_BASE"
         return "Voltage"
     end
     error("TwoTerminalLCCLine.switch_mode_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)")
@@ -1818,7 +1818,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:comp
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.compounding_resistance: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1827,7 +1827,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Resistance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Resistance"
     end
     error("TwoTerminalLCCLine.compounding_resistance: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1837,7 +1837,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:min_
     if string(o.dc_voltage_units) == "NATURAL_UNITS"
         return "kV"
     end
-    if string(o.dc_voltage_units) == "DEVICE_BASE"
+    if string(o.dc_voltage_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.min_compounding_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)")
@@ -1846,7 +1846,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.dc_voltage_units) == "NATURAL_UNITS"
         return "Voltage"
     end
-    if string(o.dc_voltage_units) == "DEVICE_BASE"
+    if string(o.dc_voltage_units) == "COMPONENT_BASE"
         return "Voltage"
     end
     error("TwoTerminalLCCLine.min_compounding_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)")
@@ -1871,7 +1871,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:rect
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.rectifier_capacitor_reactance: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1880,7 +1880,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("TwoTerminalLCCLine.rectifier_capacitor_reactance: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1905,7 +1905,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:inve
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "ohm"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalLCCLine.inverter_capacitor_reactance: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1914,7 +1914,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:
     if string(o.parameter_units) == "NATURAL_UNITS"
         return "Reactance"
     end
-    if string(o.parameter_units) == "DEVICE_BASE"
+    if string(o.parameter_units) == "COMPONENT_BASE"
         return "Reactance"
     end
     error("TwoTerminalLCCLine.inverter_capacitor_reactance: no unit declared for parameter_units=$(o.parameter_units)")
@@ -1951,10 +1951,10 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:g})
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "S"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "MW"
     end
-    if string(o.admittance_units) == "DEVICE_BASE"
+    if string(o.admittance_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalVSCLine.g: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1963,10 +1963,10 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "Conductance"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ActivePower"
     end
-    if string(o.admittance_units) == "DEVICE_BASE"
+    if string(o.admittance_units) == "COMPONENT_BASE"
         return "Conductance"
     end
     error("TwoTerminalVSCLine.g: no unit declared for admittance_units=$(o.admittance_units)")
@@ -1986,7 +1986,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:dc_s
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -1995,7 +1995,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:dc_s
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2010,7 +2010,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2019,7 +2019,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2035,7 +2035,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:ac_s
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2050,13 +2050,16 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for ac_control_from=$(o.ac_control_from)")
 end
+PowerCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_from}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_from}) = "kV"
+PowerCoreOpenAPIModels.declared_quantity(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_from}) = "Voltage"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_from}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_from}) = "A"
 PowerCoreOpenAPIModels.declared_quantity(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_from}) = "CurrentFlow"
@@ -2074,7 +2077,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:volt
     if string(o.voltage_units) == "NATURAL_UNITS"
         return "kV"
     end
-    if string(o.voltage_units) == "DEVICE_BASE"
+    if string(o.voltage_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalVSCLine.voltage_limits_from: no unit declared for voltage_units=$(o.voltage_units)")
@@ -2083,7 +2086,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
     if string(o.voltage_units) == "NATURAL_UNITS"
         return "Voltage"
     end
-    if string(o.voltage_units) == "DEVICE_BASE"
+    if string(o.voltage_units) == "COMPONENT_BASE"
         return "Voltage"
     end
     error("TwoTerminalVSCLine.voltage_limits_from: no unit declared for voltage_units=$(o.voltage_units)")
@@ -2103,7 +2106,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:dc_s
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2112,7 +2115,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:dc_s
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2127,7 +2130,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2136,7 +2139,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2152,7 +2155,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:ac_s
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "kV"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "pu"
         end
         error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
@@ -2167,13 +2170,16 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
         if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
             return "Voltage"
         end
-        if string(o.setpoint_voltage_units) == "DEVICE_BASE"
+        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
             return "Voltage"
         end
         error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)")
     end
     error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for ac_control_to=$(o.ac_control_to)")
 end
+PowerCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_to}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_to}) = "kV"
+PowerCoreOpenAPIModels.declared_quantity(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_to}) = "Voltage"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_to}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_to}) = "A"
 PowerCoreOpenAPIModels.declared_quantity(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_to}) = "CurrentFlow"
@@ -2191,7 +2197,7 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:volt
     if string(o.voltage_units) == "NATURAL_UNITS"
         return "kV"
     end
-    if string(o.voltage_units) == "DEVICE_BASE"
+    if string(o.voltage_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoTerminalVSCLine.voltage_limits_to: no unit declared for voltage_units=$(o.voltage_units)")
@@ -2200,7 +2206,7 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
     if string(o.voltage_units) == "NATURAL_UNITS"
         return "Voltage"
     end
-    if string(o.voltage_units) == "DEVICE_BASE"
+    if string(o.voltage_units) == "COMPONENT_BASE"
         return "Voltage"
     end
     error("TwoTerminalVSCLine.voltage_limits_to: no unit declared for voltage_units=$(o.voltage_units)")
@@ -2225,10 +2231,10 @@ function PowerCoreOpenAPIModels.declared_unit(o::TwoWindingTransformer, ::Val{:m
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "S"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "MVAr"
     end
-    if string(o.admittance_units) == "DEVICE_BASE"
+    if string(o.admittance_units) == "COMPONENT_BASE"
         return "pu"
     end
     error("TwoWindingTransformer.magnetizing_shunt: no unit declared for admittance_units=$(o.admittance_units)")
@@ -2237,10 +2243,10 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoWindingTransformer, ::Va
     if string(o.admittance_units) == "NATURAL_UNITS"
         return "Susceptance"
     end
-    if string(o.admittance_units) == "DEVICE_MVAR"
+    if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ReactivePower"
     end
-    if string(o.admittance_units) == "DEVICE_BASE"
+    if string(o.admittance_units) == "COMPONENT_BASE"
         return "Susceptance"
     end
     error("TwoWindingTransformer.magnetizing_shunt: no unit declared for admittance_units=$(o.admittance_units)")

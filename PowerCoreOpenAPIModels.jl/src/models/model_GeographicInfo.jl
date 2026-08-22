@@ -23,8 +23,8 @@ Base.@kwdef mutable struct GeographicInfo <: OpenAPI.APIModel
     end
 end # type GeographicInfo
 
-const _property_types_GeographicInfo = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("geo_json")=>"Dict{String, Any}", )
-OpenAPI.property_type(::Type{ GeographicInfo }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_GeographicInfo[name]))}
+const _property_types_GeographicInfo = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("geo_json")=>Union{Nothing, Dict{String, Any}}, )
+OpenAPI.property_type(::Type{ GeographicInfo }, name::Symbol) = _property_types_GeographicInfo[name]
 
 function OpenAPI.check_required(o::GeographicInfo)
     o.id === nothing && (return false)

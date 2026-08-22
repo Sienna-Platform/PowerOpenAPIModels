@@ -48,8 +48,8 @@ Base.@kwdef mutable struct AGC <: OpenAPI.APIModel
     end
 end # type AGC
 
-const _property_types_AGC = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bias")=>"Float64", Symbol("K_p")=>"Float64", Symbol("K_i")=>"Float64", Symbol("K_d")=>"Float64", Symbol("delta_t")=>"Float64", Symbol("area")=>"Int64", Symbol("initial_ace")=>"Float64", )
-OpenAPI.property_type(::Type{ AGC }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_AGC[name]))}
+const _property_types_AGC = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bias")=>Union{Nothing, Float64}, Symbol("K_p")=>Union{Nothing, Float64}, Symbol("K_i")=>Union{Nothing, Float64}, Symbol("K_d")=>Union{Nothing, Float64}, Symbol("delta_t")=>Union{Nothing, Float64}, Symbol("area")=>Union{Nothing, Int64}, Symbol("initial_ace")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ AGC }, name::Symbol) = _property_types_AGC[name]
 
 function OpenAPI.check_required(o::AGC)
     o.id === nothing && (return false)

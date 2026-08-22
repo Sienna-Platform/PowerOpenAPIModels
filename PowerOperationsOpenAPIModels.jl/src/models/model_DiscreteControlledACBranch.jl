@@ -57,8 +57,8 @@ Base.@kwdef mutable struct DiscreteControlledACBranch <: OpenAPI.APIModel
     end
 end # type DiscreteControlledACBranch
 
-const _property_types_DiscreteControlledACBranch = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("reactive_power_flow")=>"Float64", Symbol("arc")=>"Int64", Symbol("base_power")=>"Float64", Symbol("r")=>"Float64", Symbol("x")=>"Float64", Symbol("rating")=>"Float64", Symbol("discrete_branch_type")=>"String", Symbol("branch_status")=>"String", Symbol("normal_branch_status")=>"String", )
-OpenAPI.property_type(::Type{ DiscreteControlledACBranch }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_DiscreteControlledACBranch[name]))}
+const _property_types_DiscreteControlledACBranch = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("discrete_branch_type")=>Union{Nothing, String}, Symbol("branch_status")=>Union{Nothing, String}, Symbol("normal_branch_status")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ DiscreteControlledACBranch }, name::Symbol) = _property_types_DiscreteControlledACBranch[name]
 
 function OpenAPI.check_required(o::DiscreteControlledACBranch)
     o.id === nothing && (return false)

@@ -36,8 +36,8 @@ Base.@kwdef mutable struct GroupReserve <: OpenAPI.APIModel
     end
 end # type GroupReserve
 
-const _property_types_GroupReserve = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("requirement")=>"Float64", Symbol("variable")=>"CostCurve", Symbol("reserve_direction")=>"String", )
-OpenAPI.property_type(::Type{ GroupReserve }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_GroupReserve[name]))}
+const _property_types_GroupReserve = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("requirement")=>Union{Nothing, Float64}, Symbol("variable")=>Union{Nothing, CostCurve}, Symbol("reserve_direction")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ GroupReserve }, name::Symbol) = _property_types_GroupReserve[name]
 
 function OpenAPI.check_required(o::GroupReserve)
     o.id === nothing && (return false)

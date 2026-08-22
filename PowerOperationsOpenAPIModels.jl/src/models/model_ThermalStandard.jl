@@ -75,8 +75,8 @@ Base.@kwdef mutable struct ThermalStandard <: OpenAPI.APIModel
     end
 end # type ThermalStandard
 
-const _property_types_ThermalStandard = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("status")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("active_power_limits")=>"MinMax", Symbol("reactive_power_limits")=>"MinMax", Symbol("ramp_limits")=>"UpDown", Symbol("operation_cost")=>"ThermalStandardOperationCost", Symbol("base_power")=>"Float64", Symbol("time_limits")=>"UpDown", Symbol("must_run")=>"Bool", Symbol("prime_mover_type")=>"String", Symbol("fuel")=>"String", Symbol("time_at_status")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ ThermalStandard }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ThermalStandard[name]))}
+const _property_types_ThermalStandard = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("operation_cost")=>Union{Nothing, ThermalStandardOperationCost}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("must_run")=>Union{Nothing, Bool}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("fuel")=>Union{Nothing, String}, Symbol("time_at_status")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ ThermalStandard }, name::Symbol) = _property_types_ThermalStandard[name]
 
 function OpenAPI.check_required(o::ThermalStandard)
     o.id === nothing && (return false)

@@ -39,8 +39,8 @@ Base.@kwdef mutable struct MarketBidCost <: OpenAPI.APIModel
     end
 end # type MarketBidCost
 
-const _property_types_MarketBidCost = Dict{Symbol,String}(Symbol("cost_type")=>"String", Symbol("no_load_cost")=>"InputOutputCurve", Symbol("start_up")=>"StartUpStages", Symbol("shut_down")=>"InputOutputCurve", Symbol("incremental_offer_curves")=>"CostCurve", Symbol("decremental_offer_curves")=>"CostCurve", Symbol("ancillary_service_offers")=>"Vector{Int64}", )
-OpenAPI.property_type(::Type{ MarketBidCost }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_MarketBidCost[name]))}
+const _property_types_MarketBidCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("no_load_cost")=>Union{Nothing, InputOutputCurve}, Symbol("start_up")=>Union{Nothing, StartUpStages}, Symbol("shut_down")=>Union{Nothing, InputOutputCurve}, Symbol("incremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("decremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("ancillary_service_offers")=>Union{Nothing, Vector{Int64}}, )
+OpenAPI.property_type(::Type{ MarketBidCost }, name::Symbol) = _property_types_MarketBidCost[name]
 
 function OpenAPI.check_required(o::MarketBidCost)
     o.no_load_cost === nothing && (return false)

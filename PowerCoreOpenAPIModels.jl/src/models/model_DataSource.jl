@@ -3,7 +3,7 @@
 
 
 @doc raw"""DataSource
-Records data provenance for a component&#39;s field values: which organization or dataset the data came from, the URL it was retrieved from, and when it was retrieved. Mirrors the &#x60;DataSource&#x60; supplemental attribute from InfrastructureSystems.jl, with two deliberate divergences: &#x60;organization&#x60; is optional here although it is required upstream, and &#x60;extra&#x60; is narrowed from an any-valued map to a string-valued one. Linked to the entity it describes through Core/Associations/SupplementalAttributeAssociation.json with attribute_type: \&quot;DataSource\&quot;.
+Records data provenance for a component&#39;s field values: which organization or dataset the data came from, the URL it was retrieved from, and when it was retrieved. Mirrors the &#x60;DataSource&#x60; supplemental attribute from the upstream data layer, with two deliberate divergences: &#x60;organization&#x60; is optional here although it is required upstream, and &#x60;extra&#x60; is narrowed from an any-valued map to a string-valued one. Linked to the entity it describes through Core/Associations/SupplementalAttributeAssociation.json with attribute_type: \&quot;DataSource\&quot;.
 
     DataSource(;
         id=nothing,
@@ -51,8 +51,8 @@ Base.@kwdef mutable struct DataSource <: OpenAPI.APIModel
     end
 end # type DataSource
 
-const _property_types_DataSource = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("organization")=>"String", Symbol("retrieved_at")=>"ZonedDateTime", Symbol("dataset")=>"String", Symbol("url")=>"String", Symbol("version")=>"String", Symbol("published_at")=>"ZonedDateTime", Symbol("confidence")=>"String", Symbol("recorded_by")=>"String", Symbol("fields")=>"Vector{String}", Symbol("extra")=>"Dict{String, String}", )
-OpenAPI.property_type(::Type{ DataSource }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_DataSource[name]))}
+const _property_types_DataSource = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("organization")=>Union{Nothing, String}, Symbol("retrieved_at")=>Union{Nothing, ZonedDateTime}, Symbol("dataset")=>Union{Nothing, String}, Symbol("url")=>Union{Nothing, String}, Symbol("version")=>Union{Nothing, String}, Symbol("published_at")=>Union{Nothing, ZonedDateTime}, Symbol("confidence")=>Union{Nothing, String}, Symbol("recorded_by")=>Union{Nothing, String}, Symbol("fields")=>Union{Nothing, Vector{String}}, Symbol("extra")=>Union{Nothing, Dict{String, String}}, )
+OpenAPI.property_type(::Type{ DataSource }, name::Symbol) = _property_types_DataSource[name]
 
 function OpenAPI.check_required(o::DataSource)
     o.id === nothing && (return false)

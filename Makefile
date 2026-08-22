@@ -1,6 +1,16 @@
 SCHEMA_DIR ?= ../SiennaSchemas
 CODEGEN_IMAGE ?= ghcr.io/sienna-platform/power-codegen:latest
-DOMAINS := core operations investments dynamics
+DOMAINS := core operations investments dynamics timeseries
+
+# Package name per domain. The generate loop used to derive this by upper-casing
+# the domain's first letter, which yields PowerTimeseriesOpenAPIModels for
+# `timeseries` -- the interior capital in TimeSeries cannot be derived from a
+# lowercase domain name. Explicit beats clever here.
+PKGNAME_core         := PowerCoreOpenAPIModels
+PKGNAME_operations   := PowerOperationsOpenAPIModels
+PKGNAME_investments  := PowerInvestmentsOpenAPIModels
+PKGNAME_dynamics     := PowerDynamicsOpenAPIModels
+PKGNAME_timeseries   := PowerTimeSeriesOpenAPIModels
 
 .PHONY: generate generate-docker clean validate schema-version
 
@@ -11,14 +21,14 @@ generate:
 	@# matters because $(SCHEMA_DIR) is mounted read-only under generate-docker; drift
 	@# is a SiennaSchemas-side bug to surface, not to fix by regenerating a copy here.
 	cd $(SCHEMA_DIR) && python3 scripts/bundle_specs.py --check
-	@for d in $(DOMAINS); do \
-	  echo "Generating $$d"; \
+	$(foreach d,$(DOMAINS), \
+	  echo "Generating $(d)"; \
 	  cd $(SCHEMA_DIR) && openapi-generator generate \
-	    -c openapi-config-$$d.json -g julia-client \
-	    -o $(CURDIR)/generated/$$d \
-	    --additional-properties=packageName=Power$$(echo $$d | awk '{print toupper(substr($$1,1,1)) substr($$1,2)}')OpenAPIModels \
+	    -c openapi-config-$(d).json -g julia-client \
+	    -o $(CURDIR)/generated/$(d) \
+	    --additional-properties=packageName=$(PKGNAME_$(d)) \
 	    > /dev/null; \
-	done
+	)
 	@# Resolve fresh: the repo is bind-mounted into the codegen container, so a
 	@# manifest written by the host's Julia would be read by a different version.
 	rm -f scripts/Manifest.toml
@@ -28,6 +38,12 @@ generate:
 	@# PATCHES.md); this rewrites the affected field initializers in place, after the
 	@# model files have reached their final package location.
 	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/materialize_defaults.jl
+	@# Replaces the per-call eval(Base.Meta.parse(...)) OpenAPI.property_type mechanism
+	@# with a precomputed Dict{Symbol,Type} lookup (see PowerOpenAPIModels#7). Must run
+	@# last: it flips property-type resolution from lazy/order-agnostic to eager/
+	@# order-sensitive, so it also depends on materialize_defaults.jl having already run
+	@# its own defaults pass against the original (still order-agnostic) mechanism.
+	julia --project=scripts scripts/fix_property_types.jl
 
 generate-docker:
 	docker run --rm \

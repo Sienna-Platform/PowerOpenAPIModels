@@ -72,8 +72,8 @@ Base.@kwdef mutable struct RoundRotorMachine <: OpenAPI.APIModel
     end
 end # type RoundRotorMachine
 
-const _property_types_RoundRotorMachine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("R")=>"Float64", Symbol("Td0_p")=>"Float64", Symbol("Td0_pp")=>"Float64", Symbol("Tq0_p")=>"Float64", Symbol("Tq0_pp")=>"Float64", Symbol("Xd")=>"Float64", Symbol("Xq")=>"Float64", Symbol("Xd_p")=>"Float64", Symbol("Xq_p")=>"Float64", Symbol("Xd_pp")=>"Float64", Symbol("Xl")=>"Float64", Symbol("Se")=>"Vector{Float64}", Symbol("gamma_d1")=>"Float64", Symbol("gamma_q1")=>"Float64", Symbol("gamma_d2")=>"Float64", Symbol("gamma_q2")=>"Float64", Symbol("gamma_qd")=>"Float64", )
-OpenAPI.property_type(::Type{ RoundRotorMachine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RoundRotorMachine[name]))}
+const _property_types_RoundRotorMachine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("R")=>Union{Nothing, Float64}, Symbol("Td0_p")=>Union{Nothing, Float64}, Symbol("Td0_pp")=>Union{Nothing, Float64}, Symbol("Tq0_p")=>Union{Nothing, Float64}, Symbol("Tq0_pp")=>Union{Nothing, Float64}, Symbol("Xd")=>Union{Nothing, Float64}, Symbol("Xq")=>Union{Nothing, Float64}, Symbol("Xd_p")=>Union{Nothing, Float64}, Symbol("Xq_p")=>Union{Nothing, Float64}, Symbol("Xd_pp")=>Union{Nothing, Float64}, Symbol("Xl")=>Union{Nothing, Float64}, Symbol("Se")=>Union{Nothing, Vector{Float64}}, Symbol("gamma_d1")=>Union{Nothing, Float64}, Symbol("gamma_q1")=>Union{Nothing, Float64}, Symbol("gamma_d2")=>Union{Nothing, Float64}, Symbol("gamma_q2")=>Union{Nothing, Float64}, Symbol("gamma_qd")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ RoundRotorMachine }, name::Symbol) = _property_types_RoundRotorMachine[name]
 
 function OpenAPI.check_required(o::RoundRotorMachine)
     o.id === nothing && (return false)

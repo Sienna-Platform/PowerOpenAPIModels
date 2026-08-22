@@ -27,8 +27,8 @@ Base.@kwdef mutable struct CombinedCycleFractional <: OpenAPI.APIModel
     end
 end # type CombinedCycleFractional
 
-const _property_types_CombinedCycleFractional = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("configuration")=>"String", )
-OpenAPI.property_type(::Type{ CombinedCycleFractional }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_CombinedCycleFractional[name]))}
+const _property_types_CombinedCycleFractional = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("configuration")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ CombinedCycleFractional }, name::Symbol) = _property_types_CombinedCycleFractional[name]
 
 function OpenAPI.check_required(o::CombinedCycleFractional)
     o.id === nothing && (return false)

@@ -29,8 +29,8 @@ Base.@kwdef mutable struct RetirementPotential <: OpenAPI.APIModel
     end
 end # type RetirementPotential
 
-const _property_types_RetirementPotential = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("eligible_generators")=>"Vector{String}", Symbol("planned_retirement_year")=>"Dict{String, Int64}", Symbol("build_year")=>"Dict{String, Int64}", )
-OpenAPI.property_type(::Type{ RetirementPotential }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RetirementPotential[name]))}
+const _property_types_RetirementPotential = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("eligible_generators")=>Union{Nothing, Vector{String}}, Symbol("planned_retirement_year")=>Union{Nothing, Dict{String, Int64}}, Symbol("build_year")=>Union{Nothing, Dict{String, Int64}}, )
+OpenAPI.property_type(::Type{ RetirementPotential }, name::Symbol) = _property_types_RetirementPotential[name]
 
 function OpenAPI.check_required(o::RetirementPotential)
     o.id === nothing && (return false)

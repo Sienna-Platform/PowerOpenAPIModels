@@ -17,9 +17,9 @@ end # type EnergyReservoirStorageOperationCost
 function OpenAPI.property_type(::Type{ EnergyReservoirStorageOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
     if discriminator == "MARKET_BID"
-        return eval(Base.Meta.parse("MarketBidCost"))
+        return (MarketBidCost)
     elseif discriminator == "STORAGE"
-        return eval(Base.Meta.parse("StorageCost"))
+        return (StorageCost)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for EnergyReservoirStorageOperationCost"))
 end

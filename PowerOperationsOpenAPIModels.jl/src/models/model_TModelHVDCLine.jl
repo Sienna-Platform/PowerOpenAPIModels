@@ -27,7 +27,7 @@ A High Voltage DC transmission line for modeling DC transmission networks.  This
     - arc::Int64 : An &#x60;Arc&#x60; defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus.
     - parameter_units::String : Unit basis for this line&#39;s impedance field (r).
     - base_current::Float64 : Base current for per-unitization of this line&#39;s per-unit fields — this DC line per-unitizes against a current base, not a power base. Units: A.
-    - r::Float64 : Total series resistance, split equally on both sides of the shunt capacitance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - r::Float64 : Total series resistance, split equally on both sides of the shunt capacitance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
     - l::Float64 : Total series inductance, split equally on both sides of the shunt capacitance. Per-unit on this line&#39;s &#x60;base_current&#x60;. Units: pu.
     - c::Float64 : Shunt capacitance. Per-unit on this line&#39;s &#x60;base_current&#x60;. Units: pu.
     - active_power_limits_from::MinMax
@@ -54,8 +54,8 @@ Base.@kwdef mutable struct TModelHVDCLine <: OpenAPI.APIModel
     end
 end # type TModelHVDCLine
 
-const _property_types_TModelHVDCLine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("active_power_flow")=>"Float64", Symbol("arc")=>"Int64", Symbol("parameter_units")=>"String", Symbol("base_current")=>"Float64", Symbol("r")=>"Float64", Symbol("l")=>"Float64", Symbol("c")=>"Float64", Symbol("active_power_limits_from")=>"MinMax", Symbol("active_power_limits_to")=>"MinMax", )
-OpenAPI.property_type(::Type{ TModelHVDCLine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TModelHVDCLine[name]))}
+const _property_types_TModelHVDCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("base_current")=>Union{Nothing, Float64}, Symbol("r")=>Union{Nothing, Float64}, Symbol("l")=>Union{Nothing, Float64}, Symbol("c")=>Union{Nothing, Float64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, )
+OpenAPI.property_type(::Type{ TModelHVDCLine }, name::Symbol) = _property_types_TModelHVDCLine[name]
 
 function OpenAPI.check_required(o::TModelHVDCLine)
     o.id === nothing && (return false)
@@ -95,7 +95,7 @@ function OpenAPI.validate_property(::Type{ TModelHVDCLine }, name::Symbol, val)
 
 
     if name === Symbol("parameter_units")
-        OpenAPI.validate_param(name, "TModelHVDCLine", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "TModelHVDCLine", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
     end
 
 

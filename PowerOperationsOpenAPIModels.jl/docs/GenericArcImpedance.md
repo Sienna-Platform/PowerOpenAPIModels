@@ -12,9 +12,9 @@ Name | Type | Description | Notes
 **`max_flow`** | **`Float64`** | Maximum allowable flow on the generic impedance. Units: MW. | [default to nothing]
 **`arc`** | **`Int64`** | An &#x60;Arc&#x60; defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus. | [default to nothing]
 **`base_power`** | **`Float64`** | System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [default to nothing]
-**`parameter_units`** | **`String`** | Unit basis for r and x. DEVICE_BASE is per-unit on this component&#39;s base_power, which records the system base. | [optional] [default to "DEVICE_BASE"]
-**`r`** | **`Float64`** | Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu . | [default to nothing]
-**`x`** | **`Float64`** | Reactance. Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu . | [default to nothing]
+**`parameter_units`** | **`String`** | Unit basis for r and x. COMPONENT_BASE is per-unit on this component&#39;s base_power, which records the system base. | [optional] [default to "COMPONENT_BASE"]
+**`r`** | **`Float64`** | Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [default to nothing]
+**`x`** | **`Float64`** | Reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

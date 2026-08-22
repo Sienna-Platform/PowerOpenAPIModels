@@ -29,8 +29,8 @@ Base.@kwdef mutable struct QuadraticFunctionData <: OpenAPI.APIModel
     end
 end # type QuadraticFunctionData
 
-const _property_types_QuadraticFunctionData = Dict{Symbol,String}(Symbol("constant_term")=>"Float64", Symbol("function_type")=>"String", Symbol("proportional_term")=>"Float64", Symbol("quadratic_term")=>"Float64", )
-OpenAPI.property_type(::Type{ QuadraticFunctionData }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_QuadraticFunctionData[name]))}
+const _property_types_QuadraticFunctionData = Dict{Symbol,Type}(Symbol("constant_term")=>Union{Nothing, Float64}, Symbol("function_type")=>Union{Nothing, String}, Symbol("proportional_term")=>Union{Nothing, Float64}, Symbol("quadratic_term")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ QuadraticFunctionData }, name::Symbol) = _property_types_QuadraticFunctionData[name]
 
 function OpenAPI.check_required(o::QuadraticFunctionData)
     o.constant_term === nothing && (return false)

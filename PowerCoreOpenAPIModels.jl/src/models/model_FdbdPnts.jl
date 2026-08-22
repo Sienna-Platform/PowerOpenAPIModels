@@ -23,8 +23,8 @@ Base.@kwdef mutable struct FdbdPnts <: OpenAPI.APIModel
     end
 end # type FdbdPnts
 
-const _property_types_FdbdPnts = Dict{Symbol,String}(Symbol("fdbd1")=>"Float64", Symbol("fdbd2")=>"Float64", )
-OpenAPI.property_type(::Type{ FdbdPnts }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_FdbdPnts[name]))}
+const _property_types_FdbdPnts = Dict{Symbol,Type}(Symbol("fdbd1")=>Union{Nothing, Float64}, Symbol("fdbd2")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ FdbdPnts }, name::Symbol) = _property_types_FdbdPnts[name]
 
 function OpenAPI.check_required(o::FdbdPnts)
     true

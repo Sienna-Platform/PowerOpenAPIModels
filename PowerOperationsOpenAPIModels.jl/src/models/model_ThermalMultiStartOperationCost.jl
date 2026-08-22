@@ -17,9 +17,9 @@ end # type ThermalMultiStartOperationCost
 function OpenAPI.property_type(::Type{ ThermalMultiStartOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
     if discriminator == "MARKET_BID"
-        return eval(Base.Meta.parse("MarketBidCost"))
+        return (MarketBidCost)
     elseif discriminator == "THERMAL"
-        return eval(Base.Meta.parse("ThermalGenerationCost"))
+        return (ThermalGenerationCost)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for ThermalMultiStartOperationCost"))
 end

@@ -23,8 +23,8 @@ Base.@kwdef mutable struct UpDown <: OpenAPI.APIModel
     end
 end # type UpDown
 
-const _property_types_UpDown = Dict{Symbol,String}(Symbol("down")=>"Float64", Symbol("up")=>"Float64", )
-OpenAPI.property_type(::Type{ UpDown }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_UpDown[name]))}
+const _property_types_UpDown = Dict{Symbol,Type}(Symbol("down")=>Union{Nothing, Float64}, Symbol("up")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ UpDown }, name::Symbol) = _property_types_UpDown[name]
 
 function OpenAPI.check_required(o::UpDown)
     o.down === nothing && (return false)

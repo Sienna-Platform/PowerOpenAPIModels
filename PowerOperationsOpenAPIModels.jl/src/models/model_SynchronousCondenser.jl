@@ -48,8 +48,8 @@ Base.@kwdef mutable struct SynchronousCondenser <: OpenAPI.APIModel
     end
 end # type SynchronousCondenser
 
-const _property_types_SynchronousCondenser = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("reactive_power_limits")=>"MinMax", Symbol("base_power")=>"Float64", Symbol("active_power_losses")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ SynchronousCondenser }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SynchronousCondenser[name]))}
+const _property_types_SynchronousCondenser = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("active_power_losses")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ SynchronousCondenser }, name::Symbol) = _property_types_SynchronousCondenser[name]
 
 function OpenAPI.check_required(o::SynchronousCondenser)
     o.id === nothing && (return false)

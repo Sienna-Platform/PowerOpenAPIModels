@@ -3,7 +3,7 @@
 
 
 @doc raw"""ServiceAssociation
-Links a service to one component that contributes to it. One record per (service, member) pair: the many-to-many reserve-participation relation is normalized here rather than carried as a list on either side, so each membership is an individually addressable row. The type of either side is resolved through the entity registry rather than duplicated here, matching the shape of PlantAssociation and SupplementalAttributeAssociation. &#x60;entity_id&#x60; may name a Device (the reserve case), a Branch (TransmissionInterface), or another Service (GroupReserve), so no member-type discriminator is needed. PowerSystems stores the same relation on the device side as &#x60;Device.services&#x60;.
+Links a service to one component that contributes to it. One record per (service, member) pair: the many-to-many reserve-participation relation is normalized here rather than carried as a list on either side, so each membership is an individually addressable row. The type of either side is resolved through the entity registry rather than duplicated here, matching the shape of PlantAssociation and SupplementalAttributeAssociation. &#x60;entity_id&#x60; may name a Device (the reserve case), a Branch (TransmissionInterface), or another Service (GroupReserve), so no member-type discriminator is needed. The data model library stores the same relation on the device side as &#x60;Device.services&#x60;.
 
     ServiceAssociation(;
         service_id=nothing,
@@ -24,8 +24,8 @@ Base.@kwdef mutable struct ServiceAssociation <: OpenAPI.APIModel
     end
 end # type ServiceAssociation
 
-const _property_types_ServiceAssociation = Dict{Symbol,String}(Symbol("service_id")=>"Int64", Symbol("entity_id")=>"Int64", )
-OpenAPI.property_type(::Type{ ServiceAssociation }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ServiceAssociation[name]))}
+const _property_types_ServiceAssociation = Dict{Symbol,Type}(Symbol("service_id")=>Union{Nothing, Int64}, Symbol("entity_id")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ ServiceAssociation }, name::Symbol) = _property_types_ServiceAssociation[name]
 
 function OpenAPI.check_required(o::ServiceAssociation)
     o.service_id === nothing && (return false)

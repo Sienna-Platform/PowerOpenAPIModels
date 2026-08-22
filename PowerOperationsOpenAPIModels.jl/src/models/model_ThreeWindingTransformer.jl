@@ -12,7 +12,7 @@ A three-winding transformer, modeled as an equivalent star: each referenced &#x6
         secondary_circuit=nothing,
         tertiary_circuit=nothing,
         star_bus=nothing,
-        parameter_units="DEVICE_BASE",
+        parameter_units="COMPONENT_BASE",
         r_12=nothing,
         x_12=nothing,
         r_23=nothing,
@@ -22,7 +22,7 @@ A three-winding transformer, modeled as an equivalent star: each referenced &#x6
         base_power_12=nothing,
         base_power_23=nothing,
         base_power_31=nothing,
-        admittance_units="DEVICE_BASE",
+        admittance_units="COMPONENT_BASE",
         magnetizing_shunt=ComplexNumber(; real=0.0, imag=0.0),
         shunt_location="PRIMARY",
     )
@@ -34,12 +34,12 @@ A three-winding transformer, modeled as an equivalent star: each referenced &#x6
     - tertiary_circuit::Int64 : The tertiary &#x60;TransformerCircuit&#x60; connecting the tertiary bus to the star bus.
     - star_bus::Int64 : Star (hidden) Bus that this component (equivalent model) is connected to.
     - parameter_units::String : Unit basis for the pairwise measured impedance fields (r_12, x_12, r_23, x_23, r_31, x_31). PSS/E supplies a single CZ flag for the whole three-winding transformer record, so one basis governs all three winding pairs.
-    - r_12::Float64 : Measured resistance, referenced to the primary winding&#39;s base voltage, from primary to secondary windings (R1-2 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
-    - x_12::Float64 : Measured reactance, referenced to the primary winding&#39;s base voltage, from primary to secondary windings (X1-2 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
-    - r_23::Float64 : Measured resistance, referenced to the secondary winding&#39;s base voltage, from secondary to tertiary windings (R2-3 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
-    - x_23::Float64 : Measured reactance, referenced to the secondary winding&#39;s base voltage, from secondary to tertiary windings (X2-3 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
-    - r_31::Float64 : Measured resistance, referenced to the tertiary winding&#39;s base voltage, from tertiary to primary windings (R3-1 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
-    - x_31::Float64 : Measured reactance, referenced to the tertiary winding&#39;s base voltage, from tertiary to primary windings (X3-1 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, DEVICE_BASE: pu .
+    - r_12::Float64 : Measured resistance, referenced to the primary winding&#39;s base voltage, from primary to secondary windings (R1-2 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - x_12::Float64 : Measured reactance, referenced to the primary winding&#39;s base voltage, from primary to secondary windings (X1-2 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - r_23::Float64 : Measured resistance, referenced to the secondary winding&#39;s base voltage, from secondary to tertiary windings (R2-3 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - x_23::Float64 : Measured reactance, referenced to the secondary winding&#39;s base voltage, from secondary to tertiary windings (X2-3 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - r_31::Float64 : Measured resistance, referenced to the tertiary winding&#39;s base voltage, from tertiary to primary windings (R3-1 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - x_31::Float64 : Measured reactance, referenced to the tertiary winding&#39;s base voltage, from tertiary to primary windings (X3-1 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
     - base_power_12::Float64 : Base power for per unitization for primary-secondary windings. Units: MVA.
     - base_power_23::Float64 : Base power for per unitization for secondary-tertiary windings. Units: MVA.
     - base_power_31::Float64 : Base power for per unitization for tertiary-primary windings. Units: MVA.
@@ -54,7 +54,7 @@ Base.@kwdef mutable struct ThreeWindingTransformer <: OpenAPI.APIModel
     secondary_circuit::Union{Nothing, Int64} = nothing
     tertiary_circuit::Union{Nothing, Int64} = nothing
     star_bus::Union{Nothing, Int64} = nothing
-    parameter_units::Union{Nothing, String} = "DEVICE_BASE"
+    parameter_units::Union{Nothing, String} = "COMPONENT_BASE"
     r_12::Union{Nothing, Float64} = nothing
     x_12::Union{Nothing, Float64} = nothing
     r_23::Union{Nothing, Float64} = nothing
@@ -64,7 +64,7 @@ Base.@kwdef mutable struct ThreeWindingTransformer <: OpenAPI.APIModel
     base_power_12::Union{Nothing, Float64} = nothing
     base_power_23::Union{Nothing, Float64} = nothing
     base_power_31::Union{Nothing, Float64} = nothing
-    admittance_units::Union{Nothing, String} = "DEVICE_BASE"
+    admittance_units::Union{Nothing, String} = "COMPONENT_BASE"
     magnetizing_shunt = ComplexNumber(; real=0.0, imag=0.0) # spec type: Union{ Nothing, ComplexNumber }
     shunt_location::Union{Nothing, String} = "PRIMARY"
 
@@ -75,8 +75,8 @@ Base.@kwdef mutable struct ThreeWindingTransformer <: OpenAPI.APIModel
     end
 end # type ThreeWindingTransformer
 
-const _property_types_ThreeWindingTransformer = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("primary_circuit")=>"Int64", Symbol("secondary_circuit")=>"Int64", Symbol("tertiary_circuit")=>"Int64", Symbol("star_bus")=>"Int64", Symbol("parameter_units")=>"String", Symbol("r_12")=>"Float64", Symbol("x_12")=>"Float64", Symbol("r_23")=>"Float64", Symbol("x_23")=>"Float64", Symbol("r_31")=>"Float64", Symbol("x_31")=>"Float64", Symbol("base_power_12")=>"Float64", Symbol("base_power_23")=>"Float64", Symbol("base_power_31")=>"Float64", Symbol("admittance_units")=>"String", Symbol("magnetizing_shunt")=>"ComplexNumber", Symbol("shunt_location")=>"String", )
-OpenAPI.property_type(::Type{ ThreeWindingTransformer }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_ThreeWindingTransformer[name]))}
+const _property_types_ThreeWindingTransformer = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("primary_circuit")=>Union{Nothing, Int64}, Symbol("secondary_circuit")=>Union{Nothing, Int64}, Symbol("tertiary_circuit")=>Union{Nothing, Int64}, Symbol("star_bus")=>Union{Nothing, Int64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r_12")=>Union{Nothing, Float64}, Symbol("x_12")=>Union{Nothing, Float64}, Symbol("r_23")=>Union{Nothing, Float64}, Symbol("x_23")=>Union{Nothing, Float64}, Symbol("r_31")=>Union{Nothing, Float64}, Symbol("x_31")=>Union{Nothing, Float64}, Symbol("base_power_12")=>Union{Nothing, Float64}, Symbol("base_power_23")=>Union{Nothing, Float64}, Symbol("base_power_31")=>Union{Nothing, Float64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("magnetizing_shunt")=>Union{Nothing, ComplexNumber}, Symbol("shunt_location")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ ThreeWindingTransformer }, name::Symbol) = _property_types_ThreeWindingTransformer[name]
 
 function OpenAPI.check_required(o::ThreeWindingTransformer)
     o.id === nothing && (return false)
@@ -119,7 +119,7 @@ function OpenAPI.validate_property(::Type{ ThreeWindingTransformer }, name::Symb
 
 
     if name === Symbol("parameter_units")
-        OpenAPI.validate_param(name, "ThreeWindingTransformer", :enum, val, ["NATURAL_UNITS", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "ThreeWindingTransformer", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
     end
 
 
@@ -133,7 +133,7 @@ function OpenAPI.validate_property(::Type{ ThreeWindingTransformer }, name::Symb
 
 
     if name === Symbol("admittance_units")
-        OpenAPI.validate_param(name, "ThreeWindingTransformer", :enum, val, ["NATURAL_UNITS", "DEVICE_MVAR", "DEVICE_BASE"])
+        OpenAPI.validate_param(name, "ThreeWindingTransformer", :enum, val, ["NATURAL_UNITS", "COMPONENT_MVAR", "COMPONENT_BASE"])
     end
 
 

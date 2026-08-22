@@ -16,9 +16,9 @@ end # type ProductionVariableCostCurve
 function OpenAPI.property_type(::Type{ ProductionVariableCostCurve }, name::Symbol, json::Dict{String,Any})
     discriminator = json["variable_cost_type"]
     if discriminator == "COST"
-        return eval(Base.Meta.parse("CostCurve"))
+        return (CostCurve)
     elseif discriminator == "FUEL"
-        return eval(Base.Meta.parse("FuelCurve"))
+        return (FuelCurve)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for ProductionVariableCostCurve"))
 end

@@ -16,11 +16,11 @@ end # type GenericOperationCost
 function OpenAPI.property_type(::Type{ GenericOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
     if discriminator == "HYDRO_GEN"
-        return eval(Base.Meta.parse("HydroGenerationCost"))
+        return (HydroGenerationCost)
     elseif discriminator == "RENEWABLE"
-        return eval(Base.Meta.parse("RenewableGenerationCost"))
+        return (RenewableGenerationCost)
     elseif discriminator == "THERMAL"
-        return eval(Base.Meta.parse("ThermalGenerationCost"))
+        return (ThermalGenerationCost)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for GenericOperationCost"))
 end

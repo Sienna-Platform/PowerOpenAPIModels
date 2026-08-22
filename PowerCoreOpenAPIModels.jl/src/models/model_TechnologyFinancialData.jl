@@ -35,8 +35,8 @@ Base.@kwdef mutable struct TechnologyFinancialData <: OpenAPI.APIModel
     end
 end # type TechnologyFinancialData
 
-const _property_types_TechnologyFinancialData = Dict{Symbol,String}(Symbol("capital_recovery_period")=>"Int64", Symbol("technology_base_year")=>"Int64", Symbol("debt_fraction")=>"Float64", Symbol("debt_rate")=>"Float64", Symbol("return_on_equity")=>"Float64", Symbol("tax_rate")=>"Float64", )
-OpenAPI.property_type(::Type{ TechnologyFinancialData }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TechnologyFinancialData[name]))}
+const _property_types_TechnologyFinancialData = Dict{Symbol,Type}(Symbol("capital_recovery_period")=>Union{Nothing, Int64}, Symbol("technology_base_year")=>Union{Nothing, Int64}, Symbol("debt_fraction")=>Union{Nothing, Float64}, Symbol("debt_rate")=>Union{Nothing, Float64}, Symbol("return_on_equity")=>Union{Nothing, Float64}, Symbol("tax_rate")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ TechnologyFinancialData }, name::Symbol) = _property_types_TechnologyFinancialData[name]
 
 function OpenAPI.check_required(o::TechnologyFinancialData)
     true

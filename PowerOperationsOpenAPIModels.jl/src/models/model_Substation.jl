@@ -30,8 +30,8 @@ Base.@kwdef mutable struct Substation <: OpenAPI.APIModel
     end
 end # type Substation
 
-const _property_types_Substation = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("number")=>"Int64", Symbol("grounding_resistance")=>"Float64", )
-OpenAPI.property_type(::Type{ Substation }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_Substation[name]))}
+const _property_types_Substation = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("number")=>Union{Nothing, Int64}, Symbol("grounding_resistance")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ Substation }, name::Symbol) = _property_types_Substation[name]
 
 function OpenAPI.check_required(o::Substation)
     o.id === nothing && (return false)

@@ -10,7 +10,7 @@ A switched admittance, with discrete steps to adjust the admittance.  Most often
         name=nothing,
         available=nothing,
         bus=nothing,
-        admittance_units="DEVICE_MVAR",
+        admittance_units="COMPONENT_MVAR",
         Y=nothing,
         initial_status=nothing,
         number_of_steps=nothing,
@@ -25,11 +25,11 @@ A switched admittance, with discrete steps to adjust the admittance.  Most often
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
-    - admittance_units::String : Unit basis for the shunt admittance Y. DEVICE_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
+    - admittance_units::String : Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
     - Y::ComplexNumber
     - initial_status::Vector{Int64} : Vector of initial switched shunt status, one for in-service and zero for out-of-service for block i (1 through 8).
     - number_of_steps::Vector{Int64} : Vector with number of steps for each adjustable shunt block. For example, &#x60;number_of_steps[2]&#x60; are the number of available steps for admittance increment at block 2.
-    - Y_increase::Vector{ComplexNumber} : Vector with admittance increment step for each adjustable shunt block. For example, &#x60;Y_increase[2]&#x60; is the complex admittance increment for each step at block 2. Units: per admittance_units — NATURAL_UNITS: S, DEVICE_MVAR: MVAr .
+    - Y_increase::Vector{ComplexNumber} : Vector with admittance increment step for each adjustable shunt block. For example, &#x60;Y_increase[2]&#x60; is the complex admittance increment for each step at block 2. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
     - admittance_limits::MinMax
     - control_mode::String : Switched-shunt control mode (PSS/E MODSW).
     - regulated_bus_number::Int64 : Bus number whose voltage/quantity this shunt regulates; 0 means local bus (PSS/E SWREM/NREG). Units: 1.
@@ -40,7 +40,7 @@ Base.@kwdef mutable struct SwitchedAdmittance <: OpenAPI.APIModel
     name::Union{Nothing, String} = nothing
     available::Union{Nothing, Bool} = nothing
     bus::Union{Nothing, Int64} = nothing
-    admittance_units::Union{Nothing, String} = "DEVICE_MVAR"
+    admittance_units::Union{Nothing, String} = "COMPONENT_MVAR"
     Y = nothing # spec type: Union{ Nothing, ComplexNumber }
     initial_status::Union{Nothing, Vector{Int64}} = nothing
     number_of_steps::Union{Nothing, Vector{Int64}} = nothing
@@ -57,8 +57,8 @@ Base.@kwdef mutable struct SwitchedAdmittance <: OpenAPI.APIModel
     end
 end # type SwitchedAdmittance
 
-const _property_types_SwitchedAdmittance = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("admittance_units")=>"String", Symbol("Y")=>"ComplexNumber", Symbol("initial_status")=>"Vector{Int64}", Symbol("number_of_steps")=>"Vector{Int64}", Symbol("Y_increase")=>"Vector{ComplexNumber}", Symbol("admittance_limits")=>"MinMax", Symbol("control_mode")=>"String", Symbol("regulated_bus_number")=>"Int64", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ SwitchedAdmittance }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SwitchedAdmittance[name]))}
+const _property_types_SwitchedAdmittance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("Y")=>Union{Nothing, ComplexNumber}, Symbol("initial_status")=>Union{Nothing, Vector{Int64}}, Symbol("number_of_steps")=>Union{Nothing, Vector{Int64}}, Symbol("Y_increase")=>Union{Nothing, Vector{ComplexNumber}}, Symbol("admittance_limits")=>Union{Nothing, MinMax}, Symbol("control_mode")=>Union{Nothing, String}, Symbol("regulated_bus_number")=>Union{Nothing, Int64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ SwitchedAdmittance }, name::Symbol) = _property_types_SwitchedAdmittance[name]
 
 function OpenAPI.check_required(o::SwitchedAdmittance)
     o.id === nothing && (return false)
@@ -92,7 +92,7 @@ function OpenAPI.validate_property(::Type{ SwitchedAdmittance }, name::Symbol, v
 
 
     if name === Symbol("admittance_units")
-        OpenAPI.validate_param(name, "SwitchedAdmittance", :enum, val, ["NATURAL_UNITS", "DEVICE_MVAR"])
+        OpenAPI.validate_param(name, "SwitchedAdmittance", :enum, val, ["NATURAL_UNITS", "COMPONENT_MVAR"])
     end
 
 

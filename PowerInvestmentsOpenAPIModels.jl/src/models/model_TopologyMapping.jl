@@ -23,8 +23,8 @@ Base.@kwdef mutable struct TopologyMapping <: OpenAPI.APIModel
     end
 end # type TopologyMapping
 
-const _property_types_TopologyMapping = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("buses")=>"Vector{String}", )
-OpenAPI.property_type(::Type{ TopologyMapping }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TopologyMapping[name]))}
+const _property_types_TopologyMapping = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("buses")=>Union{Nothing, Vector{String}}, )
+OpenAPI.property_type(::Type{ TopologyMapping }, name::Symbol) = _property_types_TopologyMapping[name]
 
 function OpenAPI.check_required(o::TopologyMapping)
     o.id === nothing && (return false)

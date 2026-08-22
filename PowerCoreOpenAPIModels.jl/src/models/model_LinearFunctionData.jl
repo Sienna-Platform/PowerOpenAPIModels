@@ -26,8 +26,8 @@ Base.@kwdef mutable struct LinearFunctionData <: OpenAPI.APIModel
     end
 end # type LinearFunctionData
 
-const _property_types_LinearFunctionData = Dict{Symbol,String}(Symbol("constant_term")=>"Float64", Symbol("function_type")=>"String", Symbol("proportional_term")=>"Float64", )
-OpenAPI.property_type(::Type{ LinearFunctionData }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_LinearFunctionData[name]))}
+const _property_types_LinearFunctionData = Dict{Symbol,Type}(Symbol("constant_term")=>Union{Nothing, Float64}, Symbol("function_type")=>Union{Nothing, String}, Symbol("proportional_term")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ LinearFunctionData }, name::Symbol) = _property_types_LinearFunctionData[name]
 
 function OpenAPI.check_required(o::LinearFunctionData)
     o.constant_term === nothing && (return false)

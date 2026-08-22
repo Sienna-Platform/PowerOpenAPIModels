@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **`time_limits`** | [**`*UpDown`**](UpDown.md) |  | [optional] [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [default to nothing]
 **`status`** | **`String`** | Initial Operating status of a pumped-storage hydro unit. See &#x60;HydroPumpTurbineStatus&#x60; for reference. | [optional] [default to "OFF"]
-**`time_at_status`** | **`Float64`** | Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is PowerSystems.jl&#39;s INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min. | [optional] [default to 600000.0]
+**`time_at_status`** | **`Float64`** | Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min. | [optional] [default to 600000.0]
 **`operation_cost`** | [**`*HydroDispatchOperationCost`**](HydroDispatchOperationCost.md) |  | [default to nothing]
 **`active_power_pump`** | **`Float64`** | Initial active power set point of the pump unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: MW. | [optional] [default to 0.0]
 **`efficiency`** | [**`*TurbinePump`**](TurbinePump.md) |  | [optional] [default to nothing]

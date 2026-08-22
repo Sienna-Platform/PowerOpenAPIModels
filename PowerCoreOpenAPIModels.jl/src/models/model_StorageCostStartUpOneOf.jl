@@ -23,8 +23,8 @@ Base.@kwdef mutable struct StorageCostStartUpOneOf <: OpenAPI.APIModel
     end
 end # type StorageCostStartUpOneOf
 
-const _property_types_StorageCostStartUpOneOf = Dict{Symbol,String}(Symbol("charge")=>"Float64", Symbol("discharge")=>"Float64", )
-OpenAPI.property_type(::Type{ StorageCostStartUpOneOf }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_StorageCostStartUpOneOf[name]))}
+const _property_types_StorageCostStartUpOneOf = Dict{Symbol,Type}(Symbol("charge")=>Union{Nothing, Float64}, Symbol("discharge")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ StorageCostStartUpOneOf }, name::Symbol) = _property_types_StorageCostStartUpOneOf[name]
 
 function OpenAPI.check_required(o::StorageCostStartUpOneOf)
     true

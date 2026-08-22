@@ -24,8 +24,8 @@ Base.@kwdef mutable struct RenewablePowerPlant <: OpenAPI.APIModel
     end
 end # type RenewablePowerPlant
 
-const _property_types_RenewablePowerPlant = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", )
-OpenAPI.property_type(::Type{ RenewablePowerPlant }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RenewablePowerPlant[name]))}
+const _property_types_RenewablePowerPlant = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, )
+OpenAPI.property_type(::Type{ RenewablePowerPlant }, name::Symbol) = _property_types_RenewablePowerPlant[name]
 
 function OpenAPI.check_required(o::RenewablePowerPlant)
     o.id === nothing && (return false)

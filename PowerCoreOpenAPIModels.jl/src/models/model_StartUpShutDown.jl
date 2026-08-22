@@ -23,8 +23,8 @@ Base.@kwdef mutable struct StartUpShutDown <: OpenAPI.APIModel
     end
 end # type StartUpShutDown
 
-const _property_types_StartUpShutDown = Dict{Symbol,String}(Symbol("startup")=>"Float64", Symbol("shutdown")=>"Float64", )
-OpenAPI.property_type(::Type{ StartUpShutDown }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_StartUpShutDown[name]))}
+const _property_types_StartUpShutDown = Dict{Symbol,Type}(Symbol("startup")=>Union{Nothing, Float64}, Symbol("shutdown")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ StartUpShutDown }, name::Symbol) = _property_types_StartUpShutDown[name]
 
 function OpenAPI.check_required(o::StartUpShutDown)
     true

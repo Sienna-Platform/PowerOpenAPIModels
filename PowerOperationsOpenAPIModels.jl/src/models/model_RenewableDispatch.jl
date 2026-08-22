@@ -57,8 +57,8 @@ Base.@kwdef mutable struct RenewableDispatch <: OpenAPI.APIModel
     end
 end # type RenewableDispatch
 
-const _property_types_RenewableDispatch = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("prime_mover_type")=>"String", Symbol("reactive_power_limits")=>"MinMax", Symbol("power_factor")=>"Float64", Symbol("operation_cost")=>"RenewableDispatchOperationCost", Symbol("base_power")=>"Float64", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ RenewableDispatch }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RenewableDispatch[name]))}
+const _property_types_RenewableDispatch = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("power_factor")=>Union{Nothing, Float64}, Symbol("operation_cost")=>Union{Nothing, RenewableDispatchOperationCost}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ RenewableDispatch }, name::Symbol) = _property_types_RenewableDispatch[name]
 
 function OpenAPI.check_required(o::RenewableDispatch)
     o.id === nothing && (return false)

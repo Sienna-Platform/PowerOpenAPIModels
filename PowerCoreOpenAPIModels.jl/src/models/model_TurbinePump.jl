@@ -23,8 +23,8 @@ Base.@kwdef mutable struct TurbinePump <: OpenAPI.APIModel
     end
 end # type TurbinePump
 
-const _property_types_TurbinePump = Dict{Symbol,String}(Symbol("turbine")=>"Float64", Symbol("pump")=>"Float64", )
-OpenAPI.property_type(::Type{ TurbinePump }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_TurbinePump[name]))}
+const _property_types_TurbinePump = Dict{Symbol,Type}(Symbol("turbine")=>Union{Nothing, Float64}, Symbol("pump")=>Union{Nothing, Float64}, )
+OpenAPI.property_type(::Type{ TurbinePump }, name::Symbol) = _property_types_TurbinePump[name]
 
 function OpenAPI.check_required(o::TurbinePump)
     o.turbine === nothing && (return false)

@@ -29,8 +29,8 @@ Base.@kwdef mutable struct GeometricDistributionForcedOutage <: OpenAPI.APIModel
     end
 end # type GeometricDistributionForcedOutage
 
-const _property_types_GeometricDistributionForcedOutage = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("mean_time_to_recovery")=>"Int64", Symbol("outage_transition_probability")=>"Float64", Symbol("monitored_components")=>"Vector{Int64}", )
-OpenAPI.property_type(::Type{ GeometricDistributionForcedOutage }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_GeometricDistributionForcedOutage[name]))}
+const _property_types_GeometricDistributionForcedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("mean_time_to_recovery")=>Union{Nothing, Int64}, Symbol("outage_transition_probability")=>Union{Nothing, Float64}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, )
+OpenAPI.property_type(::Type{ GeometricDistributionForcedOutage }, name::Symbol) = _property_types_GeometricDistributionForcedOutage[name]
 
 function OpenAPI.check_required(o::GeometricDistributionForcedOutage)
     o.id === nothing && (return false)

@@ -54,8 +54,8 @@ Base.@kwdef mutable struct MotorLoad <: OpenAPI.APIModel
     end
 end # type MotorLoad
 
-const _property_types_MotorLoad = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("name")=>"String", Symbol("available")=>"Bool", Symbol("bus")=>"Int64", Symbol("active_power")=>"Float64", Symbol("reactive_power")=>"Float64", Symbol("base_power")=>"Float64", Symbol("rating")=>"Float64", Symbol("max_active_power")=>"Float64", Symbol("reactive_power_limits")=>"MinMax", Symbol("motor_technology")=>"String", Symbol("dynamic_injector")=>"Int64", )
-OpenAPI.property_type(::Type{ MotorLoad }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_MotorLoad[name]))}
+const _property_types_MotorLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("max_active_power")=>Union{Nothing, Float64}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("motor_technology")=>Union{Nothing, String}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+OpenAPI.property_type(::Type{ MotorLoad }, name::Symbol) = _property_types_MotorLoad[name]
 
 function OpenAPI.check_required(o::MotorLoad)
     o.id === nothing && (return false)
