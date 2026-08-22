@@ -63,10 +63,11 @@ const SCHEMA_DIR =
         # through it rather than making this harness carry its own dependency.
         schema = PowerCoreOpenAPIModels.JSON.parsefile(schema_path)
         schema_fields = Set(keys(schema["properties"]))
-        # `counter` is build-time scaffolding that is deliberately not serialized.
+        # `counter`, `component_types_by_id`, and `service_membership` are build-time
+        # scaffolding that is deliberately not serialized.
         struct_fields = setdiff(
             Set(string.(fieldnames(PowerOpenAPIModels.SystemDocument))),
-            Set(["counter"]),
+            Set(["counter", "component_types_by_id", "service_membership"]),
         )
 
         @test isempty(setdiff(schema_fields, struct_fields))

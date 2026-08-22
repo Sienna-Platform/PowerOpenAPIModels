@@ -46,10 +46,15 @@ linking them, and the name of the HDF5 sidecar holding time series values.
 `components` values are concrete `Vector{T}`, so per-type iteration stays inferable behind a
 function barrier even though the field itself is untyped.
 
-`counter` is build-time scaffolding and is not serialized: every id it has handed out is
-recoverable from the emitted rows. Ids come from one counter shared by every type, matching
-SiennaGridDB's `entities` table where an id identifies a component without also needing its
-type — which is why a bus number cannot double as an id.
+`counter`, `component_types_by_id`, and `service_membership` are build-time scaffolding and
+are not serialized: everything they hold is recoverable from the emitted rows. `counter`'s ids
+come from one counter shared by every type, matching SiennaGridDB's `entities` table where an
+id identifies a component without also needing its type — which is why a bus number cannot
+double as an id. `component_types_by_id` and `service_membership` exist purely so
+[`add_supplemental_attribute!`](@ref) and [`add_service_association!`](@ref) can check
+membership in O(1) instead of rescanning `components`/`service_associations` on every call —
+each add path is the sole writer of its cache, and [`document_from_json`](@ref) rebuilds both
+once after a bulk load.
 
 `name`, `description`, `frequency`, and `time_series_storage_file` are `nothing` when the
 document omits them; the schema marks all four optional, and a consumer with its own default
@@ -80,6 +85,8 @@ struct SystemDocument
     ext::Dict{Int, Dict{String, Any}}
     time_series_storage_file::Union{Nothing, String}
     counter::Base.RefValue{Int}
+    component_types_by_id::Dict{Int, String}
+    service_membership::Set{Tuple{Int, Int}}
 end
 
 """
@@ -127,6 +134,8 @@ function SystemDocument(
         Dict{Int, Dict{String, Any}}(),
         _optional_string(time_series_storage_file),
         Ref(0),
+        Dict{Int, String}(),
+        Set{Tuple{Int, Int}}(),
     )
 end
 
@@ -196,12 +205,17 @@ end
 
 """
 Add a component to its type's bucket.
+
+Also records the component's id in `component_types_by_id`, the cache
+[`add_supplemental_attribute!`](@ref) reads instead of rescanning `components`.
 """
 function add_component!(doc::SystemDocument, component::T) where {T <: OpenAPI.APIModel}
-    bucket = get!(doc.components, string(nameof(T))) do
+    type_name = string(nameof(T))
+    bucket = get!(doc.components, type_name) do
         return Vector{T}()
     end
     push!(bucket, component)
+    doc.component_types_by_id[_model_id(component)] = type_name
     return nothing
 end
 
@@ -224,8 +238,7 @@ function add_supplemental_attribute!(
     attribute::OpenAPI.APIModel,
     component_id::Integer,
 )
-    component_types = _component_types_by_id(doc)
-    if !haskey(component_types, Int(component_id))
+    if !haskey(doc.component_types_by_id, Int(component_id))
         throw(
             PowerCoreOpenAPIModels.DocumentFormatError(
                 "add_supplemental_attribute!: component id $(component_id) is not in the " *
@@ -238,7 +251,7 @@ function add_supplemental_attribute!(
         doc.supplemental_attribute_associations,
         SupplementalAttributeAssociation(;
             component_id=Int(component_id),
-            component_type=component_types[Int(component_id)],
+            component_type=doc.component_types_by_id[Int(component_id)],
             attribute_id=_model_id(attribute),
             attribute_type=string(nameof(typeof(attribute))),
         ),
@@ -280,9 +293,13 @@ member contributing to it: a Device, a Branch, or another Service.
 
 One row per (service, member) pair. Duplicate pairs are rejected rather than collapsed:
 eligibility rules overlap, so the same device matching one reserve twice means a malformed
-rule set rather than something to silently merge. Generic over `T <: OpenAPI.APIModel` for the
+rule set rather than something to silently merge — checked in O(1) against `service_membership`
+rather than rescanning `service_associations`. Generic over `T <: OpenAPI.APIModel` for the
 same reason as [`add_plant_association!`](@ref); `service_id`/`entity_id` are read by
 property access rather than a concrete type annotation.
+
+This is the document's one guard against a duplicate association row; callers must not
+rescan `service_associations` themselves before calling this.
 """
 function add_service_association!(
     doc::SystemDocument,
@@ -290,16 +307,16 @@ function add_service_association!(
 ) where {T <: OpenAPI.APIModel}
     service_id = assoc.service_id
     entity_id = assoc.entity_id
-    for existing in doc.service_associations
-        if existing.service_id == service_id && existing.entity_id == entity_id
-            throw(
-                PowerCoreOpenAPIModels.DocumentFormatError(
-                    "duplicate service membership: service_id=$service_id entity_id=$entity_id",
-                ),
-            )
-        end
+    key = (Int(service_id), Int(entity_id))
+    if key in doc.service_membership
+        throw(
+            PowerCoreOpenAPIModels.DocumentFormatError(
+                "duplicate service membership: service_id=$service_id entity_id=$entity_id",
+            ),
+        )
     end
     push!(doc.service_associations, assoc)
+    push!(doc.service_membership, key)
     return nothing
 end
 
@@ -380,18 +397,6 @@ function _component_ids(doc::SystemDocument)
     return ids
 end
 
-# id → type-name map used to fill and check the association rows' denormalized
-# `component_type` label. Duplicate ids are `_component_ids`'s concern, not this map's.
-function _component_types_by_id(doc::SystemDocument)
-    types = Dict{Int, String}()
-    for type_name in component_type_names(doc)
-        for component in doc.components[type_name]
-            types[_model_id(component)] = type_name
-        end
-    end
-    return types
-end
-
 function _attribute_ids(doc::SystemDocument)
     ids = Set{Int}()
     for attribute in doc.supplemental_attributes
@@ -441,7 +446,7 @@ function validate_document(doc::SystemDocument)
     end
     all_ids = union(component_ids, attribute_ids)
 
-    component_types = _component_types_by_id(doc)
+    component_types = doc.component_types_by_id
     for assoc in doc.supplemental_attribute_associations
         _check_ref(
             attribute_ids,
@@ -665,6 +670,13 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
         doc.components[String(type_name)] =
             _rows(PowerCoreOpenAPIModels.model_type(type_name), rows)
     end
+    # Bulk-loaded above rather than through `add_component!`, so `component_types_by_id`
+    # needs its one rebuild pass here.
+    for (type_name, components) in doc.components
+        for component in components
+            doc.component_types_by_id[_model_id(component)] = type_name
+        end
+    end
 
     # The flat `supplemental_attributes` array carries no per-row type, so each row's type
     # comes from the association that points at it. Indexed once rather than rescanned per
@@ -705,6 +717,11 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
             _require(raw, "service_associations", source),
         ),
     )
+    # Bulk-loaded above rather than through `add_service_association!`, so
+    # `service_membership` needs its one rebuild pass here.
+    for assoc in doc.service_associations
+        push!(doc.service_membership, (Int(assoc.service_id), Int(assoc.entity_id)))
+    end
     append!(
         doc.time_series_associations,
         _rows(TimeSeriesAssociation, _require(raw, "time_series_associations", source)),
