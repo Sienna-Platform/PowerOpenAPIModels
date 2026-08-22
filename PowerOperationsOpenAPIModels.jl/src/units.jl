@@ -2057,6 +2057,9 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
     end
     error("TwoTerminalVSCLine.ac_setpoint_from: no unit declared for ac_control_from=$(o.ac_control_from)")
 end
+PowerCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_from}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_from}) = "kV"
+PowerCoreOpenAPIModels.declared_quantity(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_from}) = "Voltage"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_from}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_from}) = "A"
 PowerCoreOpenAPIModels.declared_quantity(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_from}) = "CurrentFlow"
@@ -2174,6 +2177,9 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:
     end
     error("TwoTerminalVSCLine.ac_setpoint_to: no unit declared for ac_control_to=$(o.ac_control_to)")
 end
+PowerCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_to}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_to}) = "kV"
+PowerCoreOpenAPIModels.declared_quantity(::Type{TwoTerminalVSCLine}, ::Val{:rated_ac_voltage_to}) = "Voltage"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_to}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_to}) = "A"
 PowerCoreOpenAPIModels.declared_quantity(::Type{TwoTerminalVSCLine}, ::Val{:max_dc_current_to}) = "CurrentFlow"
