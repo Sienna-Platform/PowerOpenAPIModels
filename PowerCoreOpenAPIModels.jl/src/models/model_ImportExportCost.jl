@@ -15,8 +15,8 @@
     - cost_type::String
     - import_offer_curves::CostCurve
     - export_offer_curves::CostCurve
-    - energy_import_weekly_limit::Float64
-    - energy_export_weekly_limit::Float64
+    - energy_import_weekly_limit::Float64 : Weekly limit on imported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base.
+    - energy_export_weekly_limit::Float64 : Weekly limit on exported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base.
 """
 Base.@kwdef mutable struct ImportExportCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "IMPORTEXPORT"
