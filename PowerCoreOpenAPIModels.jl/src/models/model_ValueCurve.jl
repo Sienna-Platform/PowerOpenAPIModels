@@ -8,7 +8,7 @@
     ValueCurve(; value=nothing)
 """
 mutable struct ValueCurve <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ AverageRateCurve, IncrementalCurve, InputOutputCurve }
+    value::Any # Union{ AverageRateCurve, IncrementalCurve, InputOutputCurve, TimeSeriesAverageRateCurve1, TimeSeriesIncrementalCurve1, TimeSeriesInputOutputCurve1 }
     ValueCurve() = new()
     ValueCurve(value) = new(value)
 end # type ValueCurve
@@ -21,6 +21,12 @@ function OpenAPI.property_type(::Type{ ValueCurve }, name::Symbol, json::Dict{St
         return (IncrementalCurve)
     elseif discriminator == "INPUT_OUTPUT"
         return (InputOutputCurve)
+    elseif discriminator == "TIME_SERIES_AVERAGE_RATE"
+        return (TimeSeriesAverageRateCurve)
+    elseif discriminator == "TIME_SERIES_INCREMENTAL"
+        return (TimeSeriesIncrementalCurve)
+    elseif discriminator == "TIME_SERIES_INPUT_OUTPUT"
+        return (TimeSeriesInputOutputCurve)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for ValueCurve"))
 end

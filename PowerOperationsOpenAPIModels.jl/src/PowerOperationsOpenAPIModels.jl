@@ -21,6 +21,8 @@ include("models/model_ExponentialLoad.jl")
 include("models/model_FACTSControlDevice.jl")
 include("models/model_FixedAdmittance.jl")
 include("models/model_FixedForcedOutage.jl")
+include("models/model_FunctionData3.jl")
+include("models/model_FunctionData4.jl")
 include("models/model_GenericArcImpedance.jl")
 include("models/model_GeometricDistributionForcedOutage.jl")
 include("models/model_GroupReserve.jl")
@@ -28,6 +30,7 @@ include("models/model_HydroDispatchOperationCost.jl")
 include("models/model_HydroDispatch.jl")
 include("models/model_HydroPowerPlant.jl")
 include("models/model_HydroPumpTurbine.jl")
+include("models/model_HydroReservoirOperationCost.jl")
 include("models/model_HydroReservoir.jl")
 include("models/model_HydroTurbine.jl")
 include("models/model_ImpedanceCorrectionData.jl")
@@ -54,6 +57,7 @@ include("models/model_RenewablePowerPlant.jl")
 include("models/model_ReserveDirection.jl")
 include("models/model_ServiceAssociation.jl")
 include("models/model_ShiftablePowerLoad.jl")
+include("models/model_SourceOperationCost.jl")
 include("models/model_Source.jl")
 include("models/model_StandardLoad.jl")
 include("models/model_Substation.jl")
@@ -98,6 +102,8 @@ export ExponentialLoad
 export FACTSControlDevice
 export FixedAdmittance
 export FixedForcedOutage
+export FunctionData3
+export FunctionData4
 export GenericArcImpedance
 export GeometricDistributionForcedOutage
 export GroupReserve
@@ -107,6 +113,7 @@ export HydroDispatchOperationCost
 export HydroPowerPlant
 export HydroPumpTurbine
 export HydroReservoir
+export HydroReservoirOperationCost
 export HydroTurbine
 export ImpedanceCorrectionData
 export InterconnectingConverter
@@ -130,6 +137,7 @@ export RenewablePowerPlant
 export ServiceAssociation
 export ShiftablePowerLoad
 export Source
+export SourceOperationCost
 export StandardLoad
 export Substation
 export SwitchedAdmittance

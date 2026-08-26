@@ -6,6 +6,7 @@
 
     FuelCurve(;
         fuel_cost=nothing,
+        fuel_cost_time_series=nothing,
         power_units=nothing,
         startup_fuel_offtake=nothing,
         value_curve=nothing,
@@ -13,7 +14,8 @@
         vom_cost=nothing,
     )
 
-    - fuel_cost::FuelCurveFuelCost
+    - fuel_cost::Float64 : Fixed fuel cost per unit of fuel, or null when fuel_cost_time_series names a time-varying one. Exactly one of the two is set; producers and consumers enforce it.
+    - fuel_cost_time_series::Int64 : Store-minted id of the fuel-cost time series association, or null when fuel_cost carries a fixed value. Exactly one of the two is set.
     - power_units::String : Unit basis curve power values are stored in. COMPONENT_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as COMPONENT_BASE.
     - startup_fuel_offtake::InputOutputCurve
     - value_curve::ValueCurve
@@ -21,25 +23,25 @@
     - vom_cost::InputOutputCurve
 """
 Base.@kwdef mutable struct FuelCurve <: OpenAPI.APIModel
-    fuel_cost = nothing # spec type: Union{ Nothing, FuelCurveFuelCost }
+    fuel_cost::Union{Nothing, Float64} = nothing
+    fuel_cost_time_series::Union{Nothing, Int64} = nothing
     power_units::Union{Nothing, String} = nothing
     startup_fuel_offtake = nothing # spec type: Union{ Nothing, InputOutputCurve }
     value_curve = nothing # spec type: Union{ Nothing, ValueCurve }
     variable_cost_type::Union{Nothing, String} = "FUEL"
     vom_cost = nothing # spec type: Union{ Nothing, InputOutputCurve }
 
-    function FuelCurve(fuel_cost, power_units, startup_fuel_offtake, value_curve, variable_cost_type, vom_cost, )
-        o = new(fuel_cost, power_units, startup_fuel_offtake, value_curve, variable_cost_type, vom_cost, )
+    function FuelCurve(fuel_cost, fuel_cost_time_series, power_units, startup_fuel_offtake, value_curve, variable_cost_type, vom_cost, )
+        o = new(fuel_cost, fuel_cost_time_series, power_units, startup_fuel_offtake, value_curve, variable_cost_type, vom_cost, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type FuelCurve
 
-const _property_types_FuelCurve = Dict{Symbol,Type}(Symbol("fuel_cost")=>Union{Nothing, FuelCurveFuelCost}, Symbol("power_units")=>Union{Nothing, String}, Symbol("startup_fuel_offtake")=>Union{Nothing, InputOutputCurve}, Symbol("value_curve")=>Union{Nothing, ValueCurve}, Symbol("variable_cost_type")=>Union{Nothing, String}, Symbol("vom_cost")=>Union{Nothing, InputOutputCurve}, )
+const _property_types_FuelCurve = Dict{Symbol,Type}(Symbol("fuel_cost")=>Union{Nothing, Float64}, Symbol("fuel_cost_time_series")=>Union{Nothing, Int64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("startup_fuel_offtake")=>Union{Nothing, InputOutputCurve}, Symbol("value_curve")=>Union{Nothing, ValueCurve}, Symbol("variable_cost_type")=>Union{Nothing, String}, Symbol("vom_cost")=>Union{Nothing, InputOutputCurve}, )
 OpenAPI.property_type(::Type{ FuelCurve }, name::Symbol) = _property_types_FuelCurve[name]
 
 function OpenAPI.check_required(o::FuelCurve)
-    o.fuel_cost === nothing && (return false)
     o.power_units === nothing && (return false)
     o.value_curve === nothing && (return false)
     o.variable_cost_type === nothing && (return false)
@@ -49,6 +51,7 @@ end
 
 function OpenAPI.validate_properties(o::FuelCurve)
     OpenAPI.validate_property(FuelCurve, Symbol("fuel_cost"), o.fuel_cost)
+    OpenAPI.validate_property(FuelCurve, Symbol("fuel_cost_time_series"), o.fuel_cost_time_series)
     OpenAPI.validate_property(FuelCurve, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(FuelCurve, Symbol("startup_fuel_offtake"), o.startup_fuel_offtake)
     OpenAPI.validate_property(FuelCurve, Symbol("value_curve"), o.value_curve)
@@ -57,6 +60,7 @@ function OpenAPI.validate_properties(o::FuelCurve)
 end
 
 function OpenAPI.validate_property(::Type{ FuelCurve }, name::Symbol, val)
+
 
 
     if name === Symbol("power_units")

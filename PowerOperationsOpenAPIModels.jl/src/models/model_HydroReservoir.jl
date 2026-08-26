@@ -34,11 +34,11 @@
     - outflow::Float64 : Units: per level_data_type — USABLE_VOLUME: m3/s, TOTAL_VOLUME: m3/s, HEAD: m/s, ENERGY: MW .
     - level_targets::Float64 : in psy5 a required param with an option to be nothing Units: per level_data_type — USABLE_VOLUME: m3, TOTAL_VOLUME: m3, HEAD: m, ENERGY: MWh .
     - intake_elevation::Float64 : Units: m.
-    - head_to_volume_factor::FunctionData
+    - head_to_volume_factor::FunctionData4
     - upstream_turbines::Vector{Int64}
     - downstream_turbines::Vector{Int64}
     - upstream_reservoirs::Vector{Int64}
-    - operation_cost::HydroReservoirCost
+    - operation_cost::HydroReservoirOperationCost
     - evaporative_loss::Float64 : Standing loss from evaporation as a fraction of the reservoir&#39;s stored volume/energy lost per hour. Units: 1.
     - level_data_type::String
 """
@@ -53,11 +53,11 @@ Base.@kwdef mutable struct HydroReservoir <: OpenAPI.APIModel
     outflow::Union{Nothing, Float64} = nothing
     level_targets::Union{Nothing, Float64} = nothing
     intake_elevation::Union{Nothing, Float64} = nothing
-    head_to_volume_factor = nothing # spec type: Union{ Nothing, FunctionData }
+    head_to_volume_factor = nothing # spec type: Union{ Nothing, FunctionData4 }
     upstream_turbines::Union{Nothing, Vector{Int64}} = nothing
     downstream_turbines::Union{Nothing, Vector{Int64}} = nothing
     upstream_reservoirs::Union{Nothing, Vector{Int64}} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, HydroReservoirCost }
+    operation_cost = nothing # spec type: Union{ Nothing, HydroReservoirOperationCost }
     evaporative_loss::Union{Nothing, Float64} = 0.0
     level_data_type::Union{Nothing, String} = "USABLE_VOLUME"
 
@@ -68,7 +68,7 @@ Base.@kwdef mutable struct HydroReservoir <: OpenAPI.APIModel
     end
 end # type HydroReservoir
 
-const _property_types_HydroReservoir = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("storage_level_limits")=>Union{Nothing, MinMax}, Symbol("initial_level")=>Union{Nothing, Float64}, Symbol("spillage_limits")=>Union{Nothing, MinMax}, Symbol("inflow")=>Union{Nothing, Float64}, Symbol("outflow")=>Union{Nothing, Float64}, Symbol("level_targets")=>Union{Nothing, Float64}, Symbol("intake_elevation")=>Union{Nothing, Float64}, Symbol("head_to_volume_factor")=>Union{Nothing, FunctionData}, Symbol("upstream_turbines")=>Union{Nothing, Vector{Int64}}, Symbol("downstream_turbines")=>Union{Nothing, Vector{Int64}}, Symbol("upstream_reservoirs")=>Union{Nothing, Vector{Int64}}, Symbol("operation_cost")=>Union{Nothing, HydroReservoirCost}, Symbol("evaporative_loss")=>Union{Nothing, Float64}, Symbol("level_data_type")=>Union{Nothing, String}, )
+const _property_types_HydroReservoir = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("storage_level_limits")=>Union{Nothing, MinMax}, Symbol("initial_level")=>Union{Nothing, Float64}, Symbol("spillage_limits")=>Union{Nothing, MinMax}, Symbol("inflow")=>Union{Nothing, Float64}, Symbol("outflow")=>Union{Nothing, Float64}, Symbol("level_targets")=>Union{Nothing, Float64}, Symbol("intake_elevation")=>Union{Nothing, Float64}, Symbol("head_to_volume_factor")=>Union{Nothing, FunctionData4}, Symbol("upstream_turbines")=>Union{Nothing, Vector{Int64}}, Symbol("downstream_turbines")=>Union{Nothing, Vector{Int64}}, Symbol("upstream_reservoirs")=>Union{Nothing, Vector{Int64}}, Symbol("operation_cost")=>Union{Nothing, HydroReservoirOperationCost}, Symbol("evaporative_loss")=>Union{Nothing, Float64}, Symbol("level_data_type")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ HydroReservoir }, name::Symbol) = _property_types_HydroReservoir[name]
 
 function OpenAPI.check_required(o::HydroReservoir)

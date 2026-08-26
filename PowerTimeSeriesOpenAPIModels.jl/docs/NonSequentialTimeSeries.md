@@ -4,6 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`association_id`** | **`Int64`** | Surrogate id of this association, minted by the store that holds it. Assigned once when the association is created and never changed: renaming the series or reassigning its owner leaves it alone, so a consumer may persist it as a durable reference. Ids are never reused, and they are store-local — resolve one against the same store the document was exported from, not against an independently built store. Assigned by the store, never by a document author. | [readonly] [default to nothing]
 **`owner_id`** | **`Int64`** | ID of the owning component or supplemental attribute. The producing data layer allocates both from one id stream, so an &#x60;owner_id&#x60; never collides across the two categories; &#x60;owner_category&#x60; remains required because the store&#39;s catalog contract still supports independent streams from other producers, and it is still the store&#39;s disambiguator. | [default to nothing]
 **`owner_type`** | **`String`** | Type name of the owning entity. Descriptive, not part of the series&#39; identity. | [default to nothing]
 **`owner_category`** | **`String`** | Whether the owner is a component or a supplemental attribute. | [default to nothing]

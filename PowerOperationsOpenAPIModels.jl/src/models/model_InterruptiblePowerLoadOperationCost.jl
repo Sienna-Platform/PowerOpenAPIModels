@@ -9,17 +9,21 @@ Operational cost of interrupting load. or MarketBidCost
     InterruptiblePowerLoadOperationCost(; value=nothing)
 """
 mutable struct InterruptiblePowerLoadOperationCost <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ LoadCost, MarketBidCost }
+    value::Any # Union{ ImportExportTimeSeriesCost, LoadCost, MarketBidCost, MarketBidTimeSeriesCost }
     InterruptiblePowerLoadOperationCost() = new()
     InterruptiblePowerLoadOperationCost(value) = new(value)
 end # type InterruptiblePowerLoadOperationCost
 
 function OpenAPI.property_type(::Type{ InterruptiblePowerLoadOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
-    if discriminator == "LOAD"
+    if discriminator == "IMPORT_EXPORT_TIME_SERIES"
+        return (ImportExportTimeSeriesCost)
+    elseif discriminator == "LOAD"
         return (LoadCost)
     elseif discriminator == "MARKET_BID"
         return (MarketBidCost)
+    elseif discriminator == "MARKET_BID_TIME_SERIES"
+        return (MarketBidTimeSeriesCost)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for InterruptiblePowerLoadOperationCost"))
 end

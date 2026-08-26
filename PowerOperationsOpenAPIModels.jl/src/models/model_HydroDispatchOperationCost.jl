@@ -9,7 +9,7 @@ Operating cost of generation. or MarketBidCost; default PSY.HydroGenerationCost(
     HydroDispatchOperationCost(; value=nothing)
 """
 mutable struct HydroDispatchOperationCost <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ HydroGenerationCost, MarketBidCost }
+    value::Any # Union{ HydroGenerationCost, ImportExportTimeSeriesCost, MarketBidCost, MarketBidTimeSeriesCost }
     HydroDispatchOperationCost() = new()
     HydroDispatchOperationCost(value) = new(value)
 end # type HydroDispatchOperationCost
@@ -18,8 +18,12 @@ function OpenAPI.property_type(::Type{ HydroDispatchOperationCost }, name::Symbo
     discriminator = json["cost_type"]
     if discriminator == "HYDRO_GEN"
         return (HydroGenerationCost)
+    elseif discriminator == "IMPORT_EXPORT_TIME_SERIES"
+        return (ImportExportTimeSeriesCost)
     elseif discriminator == "MARKET_BID"
         return (MarketBidCost)
+    elseif discriminator == "MARKET_BID_TIME_SERIES"
+        return (MarketBidTimeSeriesCost)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for HydroDispatchOperationCost"))
 end

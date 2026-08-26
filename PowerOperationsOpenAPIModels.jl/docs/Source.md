@@ -19,7 +19,7 @@ Name | Type | Description | Notes
 **`internal_angle`** | **`Float64`** | Internal angle. Units: rad. | [optional] [default to 0.0]
 **`base_voltage`** | **`Float64`** | The base voltage. Units: kV. | [optional] [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [optional] [default to 100.0]
-**`operation_cost`** | [**`*ImportExportCost`**](ImportExportCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*SourceOperationCost`**](SourceOperationCost.md) |  | [default to nothing]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 
 
