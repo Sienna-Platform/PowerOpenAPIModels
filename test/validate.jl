@@ -47,6 +47,45 @@ using TimeZones
     @test isempty(duplicates)
 end
 
+# The check above catches one name claimed by two packages. It cannot see the other way a
+# generated type gets duplicated: openapi-generator materializes an anonymous copy of a
+# shared schema at every reference site it cannot resolve to a named component, then
+# disambiguates the copies with a numeric suffix. Those copies are byte-identical to the
+# original apart from the name, and they fragment the API -- a value deserialized at one
+# field site cannot be passed where another site's copy is expected. The cure is an
+# `inlineSchemaNameMappings` entry per copy in the SiennaSchemas generator config, so a
+# `<Base><N>` type whose `<Base>` also exists means such an entry is missing.
+#
+# Keyed on the base existing, not on the suffix: `SteamTurbineGov1` is a real
+# PowerSystems type name and must not be flagged.
+_type_name(::Type{T}) where {T} = string(nameof(T))
+_type_name(::Any) = ""
+
+@testset "No unmapped inline schema aliases" begin
+    pkgs = [
+        PowerCoreOpenAPIModels,
+        PowerOperationsOpenAPIModels,
+        PowerInvestmentsOpenAPIModels,
+        PowerDynamicsOpenAPIModels,
+        PowerTimeSeriesOpenAPIModels,
+    ]
+    defined = Set{String}()
+    for pkg in pkgs
+        for name in names(pkg)
+            isdefined(pkg, name) || continue
+            n = _type_name(getfield(pkg, name))
+            if !isempty(n)
+                push!(defined, n)
+            end
+        end
+    end
+    aliases = filter(defined) do n
+        base = replace(n, r"\d+$" => "")
+        base != n && base in defined
+    end
+    @test sort(collect(aliases)) == String[]
+end
+
 const SCHEMA_DIR =
     get(ENV, "SCHEMA_DIR", joinpath(dirname(@__DIR__), "..", "SiennaSchemas"))
 
