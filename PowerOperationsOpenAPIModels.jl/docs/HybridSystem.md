@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **`active_power`** | **`Float64`** | Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: MW. | [default to nothing]
 **`reactive_power`** | **`Float64`** | Initial reactive power set point of the unit. Units: MVAr. | [default to nothing]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization, which is commonly the same as &#x60;interconnection_rating&#x60;. Units: MVA. | [default to nothing]
-**`operation_cost`** | [**`*MarketBidCost1`**](MarketBidCost1.md) |  | [default to nothing]
+**`operation_cost`** | [**`*MarketBidCost`**](MarketBidCost.md) |  | [default to nothing]
 **`thermal_unit`** | **`Int64`** | ID of a thermal generator with supertype &#x60;ThermalGen&#x60;, if any. | [optional] [default to nothing]
 **`electric_load`** | **`Int64`** | ID of a load with supertype &#x60;ElectricLoad&#x60;, if any. | [optional] [default to nothing]
 **`storage`** | **`Int64`** | ID of an energy storage system with supertype &#x60;Storage&#x60;, if any. | [optional] [default to nothing]

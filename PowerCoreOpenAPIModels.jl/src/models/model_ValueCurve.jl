@@ -8,7 +8,7 @@
     ValueCurve(; value=nothing)
 """
 mutable struct ValueCurve <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ AverageRateCurve, IncrementalCurve, InputOutputCurve, TimeSeriesAverageRateCurve1, TimeSeriesIncrementalCurve1, TimeSeriesInputOutputCurve1 }
+    value::Any # Union{ AverageRateCurve, IncrementalCurve, InputOutputCurve, TimeSeriesAverageRateCurve, TimeSeriesIncrementalCurve, TimeSeriesInputOutputCurve }
     ValueCurve() = new()
     ValueCurve(value) = new(value)
 end # type ValueCurve

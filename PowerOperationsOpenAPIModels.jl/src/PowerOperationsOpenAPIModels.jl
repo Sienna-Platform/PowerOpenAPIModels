@@ -21,11 +21,10 @@ include("models/model_ExponentialLoad.jl")
 include("models/model_FACTSControlDevice.jl")
 include("models/model_FixedAdmittance.jl")
 include("models/model_FixedForcedOutage.jl")
-include("models/model_FunctionData3.jl")
-include("models/model_FunctionData4.jl")
 include("models/model_GenericArcImpedance.jl")
 include("models/model_GeometricDistributionForcedOutage.jl")
 include("models/model_GroupReserve.jl")
+include("models/model_HybridSystem.jl")
 include("models/model_HydroDispatchOperationCost.jl")
 include("models/model_HydroDispatch.jl")
 include("models/model_HydroPowerPlant.jl")
@@ -41,8 +40,6 @@ include("models/model_InterruptibleStandardLoad.jl")
 include("models/model_Line.jl")
 include("models/model_LoadConformity.jl")
 include("models/model_LoadZone.jl")
-include("models/model_MarketBidCost1.jl")
-include("models/model_HybridSystem.jl")
 include("models/model_MonitoredLine.jl")
 include("models/model_MotorLoad.jl")
 include("models/model_OfflineReserve.jl")
@@ -102,8 +99,6 @@ export ExponentialLoad
 export FACTSControlDevice
 export FixedAdmittance
 export FixedForcedOutage
-export FunctionData3
-export FunctionData4
 export GenericArcImpedance
 export GeometricDistributionForcedOutage
 export GroupReserve
@@ -122,7 +117,6 @@ export InterruptiblePowerLoadOperationCost
 export InterruptibleStandardLoad
 export Line
 export LoadZone
-export MarketBidCost1
 export MonitoredLine
 export MotorLoad
 export OfflineReserve

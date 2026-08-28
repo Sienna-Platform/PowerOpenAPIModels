@@ -797,17 +797,65 @@ PowerCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:reactive_power_flo
 PowerCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:reactive_power_flow}) = "MVAr"
 PowerCoreOpenAPIModels.declared_quantity(::Type{Line}, ::Val{:reactive_power_flow}) = "ReactivePower"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:r}) = true
-PowerCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:r}) = "pu"
-PowerCoreOpenAPIModels.declared_quantity(::Type{Line}, ::Val{:r}) = "Resistance"
+function PowerCoreOpenAPIModels.declared_unit(o::Line, ::Val{:r})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "ohm"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("Line.r: no unit declared for parameter_units=$(o.parameter_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::Line, ::Val{:r})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Resistance"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Resistance"
+    end
+    error("Line.r: no unit declared for parameter_units=$(o.parameter_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:x}) = true
-PowerCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:x}) = "pu"
-PowerCoreOpenAPIModels.declared_quantity(::Type{Line}, ::Val{:x}) = "Reactance"
+function PowerCoreOpenAPIModels.declared_unit(o::Line, ::Val{:x})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "ohm"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("Line.x: no unit declared for parameter_units=$(o.parameter_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::Line, ::Val{:x})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Reactance"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Reactance"
+    end
+    error("Line.x: no unit declared for parameter_units=$(o.parameter_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:base_power}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:base_power}) = "MVA"
 PowerCoreOpenAPIModels.declared_quantity(::Type{Line}, ::Val{:base_power}) = "ApparentPower"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:b}) = true
-PowerCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:b}) = "pu"
-PowerCoreOpenAPIModels.declared_quantity(::Type{Line}, ::Val{:b}) = "Susceptance"
+function PowerCoreOpenAPIModels.declared_unit(o::Line, ::Val{:b})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "S"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("Line.b: no unit declared for parameter_units=$(o.parameter_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::Line, ::Val{:b})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Susceptance"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Susceptance"
+    end
+    error("Line.b: no unit declared for parameter_units=$(o.parameter_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:rating}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:rating}) = "MVA"
 PowerCoreOpenAPIModels.declared_quantity(::Type{Line}, ::Val{:rating}) = "ApparentPower"
@@ -821,8 +869,24 @@ PowerCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:angle_limits}) = t
 PowerCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:angle_limits}) = "rad"
 PowerCoreOpenAPIModels.declared_quantity(::Type{Line}, ::Val{:angle_limits}) = "Angle"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:g}) = true
-PowerCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:g}) = "pu"
-PowerCoreOpenAPIModels.declared_quantity(::Type{Line}, ::Val{:g}) = "Conductance"
+function PowerCoreOpenAPIModels.declared_unit(o::Line, ::Val{:g})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "S"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("Line.g: no unit declared for parameter_units=$(o.parameter_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::Line, ::Val{:g})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Conductance"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Conductance"
+    end
+    error("Line.g: no unit declared for parameter_units=$(o.parameter_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{LoadZone}, ::Val{:peak_active_power}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{LoadZone}, ::Val{:peak_active_power}) = "MW"
 PowerCoreOpenAPIModels.declared_quantity(::Type{LoadZone}, ::Val{:peak_active_power}) = "ActivePower"
@@ -839,17 +903,65 @@ PowerCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:reactive_
 PowerCoreOpenAPIModels.declared_unit(::Type{MonitoredLine}, ::Val{:reactive_power_flow}) = "MVAr"
 PowerCoreOpenAPIModels.declared_quantity(::Type{MonitoredLine}, ::Val{:reactive_power_flow}) = "ReactivePower"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:r}) = true
-PowerCoreOpenAPIModels.declared_unit(::Type{MonitoredLine}, ::Val{:r}) = "pu"
-PowerCoreOpenAPIModels.declared_quantity(::Type{MonitoredLine}, ::Val{:r}) = "Resistance"
+function PowerCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:r})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "ohm"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("MonitoredLine.r: no unit declared for parameter_units=$(o.parameter_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:r})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Resistance"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Resistance"
+    end
+    error("MonitoredLine.r: no unit declared for parameter_units=$(o.parameter_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:x}) = true
-PowerCoreOpenAPIModels.declared_unit(::Type{MonitoredLine}, ::Val{:x}) = "pu"
-PowerCoreOpenAPIModels.declared_quantity(::Type{MonitoredLine}, ::Val{:x}) = "Reactance"
+function PowerCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:x})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "ohm"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("MonitoredLine.x: no unit declared for parameter_units=$(o.parameter_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:x})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Reactance"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Reactance"
+    end
+    error("MonitoredLine.x: no unit declared for parameter_units=$(o.parameter_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:base_power}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{MonitoredLine}, ::Val{:base_power}) = "MVA"
 PowerCoreOpenAPIModels.declared_quantity(::Type{MonitoredLine}, ::Val{:base_power}) = "ApparentPower"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:b}) = true
-PowerCoreOpenAPIModels.declared_unit(::Type{MonitoredLine}, ::Val{:b}) = "pu"
-PowerCoreOpenAPIModels.declared_quantity(::Type{MonitoredLine}, ::Val{:b}) = "Susceptance"
+function PowerCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:b})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "S"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("MonitoredLine.b: no unit declared for parameter_units=$(o.parameter_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:b})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Susceptance"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Susceptance"
+    end
+    error("MonitoredLine.b: no unit declared for parameter_units=$(o.parameter_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:flow_limits}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{MonitoredLine}, ::Val{:flow_limits}) = "MW"
 PowerCoreOpenAPIModels.declared_quantity(::Type{MonitoredLine}, ::Val{:flow_limits}) = "ActivePower"
@@ -866,8 +978,24 @@ PowerCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:angle_lim
 PowerCoreOpenAPIModels.declared_unit(::Type{MonitoredLine}, ::Val{:angle_limits}) = "rad"
 PowerCoreOpenAPIModels.declared_quantity(::Type{MonitoredLine}, ::Val{:angle_limits}) = "Angle"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:g}) = true
-PowerCoreOpenAPIModels.declared_unit(::Type{MonitoredLine}, ::Val{:g}) = "pu"
-PowerCoreOpenAPIModels.declared_quantity(::Type{MonitoredLine}, ::Val{:g}) = "Conductance"
+function PowerCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:g})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "S"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("MonitoredLine.g: no unit declared for parameter_units=$(o.parameter_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:g})
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Conductance"
+    end
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Conductance"
+    end
+    error("MonitoredLine.g: no unit declared for parameter_units=$(o.parameter_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{MotorLoad}, ::Val{:active_power}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{MotorLoad}, ::Val{:active_power}) = "MW"
 PowerCoreOpenAPIModels.declared_quantity(::Type{MotorLoad}, ::Val{:active_power}) = "ActivePower"

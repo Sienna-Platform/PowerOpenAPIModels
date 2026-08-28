@@ -5,7 +5,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | This is a oneOf model. The value must be exactly one of the following types: AverageRateCurve, IncrementalCurve, InputOutputCurve, TimeSeriesAverageRateCurve1, TimeSeriesIncrementalCurve1, TimeSeriesInputOutputCurve1 |  | [optional] 
+**value** | This is a oneOf model. The value must be exactly one of the following types: AverageRateCurve, IncrementalCurve, InputOutputCurve, TimeSeriesAverageRateCurve, TimeSeriesIncrementalCurve, TimeSeriesInputOutputCurve |  | [optional] 
 
 The discriminator field is `curve_type` with the following mapping:
  - `AVERAGE_RATE`: `AverageRateCurve`

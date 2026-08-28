@@ -14,8 +14,6 @@ include("models/model_FdbdPnts.jl")
 include("models/model_FromTo.jl")
 include("models/model_FromToToFrom.jl")
 include("models/model_FunctionData.jl")
-include("models/model_FunctionData1.jl")
-include("models/model_FunctionData2.jl")
 include("models/model_GenericOperationCost.jl")
 include("models/model_GeographicInfo.jl")
 include("models/model_HydroReservoirCost.jl")
@@ -49,21 +47,12 @@ include("models/model_ThermalFuels.jl")
 include("models/model_ThermalGenerationCostStartUp.jl")
 include("models/model_ThermalGenerationCost.jl")
 include("models/model_TimeSeriesAverageRateCurve.jl")
-include("models/model_TimeSeriesAverageRateCurve1.jl")
 include("models/model_TimeSeriesIncrementalCurve.jl")
-include("models/model_TimeSeriesIncrementalCurve1.jl")
 include("models/model_TimeSeriesInputOutputCurve.jl")
-include("models/model_TimeSeriesInputOutputCurve1.jl")
-include("models/model_TimeSeriesInputOutputCurve2.jl")
-include("models/model_TimeSeriesInputOutputCurve3.jl")
 include("models/model_TimeSeriesLinearFunctionData.jl")
-include("models/model_TimeSeriesLinearFunctionData1.jl")
 include("models/model_TimeSeriesPiecewiseLinearData.jl")
-include("models/model_TimeSeriesPiecewiseLinearData1.jl")
 include("models/model_TimeSeriesPiecewiseStepData.jl")
-include("models/model_TimeSeriesPiecewiseStepData1.jl")
 include("models/model_TimeSeriesQuadraticFunctionData.jl")
-include("models/model_TimeSeriesQuadraticFunctionData1.jl")
 include("models/model_TurbinePump.jl")
 include("models/model_TwoTerminalLoss.jl")
 include("models/model_UnitSystem.jl")
@@ -94,8 +83,6 @@ export FromTo
 export FromToToFrom
 export FuelCurve
 export FunctionData
-export FunctionData1
-export FunctionData2
 export GenericOperationCost
 export GeographicInfo
 export HydroGenerationCost
@@ -128,21 +115,12 @@ export TechnologyFinancialData
 export ThermalGenerationCost
 export ThermalGenerationCostStartUp
 export TimeSeriesAverageRateCurve
-export TimeSeriesAverageRateCurve1
 export TimeSeriesIncrementalCurve
-export TimeSeriesIncrementalCurve1
 export TimeSeriesInputOutputCurve
-export TimeSeriesInputOutputCurve1
-export TimeSeriesInputOutputCurve2
-export TimeSeriesInputOutputCurve3
 export TimeSeriesLinearFunctionData
-export TimeSeriesLinearFunctionData1
 export TimeSeriesPiecewiseLinearData
-export TimeSeriesPiecewiseLinearData1
 export TimeSeriesPiecewiseStepData
-export TimeSeriesPiecewiseStepData1
 export TimeSeriesQuadraticFunctionData
-export TimeSeriesQuadraticFunctionData1
 export TurbinePump
 export TwoTerminalLoss
 export UpDown

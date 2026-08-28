@@ -3,7 +3,7 @@
 
 
 @doc raw"""TimeSeriesInputOutputCurve
-A time-series-backed input-output curve. The static counterpart is InputOutputCurve.
+Shut-down cost as a time-series-backed linear curve. Only the TIME_SERIES_LINEAR function-data variant is admissible here; the consuming constructor rejects any other.
 
     TimeSeriesInputOutputCurve(;
         curve_type="TIME_SERIES_INPUT_OUTPUT",
@@ -12,12 +12,12 @@ A time-series-backed input-output curve. The static counterpart is InputOutputCu
     )
 
     - curve_type::String
-    - function_data::FunctionData1
+    - function_data::FunctionData
     - input_at_zero::Float64 : Optional explicit input value at zero output. A number here, unlike the incremental and average-rate variants, where it is a time series reference.
 """
 Base.@kwdef mutable struct TimeSeriesInputOutputCurve <: OpenAPI.APIModel
     curve_type::Union{Nothing, String} = "TIME_SERIES_INPUT_OUTPUT"
-    function_data = nothing # spec type: Union{ Nothing, FunctionData1 }
+    function_data = nothing # spec type: Union{ Nothing, FunctionData }
     input_at_zero::Union{Nothing, Float64} = nothing
 
     function TimeSeriesInputOutputCurve(curve_type, function_data, input_at_zero, )
@@ -27,7 +27,7 @@ Base.@kwdef mutable struct TimeSeriesInputOutputCurve <: OpenAPI.APIModel
     end
 end # type TimeSeriesInputOutputCurve
 
-const _property_types_TimeSeriesInputOutputCurve = Dict{Symbol,Type}(Symbol("curve_type")=>Union{Nothing, String}, Symbol("function_data")=>Union{Nothing, FunctionData1}, Symbol("input_at_zero")=>Union{Nothing, Float64}, )
+const _property_types_TimeSeriesInputOutputCurve = Dict{Symbol,Type}(Symbol("curve_type")=>Union{Nothing, String}, Symbol("function_data")=>Union{Nothing, FunctionData}, Symbol("input_at_zero")=>Union{Nothing, Float64}, )
 OpenAPI.property_type(::Type{ TimeSeriesInputOutputCurve }, name::Symbol) = _property_types_TimeSeriesInputOutputCurve[name]
 
 function OpenAPI.check_required(o::TimeSeriesInputOutputCurve)

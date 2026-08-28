@@ -17,8 +17,8 @@ Cost representation for time-varying imports and exports with neighboring areas.
     - cost_type::String
     - import_offer_curves::CostCurve
     - export_offer_curves::CostCurve
-    - energy_import_weekly_limit::Float64 : Weekly limit on imported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base.
-    - energy_export_weekly_limit::Float64 : Weekly limit on exported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base.
+    - energy_import_weekly_limit::Float64 : Weekly limit on imported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base. Units: MWh.
+    - energy_export_weekly_limit::Float64 : Weekly limit on exported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base. Units: MWh.
     - ancillary_service_offers::Vector{Int64}
 """
 Base.@kwdef mutable struct ImportExportTimeSeriesCost <: OpenAPI.APIModel

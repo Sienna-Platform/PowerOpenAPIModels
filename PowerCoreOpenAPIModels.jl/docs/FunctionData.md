@@ -5,7 +5,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | This is a oneOf model. The value must be exactly one of the following types: LinearFunctionData, PiecewiseLinearData, PiecewiseStepData, QuadraticFunctionData, TimeSeriesLinearFunctionData1, TimeSeriesPiecewiseLinearData1, TimeSeriesPiecewiseStepData1, TimeSeriesQuadraticFunctionData1 |  | [optional] 
+**value** | This is a oneOf model. The value must be exactly one of the following types: LinearFunctionData, PiecewiseLinearData, PiecewiseStepData, QuadraticFunctionData, TimeSeriesLinearFunctionData, TimeSeriesPiecewiseLinearData, TimeSeriesPiecewiseStepData, TimeSeriesQuadraticFunctionData | Only TIME_SERIES_LINEAR or TIME_SERIES_PIECEWISE_STEP is admissible here; all other FunctionData variants, static or time-series-backed, are rejected by the consuming constructor. | [optional] 
 
 The discriminator field is `function_type` with the following mapping:
  - `LINEAR`: `LinearFunctionData`

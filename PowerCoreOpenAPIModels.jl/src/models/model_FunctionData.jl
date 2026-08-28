@@ -4,11 +4,12 @@
 
 
 @doc raw"""FunctionData
+Only TIME_SERIES_LINEAR or TIME_SERIES_PIECEWISE_STEP is admissible here; all other FunctionData variants, static or time-series-backed, are rejected by the consuming constructor.
 
     FunctionData(; value=nothing)
 """
 mutable struct FunctionData <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ LinearFunctionData, PiecewiseLinearData, PiecewiseStepData, QuadraticFunctionData, TimeSeriesLinearFunctionData1, TimeSeriesPiecewiseLinearData1, TimeSeriesPiecewiseStepData1, TimeSeriesQuadraticFunctionData1 }
+    value::Any # Union{ LinearFunctionData, PiecewiseLinearData, PiecewiseStepData, QuadraticFunctionData, TimeSeriesLinearFunctionData, TimeSeriesPiecewiseLinearData, TimeSeriesPiecewiseStepData, TimeSeriesQuadraticFunctionData }
     FunctionData() = new()
     FunctionData(value) = new(value)
 end # type FunctionData

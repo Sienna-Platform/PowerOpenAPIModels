@@ -13,13 +13,13 @@ A time-series-backed average rate curve. The static counterpart is AverageRateCu
     )
 
     - curve_type::String
-    - function_data::FunctionData2
+    - function_data::FunctionData
     - initial_input_association_id::Int64 : Store-minted id of the time series supplying the initial input value, or null.
     - input_at_zero_association_id::Int64 : Store-minted id of the time series supplying the input at zero output, or null.
 """
 Base.@kwdef mutable struct TimeSeriesAverageRateCurve <: OpenAPI.APIModel
     curve_type::Union{Nothing, String} = "TIME_SERIES_AVERAGE_RATE"
-    function_data = nothing # spec type: Union{ Nothing, FunctionData2 }
+    function_data = nothing # spec type: Union{ Nothing, FunctionData }
     initial_input_association_id::Union{Nothing, Int64} = nothing
     input_at_zero_association_id::Union{Nothing, Int64} = nothing
 
@@ -30,7 +30,7 @@ Base.@kwdef mutable struct TimeSeriesAverageRateCurve <: OpenAPI.APIModel
     end
 end # type TimeSeriesAverageRateCurve
 
-const _property_types_TimeSeriesAverageRateCurve = Dict{Symbol,Type}(Symbol("curve_type")=>Union{Nothing, String}, Symbol("function_data")=>Union{Nothing, FunctionData2}, Symbol("initial_input_association_id")=>Union{Nothing, Int64}, Symbol("input_at_zero_association_id")=>Union{Nothing, Int64}, )
+const _property_types_TimeSeriesAverageRateCurve = Dict{Symbol,Type}(Symbol("curve_type")=>Union{Nothing, String}, Symbol("function_data")=>Union{Nothing, FunctionData}, Symbol("initial_input_association_id")=>Union{Nothing, Int64}, Symbol("input_at_zero_association_id")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ TimeSeriesAverageRateCurve }, name::Symbol) = _property_types_TimeSeriesAverageRateCurve[name]
 
 function OpenAPI.check_required(o::TimeSeriesAverageRateCurve)

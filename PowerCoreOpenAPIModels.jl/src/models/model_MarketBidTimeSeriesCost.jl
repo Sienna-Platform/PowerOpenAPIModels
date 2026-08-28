@@ -16,18 +16,18 @@ Cost representation for time-varying market bids of energy and ancillary service
     )
 
     - cost_type::String
-    - no_load_cost::TimeSeriesInputOutputCurve2
+    - no_load_cost::TimeSeriesInputOutputCurve
     - start_up_association_id::Int64 : Store-minted id of a time series of three-stage (hot, warm, cold) start-up costs.
-    - shut_down::TimeSeriesInputOutputCurve3
+    - shut_down::TimeSeriesInputOutputCurve
     - incremental_offer_curves::CostCurve
     - decremental_offer_curves::CostCurve
     - ancillary_service_offers::Vector{Int64} : IDs of the ancillary service components that this bid offers into.
 """
 Base.@kwdef mutable struct MarketBidTimeSeriesCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "MARKET_BID_TIME_SERIES"
-    no_load_cost = nothing # spec type: Union{ Nothing, TimeSeriesInputOutputCurve2 }
+    no_load_cost = nothing # spec type: Union{ Nothing, TimeSeriesInputOutputCurve }
     start_up_association_id::Union{Nothing, Int64} = nothing
-    shut_down = nothing # spec type: Union{ Nothing, TimeSeriesInputOutputCurve3 }
+    shut_down = nothing # spec type: Union{ Nothing, TimeSeriesInputOutputCurve }
     incremental_offer_curves = nothing # spec type: Union{ Nothing, CostCurve }
     decremental_offer_curves = nothing # spec type: Union{ Nothing, CostCurve }
     ancillary_service_offers::Union{Nothing, Vector{Int64}} = nothing
@@ -39,7 +39,7 @@ Base.@kwdef mutable struct MarketBidTimeSeriesCost <: OpenAPI.APIModel
     end
 end # type MarketBidTimeSeriesCost
 
-const _property_types_MarketBidTimeSeriesCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("no_load_cost")=>Union{Nothing, TimeSeriesInputOutputCurve2}, Symbol("start_up_association_id")=>Union{Nothing, Int64}, Symbol("shut_down")=>Union{Nothing, TimeSeriesInputOutputCurve3}, Symbol("incremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("decremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("ancillary_service_offers")=>Union{Nothing, Vector{Int64}}, )
+const _property_types_MarketBidTimeSeriesCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("no_load_cost")=>Union{Nothing, TimeSeriesInputOutputCurve}, Symbol("start_up_association_id")=>Union{Nothing, Int64}, Symbol("shut_down")=>Union{Nothing, TimeSeriesInputOutputCurve}, Symbol("incremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("decremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("ancillary_service_offers")=>Union{Nothing, Vector{Int64}}, )
 OpenAPI.property_type(::Type{ MarketBidTimeSeriesCost }, name::Symbol) = _property_types_MarketBidTimeSeriesCost[name]
 
 function OpenAPI.check_required(o::MarketBidTimeSeriesCost)
