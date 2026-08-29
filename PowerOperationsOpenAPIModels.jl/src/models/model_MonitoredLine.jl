@@ -15,6 +15,7 @@ An AC transmission line with additional power flow constraints specified by the 
         r=nothing,
         x=nothing,
         base_power=nothing,
+        parameter_units="COMPONENT_BASE",
         b=nothing,
         flow_limits=nothing,
         rating=nothing,
@@ -30,9 +31,10 @@ An AC transmission line with additional power flow constraints specified by the 
     - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: MW.
     - reactive_power_flow::Float64 : Initial condition of reactive power flow on the line. Units: MVAr.
     - arc::Int64 : An &#x60;Arc&#x60; defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus.
-    - r::Float64 : Resistance. Per-unit on &#x60;base_power&#x60;, which records the system base. Units: pu.
-    - x::Float64 : Reactance. Per-unit on &#x60;base_power&#x60;, which records the system base. Units: pu.
+    - r::Float64 : Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+    - x::Float64 : Reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
+    - parameter_units::String : Unit basis for this line&#39;s impedance and shunt admittance fields (r, x, b, g).
     - b::FromTo
     - flow_limits::FromToToFrom
     - rating::Float64 : Thermal rating. Flow through the transformer must be between -&#x60;rating&#x60; and &#x60;rating&#x60;. Units: MVA.
@@ -51,6 +53,7 @@ Base.@kwdef mutable struct MonitoredLine <: OpenAPI.APIModel
     r::Union{Nothing, Float64} = nothing
     x::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
+    parameter_units::Union{Nothing, String} = "COMPONENT_BASE"
     b = nothing # spec type: Union{ Nothing, FromTo }
     flow_limits = nothing # spec type: Union{ Nothing, FromToToFrom }
     rating::Union{Nothing, Float64} = nothing
@@ -59,14 +62,14 @@ Base.@kwdef mutable struct MonitoredLine <: OpenAPI.APIModel
     angle_limits = nothing # spec type: Union{ Nothing, MinMax }
     g = FromTo(; from=0.0, to=0.0) # spec type: Union{ Nothing, FromTo }
 
-    function MonitoredLine(id, name, available, active_power_flow, reactive_power_flow, arc, r, x, base_power, b, flow_limits, rating, rating_b, rating_c, angle_limits, g, )
-        o = new(id, name, available, active_power_flow, reactive_power_flow, arc, r, x, base_power, b, flow_limits, rating, rating_b, rating_c, angle_limits, g, )
+    function MonitoredLine(id, name, available, active_power_flow, reactive_power_flow, arc, r, x, base_power, parameter_units, b, flow_limits, rating, rating_b, rating_c, angle_limits, g, )
+        o = new(id, name, available, active_power_flow, reactive_power_flow, arc, r, x, base_power, parameter_units, b, flow_limits, rating, rating_b, rating_c, angle_limits, g, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type MonitoredLine
 
-const _property_types_MonitoredLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("b")=>Union{Nothing, FromTo}, Symbol("flow_limits")=>Union{Nothing, FromToToFrom}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("rating_b")=>Union{Nothing, Float64}, Symbol("rating_c")=>Union{Nothing, Float64}, Symbol("angle_limits")=>Union{Nothing, MinMax}, Symbol("g")=>Union{Nothing, FromTo}, )
+const _property_types_MonitoredLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("b")=>Union{Nothing, FromTo}, Symbol("flow_limits")=>Union{Nothing, FromToToFrom}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("rating_b")=>Union{Nothing, Float64}, Symbol("rating_c")=>Union{Nothing, Float64}, Symbol("angle_limits")=>Union{Nothing, MinMax}, Symbol("g")=>Union{Nothing, FromTo}, )
 OpenAPI.property_type(::Type{ MonitoredLine }, name::Symbol) = _property_types_MonitoredLine[name]
 
 function OpenAPI.check_required(o::MonitoredLine)
@@ -96,6 +99,7 @@ function OpenAPI.validate_properties(o::MonitoredLine)
     OpenAPI.validate_property(MonitoredLine, Symbol("r"), o.r)
     OpenAPI.validate_property(MonitoredLine, Symbol("x"), o.x)
     OpenAPI.validate_property(MonitoredLine, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(MonitoredLine, Symbol("parameter_units"), o.parameter_units)
     OpenAPI.validate_property(MonitoredLine, Symbol("b"), o.b)
     OpenAPI.validate_property(MonitoredLine, Symbol("flow_limits"), o.flow_limits)
     OpenAPI.validate_property(MonitoredLine, Symbol("rating"), o.rating)
@@ -114,6 +118,11 @@ function OpenAPI.validate_property(::Type{ MonitoredLine }, name::Symbol, val)
 
 
 
+
+
+    if name === Symbol("parameter_units")
+        OpenAPI.validate_param(name, "MonitoredLine", :enum, val, ["NATURAL_UNITS", "COMPONENT_BASE"])
+    end
 
 
 

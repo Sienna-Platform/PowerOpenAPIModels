@@ -3,6 +3,7 @@
 
 
 @doc raw"""CostCurve
+Buy offer curves whose value curve is a time-series-backed piecewise incremental curve. Only the TIME_SERIES_INCREMENTAL variant is admissible here; any other variant is rejected by the consuming constructor.
 
     CostCurve(;
         power_units="NATURAL_UNITS",

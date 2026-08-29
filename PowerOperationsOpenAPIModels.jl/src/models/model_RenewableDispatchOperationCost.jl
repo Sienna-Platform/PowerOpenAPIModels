@@ -9,15 +9,19 @@ Operating cost of generation. or MarketBidCost
     RenewableDispatchOperationCost(; value=nothing)
 """
 mutable struct RenewableDispatchOperationCost <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ MarketBidCost, RenewableGenerationCost }
+    value::Any # Union{ ImportExportTimeSeriesCost, MarketBidCost, MarketBidTimeSeriesCost, RenewableGenerationCost }
     RenewableDispatchOperationCost() = new()
     RenewableDispatchOperationCost(value) = new(value)
 end # type RenewableDispatchOperationCost
 
 function OpenAPI.property_type(::Type{ RenewableDispatchOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
-    if discriminator == "MARKET_BID"
+    if discriminator == "IMPORT_EXPORT_TIME_SERIES"
+        return (ImportExportTimeSeriesCost)
+    elseif discriminator == "MARKET_BID"
         return (MarketBidCost)
+    elseif discriminator == "MARKET_BID_TIME_SERIES"
+        return (MarketBidTimeSeriesCost)
     elseif discriminator == "RENEWABLE"
         return (RenewableGenerationCost)
     end

@@ -9,15 +9,19 @@ Operating cost of generation. or MarketBidCost
     ThermalMultiStartOperationCost(; value=nothing)
 """
 mutable struct ThermalMultiStartOperationCost <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ MarketBidCost, ThermalGenerationCost }
+    value::Any # Union{ ImportExportTimeSeriesCost, MarketBidCost, MarketBidTimeSeriesCost, ThermalGenerationCost }
     ThermalMultiStartOperationCost() = new()
     ThermalMultiStartOperationCost(value) = new(value)
 end # type ThermalMultiStartOperationCost
 
 function OpenAPI.property_type(::Type{ ThermalMultiStartOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
-    if discriminator == "MARKET_BID"
+    if discriminator == "IMPORT_EXPORT_TIME_SERIES"
+        return (ImportExportTimeSeriesCost)
+    elseif discriminator == "MARKET_BID"
         return (MarketBidCost)
+    elseif discriminator == "MARKET_BID_TIME_SERIES"
+        return (MarketBidTimeSeriesCost)
     elseif discriminator == "THERMAL"
         return (ThermalGenerationCost)
     end

@@ -6,6 +6,7 @@
 A deterministic forecast: one horizon-length array per window, windows stepping by &#x60;interval&#x60;. One of a closed set of six canonical time series types owned by the data layer. This schema records the association and its metadata; the dense values live in the store named by &#x60;uri&#x60;.
 
     Deterministic(;
+        association_id=nothing,
         owner_id=nothing,
         owner_type=nothing,
         owner_category=nothing,
@@ -16,9 +17,11 @@ A deterministic forecast: one horizon-length array per window, windows stepping 
         data_hash=nothing,
         element_type=nothing,
         element_shape=nothing,
+        array_shape=nothing,
         units=nothing,
         quantity_kind=nothing,
         unit_system=nothing,
+        time_reference=nothing,
         component_field=nothing,
         application_data=nothing,
         initial_timestamp=nothing,
@@ -28,6 +31,7 @@ A deterministic forecast: one horizon-length array per window, windows stepping 
         count=nothing,
     )
 
+    - association_id::Int64 : Surrogate id of this association, minted by the store that holds it. Assigned once when the association is created and never changed: renaming the series or reassigning its owner leaves it alone, so a consumer may persist it as a durable reference. Ids are never reused, and they are store-local — resolve one against the same store the document was exported from, not against an independently built store. Assigned by the store, never by a document author.
     - owner_id::Int64 : ID of the owning component or supplemental attribute. The producing data layer allocates both from one id stream, so an &#x60;owner_id&#x60; never collides across the two categories; &#x60;owner_category&#x60; remains required because the store&#39;s catalog contract still supports independent streams from other producers, and it is still the store&#39;s disambiguator.
     - owner_type::String : Type name of the owning entity. Descriptive, not part of the series&#39; identity.
     - owner_category::String : Whether the owner is a component or a supplemental attribute.
@@ -38,9 +42,11 @@ A deterministic forecast: one horizon-length array per window, windows stepping 
     - data_hash::String : Content hash of the stored array: SHA-256, hex-encoded. Optional — not every producer computes it.
     - element_type::String : What one timestep&#39;s values mean and how they are laid out. The physical dtype of the stored bytes derives from this and is not recorded separately. Unlike &#x60;units&#x60; and &#x60;quantity_kind&#x60; this is not a user-facing label — the writing package derives it from the array.
     - element_shape::Vector{Int64} : Per-step element shape: the trailing dims after time. An empty array means a scalar element.
+    - array_shape::Vector{Int64} : Full native shape of the stored array, in the order the store holds it: the first axis is the array&#39;s length and the trailing axes end with &#x60;element_shape&#x60;. Static types are &#x60;[length, *element_shape]&#x60;; a deterministic forecast stacks windows as &#x60;[horizon_count, count, *element_shape]&#x60;; probabilistic and scenarios forecasts add a percentile or scenario axis in front of that. Optional, and redundant for the static types, where it is exactly &#x60;[length] + element_shape&#x60;. It earns its place on the forecasts, whose array layout is a convention the producing package owns rather than a rule this layer enforces, so the stored geometry cannot be reconstructed from &#x60;horizon&#x60;, &#x60;count&#x60;, &#x60;percentiles&#x60;, and &#x60;scenario_count&#x60; alone. A consumer that has it should prefer it; one that does not falls back to those fields, which is exact for the static types and a best effort for the forecasts.
     - units::String : Unit label for the series values. Set by whoever creates the series and returned unchanged; not part of the series&#39; identity, so two series differing only in this label are duplicates. Meaningless on its own when &#x60;unit_system&#x60; is a per-unit basis, where the values are dimensionless. By convention drawn from the unit vocabulary in Core/units.json, though this field is a free-text label the store does not validate against it.
     - quantity_kind::String : Kind of physical quantity the values measure (e.g. ActivePower, ReactivePower, ElectricalEnergy). Coarser than &#x60;units&#x60; but finer than a dimension: ActivePower, ReactivePower, and ApparentPower share the dimension {M:1,L:2,T:-3}, so a dimension cannot tell them apart and a quantity kind can. It is also the only record of what the values measure when &#x60;unit_system&#x60; is a per-unit basis.
     - unit_system::String : Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a COMPONENT_BASE series back to natural units needs the owning component&#39;s base_power. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS.
+    - time_reference::String : How this series&#39; timestamps were spelled, so a read hands back what the write declared instead of relabelling everything UTC. Absent means unspecified, which is not a claim the timestamps were written as UTC.
     - component_field::String : The field on the owning component or supplemental attribute whose value these values are the time-varying form of (e.g. max_active_power, rating). Free-form: it names a field in the consumer&#39;s own object model. Records what the values are for, where &#x60;name&#x60; only says which series they are.
     - application_data::String : Opaque, package-owned payload (typically JSON) carried verbatim for an application to reconstruct its own domain objects. Never parsed or interpreted here, and end users are not expected to set it. Element typing does not belong here — that is &#x60;element_type&#x60;.
     - initial_timestamp::ZonedDateTime : Start of the first forecast window.
@@ -50,6 +56,7 @@ A deterministic forecast: one horizon-length array per window, windows stepping 
     - count::Int64 : Number of forecast windows. Descriptive, not part of the series&#39; identity.
 """
 Base.@kwdef mutable struct Deterministic <: OpenAPI.APIModel
+    association_id::Union{Nothing, Int64} = nothing
     owner_id::Union{Nothing, Int64} = nothing
     owner_type::Union{Nothing, String} = nothing
     owner_category::Union{Nothing, String} = nothing
@@ -60,9 +67,11 @@ Base.@kwdef mutable struct Deterministic <: OpenAPI.APIModel
     data_hash::Union{Nothing, String} = nothing
     element_type::Union{Nothing, String} = nothing
     element_shape::Union{Nothing, Vector{Int64}} = nothing
+    array_shape::Union{Nothing, Vector{Int64}} = nothing
     units::Union{Nothing, String} = nothing
     quantity_kind::Union{Nothing, String} = nothing
     unit_system::Union{Nothing, String} = nothing
+    time_reference::Union{Nothing, String} = nothing
     component_field::Union{Nothing, String} = nothing
     application_data::Union{Nothing, String} = nothing
     initial_timestamp::Union{Nothing, ZonedDateTime} = nothing
@@ -71,17 +80,18 @@ Base.@kwdef mutable struct Deterministic <: OpenAPI.APIModel
     interval::Union{Nothing, String} = nothing
     count::Union{Nothing, Int64} = nothing
 
-    function Deterministic(owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, )
-        o = new(owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, units, quantity_kind, unit_system, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, )
+    function Deterministic(association_id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, array_shape, units, quantity_kind, unit_system, time_reference, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, )
+        o = new(association_id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, array_shape, units, quantity_kind, unit_system, time_reference, component_field, application_data, initial_timestamp, resolution, horizon, interval, count, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type Deterministic
 
-const _property_types_Deterministic = Dict{Symbol,Type}(Symbol("owner_id")=>Union{Nothing, Int64}, Symbol("owner_type")=>Union{Nothing, String}, Symbol("owner_category")=>Union{Nothing, String}, Symbol("time_series_type")=>Union{Nothing, String}, Symbol("name")=>Union{Nothing, String}, Symbol("features")=>Union{Nothing, Dict{String, TimeSeriesFeatureValue}}, Symbol("uri")=>Union{Nothing, String}, Symbol("data_hash")=>Union{Nothing, String}, Symbol("element_type")=>Union{Nothing, String}, Symbol("element_shape")=>Union{Nothing, Vector{Int64}}, Symbol("units")=>Union{Nothing, String}, Symbol("quantity_kind")=>Union{Nothing, String}, Symbol("unit_system")=>Union{Nothing, String}, Symbol("component_field")=>Union{Nothing, String}, Symbol("application_data")=>Union{Nothing, String}, Symbol("initial_timestamp")=>Union{Nothing, ZonedDateTime}, Symbol("resolution")=>Union{Nothing, String}, Symbol("horizon")=>Union{Nothing, String}, Symbol("interval")=>Union{Nothing, String}, Symbol("count")=>Union{Nothing, Int64}, )
+const _property_types_Deterministic = Dict{Symbol,Type}(Symbol("association_id")=>Union{Nothing, Int64}, Symbol("owner_id")=>Union{Nothing, Int64}, Symbol("owner_type")=>Union{Nothing, String}, Symbol("owner_category")=>Union{Nothing, String}, Symbol("time_series_type")=>Union{Nothing, String}, Symbol("name")=>Union{Nothing, String}, Symbol("features")=>Union{Nothing, Dict{String, TimeSeriesFeatureValue}}, Symbol("uri")=>Union{Nothing, String}, Symbol("data_hash")=>Union{Nothing, String}, Symbol("element_type")=>Union{Nothing, String}, Symbol("element_shape")=>Union{Nothing, Vector{Int64}}, Symbol("array_shape")=>Union{Nothing, Vector{Int64}}, Symbol("units")=>Union{Nothing, String}, Symbol("quantity_kind")=>Union{Nothing, String}, Symbol("unit_system")=>Union{Nothing, String}, Symbol("time_reference")=>Union{Nothing, String}, Symbol("component_field")=>Union{Nothing, String}, Symbol("application_data")=>Union{Nothing, String}, Symbol("initial_timestamp")=>Union{Nothing, ZonedDateTime}, Symbol("resolution")=>Union{Nothing, String}, Symbol("horizon")=>Union{Nothing, String}, Symbol("interval")=>Union{Nothing, String}, Symbol("count")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ Deterministic }, name::Symbol) = _property_types_Deterministic[name]
 
 function OpenAPI.check_required(o::Deterministic)
+    o.association_id === nothing && (return false)
     o.owner_id === nothing && (return false)
     o.owner_type === nothing && (return false)
     o.owner_category === nothing && (return false)
@@ -100,6 +110,7 @@ function OpenAPI.check_required(o::Deterministic)
 end
 
 function OpenAPI.validate_properties(o::Deterministic)
+    OpenAPI.validate_property(Deterministic, Symbol("association_id"), o.association_id)
     OpenAPI.validate_property(Deterministic, Symbol("owner_id"), o.owner_id)
     OpenAPI.validate_property(Deterministic, Symbol("owner_type"), o.owner_type)
     OpenAPI.validate_property(Deterministic, Symbol("owner_category"), o.owner_category)
@@ -110,9 +121,11 @@ function OpenAPI.validate_properties(o::Deterministic)
     OpenAPI.validate_property(Deterministic, Symbol("data_hash"), o.data_hash)
     OpenAPI.validate_property(Deterministic, Symbol("element_type"), o.element_type)
     OpenAPI.validate_property(Deterministic, Symbol("element_shape"), o.element_shape)
+    OpenAPI.validate_property(Deterministic, Symbol("array_shape"), o.array_shape)
     OpenAPI.validate_property(Deterministic, Symbol("units"), o.units)
     OpenAPI.validate_property(Deterministic, Symbol("quantity_kind"), o.quantity_kind)
     OpenAPI.validate_property(Deterministic, Symbol("unit_system"), o.unit_system)
+    OpenAPI.validate_property(Deterministic, Symbol("time_reference"), o.time_reference)
     OpenAPI.validate_property(Deterministic, Symbol("component_field"), o.component_field)
     OpenAPI.validate_property(Deterministic, Symbol("application_data"), o.application_data)
     OpenAPI.validate_property(Deterministic, Symbol("initial_timestamp"), o.initial_timestamp)
@@ -123,6 +136,7 @@ function OpenAPI.validate_properties(o::Deterministic)
 end
 
 function OpenAPI.validate_property(::Type{ Deterministic }, name::Symbol, val)
+
 
 
 
@@ -142,11 +156,16 @@ function OpenAPI.validate_property(::Type{ Deterministic }, name::Symbol, val)
 
 
 
+    if name === Symbol("array_shape")
+        OpenAPI.validate_param(name, "Deterministic", :minItems, val, 1)
+    end
+
 
 
     if name === Symbol("unit_system")
         OpenAPI.validate_param(name, "Deterministic", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
     end
+
 
 
 

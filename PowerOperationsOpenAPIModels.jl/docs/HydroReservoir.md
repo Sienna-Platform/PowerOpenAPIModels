@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **`upstream_turbines`** | **`Vector{Int64}`** |  | [optional] [default to nothing]
 **`downstream_turbines`** | **`Vector{Int64}`** |  | [optional] [default to nothing]
 **`upstream_reservoirs`** | **`Vector{Int64}`** |  | [optional] [default to nothing]
-**`operation_cost`** | [**`*HydroReservoirCost`**](HydroReservoirCost.md) |  | [default to nothing]
+**`operation_cost`** | [**`*HydroReservoirOperationCost`**](HydroReservoirOperationCost.md) |  | [default to nothing]
 **`evaporative_loss`** | **`Float64`** | Standing loss from evaporation as a fraction of the reservoir&#39;s stored volume/energy lost per hour. Units: 1. | [optional] [default to 0.0]
 **`level_data_type`** | **`String`** |  | [optional] [default to "USABLE_VOLUME"]
 

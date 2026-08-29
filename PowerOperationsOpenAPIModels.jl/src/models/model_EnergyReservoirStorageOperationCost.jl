@@ -9,15 +9,19 @@ Operating cost of storage. or MarketBidCost
     EnergyReservoirStorageOperationCost(; value=nothing)
 """
 mutable struct EnergyReservoirStorageOperationCost <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ MarketBidCost, StorageCost }
+    value::Any # Union{ ImportExportTimeSeriesCost, MarketBidCost, MarketBidTimeSeriesCost, StorageCost }
     EnergyReservoirStorageOperationCost() = new()
     EnergyReservoirStorageOperationCost(value) = new(value)
 end # type EnergyReservoirStorageOperationCost
 
 function OpenAPI.property_type(::Type{ EnergyReservoirStorageOperationCost }, name::Symbol, json::Dict{String,Any})
     discriminator = json["cost_type"]
-    if discriminator == "MARKET_BID"
+    if discriminator == "IMPORT_EXPORT_TIME_SERIES"
+        return (ImportExportTimeSeriesCost)
+    elseif discriminator == "MARKET_BID"
         return (MarketBidCost)
+    elseif discriminator == "MARKET_BID_TIME_SERIES"
+        return (MarketBidTimeSeriesCost)
     elseif discriminator == "STORAGE"
         return (StorageCost)
     end

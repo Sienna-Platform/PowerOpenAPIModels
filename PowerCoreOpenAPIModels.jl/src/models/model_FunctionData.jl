@@ -4,11 +4,12 @@
 
 
 @doc raw"""FunctionData
+Only TIME_SERIES_LINEAR or TIME_SERIES_PIECEWISE_STEP is admissible here; all other FunctionData variants, static or time-series-backed, are rejected by the consuming constructor.
 
     FunctionData(; value=nothing)
 """
 mutable struct FunctionData <: OpenAPI.OneOfAPIModel
-    value::Any # Union{ LinearFunctionData, PiecewiseLinearData, PiecewiseStepData, QuadraticFunctionData }
+    value::Any # Union{ LinearFunctionData, PiecewiseLinearData, PiecewiseStepData, QuadraticFunctionData, TimeSeriesLinearFunctionData, TimeSeriesPiecewiseLinearData, TimeSeriesPiecewiseStepData, TimeSeriesQuadraticFunctionData }
     FunctionData() = new()
     FunctionData(value) = new(value)
 end # type FunctionData
@@ -23,6 +24,14 @@ function OpenAPI.property_type(::Type{ FunctionData }, name::Symbol, json::Dict{
         return (PiecewiseStepData)
     elseif discriminator == "QUADRATIC"
         return (QuadraticFunctionData)
+    elseif discriminator == "TIME_SERIES_LINEAR"
+        return (TimeSeriesLinearFunctionData)
+    elseif discriminator == "TIME_SERIES_PIECEWISE_LINEAR"
+        return (TimeSeriesPiecewiseLinearData)
+    elseif discriminator == "TIME_SERIES_PIECEWISE_STEP"
+        return (TimeSeriesPiecewiseStepData)
+    elseif discriminator == "TIME_SERIES_QUADRATIC"
+        return (TimeSeriesQuadraticFunctionData)
     end
     throw(OpenAPI.ValidationException("Invalid discriminator value: $discriminator for FunctionData"))
 end

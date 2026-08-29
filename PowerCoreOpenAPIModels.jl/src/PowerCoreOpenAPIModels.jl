@@ -13,7 +13,6 @@ include("models/model_EnergyUnitBasis.jl")
 include("models/model_FdbdPnts.jl")
 include("models/model_FromTo.jl")
 include("models/model_FromToToFrom.jl")
-include("models/model_FuelCurveFuelCost.jl")
 include("models/model_FunctionData.jl")
 include("models/model_GenericOperationCost.jl")
 include("models/model_GeographicInfo.jl")
@@ -47,6 +46,13 @@ include("models/model_TechnologyFinancialData.jl")
 include("models/model_ThermalFuels.jl")
 include("models/model_ThermalGenerationCostStartUp.jl")
 include("models/model_ThermalGenerationCost.jl")
+include("models/model_TimeSeriesAverageRateCurve.jl")
+include("models/model_TimeSeriesIncrementalCurve.jl")
+include("models/model_TimeSeriesInputOutputCurve.jl")
+include("models/model_TimeSeriesLinearFunctionData.jl")
+include("models/model_TimeSeriesPiecewiseLinearData.jl")
+include("models/model_TimeSeriesPiecewiseStepData.jl")
+include("models/model_TimeSeriesQuadraticFunctionData.jl")
 include("models/model_TurbinePump.jl")
 include("models/model_TwoTerminalLoss.jl")
 include("models/model_UnitSystem.jl")
@@ -55,8 +61,10 @@ include("models/model_ValueCurve.jl")
 include("models/model_CostCurve.jl")
 include("models/model_FuelCurve.jl")
 include("models/model_ImportExportCost.jl")
+include("models/model_ImportExportTimeSeriesCost.jl")
 include("models/model_LoadCost.jl")
 include("models/model_MarketBidCost.jl")
+include("models/model_MarketBidTimeSeriesCost.jl")
 include("models/model_RenewableGenerationCost.jl")
 include("models/model_StorageCost.jl")
 include("models/model_XYCoords.jl")
@@ -74,7 +82,6 @@ export FdbdPnts
 export FromTo
 export FromToToFrom
 export FuelCurve
-export FuelCurveFuelCost
 export FunctionData
 export GenericOperationCost
 export GeographicInfo
@@ -82,6 +89,7 @@ export HydroGenerationCost
 export HydroReservoirCost
 export HydroStorageGenerationCost
 export ImportExportCost
+export ImportExportTimeSeriesCost
 export InOut
 export IncrementalCurve
 export IncrementalCurveFunctionData
@@ -90,6 +98,7 @@ export InputOutputCurveFunctionData
 export LinearFunctionData
 export LoadCost
 export MarketBidCost
+export MarketBidTimeSeriesCost
 export MinMax
 export PiecewiseLinearData
 export PiecewiseStepData
@@ -105,6 +114,13 @@ export SupplementalAttributeAssociation
 export TechnologyFinancialData
 export ThermalGenerationCost
 export ThermalGenerationCostStartUp
+export TimeSeriesAverageRateCurve
+export TimeSeriesIncrementalCurve
+export TimeSeriesInputOutputCurve
+export TimeSeriesLinearFunctionData
+export TimeSeriesPiecewiseLinearData
+export TimeSeriesPiecewiseStepData
+export TimeSeriesQuadraticFunctionData
 export TurbinePump
 export TwoTerminalLoss
 export UpDown

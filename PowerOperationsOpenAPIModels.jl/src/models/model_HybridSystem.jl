@@ -36,7 +36,7 @@ A hybrid system co-locating a thermal unit, electric load, storage, and/or renew
     - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: MW.
     - reactive_power::Float64 : Initial reactive power set point of the unit. Units: MVAr.
     - base_power::Float64 : Base power of the unit for per unitization, which is commonly the same as &#x60;interconnection_rating&#x60;. Units: MVA.
-    - operation_cost::MarketBidCost1
+    - operation_cost::MarketBidCost
     - thermal_unit::Int64 : ID of a thermal generator with supertype &#x60;ThermalGen&#x60;, if any.
     - electric_load::Int64 : ID of a load with supertype &#x60;ElectricLoad&#x60;, if any.
     - storage::Int64 : ID of an energy storage system with supertype &#x60;Storage&#x60;, if any.
@@ -58,7 +58,7 @@ Base.@kwdef mutable struct HybridSystem <: OpenAPI.APIModel
     active_power::Union{Nothing, Float64} = nothing
     reactive_power::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
-    operation_cost = nothing # spec type: Union{ Nothing, MarketBidCost1 }
+    operation_cost = nothing # spec type: Union{ Nothing, MarketBidCost }
     thermal_unit::Union{Nothing, Int64} = nothing
     electric_load::Union{Nothing, Int64} = nothing
     storage::Union{Nothing, Int64} = nothing
@@ -78,7 +78,7 @@ Base.@kwdef mutable struct HybridSystem <: OpenAPI.APIModel
     end
 end # type HybridSystem
 
-const _property_types_HybridSystem = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("operation_cost")=>Union{Nothing, MarketBidCost1}, Symbol("thermal_unit")=>Union{Nothing, Int64}, Symbol("electric_load")=>Union{Nothing, Int64}, Symbol("storage")=>Union{Nothing, Int64}, Symbol("renewable_unit")=>Union{Nothing, Int64}, Symbol("interconnection_impedance")=>Union{Nothing, ComplexNumber}, Symbol("interconnection_rating")=>Union{Nothing, Float64}, Symbol("input_active_power_limits")=>Union{Nothing, MinMax}, Symbol("output_active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("interconnection_efficiency")=>Union{Nothing, InOut}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_HybridSystem = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("operation_cost")=>Union{Nothing, MarketBidCost}, Symbol("thermal_unit")=>Union{Nothing, Int64}, Symbol("electric_load")=>Union{Nothing, Int64}, Symbol("storage")=>Union{Nothing, Int64}, Symbol("renewable_unit")=>Union{Nothing, Int64}, Symbol("interconnection_impedance")=>Union{Nothing, ComplexNumber}, Symbol("interconnection_rating")=>Union{Nothing, Float64}, Symbol("input_active_power_limits")=>Union{Nothing, MinMax}, Symbol("output_active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("interconnection_efficiency")=>Union{Nothing, InOut}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ HybridSystem }, name::Symbol) = _property_types_HybridSystem[name]
 
 function OpenAPI.check_required(o::HybridSystem)

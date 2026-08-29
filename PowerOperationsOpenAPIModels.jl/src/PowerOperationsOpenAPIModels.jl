@@ -24,10 +24,12 @@ include("models/model_FixedForcedOutage.jl")
 include("models/model_GenericArcImpedance.jl")
 include("models/model_GeometricDistributionForcedOutage.jl")
 include("models/model_GroupReserve.jl")
+include("models/model_HybridSystem.jl")
 include("models/model_HydroDispatchOperationCost.jl")
 include("models/model_HydroDispatch.jl")
 include("models/model_HydroPowerPlant.jl")
 include("models/model_HydroPumpTurbine.jl")
+include("models/model_HydroReservoirOperationCost.jl")
 include("models/model_HydroReservoir.jl")
 include("models/model_HydroTurbine.jl")
 include("models/model_ImpedanceCorrectionData.jl")
@@ -38,8 +40,6 @@ include("models/model_InterruptibleStandardLoad.jl")
 include("models/model_Line.jl")
 include("models/model_LoadConformity.jl")
 include("models/model_LoadZone.jl")
-include("models/model_MarketBidCost1.jl")
-include("models/model_HybridSystem.jl")
 include("models/model_MonitoredLine.jl")
 include("models/model_MotorLoad.jl")
 include("models/model_OfflineReserve.jl")
@@ -54,6 +54,7 @@ include("models/model_RenewablePowerPlant.jl")
 include("models/model_ReserveDirection.jl")
 include("models/model_ServiceAssociation.jl")
 include("models/model_ShiftablePowerLoad.jl")
+include("models/model_SourceOperationCost.jl")
 include("models/model_Source.jl")
 include("models/model_StandardLoad.jl")
 include("models/model_Substation.jl")
@@ -107,6 +108,7 @@ export HydroDispatchOperationCost
 export HydroPowerPlant
 export HydroPumpTurbine
 export HydroReservoir
+export HydroReservoirOperationCost
 export HydroTurbine
 export ImpedanceCorrectionData
 export InterconnectingConverter
@@ -115,7 +117,6 @@ export InterruptiblePowerLoadOperationCost
 export InterruptibleStandardLoad
 export Line
 export LoadZone
-export MarketBidCost1
 export MonitoredLine
 export MotorLoad
 export OfflineReserve
@@ -130,6 +131,7 @@ export RenewablePowerPlant
 export ServiceAssociation
 export ShiftablePowerLoad
 export Source
+export SourceOperationCost
 export StandardLoad
 export Substation
 export SwitchedAdmittance
