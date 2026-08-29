@@ -234,6 +234,39 @@ end
     @test isempty(PowerOpenAPIModels.get_ext(back, bus_id))
 end
 
+@testset "SystemDocument reads a document written before trading hubs" begin
+    # Every document written before `trading_hub_associations` existed omits the key.
+    # Reading one back is the whole reason the field is optional, so assert it directly
+    # rather than trusting the schema's `required` list to stay correct.
+    doc = PowerOpenAPIModels.SystemDocument(100.0)
+    bus_id = PowerOpenAPIModels.next_id!(doc)
+    PowerOpenAPIModels.add_component!(
+        doc,
+        PowerOperationsOpenAPIModels.ACBus(;
+            id=bus_id,
+            name="b1",
+            number=1,
+            bustype="REF",
+            available=true,
+        ),
+    )
+    raw = PowerCoreOpenAPIModels.JSON.parse(
+        PowerCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(doc)),
+    )
+    delete!(raw, "trading_hub_associations")
+    back = PowerOpenAPIModels.document_from_json(raw)
+    @test isempty(back.trading_hub_associations)
+    @test isempty(back.trading_hub_membership)
+    # The siblings stay required: omitting one is still malformed input.
+    raw2 = PowerCoreOpenAPIModels.JSON.parse(
+        PowerCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(doc)),
+    )
+    delete!(raw2, "service_associations")
+    @test_throws PowerCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.document_from_json(
+        raw2,
+    )
+end
+
 @testset "SystemDocument rejects malformed input" begin
     @test_throws PowerCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.SystemDocument(
         100.0;

@@ -775,11 +775,14 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
     for assoc in doc.service_associations
         push!(doc.service_membership, (Int(assoc.service_id), Int(assoc.entity_id)))
     end
+    # Optional, unlike the association arrays above: those have been required since the
+    # format existed, so no document omits them, while this one was added later and
+    # documents written before it do. Absent means no trading hubs, not malformed input.
     append!(
         doc.trading_hub_associations,
         _rows(
             PowerCoreOpenAPIModels.model_type("TradingHubAssociation"),
-            _require(raw, "trading_hub_associations", source),
+            get(raw, "trading_hub_associations", ()),
         ),
     )
     # Bulk-loaded above rather than through `add_trading_hub_association!`, so
