@@ -2999,6 +2999,7 @@
   "plant_associations": [],
   "combined_cycle_associations": [],
   "service_associations": [],
+  "trading_hub_associations": [],
   "time_series_associations": [],
   "time_series_storage_file": null,
   "unit_system": "NATURAL_UNITS"

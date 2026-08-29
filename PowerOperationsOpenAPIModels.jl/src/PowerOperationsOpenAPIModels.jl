@@ -8,6 +8,9 @@ include("models/model_AGC.jl")
 include("models/model_Arc.jl")
 include("models/model_Area.jl")
 include("models/model_AreaInterchange.jl")
+include("models/model_BilateralConfirmation.jl")
+include("models/model_BilateralProduct.jl")
+include("models/model_BilateralTransaction.jl")
 include("models/model_CombinedCycleAssociation.jl")
 include("models/model_CombinedCycleBlock.jl")
 include("models/model_CombinedCycleConfiguration.jl")
@@ -40,12 +43,15 @@ include("models/model_InterruptibleStandardLoad.jl")
 include("models/model_Line.jl")
 include("models/model_LoadConformity.jl")
 include("models/model_LoadZone.jl")
+include("models/model_MarketStage.jl")
 include("models/model_MonitoredLine.jl")
 include("models/model_MotorLoad.jl")
 include("models/model_OfflineReserve.jl")
 include("models/model_OnlineReserve.jl")
 include("models/model_PlannedOutage.jl")
 include("models/model_PlantAssociation.jl")
+include("models/model_PointToPointBidSpreadBid.jl")
+include("models/model_PointToPointBid.jl")
 include("models/model_PowerLoad.jl")
 include("models/model_RenewableDispatchOperationCost.jl")
 include("models/model_RenewableDispatch.jl")
@@ -68,6 +74,8 @@ include("models/model_ThermalStandardOperationCost.jl")
 include("models/model_ThermalStandard.jl")
 include("models/model_ThreeWindingTransformer.jl")
 include("models/model_ThreeWindingTransformerShuntLocation.jl")
+include("models/model_TradingHub.jl")
+include("models/model_TradingHubAssociation.jl")
 include("models/model_TransformerCircuit.jl")
 include("models/model_TransformerControlObjective.jl")
 include("models/model_TransmissionInterface.jl")
@@ -78,6 +86,8 @@ include("models/model_TwoWindingTransformer.jl")
 include("models/model_TwoWindingTransformerShuntLocation.jl")
 include("models/model_VSCACControlModes.jl")
 include("models/model_VSCDCControlModes.jl")
+include("models/model_VirtualParticipantOperationCost.jl")
+include("models/model_VirtualParticipant.jl")
 include("models/model_VoltageUnitBasis.jl")
 include("units.jl")
 include("register.jl")
@@ -87,6 +97,7 @@ export AGC
 export Arc
 export Area
 export AreaInterchange
+export BilateralTransaction
 export CombinedCycleAssociation
 export CombinedCycleBlock
 export CombinedCycleFractional
@@ -123,6 +134,8 @@ export OfflineReserve
 export OnlineReserve
 export PlannedOutage
 export PlantAssociation
+export PointToPointBid
+export PointToPointBidSpreadBid
 export PowerLoad
 export RenewableDispatch
 export RenewableDispatchOperationCost
@@ -143,12 +156,16 @@ export ThermalPowerPlant
 export ThermalStandard
 export ThermalStandardOperationCost
 export ThreeWindingTransformer
+export TradingHub
+export TradingHubAssociation
 export TransformerCircuit
 export TransmissionInterface
 export TwoTerminalGenericHVDCLine
 export TwoTerminalLCCLine
 export TwoTerminalVSCLine
 export TwoWindingTransformer
+export VirtualParticipant
+export VirtualParticipantOperationCost
 
 for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export $n; end
 

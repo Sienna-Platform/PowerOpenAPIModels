@@ -43,6 +43,9 @@ PowerCoreOpenAPIModels.declared_quantity(::Type{AreaInterchange}, ::Val{:flow_li
 PowerCoreOpenAPIModels.has_declared_unit(::Type{AreaInterchange}, ::Val{:base_power}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{AreaInterchange}, ::Val{:base_power}) = "MVA"
 PowerCoreOpenAPIModels.declared_quantity(::Type{AreaInterchange}, ::Val{:base_power}) = "ApparentPower"
+PowerCoreOpenAPIModels.has_declared_unit(::Type{BilateralTransaction}, ::Val{:max_active_power}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{BilateralTransaction}, ::Val{:max_active_power}) = "MW"
+PowerCoreOpenAPIModels.declared_quantity(::Type{BilateralTransaction}, ::Val{:max_active_power}) = "ActivePower"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{DCBus}, ::Val{:base_voltage}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{DCBus}, ::Val{:base_voltage}) = "kV"
 PowerCoreOpenAPIModels.declared_quantity(::Type{DCBus}, ::Val{:base_voltage}) = "Voltage"
@@ -1032,6 +1035,12 @@ PowerCoreOpenAPIModels.declared_quantity(::Type{OnlineReserve}, ::Val{:requireme
 PowerCoreOpenAPIModels.has_declared_unit(::Type{OnlineReserve}, ::Val{:sustained_time}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{OnlineReserve}, ::Val{:sustained_time}) = "min"
 PowerCoreOpenAPIModels.declared_quantity(::Type{OnlineReserve}, ::Val{:sustained_time}) = "OperationalDuration"
+PowerCoreOpenAPIModels.has_declared_unit(::Type{PointToPointBid}, ::Val{:max_active_power}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{PointToPointBid}, ::Val{:max_active_power}) = "MW"
+PowerCoreOpenAPIModels.declared_quantity(::Type{PointToPointBid}, ::Val{:max_active_power}) = "ActivePower"
+PowerCoreOpenAPIModels.has_declared_unit(::Type{PointToPointBid}, ::Val{:price_limits}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{PointToPointBid}, ::Val{:price_limits}) = "USD/MWh"
+PowerCoreOpenAPIModels.declared_quantity(::Type{PointToPointBid}, ::Val{:price_limits}) = "CostPerEnergy"
 PowerCoreOpenAPIModels.has_declared_unit(::Type{PowerLoad}, ::Val{:active_power}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{PowerLoad}, ::Val{:active_power}) = "MW"
 PowerCoreOpenAPIModels.declared_quantity(::Type{PowerLoad}, ::Val{:active_power}) = "ActivePower"
@@ -2379,3 +2388,9 @@ function PowerCoreOpenAPIModels.declared_quantity(o::TwoWindingTransformer, ::Va
     end
     error("TwoWindingTransformer.magnetizing_shunt: no unit declared for admittance_units=$(o.admittance_units)")
 end
+PowerCoreOpenAPIModels.has_declared_unit(::Type{VirtualParticipant}, ::Val{:max_supply}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{VirtualParticipant}, ::Val{:max_supply}) = "MW"
+PowerCoreOpenAPIModels.declared_quantity(::Type{VirtualParticipant}, ::Val{:max_supply}) = "ActivePower"
+PowerCoreOpenAPIModels.has_declared_unit(::Type{VirtualParticipant}, ::Val{:max_demand}) = true
+PowerCoreOpenAPIModels.declared_unit(::Type{VirtualParticipant}, ::Val{:max_demand}) = "MW"
+PowerCoreOpenAPIModels.declared_quantity(::Type{VirtualParticipant}, ::Val{:max_demand}) = "ActivePower"

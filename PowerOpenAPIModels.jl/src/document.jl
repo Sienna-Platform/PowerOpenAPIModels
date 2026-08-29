@@ -61,13 +61,15 @@ document omits them; the schema marks all four optional, and a consumer with its
 (PowerSystems' `System` frequency, for instance) should apply it rather than have this
 container invent one.
 
-`plant_associations`, `combined_cycle_associations`, and `service_associations` are untyped
-`Vector{OpenAPI.APIModel}`, like `components`: `PlantAssociation`, `CombinedCycleAssociation`,
-and `ServiceAssociation` are Operations-layer generated types, and this Core package cannot
+`plant_associations`, `combined_cycle_associations`, `service_associations`, and
+`trading_hub_associations` are untyped `Vector{OpenAPI.APIModel}`, like `components`:
+`PlantAssociation`, `CombinedCycleAssociation`, `ServiceAssociation`, and
+`TradingHubAssociation` are Operations-layer generated types, and this Core package cannot
 depend on Operations. Callers construct the concrete row and hand it to
-[`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref), or
-[`add_service_association!`](@ref); deserialization resolves the concrete type through the
-same [`model_type`](@ref) registry `components` uses.
+[`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref),
+[`add_service_association!`](@ref), or [`add_trading_hub_association!`](@ref);
+deserialization resolves the concrete type through the same [`model_type`](@ref) registry
+`components` uses.
 """
 struct SystemDocument
     base_power::Float64
@@ -81,12 +83,14 @@ struct SystemDocument
     plant_associations::Vector{OpenAPI.APIModel}
     combined_cycle_associations::Vector{OpenAPI.APIModel}
     service_associations::Vector{OpenAPI.APIModel}
+    trading_hub_associations::Vector{OpenAPI.APIModel}
     time_series_associations::Vector{TimeSeriesAssociation}
     ext::Dict{Int, Dict{String, Any}}
     time_series_storage_file::Union{Nothing, String}
     counter::Base.RefValue{Int}
     component_types_by_id::Dict{Int, String}
     service_membership::Set{Tuple{Int, Int}}
+    trading_hub_membership::Set{Tuple{Int, Int}}
 end
 
 """
@@ -130,11 +134,13 @@ function SystemDocument(
         Vector{OpenAPI.APIModel}(),
         Vector{OpenAPI.APIModel}(),
         Vector{OpenAPI.APIModel}(),
+        Vector{OpenAPI.APIModel}(),
         Vector{TimeSeriesAssociation}(),
         Dict{Int, Dict{String, Any}}(),
         _optional_string(time_series_storage_file),
         Ref(0),
         Dict{Int, String}(),
+        Set{Tuple{Int, Int}}(),
         Set{Tuple{Int, Int}}(),
     )
 end
@@ -317,6 +323,35 @@ function add_service_association!(
     end
     push!(doc.service_associations, assoc)
     push!(doc.service_membership, key)
+    return nothing
+end
+
+"""
+Record that `assoc` (a caller-constructed `TradingHubAssociation`) links a trading hub to
+one associated entity: a member bus or a market transaction settling at the hub.
+
+Generic over `T <: OpenAPI.APIModel`, for the same reason as [`add_plant_association!`](@ref).
+
+Duplicate `(trading_hub_id, entity_id)` pairs are rejected rather than collapsed, the same
+guard [`add_service_association!`](@ref) applies to service membership.
+"""
+function add_trading_hub_association!(
+    doc::SystemDocument,
+    assoc::T,
+) where {T <: OpenAPI.APIModel}
+    trading_hub_id = assoc.trading_hub_id
+    entity_id = assoc.entity_id
+    key = (Int(trading_hub_id), Int(entity_id))
+    if key in doc.trading_hub_membership
+        throw(
+            PowerCoreOpenAPIModels.DocumentFormatError(
+                "duplicate trading hub membership: trading_hub_id=$trading_hub_id " *
+                "entity_id=$entity_id",
+            ),
+        )
+    end
+    push!(doc.trading_hub_associations, assoc)
+    push!(doc.trading_hub_membership, key)
     return nothing
 end
 
@@ -522,6 +557,23 @@ function validate_document(doc::SystemDocument)
         )
     end
 
+    # trading_hub_id names a TradingHub component; entity_id may be a bus or a market
+    # transaction, both of which are components too.
+    for assoc in doc.trading_hub_associations
+        _check_ref(
+            component_ids,
+            assoc.trading_hub_id,
+            "TradingHubAssociation",
+            "entity_id=$(assoc.entity_id)",
+        )
+        _check_ref(
+            component_ids,
+            assoc.entity_id,
+            "TradingHubAssociation",
+            "trading_hub_id=$(assoc.trading_hub_id)",
+        )
+    end
+
     # `.value` because `TimeSeriesAssociation` is the oneOf wrapper: the six per-type
     # structs hold the columns, and `OpenAPI.OneOfAPIModel` forwards no field access.
     for assoc in doc.time_series_associations
@@ -575,6 +627,7 @@ function document_tree(doc::SystemDocument)
         "plant_associations" => doc.plant_associations,
         "combined_cycle_associations" => doc.combined_cycle_associations,
         "service_associations" => doc.service_associations,
+        "trading_hub_associations" => doc.trading_hub_associations,
         "time_series_associations" => doc.time_series_associations,
         # Keyed by component id, which is unique across every type.
         "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
@@ -721,6 +774,18 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
     # `service_membership` needs its one rebuild pass here.
     for assoc in doc.service_associations
         push!(doc.service_membership, (Int(assoc.service_id), Int(assoc.entity_id)))
+    end
+    append!(
+        doc.trading_hub_associations,
+        _rows(
+            PowerCoreOpenAPIModels.model_type("TradingHubAssociation"),
+            _require(raw, "trading_hub_associations", source),
+        ),
+    )
+    # Bulk-loaded above rather than through `add_trading_hub_association!`, so
+    # `trading_hub_membership` needs its one rebuild pass here.
+    for assoc in doc.trading_hub_associations
+        push!(doc.trading_hub_membership, (Int(assoc.trading_hub_id), Int(assoc.entity_id)))
     end
     append!(
         doc.time_series_associations,
