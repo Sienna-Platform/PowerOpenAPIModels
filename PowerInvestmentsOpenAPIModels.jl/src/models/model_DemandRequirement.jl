@@ -3,6 +3,7 @@
 
 
 @doc raw"""DemandRequirement
+Demand requirements for a region. New demand enters at a stated peak in its construction year and scales forward by a growth rate; &#x60;value_of_lost_load&#x60; and &#x60;unserved_demand_curve&#x60; price whatever portion goes unserved.
 
     DemandRequirement(;
         id=nothing,

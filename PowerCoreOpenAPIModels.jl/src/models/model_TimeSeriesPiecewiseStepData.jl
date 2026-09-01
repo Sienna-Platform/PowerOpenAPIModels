@@ -3,6 +3,7 @@
 
 
 @doc raw"""TimeSeriesPiecewiseStepData
+Time-series-backed variant of &#x60;PiecewiseStepData&#x60;. In place of inline coordinate vectors it carries &#x60;association_id&#x60;, referencing a stored series that supplies them at each step; use it when the segments change over time.
 
     TimeSeriesPiecewiseStepData(;
         function_type="TIME_SERIES_PIECEWISE_STEP",

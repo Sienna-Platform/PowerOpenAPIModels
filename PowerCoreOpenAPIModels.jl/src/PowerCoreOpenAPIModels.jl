@@ -42,7 +42,6 @@ include("models/model_StorageCostStartUp.jl")
 include("models/model_StorageCostStartUpOneOf.jl")
 include("models/model_StorageTech.jl")
 include("models/model_SupplementalAttributeAssociation.jl")
-include("models/model_TechnologyFinancialData.jl")
 include("models/model_ThermalFuels.jl")
 include("models/model_ThermalGenerationCostStartUp.jl")
 include("models/model_ThermalGenerationCost.jl")
@@ -111,7 +110,6 @@ export StorageCost
 export StorageCostStartUp
 export StorageCostStartUpOneOf
 export SupplementalAttributeAssociation
-export TechnologyFinancialData
 export ThermalGenerationCost
 export ThermalGenerationCostStartUp
 export TimeSeriesAverageRateCurve

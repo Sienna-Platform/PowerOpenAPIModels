@@ -3,6 +3,7 @@
 
 
 @doc raw"""StartUpShutDown
+A pair of values, one for the start-up phase and one for the shut-down phase of a unit&#39;s cycle.
 
     StartUpShutDown(;
         startup=nothing,

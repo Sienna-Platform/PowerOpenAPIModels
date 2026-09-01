@@ -3,6 +3,7 @@
 
 
 @doc raw"""FromTo
+A pair of values, one at the &#x60;from&#x60; end and one at the &#x60;to&#x60; end of a directed edge.
 
     FromTo(;
         from=nothing,

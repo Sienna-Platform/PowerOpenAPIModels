@@ -14,16 +14,18 @@ Flow exchanged between Areas. This Interchange is agnostic to the lines connecti
         to_area=nothing,
         flow_limits=nothing,
         base_power=nothing,
+        power_units=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
-    - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: MW.
+    - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
     - from_area::Int64 : Area from which the power is extracted.
     - to_area::Int64 : Area to which the power is injected.
     - flow_limits::FromToToFrom
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
 """
 Base.@kwdef mutable struct AreaInterchange <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -34,15 +36,16 @@ Base.@kwdef mutable struct AreaInterchange <: OpenAPI.APIModel
     to_area::Union{Nothing, Int64} = nothing
     flow_limits = nothing # spec type: Union{ Nothing, FromToToFrom }
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
 
-    function AreaInterchange(id, name, available, active_power_flow, from_area, to_area, flow_limits, base_power, )
-        o = new(id, name, available, active_power_flow, from_area, to_area, flow_limits, base_power, )
+    function AreaInterchange(id, name, available, active_power_flow, from_area, to_area, flow_limits, base_power, power_units, )
+        o = new(id, name, available, active_power_flow, from_area, to_area, flow_limits, base_power, power_units, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type AreaInterchange
 
-const _property_types_AreaInterchange = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("from_area")=>Union{Nothing, Int64}, Symbol("to_area")=>Union{Nothing, Int64}, Symbol("flow_limits")=>Union{Nothing, FromToToFrom}, Symbol("base_power")=>Union{Nothing, Float64}, )
+const _property_types_AreaInterchange = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("from_area")=>Union{Nothing, Int64}, Symbol("to_area")=>Union{Nothing, Int64}, Symbol("flow_limits")=>Union{Nothing, FromToToFrom}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ AreaInterchange }, name::Symbol) = _property_types_AreaInterchange[name]
 
 function OpenAPI.check_required(o::AreaInterchange)
@@ -54,6 +57,7 @@ function OpenAPI.check_required(o::AreaInterchange)
     o.to_area === nothing && (return false)
     o.flow_limits === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -66,6 +70,7 @@ function OpenAPI.validate_properties(o::AreaInterchange)
     OpenAPI.validate_property(AreaInterchange, Symbol("to_area"), o.to_area)
     OpenAPI.validate_property(AreaInterchange, Symbol("flow_limits"), o.flow_limits)
     OpenAPI.validate_property(AreaInterchange, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(AreaInterchange, Symbol("power_units"), o.power_units)
 end
 
 function OpenAPI.validate_property(::Type{ AreaInterchange }, name::Symbol, val)
@@ -76,5 +81,10 @@ function OpenAPI.validate_property(::Type{ AreaInterchange }, name::Symbol, val)
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "AreaInterchange", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 end

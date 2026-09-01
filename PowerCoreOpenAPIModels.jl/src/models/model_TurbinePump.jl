@@ -3,6 +3,7 @@
 
 
 @doc raw"""TurbinePump
+A pair of values, one for the turbine (generating) mode and one for the pump (charging) mode of a pumped hydro unit.
 
     TurbinePump(;
         turbine=nothing,

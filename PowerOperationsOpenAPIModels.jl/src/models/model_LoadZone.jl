@@ -11,13 +11,15 @@ A load zone for electricity price analysis. The load zone can be specified when 
         peak_active_power=nothing,
         peak_reactive_power=nothing,
         base_power=nothing,
+        power_units=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
-    - peak_active_power::Float64 : Peak active power in the zone. Units: MW.
-    - peak_reactive_power::Float64 : Peak reactive power in the zone. Units: MVAr.
+    - peak_active_power::Float64 : Peak active power in the zone. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - peak_reactive_power::Float64 : Peak reactive power in the zone. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
 """
 Base.@kwdef mutable struct LoadZone <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -25,15 +27,16 @@ Base.@kwdef mutable struct LoadZone <: OpenAPI.APIModel
     peak_active_power::Union{Nothing, Float64} = nothing
     peak_reactive_power::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
 
-    function LoadZone(id, name, peak_active_power, peak_reactive_power, base_power, )
-        o = new(id, name, peak_active_power, peak_reactive_power, base_power, )
+    function LoadZone(id, name, peak_active_power, peak_reactive_power, base_power, power_units, )
+        o = new(id, name, peak_active_power, peak_reactive_power, base_power, power_units, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type LoadZone
 
-const _property_types_LoadZone = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("peak_active_power")=>Union{Nothing, Float64}, Symbol("peak_reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, )
+const _property_types_LoadZone = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("peak_active_power")=>Union{Nothing, Float64}, Symbol("peak_reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ LoadZone }, name::Symbol) = _property_types_LoadZone[name]
 
 function OpenAPI.check_required(o::LoadZone)
@@ -42,6 +45,7 @@ function OpenAPI.check_required(o::LoadZone)
     o.peak_active_power === nothing && (return false)
     o.peak_reactive_power === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -51,6 +55,7 @@ function OpenAPI.validate_properties(o::LoadZone)
     OpenAPI.validate_property(LoadZone, Symbol("peak_active_power"), o.peak_active_power)
     OpenAPI.validate_property(LoadZone, Symbol("peak_reactive_power"), o.peak_reactive_power)
     OpenAPI.validate_property(LoadZone, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(LoadZone, Symbol("power_units"), o.power_units)
 end
 
 function OpenAPI.validate_property(::Type{ LoadZone }, name::Symbol, val)
@@ -58,5 +63,10 @@ function OpenAPI.validate_property(::Type{ LoadZone }, name::Symbol, val)
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "LoadZone", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 end

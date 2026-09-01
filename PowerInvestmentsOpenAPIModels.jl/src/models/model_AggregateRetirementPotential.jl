@@ -3,6 +3,7 @@
 
 
 @doc raw"""AggregateRetirementPotential
+Supplemental attribute defining a total amount of a technology&#39;s existing capacity that can be retired, as a quantity rather than a list of named units.
 
     AggregateRetirementPotential(;
         id=nothing,

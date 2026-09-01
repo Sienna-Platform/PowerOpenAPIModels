@@ -26,6 +26,7 @@ function __init__()
     PowerCoreOpenAPIModels.register_model_type!(RetrofitPotential)
     PowerCoreOpenAPIModels.register_model_type!(StorageTechnology)
     PowerCoreOpenAPIModels.register_model_type!(SupplyTechnology)
+    PowerCoreOpenAPIModels.register_model_type!(TechnologyFinancialData)
     PowerCoreOpenAPIModels.register_model_type!(TopologyMapping)
     PowerCoreOpenAPIModels.register_model_type!(Zone)
     return nothing

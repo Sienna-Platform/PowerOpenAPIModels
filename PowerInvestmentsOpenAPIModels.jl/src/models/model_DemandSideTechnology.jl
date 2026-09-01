@@ -3,6 +3,7 @@
 
 
 @doc raw"""DemandSideTechnology
+Demand-side technology such as an electric vehicle fleet or a hydrogen electrolyzer. Its flexibility is described by how far demand may be delayed or advanced, how much of it may be curtailed, and the cost and energy losses of doing either.
 
     DemandSideTechnology(;
         id=nothing,

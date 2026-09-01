@@ -3,6 +3,7 @@
 
 
 @doc raw"""GeometricDistributionForcedOutage
+Supplemental attribute describing forced outages whose transitions follow geometric distributions, parameterized by the probability of entering an outage and the mean time to recovery. Both the outage and recovery probabilities can be backed by time series.
 
     GeometricDistributionForcedOutage(;
         id=nothing,

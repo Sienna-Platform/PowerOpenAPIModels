@@ -19,6 +19,7 @@ A thermal generator, such as a fossil fuel and nuclear generator.  This is a sta
         ramp_limits=nothing,
         operation_cost=nothing,
         base_power=nothing,
+        power_units=nothing,
         time_limits=nothing,
         must_run=false,
         prime_mover_type="OT",
@@ -32,14 +33,15 @@ A thermal generator, such as a fossil fuel and nuclear generator.  This is a sta
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - status::Bool : Initial commitment condition at the start of a simulation (&#x60;true&#x60; &#x3D; on or &#x60;false&#x60; &#x3D; off).
     - bus::Int64 : ID of the bus that this component is connected to.
-    - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: MW.
-    - reactive_power::Float64 : Initial reactive power set point of the unit. Units: MVAr.
-    - rating::Float64 : Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: MVA.
+    - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - reactive_power::Float64 : Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - rating::Float64 : Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
     - active_power_limits::MinMax
     - reactive_power_limits::MinMax
     - ramp_limits::UpDown
     - operation_cost::ThermalStandardOperationCost
     - base_power::Float64 : Base power of the unit for per unitization. Must be positive; a zero base would make per-unit conversion undefined. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
     - time_limits::UpDown
     - must_run::Bool : Set to &#x60;true&#x60; if the unit is must run.
     - prime_mover_type::String : Prime mover technology according to EIA 923.
@@ -61,6 +63,7 @@ Base.@kwdef mutable struct ThermalStandard <: OpenAPI.APIModel
     ramp_limits = nothing # spec type: Union{ Nothing, UpDown }
     operation_cost = nothing # spec type: Union{ Nothing, ThermalStandardOperationCost }
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
     time_limits = nothing # spec type: Union{ Nothing, UpDown }
     must_run::Union{Nothing, Bool} = false
     prime_mover_type::Union{Nothing, String} = "OT"
@@ -68,14 +71,14 @@ Base.@kwdef mutable struct ThermalStandard <: OpenAPI.APIModel
     time_at_status::Union{Nothing, Float64} = 600000.0
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function ThermalStandard(id, name, available, status, bus, active_power, reactive_power, rating, active_power_limits, reactive_power_limits, ramp_limits, operation_cost, base_power, time_limits, must_run, prime_mover_type, fuel, time_at_status, dynamic_injector, )
-        o = new(id, name, available, status, bus, active_power, reactive_power, rating, active_power_limits, reactive_power_limits, ramp_limits, operation_cost, base_power, time_limits, must_run, prime_mover_type, fuel, time_at_status, dynamic_injector, )
+    function ThermalStandard(id, name, available, status, bus, active_power, reactive_power, rating, active_power_limits, reactive_power_limits, ramp_limits, operation_cost, base_power, power_units, time_limits, must_run, prime_mover_type, fuel, time_at_status, dynamic_injector, )
+        o = new(id, name, available, status, bus, active_power, reactive_power, rating, active_power_limits, reactive_power_limits, ramp_limits, operation_cost, base_power, power_units, time_limits, must_run, prime_mover_type, fuel, time_at_status, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type ThermalStandard
 
-const _property_types_ThermalStandard = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("operation_cost")=>Union{Nothing, ThermalStandardOperationCost}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("must_run")=>Union{Nothing, Bool}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("fuel")=>Union{Nothing, String}, Symbol("time_at_status")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_ThermalStandard = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("operation_cost")=>Union{Nothing, ThermalStandardOperationCost}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("must_run")=>Union{Nothing, Bool}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("fuel")=>Union{Nothing, String}, Symbol("time_at_status")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ ThermalStandard }, name::Symbol) = _property_types_ThermalStandard[name]
 
 function OpenAPI.check_required(o::ThermalStandard)
@@ -90,6 +93,7 @@ function OpenAPI.check_required(o::ThermalStandard)
     o.active_power_limits === nothing && (return false)
     o.operation_cost === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -107,6 +111,7 @@ function OpenAPI.validate_properties(o::ThermalStandard)
     OpenAPI.validate_property(ThermalStandard, Symbol("ramp_limits"), o.ramp_limits)
     OpenAPI.validate_property(ThermalStandard, Symbol("operation_cost"), o.operation_cost)
     OpenAPI.validate_property(ThermalStandard, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(ThermalStandard, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(ThermalStandard, Symbol("time_limits"), o.time_limits)
     OpenAPI.validate_property(ThermalStandard, Symbol("must_run"), o.must_run)
     OpenAPI.validate_property(ThermalStandard, Symbol("prime_mover_type"), o.prime_mover_type)
@@ -128,6 +133,11 @@ function OpenAPI.validate_property(::Type{ ThermalStandard }, name::Symbol, val)
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "ThermalStandard", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
 

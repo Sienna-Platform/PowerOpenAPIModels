@@ -3,6 +3,7 @@
 
 
 @doc raw"""LinearFunctionData
+Data for a linear function &#x60;f(x) &#x3D; proportional_term * x + constant_term&#x60;.
 
     LinearFunctionData(;
         constant_term=nothing,

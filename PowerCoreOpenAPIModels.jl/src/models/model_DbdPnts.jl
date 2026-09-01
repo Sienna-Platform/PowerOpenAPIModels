@@ -3,6 +3,7 @@
 
 
 @doc raw"""DbdPnts
+A pair of deadband thresholds &#x60;(dbd1, dbd2)&#x60; on a voltage or reactive-power error signal, inside which the controller does not act.
 
     DbdPnts(;
         dbd1=nothing,

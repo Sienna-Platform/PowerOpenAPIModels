@@ -10,37 +10,37 @@ Cost representation for thermal generation units
         fixed=nothing,
         shut_down=nothing,
         start_up=nothing,
-        variable=nothing,
+        variable_operation_cost=nothing,
     )
 
     - cost_type::String
     - fixed::Float64 : Fixed cost of keeping the unit online. For some cost represenations this field can be duplicative
     - shut_down::Float64 : Cost to turn the unit off
     - start_up::ThermalGenerationCostStartUp
-    - variable::ProductionVariableCostCurve
+    - variable_operation_cost::ProductionVariableCostCurve
 """
 Base.@kwdef mutable struct ThermalGenerationCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "THERMAL"
     fixed::Union{Nothing, Float64} = nothing
     shut_down::Union{Nothing, Float64} = nothing
     start_up = nothing # spec type: Union{ Nothing, ThermalGenerationCostStartUp }
-    variable = nothing # spec type: Union{ Nothing, ProductionVariableCostCurve }
+    variable_operation_cost = nothing # spec type: Union{ Nothing, ProductionVariableCostCurve }
 
-    function ThermalGenerationCost(cost_type, fixed, shut_down, start_up, variable, )
-        o = new(cost_type, fixed, shut_down, start_up, variable, )
+    function ThermalGenerationCost(cost_type, fixed, shut_down, start_up, variable_operation_cost, )
+        o = new(cost_type, fixed, shut_down, start_up, variable_operation_cost, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type ThermalGenerationCost
 
-const _property_types_ThermalGenerationCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("fixed")=>Union{Nothing, Float64}, Symbol("shut_down")=>Union{Nothing, Float64}, Symbol("start_up")=>Union{Nothing, ThermalGenerationCostStartUp}, Symbol("variable")=>Union{Nothing, ProductionVariableCostCurve}, )
+const _property_types_ThermalGenerationCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("fixed")=>Union{Nothing, Float64}, Symbol("shut_down")=>Union{Nothing, Float64}, Symbol("start_up")=>Union{Nothing, ThermalGenerationCostStartUp}, Symbol("variable_operation_cost")=>Union{Nothing, ProductionVariableCostCurve}, )
 OpenAPI.property_type(::Type{ ThermalGenerationCost }, name::Symbol) = _property_types_ThermalGenerationCost[name]
 
 function OpenAPI.check_required(o::ThermalGenerationCost)
     o.fixed === nothing && (return false)
     o.shut_down === nothing && (return false)
     o.start_up === nothing && (return false)
-    o.variable === nothing && (return false)
+    o.variable_operation_cost === nothing && (return false)
     true
 end
 
@@ -49,7 +49,7 @@ function OpenAPI.validate_properties(o::ThermalGenerationCost)
     OpenAPI.validate_property(ThermalGenerationCost, Symbol("fixed"), o.fixed)
     OpenAPI.validate_property(ThermalGenerationCost, Symbol("shut_down"), o.shut_down)
     OpenAPI.validate_property(ThermalGenerationCost, Symbol("start_up"), o.start_up)
-    OpenAPI.validate_property(ThermalGenerationCost, Symbol("variable"), o.variable)
+    OpenAPI.validate_property(ThermalGenerationCost, Symbol("variable_operation_cost"), o.variable_operation_cost)
 end
 
 function OpenAPI.validate_property(::Type{ ThermalGenerationCost }, name::Symbol, val)

@@ -3,6 +3,7 @@
 
 
 @doc raw"""RetrofitPotential
+Supplemental attribute defining which existing generators mapped to a supply technology are eligible for retrofit.
 
     RetrofitPotential(;
         id=nothing,

@@ -17,12 +17,13 @@ A High Voltage DC line, which must be connected to an ACBus on each end. This mo
         reactive_power_limits_to=nothing,
         loss=TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))),
         base_power=nothing,
+        power_units=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
-    - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: MW.
+    - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
     - arc::Int64 : An Arc defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus.
     - active_power_limits_from::MinMax
     - active_power_limits_to::MinMax
@@ -30,6 +31,7 @@ A High Voltage DC line, which must be connected to an ACBus on each end. This mo
     - reactive_power_limits_to::MinMax
     - loss::TwoTerminalLoss
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
 """
 Base.@kwdef mutable struct TwoTerminalGenericHVDCLine <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -43,15 +45,16 @@ Base.@kwdef mutable struct TwoTerminalGenericHVDCLine <: OpenAPI.APIModel
     reactive_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
     loss = TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))) # spec type: Union{ Nothing, TwoTerminalLoss }
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
 
-    function TwoTerminalGenericHVDCLine(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )
-        o = new(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )
+    function TwoTerminalGenericHVDCLine(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, power_units, )
+        o = new(id, name, available, active_power_flow, arc, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, power_units, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type TwoTerminalGenericHVDCLine
 
-const _property_types_TwoTerminalGenericHVDCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_from")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_to")=>Union{Nothing, MinMax}, Symbol("loss")=>Union{Nothing, TwoTerminalLoss}, Symbol("base_power")=>Union{Nothing, Float64}, )
+const _property_types_TwoTerminalGenericHVDCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_from")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_to")=>Union{Nothing, MinMax}, Symbol("loss")=>Union{Nothing, TwoTerminalLoss}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ TwoTerminalGenericHVDCLine }, name::Symbol) = _property_types_TwoTerminalGenericHVDCLine[name]
 
 function OpenAPI.check_required(o::TwoTerminalGenericHVDCLine)
@@ -65,6 +68,7 @@ function OpenAPI.check_required(o::TwoTerminalGenericHVDCLine)
     o.reactive_power_limits_from === nothing && (return false)
     o.reactive_power_limits_to === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -80,6 +84,7 @@ function OpenAPI.validate_properties(o::TwoTerminalGenericHVDCLine)
     OpenAPI.validate_property(TwoTerminalGenericHVDCLine, Symbol("reactive_power_limits_to"), o.reactive_power_limits_to)
     OpenAPI.validate_property(TwoTerminalGenericHVDCLine, Symbol("loss"), o.loss)
     OpenAPI.validate_property(TwoTerminalGenericHVDCLine, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(TwoTerminalGenericHVDCLine, Symbol("power_units"), o.power_units)
 end
 
 function OpenAPI.validate_property(::Type{ TwoTerminalGenericHVDCLine }, name::Symbol, val)
@@ -93,5 +98,10 @@ function OpenAPI.validate_property(::Type{ TwoTerminalGenericHVDCLine }, name::S
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "TwoTerminalGenericHVDCLine", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 end

@@ -3,6 +3,7 @@
 
 
 @doc raw"""HydroReservoir
+A hydropower reservoir feeding, or fed by, the turbines attached to it. Storage level, inflow, outflow, and spillage are recorded in the basis named by &#x60;level_data_type&#x60; — volume, head, or energy — and the upstream and downstream associations set the reservoir&#39;s place in a cascade.
 
     HydroReservoir(;
         id=nothing,

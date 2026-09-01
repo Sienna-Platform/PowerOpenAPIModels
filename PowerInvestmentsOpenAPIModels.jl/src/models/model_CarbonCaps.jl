@@ -3,6 +3,7 @@
 
 
 @doc raw"""CarbonCaps
+Policy requirement limiting the amount of carbon produced in the target year. The limit can be given either as a total mass of CO2 or as the carbon intensity of the portfolio, in mass of CO2 per MWh of electricity.
 
     CarbonCaps(;
         id=nothing,

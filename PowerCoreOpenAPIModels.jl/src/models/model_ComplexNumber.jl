@@ -3,6 +3,7 @@
 
 
 @doc raw"""ComplexNumber
+A complex number, given as its &#x60;real&#x60; and &#x60;imag&#x60; parts.
 
     ComplexNumber(;
         real=nothing,

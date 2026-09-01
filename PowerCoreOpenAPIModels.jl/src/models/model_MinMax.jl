@@ -3,6 +3,7 @@
 
 
 @doc raw"""MinMax
+A pair of values bounding a quantity from below (&#x60;min&#x60;) and from above (&#x60;max&#x60;).
 
     MinMax(;
         max=nothing,

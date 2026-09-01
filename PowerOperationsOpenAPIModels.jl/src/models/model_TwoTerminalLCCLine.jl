@@ -48,13 +48,14 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
         reactive_power_limits_to=MinMax(; max=0.0, min=0.0),
         loss=TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))),
         base_power=nothing,
+        power_units=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - arc::Int64 : An Arc defining this line &#x60;from&#x60; a rectifier bus &#x60;to&#x60; an inverter bus. The rectifier bus must be specified in the &#x60;from&#x60; bus and inverter bus in the &#x60;to&#x60; bus.
-    - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: MW.
+    - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
     - parameter_units::String : Unit basis for this line&#39;s impedance fields (r, rectifier/inverter rc/xc, capacitor reactances, compounding_resistance).
     - r::Float64 : Series resistance of the DC line. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
     - transfer_setpoint::Float64 : Desired set-point of power. If &#x60;power_mode &#x3D; true&#x60; this value is in MW units, and if &#x60;power_mode &#x3D; false&#x60; is in Amperes units. This parameter must not be specified in per-unit. A positive value represents the desired consumed power at the rectifier bus, while a negative value represents the desired power at the inverter bus (i.e. the absolute value of &#x60;transfer_setpoint&#x60; is the generated power at the inverter bus). Units: per power_mode — true: MW, false: A .
@@ -92,6 +93,7 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
     - reactive_power_limits_to::MinMax
     - loss::TwoTerminalLoss
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
 """
 Base.@kwdef mutable struct TwoTerminalLCCLine <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -136,15 +138,16 @@ Base.@kwdef mutable struct TwoTerminalLCCLine <: OpenAPI.APIModel
     reactive_power_limits_to = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
     loss = TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))) # spec type: Union{ Nothing, TwoTerminalLoss }
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
 
-    function TwoTerminalLCCLine(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )
-        o = new(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, )
+    function TwoTerminalLCCLine(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, power_units, )
+        o = new(id, name, available, arc, active_power_flow, parameter_units, r, transfer_setpoint, dc_voltage_units, scheduled_dc_voltage, rectifier_bridges, rectifier_delay_angle_limits, rectifier_rc, rectifier_xc, rectifier_base_voltage, inverter_bridges, inverter_extinction_angle_limits, inverter_rc, inverter_xc, inverter_base_voltage, power_mode, switch_mode_voltage, compounding_resistance, min_compounding_voltage, rectifier_transformer_ratio, rectifier_tap_setting, rectifier_tap_limits, rectifier_tap_step, rectifier_delay_angle, rectifier_capacitor_reactance, inverter_transformer_ratio, inverter_tap_setting, inverter_tap_limits, inverter_tap_step, inverter_extinction_angle, inverter_capacitor_reactance, active_power_limits_from, active_power_limits_to, reactive_power_limits_from, reactive_power_limits_to, loss, base_power, power_units, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type TwoTerminalLCCLine
 
-const _property_types_TwoTerminalLCCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r")=>Union{Nothing, Float64}, Symbol("transfer_setpoint")=>Union{Nothing, Float64}, Symbol("dc_voltage_units")=>Union{Nothing, String}, Symbol("scheduled_dc_voltage")=>Union{Nothing, Float64}, Symbol("rectifier_bridges")=>Union{Nothing, Int64}, Symbol("rectifier_delay_angle_limits")=>Union{Nothing, MinMax}, Symbol("rectifier_rc")=>Union{Nothing, Float64}, Symbol("rectifier_xc")=>Union{Nothing, Float64}, Symbol("rectifier_base_voltage")=>Union{Nothing, Float64}, Symbol("inverter_bridges")=>Union{Nothing, Int64}, Symbol("inverter_extinction_angle_limits")=>Union{Nothing, MinMax}, Symbol("inverter_rc")=>Union{Nothing, Float64}, Symbol("inverter_xc")=>Union{Nothing, Float64}, Symbol("inverter_base_voltage")=>Union{Nothing, Float64}, Symbol("power_mode")=>Union{Nothing, Bool}, Symbol("switch_mode_voltage")=>Union{Nothing, Float64}, Symbol("compounding_resistance")=>Union{Nothing, Float64}, Symbol("min_compounding_voltage")=>Union{Nothing, Float64}, Symbol("rectifier_transformer_ratio")=>Union{Nothing, Float64}, Symbol("rectifier_tap_setting")=>Union{Nothing, Float64}, Symbol("rectifier_tap_limits")=>Union{Nothing, MinMax}, Symbol("rectifier_tap_step")=>Union{Nothing, Float64}, Symbol("rectifier_delay_angle")=>Union{Nothing, Float64}, Symbol("rectifier_capacitor_reactance")=>Union{Nothing, Float64}, Symbol("inverter_transformer_ratio")=>Union{Nothing, Float64}, Symbol("inverter_tap_setting")=>Union{Nothing, Float64}, Symbol("inverter_tap_limits")=>Union{Nothing, MinMax}, Symbol("inverter_tap_step")=>Union{Nothing, Float64}, Symbol("inverter_extinction_angle")=>Union{Nothing, Float64}, Symbol("inverter_capacitor_reactance")=>Union{Nothing, Float64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_from")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_to")=>Union{Nothing, MinMax}, Symbol("loss")=>Union{Nothing, TwoTerminalLoss}, Symbol("base_power")=>Union{Nothing, Float64}, )
+const _property_types_TwoTerminalLCCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r")=>Union{Nothing, Float64}, Symbol("transfer_setpoint")=>Union{Nothing, Float64}, Symbol("dc_voltage_units")=>Union{Nothing, String}, Symbol("scheduled_dc_voltage")=>Union{Nothing, Float64}, Symbol("rectifier_bridges")=>Union{Nothing, Int64}, Symbol("rectifier_delay_angle_limits")=>Union{Nothing, MinMax}, Symbol("rectifier_rc")=>Union{Nothing, Float64}, Symbol("rectifier_xc")=>Union{Nothing, Float64}, Symbol("rectifier_base_voltage")=>Union{Nothing, Float64}, Symbol("inverter_bridges")=>Union{Nothing, Int64}, Symbol("inverter_extinction_angle_limits")=>Union{Nothing, MinMax}, Symbol("inverter_rc")=>Union{Nothing, Float64}, Symbol("inverter_xc")=>Union{Nothing, Float64}, Symbol("inverter_base_voltage")=>Union{Nothing, Float64}, Symbol("power_mode")=>Union{Nothing, Bool}, Symbol("switch_mode_voltage")=>Union{Nothing, Float64}, Symbol("compounding_resistance")=>Union{Nothing, Float64}, Symbol("min_compounding_voltage")=>Union{Nothing, Float64}, Symbol("rectifier_transformer_ratio")=>Union{Nothing, Float64}, Symbol("rectifier_tap_setting")=>Union{Nothing, Float64}, Symbol("rectifier_tap_limits")=>Union{Nothing, MinMax}, Symbol("rectifier_tap_step")=>Union{Nothing, Float64}, Symbol("rectifier_delay_angle")=>Union{Nothing, Float64}, Symbol("rectifier_capacitor_reactance")=>Union{Nothing, Float64}, Symbol("inverter_transformer_ratio")=>Union{Nothing, Float64}, Symbol("inverter_tap_setting")=>Union{Nothing, Float64}, Symbol("inverter_tap_limits")=>Union{Nothing, MinMax}, Symbol("inverter_tap_step")=>Union{Nothing, Float64}, Symbol("inverter_extinction_angle")=>Union{Nothing, Float64}, Symbol("inverter_capacitor_reactance")=>Union{Nothing, Float64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_from")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_to")=>Union{Nothing, MinMax}, Symbol("loss")=>Union{Nothing, TwoTerminalLoss}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ TwoTerminalLCCLine }, name::Symbol) = _property_types_TwoTerminalLCCLine[name]
 
 function OpenAPI.check_required(o::TwoTerminalLCCLine)
@@ -167,6 +170,7 @@ function OpenAPI.check_required(o::TwoTerminalLCCLine)
     o.inverter_xc === nothing && (return false)
     o.inverter_base_voltage === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -213,6 +217,7 @@ function OpenAPI.validate_properties(o::TwoTerminalLCCLine)
     OpenAPI.validate_property(TwoTerminalLCCLine, Symbol("reactive_power_limits_to"), o.reactive_power_limits_to)
     OpenAPI.validate_property(TwoTerminalLCCLine, Symbol("loss"), o.loss)
     OpenAPI.validate_property(TwoTerminalLCCLine, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(TwoTerminalLCCLine, Symbol("power_units"), o.power_units)
 end
 
 function OpenAPI.validate_property(::Type{ TwoTerminalLCCLine }, name::Symbol, val)
@@ -265,5 +270,10 @@ function OpenAPI.validate_property(::Type{ TwoTerminalLCCLine }, name::Symbol, v
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "TwoTerminalLCCLine", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 end

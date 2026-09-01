@@ -26,22 +26,19 @@
 # like any other association, and `time_series_storage_file` is a name this carries and does
 # not resolve. Reading or writing that HDF5 file belongs to the consumer.
 #
-# Nothing here is exported: the accessor names (`get_components`, `get_base_power`, ...)
+# Nothing here is exported: the accessor names (`get_components`, `get_name`, ...)
 # deliberately collide with PowerSystems' own, so callers reach them qualified
 # (`PowerOpenAPIModels.get_components(doc, "ACBus")`).
 
-"""
-Unit conventions a document may be written in, from the schemas' `unit_system` enum.
-
-There is no system-base option: per-unit data historically on the system base records that
-base in the component's own `base_power` and rides as `COMPONENT_BASE`.
-"""
-const DOCUMENT_UNIT_SYSTEMS = ("NATURAL_UNITS", "COMPONENT_BASE")
 # ── the container ────────────────────────────────────────────────────────────────
 
 """
 A whole serialized power system: components bucketed by type name, the association tables
 linking them, and the name of the HDF5 sidecar holding time series values.
+
+There is no document-level unit system or base power: every value is interpretable from its
+own component blob alone, via that blob's own basis-selector property (`power_units`,
+`parameter_units`, ...) and, for a COMPONENT_BASE reading, that blob's own `base_power`.
 
 `components` values are concrete `Vector{T}`, so per-type iteration stays inferable behind a
 function barrier even though the field itself is untyped.
@@ -72,8 +69,6 @@ deserialization resolves the concrete type through the same [`model_type`](@ref)
 `components` uses.
 """
 struct SystemDocument
-    base_power::Float64
-    unit_system::String
     name::Union{Nothing, String}
     description::Union{Nothing, String}
     frequency::Union{Nothing, Float64}
@@ -94,37 +89,15 @@ struct SystemDocument
 end
 
 """
-Build an empty document on `base_power`.
-
-`unit_system` is fixed at construction and read by every writer, so one document cannot hold
-a mixture of conventions.
+Build an empty document.
 """
-function SystemDocument(
-    base_power::Real;
-    unit_system::AbstractString="NATURAL_UNITS",
+function SystemDocument(;
     name=nothing,
     description=nothing,
     frequency=nothing,
     time_series_storage_file=nothing,
 )
-    if !(unit_system in DOCUMENT_UNIT_SYSTEMS)
-        throw(
-            PowerCoreOpenAPIModels.DocumentFormatError(
-                "unit_system must be one of $(join(DOCUMENT_UNIT_SYSTEMS, ", ")); " *
-                "got \"$unit_system\"",
-            ),
-        )
-    end
-    if !(base_power > 0)
-        throw(
-            PowerCoreOpenAPIModels.DocumentFormatError(
-                "base_power must be positive; got $base_power",
-            ),
-        )
-    end
     return SystemDocument(
-        Float64(base_power),
-        String(unit_system),
         name,
         description,
         _optional_float(frequency),
@@ -150,21 +123,10 @@ _optional_float(value::Real) = Float64(value)
 _optional_string(::Nothing) = nothing
 _optional_string(value::AbstractString) = String(value)
 
-get_base_power(doc::SystemDocument) = doc.base_power
-get_unit_system(doc::SystemDocument) = doc.unit_system
 get_name(doc::SystemDocument) = doc.name
 get_description(doc::SystemDocument) = doc.description
 get_frequency(doc::SystemDocument) = doc.frequency
 get_time_series_storage_file(doc::SystemDocument) = doc.time_series_storage_file
-
-"""
-Whether values are stored per unit rather than in the schemas' natural units.
-
-`COMPONENT_BASE` reproduces PowerSystems' storage convention. The `x-unit` annotations still
-name the natural unit either way, which is why the document states the convention it was
-written in.
-"""
-uses_per_unit(doc::SystemDocument) = doc.unit_system == "COMPONENT_BASE"
 
 """
 Type names present, sorted, so serialized output is deterministic across builds.
@@ -618,8 +580,6 @@ function document_tree(doc::SystemDocument)
         components[type_name] = _bucket(doc.components[type_name])
     end
     tree = Dict{String, Any}(
-        "base_power" => doc.base_power,
-        "unit_system" => doc.unit_system,
         "components" => components,
         "supplemental_attributes" => doc.supplemental_attributes,
         "supplemental_attribute_associations" =>
@@ -710,9 +670,7 @@ Every `components` key must name a registered model type — an unknown type nam
 rather than being skipped, since dropping the rows would lose data silently.
 """
 function document_from_json(raw::AbstractDict; source::AbstractString="document")
-    doc = SystemDocument(
-        Float64(_require(raw, "base_power", source));
-        unit_system=String(_require(raw, "unit_system", source)),
+    doc = SystemDocument(;
         name=_optional(raw, "name"),
         description=_optional(raw, "description"),
         frequency=_optional(raw, "frequency"),

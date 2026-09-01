@@ -37,31 +37,24 @@ const UNIT_EXPORTS = [
 const QUANTITY_OVERRIDES = Dict(
     ("ACBus", "magnitude") => "Voltage",
     ("ACBus", "voltage_limits") => "Voltage",
-
     ("AggregateRetrofitPotential", "retrofit_fraction") => "Fraction",
-
     ("AggregateTransportTechnology", "line_loss") => "Fraction",
-
     ("CapacityReserveMargin", "capacity_reserve_fraction") => "Fraction",
-
     ("ColocatedSupplyStorageTechnology", "efficiency_storage") => "Fraction",
     ("ColocatedSupplyStorageTechnology", "inverter_efficiency") => "Fraction",
     # Generation capacity over grid connection capacity: deliberately oversized
     # above 1 in co-located designs, so a plain ratio and not a [0,1] Fraction.
     ("ColocatedSupplyStorageTechnology", "inverter_supply_ratio") => "Dimensionless",
     ("ColocatedSupplyStorageTechnology", "losses_storage") => "Fraction",
-
     ("DCBus", "magnitude") => "Voltage",
     ("DCBus", "voltage_limits") => "Voltage",
 
     # Same reasoning as PortfolioFinancialData's rates below.
     ("DemandRequirement", "growth_rate") => "Fraction",
-
     ("DemandSideTechnology", "demand_energy_efficiency") => "Fraction",
     ("DemandSideTechnology", "max_demand_curtailment") => "Fraction",
     ("DemandSideTechnology", "min_power") => "Fraction",
     ("DemandSideTechnology", "technology_efficiency") => "Fraction",
-
     ("DiscreteControlledACBranch", "b") => "Susceptance",
     ("DiscreteControlledACBranch", "g") => "Conductance",
     ("DiscreteControlledACBranch", "r") => "Resistance",
@@ -79,9 +72,7 @@ const QUANTITY_OVERRIDES = Dict(
     ("EnergyReservoirStorage", "initial_storage_capacity_level") => "Fraction",
     ("EnergyReservoirStorage", "self_discharge") => "Fraction",
     ("EnergyReservoirStorage", "storage_target") => "Fraction",
-
     ("EnergyShareRequirements", "generation_fraction_requirement") => "Fraction",
-
     ("FACTSControlDevice", "reactive_power_required") => "Fraction",
     # A regulated-bus identifier (0 = local bus), not a physical fraction.
     ("FACTSControlDevice", "regulated_bus_number") => "Dimensionless",
@@ -90,7 +81,6 @@ const QUANTITY_OVERRIDES = Dict(
     # Complex admittance: real part is conductance, imag part is susceptance,
     # both in the same pu base.
     ("FixedAdmittance", "Y") => "Susceptance",
-
     ("GenericArcImpedance", "r") => "Resistance",
     ("GenericArcImpedance", "x") => "Reactance",
 
@@ -101,7 +91,6 @@ const QUANTITY_OVERRIDES = Dict(
     # Same reasoning as EnergyReservoirStorage.conversion_factor above.
     ("HydroPumpTurbine", "conversion_factor") => "Dimensionless",
     ("HydroPumpTurbine", "powerhouse_elevation") => "Elevation",
-
     ("HydroReservoir", "evaporative_loss") => "Fraction",
     ("HydroReservoir", "initial_level") => "Elevation",
     ("HydroReservoir", "intake_elevation") => "Elevation",
@@ -134,20 +123,16 @@ const QUANTITY_OVERRIDES = Dict(
     # Participation share of total Mvar contributed by this converter.
     ("InterconnectingConverter", "rmpct") => "Fraction",
     ("InterconnectingConverter", "voltage_limits") => "Voltage",
-
     ("Line", "b") => "Susceptance",
     ("Line", "g") => "Conductance",
     ("Line", "r") => "Resistance",
     ("Line", "x") => "Reactance",
-
     ("MonitoredLine", "b") => "Susceptance",
     ("MonitoredLine", "g") => "Conductance",
     ("MonitoredLine", "r") => "Resistance",
     ("MonitoredLine", "x") => "Reactance",
-
     ("NodalACTransportTechnology", "reactance") => "Reactance",
     ("NodalACTransportTechnology", "resistance") => "Resistance",
-
     ("NodalHVDCTransportTechnology", "line_loss") => "Fraction",
 
     # Financial rates are proportional (dimensionless) quantities, closer in
@@ -155,19 +140,14 @@ const QUANTITY_OVERRIDES = Dict(
     ("PortfolioFinancialData", "discount_rate") => "Fraction",
     ("PortfolioFinancialData", "inflation_rate") => "Fraction",
     ("PortfolioFinancialData", "interest_rate") => "Fraction",
-
     ("RenewableDispatch", "power_factor") => "PowerFactor",
-
     ("RenewableNonDispatch", "power_factor") => "PowerFactor",
-
     ("Source", "R_th") => "Resistance",
     ("Source", "X_th") => "Reactance",
     ("Source", "internal_voltage") => "Voltage",
-
     ("StorageTechnology", "efficiency") => "Fraction",
     ("StorageTechnology", "losses") => "Fraction",
     ("StorageTechnology", "min_discharge_fraction") => "Fraction",
-
     ("Substation", "grounding_resistance") => "Resistance",
 
     # units.json's own Fraction description names "cofire level" as an example.
@@ -190,7 +170,6 @@ const QUANTITY_OVERRIDES = Dict(
     ("TechnologyFinancialData", "interest_rate") => "Fraction",
     ("TechnologyFinancialData", "return_on_equity") => "Fraction",
     ("TechnologyFinancialData", "tax_rate") => "Fraction",
-
     ("TModelHVDCLine", "r") => "Resistance",
     # Series inductance in the T-model, expressed on the same pu base as a
     # series reactance.
@@ -198,7 +177,6 @@ const QUANTITY_OVERRIDES = Dict(
     # Shunt capacitance in the T-model, expressed on the same pu base as a
     # shunt susceptance.
     ("TModelHVDCLine", "c") => "Susceptance",
-
     ("ThreeWindingTransformer", "r_12") => "Resistance",
     ("ThreeWindingTransformer", "r_23") => "Resistance",
     ("ThreeWindingTransformer", "r_31") => "Resistance",
@@ -223,7 +201,6 @@ const QUANTITY_OVERRIDES = Dict(
     # a bare multiplier rather than a context-dependent voltage-base quantity.
     ("TransformerCircuit", "tap") => "Dimensionless",
     ("TransformerCircuit", "x") => "Reactance",
-
     ("TwoTerminalLCCLine", "compounding_resistance") => "Resistance",
     ("TwoTerminalLCCLine", "inverter_capacitor_reactance") => "Reactance",
     ("TwoTerminalLCCLine", "inverter_rc") => "Resistance",
@@ -274,6 +251,166 @@ const QUANTITY_OVERRIDES = Dict(
     # Complex admittance: real part is conductance, imag part is susceptance,
     # both in the same pu base.
     ("TwoWindingTransformer", "magnetizing_shunt") => "Susceptance",
+
+    # power-family fields: schemas-0.1.0 added power_units + a COMPONENT_BASE "pu"
+    # branch, and units.json now lists "pu" under ActivePower/ReactivePower/
+    # ApparentPower too, so each field's own quantity needs stating explicitly.
+    ("Area", "peak_active_power") => "ActivePower",
+    ("Area", "peak_reactive_power") => "ReactivePower",
+    ("AreaInterchange", "active_power_flow") => "ActivePower",
+    ("AreaInterchange", "flow_limits") => "ActivePower",
+    ("DiscreteControlledACBranch", "active_power_flow") => "ActivePower",
+    ("DiscreteControlledACBranch", "rating") => "ApparentPower",
+    ("DiscreteControlledACBranch", "reactive_power_flow") => "ReactivePower",
+    ("EnergyReservoirStorage", "active_power") => "ActivePower",
+    ("EnergyReservoirStorage", "input_active_power_limits") => "ActivePower",
+    ("EnergyReservoirStorage", "output_active_power_limits") => "ActivePower",
+    ("EnergyReservoirStorage", "rating") => "ApparentPower",
+    ("EnergyReservoirStorage", "reactive_power") => "ReactivePower",
+    ("EnergyReservoirStorage", "reactive_power_limits") => "ReactivePower",
+    ("EnergyReservoirStorage", "standing_loss") => "ActivePower",
+    ("ExponentialLoad", "active_power") => "ActivePower",
+    ("ExponentialLoad", "max_active_power") => "ActivePower",
+    ("ExponentialLoad", "max_reactive_power") => "ReactivePower",
+    ("ExponentialLoad", "reactive_power") => "ReactivePower",
+    ("FACTSControlDevice", "max_shunt_current") => "ApparentPower",
+    ("GenericArcImpedance", "active_power_flow") => "ActivePower",
+    ("GenericArcImpedance", "max_flow") => "ActivePower",
+    ("GenericArcImpedance", "reactive_power_flow") => "ReactivePower",
+    ("HybridSystem", "active_power") => "ActivePower",
+    ("HybridSystem", "input_active_power_limits") => "ActivePower",
+    ("HybridSystem", "interconnection_rating") => "ApparentPower",
+    ("HybridSystem", "output_active_power_limits") => "ActivePower",
+    ("HybridSystem", "reactive_power") => "ReactivePower",
+    ("HybridSystem", "reactive_power_limits") => "ReactivePower",
+    ("HydroDispatch", "active_power") => "ActivePower",
+    ("HydroDispatch", "active_power_limits") => "ActivePower",
+    ("HydroDispatch", "rating") => "ApparentPower",
+    ("HydroDispatch", "reactive_power") => "ReactivePower",
+    ("HydroDispatch", "reactive_power_limits") => "ReactivePower",
+    ("HydroPumpTurbine", "active_power") => "ActivePower",
+    ("HydroPumpTurbine", "active_power_limits") => "ActivePower",
+    ("HydroPumpTurbine", "active_power_limits_pump") => "ActivePower",
+    ("HydroPumpTurbine", "active_power_pump") => "ActivePower",
+    ("HydroPumpTurbine", "rating") => "ApparentPower",
+    ("HydroPumpTurbine", "reactive_power") => "ReactivePower",
+    ("HydroPumpTurbine", "reactive_power_limits") => "ReactivePower",
+    ("HydroTurbine", "active_power") => "ActivePower",
+    ("HydroTurbine", "active_power_limits") => "ActivePower",
+    ("HydroTurbine", "rating") => "ApparentPower",
+    ("HydroTurbine", "reactive_power") => "ReactivePower",
+    ("HydroTurbine", "reactive_power_limits") => "ReactivePower",
+    ("InterconnectingConverter", "active_power") => "ActivePower",
+    ("InterconnectingConverter", "active_power_limits") => "ActivePower",
+    ("InterconnectingConverter", "rating") => "ApparentPower",
+    ("InterconnectingConverter", "reactive_power_limits") => "ReactivePower",
+    ("InterruptiblePowerLoad", "active_power") => "ActivePower",
+    ("InterruptiblePowerLoad", "max_active_power") => "ActivePower",
+    ("InterruptiblePowerLoad", "max_reactive_power") => "ReactivePower",
+    ("InterruptiblePowerLoad", "reactive_power") => "ReactivePower",
+    ("InterruptibleStandardLoad", "constant_active_power") => "ActivePower",
+    ("InterruptibleStandardLoad", "constant_reactive_power") => "ReactivePower",
+    ("InterruptibleStandardLoad", "current_active_power") => "ActivePower",
+    ("InterruptibleStandardLoad", "current_reactive_power") => "ReactivePower",
+    ("InterruptibleStandardLoad", "impedance_active_power") => "ActivePower",
+    ("InterruptibleStandardLoad", "impedance_reactive_power") => "ReactivePower",
+    ("InterruptibleStandardLoad", "max_constant_active_power") => "ActivePower",
+    ("InterruptibleStandardLoad", "max_constant_reactive_power") => "ReactivePower",
+    ("InterruptibleStandardLoad", "max_current_active_power") => "ActivePower",
+    ("InterruptibleStandardLoad", "max_current_reactive_power") => "ReactivePower",
+    ("InterruptibleStandardLoad", "max_impedance_active_power") => "ActivePower",
+    ("InterruptibleStandardLoad", "max_impedance_reactive_power") => "ReactivePower",
+    ("Line", "active_power_flow") => "ActivePower",
+    ("Line", "rating") => "ApparentPower",
+    ("Line", "rating_b") => "ApparentPower",
+    ("Line", "rating_c") => "ApparentPower",
+    ("Line", "reactive_power_flow") => "ReactivePower",
+    ("LoadZone", "peak_active_power") => "ActivePower",
+    ("LoadZone", "peak_reactive_power") => "ReactivePower",
+    ("MonitoredLine", "active_power_flow") => "ActivePower",
+    ("MonitoredLine", "flow_limits") => "ActivePower",
+    ("MonitoredLine", "rating") => "ApparentPower",
+    ("MonitoredLine", "rating_b") => "ApparentPower",
+    ("MonitoredLine", "rating_c") => "ApparentPower",
+    ("MonitoredLine", "reactive_power_flow") => "ReactivePower",
+    ("MotorLoad", "active_power") => "ActivePower",
+    ("MotorLoad", "max_active_power") => "ActivePower",
+    ("MotorLoad", "rating") => "ApparentPower",
+    ("MotorLoad", "reactive_power") => "ReactivePower",
+    ("MotorLoad", "reactive_power_limits") => "ReactivePower",
+    ("PowerLoad", "active_power") => "ActivePower",
+    ("PowerLoad", "max_active_power") => "ActivePower",
+    ("PowerLoad", "max_reactive_power") => "ReactivePower",
+    ("PowerLoad", "reactive_power") => "ReactivePower",
+    ("RenewableDispatch", "active_power") => "ActivePower",
+    ("RenewableDispatch", "rating") => "ApparentPower",
+    ("RenewableDispatch", "reactive_power") => "ReactivePower",
+    ("RenewableDispatch", "reactive_power_limits") => "ReactivePower",
+    ("RenewableNonDispatch", "active_power") => "ActivePower",
+    ("RenewableNonDispatch", "rating") => "ApparentPower",
+    ("RenewableNonDispatch", "reactive_power") => "ReactivePower",
+    ("ShiftablePowerLoad", "active_power") => "ActivePower",
+    ("ShiftablePowerLoad", "active_power_limits") => "ActivePower",
+    ("ShiftablePowerLoad", "max_active_power") => "ActivePower",
+    ("ShiftablePowerLoad", "max_reactive_power") => "ReactivePower",
+    ("ShiftablePowerLoad", "reactive_power") => "ReactivePower",
+    ("Source", "active_power") => "ActivePower",
+    ("Source", "active_power_limits") => "ActivePower",
+    ("Source", "reactive_power") => "ReactivePower",
+    ("Source", "reactive_power_limits") => "ReactivePower",
+    ("StandardLoad", "constant_active_power") => "ActivePower",
+    ("StandardLoad", "constant_reactive_power") => "ReactivePower",
+    ("StandardLoad", "current_active_power") => "ActivePower",
+    ("StandardLoad", "current_reactive_power") => "ReactivePower",
+    ("StandardLoad", "impedance_active_power") => "ActivePower",
+    ("StandardLoad", "impedance_reactive_power") => "ReactivePower",
+    ("StandardLoad", "max_constant_active_power") => "ActivePower",
+    ("StandardLoad", "max_constant_reactive_power") => "ReactivePower",
+    ("StandardLoad", "max_current_active_power") => "ActivePower",
+    ("StandardLoad", "max_current_reactive_power") => "ReactivePower",
+    ("StandardLoad", "max_impedance_active_power") => "ActivePower",
+    ("StandardLoad", "max_impedance_reactive_power") => "ReactivePower",
+    ("SynchronousCondenser", "active_power_losses") => "ActivePower",
+    ("SynchronousCondenser", "rating") => "ApparentPower",
+    ("SynchronousCondenser", "reactive_power") => "ReactivePower",
+    ("SynchronousCondenser", "reactive_power_limits") => "ReactivePower",
+    ("ThermalMultiStart", "active_power") => "ActivePower",
+    ("ThermalMultiStart", "active_power_limits") => "ActivePower",
+    ("ThermalMultiStart", "power_trajectory") => "ActivePower",
+    ("ThermalMultiStart", "rating") => "ApparentPower",
+    ("ThermalMultiStart", "reactive_power") => "ReactivePower",
+    ("ThermalMultiStart", "reactive_power_limits") => "ReactivePower",
+    ("ThermalStandard", "active_power") => "ActivePower",
+    ("ThermalStandard", "active_power_limits") => "ActivePower",
+    ("ThermalStandard", "rating") => "ApparentPower",
+    ("ThermalStandard", "reactive_power") => "ReactivePower",
+    ("ThermalStandard", "reactive_power_limits") => "ReactivePower",
+    ("TransformerCircuit", "active_power_flow") => "ActivePower",
+    ("TransformerCircuit", "rating") => "ApparentPower",
+    ("TransformerCircuit", "rating_b") => "ApparentPower",
+    ("TransformerCircuit", "rating_c") => "ApparentPower",
+    ("TransformerCircuit", "reactive_power_flow") => "ReactivePower",
+    ("TransmissionInterface", "active_power_flow_limits") => "ActivePower",
+    ("TwoTerminalGenericHVDCLine", "active_power_flow") => "ActivePower",
+    ("TwoTerminalGenericHVDCLine", "active_power_limits_from") => "ActivePower",
+    ("TwoTerminalGenericHVDCLine", "active_power_limits_to") => "ActivePower",
+    ("TwoTerminalGenericHVDCLine", "reactive_power_limits_from") => "ReactivePower",
+    ("TwoTerminalGenericHVDCLine", "reactive_power_limits_to") => "ReactivePower",
+    ("TwoTerminalLCCLine", "active_power_flow") => "ActivePower",
+    ("TwoTerminalLCCLine", "active_power_limits_from") => "ActivePower",
+    ("TwoTerminalLCCLine", "active_power_limits_to") => "ActivePower",
+    ("TwoTerminalLCCLine", "reactive_power_limits_from") => "ReactivePower",
+    ("TwoTerminalLCCLine", "reactive_power_limits_to") => "ReactivePower",
+    ("TwoTerminalVSCLine", "active_power_flow") => "ActivePower",
+    ("TwoTerminalVSCLine", "active_power_limits_from") => "ActivePower",
+    ("TwoTerminalVSCLine", "active_power_limits_to") => "ActivePower",
+    ("TwoTerminalVSCLine", "rating") => "ApparentPower",
+    ("TwoTerminalVSCLine", "rating_from") => "ApparentPower",
+    ("TwoTerminalVSCLine", "rating_to") => "ApparentPower",
+    ("TwoTerminalVSCLine", "reactive_power_from") => "ReactivePower",
+    ("TwoTerminalVSCLine", "reactive_power_limits_from") => "ReactivePower",
+    ("TwoTerminalVSCLine", "reactive_power_limits_to") => "ReactivePower",
+    ("TwoTerminalVSCLine", "reactive_power_to") => "ReactivePower",
 )
 
 _is_convertible(::Nothing) = false
@@ -381,7 +518,10 @@ function emit_fallbacks(io)
         ("declared_quantity", "no declared quantity"),
         ("unit_base", "no unit base"),
     )
-        println(io, "function $accessor(::Type{T}, ::Val{P}) where {T <: OpenAPI.APIModel, P}")
+        println(
+            io,
+            "function $accessor(::Type{T}, ::Val{P}) where {T <: OpenAPI.APIModel, P}",
+        )
         println(io, "    error(\"\$(nameof(T)).\$P has $subject\")")
         println(io, "end")
     end
@@ -430,11 +570,8 @@ struct NestedBranch
     branches::Vector{Any}
 end
 
-build_branch(by_unit, type_name, prop, key, unit::AbstractString) = LeafBranch(
-    key,
-    String(unit),
-    resolve_quantity(by_unit, type_name, prop, String(unit)),
-)
+build_branch(by_unit, type_name, prop, key, unit::AbstractString) =
+    LeafBranch(key, String(unit), resolve_quantity(by_unit, type_name, prop, String(unit)))
 
 function build_branch(by_unit, type_name, prop, key, nested::AbstractDict)
     disc = nested["x-unit-discriminator"]
@@ -498,7 +635,8 @@ function emit_discriminated(io, prefix, by_unit, type_name, prop, spec)
     end
 
     println(io, "$(prefix)has_declared_unit(::Type{$type_name}, ::Val{:$prop}) = true")
-    for (accessor, kind) in (("declared_unit", Val(:unit)), ("declared_quantity", Val(:quantity)))
+    for (accessor, kind) in
+        (("declared_unit", Val(:unit)), ("declared_quantity", Val(:quantity)))
         println(io, "function $(prefix)$(accessor)(o::$type_name, ::Val{:$prop})")
         emit_branches(io, type_name, prop, branches, disc, kind, 1)
         println(

@@ -11,6 +11,7 @@ A voltage-dependent ZIP load, most commonly used for dynamics modeling.  A &#x60
         available=nothing,
         bus=nothing,
         base_power=nothing,
+        power_units=nothing,
         constant_active_power=0.0,
         constant_reactive_power=0.0,
         impedance_active_power=0.0,
@@ -32,18 +33,19 @@ A voltage-dependent ZIP load, most commonly used for dynamics modeling.  A &#x60
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
     - base_power::Float64 : Base power of the load for per unitization. Units: MVA.
-    - constant_active_power::Float64 : Constant active power demand (P_P). Units: MW.
-    - constant_reactive_power::Float64 : Constant reactive power demand (Q_P). Units: MVAr.
-    - impedance_active_power::Float64 : Active power coefficient for constant impedance load (P_Z). Units: MW.
-    - impedance_reactive_power::Float64 : Reactive power coefficient for constant impedance load (Q_Z). Units: MVAr.
-    - current_active_power::Float64 : Active power coefficient for constant current load (P_I). Units: MW.
-    - current_reactive_power::Float64 : Reactive power coefficient for constant current load (Q_I). Units: MVAr.
-    - max_constant_active_power::Float64 : Maximum active power drawn by constant power load. Units: MW.
-    - max_constant_reactive_power::Float64 : Maximum reactive power drawn by constant power load. Units: MVAr.
-    - max_impedance_active_power::Float64 : Maximum active power drawn by constant impedance load. Units: MW.
-    - max_impedance_reactive_power::Float64 : Maximum reactive power drawn by constant impedance load. Units: MVAr.
-    - max_current_active_power::Float64 : Maximum active power drawn by constant current load. Units: MW.
-    - max_current_reactive_power::Float64 : Maximum reactive power drawn by constant current load. Units: MVAr.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
+    - constant_active_power::Float64 : Constant active power demand (P_P). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - constant_reactive_power::Float64 : Constant reactive power demand (Q_P). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - impedance_active_power::Float64 : Active power coefficient for constant impedance load (P_Z). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - impedance_reactive_power::Float64 : Reactive power coefficient for constant impedance load (Q_Z). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - current_active_power::Float64 : Active power coefficient for constant current load (P_I). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - current_reactive_power::Float64 : Reactive power coefficient for constant current load (Q_I). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - max_constant_active_power::Float64 : Maximum active power drawn by constant power load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - max_constant_reactive_power::Float64 : Maximum reactive power drawn by constant power load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - max_impedance_active_power::Float64 : Maximum active power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - max_impedance_reactive_power::Float64 : Maximum reactive power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - max_current_active_power::Float64 : Maximum active power drawn by constant current load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - max_current_reactive_power::Float64 : Maximum reactive power drawn by constant current load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
     - conformity::String : Indicates whether the specified load is conforming or non-conforming.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
@@ -53,6 +55,7 @@ Base.@kwdef mutable struct StandardLoad <: OpenAPI.APIModel
     available::Union{Nothing, Bool} = nothing
     bus::Union{Nothing, Int64} = nothing
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
     constant_active_power::Union{Nothing, Float64} = 0.0
     constant_reactive_power::Union{Nothing, Float64} = 0.0
     impedance_active_power::Union{Nothing, Float64} = 0.0
@@ -68,14 +71,14 @@ Base.@kwdef mutable struct StandardLoad <: OpenAPI.APIModel
     conformity::Union{Nothing, String} = "UNDEFINED"
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function StandardLoad(id, name, available, bus, base_power, constant_active_power, constant_reactive_power, impedance_active_power, impedance_reactive_power, current_active_power, current_reactive_power, max_constant_active_power, max_constant_reactive_power, max_impedance_active_power, max_impedance_reactive_power, max_current_active_power, max_current_reactive_power, conformity, dynamic_injector, )
-        o = new(id, name, available, bus, base_power, constant_active_power, constant_reactive_power, impedance_active_power, impedance_reactive_power, current_active_power, current_reactive_power, max_constant_active_power, max_constant_reactive_power, max_impedance_active_power, max_impedance_reactive_power, max_current_active_power, max_current_reactive_power, conformity, dynamic_injector, )
+    function StandardLoad(id, name, available, bus, base_power, power_units, constant_active_power, constant_reactive_power, impedance_active_power, impedance_reactive_power, current_active_power, current_reactive_power, max_constant_active_power, max_constant_reactive_power, max_impedance_active_power, max_impedance_reactive_power, max_current_active_power, max_current_reactive_power, conformity, dynamic_injector, )
+        o = new(id, name, available, bus, base_power, power_units, constant_active_power, constant_reactive_power, impedance_active_power, impedance_reactive_power, current_active_power, current_reactive_power, max_constant_active_power, max_constant_reactive_power, max_impedance_active_power, max_impedance_reactive_power, max_current_active_power, max_current_reactive_power, conformity, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type StandardLoad
 
-const _property_types_StandardLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("constant_active_power")=>Union{Nothing, Float64}, Symbol("constant_reactive_power")=>Union{Nothing, Float64}, Symbol("impedance_active_power")=>Union{Nothing, Float64}, Symbol("impedance_reactive_power")=>Union{Nothing, Float64}, Symbol("current_active_power")=>Union{Nothing, Float64}, Symbol("current_reactive_power")=>Union{Nothing, Float64}, Symbol("max_constant_active_power")=>Union{Nothing, Float64}, Symbol("max_constant_reactive_power")=>Union{Nothing, Float64}, Symbol("max_impedance_active_power")=>Union{Nothing, Float64}, Symbol("max_impedance_reactive_power")=>Union{Nothing, Float64}, Symbol("max_current_active_power")=>Union{Nothing, Float64}, Symbol("max_current_reactive_power")=>Union{Nothing, Float64}, Symbol("conformity")=>Union{Nothing, String}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_StandardLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("constant_active_power")=>Union{Nothing, Float64}, Symbol("constant_reactive_power")=>Union{Nothing, Float64}, Symbol("impedance_active_power")=>Union{Nothing, Float64}, Symbol("impedance_reactive_power")=>Union{Nothing, Float64}, Symbol("current_active_power")=>Union{Nothing, Float64}, Symbol("current_reactive_power")=>Union{Nothing, Float64}, Symbol("max_constant_active_power")=>Union{Nothing, Float64}, Symbol("max_constant_reactive_power")=>Union{Nothing, Float64}, Symbol("max_impedance_active_power")=>Union{Nothing, Float64}, Symbol("max_impedance_reactive_power")=>Union{Nothing, Float64}, Symbol("max_current_active_power")=>Union{Nothing, Float64}, Symbol("max_current_reactive_power")=>Union{Nothing, Float64}, Symbol("conformity")=>Union{Nothing, String}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ StandardLoad }, name::Symbol) = _property_types_StandardLoad[name]
 
 function OpenAPI.check_required(o::StandardLoad)
@@ -84,6 +87,7 @@ function OpenAPI.check_required(o::StandardLoad)
     o.available === nothing && (return false)
     o.bus === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -93,6 +97,7 @@ function OpenAPI.validate_properties(o::StandardLoad)
     OpenAPI.validate_property(StandardLoad, Symbol("available"), o.available)
     OpenAPI.validate_property(StandardLoad, Symbol("bus"), o.bus)
     OpenAPI.validate_property(StandardLoad, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(StandardLoad, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(StandardLoad, Symbol("constant_active_power"), o.constant_active_power)
     OpenAPI.validate_property(StandardLoad, Symbol("constant_reactive_power"), o.constant_reactive_power)
     OpenAPI.validate_property(StandardLoad, Symbol("impedance_active_power"), o.impedance_active_power)
@@ -114,6 +119,11 @@ function OpenAPI.validate_property(::Type{ StandardLoad }, name::Symbol, val)
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "StandardLoad", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
 

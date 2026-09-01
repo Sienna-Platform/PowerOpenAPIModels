@@ -4,6 +4,7 @@
 
 
 @doc raw"""ValueCurve
+A cost or fuel curve: function data plus a declaration of how to read its y axis. &#x60;INPUT_OUTPUT&#x60; reads y as the total &#x60;f(x)&#x60;, &#x60;INCREMENTAL&#x60; as the marginal rate &#x60;f&#39;(x)&#x60;, and &#x60;AVERAGE_RATE&#x60; as the average &#x60;f(x)/x&#x60;; the three can express the same underlying function and are inter-convertible given &#x60;initial_input&#x60;. The &#x60;TIME_SERIES_*&#x60; variants are the time-varying equivalents. Which form to use follows the data source: bid stacks are incremental, total cost tables input-output, efficiency tables average rate.
 
     ValueCurve(; value=nothing)
 """

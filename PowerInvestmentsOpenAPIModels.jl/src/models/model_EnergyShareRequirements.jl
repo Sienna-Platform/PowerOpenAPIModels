@@ -3,6 +3,7 @@
 
 
 @doc raw"""EnergyShareRequirements
+Policy requirement that the total generation of the eligible technologies be at least a pre-determined fraction of the total annual demand across the eligible zones in the target year.
 
     EnergyShareRequirements(;
         id=nothing,

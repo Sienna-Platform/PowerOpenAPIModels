@@ -3,6 +3,7 @@
 
 
 @doc raw"""InOut
+A pair of values, one for the inbound (&#x60;in&#x60;) and one for the outbound (&#x60;out&#x60;) direction of a quantity.
 
     InOut(;
         in=nothing,

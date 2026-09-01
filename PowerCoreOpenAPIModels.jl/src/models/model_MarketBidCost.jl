@@ -7,9 +7,9 @@ Cost representation for static (non-time-varying) market bids of energy and anci
 
     MarketBidCost(;
         cost_type="MARKET_BID",
-        minimum_energy_offer=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
+        minimum_energy_offer=nothing,
         start_up=nothing,
-        shut_down=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
+        shut_down=nothing,
         incremental_offer_curves=nothing,
         decremental_offer_curves=nothing,
         ancillary_service_offers=nothing,
@@ -31,9 +31,9 @@ Cost representation for static (non-time-varying) market bids of energy and anci
 """
 Base.@kwdef mutable struct MarketBidCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "MARKET_BID"
-    minimum_energy_offer = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
+    minimum_energy_offer = nothing # spec type: Union{ Nothing, InputOutputCurve }
     start_up = nothing # spec type: Union{ Nothing, StartUpStages }
-    shut_down = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
+    shut_down = nothing # spec type: Union{ Nothing, InputOutputCurve }
     incremental_offer_curves = nothing # spec type: Union{ Nothing, CostCurve }
     decremental_offer_curves = nothing # spec type: Union{ Nothing, CostCurve }
     ancillary_service_offers::Union{Nothing, Vector{Int64}} = nothing

@@ -3,6 +3,7 @@
 
 
 @doc raw"""ImpedanceCorrectionData
+Supplemental attribute carrying one row of an impedance correction table, linked to a transformer. The correction curve defines intervals over tap ratio or angle shift, and the accompanying fields name which winding the row applies to and whether the controlled quantity is an off-nominal turns ratio or a phase angle shift.
 
     ImpedanceCorrectionData(;
         id=nothing,

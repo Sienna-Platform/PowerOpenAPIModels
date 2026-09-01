@@ -3,6 +3,7 @@
 
 
 @doc raw"""TimeSeriesQuadraticFunctionData
+Time-series-backed variant of &#x60;QuadraticFunctionData&#x60;. In place of inline coefficients it carries &#x60;association_id&#x60;, referencing a stored series that supplies them at each step; use it when the coefficients change over time.
 
     TimeSeriesQuadraticFunctionData(;
         function_type="TIME_SERIES_QUADRATIC",

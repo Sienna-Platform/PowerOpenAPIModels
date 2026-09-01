@@ -3,6 +3,7 @@
 
 
 @doc raw"""TimeSeriesPiecewiseLinearData
+Time-series-backed variant of &#x60;PiecewiseLinearData&#x60;. In place of an inline point table it carries &#x60;association_id&#x60;, referencing a stored series that supplies one at each step; use it when the points change over time.
 
     TimeSeriesPiecewiseLinearData(;
         function_type="TIME_SERIES_PIECEWISE_LINEAR",

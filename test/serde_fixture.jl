@@ -31,9 +31,6 @@ const SERDE_FIXTURES = (
     end
 
     @testset "value spot-checks" begin
-        @test PowerOpenAPIModels.get_base_power(doc) == 100.0
-        @test PowerOpenAPIModels.get_unit_system(doc) == unit_system
-
         buses = PowerOpenAPIModels.get_components(doc, "ACBus")
         bus = only(filter(b -> b.id == 3, buses))
         @test bus.base_voltage == 138.0

@@ -1,6 +1,7 @@
 #!/usr/bin/env julia
 # Move generated stubs into monorepo packages and generate module files.
-# Core gets all models; domain packages skip models already in Core.
+# Core gets all models; domain packages skip models already in Core, and any type shared
+# across 2+ domains is promoted into Core even when Core's own generator run skipped it.
 
 const REPO = dirname(@__DIR__)
 const GENERATED = joinpath(REPO, "generated")
@@ -19,8 +20,55 @@ const DOMAINS = [
     "operations" => "PowerOperationsOpenAPIModels.jl",
     "investments" => "PowerInvestmentsOpenAPIModels.jl",
     "dynamics" => "PowerDynamicsOpenAPIModels.jl",
-    "timeseries" => "PowerTimeSeriesOpenAPIModels.jl"
+    "timeseries" => "PowerTimeSeriesOpenAPIModels.jl",
 ]
+
+# SiennaSchemas generates its purely-administrative/association schemas (Supplemental-
+# AttributeAssociation, GeographicInfo, DataSource, the shared MinMax/InOut/UpDown/... value
+# types) as a separate `infrastructure-core` bundle, gated by its own scripts/check_layering.py
+# for staying power-semantics-free -- but no Julia package here corresponds to that split yet,
+# so its raw generator output is merged into core's own before anything below (the per-domain
+# loop, the shared-type scan) ever looks at `generated/core`. Not a DOMAINS entry: it has no
+# destination package of its own, only a source directory to fold into core's.
+let infra_core = joinpath(GENERATED, "infrastructure-core")
+    if isdir(infra_core)
+        for sub in ("src/models", "src/apis", "docs")
+            src_dir = joinpath(infra_core, sub)
+            isdir(src_dir) || continue
+            dst_dir = joinpath(GENERATED, "core", sub)
+            mkpath(dst_dir)
+            for f in readdir(src_dir, join=true)
+                cp(f, joinpath(dst_dir, basename(f)); force=true)
+            end
+        end
+    end
+end
+
+# A schema shared across domains (MinMax, InOut, UpDown, ...) lands in every domain whose
+# own document references it, independent of whether Core's own document does. Core is
+# still its one canonical home, so this scans every domain's raw generator output up front
+# and flags any name occurring in more than one domain, recording one representative source
+# path per name (first domain in DOMAINS order that has it) for Core to adopt even when
+# Core's own generator run produced no copy of it.
+function _scan_shared(subpath, suffix)
+    domain_count = Dict{String, Int}()
+    source = Dict{String, String}()
+    for (domain, _) in DOMAINS
+        dir = joinpath(GENERATED, domain, subpath)
+        isdir(dir) || continue
+        for f in readdir(dir, join=true)
+            endswith(f, suffix) || continue
+            name = basename(f)
+            domain_count[name] = get(domain_count, name, 0) + 1
+            haskey(source, name) || (source[name] = f)
+        end
+    end
+    shared = Set(name for (name, n) in domain_count if n > 1)
+    return shared, source
+end
+
+const SHARED_MODELS, MODEL_SOURCE = _scan_shared(joinpath("src", "models"), ".jl")
+const SHARED_DOCS, DOC_SOURCE = _scan_shared("docs", ".md")
 
 for (domain, pkg) in DOMAINS
     gen = joinpath(GENERATED, domain)
@@ -36,12 +84,21 @@ for (domain, pkg) in DOMAINS
     mkpath(joinpath(dest, "apis"))
     mkpath(docs_dest)
 
-    # Copy models (skip Core duplicates for domain packages)
+    # Copy models (skip Core duplicates, and cross-domain shared types, for domain packages)
     for f in readdir(joinpath(gen, "src", "models"), join=true)
         endswith(f, ".jl") || continue
         name = basename(f)
-        domain != "core" && isfile(joinpath(CORE_MODELS, name)) && continue
+        domain != "core" &&
+            (isfile(joinpath(CORE_MODELS, name)) || name in SHARED_MODELS) &&
+            continue
         cp(f, joinpath(dest, "models", name))
+    end
+    if domain == "core"
+        # Adopt every cross-domain shared type Core's own generator run did not produce.
+        for name in SHARED_MODELS
+            isfile(joinpath(CORE_MODELS, name)) ||
+                cp(MODEL_SOURCE[name], joinpath(CORE_MODELS, name))
+        end
     end
 
     # Copy APIs
@@ -53,22 +110,31 @@ for (domain, pkg) in DOMAINS
         end
     end
 
-    # Copy docs (skip Core duplicates for domain packages)
+    # Copy docs (skip Core duplicates, and cross-domain shared types, for domain packages)
     docs_dir = joinpath(gen, "docs")
     if isdir(docs_dir)
         for f in readdir(docs_dir, join=true)
             endswith(f, ".md") || continue
             name = basename(f)
-            domain != "core" && isfile(joinpath(CORE_DOCS, name)) && continue
+            domain != "core" &&
+                (isfile(joinpath(CORE_DOCS, name)) || name in SHARED_DOCS) &&
+                continue
             cp(f, joinpath(docs_dest, name))
+        end
+    end
+    if domain == "core"
+        for name in SHARED_DOCS
+            isfile(joinpath(CORE_DOCS, name)) ||
+                cp(DOC_SOURCE[name], joinpath(CORE_DOCS, name))
         end
     end
 
     # Generate module file
     mod = replace(pkg, ".jl" => "")
-    models = sort([basename(f)
-                   for f in readdir(joinpath(dest, "models")) if endswith(f, ".jl")])
-    apis = sort([basename(f) for f in readdir(joinpath(dest, "apis")) if endswith(f, ".jl")])
+    models =
+        sort([basename(f) for f in readdir(joinpath(dest, "models")) if endswith(f, ".jl")])
+    apis =
+        sort([basename(f) for f in readdir(joinpath(dest, "apis")) if endswith(f, ".jl")])
 
     # Extract exported type names from files
     exports = Set{String}()
@@ -89,9 +155,8 @@ for (domain, pkg) in DOMAINS
     # openapi-generator's julia-client template emits ZonedDateTime for
     # date-time formatted fields but never imports TimeZones for it.
     needs_timezones = any(
-        occursin("ZonedDateTime", read(joinpath(dest, "models", f), String))
-    for
-    f in models
+        occursin("ZonedDateTime", read(joinpath(dest, "models", f), String)) for
+        f in models
     )
 
     # Units must be emitted before the module file so the include below is valid.
@@ -141,7 +206,7 @@ for (domain, pkg) in DOMAINS
             println(io)
             println(
                 io,
-                "for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export \$n; end"
+                "for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export \$n; end",
             )
         end
         println(io)

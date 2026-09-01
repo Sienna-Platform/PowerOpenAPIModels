@@ -3,6 +3,7 @@
 
 
 @doc raw"""UpDown
+A pair of values, one for the upward (&#x60;up&#x60;) and one for the downward (&#x60;down&#x60;) direction of a quantity.
 
     UpDown(;
         down=nothing,

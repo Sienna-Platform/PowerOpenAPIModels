@@ -3,6 +3,7 @@
 
 
 @doc raw"""FdbdPnts
+A pair of deadband thresholds &#x60;(fdbd1, fdbd2)&#x60; on a frequency error signal, inside which the controller does not act.
 
     FdbdPnts(;
         fdbd1=nothing,

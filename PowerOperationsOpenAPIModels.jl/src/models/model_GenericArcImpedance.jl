@@ -14,6 +14,7 @@ A generic branch defined by a series impedance on an &#x60;Arc&#x60; between two
         max_flow=nothing,
         arc=nothing,
         base_power=nothing,
+        power_units=nothing,
         parameter_units="COMPONENT_BASE",
         r=nothing,
         x=nothing,
@@ -22,11 +23,12 @@ A generic branch defined by a series impedance on an &#x60;Arc&#x60; between two
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
-    - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: MW.
-    - reactive_power_flow::Float64 : Initial condition of reactive power flow on the line. Units: MVAr.
-    - max_flow::Float64 : Maximum allowable flow on the generic impedance. Units: MW.
+    - active_power_flow::Float64 : Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - reactive_power_flow::Float64 : Initial condition of reactive power flow on the line. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - max_flow::Float64 : Maximum allowable flow on the generic impedance. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
     - arc::Int64 : An &#x60;Arc&#x60; defining this line &#x60;from&#x60; a bus &#x60;to&#x60; another bus.
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
     - parameter_units::String : Unit basis for r and x. COMPONENT_BASE is per-unit on this component&#39;s base_power, which records the system base.
     - r::Float64 : Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
     - x::Float64 : Reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
@@ -40,18 +42,19 @@ Base.@kwdef mutable struct GenericArcImpedance <: OpenAPI.APIModel
     max_flow::Union{Nothing, Float64} = nothing
     arc::Union{Nothing, Int64} = nothing
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
     parameter_units::Union{Nothing, String} = "COMPONENT_BASE"
     r::Union{Nothing, Float64} = nothing
     x::Union{Nothing, Float64} = nothing
 
-    function GenericArcImpedance(id, name, available, active_power_flow, reactive_power_flow, max_flow, arc, base_power, parameter_units, r, x, )
-        o = new(id, name, available, active_power_flow, reactive_power_flow, max_flow, arc, base_power, parameter_units, r, x, )
+    function GenericArcImpedance(id, name, available, active_power_flow, reactive_power_flow, max_flow, arc, base_power, power_units, parameter_units, r, x, )
+        o = new(id, name, available, active_power_flow, reactive_power_flow, max_flow, arc, base_power, power_units, parameter_units, r, x, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type GenericArcImpedance
 
-const _property_types_GenericArcImpedance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("max_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, )
+const _property_types_GenericArcImpedance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("max_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, )
 OpenAPI.property_type(::Type{ GenericArcImpedance }, name::Symbol) = _property_types_GenericArcImpedance[name]
 
 function OpenAPI.check_required(o::GenericArcImpedance)
@@ -63,6 +66,7 @@ function OpenAPI.check_required(o::GenericArcImpedance)
     o.max_flow === nothing && (return false)
     o.arc === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     o.r === nothing && (return false)
     o.x === nothing && (return false)
     true
@@ -77,6 +81,7 @@ function OpenAPI.validate_properties(o::GenericArcImpedance)
     OpenAPI.validate_property(GenericArcImpedance, Symbol("max_flow"), o.max_flow)
     OpenAPI.validate_property(GenericArcImpedance, Symbol("arc"), o.arc)
     OpenAPI.validate_property(GenericArcImpedance, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(GenericArcImpedance, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(GenericArcImpedance, Symbol("parameter_units"), o.parameter_units)
     OpenAPI.validate_property(GenericArcImpedance, Symbol("r"), o.r)
     OpenAPI.validate_property(GenericArcImpedance, Symbol("x"), o.x)
@@ -90,6 +95,11 @@ function OpenAPI.validate_property(::Type{ GenericArcImpedance }, name::Symbol, 
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "GenericArcImpedance", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
     if name === Symbol("parameter_units")

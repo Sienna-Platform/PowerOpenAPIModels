@@ -4,6 +4,7 @@
 
 
 @doc raw"""GenericOperationCost
+Operating cost of a generation technology, selected by &#x60;cost_type&#x60; among the thermal (&#x60;THERMAL&#x60;), renewable (&#x60;RENEWABLE&#x60;), and hydro (&#x60;HYDRO_GEN&#x60;) generation cost representations.
 
     GenericOperationCost(; value=nothing)
 """

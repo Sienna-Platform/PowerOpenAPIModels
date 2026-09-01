@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`cost_type`** | **`String`** |  | [optional] [default to "RENEWABLE"]
 **`curtailment_cost`** | [**`*CostCurve`**](CostCurve.md) |  | [optional] [default to nothing]
-**`variable`** | [**`*CostCurve`**](CostCurve.md) |  | [default to nothing]
+**`variable_operation_cost`** | [**`*CostCurve`**](CostCurve.md) |  | [default to nothing]
 **`fixed`** | **`Float64`** |  | [optional] [default to 0.0]
 
 

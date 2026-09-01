@@ -3,6 +3,7 @@
 
 
 @doc raw"""IncrementalCurve
+A curve whose y values are the marginal rate &#x60;f&#39;(x)&#x60; at production level &#x60;x&#x60; — the native form for market bid stacks and incremental heat rate data. &#x60;initial_input&#x60; records the total input at the minimum production point, anchoring the absolute level and enabling conversion to an &#x60;InputOutputCurve&#x60;. Use &#x60;InputOutputCurve&#x60; when the data gives total cost at each output level.
 
     IncrementalCurve(;
         curve_type="INCREMENTAL",

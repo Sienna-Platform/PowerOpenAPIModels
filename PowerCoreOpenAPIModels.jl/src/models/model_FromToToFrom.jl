@@ -3,6 +3,7 @@
 
 
 @doc raw"""FromTo_ToFrom
+A pair of values for a directed edge, one for each orientation: &#x60;from_to&#x60; and &#x60;to_from&#x60;. The two are carried separately because the quantity need not be equal in the two directions.
 
     FromToToFrom(;
         from_to=nothing,

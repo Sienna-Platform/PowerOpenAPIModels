@@ -3,6 +3,7 @@
 
 
 @doc raw"""CarbonTax
+Policy requirement defining an additional cost penalty per ton of CO2 produced in the eligible regions during the target year.
 
     CarbonTax(;
         id=nothing,

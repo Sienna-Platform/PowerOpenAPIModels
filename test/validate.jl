@@ -108,7 +108,9 @@ const SCHEMA_DIR =
         struct_fields = setdiff(
             Set(string.(fieldnames(PowerOpenAPIModels.SystemDocument))),
             Set([
-                "counter", "component_types_by_id", "service_membership",
+                "counter",
+                "component_types_by_id",
+                "service_membership",
                 "trading_hub_membership",
             ]),
         )
@@ -117,19 +119,14 @@ const SCHEMA_DIR =
         @test isempty(setdiff(struct_fields, schema_fields))
 
         # Every required field must be one the container always emits.
-        emitted = Set(
-            keys(
-                PowerOpenAPIModels.document_tree(PowerOpenAPIModels.SystemDocument(100.0)),
-            ),
-        )
+        emitted =
+            Set(keys(PowerOpenAPIModels.document_tree(PowerOpenAPIModels.SystemDocument())))
         @test isempty(setdiff(Set(schema["required"]), emitted))
     end
 end
 
 @testset "SystemDocument round-trips" begin
-    doc = PowerOpenAPIModels.SystemDocument(
-        100.0;
-        unit_system="COMPONENT_BASE",
+    doc = PowerOpenAPIModels.SystemDocument(;
         name="validate",
         description="round-trip fixture",
         frequency=50.0,
@@ -152,9 +149,6 @@ end
         PowerOpenAPIModels.write_document(doc, path)
         back = PowerOpenAPIModels.read_document(path)
 
-        @test PowerOpenAPIModels.get_base_power(back) == 100.0
-        @test PowerOpenAPIModels.get_unit_system(back) == "COMPONENT_BASE"
-        @test PowerOpenAPIModels.uses_per_unit(back)
         @test PowerOpenAPIModels.get_name(back) == "validate"
         @test PowerOpenAPIModels.get_description(back) == "round-trip fixture"
         @test PowerOpenAPIModels.get_frequency(back) == 50.0
@@ -170,8 +164,7 @@ end
     # Components carry ids that must be reserved when reading a document;
     # `_highest_id` must walk them or a read document's id counter under-reserves
     # and `next_id!` can mint a colliding id.
-    doc = PowerOpenAPIModels.SystemDocument(
-        100.0;
+    doc = PowerOpenAPIModels.SystemDocument(;
         time_series_storage_file="fixture_time_series_storage.h5",
     )
     bus_id = PowerOpenAPIModels.next_id!(doc)
@@ -214,7 +207,7 @@ end
 @testset "SystemDocument reads a document with no ext key" begin
     # `ext` is optional in the schema (Core/SystemDocument.json's `required` list omits
     # it); a producer that mapped every field is allowed to omit the key entirely.
-    doc = PowerOpenAPIModels.SystemDocument(100.0)
+    doc = PowerOpenAPIModels.SystemDocument()
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
@@ -238,7 +231,7 @@ end
     # Every document written before `trading_hub_associations` existed omits the key.
     # Reading one back is the whole reason the field is optional, so assert it directly
     # rather than trusting the schema's `required` list to stay correct.
-    doc = PowerOpenAPIModels.SystemDocument(100.0)
+    doc = PowerOpenAPIModels.SystemDocument()
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
@@ -268,16 +261,12 @@ end
 end
 
 @testset "SystemDocument rejects malformed input" begin
-    @test_throws PowerCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.SystemDocument(
-        100.0;
-        unit_system="SYSTEM_BASE",
-    )
     @test_throws PowerCoreOpenAPIModels.DocumentFormatError PowerCoreOpenAPIModels.model_type(
         "NoSuchType",
     )
 
     # An unresolved reference must error rather than be dropped.
-    doc = PowerOpenAPIModels.SystemDocument(100.0)
+    doc = PowerOpenAPIModels.SystemDocument()
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,

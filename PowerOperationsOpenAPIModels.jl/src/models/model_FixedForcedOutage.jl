@@ -3,6 +3,7 @@
 
 
 @doc raw"""FixedForcedOutage
+Supplemental attribute recording a component&#39;s forced outage status directly, rather than as a probability. &#x60;outage_status&#x60; is 1 when the component is outaged and 0 when it is available, and it can be backed by a time series drawn from a stochastic simulation or from historical records.
 
     FixedForcedOutage(;
         id=nothing,

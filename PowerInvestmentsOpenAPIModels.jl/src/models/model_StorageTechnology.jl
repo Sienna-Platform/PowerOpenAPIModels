@@ -3,6 +3,7 @@
 
 
 @doc raw"""StorageTechnology
+Candidate storage technology in a region. Charge capacity, discharge capacity, and energy capacity are added independently, each with its own capital cost, unit size, and capacity limits; charge and discharge efficiency, self-discharge losses, and limits on the ratio of energy to discharge capacity complete the description.
 
     StorageTechnology(;
         id=nothing,

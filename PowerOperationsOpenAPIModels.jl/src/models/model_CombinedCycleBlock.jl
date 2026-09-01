@@ -14,7 +14,7 @@ Attribute to represent combined cycle generation by block configuration that sha
 
     - id::Int64
     - name::String : Name of the combined cycle block
-    - configuration::String
+    - configuration::String : Shaft and turbine arrangement of a combined cycle plant: a single shaft carrying one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or &#x60;Other&#x60; for any arrangement outside these.
     - heat_recovery_to_steam_factor::Float64 : Factor for heat recovery to steam conversion
 """
 Base.@kwdef mutable struct CombinedCycleBlock <: OpenAPI.APIModel

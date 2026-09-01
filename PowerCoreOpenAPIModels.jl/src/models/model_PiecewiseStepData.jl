@@ -3,6 +3,7 @@
 
 
 @doc raw"""PiecewiseStepData
+Data for a step function, constant on each segment, defined by the x coordinates of the segment endpoints and one y value per segment. The y values are per-segment rates, not absolute values; use &#x60;PiecewiseLinearData&#x60; when the data gives a value at each point. &#x60;x_coords&#x60; ascends and holds at least two entries, and &#x60;y_coords&#x60; holds exactly one fewer.
 
     PiecewiseStepData(;
         function_type="PIECEWISE_STEP",

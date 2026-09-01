@@ -3,6 +3,7 @@
 
 
 @doc raw"""XY_Coords
+A single point, given as its &#x60;x&#x60; and &#x60;y&#x60; coordinates.
 
     XYCoords(;
         x=nothing,

@@ -7,41 +7,41 @@ Cost representation for renewable generation units
 
     RenewableGenerationCost(;
         cost_type="RENEWABLE",
-        curtailment_cost=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))),
-        variable=nothing,
+        curtailment_cost=nothing,
+        variable_operation_cost=nothing,
         fixed=0.0,
     )
 
     - cost_type::String
     - curtailment_cost::CostCurve
-    - variable::CostCurve
+    - variable_operation_cost::CostCurve
     - fixed::Float64
 """
 Base.@kwdef mutable struct RenewableGenerationCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "RENEWABLE"
-    curtailment_cost = CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))) # spec type: Union{ Nothing, CostCurve }
-    variable = nothing # spec type: Union{ Nothing, CostCurve }
+    curtailment_cost = nothing # spec type: Union{ Nothing, CostCurve }
+    variable_operation_cost = nothing # spec type: Union{ Nothing, CostCurve }
     fixed::Union{Nothing, Float64} = 0.0
 
-    function RenewableGenerationCost(cost_type, curtailment_cost, variable, fixed, )
-        o = new(cost_type, curtailment_cost, variable, fixed, )
+    function RenewableGenerationCost(cost_type, curtailment_cost, variable_operation_cost, fixed, )
+        o = new(cost_type, curtailment_cost, variable_operation_cost, fixed, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type RenewableGenerationCost
 
-const _property_types_RenewableGenerationCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("curtailment_cost")=>Union{Nothing, CostCurve}, Symbol("variable")=>Union{Nothing, CostCurve}, Symbol("fixed")=>Union{Nothing, Float64}, )
+const _property_types_RenewableGenerationCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("curtailment_cost")=>Union{Nothing, CostCurve}, Symbol("variable_operation_cost")=>Union{Nothing, CostCurve}, Symbol("fixed")=>Union{Nothing, Float64}, )
 OpenAPI.property_type(::Type{ RenewableGenerationCost }, name::Symbol) = _property_types_RenewableGenerationCost[name]
 
 function OpenAPI.check_required(o::RenewableGenerationCost)
-    o.variable === nothing && (return false)
+    o.variable_operation_cost === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::RenewableGenerationCost)
     OpenAPI.validate_property(RenewableGenerationCost, Symbol("cost_type"), o.cost_type)
     OpenAPI.validate_property(RenewableGenerationCost, Symbol("curtailment_cost"), o.curtailment_cost)
-    OpenAPI.validate_property(RenewableGenerationCost, Symbol("variable"), o.variable)
+    OpenAPI.validate_property(RenewableGenerationCost, Symbol("variable_operation_cost"), o.variable_operation_cost)
     OpenAPI.validate_property(RenewableGenerationCost, Symbol("fixed"), o.fixed)
 end
 

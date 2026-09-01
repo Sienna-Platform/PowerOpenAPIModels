@@ -3,6 +3,7 @@
 
 
 @doc raw"""QuadraticFunctionData
+Data for a quadratic function &#x60;f(x) &#x3D; quadratic_term * x^2 + proportional_term * x + constant_term&#x60;. A non-negative &#x60;quadratic_term&#x60; makes the function convex.
 
     QuadraticFunctionData(;
         constant_term=nothing,

@@ -3,6 +3,7 @@
 
 
 @doc raw"""TechnologyFinancialData
+Struct containing relevant financial information for a technology.
 
     TechnologyFinancialData(;
         capital_recovery_period=nothing,
@@ -13,12 +14,12 @@
         tax_rate=nothing,
     )
 
-    - capital_recovery_period::Int64
-    - technology_base_year::Int64
-    - debt_fraction::Float64
-    - debt_rate::Float64
-    - return_on_equity::Float64
-    - tax_rate::Float64
+    - capital_recovery_period::Int64 : Period over which capital costs are recovered for net present value calculations. Units: yr.
+    - technology_base_year::Int64 : Base year for technology cost data used in NPV calculations.
+    - debt_fraction::Float64 : Fraction of capital costs financed through debt. Units: 1.
+    - debt_rate::Float64 : Interest rate on debt financing. Units: 1.
+    - return_on_equity::Float64 : Required rate of return on equity financing. Units: 1.
+    - tax_rate::Float64 : Tax rate applied to equity returns. Units: 1.
 """
 Base.@kwdef mutable struct TechnologyFinancialData <: OpenAPI.APIModel
     capital_recovery_period::Union{Nothing, Int64} = nothing
@@ -39,6 +40,12 @@ const _property_types_TechnologyFinancialData = Dict{Symbol,Type}(Symbol("capita
 OpenAPI.property_type(::Type{ TechnologyFinancialData }, name::Symbol) = _property_types_TechnologyFinancialData[name]
 
 function OpenAPI.check_required(o::TechnologyFinancialData)
+    o.capital_recovery_period === nothing && (return false)
+    o.technology_base_year === nothing && (return false)
+    o.debt_fraction === nothing && (return false)
+    o.debt_rate === nothing && (return false)
+    o.return_on_equity === nothing && (return false)
+    o.tax_rate === nothing && (return false)
     true
 end
 

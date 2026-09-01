@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations. | [default to nothing]
 **`arc`** | **`Int64`** | An Arc defining this line &#x60;from&#x60; a rectifier bus &#x60;to&#x60; an inverter bus. The rectifier bus must be specified in the &#x60;from&#x60; bus and inverter bus in the &#x60;to&#x60; bus. | [default to nothing]
-**`active_power_flow`** | **`Float64`** | Initial condition of active power flow on the line. Units: MW. | [default to nothing]
+**`active_power_flow`** | **`Float64`** | Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [default to nothing]
 **`parameter_units`** | **`String`** | Unit basis for this line&#39;s impedance fields (r, rectifier/inverter rc/xc, capacitor reactances, compounding_resistance). | [optional] [default to "NATURAL_UNITS"]
 **`r`** | **`Float64`** | Series resistance of the DC line. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [default to nothing]
 **`transfer_setpoint`** | **`Float64`** | Desired set-point of power. If &#x60;power_mode &#x3D; true&#x60; this value is in MW units, and if &#x60;power_mode &#x3D; false&#x60; is in Amperes units. This parameter must not be specified in per-unit. A positive value represents the desired consumed power at the rectifier bus, while a negative value represents the desired power at the inverter bus (i.e. the absolute value of &#x60;transfer_setpoint&#x60; is the generated power at the inverter bus). Units: per power_mode — true: MW, false: A . | [default to nothing]
@@ -46,6 +46,7 @@ Name | Type | Description | Notes
 **`reactive_power_limits_to`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`loss`** | [**`*TwoTerminalLoss`**](TwoTerminalLoss.md) |  | [optional] [default to nothing]
 **`base_power`** | **`Float64`** | System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [default to nothing]
+**`power_units`** | **`String`** | Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit. | [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

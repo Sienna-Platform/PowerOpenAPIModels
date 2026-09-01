@@ -3,6 +3,7 @@
 
 
 @doc raw"""NodalACTransportTechnology
+Nodal representation of candidate AC transmission lines between two regions. Alongside capacity limits and a capital cost curve it carries the electrical characteristics of the line — resistance, series reactance, and voltage rating — and is added in discrete units of &#x60;unit_size&#x60;.
 
     NodalACTransportTechnology(;
         id=nothing,

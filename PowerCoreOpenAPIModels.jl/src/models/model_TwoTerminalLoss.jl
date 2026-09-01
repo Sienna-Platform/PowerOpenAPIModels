@@ -4,6 +4,7 @@
 
 
 @doc raw"""TwoTerminalLoss
+Loss model of a two-terminal HVDC line as a function of flow, selected by &#x60;curve_type&#x60;. It accepts a linear model with a constant loss and a proportional loss rate (MW of loss per MW of flow), or a piecewise model giving different proportional losses on different flow segments.
 
     TwoTerminalLoss(; value=nothing)
 """
