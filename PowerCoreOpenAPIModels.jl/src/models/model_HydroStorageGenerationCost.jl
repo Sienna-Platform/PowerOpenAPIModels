@@ -4,6 +4,7 @@
 
 
 @doc raw"""HydroStorageGenerationCost
+Operating cost of hydro generation with storage, selected by &#x60;cost_type&#x60; between the hydro generation (&#x60;HYDRO_GEN&#x60;) and storage (&#x60;STORAGE&#x60;) cost representations.
 
     HydroStorageGenerationCost(; value=nothing)
 """

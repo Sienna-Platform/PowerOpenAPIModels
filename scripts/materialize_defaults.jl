@@ -30,11 +30,12 @@ const REPO = dirname(@__DIR__)
 const SCHEMA_DIR = get(ENV, "SCHEMA_DIR", joinpath(dirname(REPO), "SiennaSchemas"))
 
 const DOMAIN_TO_PKG = Dict(
+    "infrastructure-core" => "InfrastructureCoreOpenAPIModels.jl",
+    "timeseries" => "InfrastructureTimeSeriesOpenAPIModels.jl",
     "core" => "PowerCoreOpenAPIModels.jl",
     "operations" => "PowerOperationsOpenAPIModels.jl",
     "investments" => "PowerInvestmentsOpenAPIModels.jl",
-    "dynamics" => "PowerDynamicsOpenAPIModels.jl",
-    "timeseries" => "PowerTimeSeriesOpenAPIModels.jl"
+    "dynamics" => "PowerDynamicsOpenAPIModels.jl"
 )
 
 # --------------------------------------------------------------------------- #

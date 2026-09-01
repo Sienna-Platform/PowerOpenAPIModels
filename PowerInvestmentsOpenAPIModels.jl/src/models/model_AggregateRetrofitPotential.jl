@@ -3,6 +3,7 @@
 
 
 @doc raw"""AggregateRetrofitPotential
+Supplemental attribute defining a total amount of a supply technology&#39;s capacity that can be retrofit, given either as an absolute quantity or as a fraction of existing capacity. &#x60;retrofit_id&#x60; groups retrofittable source technologies with the retrofit options available to them inside the same zone.
 
     AggregateRetrofitPotential(;
         id=nothing,

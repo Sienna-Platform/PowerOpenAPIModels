@@ -3,6 +3,7 @@
 
 
 @doc raw"""StartUpStages
+A triple of values, one for each stage of a thermal unit&#39;s start-up: &#x60;hot&#x60;, &#x60;warm&#x60;, and &#x60;cold&#x60;.
 
     StartUpStages(;
         startup_stages_type="STAGES",

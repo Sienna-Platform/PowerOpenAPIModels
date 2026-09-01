@@ -3,6 +3,7 @@
 
 
 @doc raw"""HourlyMatching
+Policy requirement that the qualified demand-side technologies have their demand met by an equal amount of generation from qualified supply in every hour, such that &#x60;sum(P)_qualified_supply &gt;&#x3D; sum(D)_qualified_demand&#x60;.
 
     HourlyMatching(;
         id=nothing,

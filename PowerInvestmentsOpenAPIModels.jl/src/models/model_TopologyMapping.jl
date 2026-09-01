@@ -3,6 +3,7 @@
 
 
 @doc raw"""TopologyMapping
+Supplemental attribute storing the mapping between a zone and the associated buses in the base system.
 
     TopologyMapping(;
         id=nothing,

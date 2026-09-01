@@ -8,37 +8,37 @@ Cost representation for hydro gen units
     HydroGenerationCost(;
         cost_type="HYDRO_GEN",
         fixed=0.0,
-        variable=nothing,
+        variable_operation_cost=nothing,
     )
 
     - cost_type::String
     - fixed::Float64
-    - variable::ProductionVariableCostCurve
+    - variable_operation_cost::ProductionVariableCostCurve
 """
 Base.@kwdef mutable struct HydroGenerationCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "HYDRO_GEN"
     fixed::Union{Nothing, Float64} = 0.0
-    variable = nothing # spec type: Union{ Nothing, ProductionVariableCostCurve }
+    variable_operation_cost = nothing # spec type: Union{ Nothing, ProductionVariableCostCurve }
 
-    function HydroGenerationCost(cost_type, fixed, variable, )
-        o = new(cost_type, fixed, variable, )
+    function HydroGenerationCost(cost_type, fixed, variable_operation_cost, )
+        o = new(cost_type, fixed, variable_operation_cost, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type HydroGenerationCost
 
-const _property_types_HydroGenerationCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("fixed")=>Union{Nothing, Float64}, Symbol("variable")=>Union{Nothing, ProductionVariableCostCurve}, )
+const _property_types_HydroGenerationCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("fixed")=>Union{Nothing, Float64}, Symbol("variable_operation_cost")=>Union{Nothing, ProductionVariableCostCurve}, )
 OpenAPI.property_type(::Type{ HydroGenerationCost }, name::Symbol) = _property_types_HydroGenerationCost[name]
 
 function OpenAPI.check_required(o::HydroGenerationCost)
-    o.variable === nothing && (return false)
+    o.variable_operation_cost === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::HydroGenerationCost)
     OpenAPI.validate_property(HydroGenerationCost, Symbol("cost_type"), o.cost_type)
     OpenAPI.validate_property(HydroGenerationCost, Symbol("fixed"), o.fixed)
-    OpenAPI.validate_property(HydroGenerationCost, Symbol("variable"), o.variable)
+    OpenAPI.validate_property(HydroGenerationCost, Symbol("variable_operation_cost"), o.variable_operation_cost)
 end
 
 function OpenAPI.validate_property(::Type{ HydroGenerationCost }, name::Symbol, val)

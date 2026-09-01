@@ -3,7 +3,7 @@
 
 
 @doc raw"""TModelHVDCLine
-A High Voltage DC transmission line for modeling DC transmission networks.  This line must be connected to a &#x60;DCBus&#x60; on each end. It uses a T-Model of the line impedance. This is suitable for operational simulations with a multi-terminal DC network.
+A High Voltage DC transmission line for modeling DC transmission networks.  This line must be connected to a &#x60;DCBus&#x60; on each end. It uses a T-Model of the line impedance. This is suitable for operational simulations with a multi-terminal DC network. This line has no independent per-component power base, so its power fields are always natural units.
 
     TModelHVDCLine(;
         id=nothing,

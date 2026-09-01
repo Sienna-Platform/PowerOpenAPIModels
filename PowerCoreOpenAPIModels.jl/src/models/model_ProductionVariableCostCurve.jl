@@ -4,6 +4,7 @@
 
 
 @doc raw"""ProductionVariableCostCurve
+Variable production cost of a device, selected by &#x60;variable_cost_type&#x60; between a curve denominated directly in currency (&#x60;COST&#x60;) and one denominated in fuel with a separate fuel price (&#x60;FUEL&#x60;).
 
     ProductionVariableCostCurve(; value=nothing)
 """

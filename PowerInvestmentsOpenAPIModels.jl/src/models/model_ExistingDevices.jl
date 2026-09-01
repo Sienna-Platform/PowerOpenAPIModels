@@ -3,6 +3,7 @@
 
 
 @doc raw"""ExistingDevices
+Supplemental attribute mapping a technology in the portfolio to the existing system — for example, the list of existing generators that correspond to one supply technology.
 
     ExistingDevices(;
         id=nothing,

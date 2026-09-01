@@ -3,6 +3,7 @@
 
 
 @doc raw"""ColocatedSupplyStorageTechnology
+Supply technology that supports storage co-located with wind and solar generation. Capital costs, operating costs, capacity limits, and lifetimes are carried separately for the solar, wind, storage, and inverter portions, which share one grid connection.
 
     ColocatedSupplyStorageTechnology(;
         id=nothing,

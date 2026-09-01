@@ -9,10 +9,10 @@ Buy offer curves whose value curve is a time-series-backed piecewise incremental
         power_units="NATURAL_UNITS",
         value_curve=nothing,
         variable_cost_type="COST",
-        vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
+        vom_cost=nothing,
     )
 
-    - power_units::String : Unit basis curve power values are stored in. COMPONENT_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as COMPONENT_BASE.
+    - power_units::String : Unit basis a stored value is expressed in. COMPONENT_BASE: per-unit against a base the component records itself. NATURAL_UNITS: the quantity&#39;s own physical unit. No system-wide option: a value per-unitized against a shared base records that base on the component and rides as COMPONENT_BASE. Used in three scopes, each read against its own record rather than a document-wide table: a component&#39;s own &#x60;power_units&#x60; (against that component&#39;s &#x60;base_power&#x60;), a cost payload&#39;s own &#x60;power_units&#x60; (e.g. &#x60;CostCurve&#x60;, against the owning component&#39;s &#x60;base_power&#x60;), and a time series association&#39;s own &#x60;unit_system&#x60; (governing only that one series).
     - value_curve::ValueCurve
     - variable_cost_type::String
     - vom_cost::InputOutputCurve
@@ -21,7 +21,7 @@ Base.@kwdef mutable struct CostCurve <: OpenAPI.APIModel
     power_units::Union{Nothing, String} = "NATURAL_UNITS"
     value_curve = nothing # spec type: Union{ Nothing, ValueCurve }
     variable_cost_type::Union{Nothing, String} = "COST"
-    vom_cost = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
+    vom_cost = nothing # spec type: Union{ Nothing, InputOutputCurve }
 
     function CostCurve(power_units, value_curve, variable_cost_type, vom_cost, )
         o = new(power_units, value_curve, variable_cost_type, vom_cost, )

@@ -16,6 +16,7 @@ A static power load that can be partially or completed shifted to later time per
         max_active_power=nothing,
         max_reactive_power=nothing,
         base_power=nothing,
+        power_units=nothing,
         load_balance_time_horizon=nothing,
         operation_cost=nothing,
         dynamic_injector=nothing,
@@ -25,12 +26,13 @@ A static power load that can be partially or completed shifted to later time per
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
-    - active_power::Float64 : Initial steady state active power demand. Units: MW.
+    - active_power::Float64 : Initial steady state active power demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
     - active_power_limits::MinMax
-    - reactive_power::Float64 : Initial steady state reactive power demand. Units: MVAr.
-    - max_active_power::Float64 : Maximum active power that this load can demand. Units: MW.
-    - max_reactive_power::Float64 : Maximum reactive power that this load can demand. Units: MVAr.
+    - reactive_power::Float64 : Initial steady state reactive power demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - max_active_power::Float64 : Maximum active power that this load can demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - max_reactive_power::Float64 : Maximum reactive power that this load can demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
     - load_balance_time_horizon::Int64 : Number of time periods over which load must be balanced.
     - operation_cost::InterruptiblePowerLoadOperationCost
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
@@ -46,18 +48,19 @@ Base.@kwdef mutable struct ShiftablePowerLoad <: OpenAPI.APIModel
     max_active_power::Union{Nothing, Float64} = nothing
     max_reactive_power::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
     load_balance_time_horizon::Union{Nothing, Int64} = nothing
     operation_cost = nothing # spec type: Union{ Nothing, InterruptiblePowerLoadOperationCost }
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function ShiftablePowerLoad(id, name, available, bus, active_power, active_power_limits, reactive_power, max_active_power, max_reactive_power, base_power, load_balance_time_horizon, operation_cost, dynamic_injector, )
-        o = new(id, name, available, bus, active_power, active_power_limits, reactive_power, max_active_power, max_reactive_power, base_power, load_balance_time_horizon, operation_cost, dynamic_injector, )
+    function ShiftablePowerLoad(id, name, available, bus, active_power, active_power_limits, reactive_power, max_active_power, max_reactive_power, base_power, power_units, load_balance_time_horizon, operation_cost, dynamic_injector, )
+        o = new(id, name, available, bus, active_power, active_power_limits, reactive_power, max_active_power, max_reactive_power, base_power, power_units, load_balance_time_horizon, operation_cost, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type ShiftablePowerLoad
 
-const _property_types_ShiftablePowerLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("max_active_power")=>Union{Nothing, Float64}, Symbol("max_reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("load_balance_time_horizon")=>Union{Nothing, Int64}, Symbol("operation_cost")=>Union{Nothing, InterruptiblePowerLoadOperationCost}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_ShiftablePowerLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("max_active_power")=>Union{Nothing, Float64}, Symbol("max_reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("load_balance_time_horizon")=>Union{Nothing, Int64}, Symbol("operation_cost")=>Union{Nothing, InterruptiblePowerLoadOperationCost}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ ShiftablePowerLoad }, name::Symbol) = _property_types_ShiftablePowerLoad[name]
 
 function OpenAPI.check_required(o::ShiftablePowerLoad)
@@ -71,6 +74,7 @@ function OpenAPI.check_required(o::ShiftablePowerLoad)
     o.max_active_power === nothing && (return false)
     o.max_reactive_power === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     o.load_balance_time_horizon === nothing && (return false)
     o.operation_cost === nothing && (return false)
     true
@@ -87,6 +91,7 @@ function OpenAPI.validate_properties(o::ShiftablePowerLoad)
     OpenAPI.validate_property(ShiftablePowerLoad, Symbol("max_active_power"), o.max_active_power)
     OpenAPI.validate_property(ShiftablePowerLoad, Symbol("max_reactive_power"), o.max_reactive_power)
     OpenAPI.validate_property(ShiftablePowerLoad, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(ShiftablePowerLoad, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(ShiftablePowerLoad, Symbol("load_balance_time_horizon"), o.load_balance_time_horizon)
     OpenAPI.validate_property(ShiftablePowerLoad, Symbol("operation_cost"), o.operation_cost)
     OpenAPI.validate_property(ShiftablePowerLoad, Symbol("dynamic_injector"), o.dynamic_injector)
@@ -102,6 +107,11 @@ function OpenAPI.validate_property(::Type{ ShiftablePowerLoad }, name::Symbol, v
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "ShiftablePowerLoad", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
 

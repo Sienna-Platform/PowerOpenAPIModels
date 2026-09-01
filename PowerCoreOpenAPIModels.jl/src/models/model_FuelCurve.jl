@@ -3,6 +3,7 @@
 
 
 @doc raw"""FuelCurve
+Variable operation cost of a device expressed in fuel consumed — MBTU, liters, m^3 — together with the price that converts fuel to currency. Wraps a &#x60;ValueCurve&#x60; in input-output, incremental, or average-rate form; exactly one of &#x60;fuel_cost&#x60; and &#x60;fuel_cost_time_series&#x60; supplies the price.
 
     FuelCurve(;
         fuel_cost=nothing,
@@ -16,7 +17,7 @@
 
     - fuel_cost::Float64 : Fixed fuel cost per unit of fuel, or null when fuel_cost_time_series names a time-varying one. Exactly one of the two is set; producers and consumers enforce it.
     - fuel_cost_time_series::Int64 : Store-minted id of the fuel-cost time series association, or null when fuel_cost carries a fixed value. Exactly one of the two is set.
-    - power_units::String : Unit basis curve power values are stored in. COMPONENT_BASE: per-unit on the component&#39;s own base_power. NATURAL_UNITS: MW/MVA. There is no system-base option: per-unit data historically on the system base records that base in the component&#39;s base_power and rides as COMPONENT_BASE.
+    - power_units::String : Unit basis a stored value is expressed in. COMPONENT_BASE: per-unit against a base the component records itself. NATURAL_UNITS: the quantity&#39;s own physical unit. No system-wide option: a value per-unitized against a shared base records that base on the component and rides as COMPONENT_BASE. Used in three scopes, each read against its own record rather than a document-wide table: a component&#39;s own &#x60;power_units&#x60; (against that component&#39;s &#x60;base_power&#x60;), a cost payload&#39;s own &#x60;power_units&#x60; (e.g. &#x60;CostCurve&#x60;, against the owning component&#39;s &#x60;base_power&#x60;), and a time series association&#39;s own &#x60;unit_system&#x60; (governing only that one series).
     - startup_fuel_offtake::InputOutputCurve
     - value_curve::ValueCurve
     - variable_cost_type::String

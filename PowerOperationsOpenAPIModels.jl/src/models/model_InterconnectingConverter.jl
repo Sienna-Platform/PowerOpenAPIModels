@@ -15,6 +15,7 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
         rating=nothing,
         active_power_limits=nothing,
         base_power=nothing,
+        power_units=nothing,
         reactive_power_limits=nothing,
         dc_current=0.0,
         max_dc_current=100000000,
@@ -37,10 +38,11 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus on the AC side of this converter.
     - dc_bus::Int64 : ID of the bus on the DC side of this converter.
-    - active_power::Float64 : Active power on the DC side. Units: MW.
-    - rating::Float64 : Maximum output power rating of the converter. Units: MVA.
+    - active_power::Float64 : Active power on the DC side. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - rating::Float64 : Maximum output power rating of the converter. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
     - active_power_limits::MinMax
     - base_power::Float64 : Base power of the converter for per unitization. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
     - reactive_power_limits::MinMax
     - dc_current::Float64 : DC current on the converter. Units: A.
     - max_dc_current::Float64 : Maximum stable dc current limits. Units: A.
@@ -67,6 +69,7 @@ Base.@kwdef mutable struct InterconnectingConverter <: OpenAPI.APIModel
     rating::Union{Nothing, Float64} = nothing
     active_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
     reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     dc_current::Union{Nothing, Float64} = 0.0
     max_dc_current::Union{Nothing, Float64} = 100000000
@@ -83,14 +86,14 @@ Base.@kwdef mutable struct InterconnectingConverter <: OpenAPI.APIModel
     voltage_limits = MinMax(; max=999.9, min=0.0) # spec type: Union{ Nothing, MinMax }
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function InterconnectingConverter(id, name, available, bus, dc_bus, active_power, rating, active_power_limits, base_power, reactive_power_limits, dc_current, max_dc_current, loss_function, dc_control, ac_control, voltage_setpoint_units, dc_setpoint, ac_setpoint, dc_voltage_droop, remote_bus_control, rmpct, power_factor_weighting_fraction, voltage_limits, dynamic_injector, )
-        o = new(id, name, available, bus, dc_bus, active_power, rating, active_power_limits, base_power, reactive_power_limits, dc_current, max_dc_current, loss_function, dc_control, ac_control, voltage_setpoint_units, dc_setpoint, ac_setpoint, dc_voltage_droop, remote_bus_control, rmpct, power_factor_weighting_fraction, voltage_limits, dynamic_injector, )
+    function InterconnectingConverter(id, name, available, bus, dc_bus, active_power, rating, active_power_limits, base_power, power_units, reactive_power_limits, dc_current, max_dc_current, loss_function, dc_control, ac_control, voltage_setpoint_units, dc_setpoint, ac_setpoint, dc_voltage_droop, remote_bus_control, rmpct, power_factor_weighting_fraction, voltage_limits, dynamic_injector, )
+        o = new(id, name, available, bus, dc_bus, active_power, rating, active_power_limits, base_power, power_units, reactive_power_limits, dc_current, max_dc_current, loss_function, dc_control, ac_control, voltage_setpoint_units, dc_setpoint, ac_setpoint, dc_voltage_droop, remote_bus_control, rmpct, power_factor_weighting_fraction, voltage_limits, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type InterconnectingConverter
 
-const _property_types_InterconnectingConverter = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("dc_bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("dc_current")=>Union{Nothing, Float64}, Symbol("max_dc_current")=>Union{Nothing, Float64}, Symbol("loss_function")=>Union{Nothing, InputOutputCurve}, Symbol("dc_control")=>Union{Nothing, String}, Symbol("ac_control")=>Union{Nothing, String}, Symbol("voltage_setpoint_units")=>Union{Nothing, String}, Symbol("dc_setpoint")=>Union{Nothing, Float64}, Symbol("ac_setpoint")=>Union{Nothing, Float64}, Symbol("dc_voltage_droop")=>Union{Nothing, Float64}, Symbol("remote_bus_control")=>Union{Nothing, Int64}, Symbol("rmpct")=>Union{Nothing, Float64}, Symbol("power_factor_weighting_fraction")=>Union{Nothing, Float64}, Symbol("voltage_limits")=>Union{Nothing, MinMax}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_InterconnectingConverter = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("dc_bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("dc_current")=>Union{Nothing, Float64}, Symbol("max_dc_current")=>Union{Nothing, Float64}, Symbol("loss_function")=>Union{Nothing, InputOutputCurve}, Symbol("dc_control")=>Union{Nothing, String}, Symbol("ac_control")=>Union{Nothing, String}, Symbol("voltage_setpoint_units")=>Union{Nothing, String}, Symbol("dc_setpoint")=>Union{Nothing, Float64}, Symbol("ac_setpoint")=>Union{Nothing, Float64}, Symbol("dc_voltage_droop")=>Union{Nothing, Float64}, Symbol("remote_bus_control")=>Union{Nothing, Int64}, Symbol("rmpct")=>Union{Nothing, Float64}, Symbol("power_factor_weighting_fraction")=>Union{Nothing, Float64}, Symbol("voltage_limits")=>Union{Nothing, MinMax}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ InterconnectingConverter }, name::Symbol) = _property_types_InterconnectingConverter[name]
 
 function OpenAPI.check_required(o::InterconnectingConverter)
@@ -103,6 +106,7 @@ function OpenAPI.check_required(o::InterconnectingConverter)
     o.rating === nothing && (return false)
     o.active_power_limits === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -116,6 +120,7 @@ function OpenAPI.validate_properties(o::InterconnectingConverter)
     OpenAPI.validate_property(InterconnectingConverter, Symbol("rating"), o.rating)
     OpenAPI.validate_property(InterconnectingConverter, Symbol("active_power_limits"), o.active_power_limits)
     OpenAPI.validate_property(InterconnectingConverter, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(InterconnectingConverter, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(InterconnectingConverter, Symbol("reactive_power_limits"), o.reactive_power_limits)
     OpenAPI.validate_property(InterconnectingConverter, Symbol("dc_current"), o.dc_current)
     OpenAPI.validate_property(InterconnectingConverter, Symbol("max_dc_current"), o.max_dc_current)
@@ -142,6 +147,11 @@ function OpenAPI.validate_property(::Type{ InterconnectingConverter }, name::Sym
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "InterconnectingConverter", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
 

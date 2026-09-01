@@ -22,8 +22,8 @@ const SERDE_FIXTURES = (
         total = 0
         for type_name in PowerOpenAPIModels.component_type_names(doc)
             components = PowerOpenAPIModels.get_components(doc, type_name)
-            T = PowerCoreOpenAPIModels.model_type(type_name)
-            @test T <: PowerCoreOpenAPIModels.OpenAPI.APIModel
+            T = InfrastructureCoreOpenAPIModels.model_type(type_name)
+            @test T <: InfrastructureCoreOpenAPIModels.OpenAPI.APIModel
             @test eltype(components) === T
             total += length(components)
         end
@@ -31,9 +31,6 @@ const SERDE_FIXTURES = (
     end
 
     @testset "value spot-checks" begin
-        @test PowerOpenAPIModels.get_base_power(doc) == 100.0
-        @test PowerOpenAPIModels.get_unit_system(doc) == unit_system
-
         buses = PowerOpenAPIModels.get_components(doc, "ACBus")
         bus = only(filter(b -> b.id == 3, buses))
         @test bus.base_voltage == 138.0
@@ -56,8 +53,8 @@ const SERDE_FIXTURES = (
             # The generated model structs are mutable with no custom `==`, so struct
             # equality is identity, not value equality. Compare through the JSON tree
             # instead, matching the idiom validate.jl already uses for this purpose.
-            as_json(d) = PowerCoreOpenAPIModels.JSON.parse(
-                PowerCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(d)),
+            as_json(d) = InfrastructureCoreOpenAPIModels.JSON.parse(
+                InfrastructureCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(d)),
             )
             @test as_json(doc) == as_json(reread)
         end

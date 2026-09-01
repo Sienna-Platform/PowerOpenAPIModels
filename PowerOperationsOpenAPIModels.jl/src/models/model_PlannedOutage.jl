@@ -3,6 +3,7 @@
 
 
 @doc raw"""PlannedOutage
+Supplemental attribute describing outages that are scheduled in advance, naming the time series that carries the schedule.
 
     PlannedOutage(;
         id=nothing,

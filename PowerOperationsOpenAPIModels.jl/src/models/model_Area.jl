@@ -12,14 +12,16 @@ A collection of buses for control purposes. The &#x60;Area&#x60; can be specifie
         peak_reactive_power=0.0,
         load_response=0.0,
         base_power=nothing,
+        power_units=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
-    - peak_active_power::Float64 : Peak active power in the area. Units: MW.
-    - peak_reactive_power::Float64 : Peak reactive power in the area. Units: MVAr.
+    - peak_active_power::Float64 : Peak active power in the area. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - peak_reactive_power::Float64 : Peak reactive power in the area. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
     - load_response::Float64 : Load-frequency damping parameter modeling how much the load in the area changes due to changes in frequency. Units: MW/Hz.
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
 """
 Base.@kwdef mutable struct Area <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -28,21 +30,23 @@ Base.@kwdef mutable struct Area <: OpenAPI.APIModel
     peak_reactive_power::Union{Nothing, Float64} = 0.0
     load_response::Union{Nothing, Float64} = 0.0
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
 
-    function Area(id, name, peak_active_power, peak_reactive_power, load_response, base_power, )
-        o = new(id, name, peak_active_power, peak_reactive_power, load_response, base_power, )
+    function Area(id, name, peak_active_power, peak_reactive_power, load_response, base_power, power_units, )
+        o = new(id, name, peak_active_power, peak_reactive_power, load_response, base_power, power_units, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type Area
 
-const _property_types_Area = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("peak_active_power")=>Union{Nothing, Float64}, Symbol("peak_reactive_power")=>Union{Nothing, Float64}, Symbol("load_response")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, )
+const _property_types_Area = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("peak_active_power")=>Union{Nothing, Float64}, Symbol("peak_reactive_power")=>Union{Nothing, Float64}, Symbol("load_response")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ Area }, name::Symbol) = _property_types_Area[name]
 
 function OpenAPI.check_required(o::Area)
     o.id === nothing && (return false)
     o.name === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -53,6 +57,7 @@ function OpenAPI.validate_properties(o::Area)
     OpenAPI.validate_property(Area, Symbol("peak_reactive_power"), o.peak_reactive_power)
     OpenAPI.validate_property(Area, Symbol("load_response"), o.load_response)
     OpenAPI.validate_property(Area, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(Area, Symbol("power_units"), o.power_units)
 end
 
 function OpenAPI.validate_property(::Type{ Area }, name::Symbol, val)
@@ -61,5 +66,10 @@ function OpenAPI.validate_property(::Type{ Area }, name::Symbol, val)
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "Area", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 end

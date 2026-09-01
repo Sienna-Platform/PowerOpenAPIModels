@@ -3,6 +3,7 @@
 
 
 @doc raw"""SupplyTechnology
+Candidate generation technology for a region, representing either a thermal or a renewable generation technology. It carries the capital and operating cost of new capacity together with the operating characteristics the added units take on — capacity limits, ramp and time limits, outage derating, fuel and its carbon intensity, and start-up fuel use.
 
     SupplyTechnology(;
         id=nothing,

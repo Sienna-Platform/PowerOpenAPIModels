@@ -3,6 +3,7 @@
 
 
 @doc raw"""PortfolioFinancialData
+Financial data for the portfolio as a whole: the base economic year that all costs are converted to a net present value in, and the discount, inflation, and interest rates used in that conversion.
 
     PortfolioFinancialData(;
         id=nothing,

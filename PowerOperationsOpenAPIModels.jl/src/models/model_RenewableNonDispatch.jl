@@ -16,6 +16,7 @@ A non-dispatchable (i.e., non-curtailable or must-take) renewable generator.  It
         prime_mover_type=nothing,
         power_factor=nothing,
         base_power=nothing,
+        power_units=nothing,
         dynamic_injector=nothing,
     )
 
@@ -23,12 +24,13 @@ A non-dispatchable (i.e., non-curtailable or must-take) renewable generator.  It
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
-    - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: MW.
-    - reactive_power::Float64 : Initial reactive power set point of the unit, used in some production cost modeling simulations. To set the reactive power in a load flow, use &#x60;power_factor&#x60;. Units: MVAr.
-    - rating::Float64 : Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: MVA.
+    - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - reactive_power::Float64 : Initial reactive power set point of the unit, used in some production cost modeling simulations. To set the reactive power in a load flow, use &#x60;power_factor&#x60;. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+    - rating::Float64 : Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
     - prime_mover_type::String : Prime mover technology according to EIA 923.
     - power_factor::Float64 : Power factor [0, 1] set-point, used in some production cost modeling and in load flow if the unit is connected to a &#x60;PQ&#x60; bus. Units: 1.
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
 Base.@kwdef mutable struct RenewableNonDispatch <: OpenAPI.APIModel
@@ -42,16 +44,17 @@ Base.@kwdef mutable struct RenewableNonDispatch <: OpenAPI.APIModel
     prime_mover_type::Union{Nothing, String} = nothing
     power_factor::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function RenewableNonDispatch(id, name, available, bus, active_power, reactive_power, rating, prime_mover_type, power_factor, base_power, dynamic_injector, )
-        o = new(id, name, available, bus, active_power, reactive_power, rating, prime_mover_type, power_factor, base_power, dynamic_injector, )
+    function RenewableNonDispatch(id, name, available, bus, active_power, reactive_power, rating, prime_mover_type, power_factor, base_power, power_units, dynamic_injector, )
+        o = new(id, name, available, bus, active_power, reactive_power, rating, prime_mover_type, power_factor, base_power, power_units, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type RenewableNonDispatch
 
-const _property_types_RenewableNonDispatch = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("power_factor")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_RenewableNonDispatch = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("power_factor")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ RenewableNonDispatch }, name::Symbol) = _property_types_RenewableNonDispatch[name]
 
 function OpenAPI.check_required(o::RenewableNonDispatch)
@@ -65,6 +68,7 @@ function OpenAPI.check_required(o::RenewableNonDispatch)
     o.prime_mover_type === nothing && (return false)
     o.power_factor === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -79,6 +83,7 @@ function OpenAPI.validate_properties(o::RenewableNonDispatch)
     OpenAPI.validate_property(RenewableNonDispatch, Symbol("prime_mover_type"), o.prime_mover_type)
     OpenAPI.validate_property(RenewableNonDispatch, Symbol("power_factor"), o.power_factor)
     OpenAPI.validate_property(RenewableNonDispatch, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(RenewableNonDispatch, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(RenewableNonDispatch, Symbol("dynamic_injector"), o.dynamic_injector)
 end
 
@@ -96,6 +101,11 @@ function OpenAPI.validate_property(::Type{ RenewableNonDispatch }, name::Symbol,
     end
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "RenewableNonDispatch", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
 end

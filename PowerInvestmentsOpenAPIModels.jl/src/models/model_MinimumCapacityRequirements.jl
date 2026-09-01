@@ -3,6 +3,7 @@
 
 
 @doc raw"""MinimumCapacityRequirements
+Policy requirement that the total capacity of all eligible technologies in the target year be greater than or equal to the specified minimum in MW.
 
     MinimumCapacityRequirements(;
         id=nothing,

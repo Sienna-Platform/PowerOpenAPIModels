@@ -25,6 +25,7 @@ The data defining one modeled arc of a transformer.  A &#x60;TwoWindingTransform
         active_power_flow=0.0,
         reactive_power_flow=0.0,
         base_power=100.0,
+        power_units=nothing,
         base_voltage_primary=nothing,
         base_voltage_secondary=nothing,
     )
@@ -42,12 +43,13 @@ The data defining one modeled arc of a transformer.  A &#x60;TwoWindingTransform
     - control_limits::MinMax
     - controlled_quantity_limits::MinMax
     - number_of_tap_positions::Int64 : Number of tap positions (PSS/E NTP).
-    - rating::Float64 : Thermal rating. Units: MVA.
-    - rating_b::Float64 : Second current rating. Units: MVA.
-    - rating_c::Float64 : Third current rating. Units: MVA.
-    - active_power_flow::Float64 : Initial condition of active power flow through this circuit. Units: MW.
-    - reactive_power_flow::Float64 : Initial condition of reactive power flow through this circuit. Units: MVAr.
+    - rating::Float64 : Thermal rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+    - rating_b::Float64 : Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+    - rating_c::Float64 : Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+    - active_power_flow::Float64 : Initial condition of active power flow through this circuit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - reactive_power_flow::Float64 : Initial condition of reactive power flow through this circuit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
     - base_power::Float64 : Base power for per unitization of this circuit. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
     - base_voltage_primary::Float64 : Primary (from) terminal-side base voltage; the reference voltage for this circuit&#39;s per-unit impedance. Units: kV.
     - base_voltage_secondary::Float64 : Secondary (to) terminal-side base voltage. For a three-winding transformer this defaults to the primary base voltage at parse time. Units: kV.
 """
@@ -71,23 +73,25 @@ Base.@kwdef mutable struct TransformerCircuit <: OpenAPI.APIModel
     active_power_flow::Union{Nothing, Float64} = 0.0
     reactive_power_flow::Union{Nothing, Float64} = 0.0
     base_power::Union{Nothing, Float64} = 100.0
+    power_units::Union{Nothing, String} = nothing
     base_voltage_primary::Union{Nothing, Float64} = nothing
     base_voltage_secondary::Union{Nothing, Float64} = nothing
 
-    function TransformerCircuit(id, available, arc, tap, alpha, parameter_units, r, x, control_objective, regulated_bus_number, control_limits, controlled_quantity_limits, number_of_tap_positions, rating, rating_b, rating_c, active_power_flow, reactive_power_flow, base_power, base_voltage_primary, base_voltage_secondary, )
-        o = new(id, available, arc, tap, alpha, parameter_units, r, x, control_objective, regulated_bus_number, control_limits, controlled_quantity_limits, number_of_tap_positions, rating, rating_b, rating_c, active_power_flow, reactive_power_flow, base_power, base_voltage_primary, base_voltage_secondary, )
+    function TransformerCircuit(id, available, arc, tap, alpha, parameter_units, r, x, control_objective, regulated_bus_number, control_limits, controlled_quantity_limits, number_of_tap_positions, rating, rating_b, rating_c, active_power_flow, reactive_power_flow, base_power, power_units, base_voltage_primary, base_voltage_secondary, )
+        o = new(id, available, arc, tap, alpha, parameter_units, r, x, control_objective, regulated_bus_number, control_limits, controlled_quantity_limits, number_of_tap_positions, rating, rating_b, rating_c, active_power_flow, reactive_power_flow, base_power, power_units, base_voltage_primary, base_voltage_secondary, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type TransformerCircuit
 
-const _property_types_TransformerCircuit = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("available")=>Union{Nothing, Bool}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("tap")=>Union{Nothing, Float64}, Symbol("alpha")=>Union{Nothing, Float64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, Symbol("control_objective")=>Union{Nothing, String}, Symbol("regulated_bus_number")=>Union{Nothing, Int64}, Symbol("control_limits")=>Union{Nothing, MinMax}, Symbol("controlled_quantity_limits")=>Union{Nothing, MinMax}, Symbol("number_of_tap_positions")=>Union{Nothing, Int64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("rating_b")=>Union{Nothing, Float64}, Symbol("rating_c")=>Union{Nothing, Float64}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("base_voltage_primary")=>Union{Nothing, Float64}, Symbol("base_voltage_secondary")=>Union{Nothing, Float64}, )
+const _property_types_TransformerCircuit = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("available")=>Union{Nothing, Bool}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("tap")=>Union{Nothing, Float64}, Symbol("alpha")=>Union{Nothing, Float64}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("r")=>Union{Nothing, Float64}, Symbol("x")=>Union{Nothing, Float64}, Symbol("control_objective")=>Union{Nothing, String}, Symbol("regulated_bus_number")=>Union{Nothing, Int64}, Symbol("control_limits")=>Union{Nothing, MinMax}, Symbol("controlled_quantity_limits")=>Union{Nothing, MinMax}, Symbol("number_of_tap_positions")=>Union{Nothing, Int64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("rating_b")=>Union{Nothing, Float64}, Symbol("rating_c")=>Union{Nothing, Float64}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("reactive_power_flow")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("base_voltage_primary")=>Union{Nothing, Float64}, Symbol("base_voltage_secondary")=>Union{Nothing, Float64}, )
 OpenAPI.property_type(::Type{ TransformerCircuit }, name::Symbol) = _property_types_TransformerCircuit[name]
 
 function OpenAPI.check_required(o::TransformerCircuit)
     o.id === nothing && (return false)
     o.available === nothing && (return false)
     o.arc === nothing && (return false)
+    o.power_units === nothing && (return false)
     true
 end
 
@@ -111,6 +115,7 @@ function OpenAPI.validate_properties(o::TransformerCircuit)
     OpenAPI.validate_property(TransformerCircuit, Symbol("active_power_flow"), o.active_power_flow)
     OpenAPI.validate_property(TransformerCircuit, Symbol("reactive_power_flow"), o.reactive_power_flow)
     OpenAPI.validate_property(TransformerCircuit, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(TransformerCircuit, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(TransformerCircuit, Symbol("base_voltage_primary"), o.base_voltage_primary)
     OpenAPI.validate_property(TransformerCircuit, Symbol("base_voltage_secondary"), o.base_voltage_secondary)
 end
@@ -142,6 +147,11 @@ function OpenAPI.validate_property(::Type{ TransformerCircuit }, name::Symbol, v
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "TransformerCircuit", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
 

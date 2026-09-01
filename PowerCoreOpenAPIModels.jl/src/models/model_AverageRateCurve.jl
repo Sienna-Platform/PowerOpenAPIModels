@@ -3,6 +3,7 @@
 
 
 @doc raw"""AverageRateCurve
+A curve whose y values are the average rate &#x60;f(x)/x&#x60; at production level &#x60;x&#x60; — total cost or fuel divided by output, the form heat rate tables use when they report MBTU/MWh against MW. &#x60;initial_input&#x60; records the total input at the minimum production point and is what makes conversion to an &#x60;InputOutputCurve&#x60; possible. Use &#x60;IncrementalCurve&#x60; when the data gives marginal rather than average rates.
 
     AverageRateCurve(;
         curve_type="AVERAGE_RATE",

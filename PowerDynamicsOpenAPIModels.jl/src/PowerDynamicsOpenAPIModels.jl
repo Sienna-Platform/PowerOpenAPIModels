@@ -1,6 +1,7 @@
 module PowerDynamicsOpenAPIModels
 
 using OpenAPI, JSON3, HTTP
+using InfrastructureCoreOpenAPIModels
 using PowerCoreOpenAPIModels
 
 include("models/model_ActiveRenewableControllerAB.jl")
@@ -21,6 +22,7 @@ export RoundRotorMachine
 export SEXS
 export SteamTurbineGov1
 
+for n in names(InfrastructureCoreOpenAPIModels); n === :InfrastructureCoreOpenAPIModels && continue; @eval export $n; end
 for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export $n; end
 
 end

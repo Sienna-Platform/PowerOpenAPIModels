@@ -3,6 +3,7 @@
 
 
 @doc raw"""CapacityReserveMargin
+Policy requirement enforcing a minimum capacity reserve margin in the target year, such that &#x60;(total_capacity - peak_demand) / peak_demand &gt;&#x3D; capacity_reserve_fraction&#x60;.
 
     CapacityReserveMargin(;
         id=nothing,

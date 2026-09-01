@@ -3,6 +3,7 @@
 
 
 @doc raw"""ImportExportCost
+Cost representation for static (non-time-varying) imports and exports with neighboring areas, together with the ancillary services offered alongside them. The offer curves are piecewise incremental cost curves with an implied zero cost at zero power, and a weekly energy limit bounds each direction. The time-varying counterpart is &#x60;ImportExportTimeSeriesCost&#x60;.
 
     ImportExportCost(;
         cost_type="IMPORTEXPORT",

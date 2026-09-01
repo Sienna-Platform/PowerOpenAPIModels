@@ -5,31 +5,34 @@
 using Pkg, Test
 
 Pkg.develop([
+    PackageSpec(path="InfrastructureCoreOpenAPIModels.jl"),
+    PackageSpec(path="InfrastructureTimeSeriesOpenAPIModels.jl"),
     PackageSpec(path="PowerCoreOpenAPIModels.jl"),
     PackageSpec(path="PowerOperationsOpenAPIModels.jl"),
     PackageSpec(path="PowerInvestmentsOpenAPIModels.jl"),
     PackageSpec(path="PowerDynamicsOpenAPIModels.jl"),
-    PackageSpec(path="PowerTimeSeriesOpenAPIModels.jl"),
     PackageSpec(path="PowerOpenAPIModels.jl"),
 ])
 
 # A failed `using` throws, so loading the packages is itself the load check.
+using InfrastructureCoreOpenAPIModels
+using InfrastructureTimeSeriesOpenAPIModels
 using PowerCoreOpenAPIModels
 using PowerOperationsOpenAPIModels
 using PowerInvestmentsOpenAPIModels
 using PowerDynamicsOpenAPIModels
-using PowerTimeSeriesOpenAPIModels
 using PowerOpenAPIModels
 using Dates
 using TimeZones
 
 @testset "No duplicate type definitions" begin
     pkgs = [
+        InfrastructureCoreOpenAPIModels,
+        InfrastructureTimeSeriesOpenAPIModels,
         PowerCoreOpenAPIModels,
         PowerOperationsOpenAPIModels,
         PowerInvestmentsOpenAPIModels,
         PowerDynamicsOpenAPIModels,
-        PowerTimeSeriesOpenAPIModels,
     ]
     seen = Dict{Symbol, Module}()
     duplicates = String[]
@@ -63,11 +66,12 @@ _type_name(::Any) = ""
 
 @testset "No unmapped inline schema aliases" begin
     pkgs = [
+        InfrastructureCoreOpenAPIModels,
+        InfrastructureTimeSeriesOpenAPIModels,
         PowerCoreOpenAPIModels,
         PowerOperationsOpenAPIModels,
         PowerInvestmentsOpenAPIModels,
         PowerDynamicsOpenAPIModels,
-        PowerTimeSeriesOpenAPIModels,
     ]
     defined = Set{String}()
     for pkg in pkgs
@@ -86,6 +90,21 @@ _type_name(::Any) = ""
     @test sort(collect(aliases)) == String[]
 end
 
+@testset "Infrastructure packages carry no power dependency" begin
+    using TOML
+    for pkg in ["InfrastructureCoreOpenAPIModels", "InfrastructureTimeSeriesOpenAPIModels"]
+        deps = keys(TOML.parsefile(joinpath(pkg * ".jl", "Project.toml"))["deps"])
+        power = filter(startswith("Power"), collect(deps))
+        @test isempty(power)
+    end
+    # ACBusType and ThermalFuels are the canaries: power enums that must not be
+    # reachable from the generic packages.
+    for sym in [:ACBusType, :ThermalFuels]
+        @test !isdefined(InfrastructureCoreOpenAPIModels, sym)
+        @test !isdefined(InfrastructureTimeSeriesOpenAPIModels, sym)
+    end
+end
+
 const SCHEMA_DIR =
     get(ENV, "SCHEMA_DIR", joinpath(dirname(@__DIR__), "..", "SiennaSchemas"))
 
@@ -98,34 +117,35 @@ const SCHEMA_DIR =
     if !isfile(schema_path)
         @warn "SystemDocument.json not found; skipping drift check" schema_path
     else
-        # Core already depends on JSON (document.jl needs JSON.lower), so read the schema
-        # through it rather than making this harness carry its own dependency.
-        schema = PowerCoreOpenAPIModels.JSON.parsefile(schema_path)
+        # InfrastructureCore already depends on JSON (document.jl needs JSON.lower), so read
+        # the schema through it rather than making this harness carry its own dependency.
+        schema = InfrastructureCoreOpenAPIModels.JSON.parsefile(schema_path)
         schema_fields = Set(keys(schema["properties"]))
-        # `counter`, `component_types_by_id`, and `service_membership` are build-time
-        # scaffolding that is deliberately not serialized.
+        # `counter`, `component_types_by_id`, `service_membership`, and
+        # `trading_hub_membership` are build-time scaffolding that is deliberately not
+        # serialized.
         struct_fields = setdiff(
             Set(string.(fieldnames(PowerOpenAPIModels.SystemDocument))),
-            Set(["counter", "component_types_by_id", "service_membership"]),
+            Set([
+                "counter",
+                "component_types_by_id",
+                "service_membership",
+                "trading_hub_membership",
+            ]),
         )
 
         @test isempty(setdiff(schema_fields, struct_fields))
         @test isempty(setdiff(struct_fields, schema_fields))
 
         # Every required field must be one the container always emits.
-        emitted = Set(
-            keys(
-                PowerOpenAPIModels.document_tree(PowerOpenAPIModels.SystemDocument(100.0)),
-            ),
-        )
+        emitted =
+            Set(keys(PowerOpenAPIModels.document_tree(PowerOpenAPIModels.SystemDocument())))
         @test isempty(setdiff(Set(schema["required"]), emitted))
     end
 end
 
 @testset "SystemDocument round-trips" begin
-    doc = PowerOpenAPIModels.SystemDocument(
-        100.0;
-        unit_system="COMPONENT_BASE",
+    doc = PowerOpenAPIModels.SystemDocument(;
         name="validate",
         description="round-trip fixture",
         frequency=50.0,
@@ -148,9 +168,6 @@ end
         PowerOpenAPIModels.write_document(doc, path)
         back = PowerOpenAPIModels.read_document(path)
 
-        @test PowerOpenAPIModels.get_base_power(back) == 100.0
-        @test PowerOpenAPIModels.get_unit_system(back) == "COMPONENT_BASE"
-        @test PowerOpenAPIModels.uses_per_unit(back)
         @test PowerOpenAPIModels.get_name(back) == "validate"
         @test PowerOpenAPIModels.get_description(back) == "round-trip fixture"
         @test PowerOpenAPIModels.get_frequency(back) == 50.0
@@ -166,8 +183,7 @@ end
     # Components carry ids that must be reserved when reading a document;
     # `_highest_id` must walk them or a read document's id counter under-reserves
     # and `next_id!` can mint a colliding id.
-    doc = PowerOpenAPIModels.SystemDocument(
-        100.0;
+    doc = PowerOpenAPIModels.SystemDocument(;
         time_series_storage_file="fixture_time_series_storage.h5",
     )
     bus_id = PowerOpenAPIModels.next_id!(doc)
@@ -181,7 +197,7 @@ end
             available=true,
         ),
     )
-    ts = PowerTimeSeriesOpenAPIModels.SingleTimeSeries(;
+    ts = InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeries(;
         owner_id=bus_id,
         owner_type="ACBus",
         owner_category="Component",
@@ -196,7 +212,7 @@ end
     )
     PowerOpenAPIModels.add_time_series_association!(
         doc,
-        PowerTimeSeriesOpenAPIModels.TimeSeriesAssociation(ts),
+        InfrastructureTimeSeriesOpenAPIModels.TimeSeriesAssociation(ts),
     )
 
     mktempdir() do dir
@@ -210,7 +226,7 @@ end
 @testset "SystemDocument reads a document with no ext key" begin
     # `ext` is optional in the schema (Core/SystemDocument.json's `required` list omits
     # it); a producer that mapped every field is allowed to omit the key entirely.
-    doc = PowerOpenAPIModels.SystemDocument(100.0)
+    doc = PowerOpenAPIModels.SystemDocument()
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
@@ -222,25 +238,54 @@ end
             available=true,
         ),
     )
-    raw = PowerCoreOpenAPIModels.JSON.parse(
-        PowerCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(doc)),
+    raw = InfrastructureCoreOpenAPIModels.JSON.parse(
+        InfrastructureCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(doc)),
     )
     delete!(raw, "ext")
     back = PowerOpenAPIModels.document_from_json(raw)
     @test isempty(PowerOpenAPIModels.get_ext(back, bus_id))
 end
 
-@testset "SystemDocument rejects malformed input" begin
-    @test_throws PowerCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.SystemDocument(
-        100.0;
-        unit_system="SYSTEM_BASE",
+@testset "SystemDocument reads a document written before trading hubs" begin
+    # Every document written before `trading_hub_associations` existed omits the key.
+    # Reading one back is the whole reason the field is optional, so assert it directly
+    # rather than trusting the schema's `required` list to stay correct.
+    doc = PowerOpenAPIModels.SystemDocument()
+    bus_id = PowerOpenAPIModels.next_id!(doc)
+    PowerOpenAPIModels.add_component!(
+        doc,
+        PowerOperationsOpenAPIModels.ACBus(;
+            id=bus_id,
+            name="b1",
+            number=1,
+            bustype="REF",
+            available=true,
+        ),
     )
-    @test_throws PowerCoreOpenAPIModels.DocumentFormatError PowerCoreOpenAPIModels.model_type(
+    raw = InfrastructureCoreOpenAPIModels.JSON.parse(
+        InfrastructureCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(doc)),
+    )
+    delete!(raw, "trading_hub_associations")
+    back = PowerOpenAPIModels.document_from_json(raw)
+    @test isempty(back.trading_hub_associations)
+    @test isempty(back.trading_hub_membership)
+    # The siblings stay required: omitting one is still malformed input.
+    raw2 = InfrastructureCoreOpenAPIModels.JSON.parse(
+        InfrastructureCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(doc)),
+    )
+    delete!(raw2, "service_associations")
+    @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.document_from_json(
+        raw2,
+    )
+end
+
+@testset "SystemDocument rejects malformed input" begin
+    @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError InfrastructureCoreOpenAPIModels.model_type(
         "NoSuchType",
     )
 
     # An unresolved reference must error rather than be dropped.
-    doc = PowerOpenAPIModels.SystemDocument(100.0)
+    doc = PowerOpenAPIModels.SystemDocument()
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
@@ -254,22 +299,22 @@ end
     )
     push!(
         doc.supplemental_attribute_associations,
-        PowerCoreOpenAPIModels.SupplementalAttributeAssociation(;
+        InfrastructureCoreOpenAPIModels.SupplementalAttributeAssociation(;
             component_id=bus_id,
             component_type="ACBus",
             attribute_id=9999,
             attribute_type="OnlineReserve",
         ),
     )
-    @test_throws PowerCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.validate_document(
+    @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.validate_document(
         doc,
     )
 end
 
 @testset "every registered type is an APIModel" begin
-    @test !isempty(PowerCoreOpenAPIModels.MODEL_TYPES)
-    for (name, T) in PowerCoreOpenAPIModels.MODEL_TYPES
-        @test T <: PowerCoreOpenAPIModels.OpenAPI.APIModel
+    @test !isempty(InfrastructureCoreOpenAPIModels.MODEL_TYPES)
+    for (name, T) in InfrastructureCoreOpenAPIModels.MODEL_TYPES
+        @test T <: InfrastructureCoreOpenAPIModels.OpenAPI.APIModel
         @test string(nameof(T)) == name
     end
 end

@@ -3,6 +3,7 @@
 
 
 @doc raw"""NodalHVDCTransportTechnology
+A nodal representation of candidate HVDC transmission lines between two regions, added in discrete units of &#x60;unit_size&#x60; and characterized by capacity limits, a capital cost curve, and a loss model expressed as a fraction of installed nameplate capacity.
 
     NodalHVDCTransportTechnology(;
         id=nothing,

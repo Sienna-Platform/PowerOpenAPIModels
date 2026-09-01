@@ -3,6 +3,7 @@
 
 
 @doc raw"""RetirementPotential
+Supplemental attribute defining which existing generators mapped to a supply technology are eligible for retirement, optionally with the year each was built and the year each is already scheduled to retire.
 
     RetirementPotential(;
         id=nothing,

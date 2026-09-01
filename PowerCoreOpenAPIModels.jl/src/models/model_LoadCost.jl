@@ -8,37 +8,37 @@ Cost representation for controllable load units
     LoadCost(;
         cost_type="LOAD",
         fixed=0.0,
-        variable=nothing,
+        variable_operation_cost=nothing,
     )
 
     - cost_type::String
     - fixed::Float64
-    - variable::CostCurve
+    - variable_operation_cost::CostCurve
 """
 Base.@kwdef mutable struct LoadCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "LOAD"
     fixed::Union{Nothing, Float64} = 0.0
-    variable = nothing # spec type: Union{ Nothing, CostCurve }
+    variable_operation_cost = nothing # spec type: Union{ Nothing, CostCurve }
 
-    function LoadCost(cost_type, fixed, variable, )
-        o = new(cost_type, fixed, variable, )
+    function LoadCost(cost_type, fixed, variable_operation_cost, )
+        o = new(cost_type, fixed, variable_operation_cost, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type LoadCost
 
-const _property_types_LoadCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("fixed")=>Union{Nothing, Float64}, Symbol("variable")=>Union{Nothing, CostCurve}, )
+const _property_types_LoadCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("fixed")=>Union{Nothing, Float64}, Symbol("variable_operation_cost")=>Union{Nothing, CostCurve}, )
 OpenAPI.property_type(::Type{ LoadCost }, name::Symbol) = _property_types_LoadCost[name]
 
 function OpenAPI.check_required(o::LoadCost)
-    o.variable === nothing && (return false)
+    o.variable_operation_cost === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::LoadCost)
     OpenAPI.validate_property(LoadCost, Symbol("cost_type"), o.cost_type)
     OpenAPI.validate_property(LoadCost, Symbol("fixed"), o.fixed)
-    OpenAPI.validate_property(LoadCost, Symbol("variable"), o.variable)
+    OpenAPI.validate_property(LoadCost, Symbol("variable_operation_cost"), o.variable_operation_cost)
 end
 
 function OpenAPI.validate_property(::Type{ LoadCost }, name::Symbol, val)

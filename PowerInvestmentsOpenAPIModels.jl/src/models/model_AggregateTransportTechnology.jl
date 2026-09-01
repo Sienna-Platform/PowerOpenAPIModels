@@ -3,6 +3,7 @@
 
 
 @doc raw"""AggregateTransportTechnology
+An aggregated representation of a transmission interchange between two regions. Capacity is added in discrete units of &#x60;unit_size&#x60;, priced by a capital cost curve, and derated by a proportional line loss.
 
     AggregateTransportTechnology(;
         id=nothing,

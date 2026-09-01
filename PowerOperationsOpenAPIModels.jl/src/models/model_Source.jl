@@ -21,6 +21,7 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
         internal_angle=0.0,
         base_voltage=nothing,
         base_power=100.0,
+        power_units=nothing,
         operation_cost=SourceOperationCost(ImportExportCost(; cost_type="IMPORTEXPORT", import_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), export_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), energy_import_weekly_limit=1.0e6, energy_export_weekly_limit=1.0e6)),
         dynamic_injector=nothing,
     )
@@ -29,8 +30,8 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
-    - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: MW.
-    - reactive_power::Float64 : Initial reactive power set point of the unit. Units: MVAr.
+    - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - reactive_power::Float64 : Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
     - active_power_limits::MinMax
     - reactive_power_limits::MinMax
     - parameter_units::String : Unit basis for this source&#39;s impedance fields (R_th, X_th).
@@ -40,6 +41,7 @@ An infinite bus with a constant voltage output.  Commonly used in dynamics simul
     - internal_angle::Float64 : Internal angle. Units: rad.
     - base_voltage::Float64 : The base voltage. Units: kV.
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
     - operation_cost::SourceOperationCost
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
@@ -59,17 +61,18 @@ Base.@kwdef mutable struct Source <: OpenAPI.APIModel
     internal_angle::Union{Nothing, Float64} = 0.0
     base_voltage::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = 100.0
+    power_units::Union{Nothing, String} = nothing
     operation_cost = SourceOperationCost(ImportExportCost(; cost_type="IMPORTEXPORT", import_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), export_offer_curves=CostCurve(; value_curve=ValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), variable_cost_type="COST", vom_cost=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))), energy_import_weekly_limit=1.0e6, energy_export_weekly_limit=1.0e6)) # spec type: Union{ Nothing, SourceOperationCost }
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function Source(id, name, available, bus, active_power, reactive_power, active_power_limits, reactive_power_limits, parameter_units, R_th, X_th, internal_voltage, internal_angle, base_voltage, base_power, operation_cost, dynamic_injector, )
-        o = new(id, name, available, bus, active_power, reactive_power, active_power_limits, reactive_power_limits, parameter_units, R_th, X_th, internal_voltage, internal_angle, base_voltage, base_power, operation_cost, dynamic_injector, )
+    function Source(id, name, available, bus, active_power, reactive_power, active_power_limits, reactive_power_limits, parameter_units, R_th, X_th, internal_voltage, internal_angle, base_voltage, base_power, power_units, operation_cost, dynamic_injector, )
+        o = new(id, name, available, bus, active_power, reactive_power, active_power_limits, reactive_power_limits, parameter_units, R_th, X_th, internal_voltage, internal_angle, base_voltage, base_power, power_units, operation_cost, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type Source
 
-const _property_types_Source = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("R_th")=>Union{Nothing, Float64}, Symbol("X_th")=>Union{Nothing, Float64}, Symbol("internal_voltage")=>Union{Nothing, Float64}, Symbol("internal_angle")=>Union{Nothing, Float64}, Symbol("base_voltage")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("operation_cost")=>Union{Nothing, SourceOperationCost}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_Source = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("parameter_units")=>Union{Nothing, String}, Symbol("R_th")=>Union{Nothing, Float64}, Symbol("X_th")=>Union{Nothing, Float64}, Symbol("internal_voltage")=>Union{Nothing, Float64}, Symbol("internal_angle")=>Union{Nothing, Float64}, Symbol("base_voltage")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("operation_cost")=>Union{Nothing, SourceOperationCost}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ Source }, name::Symbol) = _property_types_Source[name]
 
 function OpenAPI.check_required(o::Source)
@@ -77,6 +80,7 @@ function OpenAPI.check_required(o::Source)
     o.name === nothing && (return false)
     o.available === nothing && (return false)
     o.bus === nothing && (return false)
+    o.power_units === nothing && (return false)
     o.operation_cost === nothing && (return false)
     true
 end
@@ -97,6 +101,7 @@ function OpenAPI.validate_properties(o::Source)
     OpenAPI.validate_property(Source, Symbol("internal_angle"), o.internal_angle)
     OpenAPI.validate_property(Source, Symbol("base_voltage"), o.base_voltage)
     OpenAPI.validate_property(Source, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(Source, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(Source, Symbol("operation_cost"), o.operation_cost)
     OpenAPI.validate_property(Source, Symbol("dynamic_injector"), o.dynamic_injector)
 end
@@ -120,6 +125,11 @@ function OpenAPI.validate_property(::Type{ Source }, name::Symbol, val)
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "Source", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
 

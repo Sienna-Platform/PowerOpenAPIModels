@@ -13,6 +13,7 @@ An induction-motor static load, representing the steady-state power draw of moto
         active_power=nothing,
         reactive_power=nothing,
         base_power=nothing,
+        power_units=nothing,
         rating=nothing,
         max_active_power=nothing,
         reactive_power_limits=nothing,
@@ -24,11 +25,12 @@ An induction-motor static load, representing the steady-state power draw of moto
     - name::String : Name of the component. Components of the same type (e.g., &#x60;MotorLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;MotorLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
-    - active_power::Float64 : Initial steady-state active power demand. A positive value indicates power consumption. Units: MW.
-    - reactive_power::Float64 : Initial steady-state reactive power demand. A positive value indicates reactive power consumption. Units: MVAr.
+    - active_power::Float64 : Initial steady-state active power demand. A positive value indicates power consumption. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+    - reactive_power::Float64 : Initial steady-state reactive power demand. A positive value indicates reactive power consumption. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
-    - rating::Float64 : Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: MVA.
-    - max_active_power::Float64 : Maximum active power that this load can demand. Units: MW.
+    - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
+    - rating::Float64 : Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+    - max_active_power::Float64 : Maximum active power that this load can demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
     - reactive_power_limits::MinMax
     - motor_technology::String : AC Motor type.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
@@ -41,20 +43,21 @@ Base.@kwdef mutable struct MotorLoad <: OpenAPI.APIModel
     active_power::Union{Nothing, Float64} = nothing
     reactive_power::Union{Nothing, Float64} = nothing
     base_power::Union{Nothing, Float64} = nothing
+    power_units::Union{Nothing, String} = nothing
     rating::Union{Nothing, Float64} = nothing
     max_active_power::Union{Nothing, Float64} = nothing
     reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     motor_technology::Union{Nothing, String} = "UNDETERMINED"
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function MotorLoad(id, name, available, bus, active_power, reactive_power, base_power, rating, max_active_power, reactive_power_limits, motor_technology, dynamic_injector, )
-        o = new(id, name, available, bus, active_power, reactive_power, base_power, rating, max_active_power, reactive_power_limits, motor_technology, dynamic_injector, )
+    function MotorLoad(id, name, available, bus, active_power, reactive_power, base_power, power_units, rating, max_active_power, reactive_power_limits, motor_technology, dynamic_injector, )
+        o = new(id, name, available, bus, active_power, reactive_power, base_power, power_units, rating, max_active_power, reactive_power_limits, motor_technology, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type MotorLoad
 
-const _property_types_MotorLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("max_active_power")=>Union{Nothing, Float64}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("motor_technology")=>Union{Nothing, String}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_MotorLoad = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("max_active_power")=>Union{Nothing, Float64}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("motor_technology")=>Union{Nothing, String}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ MotorLoad }, name::Symbol) = _property_types_MotorLoad[name]
 
 function OpenAPI.check_required(o::MotorLoad)
@@ -65,6 +68,7 @@ function OpenAPI.check_required(o::MotorLoad)
     o.active_power === nothing && (return false)
     o.reactive_power === nothing && (return false)
     o.base_power === nothing && (return false)
+    o.power_units === nothing && (return false)
     o.rating === nothing && (return false)
     o.max_active_power === nothing && (return false)
     true
@@ -78,6 +82,7 @@ function OpenAPI.validate_properties(o::MotorLoad)
     OpenAPI.validate_property(MotorLoad, Symbol("active_power"), o.active_power)
     OpenAPI.validate_property(MotorLoad, Symbol("reactive_power"), o.reactive_power)
     OpenAPI.validate_property(MotorLoad, Symbol("base_power"), o.base_power)
+    OpenAPI.validate_property(MotorLoad, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(MotorLoad, Symbol("rating"), o.rating)
     OpenAPI.validate_property(MotorLoad, Symbol("max_active_power"), o.max_active_power)
     OpenAPI.validate_property(MotorLoad, Symbol("reactive_power_limits"), o.reactive_power_limits)
@@ -92,6 +97,11 @@ function OpenAPI.validate_property(::Type{ MotorLoad }, name::Symbol, val)
 
 
 
+
+
+    if name === Symbol("power_units")
+        OpenAPI.validate_param(name, "MotorLoad", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
 
 
 

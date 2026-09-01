@@ -4,9 +4,9 @@
 # Sibling of emit_units.jl, and included by reorganize.jl the same way.
 #
 # Why registration happens in `__init__` rather than at include time: the registry Dict lives
-# in PowerCoreOpenAPIModels, and mutations one module makes to another module's global state
-# during precompilation are not saved. Registering at include time would leave the registry
-# empty at runtime.
+# in InfrastructureCoreOpenAPIModels, and mutations one module makes to another module's
+# global state during precompilation are not saved. Registering at include time would leave
+# the registry empty at runtime.
 
 """
 Model types a generated file declares: `mutable struct <Name> <: OpenAPI.<Something>`.
@@ -40,7 +40,7 @@ duplicate is not re-registered by the domain that also declares it.
 
 Returns whether a file was written.
 """
-function emit_registry_for(domain, dest_dir)
+function emit_registry_for(domain, dest_dir; accessor_module = "InfrastructureCoreOpenAPIModels")
     models_dir = joinpath(dest_dir, "models")
     isdir(models_dir) || return false
 
@@ -52,8 +52,8 @@ function emit_registry_for(domain, dest_dir)
     isempty(type_names) && return false
 
     prefix = ""
-    if domain != "core"
-        prefix = "PowerCoreOpenAPIModels."
+    if domain != "infrastructure-core"
+        prefix = "$accessor_module."
     end
     open(joinpath(dest_dir, "register.jl"), "w") do io
         println(io, "# Generated from the declared model types. Do not edit.")
