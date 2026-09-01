@@ -32,7 +32,7 @@ Facts control devices.  Most often used in AC power flow studies as a control of
     - voltage_setpoint::Float64 : Voltage setpoint at the sending end bus in kV, it has to be a &#x60;PV&#x60; bus. Units: kV. Units: per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
     - max_shunt_current::Float64 : Maximum shunt current at the sending end bus; entered at unity voltage. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
     - reactive_power_required::Float64 : Total reactive power required to hold voltage at sending bus, as a fraction in the range 0-1. Units: 1.
-    - max_reactive_power::Float64 : Independent maximum reactive power ceiling; the device reactive limit is min(the current/susceptance law on max_shunt_current, this value). Non-binding at the 9999.0 default.
+    - max_reactive_power::Float64 : Independent maximum reactive power ceiling; the device reactive limit is min(the current/susceptance law on max_shunt_current, this value). Non-binding at the 9999.0 default. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
     - shunt_control_type::String : Device class selecting the reactive-limit law (SVC vs STATCOM).
     - regulated_bus_number::Int64 : Bus whose voltage this device regulates; 0 means local (sending) bus (PSS/E FCREG). Units: 1.
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.

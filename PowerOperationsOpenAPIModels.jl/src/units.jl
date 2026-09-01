@@ -532,6 +532,25 @@ end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{FACTSControlDevice}, ::Val{:reactive_power_required}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{FACTSControlDevice}, ::Val{:reactive_power_required}) = "1"
 PowerCoreOpenAPIModels.declared_quantity(::Type{FACTSControlDevice}, ::Val{:reactive_power_required}) = "Fraction"
+PowerCoreOpenAPIModels.has_declared_unit(::Type{FACTSControlDevice}, ::Val{:max_reactive_power}) = true
+function PowerCoreOpenAPIModels.declared_unit(o::FACTSControlDevice, ::Val{:max_reactive_power})
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MVAr"
+    end
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    error("FACTSControlDevice.max_reactive_power: no unit declared for power_units=$(o.power_units)")
+end
+function PowerCoreOpenAPIModels.declared_quantity(o::FACTSControlDevice, ::Val{:max_reactive_power})
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ReactivePower"
+    end
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ReactivePower"
+    end
+    error("FACTSControlDevice.max_reactive_power: no unit declared for power_units=$(o.power_units)")
+end
 PowerCoreOpenAPIModels.has_declared_unit(::Type{FACTSControlDevice}, ::Val{:regulated_bus_number}) = true
 PowerCoreOpenAPIModels.declared_unit(::Type{FACTSControlDevice}, ::Val{:regulated_bus_number}) = "1"
 PowerCoreOpenAPIModels.declared_quantity(::Type{FACTSControlDevice}, ::Val{:regulated_bus_number}) = "Dimensionless"

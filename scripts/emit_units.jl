@@ -73,6 +73,7 @@ const QUANTITY_OVERRIDES = Dict(
     ("EnergyReservoirStorage", "self_discharge") => "Fraction",
     ("EnergyReservoirStorage", "storage_target") => "Fraction",
     ("EnergyShareRequirements", "generation_fraction_requirement") => "Fraction",
+    ("FACTSControlDevice", "max_reactive_power") => "ReactivePower",
     ("FACTSControlDevice", "reactive_power_required") => "Fraction",
     # A regulated-bus identifier (0 = local bus), not a physical fraction.
     ("FACTSControlDevice", "regulated_bus_number") => "Dimensionless",
