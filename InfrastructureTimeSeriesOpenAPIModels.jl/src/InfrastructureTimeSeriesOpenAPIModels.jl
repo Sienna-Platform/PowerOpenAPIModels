@@ -1,7 +1,7 @@
-module PowerTimeSeriesOpenAPIModels
+module InfrastructureTimeSeriesOpenAPIModels
 
 using OpenAPI, JSON3, HTTP, TimeZones
-using PowerCoreOpenAPIModels
+using InfrastructureCoreOpenAPIModels
 
 include("models/model_OwnerCategory.jl")
 include("models/model_TimeSeriesAssociation.jl")
@@ -24,6 +24,6 @@ export SingleTimeSeries
 export TimeSeriesAssociation
 export TimeSeriesFeatureValue
 
-for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export $n; end
+for n in names(InfrastructureCoreOpenAPIModels); n === :InfrastructureCoreOpenAPIModels && continue; @eval export $n; end
 
 end

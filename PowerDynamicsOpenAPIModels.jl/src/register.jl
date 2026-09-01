@@ -4,12 +4,12 @@
 # mutated there during precompilation would not be saved.
 
 function __init__()
-    PowerCoreOpenAPIModels.register_model_type!(ActiveRenewableControllerAB)
-    PowerCoreOpenAPIModels.register_model_type!(RECurrentControlB)
-    PowerCoreOpenAPIModels.register_model_type!(ReactiveRenewableControllerAB)
-    PowerCoreOpenAPIModels.register_model_type!(RenewableEnergyConverterTypeA)
-    PowerCoreOpenAPIModels.register_model_type!(RoundRotorMachine)
-    PowerCoreOpenAPIModels.register_model_type!(SEXS)
-    PowerCoreOpenAPIModels.register_model_type!(SteamTurbineGov1)
+    InfrastructureCoreOpenAPIModels.register_model_type!(ActiveRenewableControllerAB)
+    InfrastructureCoreOpenAPIModels.register_model_type!(RECurrentControlB)
+    InfrastructureCoreOpenAPIModels.register_model_type!(ReactiveRenewableControllerAB)
+    InfrastructureCoreOpenAPIModels.register_model_type!(RenewableEnergyConverterTypeA)
+    InfrastructureCoreOpenAPIModels.register_model_type!(RoundRotorMachine)
+    InfrastructureCoreOpenAPIModels.register_model_type!(SEXS)
+    InfrastructureCoreOpenAPIModels.register_model_type!(SteamTurbineGov1)
     return nothing
 end

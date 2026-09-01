@@ -60,13 +60,17 @@
 const REPO = dirname(@__DIR__)
 
 const DOMAIN_TO_PKG = Dict(
+    "infrastructure-core" => "InfrastructureCoreOpenAPIModels.jl",
+    "timeseries" => "InfrastructureTimeSeriesOpenAPIModels.jl",
     "core" => "PowerCoreOpenAPIModels.jl",
     "operations" => "PowerOperationsOpenAPIModels.jl",
     "investments" => "PowerInvestmentsOpenAPIModels.jl",
     "dynamics" => "PowerDynamicsOpenAPIModels.jl",
-    "timeseries" => "PowerTimeSeriesOpenAPIModels.jl",
 )
-const DOMAIN_ORDER = ["core", "operations", "investments", "dynamics", "timeseries"]
+# Matches scripts/reorganize.jl's base chain: a base must be fully rewritten (and thus
+# load-testable) before any domain that references its types.
+const DOMAIN_ORDER =
+    ["infrastructure-core", "timeseries", "core", "operations", "investments", "dynamics"]
 
 # --------------------------------------------------------------------------- #
 # 1. Locate the model's own type name (struct or plain alias/enum) so we know

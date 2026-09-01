@@ -22,8 +22,8 @@ const SERDE_FIXTURES = (
         total = 0
         for type_name in PowerOpenAPIModels.component_type_names(doc)
             components = PowerOpenAPIModels.get_components(doc, type_name)
-            T = PowerCoreOpenAPIModels.model_type(type_name)
-            @test T <: PowerCoreOpenAPIModels.OpenAPI.APIModel
+            T = InfrastructureCoreOpenAPIModels.model_type(type_name)
+            @test T <: InfrastructureCoreOpenAPIModels.OpenAPI.APIModel
             @test eltype(components) === T
             total += length(components)
         end
@@ -53,8 +53,8 @@ const SERDE_FIXTURES = (
             # The generated model structs are mutable with no custom `==`, so struct
             # equality is identity, not value equality. Compare through the JSON tree
             # instead, matching the idiom validate.jl already uses for this purpose.
-            as_json(d) = PowerCoreOpenAPIModels.JSON.parse(
-                PowerCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(d)),
+            as_json(d) = InfrastructureCoreOpenAPIModels.JSON.parse(
+                InfrastructureCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(d)),
             )
             @test as_json(doc) == as_json(reread)
         end

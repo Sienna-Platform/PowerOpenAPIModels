@@ -1,6 +1,7 @@
 module PowerOperationsOpenAPIModels
 
 using OpenAPI, JSON3, HTTP
+using InfrastructureCoreOpenAPIModels
 using PowerCoreOpenAPIModels
 
 include("models/model_ACBus.jl")
@@ -167,6 +168,7 @@ export TwoWindingTransformer
 export VirtualParticipant
 export VirtualParticipantOperationCost
 
+for n in names(InfrastructureCoreOpenAPIModels); n === :InfrastructureCoreOpenAPIModels && continue; @eval export $n; end
 for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export $n; end
 
 end

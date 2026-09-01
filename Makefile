@@ -3,22 +3,24 @@ CODEGEN_IMAGE ?= ghcr.io/sienna-platform/power-codegen:latest
 # SiennaSchemas splits its purely-administrative/association schemas (SupplementalAttribute-
 # Association, GeographicInfo, DataSource, the shared MinMax/InOut/UpDown/... value types) into
 # a separate `infrastructure-core` bundle -- see openapi-config-infrastructure-core.json and
-# scripts/check_layering.py there. No Julia package here corresponds to that split yet, so its
-# output is generated on its own and then folded into PowerCoreOpenAPIModels.jl by
-# reorganize.jl, alongside core's own; PKGNAME_infrastructure-core stays PowerCoreOpenAPIModels
-# accordingly.
-DOMAINS := core operations investments dynamics timeseries infrastructure-core
+# scripts/check_layering.py there. InfrastructureCoreOpenAPIModels.jl is that bundle's own
+# package, generated and deduped like every other domain in scripts/reorganize.jl's base chain.
+#
+# Order matches the dependency chain in scripts/reorganize.jl: a domain's bases must be
+# generated before it, because dedup reads the bases' output directories.
+DOMAINS := infrastructure-core timeseries core operations investments dynamics
 
 # Package name per domain. The generate loop used to derive this by upper-casing
 # the domain's first letter, which yields PowerTimeseriesOpenAPIModels for
 # `timeseries` -- the interior capital in TimeSeries cannot be derived from a
-# lowercase domain name. Explicit beats clever here.
+# lowercase domain name, and `infrastructure-core` (a hyphenated domain mapping to an
+# interior-capitalized name) makes the case stronger still. Explicit beats clever here.
+PKGNAME_infrastructure-core := InfrastructureCoreOpenAPIModels
+PKGNAME_timeseries          := InfrastructureTimeSeriesOpenAPIModels
 PKGNAME_core                := PowerCoreOpenAPIModels
 PKGNAME_operations          := PowerOperationsOpenAPIModels
 PKGNAME_investments         := PowerInvestmentsOpenAPIModels
 PKGNAME_dynamics            := PowerDynamicsOpenAPIModels
-PKGNAME_timeseries          := PowerTimeSeriesOpenAPIModels
-PKGNAME_infrastructure-core := PowerCoreOpenAPIModels
 
 .PHONY: generate generate-docker clean validate schema-version
 

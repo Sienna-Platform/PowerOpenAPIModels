@@ -1,6 +1,7 @@
 module PowerInvestmentsOpenAPIModels
 
 using OpenAPI, JSON3, HTTP
+using InfrastructureCoreOpenAPIModels
 using PowerCoreOpenAPIModels
 
 include("models/model_AggregateRetirementPotential.jl")
@@ -57,6 +58,7 @@ export TechnologyFinancialData
 export TopologyMapping
 export Zone
 
+for n in names(InfrastructureCoreOpenAPIModels); n === :InfrastructureCoreOpenAPIModels && continue; @eval export $n; end
 for n in names(PowerCoreOpenAPIModels); n === :PowerCoreOpenAPIModels && continue; @eval export $n; end
 
 end

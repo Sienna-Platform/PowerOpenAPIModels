@@ -13,6 +13,8 @@
 import JSON
 
 const DOMAIN_TO_PKG = Dict(
+    "infrastructure-core" => "InfrastructureCoreOpenAPIModels.jl",
+    "timeseries" => "InfrastructureTimeSeriesOpenAPIModels.jl",
     "core" => "PowerCoreOpenAPIModels.jl",
     "operations" => "PowerOperationsOpenAPIModels.jl",
     "investments" => "PowerInvestmentsOpenAPIModels.jl",
@@ -687,7 +689,14 @@ end
 """
 Write `<package>/src/units.jl` for one domain. Returns true if a file was written.
 """
-function emit_units_for(domain, dest_dir, schema_dir, factors, by_unit)
+function emit_units_for(
+    domain,
+    dest_dir,
+    schema_dir,
+    factors,
+    by_unit;
+    accessor_module = "InfrastructureCoreOpenAPIModels",
+)
     bundle = joinpath(schema_dir, "dist", "openapi-$domain-bundled.json")
     if !isfile(bundle)
         @warn "No bundled spec for $domain at $bundle; skipping unit emission"
@@ -695,13 +704,13 @@ function emit_units_for(domain, dest_dir, schema_dir, factors, by_unit)
     end
     spec = JSON.parsefile(bundle)
     prefix = ""
-    if domain != "core"
-        prefix = "PowerCoreOpenAPIModels."
+    if domain != "infrastructure-core"
+        prefix = "$accessor_module."
     end
     open(joinpath(dest_dir, "units.jl"), "w") do io
         println(io, "# Generated from SiennaSchemas x-unit annotations. Do not edit.")
         println(io)
-        if domain == "core"
+        if domain == "infrastructure-core"
             emit_vocabulary(io, factors)
             emit_fallbacks(io)
         end
