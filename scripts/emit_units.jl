@@ -33,388 +33,13 @@ const UNIT_EXPORTS = [
 ]
 
 # A unit string can belong to several quantity types with DIFFERENT conversion
-# factors ("m": Length 0.001, Elevation 1.0). Where that happens the unit alone
-# cannot identify the quantity, so the property must be listed here. Generation
-# fails on any unlisted ambiguous property rather than guessing.
-const QUANTITY_OVERRIDES = Dict(
-    ("ACBus", "magnitude") => "Voltage",
-    ("ACBus", "voltage_limits") => "Voltage",
-    ("AggregateRetrofitPotential", "retrofit_fraction") => "Fraction",
-    ("AggregateTransportTechnology", "line_loss") => "Fraction",
-    ("CapacityReserveMargin", "capacity_reserve_fraction") => "Fraction",
-    ("ColocatedSupplyStorageTechnology", "efficiency_storage") => "Fraction",
-    ("ColocatedSupplyStorageTechnology", "inverter_efficiency") => "Fraction",
-    # Generation capacity over grid connection capacity: deliberately oversized
-    # above 1 in co-located designs, so a plain ratio and not a [0,1] Fraction.
-    ("ColocatedSupplyStorageTechnology", "inverter_supply_ratio") => "Dimensionless",
-    ("ColocatedSupplyStorageTechnology", "losses_storage") => "Fraction",
-    ("DCBus", "magnitude") => "Voltage",
-    ("DCBus", "voltage_limits") => "Voltage",
-
-    # Same reasoning as PortfolioFinancialData's rates below.
-    ("DemandRequirement", "growth_rate") => "Fraction",
-    ("DemandSideTechnology", "demand_energy_efficiency") => "Fraction",
-    ("DemandSideTechnology", "max_demand_curtailment") => "Fraction",
-    ("DemandSideTechnology", "min_power") => "Fraction",
-    ("DemandSideTechnology", "technology_efficiency") => "Fraction",
-    ("DiscreteControlledACBranch", "b") => "Susceptance",
-    ("DiscreteControlledACBranch", "g") => "Conductance",
-    ("DiscreteControlledACBranch", "r") => "Resistance",
-    ("DiscreteControlledACBranch", "x") => "Reactance",
-
-    # GWP multipliers run well above 1 (e.g. CH4 ~27-30), so this is a plain
-    # scaling factor, not a [0,1]-style Fraction.
-    ("EmissionsData", "gwp") => "Dimensionless",
-
-    # conversion_factor is a generic multiplier (e.g. MWh/liter, m^3 -> pu-hr)
-    # and cycle_limits is a plain count -- neither is a bounded [0,1]-style
-    # fraction, so Dimensionless rather than Fraction.
-    ("EnergyReservoirStorage", "conversion_factor") => "Dimensionless",
-    ("EnergyReservoirStorage", "cycle_limits") => "Dimensionless",
-    ("EnergyReservoirStorage", "initial_storage_capacity_level") => "Fraction",
-    ("EnergyReservoirStorage", "self_discharge") => "Fraction",
-    ("EnergyReservoirStorage", "storage_target") => "Fraction",
-    ("EnergyShareRequirements", "generation_fraction_requirement") => "Fraction",
-    ("FACTSControlDevice", "max_reactive_power") => "ReactivePower",
-    ("FACTSControlDevice", "reactive_power_required") => "Fraction",
-    # A regulated-bus identifier (0 = local bus), not a physical fraction.
-    ("FACTSControlDevice", "regulated_bus_number") => "Dimensionless",
-    ("FACTSControlDevice", "voltage_setpoint") => "Voltage",
-
-    # Complex admittance: real part is conductance, imag part is susceptance,
-    # both in the same pu base.
-    ("FixedAdmittance", "Y") => "Susceptance",
-    ("GenericArcImpedance", "r") => "Resistance",
-    ("GenericArcImpedance", "x") => "Reactance",
-
-    # Complex impedance: real part is resistance, imag part is reactance, both
-    # in the same pu base.
-    ("HybridSystem", "interconnection_impedance") => "Reactance",
-
-    # Same reasoning as EnergyReservoirStorage.conversion_factor above.
-    ("HydroPumpTurbine", "conversion_factor") => "Dimensionless",
-    ("HydroPumpTurbine", "powerhouse_elevation") => "Elevation",
-    ("HydroReservoir", "evaporative_loss") => "Fraction",
-    ("HydroReservoir", "initial_level") => "Elevation",
-    ("HydroReservoir", "intake_elevation") => "Elevation",
-    ("HydroReservoir", "level_targets") => "Elevation",
-    # level_data_type=HEAD measures hydraulic head, a height in metres, so it is
-    # Elevation (default m) and not Length (default km).
-    ("HydroReservoir", "storage_level_limits") => "Elevation",
-
-    # Same reasoning as EnergyReservoirStorage.conversion_factor above.
-    ("HydroTurbine", "conversion_factor") => "Dimensionless",
-    ("HydroTurbine", "powerhouse_elevation") => "Elevation",
-
-    # Nested discriminator, same shape as TwoTerminalVSCLine.ac_setpoint_from
-    # below: "1" (AC_REACTIVE_POWER) is a power factor, "pu" (AC_VOLTAGE +
-    # COMPONENT_BASE) is a per-unit voltage — two different target quantities for
-    # the two ambiguous units on this one property.
-    ("InterconnectingConverter", "ac_setpoint") =>
-        Dict("1" => "PowerFactor", "pu" => "Voltage"),
-    # dc_setpoint's only ambiguous branch is "pu" (DC_VOLTAGE/DC_VOLTAGE_DROOP +
-    # COMPONENT_BASE); "MW" (DC_POWER) is unambiguous.
-    ("InterconnectingConverter", "dc_setpoint") => "Voltage",
-    # DC-voltage droop gain (dV/dP); modeled on the same pu base as a series
-    # resistance, matching the "droop resistance" convention in DC-grid droop
-    # control literature.
-    ("InterconnectingConverter", "dc_voltage_droop") => "Resistance",
-    # Despite the name, this blends active/reactive power reduction (0 = only
-    # active power reduced, 1 = ...); it is a weighting Fraction, not a true
-    # power factor.
-    ("InterconnectingConverter", "power_factor_weighting_fraction") => "Fraction",
-    # Participation share of total Mvar contributed by this converter.
-    ("InterconnectingConverter", "rmpct") => "Fraction",
-    ("InterconnectingConverter", "voltage_limits") => "Voltage",
-    ("Line", "b") => "Susceptance",
-    ("Line", "g") => "Conductance",
-    ("Line", "r") => "Resistance",
-    ("Line", "x") => "Reactance",
-    ("MonitoredLine", "b") => "Susceptance",
-    ("MonitoredLine", "g") => "Conductance",
-    ("MonitoredLine", "r") => "Resistance",
-    ("MonitoredLine", "x") => "Reactance",
-    ("NodalACTransportTechnology", "reactance") => "Reactance",
-    ("NodalACTransportTechnology", "resistance") => "Resistance",
-    ("NodalHVDCTransportTechnology", "line_loss") => "Fraction",
-
-    # Financial rates are proportional (dimensionless) quantities, closer in
-    # kind to Fraction than to a bare Dimensionless multiplier.
-    ("PortfolioFinancialData", "discount_rate") => "Fraction",
-    ("PortfolioFinancialData", "inflation_rate") => "Fraction",
-    ("PortfolioFinancialData", "interest_rate") => "Fraction",
-    ("RenewableDispatch", "power_factor") => "PowerFactor",
-    ("RenewableNonDispatch", "power_factor") => "PowerFactor",
-    ("Source", "R_th") => "Resistance",
-    ("Source", "X_th") => "Reactance",
-    ("Source", "internal_voltage") => "Voltage",
-    ("StorageTechnology", "efficiency") => "Fraction",
-    ("StorageTechnology", "losses") => "Fraction",
-    ("StorageTechnology", "min_discharge_fraction") => "Fraction",
-    ("Substation", "grounding_resistance") => "Resistance",
-
-    # units.json's own Fraction description names "cofire level" as an example.
-    ("SupplyTechnology", "cofire_level_limits") => "Fraction",
-    ("SupplyTechnology", "cofire_start_limits") => "Fraction",
-    ("SupplyTechnology", "min_generation_fraction") => "Fraction",
-    ("SupplyTechnology", "outage_factor") => "Fraction",
-
-    # Complex admittance: real part is conductance, imag part is susceptance,
-    # both in the same pu base.
-    ("SwitchedAdmittance", "Y") => "Susceptance",
-    ("SwitchedAdmittance", "Y_increase") => "Susceptance",
-    ("SwitchedAdmittance", "admittance_limits") => "Susceptance",
-    # A regulated-bus identifier (0 = local bus), not a physical fraction.
-    ("SwitchedAdmittance", "regulated_bus_number") => "Dimensionless",
-
-    # Same reasoning as PortfolioFinancialData's rates above.
-    ("TechnologyFinancialData", "debt_fraction") => "Fraction",
-    ("TechnologyFinancialData", "debt_rate") => "Fraction",
-    ("TechnologyFinancialData", "interest_rate") => "Fraction",
-    ("TechnologyFinancialData", "return_on_equity") => "Fraction",
-    ("TechnologyFinancialData", "tax_rate") => "Fraction",
-    ("TModelHVDCLine", "r") => "Resistance",
-    # Series inductance in the T-model, expressed on the same pu base as a
-    # series reactance.
-    ("TModelHVDCLine", "l") => "Reactance",
-    # Shunt capacitance in the T-model, expressed on the same pu base as a
-    # shunt susceptance.
-    ("TModelHVDCLine", "c") => "Susceptance",
-    ("ThreeWindingTransformer", "r_12") => "Resistance",
-    ("ThreeWindingTransformer", "r_23") => "Resistance",
-    ("ThreeWindingTransformer", "r_31") => "Resistance",
-    ("ThreeWindingTransformer", "x_12") => "Reactance",
-    ("ThreeWindingTransformer", "x_23") => "Reactance",
-    ("ThreeWindingTransformer", "x_31") => "Reactance",
-    # Complex admittance: real part is conductance, imag part is susceptance,
-    # both in the same pu base.
-    ("ThreeWindingTransformer", "magnetizing_shunt") => "Susceptance",
-
-    # A control band around a per-unit tap/reactive setpoint (unit "1" on the
-    # eight non-angle control_objective branches); same convention as `tap`
-    # below, not a bounded [0,1] Fraction.
-    ("TransformerCircuit", "control_limits") => "Dimensionless",
-    # PSS/E VMA/VMI voltage band; the pu branch of this discriminated property
-    # applies only to the voltage-controlled objectives (UNDEFINED,
-    # VOLTAGE_DISABLED, FIXED, VOLTAGE) -- the other objectives resolve to
-    # ReactivePower/ActivePower on their own MVAr/MW branches.
-    ("TransformerCircuit", "controlled_quantity_limits") => "Voltage",
-    ("TransformerCircuit", "r") => "Resistance",
-    # Normalized tap position (0-2, 1 = nominal); unit "1", not "pu", so it is
-    # a bare multiplier rather than a context-dependent voltage-base quantity.
-    ("TransformerCircuit", "tap") => "Dimensionless",
-    ("TransformerCircuit", "x") => "Reactance",
-    ("TwoTerminalLCCLine", "compounding_resistance") => "Resistance",
-    ("TwoTerminalLCCLine", "inverter_capacitor_reactance") => "Reactance",
-    ("TwoTerminalLCCLine", "inverter_rc") => "Resistance",
-    # Same tap-ratio convention as TransformerCircuit.tap above.
-    ("TwoTerminalLCCLine", "inverter_tap_limits") => "Dimensionless",
-    ("TwoTerminalLCCLine", "inverter_tap_setting") => "Dimensionless",
-    ("TwoTerminalLCCLine", "inverter_tap_step") => "Dimensionless",
-    ("TwoTerminalLCCLine", "inverter_transformer_ratio") => "Dimensionless",
-    ("TwoTerminalLCCLine", "inverter_xc") => "Reactance",
-    ("TwoTerminalLCCLine", "min_compounding_voltage") => "Voltage",
-    ("TwoTerminalLCCLine", "r") => "Resistance",
-    ("TwoTerminalLCCLine", "rectifier_capacitor_reactance") => "Reactance",
-    ("TwoTerminalLCCLine", "rectifier_rc") => "Resistance",
-    ("TwoTerminalLCCLine", "rectifier_tap_limits") => "Dimensionless",
-    ("TwoTerminalLCCLine", "rectifier_tap_setting") => "Dimensionless",
-    ("TwoTerminalLCCLine", "rectifier_tap_step") => "Dimensionless",
-    ("TwoTerminalLCCLine", "rectifier_transformer_ratio") => "Dimensionless",
-    ("TwoTerminalLCCLine", "rectifier_xc") => "Reactance",
-    ("TwoTerminalLCCLine", "scheduled_dc_voltage") => "Voltage",
-    ("TwoTerminalLCCLine", "switch_mode_voltage") => "Voltage",
-
-    # Nested discriminator with two differently-ambiguous branches: "1"
-    # (AC_REACTIVE_POWER) reads as a power factor, "pu" (AC_VOLTAGE +
-    # COMPONENT_BASE) reads as a per-unit voltage. One quantity per property is not
-    # enough here, so the value is a per-unit-string map instead of a bare name.
-    ("TwoTerminalVSCLine", "ac_setpoint_from") =>
-        Dict("1" => "PowerFactor", "pu" => "Voltage"),
-    ("TwoTerminalVSCLine", "ac_setpoint_to") =>
-        Dict("1" => "PowerFactor", "pu" => "Voltage"),
-    # dc_setpoint_from/to's only ambiguous branch is "pu" (DC_VOLTAGE/
-    # DC_VOLTAGE_DROOP + COMPONENT_BASE); "MW" (DC_POWER) is unambiguous.
-    ("TwoTerminalVSCLine", "dc_setpoint_from") => "Voltage",
-    ("TwoTerminalVSCLine", "dc_setpoint_to") => "Voltage",
-    # DC-voltage droop gain (dV/dP); same convention as
-    # InterconnectingConverter.dc_voltage_droop above.
-    ("TwoTerminalVSCLine", "dc_voltage_droop_from") => "Resistance",
-    ("TwoTerminalVSCLine", "dc_voltage_droop_to") => "Resistance",
-    ("TwoTerminalVSCLine", "g") => "Conductance",
-    # Same weighting-fraction reasoning as InterconnectingConverter's above.
-    ("TwoTerminalVSCLine", "power_factor_weighting_fraction_from") => "Fraction",
-    ("TwoTerminalVSCLine", "power_factor_weighting_fraction_to") => "Fraction",
-    # Same participation-share reasoning as InterconnectingConverter.rmpct above.
-    ("TwoTerminalVSCLine", "rmpct_from") => "Fraction",
-    ("TwoTerminalVSCLine", "rmpct_to") => "Fraction",
-    ("TwoTerminalVSCLine", "voltage_limits_from") => "Voltage",
-    ("TwoTerminalVSCLine", "voltage_limits_to") => "Voltage",
-
-    # Complex admittance: real part is conductance, imag part is susceptance,
-    # both in the same pu base.
-    ("TwoWindingTransformer", "magnetizing_shunt") => "Susceptance",
-
-    # power-family fields: schemas-0.1.0 added power_units + a COMPONENT_BASE "pu"
-    # branch, and units.json now lists "pu" under ActivePower/ReactivePower/
-    # ApparentPower too, so each field's own quantity needs stating explicitly.
-    ("Area", "peak_active_power") => "ActivePower",
-    ("Area", "peak_reactive_power") => "ReactivePower",
-    ("AreaInterchange", "active_power_flow") => "ActivePower",
-    ("AreaInterchange", "flow_limits") => "ActivePower",
-    ("DiscreteControlledACBranch", "active_power_flow") => "ActivePower",
-    ("DiscreteControlledACBranch", "rating") => "ApparentPower",
-    ("DiscreteControlledACBranch", "reactive_power_flow") => "ReactivePower",
-    ("EnergyReservoirStorage", "active_power") => "ActivePower",
-    ("EnergyReservoirStorage", "input_active_power_limits") => "ActivePower",
-    ("EnergyReservoirStorage", "output_active_power_limits") => "ActivePower",
-    ("EnergyReservoirStorage", "rating") => "ApparentPower",
-    ("EnergyReservoirStorage", "reactive_power") => "ReactivePower",
-    ("EnergyReservoirStorage", "reactive_power_limits") => "ReactivePower",
-    ("EnergyReservoirStorage", "standing_loss") => "ActivePower",
-    ("ExponentialLoad", "active_power") => "ActivePower",
-    ("ExponentialLoad", "max_active_power") => "ActivePower",
-    ("ExponentialLoad", "max_reactive_power") => "ReactivePower",
-    ("ExponentialLoad", "reactive_power") => "ReactivePower",
-    ("FACTSControlDevice", "max_shunt_current") => "ApparentPower",
-    ("GenericArcImpedance", "active_power_flow") => "ActivePower",
-    ("GenericArcImpedance", "max_flow") => "ActivePower",
-    ("GenericArcImpedance", "reactive_power_flow") => "ReactivePower",
-    ("HybridSystem", "active_power") => "ActivePower",
-    ("HybridSystem", "input_active_power_limits") => "ActivePower",
-    ("HybridSystem", "interconnection_rating") => "ApparentPower",
-    ("HybridSystem", "output_active_power_limits") => "ActivePower",
-    ("HybridSystem", "reactive_power") => "ReactivePower",
-    ("HybridSystem", "reactive_power_limits") => "ReactivePower",
-    ("HydroDispatch", "active_power") => "ActivePower",
-    ("HydroDispatch", "active_power_limits") => "ActivePower",
-    ("HydroDispatch", "rating") => "ApparentPower",
-    ("HydroDispatch", "reactive_power") => "ReactivePower",
-    ("HydroDispatch", "reactive_power_limits") => "ReactivePower",
-    ("HydroPumpTurbine", "active_power") => "ActivePower",
-    ("HydroPumpTurbine", "active_power_limits") => "ActivePower",
-    ("HydroPumpTurbine", "active_power_limits_pump") => "ActivePower",
-    ("HydroPumpTurbine", "active_power_pump") => "ActivePower",
-    ("HydroPumpTurbine", "rating") => "ApparentPower",
-    ("HydroPumpTurbine", "reactive_power") => "ReactivePower",
-    ("HydroPumpTurbine", "reactive_power_limits") => "ReactivePower",
-    ("HydroTurbine", "active_power") => "ActivePower",
-    ("HydroTurbine", "active_power_limits") => "ActivePower",
-    ("HydroTurbine", "rating") => "ApparentPower",
-    ("HydroTurbine", "reactive_power") => "ReactivePower",
-    ("HydroTurbine", "reactive_power_limits") => "ReactivePower",
-    ("InterconnectingConverter", "active_power") => "ActivePower",
-    ("InterconnectingConverter", "active_power_limits") => "ActivePower",
-    ("InterconnectingConverter", "rating") => "ApparentPower",
-    ("InterconnectingConverter", "reactive_power_limits") => "ReactivePower",
-    ("InterruptiblePowerLoad", "active_power") => "ActivePower",
-    ("InterruptiblePowerLoad", "max_active_power") => "ActivePower",
-    ("InterruptiblePowerLoad", "max_reactive_power") => "ReactivePower",
-    ("InterruptiblePowerLoad", "reactive_power") => "ReactivePower",
-    ("InterruptibleStandardLoad", "constant_active_power") => "ActivePower",
-    ("InterruptibleStandardLoad", "constant_reactive_power") => "ReactivePower",
-    ("InterruptibleStandardLoad", "current_active_power") => "ActivePower",
-    ("InterruptibleStandardLoad", "current_reactive_power") => "ReactivePower",
-    ("InterruptibleStandardLoad", "impedance_active_power") => "ActivePower",
-    ("InterruptibleStandardLoad", "impedance_reactive_power") => "ReactivePower",
-    ("InterruptibleStandardLoad", "max_constant_active_power") => "ActivePower",
-    ("InterruptibleStandardLoad", "max_constant_reactive_power") => "ReactivePower",
-    ("InterruptibleStandardLoad", "max_current_active_power") => "ActivePower",
-    ("InterruptibleStandardLoad", "max_current_reactive_power") => "ReactivePower",
-    ("InterruptibleStandardLoad", "max_impedance_active_power") => "ActivePower",
-    ("InterruptibleStandardLoad", "max_impedance_reactive_power") => "ReactivePower",
-    ("Line", "active_power_flow") => "ActivePower",
-    ("Line", "rating") => "ApparentPower",
-    ("Line", "rating_b") => "ApparentPower",
-    ("Line", "rating_c") => "ApparentPower",
-    ("Line", "reactive_power_flow") => "ReactivePower",
-    ("LoadZone", "peak_active_power") => "ActivePower",
-    ("LoadZone", "peak_reactive_power") => "ReactivePower",
-    ("MonitoredLine", "active_power_flow") => "ActivePower",
-    ("MonitoredLine", "flow_limits") => "ActivePower",
-    ("MonitoredLine", "rating") => "ApparentPower",
-    ("MonitoredLine", "rating_b") => "ApparentPower",
-    ("MonitoredLine", "rating_c") => "ApparentPower",
-    ("MonitoredLine", "reactive_power_flow") => "ReactivePower",
-    ("MotorLoad", "active_power") => "ActivePower",
-    ("MotorLoad", "max_active_power") => "ActivePower",
-    ("MotorLoad", "rating") => "ApparentPower",
-    ("MotorLoad", "reactive_power") => "ReactivePower",
-    ("MotorLoad", "reactive_power_limits") => "ReactivePower",
-    ("PowerLoad", "active_power") => "ActivePower",
-    ("PowerLoad", "max_active_power") => "ActivePower",
-    ("PowerLoad", "max_reactive_power") => "ReactivePower",
-    ("PowerLoad", "reactive_power") => "ReactivePower",
-    ("RenewableDispatch", "active_power") => "ActivePower",
-    ("RenewableDispatch", "rating") => "ApparentPower",
-    ("RenewableDispatch", "reactive_power") => "ReactivePower",
-    ("RenewableDispatch", "reactive_power_limits") => "ReactivePower",
-    ("RenewableNonDispatch", "active_power") => "ActivePower",
-    ("RenewableNonDispatch", "rating") => "ApparentPower",
-    ("RenewableNonDispatch", "reactive_power") => "ReactivePower",
-    ("ShiftablePowerLoad", "active_power") => "ActivePower",
-    ("ShiftablePowerLoad", "active_power_limits") => "ActivePower",
-    ("ShiftablePowerLoad", "max_active_power") => "ActivePower",
-    ("ShiftablePowerLoad", "max_reactive_power") => "ReactivePower",
-    ("ShiftablePowerLoad", "reactive_power") => "ReactivePower",
-    ("Source", "active_power") => "ActivePower",
-    ("Source", "active_power_limits") => "ActivePower",
-    ("Source", "reactive_power") => "ReactivePower",
-    ("Source", "reactive_power_limits") => "ReactivePower",
-    ("StandardLoad", "constant_active_power") => "ActivePower",
-    ("StandardLoad", "constant_reactive_power") => "ReactivePower",
-    ("StandardLoad", "current_active_power") => "ActivePower",
-    ("StandardLoad", "current_reactive_power") => "ReactivePower",
-    ("StandardLoad", "impedance_active_power") => "ActivePower",
-    ("StandardLoad", "impedance_reactive_power") => "ReactivePower",
-    ("StandardLoad", "max_constant_active_power") => "ActivePower",
-    ("StandardLoad", "max_constant_reactive_power") => "ReactivePower",
-    ("StandardLoad", "max_current_active_power") => "ActivePower",
-    ("StandardLoad", "max_current_reactive_power") => "ReactivePower",
-    ("StandardLoad", "max_impedance_active_power") => "ActivePower",
-    ("StandardLoad", "max_impedance_reactive_power") => "ReactivePower",
-    ("SynchronousCondenser", "active_power_losses") => "ActivePower",
-    ("SynchronousCondenser", "rating") => "ApparentPower",
-    ("SynchronousCondenser", "reactive_power") => "ReactivePower",
-    ("SynchronousCondenser", "reactive_power_limits") => "ReactivePower",
-    ("ThermalMultiStart", "active_power") => "ActivePower",
-    ("ThermalMultiStart", "active_power_limits") => "ActivePower",
-    ("ThermalMultiStart", "power_trajectory") => "ActivePower",
-    ("ThermalMultiStart", "rating") => "ApparentPower",
-    ("ThermalMultiStart", "reactive_power") => "ReactivePower",
-    ("ThermalMultiStart", "reactive_power_limits") => "ReactivePower",
-    ("ThermalStandard", "active_power") => "ActivePower",
-    ("ThermalStandard", "active_power_limits") => "ActivePower",
-    ("ThermalStandard", "rating") => "ApparentPower",
-    ("ThermalStandard", "reactive_power") => "ReactivePower",
-    ("ThermalStandard", "reactive_power_limits") => "ReactivePower",
-    ("TransformerCircuit", "active_power_flow") => "ActivePower",
-    ("TransformerCircuit", "rating") => "ApparentPower",
-    ("TransformerCircuit", "rating_b") => "ApparentPower",
-    ("TransformerCircuit", "rating_c") => "ApparentPower",
-    ("TransformerCircuit", "reactive_power_flow") => "ReactivePower",
-    ("TransmissionInterface", "active_power_flow_limits") => "ActivePower",
-    ("TwoTerminalGenericHVDCLine", "active_power_flow") => "ActivePower",
-    ("TwoTerminalGenericHVDCLine", "active_power_limits_from") => "ActivePower",
-    ("TwoTerminalGenericHVDCLine", "active_power_limits_to") => "ActivePower",
-    ("TwoTerminalGenericHVDCLine", "reactive_power_limits_from") => "ReactivePower",
-    ("TwoTerminalGenericHVDCLine", "reactive_power_limits_to") => "ReactivePower",
-    ("TwoTerminalLCCLine", "active_power_flow") => "ActivePower",
-    ("TwoTerminalLCCLine", "active_power_limits_from") => "ActivePower",
-    ("TwoTerminalLCCLine", "active_power_limits_to") => "ActivePower",
-    ("TwoTerminalLCCLine", "reactive_power_limits_from") => "ReactivePower",
-    ("TwoTerminalLCCLine", "reactive_power_limits_to") => "ReactivePower",
-    ("TwoTerminalVSCLine", "active_power_flow") => "ActivePower",
-    ("TwoTerminalVSCLine", "active_power_limits_from") => "ActivePower",
-    ("TwoTerminalVSCLine", "active_power_limits_to") => "ActivePower",
-    ("TwoTerminalVSCLine", "rating") => "ApparentPower",
-    ("TwoTerminalVSCLine", "rating_from") => "ApparentPower",
-    ("TwoTerminalVSCLine", "rating_to") => "ApparentPower",
-    ("TwoTerminalVSCLine", "reactive_power_from") => "ReactivePower",
-    ("TwoTerminalVSCLine", "reactive_power_limits_from") => "ReactivePower",
-    ("TwoTerminalVSCLine", "reactive_power_limits_to") => "ReactivePower",
-    ("TwoTerminalVSCLine", "reactive_power_to") => "ReactivePower",
-)
+# factors ("m": Length 0.001, Elevation 1.0), so the unit alone cannot always
+# identify the quantity. The schemas declare the answer with `x-quantity` --
+# see SiennaSchemas docs/UNIT_ANNOTATIONS.md rule 7 -- and this file no longer
+# carries a lookup table of its own. Where no declaration is present, an
+# ambiguous branch is resolved from the unambiguous branches beside it in the
+# same `x-units` map; generation still fails rather than guessing when neither
+# route settles it.
 
 _is_convertible(::Nothing) = false
 _is_convertible(factor::Real) = !iszero(factor)
@@ -439,7 +64,56 @@ function load_unit_vocabulary(units_path)
     return factors, by_unit
 end
 
-function resolve_quantity(by_unit, type_name, prop, unit)
+"""
+Quantities inferable from the unambiguous branches of one `x-units` map.
+
+A branch whose unit names exactly one quantity pins that quantity for the map;
+an ambiguous branch beside it then means the same thing. `{NATURAL_UNITS: MW,
+COMPONENT_BASE: pu}` is the pattern every power-family field uses, and it needs
+no declaration.
+
+The pin must also be a candidate for every ambiguous branch in the map, or
+nothing is inferred. Without that guard the COMPONENT_MVAR shunt bases mislead
+it: a magnetizing shunt's `{S, MVAr, pu}` pins ReactivePower off the MVAr
+branch, but the property is a Susceptance. Those declare `x-quantity`.
+"""
+function infer_quantities(by_unit, xunits)
+    leaves = [v for v in values(xunits) if v isa AbstractString]
+    pins = unique([
+        unique(by_unit[v])[1] for
+        v in leaves if haskey(by_unit, v) && length(unique(by_unit[v])) == 1
+    ])
+    ambiguous = [v for v in leaves if haskey(by_unit, v) && length(unique(by_unit[v])) > 1]
+    resolved = Dict{String, String}()
+    usable = length(pins) == 1 && all(pins[1] in unique(by_unit[v]) for v in ambiguous)
+    for v in values(xunits)
+        if v isa AbstractDict && haskey(v, "x-units")
+            merge!(resolved, infer_quantities(by_unit, v["x-units"]))
+        elseif usable && v isa AbstractString && v in ambiguous
+            resolved[String(v)] = pins[1]
+        end
+    end
+    return resolved
+end
+
+"""
+The quantity a property declares for `unit`, or `nothing`.
+
+`x-quantity` is either a quantity-type string — every ambiguous unit on the
+property means that quantity — or a unit-to-quantity object, for a property
+whose branches disagree: a VSC setpoint reads as a power factor on one control
+mode and a per-unit voltage on another.
+"""
+declared_quantity_for(declared::Nothing, unit) = nothing
+declared_quantity_for(declared::AbstractString, unit) = String(declared)
+function declared_quantity_for(declared::AbstractDict, unit)
+    if haskey(declared, unit)
+        return String(declared[unit])
+    end
+    return nothing
+end
+
+function resolve_quantity(by_unit, type_name, prop, unit; declared = nothing, inferred = nothing)
     if !haskey(by_unit, unit)
         error("$type_name.$prop declares x-unit=\"$unit\", which is absent from units.json")
     end
@@ -448,39 +122,20 @@ function resolve_quantity(by_unit, type_name, prop, unit)
         return quantities[1]
     end
     # More than one quantity is registered for this unit. A shared conversion
-    # factor would make the arithmetic work out the same either way, but it
-    # does not make the label correct, so it is not grounds for a guess here --
-    # only QUANTITY_OVERRIDES may pick the quantity. A discriminated property
-    # has one entry per branch unit, and the other branches resolve on their
-    # own.
-    key = (String(type_name), String(prop))
-    if haskey(QUANTITY_OVERRIDES, key)
-        return resolve_override(QUANTITY_OVERRIDES[key], type_name, prop, unit)
+    # factor would make the arithmetic work out the same either way, but it does
+    # not make the label correct, so it is not grounds for a guess. The schema's
+    # own x-quantity settles it; failing that, the sibling branches may.
+    from_schema = declared_quantity_for(declared, unit)
+    if !isnothing(from_schema)
+        return from_schema
+    end
+    if !isnothing(inferred) && haskey(inferred, unit)
+        return inferred[unit]
     end
     error(
         "$type_name.$prop declares ambiguous x-unit=\"$unit\" across quantities " *
-        "[$(join(quantities, ", "))]. " *
-        "Add (\"$type_name\", \"$prop\") to QUANTITY_OVERRIDES.",
-    )
-end
-
-"""
-A `QUANTITY_OVERRIDES` entry is either a single quantity name — every ambiguous
-unit on that property means the same quantity — or a unit-to-quantity `Dict`,
-for a property whose branches disagree: a VSC setpoint reads as a power factor
-on one control mode and a per-unit voltage on another.
-"""
-function resolve_override(override::AbstractString, type_name, prop, unit)
-    return override
-end
-
-function resolve_override(override::AbstractDict, type_name, prop, unit)
-    if haskey(override, unit)
-        return override[unit]
-    end
-    error(
-        "$type_name.$prop declares ambiguous x-unit=\"$unit\" with no override entry " *
-        "for that unit (existing entries cover $(join(sort(collect(keys(override))), ", "))).",
+        "[$(join(quantities, ", "))], and no sibling branch settles it. " *
+        "Declare \"x-quantity\" on that property in the schemas.",
     )
 end
 
@@ -573,22 +228,37 @@ struct NestedBranch
     branches::Vector{Any}
 end
 
-build_branch(by_unit, type_name, prop, key, unit::AbstractString) =
-    LeafBranch(key, String(unit), resolve_quantity(by_unit, type_name, prop, String(unit)))
+build_branch(by_unit, type_name, prop, key, unit::AbstractString, declared, inferred) =
+    LeafBranch(
+        key,
+        String(unit),
+        resolve_quantity(
+            by_unit, type_name, prop, String(unit);
+            declared = declared, inferred = inferred,
+        ),
+    )
 
-function build_branch(by_unit, type_name, prop, key, nested::AbstractDict)
+function build_branch(by_unit, type_name, prop, key, nested::AbstractDict, declared, inferred)
     disc = nested["x-unit-discriminator"]
     return NestedBranch(
         key,
         disc,
-        build_branches(by_unit, type_name, prop, nested["x-units"]),
+        build_branches(by_unit, type_name, prop, nested["x-units"], declared),
     )
 end
 
-function build_branches(by_unit, type_name, prop, xunits)
+"""
+Inference is scoped to one `x-units` map, so each nesting level recomputes it
+from its own branches before resolving them.
+"""
+function build_branches(by_unit, type_name, prop, xunits, declared = nothing)
+    inferred = infer_quantities(by_unit, xunits)
     branches = Any[]
     for (key, value) in pairs(xunits)
-        push!(branches, build_branch(by_unit, type_name, prop, String(key), value))
+        push!(
+            branches,
+            build_branch(by_unit, type_name, prop, String(key), value, declared, inferred),
+        )
     end
     return branches
 end
@@ -632,7 +302,8 @@ branches.
 """
 function emit_discriminated(io, prefix, by_unit, type_name, prop, spec)
     disc = spec["x-unit-discriminator"]
-    branches = build_branches(by_unit, type_name, prop, spec["x-units"])
+    branches =
+        build_branches(by_unit, type_name, prop, spec["x-units"], get(spec, "x-quantity", nothing))
     if isempty(branches)
         return false
     end
@@ -672,7 +343,10 @@ function emit_type(io, prefix, by_unit, type_name, schema)
                 type_name,
                 prop,
                 unit,
-                resolve_quantity(by_unit, type_name, prop, unit),
+                resolve_quantity(
+                    by_unit, type_name, prop, unit;
+                    declared = get(spec, "x-quantity", nothing),
+                ),
             )
         end
         if haskey(spec, "x-unit-base")
