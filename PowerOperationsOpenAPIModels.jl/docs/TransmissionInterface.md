@@ -1,0 +1,15 @@
+# TransmissionInterface
+
+A collection of transmission branches whose combined flow is monitored and constrained as an interface.
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**`active_power_flow_limits`** | **`TransmissionInterfaceActivePowerFlowLimits`** | Minimum and maximum active power flow limits on the interface. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
+**`base_power`** | **`Float64`** | System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [required]
+**`direction_mapping`** | **`Union{Absent,Nothing,TransmissionInterfaceDirectionMapping}`** | Dictionary of the line `name`s in the interface and their direction of flow (1 or -1) relative to the flow of the interface. | [optional]
+**`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
+**`power_units`** | **`TransmissionInterfacePowerUnits`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
+**`violation_penalty`** | **`Union{Absent,Float64,Nothing}`** | Penalty cost for violating the flow limits in the interface. | [optional]

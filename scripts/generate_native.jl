@@ -22,6 +22,7 @@ const RAW_DIR = joinpath(REPO, ".native_raw") # scratch: one unsplit file per do
 
 include(joinpath(@__DIR__, "normalize_bundle.jl"))
 include(joinpath(@__DIR__, "emit_units.jl"))
+include(joinpath(@__DIR__, "emit_docs.jl"))
 include(joinpath(@__DIR__, "registered_names.jl"))
 
 const UNIT_VOCAB = load_unit_vocabulary(joinpath(SCHEMA_DIR, "Core", "units.json"))
@@ -284,7 +285,10 @@ for (domain, pkgdir, modname, bases) in DOMAINS
 
     write(joinpath(dest, "$modname.jl"), String(take!(lines_out)))
     rm(joinpath(dest, "apis"); force=true, recursive=true)
-    rm(joinpath(REPO, pkgdir, "docs"); force=true, recursive=true)
+
+    docs_dest = joinpath(REPO, pkgdir, "docs")
+    rm(docs_dest; force=true, recursive=true)
+    emit_docs_for(chunks, docs_dest)
 
     println(
         "Wrote $pkgdir/src/$modname.jl: $(length(chunks)) new type(s), " *

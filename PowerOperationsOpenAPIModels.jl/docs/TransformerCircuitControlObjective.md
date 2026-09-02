@@ -1,0 +1,17 @@
+# TransformerCircuitControlObjective
+
+Tap-changer / phase-shifter control objective (PSS/E COD). `UNDEFINED` means this circuit has no control block.
+
+## Allowed values
+- `UNDEFINED`
+- `VOLTAGE_DISABLED`
+- `REACTIVE_POWER_FLOW_DISABLED`
+- `ACTIVE_POWER_FLOW_DISABLED`
+- `CONTROL_OF_DC_LINE_DISABLED`
+- `ASYMMETRIC_ACTIVE_POWER_FLOW_DISABLED`
+- `FIXED`
+- `VOLTAGE`
+- `REACTIVE_POWER_FLOW`
+- `ACTIVE_POWER_FLOW`
+- `CONTROL_OF_DC_LINE`
+- `ASYMMETRIC_ACTIVE_POWER_FLOW`
