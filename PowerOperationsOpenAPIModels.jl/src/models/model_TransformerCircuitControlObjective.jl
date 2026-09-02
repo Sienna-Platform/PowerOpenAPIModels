@@ -8,11 +8,11 @@ struct TransformerCircuitControlObjective
 end
 _decode(::Type{TransformerCircuitControlObjective}, value) = _decode(TransformerCircuitControlObjective, value, true)
 function _decode(::Type{TransformerCircuitControlObjective}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TransformerCircuit/properties/control_objective"), value, "decoding TransformerCircuitControlObjective"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TransformerCircuit/properties/control_objective"), value, "decoding TransformerCircuitControlObjective"; direction = :neutral)
     return TransformerCircuitControlObjective(_decode(String, value, _openapi_validate))
 end
 function _encode(value::TransformerCircuitControlObjective)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TransformerCircuit/properties/control_objective"), output, "encoding TransformerCircuitControlObjective"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TransformerCircuit/properties/control_objective"), output, "encoding TransformerCircuitControlObjective"; direction = :neutral)
 end
 Base.string(value::TransformerCircuitControlObjective) = string(value.value)

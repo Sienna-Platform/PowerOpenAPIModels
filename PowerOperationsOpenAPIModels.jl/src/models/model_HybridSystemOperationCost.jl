@@ -14,7 +14,7 @@ Base.@kwdef struct HybridSystemOperationCost
 end
 _decode(::Type{HybridSystemOperationCost}, value) = _decode(HybridSystemOperationCost, value, true)
 function _decode(::Type{HybridSystemOperationCost}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/HybridSystem/properties/operation_cost"), _openapi_raw, "decoding HybridSystemOperationCost"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/HybridSystem/properties/operation_cost"), _openapi_raw, "decoding HybridSystemOperationCost"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "HybridSystemOperationCost")
     _openapi_field_ancillary_service_offers = _decode(Vector{Int64}, _required(_openapi_object, "ancillary_service_offers", "HybridSystemOperationCost"), _openapi_validate)
     _openapi_field_cost_type = haskey(_openapi_object, "cost_type") ? _decode(Union{Absent,Nothing,String}, _openapi_object["cost_type"], _openapi_validate) : ABSENT
@@ -49,7 +49,7 @@ function _encode(_openapi_value::HybridSystemOperationCost)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/HybridSystem/properties/operation_cost"), _openapi_output, "encoding HybridSystemOperationCost"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/HybridSystem/properties/operation_cost"), _openapi_output, "encoding HybridSystemOperationCost"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::HybridSystemOperationCost)

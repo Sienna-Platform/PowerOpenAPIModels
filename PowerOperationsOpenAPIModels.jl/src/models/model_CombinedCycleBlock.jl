@@ -1,6 +1,6 @@
 @doc "    CombinedCycleBlock\n\nAttribute to represent combined cycle generation by block configuration that shares heat recovery conversions. CT and CA unit assignments to HRSGs are recorded as CombinedCycleAssociation rows.\n\n- `configuration`: Shaft and turbine arrangement of a combined cycle plant: a single shaft carrying one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or `Other` for any arrangement outside these.\n- `heat_recovery_to_steam_factor`: Factor for heat recovery to steam conversion\n- `name`: Name of the combined cycle block"
 Base.@kwdef struct CombinedCycleBlock
-    configuration::CombinedCycleBlockConfiguration
+    configuration::CombinedCycleConfiguration
     heat_recovery_to_steam_factor::Union{Absent,Float64,Nothing} = ABSENT
     id::Int64
     name::String
@@ -8,9 +8,9 @@ Base.@kwdef struct CombinedCycleBlock
 end
 _decode(::Type{CombinedCycleBlock}, value) = _decode(CombinedCycleBlock, value, true)
 function _decode(::Type{CombinedCycleBlock}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/CombinedCycleBlock"), _openapi_raw, "decoding CombinedCycleBlock"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/CombinedCycleBlock"), _openapi_raw, "decoding CombinedCycleBlock"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "CombinedCycleBlock")
-    _openapi_field_configuration = _decode(CombinedCycleBlockConfiguration, _required(_openapi_object, "configuration", "CombinedCycleBlock"), _openapi_validate)
+    _openapi_field_configuration = _decode(CombinedCycleConfiguration, _required(_openapi_object, "configuration", "CombinedCycleBlock"), _openapi_validate)
     _openapi_field_heat_recovery_to_steam_factor = haskey(_openapi_object, "heat_recovery_to_steam_factor") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["heat_recovery_to_steam_factor"], _openapi_validate) : ABSENT
     _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "CombinedCycleBlock"), _openapi_validate)
     _openapi_field_name = _decode(String, _required(_openapi_object, "name", "CombinedCycleBlock"), _openapi_validate)
@@ -31,7 +31,7 @@ function _encode(_openapi_value::CombinedCycleBlock)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/CombinedCycleBlock"), _openapi_output, "encoding CombinedCycleBlock"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/CombinedCycleBlock"), _openapi_output, "encoding CombinedCycleBlock"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::CombinedCycleBlock)

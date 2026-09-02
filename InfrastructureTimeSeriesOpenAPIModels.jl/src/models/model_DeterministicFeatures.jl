@@ -4,7 +4,7 @@ Base.@kwdef struct DeterministicFeatures
 end
 _decode(::Type{DeterministicFeatures}, value) = _decode(DeterministicFeatures, value, true)
 function _decode(::Type{DeterministicFeatures}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/Deterministic/properties/features"), _openapi_raw, "decoding DeterministicFeatures"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/Deterministic/properties/features"), _openapi_raw, "decoding DeterministicFeatures"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "DeterministicFeatures")
     _openapi_additional_properties = Dict{String,TimeSeriesFeatureValue}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -19,7 +19,7 @@ function _encode(_openapi_value::DeterministicFeatures)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/Deterministic/properties/features"), _openapi_output, "encoding DeterministicFeatures"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/Deterministic/properties/features"), _openapi_output, "encoding DeterministicFeatures"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::DeterministicFeatures)

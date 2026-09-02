@@ -8,7 +8,7 @@ Base.@kwdef struct OfflineReserveVariable
 end
 _decode(::Type{OfflineReserveVariable}, value) = _decode(OfflineReserveVariable, value, true)
 function _decode(::Type{OfflineReserveVariable}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/OfflineReserve/properties/variable"), _openapi_raw, "decoding OfflineReserveVariable"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/OfflineReserve/properties/variable"), _openapi_raw, "decoding OfflineReserveVariable"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "OfflineReserveVariable")
     _openapi_field_power_units = _decode(UnitSystem, _required(_openapi_object, "power_units", "OfflineReserveVariable"), _openapi_validate)
     _openapi_field_value_curve = _decode(ValueCurve, _required(_openapi_object, "value_curve", "OfflineReserveVariable"), _openapi_validate)
@@ -31,7 +31,7 @@ function _encode(_openapi_value::OfflineReserveVariable)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/OfflineReserve/properties/variable"), _openapi_output, "encoding OfflineReserveVariable"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/OfflineReserve/properties/variable"), _openapi_output, "encoding OfflineReserveVariable"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::OfflineReserveVariable)

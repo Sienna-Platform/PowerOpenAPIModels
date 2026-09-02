@@ -7,7 +7,7 @@ Base.@kwdef struct InterconnectingConverterLossFunction
 end
 _decode(::Type{InterconnectingConverterLossFunction}, value) = _decode(InterconnectingConverterLossFunction, value, true)
 function _decode(::Type{InterconnectingConverterLossFunction}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/InterconnectingConverter/properties/loss_function"), _openapi_raw, "decoding InterconnectingConverterLossFunction"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/InterconnectingConverter/properties/loss_function"), _openapi_raw, "decoding InterconnectingConverterLossFunction"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "InterconnectingConverterLossFunction")
     _openapi_field_curve_type = _decode(String, _required(_openapi_object, "curve_type", "InterconnectingConverterLossFunction"), _openapi_validate)
     _openapi_field_function_data = _decode(InterconnectingConverterLossFunctionFunctionData, _required(_openapi_object, "function_data", "InterconnectingConverterLossFunction"), _openapi_validate)
@@ -28,7 +28,7 @@ function _encode(_openapi_value::InterconnectingConverterLossFunction)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/InterconnectingConverter/properties/loss_function"), _openapi_output, "encoding InterconnectingConverterLossFunction"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/InterconnectingConverter/properties/loss_function"), _openapi_output, "encoding InterconnectingConverterLossFunction"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::InterconnectingConverterLossFunction)

@@ -15,7 +15,7 @@ Base.@kwdef struct BilateralTransaction
 end
 _decode(::Type{BilateralTransaction}, value) = _decode(BilateralTransaction, value, true)
 function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/BilateralTransaction"), _openapi_raw, "decoding BilateralTransaction"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/BilateralTransaction"), _openapi_raw, "decoding BilateralTransaction"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "BilateralTransaction")
     _openapi_field_active_power_association_id = haskey(_openapi_object, "active_power_association_id") ? _decode(Union{Absent,Union{Int64,Nothing}}, _openapi_object["active_power_association_id"], _openapi_validate) : ABSENT
     _openapi_field_buyer_id = _decode(String, _required(_openapi_object, "buyer_id", "BilateralTransaction"), _openapi_validate)
@@ -52,7 +52,7 @@ function _encode(_openapi_value::BilateralTransaction)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/BilateralTransaction"), _openapi_output, "encoding BilateralTransaction"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/BilateralTransaction"), _openapi_output, "encoding BilateralTransaction"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::BilateralTransaction)

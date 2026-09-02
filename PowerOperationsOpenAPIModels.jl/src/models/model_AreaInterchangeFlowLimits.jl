@@ -6,7 +6,7 @@ Base.@kwdef struct AreaInterchangeFlowLimits
 end
 _decode(::Type{AreaInterchangeFlowLimits}, value) = _decode(AreaInterchangeFlowLimits, value, true)
 function _decode(::Type{AreaInterchangeFlowLimits}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/AreaInterchange/properties/flow_limits"), _openapi_raw, "decoding AreaInterchangeFlowLimits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/AreaInterchange/properties/flow_limits"), _openapi_raw, "decoding AreaInterchangeFlowLimits"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "AreaInterchangeFlowLimits")
     _openapi_field_from_to = haskey(_openapi_object, "from_to") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["from_to"], _openapi_validate) : ABSENT
     _openapi_field_to_from = haskey(_openapi_object, "to_from") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["to_from"], _openapi_validate) : ABSENT
@@ -25,7 +25,7 @@ function _encode(_openapi_value::AreaInterchangeFlowLimits)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/AreaInterchange/properties/flow_limits"), _openapi_output, "encoding AreaInterchangeFlowLimits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/AreaInterchange/properties/flow_limits"), _openapi_output, "encoding AreaInterchangeFlowLimits"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::AreaInterchangeFlowLimits)

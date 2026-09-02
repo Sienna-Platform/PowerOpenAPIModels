@@ -8,11 +8,11 @@ struct OwnerCategory
 end
 _decode(::Type{OwnerCategory}, value) = _decode(OwnerCategory, value, true)
 function _decode(::Type{OwnerCategory}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/OwnerCategory"), value, "decoding OwnerCategory"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/OwnerCategory"), value, "decoding OwnerCategory"; direction = :neutral)
     return OwnerCategory(_decode(String, value, _openapi_validate))
 end
 function _encode(value::OwnerCategory)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/OwnerCategory"), output, "encoding OwnerCategory"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/OwnerCategory"), output, "encoding OwnerCategory"; direction = :neutral)
 end
 Base.string(value::OwnerCategory) = string(value.value)

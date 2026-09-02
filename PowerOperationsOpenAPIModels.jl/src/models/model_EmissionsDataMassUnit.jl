@@ -8,11 +8,11 @@ struct EmissionsDataMassUnit
 end
 _decode(::Type{EmissionsDataMassUnit}, value) = _decode(EmissionsDataMassUnit, value, true)
 function _decode(::Type{EmissionsDataMassUnit}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/EmissionsData/properties/mass_unit"), value, "decoding EmissionsDataMassUnit"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/EmissionsData/properties/mass_unit"), value, "decoding EmissionsDataMassUnit"; direction = :neutral)
     return EmissionsDataMassUnit(_decode(String, value, _openapi_validate))
 end
 function _encode(value::EmissionsDataMassUnit)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/EmissionsData/properties/mass_unit"), output, "encoding EmissionsDataMassUnit"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/EmissionsData/properties/mass_unit"), output, "encoding EmissionsDataMassUnit"; direction = :neutral)
 end
 Base.string(value::EmissionsDataMassUnit) = string(value.value)

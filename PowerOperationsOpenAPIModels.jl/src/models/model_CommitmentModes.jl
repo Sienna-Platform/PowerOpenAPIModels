@@ -8,11 +8,11 @@ struct CommitmentModes
 end
 _decode(::Type{CommitmentModes}, value) = _decode(CommitmentModes, value, true)
 function _decode(::Type{CommitmentModes}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/CommitmentModes"), value, "decoding CommitmentModes"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/CommitmentModes"), value, "decoding CommitmentModes"; direction = :neutral)
     return CommitmentModes(_decode(String, value, _openapi_validate))
 end
 function _encode(value::CommitmentModes)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/CommitmentModes"), output, "encoding CommitmentModes"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/CommitmentModes"), output, "encoding CommitmentModes"; direction = :neutral)
 end
 Base.string(value::CommitmentModes) = string(value.value)

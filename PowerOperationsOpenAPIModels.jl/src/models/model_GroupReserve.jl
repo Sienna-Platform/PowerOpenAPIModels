@@ -10,7 +10,7 @@ Base.@kwdef struct GroupReserve
 end
 _decode(::Type{GroupReserve}, value) = _decode(GroupReserve, value, true)
 function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/GroupReserve"), _openapi_raw, "decoding GroupReserve"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/GroupReserve"), _openapi_raw, "decoding GroupReserve"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "GroupReserve")
     _openapi_field_available = _decode(Bool, _required(_openapi_object, "available", "GroupReserve"), _openapi_validate)
     _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "GroupReserve"), _openapi_validate)
@@ -37,7 +37,7 @@ function _encode(_openapi_value::GroupReserve)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/GroupReserve"), _openapi_output, "encoding GroupReserve"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/GroupReserve"), _openapi_output, "encoding GroupReserve"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::GroupReserve)

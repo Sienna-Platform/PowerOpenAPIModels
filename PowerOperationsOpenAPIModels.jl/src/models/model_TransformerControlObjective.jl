@@ -8,11 +8,11 @@ struct TransformerControlObjective
 end
 _decode(::Type{TransformerControlObjective}, value) = _decode(TransformerControlObjective, value, true)
 function _decode(::Type{TransformerControlObjective}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TransformerControlObjective"), value, "decoding TransformerControlObjective"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TransformerControlObjective"), value, "decoding TransformerControlObjective"; direction = :neutral)
     return TransformerControlObjective(_decode(String, value, _openapi_validate))
 end
 function _encode(value::TransformerControlObjective)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TransformerControlObjective"), output, "encoding TransformerControlObjective"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TransformerControlObjective"), output, "encoding TransformerControlObjective"; direction = :neutral)
 end
 Base.string(value::TransformerControlObjective) = string(value.value)

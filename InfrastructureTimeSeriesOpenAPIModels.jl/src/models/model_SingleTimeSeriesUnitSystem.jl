@@ -8,11 +8,11 @@ struct SingleTimeSeriesUnitSystem
 end
 _decode(::Type{SingleTimeSeriesUnitSystem}, value) = _decode(SingleTimeSeriesUnitSystem, value, true)
 function _decode(::Type{SingleTimeSeriesUnitSystem}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/SingleTimeSeries/properties/unit_system"), value, "decoding SingleTimeSeriesUnitSystem"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/SingleTimeSeries/properties/unit_system"), value, "decoding SingleTimeSeriesUnitSystem"; direction = :neutral)
     return SingleTimeSeriesUnitSystem(_decode(String, value, _openapi_validate))
 end
 function _encode(value::SingleTimeSeriesUnitSystem)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/SingleTimeSeries/properties/unit_system"), output, "encoding SingleTimeSeriesUnitSystem"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/SingleTimeSeries/properties/unit_system"), output, "encoding SingleTimeSeriesUnitSystem"; direction = :neutral)
 end
 Base.string(value::SingleTimeSeriesUnitSystem) = string(value.value)

@@ -28,7 +28,7 @@ Base.@kwdef struct Probabilistic
 end
 _decode(::Type{Probabilistic}, value) = _decode(Probabilistic, value, true)
 function _decode(::Type{Probabilistic}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/Probabilistic"), _openapi_raw, "decoding Probabilistic"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/Probabilistic"), _openapi_raw, "decoding Probabilistic"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "Probabilistic")
     _openapi_field_application_data = haskey(_openapi_object, "application_data") ? _decode(Union{Absent,Nothing,String}, _openapi_object["application_data"], _openapi_validate) : ABSENT
     _openapi_field_array_shape = haskey(_openapi_object, "array_shape") ? _decode(Union{Absent,Nothing,Vector{Int64}}, _openapi_object["array_shape"], _openapi_validate) : ABSENT
@@ -91,7 +91,7 @@ function _encode(_openapi_value::Probabilistic)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/Probabilistic"), _openapi_output, "encoding Probabilistic"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/Probabilistic"), _openapi_output, "encoding Probabilistic"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::Probabilistic)

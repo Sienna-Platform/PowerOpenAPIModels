@@ -87,14 +87,28 @@ _type_name(::Any) = ""
         base = replace(n, r"\d+$" => "")
         base != n && base in defined
     end
-    # Known, upstream-blocked failure under the native (post-1.0) generator: SiennaSchemas'
-    # `TimeSeriesAssociation` oneOf (and a few Operations/Investments oneOfs) compose their
-    # branches by inline/duplicated schema body rather than a clean `$ref` to the named
-    # schema. The Java generator has the same duplication but SiennaSchemas papers over it
-    # with `inlineSchemaNameMappings` in openapi-config-timeseries.json -- a generator-config
-    # override with no equivalent in the native pipeline (no mustache/config layer at all).
-    # Fixing this for real means giving those oneOf branches clean `$ref`s in SiennaSchemas
-    # itself, not another local override here.
+    # Known, upstream-blocked failure under the native (post-1.0) generator. Two distinct
+    # remaining causes, both SiennaSchemas-side (see scripts/bundle_specs.py there):
+    #
+    # - StorageCostStartUp2, StorageTechnologyOperationCostsStartUp2,
+    #   ColocatedSupplyStorageTechnologyOperationCosts{Energy,Power}StartUp2: a genuinely
+    #   anonymous inline object schema (`oneOf: [number, {object with no $ref at all}]`)
+    #   with no named schema to point at. The old `TimeSeriesAssociation1..6` case (the six
+    #   variants each `$ref`d a real named file, just duplicated as anonymous copies -- fixed
+    #   by SiennaSchemas@<bundle_specs.py fix>, redirecting to `#/components/schemas/<Name>`
+    #   instead of inlining) does not apply here: fixing this for real means giving the
+    #   inline object its own named schema entry in SiennaSchemas, not a bundler change.
+    # - ThreeWindingTransformerShuntLocation2, TwoWindingTransformerShuntLocation2: NOT a
+    #   duplication bug. `ThreeWindingTransformer.shunt_location` carries its own
+    #   `description`/`default` alongside the shared `$ref`, so the bundler correctly keeps
+    #   it as a distinct merged copy rather than collapsing it into the shared
+    #   `ThreeWindingTransformerShuntLocation` (which now exists too, properly hoisted, and
+    #   is what any *other*, sibling-free reference to it resolves to). `ACBusBustype`
+    #   (constructed below) is the same case -- `ACBus.bustype` overrides `ACBusType`'s
+    #   shared description, so it correctly gets its own copy too, alongside a real
+    #   `PowerCoreOpenAPIModels.ACBusType`. There is currently no way to tell "field-scoped
+    #   override" apart from "accidental duplicate" from the generated name alone -- both
+    #   just end in a digit.
     @test_broken sort(collect(aliases)) == String[]
 end
 
@@ -167,10 +181,10 @@ end
             number=1,
             # Under the pre-1.0 generator `bustype::ACBusType` was a bare `String` alias, so
             # a literal worked directly. The native generator turns any enum-constrained
-            # schema into a validating wrapper struct, named `ACBusBustype` here because
-            # SiennaSchemas' ACBus.bustype composes the shared ACBusType enum inline instead
-            # of a clean $ref to it (same root cause as the "No unmapped inline schema
-            # aliases" @test_broken above) -- so this is not yet the real ACBusType.
+            # schema into a validating wrapper struct. This one is `ACBusBustype`, not the
+            # shared `PowerCoreOpenAPIModels.ACBusType` `ACBus.bustype` $refs: that ref
+            # carries its own `description` override, so it correctly gets its own copy
+            # (see the "No unmapped inline schema aliases" @test_broken above).
             bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
             available=true,
         ),

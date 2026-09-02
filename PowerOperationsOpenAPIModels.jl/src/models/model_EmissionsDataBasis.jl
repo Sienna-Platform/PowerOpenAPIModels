@@ -8,11 +8,11 @@ struct EmissionsDataBasis
 end
 _decode(::Type{EmissionsDataBasis}, value) = _decode(EmissionsDataBasis, value, true)
 function _decode(::Type{EmissionsDataBasis}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/EmissionsData/properties/basis"), value, "decoding EmissionsDataBasis"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/EmissionsData/properties/basis"), value, "decoding EmissionsDataBasis"; direction = :neutral)
     return EmissionsDataBasis(_decode(String, value, _openapi_validate))
 end
 function _encode(value::EmissionsDataBasis)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/EmissionsData/properties/basis"), output, "encoding EmissionsDataBasis"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/EmissionsData/properties/basis"), output, "encoding EmissionsDataBasis"; direction = :neutral)
 end
 Base.string(value::EmissionsDataBasis) = string(value.value)

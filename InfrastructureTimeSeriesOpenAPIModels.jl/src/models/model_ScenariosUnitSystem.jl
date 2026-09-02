@@ -8,11 +8,11 @@ struct ScenariosUnitSystem
 end
 _decode(::Type{ScenariosUnitSystem}, value) = _decode(ScenariosUnitSystem, value, true)
 function _decode(::Type{ScenariosUnitSystem}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/Scenarios/properties/unit_system"), value, "decoding ScenariosUnitSystem"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/Scenarios/properties/unit_system"), value, "decoding ScenariosUnitSystem"; direction = :neutral)
     return ScenariosUnitSystem(_decode(String, value, _openapi_validate))
 end
 function _encode(value::ScenariosUnitSystem)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/Scenarios/properties/unit_system"), output, "encoding ScenariosUnitSystem"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/Scenarios/properties/unit_system"), output, "encoding ScenariosUnitSystem"; direction = :neutral)
 end
 Base.string(value::ScenariosUnitSystem) = string(value.value)

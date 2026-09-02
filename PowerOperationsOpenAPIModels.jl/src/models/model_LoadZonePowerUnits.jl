@@ -8,11 +8,11 @@ struct LoadZonePowerUnits
 end
 _decode(::Type{LoadZonePowerUnits}, value) = _decode(LoadZonePowerUnits, value, true)
 function _decode(::Type{LoadZonePowerUnits}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/LoadZone/properties/power_units"), value, "decoding LoadZonePowerUnits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/LoadZone/properties/power_units"), value, "decoding LoadZonePowerUnits"; direction = :neutral)
     return LoadZonePowerUnits(_decode(String, value, _openapi_validate))
 end
 function _encode(value::LoadZonePowerUnits)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/LoadZone/properties/power_units"), output, "encoding LoadZonePowerUnits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/LoadZone/properties/power_units"), output, "encoding LoadZonePowerUnits"; direction = :neutral)
 end
 Base.string(value::LoadZonePowerUnits) = string(value.value)

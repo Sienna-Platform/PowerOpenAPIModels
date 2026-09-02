@@ -10,7 +10,7 @@ Base.@kwdef struct LoadZone
 end
 _decode(::Type{LoadZone}, value) = _decode(LoadZone, value, true)
 function _decode(::Type{LoadZone}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/LoadZone"), _openapi_raw, "decoding LoadZone"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/LoadZone"), _openapi_raw, "decoding LoadZone"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "LoadZone")
     _openapi_field_base_power = _decode(Float64, _required(_openapi_object, "base_power", "LoadZone"), _openapi_validate)
     _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "LoadZone"), _openapi_validate)
@@ -37,7 +37,7 @@ function _encode(_openapi_value::LoadZone)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/LoadZone"), _openapi_output, "encoding LoadZone"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/LoadZone"), _openapi_output, "encoding LoadZone"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::LoadZone)

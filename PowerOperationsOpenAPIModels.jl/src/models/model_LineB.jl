@@ -6,7 +6,7 @@ Base.@kwdef struct LineB
 end
 _decode(::Type{LineB}, value) = _decode(LineB, value, true)
 function _decode(::Type{LineB}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/Line/properties/b"), _openapi_raw, "decoding LineB"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/Line/properties/b"), _openapi_raw, "decoding LineB"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "LineB")
     _openapi_field_from = haskey(_openapi_object, "from") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["from"], _openapi_validate) : ABSENT
     _openapi_field_to = haskey(_openapi_object, "to") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["to"], _openapi_validate) : ABSENT
@@ -25,7 +25,7 @@ function _encode(_openapi_value::LineB)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/Line/properties/b"), _openapi_output, "encoding LineB"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/Line/properties/b"), _openapi_output, "encoding LineB"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::LineB)

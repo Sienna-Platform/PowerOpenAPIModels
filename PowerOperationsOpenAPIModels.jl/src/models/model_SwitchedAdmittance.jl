@@ -17,7 +17,7 @@ Base.@kwdef struct SwitchedAdmittance
 end
 _decode(::Type{SwitchedAdmittance}, value) = _decode(SwitchedAdmittance, value, true)
 function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/SwitchedAdmittance"), _openapi_raw, "decoding SwitchedAdmittance"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/SwitchedAdmittance"), _openapi_raw, "decoding SwitchedAdmittance"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "SwitchedAdmittance")
     _openapi_field_y = _decode(SwitchedAdmittanceY, _required(_openapi_object, "Y", "SwitchedAdmittance"), _openapi_validate)
     _openapi_field_y_increase = haskey(_openapi_object, "Y_increase") ? _decode(Union{Absent,Nothing,Vector{ComplexNumber}}, _openapi_object["Y_increase"], _openapi_validate) : ABSENT
@@ -58,7 +58,7 @@ function _encode(_openapi_value::SwitchedAdmittance)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/SwitchedAdmittance"), _openapi_output, "encoding SwitchedAdmittance"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/SwitchedAdmittance"), _openapi_output, "encoding SwitchedAdmittance"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::SwitchedAdmittance)

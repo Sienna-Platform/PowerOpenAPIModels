@@ -18,7 +18,7 @@ Base.@kwdef struct ExponentialLoad
 end
 _decode(::Type{ExponentialLoad}, value) = _decode(ExponentialLoad, value, true)
 function _decode(::Type{ExponentialLoad}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ExponentialLoad"), _openapi_raw, "decoding ExponentialLoad"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ExponentialLoad"), _openapi_raw, "decoding ExponentialLoad"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "ExponentialLoad")
     _openapi_field_active_power = _decode(Float64, _required(_openapi_object, "active_power", "ExponentialLoad"), _openapi_validate)
     _openapi_field_alpha = _decode(Float64, _required(_openapi_object, "alpha", "ExponentialLoad"), _openapi_validate)
@@ -61,7 +61,7 @@ function _encode(_openapi_value::ExponentialLoad)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ExponentialLoad"), _openapi_output, "encoding ExponentialLoad"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ExponentialLoad"), _openapi_output, "encoding ExponentialLoad"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::ExponentialLoad)

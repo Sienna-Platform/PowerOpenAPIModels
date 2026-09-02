@@ -6,7 +6,7 @@ Base.@kwdef struct HydroTurbineRampLimits
 end
 _decode(::Type{HydroTurbineRampLimits}, value) = _decode(HydroTurbineRampLimits, value, true)
 function _decode(::Type{HydroTurbineRampLimits}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/HydroTurbine/properties/ramp_limits"), _openapi_raw, "decoding HydroTurbineRampLimits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/HydroTurbine/properties/ramp_limits"), _openapi_raw, "decoding HydroTurbineRampLimits"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "HydroTurbineRampLimits")
     _openapi_field_down = _decode(Float64, _required(_openapi_object, "down", "HydroTurbineRampLimits"), _openapi_validate)
     _openapi_field_up = _decode(Float64, _required(_openapi_object, "up", "HydroTurbineRampLimits"), _openapi_validate)
@@ -25,7 +25,7 @@ function _encode(_openapi_value::HydroTurbineRampLimits)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/HydroTurbine/properties/ramp_limits"), _openapi_output, "encoding HydroTurbineRampLimits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/HydroTurbine/properties/ramp_limits"), _openapi_output, "encoding HydroTurbineRampLimits"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::HydroTurbineRampLimits)

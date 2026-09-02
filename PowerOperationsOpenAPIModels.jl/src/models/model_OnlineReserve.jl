@@ -15,7 +15,7 @@ Base.@kwdef struct OnlineReserve
 end
 _decode(::Type{OnlineReserve}, value) = _decode(OnlineReserve, value, true)
 function _decode(::Type{OnlineReserve}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/OnlineReserve"), _openapi_raw, "decoding OnlineReserve"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/OnlineReserve"), _openapi_raw, "decoding OnlineReserve"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "OnlineReserve")
     _openapi_field_available = _decode(Bool, _required(_openapi_object, "available", "OnlineReserve"), _openapi_validate)
     _openapi_field_deployed_fraction = haskey(_openapi_object, "deployed_fraction") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["deployed_fraction"], _openapi_validate) : ABSENT
@@ -52,7 +52,7 @@ function _encode(_openapi_value::OnlineReserve)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/OnlineReserve"), _openapi_output, "encoding OnlineReserve"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/OnlineReserve"), _openapi_output, "encoding OnlineReserve"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::OnlineReserve)

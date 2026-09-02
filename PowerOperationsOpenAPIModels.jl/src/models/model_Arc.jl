@@ -7,7 +7,7 @@ Base.@kwdef struct Arc
 end
 _decode(::Type{Arc}, value) = _decode(Arc, value, true)
 function _decode(::Type{Arc}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/Arc"), _openapi_raw, "decoding Arc"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/Arc"), _openapi_raw, "decoding Arc"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "Arc")
     _openapi_field_from_id = _decode(Int64, _required(_openapi_object, "from_id", "Arc"), _openapi_validate)
     _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "Arc"), _openapi_validate)
@@ -28,7 +28,7 @@ function _encode(_openapi_value::Arc)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/Arc"), _openapi_output, "encoding Arc"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/Arc"), _openapi_output, "encoding Arc"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::Arc)

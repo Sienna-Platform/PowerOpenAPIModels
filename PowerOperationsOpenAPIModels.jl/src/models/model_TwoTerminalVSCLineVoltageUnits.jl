@@ -8,11 +8,11 @@ struct TwoTerminalVSCLineVoltageUnits
 end
 _decode(::Type{TwoTerminalVSCLineVoltageUnits}, value) = _decode(TwoTerminalVSCLineVoltageUnits, value, true)
 function _decode(::Type{TwoTerminalVSCLineVoltageUnits}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TwoTerminalVSCLine/properties/voltage_units"), value, "decoding TwoTerminalVSCLineVoltageUnits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TwoTerminalVSCLine/properties/voltage_units"), value, "decoding TwoTerminalVSCLineVoltageUnits"; direction = :neutral)
     return TwoTerminalVSCLineVoltageUnits(_decode(String, value, _openapi_validate))
 end
 function _encode(value::TwoTerminalVSCLineVoltageUnits)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TwoTerminalVSCLine/properties/voltage_units"), output, "encoding TwoTerminalVSCLineVoltageUnits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TwoTerminalVSCLine/properties/voltage_units"), output, "encoding TwoTerminalVSCLineVoltageUnits"; direction = :neutral)
 end
 Base.string(value::TwoTerminalVSCLineVoltageUnits) = string(value.value)

@@ -8,11 +8,11 @@ struct TwoTerminalGenericHVDCLinePowerUnits
 end
 _decode(::Type{TwoTerminalGenericHVDCLinePowerUnits}, value) = _decode(TwoTerminalGenericHVDCLinePowerUnits, value, true)
 function _decode(::Type{TwoTerminalGenericHVDCLinePowerUnits}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TwoTerminalGenericHVDCLine/properties/power_units"), value, "decoding TwoTerminalGenericHVDCLinePowerUnits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TwoTerminalGenericHVDCLine/properties/power_units"), value, "decoding TwoTerminalGenericHVDCLinePowerUnits"; direction = :neutral)
     return TwoTerminalGenericHVDCLinePowerUnits(_decode(String, value, _openapi_validate))
 end
 function _encode(value::TwoTerminalGenericHVDCLinePowerUnits)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TwoTerminalGenericHVDCLine/properties/power_units"), output, "encoding TwoTerminalGenericHVDCLinePowerUnits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TwoTerminalGenericHVDCLine/properties/power_units"), output, "encoding TwoTerminalGenericHVDCLinePowerUnits"; direction = :neutral)
 end
 Base.string(value::TwoTerminalGenericHVDCLinePowerUnits) = string(value.value)

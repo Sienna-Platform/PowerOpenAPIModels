@@ -8,11 +8,11 @@ struct BilateralConfirmation
 end
 _decode(::Type{BilateralConfirmation}, value) = _decode(BilateralConfirmation, value, true)
 function _decode(::Type{BilateralConfirmation}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/BilateralConfirmation"), value, "decoding BilateralConfirmation"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/BilateralConfirmation"), value, "decoding BilateralConfirmation"; direction = :neutral)
     return BilateralConfirmation(_decode(String, value, _openapi_validate))
 end
 function _encode(value::BilateralConfirmation)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/BilateralConfirmation"), output, "encoding BilateralConfirmation"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/BilateralConfirmation"), output, "encoding BilateralConfirmation"; direction = :neutral)
 end
 Base.string(value::BilateralConfirmation) = string(value.value)

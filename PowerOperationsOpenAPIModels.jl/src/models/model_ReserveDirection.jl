@@ -8,11 +8,11 @@ struct ReserveDirection
 end
 _decode(::Type{ReserveDirection}, value) = _decode(ReserveDirection, value, true)
 function _decode(::Type{ReserveDirection}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ReserveDirection"), value, "decoding ReserveDirection"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ReserveDirection"), value, "decoding ReserveDirection"; direction = :neutral)
     return ReserveDirection(_decode(String, value, _openapi_validate))
 end
 function _encode(value::ReserveDirection)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ReserveDirection"), output, "encoding ReserveDirection"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ReserveDirection"), output, "encoding ReserveDirection"; direction = :neutral)
 end
 Base.string(value::ReserveDirection) = string(value.value)

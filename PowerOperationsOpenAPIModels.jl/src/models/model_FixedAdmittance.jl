@@ -12,7 +12,7 @@ Base.@kwdef struct FixedAdmittance
 end
 _decode(::Type{FixedAdmittance}, value) = _decode(FixedAdmittance, value, true)
 function _decode(::Type{FixedAdmittance}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/FixedAdmittance"), _openapi_raw, "decoding FixedAdmittance"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/FixedAdmittance"), _openapi_raw, "decoding FixedAdmittance"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "FixedAdmittance")
     _openapi_field_y = _decode(FixedAdmittanceY, _required(_openapi_object, "Y", "FixedAdmittance"), _openapi_validate)
     _openapi_field_admittance_units = haskey(_openapi_object, "admittance_units") ? _decode(Union{Absent,FixedAdmittanceAdmittanceUnits,Nothing}, _openapi_object["admittance_units"], _openapi_validate) : ABSENT
@@ -43,7 +43,7 @@ function _encode(_openapi_value::FixedAdmittance)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/FixedAdmittance"), _openapi_output, "encoding FixedAdmittance"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/FixedAdmittance"), _openapi_output, "encoding FixedAdmittance"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::FixedAdmittance)

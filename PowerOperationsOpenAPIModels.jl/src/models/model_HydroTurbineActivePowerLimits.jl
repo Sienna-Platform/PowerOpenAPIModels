@@ -6,7 +6,7 @@ Base.@kwdef struct HydroTurbineActivePowerLimits
 end
 _decode(::Type{HydroTurbineActivePowerLimits}, value) = _decode(HydroTurbineActivePowerLimits, value, true)
 function _decode(::Type{HydroTurbineActivePowerLimits}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/HydroTurbine/properties/active_power_limits"), _openapi_raw, "decoding HydroTurbineActivePowerLimits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/HydroTurbine/properties/active_power_limits"), _openapi_raw, "decoding HydroTurbineActivePowerLimits"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "HydroTurbineActivePowerLimits")
     _openapi_field_max = haskey(_openapi_object, "max") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["max"], _openapi_validate) : ABSENT
     _openapi_field_min = haskey(_openapi_object, "min") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["min"], _openapi_validate) : ABSENT
@@ -25,7 +25,7 @@ function _encode(_openapi_value::HydroTurbineActivePowerLimits)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/HydroTurbine/properties/active_power_limits"), _openapi_output, "encoding HydroTurbineActivePowerLimits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/HydroTurbine/properties/active_power_limits"), _openapi_output, "encoding HydroTurbineActivePowerLimits"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::HydroTurbineActivePowerLimits)

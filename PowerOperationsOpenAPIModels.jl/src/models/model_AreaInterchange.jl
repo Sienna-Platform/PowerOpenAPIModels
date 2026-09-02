@@ -13,7 +13,7 @@ Base.@kwdef struct AreaInterchange
 end
 _decode(::Type{AreaInterchange}, value) = _decode(AreaInterchange, value, true)
 function _decode(::Type{AreaInterchange}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/AreaInterchange"), _openapi_raw, "decoding AreaInterchange"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/AreaInterchange"), _openapi_raw, "decoding AreaInterchange"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "AreaInterchange")
     _openapi_field_active_power_flow = _decode(Float64, _required(_openapi_object, "active_power_flow", "AreaInterchange"), _openapi_validate)
     _openapi_field_available = _decode(Bool, _required(_openapi_object, "available", "AreaInterchange"), _openapi_validate)
@@ -46,7 +46,7 @@ function _encode(_openapi_value::AreaInterchange)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/AreaInterchange"), _openapi_output, "encoding AreaInterchange"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/AreaInterchange"), _openapi_output, "encoding AreaInterchange"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::AreaInterchange)

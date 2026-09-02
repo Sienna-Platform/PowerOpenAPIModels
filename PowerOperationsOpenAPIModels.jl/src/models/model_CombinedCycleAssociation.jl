@@ -8,7 +8,7 @@ Base.@kwdef struct CombinedCycleAssociation
 end
 _decode(::Type{CombinedCycleAssociation}, value) = _decode(CombinedCycleAssociation, value, true)
 function _decode(::Type{CombinedCycleAssociation}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/CombinedCycleAssociation"), _openapi_raw, "decoding CombinedCycleAssociation"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/CombinedCycleAssociation"), _openapi_raw, "decoding CombinedCycleAssociation"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "CombinedCycleAssociation")
     _openapi_field_entity_id = _decode(Int64, _required(_openapi_object, "entity_id", "CombinedCycleAssociation"), _openapi_validate)
     _openapi_field_hrsg_index = _decode(Int64, _required(_openapi_object, "hrsg_index", "CombinedCycleAssociation"), _openapi_validate)
@@ -31,7 +31,7 @@ function _encode(_openapi_value::CombinedCycleAssociation)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/CombinedCycleAssociation"), _openapi_output, "encoding CombinedCycleAssociation"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/CombinedCycleAssociation"), _openapi_output, "encoding CombinedCycleAssociation"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::CombinedCycleAssociation)

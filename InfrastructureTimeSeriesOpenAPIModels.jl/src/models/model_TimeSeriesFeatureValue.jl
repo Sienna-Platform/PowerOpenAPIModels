@@ -4,30 +4,30 @@ struct TimeSeriesFeatureValue
 end
 _decode(::Type{TimeSeriesFeatureValue}, value) = _decode(TimeSeriesFeatureValue, value, true)
 function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/TimeSeriesFeatureValue"), value, "decoding TimeSeriesFeatureValue"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/TimeSeriesFeatureValue"), value, "decoding TimeSeriesFeatureValue"; direction = :neutral)
     matches = Any[]
-    if !_openapi_validate || _schema_valid(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/TimeSeriesFeatureValue/anyOf/0"), value; direction = :neutral)
+    if !_openapi_validate || _schema_valid(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/TimeSeriesFeatureValue/anyOf/0"), value; direction = :neutral)
         try
             push!(matches, _decode(Int64, value, _openapi_validate))
         catch error
             error isa DecodeError || rethrow()
         end
     end
-    if !_openapi_validate || _schema_valid(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/TimeSeriesFeatureValue/anyOf/1"), value; direction = :neutral)
+    if !_openapi_validate || _schema_valid(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/TimeSeriesFeatureValue/anyOf/1"), value; direction = :neutral)
         try
             push!(matches, _decode(Float64, value, _openapi_validate))
         catch error
             error isa DecodeError || rethrow()
         end
     end
-    if !_openapi_validate || _schema_valid(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/TimeSeriesFeatureValue/anyOf/2"), value; direction = :neutral)
+    if !_openapi_validate || _schema_valid(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/TimeSeriesFeatureValue/anyOf/2"), value; direction = :neutral)
         try
             push!(matches, _decode(Bool, value, _openapi_validate))
         catch error
             error isa DecodeError || rethrow()
         end
     end
-    if !_openapi_validate || _schema_valid(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/TimeSeriesFeatureValue/anyOf/3"), value; direction = :neutral)
+    if !_openapi_validate || _schema_valid(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/TimeSeriesFeatureValue/anyOf/3"), value; direction = :neutral)
         try
             push!(matches, _decode(String, value, _openapi_validate))
         catch error
@@ -39,5 +39,5 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
 end
 function _encode(value::TimeSeriesFeatureValue)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/TimeSeriesFeatureValue"), output, "encoding TimeSeriesFeatureValue"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/TimeSeriesFeatureValue"), output, "encoding TimeSeriesFeatureValue"; direction = :neutral)
 end

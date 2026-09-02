@@ -8,11 +8,11 @@ struct MonitoredLineParameterUnits
 end
 _decode(::Type{MonitoredLineParameterUnits}, value) = _decode(MonitoredLineParameterUnits, value, true)
 function _decode(::Type{MonitoredLineParameterUnits}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/MonitoredLine/properties/parameter_units"), value, "decoding MonitoredLineParameterUnits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/MonitoredLine/properties/parameter_units"), value, "decoding MonitoredLineParameterUnits"; direction = :neutral)
     return MonitoredLineParameterUnits(_decode(String, value, _openapi_validate))
 end
 function _encode(value::MonitoredLineParameterUnits)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/MonitoredLine/properties/parameter_units"), output, "encoding MonitoredLineParameterUnits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/MonitoredLine/properties/parameter_units"), output, "encoding MonitoredLineParameterUnits"; direction = :neutral)
 end
 Base.string(value::MonitoredLineParameterUnits) = string(value.value)

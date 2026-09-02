@@ -24,7 +24,7 @@ Base.@kwdef struct ThermalStandard
 end
 _decode(::Type{ThermalStandard}, value) = _decode(ThermalStandard, value, true)
 function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ThermalStandard"), _openapi_raw, "decoding ThermalStandard"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ThermalStandard"), _openapi_raw, "decoding ThermalStandard"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "ThermalStandard")
     _openapi_field_active_power = _decode(Float64, _required(_openapi_object, "active_power", "ThermalStandard"), _openapi_validate)
     _openapi_field_active_power_limits = _decode(ThermalStandardActivePowerLimits, _required(_openapi_object, "active_power_limits", "ThermalStandard"), _openapi_validate)
@@ -79,7 +79,7 @@ function _encode(_openapi_value::ThermalStandard)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ThermalStandard"), _openapi_output, "encoding ThermalStandard"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ThermalStandard"), _openapi_output, "encoding ThermalStandard"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::ThermalStandard)

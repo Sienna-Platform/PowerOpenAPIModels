@@ -54,8 +54,8 @@ const SERDE_FIXTURES = (
         bus = only(filter(b -> b.id == 3, buses))
         @test bus.base_voltage == 138.0
         # `bustype` is a validating wrapper struct now, not a bare `String`; see the
-        # `bustype=` fixtures in validate.jl for why (ACBus.bustype composes the shared
-        # ACBusType enum inline instead of a clean $ref to it).
+        # `bustype=` fixtures in validate.jl for why (ACBus.bustype's $ref to the shared
+        # ACBusType carries its own description override, so it gets its own copy).
         @test bus.bustype.value == "REF"
 
         thermals = PowerOpenAPIModels.get_components(doc, "ThermalStandard")

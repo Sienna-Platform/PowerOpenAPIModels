@@ -8,11 +8,11 @@ struct CombinedCycleConfiguration
 end
 _decode(::Type{CombinedCycleConfiguration}, value) = _decode(CombinedCycleConfiguration, value, true)
 function _decode(::Type{CombinedCycleConfiguration}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/CombinedCycleConfiguration"), value, "decoding CombinedCycleConfiguration"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/CombinedCycleConfiguration"), value, "decoding CombinedCycleConfiguration"; direction = :neutral)
     return CombinedCycleConfiguration(_decode(String, value, _openapi_validate))
 end
 function _encode(value::CombinedCycleConfiguration)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/CombinedCycleConfiguration"), output, "encoding CombinedCycleConfiguration"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/CombinedCycleConfiguration"), output, "encoding CombinedCycleConfiguration"; direction = :neutral)
 end
 Base.string(value::CombinedCycleConfiguration) = string(value.value)

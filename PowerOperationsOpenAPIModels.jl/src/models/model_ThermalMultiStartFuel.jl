@@ -8,11 +8,11 @@ struct ThermalMultiStartFuel
 end
 _decode(::Type{ThermalMultiStartFuel}, value) = _decode(ThermalMultiStartFuel, value, true)
 function _decode(::Type{ThermalMultiStartFuel}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ThermalMultiStart/properties/fuel"), value, "decoding ThermalMultiStartFuel"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ThermalMultiStart/properties/fuel"), value, "decoding ThermalMultiStartFuel"; direction = :neutral)
     return ThermalMultiStartFuel(_decode(String, value, _openapi_validate))
 end
 function _encode(value::ThermalMultiStartFuel)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ThermalMultiStart/properties/fuel"), output, "encoding ThermalMultiStartFuel"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ThermalMultiStart/properties/fuel"), output, "encoding ThermalMultiStartFuel"; direction = :neutral)
 end
 Base.string(value::ThermalMultiStartFuel) = string(value.value)

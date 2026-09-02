@@ -15,7 +15,7 @@ Base.@kwdef struct ACBus
 end
 _decode(::Type{ACBus}, value) = _decode(ACBus, value, true)
 function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ACBus"), _openapi_raw, "decoding ACBus"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ACBus"), _openapi_raw, "decoding ACBus"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "ACBus")
     _openapi_field_angle = haskey(_openapi_object, "angle") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["angle"], _openapi_validate) : ABSENT
     _openapi_field_area = haskey(_openapi_object, "area") ? _decode(Union{Absent,Int64,Nothing}, _openapi_object["area"], _openapi_validate) : ABSENT
@@ -52,7 +52,7 @@ function _encode(_openapi_value::ACBus)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ACBus"), _openapi_output, "encoding ACBus"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ACBus"), _openapi_output, "encoding ACBus"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::ACBus)

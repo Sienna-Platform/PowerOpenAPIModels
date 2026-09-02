@@ -8,11 +8,11 @@ struct SourceParameterUnits
 end
 _decode(::Type{SourceParameterUnits}, value) = _decode(SourceParameterUnits, value, true)
 function _decode(::Type{SourceParameterUnits}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/Source/properties/parameter_units"), value, "decoding SourceParameterUnits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/Source/properties/parameter_units"), value, "decoding SourceParameterUnits"; direction = :neutral)
     return SourceParameterUnits(_decode(String, value, _openapi_validate))
 end
 function _encode(value::SourceParameterUnits)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/Source/properties/parameter_units"), output, "encoding SourceParameterUnits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/Source/properties/parameter_units"), output, "encoding SourceParameterUnits"; direction = :neutral)
 end
 Base.string(value::SourceParameterUnits) = string(value.value)

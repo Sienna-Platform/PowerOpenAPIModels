@@ -4,7 +4,7 @@ Base.@kwdef struct SingleTimeSeriesFeatures
 end
 _decode(::Type{SingleTimeSeriesFeatures}, value) = _decode(SingleTimeSeriesFeatures, value, true)
 function _decode(::Type{SingleTimeSeriesFeatures}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/SingleTimeSeries/properties/features"), _openapi_raw, "decoding SingleTimeSeriesFeatures"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/SingleTimeSeries/properties/features"), _openapi_raw, "decoding SingleTimeSeriesFeatures"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "SingleTimeSeriesFeatures")
     _openapi_additional_properties = Dict{String,TimeSeriesFeatureValue}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -19,7 +19,7 @@ function _encode(_openapi_value::SingleTimeSeriesFeatures)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/SingleTimeSeries/properties/features"), _openapi_output, "encoding SingleTimeSeriesFeatures"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/SingleTimeSeries/properties/features"), _openapi_output, "encoding SingleTimeSeriesFeatures"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::SingleTimeSeriesFeatures)

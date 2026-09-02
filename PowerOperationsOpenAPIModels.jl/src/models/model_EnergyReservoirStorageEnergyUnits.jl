@@ -8,11 +8,11 @@ struct EnergyReservoirStorageEnergyUnits
 end
 _decode(::Type{EnergyReservoirStorageEnergyUnits}, value) = _decode(EnergyReservoirStorageEnergyUnits, value, true)
 function _decode(::Type{EnergyReservoirStorageEnergyUnits}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/EnergyReservoirStorage/properties/energy_units"), value, "decoding EnergyReservoirStorageEnergyUnits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/EnergyReservoirStorage/properties/energy_units"), value, "decoding EnergyReservoirStorageEnergyUnits"; direction = :neutral)
     return EnergyReservoirStorageEnergyUnits(_decode(String, value, _openapi_validate))
 end
 function _encode(value::EnergyReservoirStorageEnergyUnits)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/EnergyReservoirStorage/properties/energy_units"), output, "encoding EnergyReservoirStorageEnergyUnits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/EnergyReservoirStorage/properties/energy_units"), output, "encoding EnergyReservoirStorageEnergyUnits"; direction = :neutral)
 end
 Base.string(value::EnergyReservoirStorageEnergyUnits) = string(value.value)

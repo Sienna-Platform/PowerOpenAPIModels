@@ -9,7 +9,7 @@ Base.@kwdef struct ImpedanceCorrectionData
 end
 _decode(::Type{ImpedanceCorrectionData}, value) = _decode(ImpedanceCorrectionData, value, true)
 function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ImpedanceCorrectionData"), _openapi_raw, "decoding ImpedanceCorrectionData"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ImpedanceCorrectionData"), _openapi_raw, "decoding ImpedanceCorrectionData"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "ImpedanceCorrectionData")
     _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "ImpedanceCorrectionData"), _openapi_validate)
     _openapi_field_impedance_correction_curve = _decode(PiecewiseLinearData, _required(_openapi_object, "impedance_correction_curve", "ImpedanceCorrectionData"), _openapi_validate)
@@ -34,7 +34,7 @@ function _encode(_openapi_value::ImpedanceCorrectionData)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ImpedanceCorrectionData"), _openapi_output, "encoding ImpedanceCorrectionData"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ImpedanceCorrectionData"), _openapi_output, "encoding ImpedanceCorrectionData"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::ImpedanceCorrectionData)

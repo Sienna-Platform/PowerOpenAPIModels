@@ -8,11 +8,11 @@ struct PowerLoadConformity
 end
 _decode(::Type{PowerLoadConformity}, value) = _decode(PowerLoadConformity, value, true)
 function _decode(::Type{PowerLoadConformity}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/PowerLoad/properties/conformity"), value, "decoding PowerLoadConformity"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/PowerLoad/properties/conformity"), value, "decoding PowerLoadConformity"; direction = :neutral)
     return PowerLoadConformity(_decode(String, value, _openapi_validate))
 end
 function _encode(value::PowerLoadConformity)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/PowerLoad/properties/conformity"), output, "encoding PowerLoadConformity"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/PowerLoad/properties/conformity"), output, "encoding PowerLoadConformity"; direction = :neutral)
 end
 Base.string(value::PowerLoadConformity) = string(value.value)

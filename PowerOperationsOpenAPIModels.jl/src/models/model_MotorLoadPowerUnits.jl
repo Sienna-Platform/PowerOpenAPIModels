@@ -8,11 +8,11 @@ struct MotorLoadPowerUnits
 end
 _decode(::Type{MotorLoadPowerUnits}, value) = _decode(MotorLoadPowerUnits, value, true)
 function _decode(::Type{MotorLoadPowerUnits}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/MotorLoad/properties/power_units"), value, "decoding MotorLoadPowerUnits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/MotorLoad/properties/power_units"), value, "decoding MotorLoadPowerUnits"; direction = :neutral)
     return MotorLoadPowerUnits(_decode(String, value, _openapi_validate))
 end
 function _encode(value::MotorLoadPowerUnits)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/MotorLoad/properties/power_units"), output, "encoding MotorLoadPowerUnits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/MotorLoad/properties/power_units"), output, "encoding MotorLoadPowerUnits"; direction = :neutral)
 end
 Base.string(value::MotorLoadPowerUnits) = string(value.value)

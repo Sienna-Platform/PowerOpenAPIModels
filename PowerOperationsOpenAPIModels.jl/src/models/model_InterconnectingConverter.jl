@@ -29,7 +29,7 @@ Base.@kwdef struct InterconnectingConverter
 end
 _decode(::Type{InterconnectingConverter}, value) = _decode(InterconnectingConverter, value, true)
 function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/InterconnectingConverter"), _openapi_raw, "decoding InterconnectingConverter"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/InterconnectingConverter"), _openapi_raw, "decoding InterconnectingConverter"; direction = :neutral)
     _openapi_object = _object(_openapi_raw, "InterconnectingConverter")
     _openapi_field_ac_control = haskey(_openapi_object, "ac_control") ? _decode(Union{Absent,InterconnectingConverterAcControl,Nothing}, _openapi_object["ac_control"], _openapi_validate) : ABSENT
     _openapi_field_ac_setpoint = haskey(_openapi_object, "ac_setpoint") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["ac_setpoint"], _openapi_validate) : ABSENT
@@ -94,7 +94,7 @@ function _encode(_openapi_value::InterconnectingConverter)
         haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
         _openapi_output[_openapi_key] = _encode(_openapi_item)
     end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/InterconnectingConverter"), _openapi_output, "encoding InterconnectingConverter"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/InterconnectingConverter"), _openapi_output, "encoding InterconnectingConverter"; direction = :neutral)
 end
 
 function _form_fields(_openapi_value::InterconnectingConverter)

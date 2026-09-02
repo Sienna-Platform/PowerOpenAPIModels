@@ -8,11 +8,11 @@ struct ShiftablePowerLoadPowerUnits
 end
 _decode(::Type{ShiftablePowerLoadPowerUnits}, value) = _decode(ShiftablePowerLoadPowerUnits, value, true)
 function _decode(::Type{ShiftablePowerLoadPowerUnits}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ShiftablePowerLoad/properties/power_units"), value, "decoding ShiftablePowerLoadPowerUnits"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ShiftablePowerLoad/properties/power_units"), value, "decoding ShiftablePowerLoadPowerUnits"; direction = :neutral)
     return ShiftablePowerLoadPowerUnits(_decode(String, value, _openapi_validate))
 end
 function _encode(value::ShiftablePowerLoadPowerUnits)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ShiftablePowerLoad/properties/power_units"), output, "encoding ShiftablePowerLoadPowerUnits"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ShiftablePowerLoad/properties/power_units"), output, "encoding ShiftablePowerLoadPowerUnits"; direction = :neutral)
 end
 Base.string(value::ShiftablePowerLoadPowerUnits) = string(value.value)

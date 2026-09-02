@@ -8,11 +8,11 @@ struct ThermalStandardFuel
 end
 _decode(::Type{ThermalStandardFuel}, value) = _decode(ThermalStandardFuel, value, true)
 function _decode(::Type{ThermalStandardFuel}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ThermalStandard/properties/fuel"), value, "decoding ThermalStandardFuel"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ThermalStandard/properties/fuel"), value, "decoding ThermalStandardFuel"; direction = :neutral)
     return ThermalStandardFuel(_decode(String, value, _openapi_validate))
 end
 function _encode(value::ThermalStandardFuel)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/ThermalStandard/properties/fuel"), output, "encoding ThermalStandardFuel"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/ThermalStandard/properties/fuel"), output, "encoding ThermalStandardFuel"; direction = :neutral)
 end
 Base.string(value::ThermalStandardFuel) = string(value.value)

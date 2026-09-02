@@ -4,15 +4,15 @@ struct TwoTerminalLCCLineLoss
 end
 _decode(::Type{TwoTerminalLCCLineLoss}, value) = _decode(TwoTerminalLCCLineLoss, value, true)
 function _decode(::Type{TwoTerminalLCCLineLoss}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TwoTerminalLCCLine/properties/loss"), value, "decoding TwoTerminalLCCLineLoss"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TwoTerminalLCCLine/properties/loss"), value, "decoding TwoTerminalLCCLineLoss"; direction = :neutral)
     object = _object(value, "TwoTerminalLCCLineLoss")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent || tag isa AbstractString || throw(DecodeError("discriminator value must be a string for TwoTerminalLCCLineLoss"))
     selected = get(Dict(
-        "INCREMENTAL" => (IncrementalCurve, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/IncrementalCurve")),
-        "INPUT_OUTPUT" => (InputOutputCurve, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/InputOutputCurve")),
-        "IncrementalCurve" => (IncrementalCurve, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/IncrementalCurve")),
-        "InputOutputCurve" => (InputOutputCurve, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/InputOutputCurve")),
+        "INCREMENTAL" => (IncrementalCurve, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/IncrementalCurve")),
+        "INPUT_OUTPUT" => (InputOutputCurve, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/InputOutputCurve")),
+        "IncrementalCurve" => (IncrementalCurve, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/IncrementalCurve")),
+        "InputOutputCurve" => (InputOutputCurve, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/InputOutputCurve")),
     ), tag isa Absent ? "" : String(tag), nothing)
     selected === nothing && throw(DecodeError("unknown discriminator value $(repr(tag)) for TwoTerminalLCCLineLoss"))
     !_openapi_validate || _schema_valid(_SPEC, selected[2], value; direction = :neutral) || throw(DecodeError("discriminator-selected schema did not validate for TwoTerminalLCCLineLoss"))
@@ -20,5 +20,5 @@ function _decode(::Type{TwoTerminalLCCLineLoss}, value, _openapi_validate::Bool)
 end
 function _encode(value::TwoTerminalLCCLineLoss)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-fd257d251032567e8241.json", pointer = "/components/schemas/TwoTerminalLCCLine/properties/loss"), output, "encoding TwoTerminalLCCLineLoss"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-1068b1dda553e6e25b3b.json", pointer = "/components/schemas/TwoTerminalLCCLine/properties/loss"), output, "encoding TwoTerminalLCCLineLoss"; direction = :neutral)
 end

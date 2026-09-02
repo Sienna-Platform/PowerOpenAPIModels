@@ -8,11 +8,11 @@ struct SingleTimeSeriesOwnerCategory
 end
 _decode(::Type{SingleTimeSeriesOwnerCategory}, value) = _decode(SingleTimeSeriesOwnerCategory, value, true)
 function _decode(::Type{SingleTimeSeriesOwnerCategory}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/SingleTimeSeries/properties/owner_category"), value, "decoding SingleTimeSeriesOwnerCategory"; direction = :neutral)
+    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/SingleTimeSeries/properties/owner_category"), value, "decoding SingleTimeSeriesOwnerCategory"; direction = :neutral)
     return SingleTimeSeriesOwnerCategory(_decode(String, value, _openapi_validate))
 end
 function _encode(value::SingleTimeSeriesOwnerCategory)
     output = _encode(value.value)
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json", pointer = "/components/schemas/SingleTimeSeries/properties/owner_category"), output, "encoding SingleTimeSeriesOwnerCategory"; direction = :neutral)
+    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-d907e2d1c7ab387eab6d.json", pointer = "/components/schemas/SingleTimeSeries/properties/owner_category"), output, "encoding SingleTimeSeriesOwnerCategory"; direction = :neutral)
 end
 Base.string(value::SingleTimeSeriesOwnerCategory) = string(value.value)

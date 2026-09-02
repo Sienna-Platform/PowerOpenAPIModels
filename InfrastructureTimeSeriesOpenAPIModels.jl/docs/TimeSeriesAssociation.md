@@ -7,4 +7,4 @@ Dense values never appear here. `uri` names the store location that holds them; 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`value`** | **`Union{Deterministic,DeterministicSingleTimeSeries,NonSequentialTimeSeries,Probabilistic,Scenarios,SingleTimeSeries,TimeSeriesAssociation1,TimeSeriesAssociation2,TimeSeriesAssociation3,TimeSeriesAssociation4,TimeSeriesAssociation5,TimeSeriesAssociation6}`** |  | [required]
+**`value`** | **`Union{Deterministic,DeterministicSingleTimeSeries,NonSequentialTimeSeries,Probabilistic,Scenarios,SingleTimeSeries}`** |  | [required]
