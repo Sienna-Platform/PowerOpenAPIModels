@@ -1,4 +1,4 @@
-# Generated from the declared model types. Do not edit.
+# Generated from the frozen pre-1.0 registered-name set. Do not edit.
 #
 # Runs in __init__ because the registry lives in another module: state
 # mutated there during precompilation would not be saved.

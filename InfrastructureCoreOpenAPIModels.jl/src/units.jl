@@ -63,21 +63,21 @@ const UNIT_VOCABULARY = Dict{Tuple{String, String}, Float64}(
 has_conversion_factor(q::AbstractString, u::AbstractString) = haskey(UNIT_VOCABULARY, (String(q), String(u)))
 conversion_factor(q::AbstractString, u::AbstractString) = UNIT_VOCABULARY[(String(q), String(u))]
 
-has_declared_unit(::Type{<:OpenAPI.APIModel}, ::Val) = false
-has_unit_base(::Type{<:OpenAPI.APIModel}, ::Val) = false
-has_declared_unit(o::T, v::Val) where {T <: OpenAPI.APIModel} = has_declared_unit(T, v)
+has_declared_unit(::Type, ::Val) = false
+has_unit_base(::Type, ::Val) = false
+has_declared_unit(o::T, v::Val) where {T} = has_declared_unit(T, v)
 
-function declared_unit(::Type{T}, ::Val{P}) where {T <: OpenAPI.APIModel, P}
+function declared_unit(::Type{T}, ::Val{P}) where {T, P}
     error("$(nameof(T)).$P has no declared unit")
 end
-function declared_quantity(::Type{T}, ::Val{P}) where {T <: OpenAPI.APIModel, P}
+function declared_quantity(::Type{T}, ::Val{P}) where {T, P}
     error("$(nameof(T)).$P has no declared quantity")
 end
-function unit_base(::Type{T}, ::Val{P}) where {T <: OpenAPI.APIModel, P}
+function unit_base(::Type{T}, ::Val{P}) where {T, P}
     error("$(nameof(T)).$P has no unit base")
 end
 
-declared_unit(o::T, v::Val) where {T <: OpenAPI.APIModel} = declared_unit(T, v)
-declared_quantity(o::T, v::Val) where {T <: OpenAPI.APIModel} = declared_quantity(T, v)
-unit_base(o::T, v::Val) where {T <: OpenAPI.APIModel} = unit_base(T, v)
+declared_unit(o::T, v::Val) where {T} = declared_unit(T, v)
+declared_quantity(o::T, v::Val) where {T} = declared_quantity(T, v)
+unit_base(o::T, v::Val) where {T} = unit_base(T, v)
 

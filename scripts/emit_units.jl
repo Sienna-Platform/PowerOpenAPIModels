@@ -68,8 +68,7 @@ end
 Quantities inferable from the unambiguous branches of one `x-units` map.
 
 A branch whose unit names exactly one quantity pins that quantity for the map;
-an ambiguous branch beside it then means the same thing. `{NATURAL_UNITS: MW,
-COMPONENT_BASE: pu}` is the pattern every power-family field uses, and it needs
+an ambiguous branch beside it then means the same thing. `{NATURAL_UNITS: MW, COMPONENT_BASE: pu}` is the pattern every power-family field uses, and it needs
 no declaration.
 
 The pin must also be a candidate for every ambiguous branch in the map, or
@@ -113,7 +112,14 @@ function declared_quantity_for(declared::AbstractDict, unit)
     return nothing
 end
 
-function resolve_quantity(by_unit, type_name, prop, unit; declared = nothing, inferred = nothing)
+function resolve_quantity(
+    by_unit,
+    type_name,
+    prop,
+    unit;
+    declared=nothing,
+    inferred=nothing,
+)
     if !haskey(by_unit, unit)
         error("$type_name.$prop declares x-unit=\"$unit\", which is absent from units.json")
     end
@@ -161,12 +167,14 @@ function emit_vocabulary(io, factors)
 end
 
 function emit_fallbacks(io)
-    println(io, "has_declared_unit(::Type{<:OpenAPI.APIModel}, ::Val) = false")
-    println(io, "has_unit_base(::Type{<:OpenAPI.APIModel}, ::Val) = false")
-    println(
-        io,
-        "has_declared_unit(o::T, v::Val) where {T <: OpenAPI.APIModel} = has_declared_unit(T, v)",
-    )
+    # Unconstrained: the native (post-1.0) generator gives every schema the same plain
+    # `struct` shape, with no common supertype like the old `OpenAPI.APIModel` to bound
+    # these against. The fallback only ever needs to lose to a more specific method a
+    # domain package defines for its own concrete type, so an unconstrained `Type`/free `T`
+    # is exactly as selective as `<: OpenAPI.APIModel` was in practice.
+    println(io, "has_declared_unit(::Type, ::Val) = false")
+    println(io, "has_unit_base(::Type, ::Val) = false")
+    println(io, "has_declared_unit(o::T, v::Val) where {T} = has_declared_unit(T, v)")
     println(io)
     # The accessors need a generic method in Core even though it only ever
     # throws: the domain packages extend them by qualified name, which requires
@@ -176,19 +184,13 @@ function emit_fallbacks(io)
         ("declared_quantity", "no declared quantity"),
         ("unit_base", "no unit base"),
     )
-        println(
-            io,
-            "function $accessor(::Type{T}, ::Val{P}) where {T <: OpenAPI.APIModel, P}",
-        )
+        println(io, "function $accessor(::Type{T}, ::Val{P}) where {T, P}")
         println(io, "    error(\"\$(nameof(T)).\$P has $subject\")")
         println(io, "end")
     end
     println(io)
     for accessor in ("declared_unit", "declared_quantity", "unit_base")
-        println(
-            io,
-            "$accessor(o::T, v::Val) where {T <: OpenAPI.APIModel} = $accessor(T, v)",
-        )
+        println(io, "$accessor(o::T, v::Val) where {T} = $accessor(T, v)")
     end
     println(io)
     return
@@ -233,12 +235,24 @@ build_branch(by_unit, type_name, prop, key, unit::AbstractString, declared, infe
         key,
         String(unit),
         resolve_quantity(
-            by_unit, type_name, prop, String(unit);
-            declared = declared, inferred = inferred,
+            by_unit,
+            type_name,
+            prop,
+            String(unit);
+            declared=declared,
+            inferred=inferred,
         ),
     )
 
-function build_branch(by_unit, type_name, prop, key, nested::AbstractDict, declared, inferred)
+function build_branch(
+    by_unit,
+    type_name,
+    prop,
+    key,
+    nested::AbstractDict,
+    declared,
+    inferred,
+)
     disc = nested["x-unit-discriminator"]
     return NestedBranch(
         key,
@@ -251,7 +265,7 @@ end
 Inference is scoped to one `x-units` map, so each nesting level recomputes it
 from its own branches before resolving them.
 """
-function build_branches(by_unit, type_name, prop, xunits, declared = nothing)
+function build_branches(by_unit, type_name, prop, xunits, declared=nothing)
     inferred = infer_quantities(by_unit, xunits)
     branches = Any[]
     for (key, value) in pairs(xunits)
@@ -302,8 +316,13 @@ branches.
 """
 function emit_discriminated(io, prefix, by_unit, type_name, prop, spec)
     disc = spec["x-unit-discriminator"]
-    branches =
-        build_branches(by_unit, type_name, prop, spec["x-units"], get(spec, "x-quantity", nothing))
+    branches = build_branches(
+        by_unit,
+        type_name,
+        prop,
+        spec["x-units"],
+        get(spec, "x-quantity", nothing),
+    )
     if isempty(branches)
         return false
     end
@@ -344,8 +363,11 @@ function emit_type(io, prefix, by_unit, type_name, schema)
                 prop,
                 unit,
                 resolve_quantity(
-                    by_unit, type_name, prop, unit;
-                    declared = get(spec, "x-quantity", nothing),
+                    by_unit,
+                    type_name,
+                    prop,
+                    unit;
+                    declared=get(spec, "x-quantity", nothing),
                 ),
             )
         end
@@ -369,7 +391,7 @@ function emit_units_for(
     schema_dir,
     factors,
     by_unit;
-    accessor_module = "InfrastructureCoreOpenAPIModels",
+    accessor_module="InfrastructureCoreOpenAPIModels",
 )
     bundle = joinpath(schema_dir, "dist", "openapi-$domain-bundled.json")
     if !isfile(bundle)

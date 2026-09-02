@@ -43,8 +43,11 @@ Manifest.toml
 # dependency file like scripts/Project.toml.
 test/Project.toml
 
-# Generated stubs (cleaned up by scripts/reorganize_stubs.sh)
+# Generated stubs from the old openapi-generator pipeline (cleaned up by `make clean`)
 generated/
+# Native generator scratch: one unsplit file per domain (scripts/generate_native.jl removes
+# this itself when it finishes; KEEP_RAW=1 leaves it for debugging)
+.native_raw/
 
 ################################################################################
 #                              Operating systems                               #
