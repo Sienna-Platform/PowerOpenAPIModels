@@ -11,9 +11,16 @@ OpenAPI = "d5e62ea6-ddf3-4d43-8e4c-ad5e6c8bfd7d"
 PowerCoreOpenAPIModels = "b7b40286-e793-417d-a9a0-b1583e4da1cb"
 
 [compat]
-HTTP = "1"
+HTTP = "1 - 2"
 InfrastructureCoreOpenAPIModels = "0.1"
 JSON3 = "1.14.3"
-OpenAPI = "0.2.9"
+OpenAPI = "1"
 PowerCoreOpenAPIModels = "0.1"
 julia = "1.10"
+
+# OpenAPI.jl 1.0.0 is not yet on the General registry (tagged 2026-09-02); pin the
+# git tag so this can be evaluated against it ahead of registration. Generated code here
+# subtypes OpenAPI.APIModel, which 1.0 removes -- this pin currently breaks precompilation;
+# it exists to make that breakage reproducible, not to fix it.
+[sources]
+OpenAPI = { url = "https://github.com/JuliaComputing/OpenAPI.jl.git", rev = "v1.0.0" }
