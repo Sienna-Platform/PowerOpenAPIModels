@@ -1,11 +1,7 @@
 # ReservoirLocation
 
+Position of a hydro reservoir relative to its turbine: `HEAD` upstream of the turbine, typically at higher elevation; `TAIL` downstream, at lower or equal elevation.
 
-## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+## Allowed values
+- `HEAD`
+- `TAIL`

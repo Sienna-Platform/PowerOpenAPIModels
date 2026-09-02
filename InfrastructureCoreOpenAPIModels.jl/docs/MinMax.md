@@ -1,13 +1,9 @@
 # MinMax
 
+A pair of values bounding a quantity from below (`min`) and from above (`max`).
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`max`** | **`Float64`** |  | [optional] [default to nothing]
-**`min`** | **`Float64`** |  | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`max`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`min`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

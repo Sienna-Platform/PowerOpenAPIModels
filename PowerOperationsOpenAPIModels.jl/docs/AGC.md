@@ -1,21 +1,17 @@
 # AGC
 
+Automatic generation control (AGC) for the system or a certain `Area` within the system. This model uses a proportional-integral-derivative (PID) control to simulate a "smooth" response of the AGC to the area control error (ACE).
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component. | [default to nothing]
-**`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
-**`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations. | [default to nothing]
-**`bias`** | **`Float64`** | Area frequency bias. Units: MW/Hz. | [default to nothing]
-**`K_p`** | **`Float64`** | PID Proportional Constant. | [default to nothing]
-**`K_i`** | **`Float64`** | PID Integral Constant. | [default to nothing]
-**`K_d`** | **`Float64`** | PID Derivative Constant. | [default to nothing]
-**`delta_t`** | **`Float64`** | PID Discretization period. Units: s. | [default to nothing]
-**`area`** | **`Int64`** | ID of the area controlled by the AGC. | [optional] [default to nothing]
-**`initial_ace`** | **`Float64`** | Initial condition for ACE. | [optional] [default to 0.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`k_d`** | **`Float64`** | PID Derivative Constant. | [required]
+**`k_i`** | **`Float64`** | PID Integral Constant. | [required]
+**`k_p`** | **`Float64`** | PID Proportional Constant. | [required]
+**`area`** | **`Union{Absent,Int64,Nothing}`** | ID of the area controlled by the AGC. | [optional]
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
+**`bias`** | **`Float64`** | Area frequency bias. Units: MW/Hz. | [required]
+**`delta_t`** | **`Float64`** | PID Discretization period. Units: s. | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
+**`initial_ace`** | **`Union{Absent,Float64,Nothing}`** | Initial condition for ACE. | [optional]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]

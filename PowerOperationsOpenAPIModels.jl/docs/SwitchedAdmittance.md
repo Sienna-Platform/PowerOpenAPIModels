@@ -1,24 +1,22 @@
 # SwitchedAdmittance
 
+A switched admittance, with discrete steps to adjust the admittance.
+
+Most often used in power flow studies, iterating over the steps to see impacts of admittance on the results. Total admittance is calculated as: `Y` + `number_of_steps` * `Y_increase`.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component. | [default to nothing]
-**`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
-**`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations. | [default to nothing]
-**`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [default to nothing]
-**`admittance_units`** | **`String`** | Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage). | [optional] [default to "COMPONENT_MVAR"]
-**`Y`** | [**`*ComplexNumber`**](ComplexNumber.md) |  | [default to nothing]
-**`initial_status`** | **`Vector{Int64}`** | Vector of initial switched shunt status, one for in-service and zero for out-of-service for block i (1 through 8). | [optional] [default to nothing]
-**`number_of_steps`** | **`Vector{Int64}`** | Vector with number of steps for each adjustable shunt block. For example, &#x60;number_of_steps[2]&#x60; are the number of available steps for admittance increment at block 2. | [optional] [default to nothing]
-**`Y_increase`** | [**`Vector{ComplexNumber}`**](ComplexNumber.md) | Vector with admittance increment step for each adjustable shunt block. For example, &#x60;Y_increase[2]&#x60; is the complex admittance increment for each step at block 2. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr . | [optional] [default to nothing]
-**`admittance_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
-**`control_mode`** | **`String`** | Switched-shunt control mode (PSS/E MODSW). | [optional] [default to "FIXED"]
-**`regulated_bus_number`** | **`Int64`** | Bus number whose voltage/quantity this shunt regulates; 0 means local bus (PSS/E SWREM/NREG). Units: 1. | [optional] [default to 0]
-**`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection model for admittance, if any. | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`y`** | **`SwitchedAdmittanceY`** | Initial admittance at N = 0. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr . | [required]
+**`y_increase`** | **`Union{Absent,Nothing,Vector{ComplexNumber}}`** | Vector with admittance increment step for each adjustable shunt block. For example, `Y_increase[2]` is the complex admittance increment for each step at block 2. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr . | [optional]
+**`admittance_limits`** | **`Union{Absent,Nothing,SwitchedAdmittanceAdmittanceLimits}`** | Shunt admittance limits for switched shunt model. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr . | [optional]
+**`admittance_units`** | **`Union{Absent,Nothing,SwitchedAdmittanceAdmittanceUnits}`** | Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage). | [optional]
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
+**`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [required]
+**`control_mode`** | **`Union{Absent,Nothing,SwitchedAdmittanceControlMode}`** | Switched-shunt control mode (PSS/E MODSW). | [optional]
+**`dynamic_injector`** | **`Union{Absent,Union{Int64,Nothing}}`** | ID of the corresponding dynamic injection model for admittance, if any. | [optional]
+**`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
+**`initial_status`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Vector of initial switched shunt status, one for in-service and zero for out-of-service for block i (1 through 8). | [optional]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
+**`number_of_steps`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Vector with number of steps for each adjustable shunt block. For example, `number_of_steps[2]` are the number of available steps for admittance increment at block 2. | [optional]
+**`regulated_bus_number`** | **`Union{Absent,Int64,Nothing}`** | Bus number whose voltage/quantity this shunt regulates; 0 means local bus (PSS/E SWREM/NREG). Units: 1. | [optional]

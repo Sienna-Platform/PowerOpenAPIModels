@@ -1,13 +1,9 @@
 # InOut
 
+A pair of values, one for the inbound (`in`) and one for the outbound (`out`) direction of a quantity.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`in`** | **`Float64`** |  | [optional] [default to nothing]
-**`out`** | **`Float64`** |  | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`in`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`out`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

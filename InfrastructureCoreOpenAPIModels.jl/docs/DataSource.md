@@ -1,22 +1,18 @@
 # DataSource
 
+Records data provenance for a component's field values: which organization or dataset the data came from, the URL it was retrieved from, and when it was retrieved. Mirrors the `DataSource` supplemental attribute from the upstream data layer, with two deliberate divergences: `organization` is optional here although it is required upstream, and `extra` is narrowed from an any-valued map to a string-valued one. Linked to the entity it describes through Core/Associations/SupplementalAttributeAssociation.json with attribute_type: "DataSource".
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** |  | [default to nothing]
-**`organization`** | **`String`** | Publishing organization, e.g. &#39;U.S. Energy Information Administration&#39;. | [optional] [default to nothing]
-**`retrieved_at`** | **`ZonedDateTime`** | When the data was obtained. | [default to nothing]
-**`dataset`** | **`String`** | Dataset identifier within the publishing organization, e.g. &#39;EIA-860 2023, Schedule 3&#39;. | [optional] [default to nothing]
-**`url`** | **`String`** | URL the data was retrieved from. | [optional] [default to nothing]
-**`version`** | **`String`** | Data version or vintage, e.g. &#39;2023 final&#39;. | [optional] [default to nothing]
-**`published_at`** | **`ZonedDateTime`** | When the source published the data; null if unknown. | [optional] [default to nothing]
-**`confidence`** | **`String`** | Confidence qualifier, e.g. &#39;high&#39;, &#39;medium&#39;. | [optional] [default to nothing]
-**`recorded_by`** | **`String`** | User or agent that recorded the value. | [optional] [default to nothing]
-**`fields`** | **`Vector{String}`** | Names of the component fields this provenance record applies to. | [default to nothing]
-**`extra`** | **`Dict{String, String}`** | Additional string-valued provenance metadata. | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`confidence`** | **`Union{Absent,Nothing,String}`** | Confidence qualifier, e.g. 'high', 'medium'. | [optional]
+**`dataset`** | **`Union{Absent,Nothing,String}`** | Dataset identifier within the publishing organization, e.g. 'EIA-860 2023, Schedule 3'. | [optional]
+**`extra`** | **`Union{Absent,DataSourceExtra,Nothing}`** | Additional string-valued provenance metadata. | [optional]
+**`fields`** | **`Vector{String}`** | Names of the component fields this provenance record applies to. | [required]
+**`id`** | **`Int64`** |  | [required]
+**`organization`** | **`Union{Absent,Nothing,String}`** | Publishing organization, e.g. 'U.S. Energy Information Administration'. | [optional]
+**`published_at`** | **`Union{Absent,Union{Dates.DateTime,Nothing}}`** | When the source published the data; null if unknown. | [optional]
+**`recorded_by`** | **`Union{Absent,Union{Nothing,String}}`** | User or agent that recorded the value. | [optional]
+**`retrieved_at`** | **`Dates.DateTime`** | When the data was obtained. | [required]
+**`url`** | **`Union{Absent,Nothing,String}`** | URL the data was retrieved from. | [optional]
+**`version`** | **`Union{Absent,Nothing,String}`** | Data version or vintage, e.g. '2023 final'. | [optional]

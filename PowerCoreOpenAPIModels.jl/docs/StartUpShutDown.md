@@ -1,13 +1,9 @@
 # StartUpShutDown
 
+A pair of values, one for the start-up phase and one for the shut-down phase of a unit's cycle.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`startup`** | **`Float64`** |  | [optional] [default to nothing]
-**`shutdown`** | **`Float64`** |  | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`shutdown`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`startup`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

@@ -1,17 +1,15 @@
 # TwoWindingTransformer
 
+A two-winding transformer connecting two buses.
+
+All series electrical data — the modeled arc, tap, phase shift, series impedance `r`/`x`, ratings, per-winding base power, base voltages, and control — lives on the single `TransformerCircuit` referenced by `circuit`; availability is circuit-level. The `magnetizing_shunt` admittance and its `shunt_location` are transformer-level. The model uses an equivalent circuit assuming the impedance is on the high-voltage side and allocates iron losses and magnetizing susceptance according to `shunt_location`. The transformer's device base is the circuit's `base_power`.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component. | [default to nothing]
-**`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
-**`circuit`** | **`Int64`** | The &#x60;TransformerCircuit&#x60; carrying this transformer&#39;s series electrical data. | [default to nothing]
-**`admittance_units`** | **`String`** | Unit basis for the magnetizing_shunt admittance. | [optional] [default to "COMPONENT_BASE"]
-**`magnetizing_shunt`** | [**`*ComplexNumber`**](ComplexNumber.md) |  | [optional] [default to nothing]
-**`shunt_location`** | **`String`** | Placement of &#x60;magnetizing_shunt&#x60; on the two sides of the circuit arc. | [optional] [default to "PRIMARY"]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`admittance_units`** | **`Union{Absent,Nothing,TwoWindingTransformerAdmittanceUnits}`** | Unit basis for the magnetizing_shunt admittance. | [optional]
+**`circuit`** | **`Int64`** | The `TransformerCircuit` carrying this transformer's series electrical data. | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
+**`magnetizing_shunt`** | **`Union{Absent,Nothing,TwoWindingTransformerMagnetizingShunt}`** | Magnetizing shunt admittance referenced to the circuit's `base_voltage_primary`. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr, COMPONENT_BASE: pu . | [optional]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
+**`shunt_location`** | **`Union{Absent,Nothing,TwoWindingTransformerShuntLocation2}`** | Placement of `magnetizing_shunt` on the two sides of the circuit arc. | [optional]

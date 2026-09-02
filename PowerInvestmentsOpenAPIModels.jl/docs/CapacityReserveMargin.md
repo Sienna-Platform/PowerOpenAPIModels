@@ -1,16 +1,12 @@
 # CapacityReserveMargin
 
+Policy requirement enforcing a minimum capacity reserve margin in the target year, such that `(total_capacity - peak_demand) / peak_demand >= capacity_reserve_fraction`.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | ID for individual component. | [default to nothing]
-**`name`** | **`String`** | Name of the component. | [default to nothing]
-**`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). | [default to nothing]
-**`target_year`** | **`Int64`** | Year in which this requirement is applied. | [optional] [default to nothing]
-**`capacity_reserve_fraction`** | **`Float64`** | Capacity reserve requirements, represented as a fraction of peak demand in a region. Units: 1. | [optional] [default to 0.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). | [required]
+**`capacity_reserve_fraction`** | **`Union{Absent,Float64,Nothing}`** | Capacity reserve requirements, represented as a fraction of peak demand in a region. Units: 1. | [optional]
+**`id`** | **`Int64`** | ID for individual component. | [required]
+**`name`** | **`String`** | Name of the component. | [required]
+**`target_year`** | **`Union{Absent,Int64,Nothing}`** | Year in which this requirement is applied. | [optional]

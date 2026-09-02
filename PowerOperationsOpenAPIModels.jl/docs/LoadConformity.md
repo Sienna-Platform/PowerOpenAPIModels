@@ -1,11 +1,8 @@
 # LoadConformity
 
+WECC classification of how a load tracks voltage and frequency variation, used in dynamic studies to decide how it is modeled during a disturbance. `CONFORMING` responds predictably and follows standard load modeling practice; `NON_CONFORMING` does not, as with a constant power load or one behind a complex control system; `UNDEFINED` leaves the classification unstated.
 
-## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+## Allowed values
+- `NON_CONFORMING`
+- `CONFORMING`
+- `UNDEFINED`

@@ -1,18 +1,14 @@
 # SEXS
 
+Parameters of Simplified Excitation System Model - SEXS in PSSE.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component. | [default to nothing]
-**`Ta_Tb`** | **`Float64`** | Ratio of lead and lag time constants. | [default to nothing]
-**`Tb`** | **`Float64`** | Lag time constant. Units: s. | [default to nothing]
-**`K`** | **`Float64`** | Gain. | [default to nothing]
-**`Te`** | **`Float64`** | Field circuit time constant. Units: s. | [default to nothing]
-**`V_lim`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`V_ref`** | **`Float64`** | Reference Voltage Set-point. | [optional] [default to 1.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`k`** | **`Float64`** | Gain. | [required]
+**`ta_tb`** | **`Float64`** | Ratio of lead and lag time constants. | [required]
+**`tb`** | **`Float64`** | Lag time constant. Units: s. | [required]
+**`te`** | **`Float64`** | Field circuit time constant. Units: s. | [required]
+**`v_lim`** | **`SEXSVLim`** | Field voltage limits. | [required]
+**`v_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference Voltage Set-point. | [optional]
+**`id`** | **`Int64`** | Unique integer identifier for this component. | [required]

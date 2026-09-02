@@ -1,32 +1,32 @@
 # InterruptibleStandardLoad
 
+An interruptible, voltage-dependent ZIP load whose demand can be curtailed through demand response programs, subject to an interruption cost.
+
+Like `StandardLoad`, it breaks the ZIP into three pieces: Z (constant impedance), I (constant current), and P (constant power), according to `P = P_P * V^0 + P_I * V^1 + P_Z * V^2` for active power and `Q = Q_P * V^0 + Q_I * V^1 + Q_Z * V^2` for reactive power. (Voltage V is in per unit.) Unlike `StandardLoad`, it carries an `operation_cost` for interrupting the load.
+
+For a non-interruptible ZIP load, see `StandardLoad`. For an interruptible constant-power load, see `InterruptiblePowerLoad`.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component. | [default to nothing]
-**`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;InterruptibleStandardLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;InterruptibleStandardLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
-**`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations. | [default to nothing]
-**`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [default to nothing]
-**`base_power`** | **`Float64`** | Base power of the load for per unitization. Units: MVA. | [default to nothing]
-**`power_units`** | **`String`** | Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit. | [default to nothing]
-**`operation_cost`** | [**`*InterruptiblePowerLoadOperationCost`**](InterruptiblePowerLoadOperationCost.md) |  | [default to nothing]
-**`conformity`** | **`String`** | Indicates whether the specified load is conforming or non-conforming. | [optional] [default to "UNDEFINED"]
-**`constant_active_power`** | **`Float64`** | Constant active power demand (P_P). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`constant_reactive_power`** | **`Float64`** | Constant reactive power demand (Q_P). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`impedance_active_power`** | **`Float64`** | Active power coefficient for constant impedance load (P_Z). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`impedance_reactive_power`** | **`Float64`** | Reactive power coefficient for constant impedance load (Q_Z). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`current_active_power`** | **`Float64`** | Active power coefficient for constant current load (P_I). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`current_reactive_power`** | **`Float64`** | Reactive power coefficient for constant current load (Q_I). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`max_constant_active_power`** | **`Float64`** | Maximum active power drawn by constant power load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`max_constant_reactive_power`** | **`Float64`** | Maximum reactive power drawn by constant power load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`max_impedance_active_power`** | **`Float64`** | Maximum active power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`max_impedance_reactive_power`** | **`Float64`** | Maximum reactive power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`max_current_active_power`** | **`Float64`** | Maximum active power drawn by constant current load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`max_current_reactive_power`** | **`Float64`** | Maximum reactive power drawn by constant current load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional] [default to 0.0]
-**`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
+**`base_power`** | **`Float64`** | Base power of the load for per unitization. Units: MVA. | [required]
+**`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [required]
+**`conformity`** | **`Union{Absent,InterruptibleStandardLoadConformity,Nothing}`** | Indicates whether the specified load is conforming or non-conforming. | [optional]
+**`constant_active_power`** | **`Union{Absent,Float64,Nothing}`** | Constant active power demand (P_P). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
+**`constant_reactive_power`** | **`Union{Absent,Float64,Nothing}`** | Constant reactive power demand (Q_P). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
+**`current_active_power`** | **`Union{Absent,Float64,Nothing}`** | Active power coefficient for constant current load (P_I). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
+**`current_reactive_power`** | **`Union{Absent,Float64,Nothing}`** | Reactive power coefficient for constant current load (Q_I). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
+**`dynamic_injector`** | **`Union{Absent,Union{Int64,Nothing}}`** | ID of the corresponding dynamic injection device, if any. | [optional]
+**`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
+**`impedance_active_power`** | **`Union{Absent,Float64,Nothing}`** | Active power coefficient for constant impedance load (P_Z). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
+**`impedance_reactive_power`** | **`Union{Absent,Float64,Nothing}`** | Reactive power coefficient for constant impedance load (Q_Z). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
+**`max_constant_active_power`** | **`Union{Absent,Float64,Nothing}`** | Maximum active power drawn by constant power load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
+**`max_constant_reactive_power`** | **`Union{Absent,Float64,Nothing}`** | Maximum reactive power drawn by constant power load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
+**`max_current_active_power`** | **`Union{Absent,Float64,Nothing}`** | Maximum active power drawn by constant current load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
+**`max_current_reactive_power`** | **`Union{Absent,Float64,Nothing}`** | Maximum reactive power drawn by constant current load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
+**`max_impedance_active_power`** | **`Union{Absent,Float64,Nothing}`** | Maximum active power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
+**`max_impedance_reactive_power`** | **`Union{Absent,Float64,Nothing}`** | Maximum reactive power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., `InterruptibleStandardLoad`) must have unique names, but components of different types (e.g., `InterruptibleStandardLoad` and `ACBus`) can have the same name. | [required]
+**`operation_cost`** | **`InterruptibleStandardLoadOperationCost`** | Operational cost of interrupting load. or MarketBidCost | [required]
+**`power_units`** | **`InterruptibleStandardLoadPowerUnits`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]

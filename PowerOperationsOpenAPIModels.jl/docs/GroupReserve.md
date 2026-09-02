@@ -1,17 +1,13 @@
 # GroupReserve
 
+A reserve product met by a group of individual reserves. The group requirement is additional to each member's own requirement, and a device contributing to a member reserve also counts toward the group. Membership is carried by `ServiceAssociation` rows, not by a field here.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component. | [default to nothing]
-**`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
-**`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations. | [default to nothing]
-**`requirement`** | **`Float64`** | The value of required reserves. Units: MW. | [default to nothing]
-**`variable`** | [**`*CostCurve`**](CostCurve.md) |  | [optional] [default to nothing]
-**`reserve_direction`** | **`String`** | Whether the reserve is an upward, downward, or symmetric reserve product. | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
+**`requirement`** | **`Float64`** | The value of required reserves. Units: MW. | [required]
+**`reserve_direction`** | **`GroupReserveReserveDirection`** | Whether the reserve is an upward, downward, or symmetric reserve product. | [required]
+**`variable`** | **`Union{Absent,GroupReserveVariable,Nothing}`** | Operating reserve demand curve for the group, either static or time-series-backed. A group carrying a curve is elastic: its requirement is priced by the curve rather than enforced. Time series values are carried via `time_series_associations` in the sidecar, never inline. Omit when the group has no demand curve. | [optional]

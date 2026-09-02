@@ -1,13 +1,9 @@
 # ThermalPowerPlant
 
+Attribute to represent ThermalGen power plants with synchronous generation. Shared shafts between units are recorded as PlantAssociation rows with role='shaft'.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** |  | [default to nothing]
-**`name`** | **`String`** | Name of the power plant | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`id`** | **`Int64`** |  | [required]
+**`name`** | **`String`** | Name of the power plant | [required]

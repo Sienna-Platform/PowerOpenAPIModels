@@ -1,15 +1,11 @@
 # HydroReservoirCost
 
+Cost representation for hydro reservoir
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`cost_type`** | **`String`** |  | [optional] [default to "HYDRO_RES"]
-**`level_shortage_cost`** | **`Float64`** |  | [optional] [default to 0.0]
-**`level_surplus_cost`** | **`Float64`** |  | [optional] [default to 0.0]
-**`spillage_cost`** | **`Float64`** |  | [optional] [default to 0.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`cost_type`** | **`Union{Absent,Nothing,String}`** |  | [optional]
+**`level_shortage_cost`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`level_surplus_cost`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`spillage_cost`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

@@ -32,11 +32,15 @@ const MODEL_TYPES = Dict{String, Type}()
 """
 Register `T` under its bare type name so documents naming it can be deserialized.
 
-Called from each domain package's generated `register.jl`. Re-registering the same type is a
-no-op; two different types with one name is a build error, not something to resolve at read
-time.
+Called from each domain package's generated `register.jl`, which enumerates a frozen name
+set rather than filtering by a common supertype: the native (post-1.0) generator gives every
+schema -- component and small value type alike -- the same plain `struct` shape, with no
+marker like the old `OpenAPI.APIModel` distinguishing one from the other.
+
+Re-registering the same type is a no-op; two different types with one name is a build error,
+not something to resolve at read time.
 """
-function register_model_type!(::Type{T}) where {T <: OpenAPI.APIModel}
+function register_model_type!(::Type{T}) where {T}
     name = string(nameof(T))
     if haskey(MODEL_TYPES, name) && MODEL_TYPES[name] !== T
         throw(

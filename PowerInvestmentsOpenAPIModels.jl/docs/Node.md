@@ -1,14 +1,10 @@
 # Node
 
+A unit of spatial aggregation for nodal capacity expansion models. Used to define locations for supply, demand, transport, and storage technologies and the relevant policy requirements.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | ID for individual component. | [default to nothing]
-**`name`** | **`String`** | Name of the component. | [default to nothing]
-**`bus_type`** | **`String`** | AC Bus Type for a node. | [optional] [default to "PQ"]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`bus_type`** | **`Union{Absent,NodeBusType,Nothing}`** | AC Bus Type for a node. | [optional]
+**`id`** | **`Int64`** | ID for individual component. | [required]
+**`name`** | **`String`** | Name of the component. | [required]

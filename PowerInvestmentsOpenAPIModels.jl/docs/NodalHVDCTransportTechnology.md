@@ -1,23 +1,19 @@
 # NodalHVDCTransportTechnology
 
+A nodal representation of candidate HVDC transmission lines between two regions, added in discrete units of `unit_size` and characterized by capacity limits, a capital cost curve, and a loss model expressed as a fraction of installed nameplate capacity.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | ID for individual component. | [default to nothing]
-**`name`** | **`String`** | Name of the component. | [default to nothing]
-**`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). | [default to nothing]
-**`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [default to nothing]
-**`start_node`** | **`Int64`** | Start node for transport technology. | [default to nothing]
-**`end_node`** | **`Int64`** | End node for transport technology. | [default to nothing]
-**`capacity_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
-**`capital_costs`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
-**`line_loss`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
-**`unit_size`** | **`Float64`** | Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW. | [optional] [default to nothing]
-**`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
-**`financial_data`** | [**`*TechnologyFinancialData`**](TechnologyFinancialData.md) |  | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). | [required]
+**`capacity_limits`** | **`Union{Absent,NodalHVDCTransportTechnologyCapacityLimits,Nothing}`** | Allowable capacity for a transmission line. Units: MW. | [optional]
+**`capital_costs`** | **`Union{Absent,NodalHVDCTransportTechnologyCapitalCosts,Nothing}`** | Cost of adding new capacity to the nodal transmission line. Units: USD/MW. | [optional]
+**`end_node`** | **`Int64`** | End node for transport technology. | [required]
+**`financial_data`** | **`NodalHVDCTransportTechnologyFinancialData`** | Struct containing relevant financial information for a technology. | [required]
+**`id`** | **`Int64`** | ID for individual component. | [required]
+**`line_loss`** | **`Union{Absent,NodalHVDCTransportTechnologyLineLoss,Nothing}`** | Loss model coefficients. Accepts a linear model with a constant loss and a proportional loss rate, or a Piecewise loss with N segments for different proportional losses. All terms are defined as fraction of installed nameplate capacity. Units: 1. | [optional]
+**`name`** | **`String`** | Name of the component. | [required]
+**`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
+**`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
+**`start_node`** | **`Int64`** | Start node for transport technology. | [required]
+**`unit_size`** | **`Union{Absent,Float64,Nothing}`** | Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW. | [optional]

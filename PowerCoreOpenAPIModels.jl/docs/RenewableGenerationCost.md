@@ -1,15 +1,11 @@
 # RenewableGenerationCost
 
+Cost representation for renewable generation units
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`cost_type`** | **`String`** |  | [optional] [default to "RENEWABLE"]
-**`curtailment_cost`** | [**`*CostCurve`**](CostCurve.md) |  | [optional] [default to nothing]
-**`variable_operation_cost`** | [**`*CostCurve`**](CostCurve.md) |  | [default to nothing]
-**`fixed`** | **`Float64`** |  | [optional] [default to 0.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`cost_type`** | **`Union{Absent,Nothing,String}`** |  | [optional]
+**`curtailment_cost`** | **`Union{Absent,CostCurve,Nothing}`** | Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term. | [optional]
+**`fixed`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`variable_operation_cost`** | **`CostCurve`** | Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term. | [required]

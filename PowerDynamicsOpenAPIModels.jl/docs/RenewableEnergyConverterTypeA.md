@@ -1,27 +1,23 @@
 # RenewableEnergyConverterTypeA
 
+Parameters of a renewable energy generator/converter model, this model corresponds to REGCA1 in PSSE.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`T_g`** | **`Float64`** | Converter time constant. Units: s. | [default to nothing]
-**`Rrpwr`** | **`Float64`** | Low Voltage Power Logic (LVPL) ramp rate limit. | [default to nothing]
-**`Brkpt`** | **`Float64`** | LVPL characteristic voltage 2. | [default to nothing]
-**`Zerox`** | **`Float64`** | LVPL characteristic voltage 1. | [default to nothing]
-**`Lvpl1`** | **`Float64`** | LVPL gain. | [default to nothing]
-**`Vo_lim`** | **`Float64`** | Voltage limit for high voltage reactive current management. | [default to nothing]
-**`Lv_pnts`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`Io_lim`** | **`Float64`** | Current limit for high voltage reactive current management (specified as a negative value). | [default to nothing]
-**`T_fltr`** | **`Float64`** | Voltage filter time constant for low voltage active current management. Units: s. | [default to nothing]
-**`K_hv`** | **`Float64`** | Overvoltage compensation gain used in the high voltage reactive current management. | [default to nothing]
-**`Iqr_lims`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`Accel`** | **`Float64`** | Acceleration factor. | [default to nothing]
-**`Lvpl_sw`** | **`Bool`** | Low voltage power logic (LVPL) switch. (&#x60;false&#x60;: LVPL not present, &#x60;true&#x60;: LVPL present). | [default to nothing]
-**`Q_ref`** | **`Float64`** | Initial condition of reactive power from power flow. | [optional] [default to 1.0]
-**`R_source`** | **`Float64`** | Output resistor used for the Thevenin Equivalent. | [optional] [default to 0.0]
-**`X_source`** | **`Float64`** | Output reactance used for the Thevenin Equivalent. | [optional] [default to 100000.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`accel`** | **`Float64`** | Acceleration factor. | [required]
+**`brkpt`** | **`Float64`** | LVPL characteristic voltage 2. | [required]
+**`io_lim`** | **`Float64`** | Current limit for high voltage reactive current management (specified as a negative value). | [required]
+**`iqr_lims`** | **`RenewableEnergyConverterTypeAIqrLims`** | Limit on rate of change for reactive current (Iqr_min, Iqr_max). | [required]
+**`k_hv`** | **`Float64`** | Overvoltage compensation gain used in the high voltage reactive current management. | [required]
+**`lv_pnts`** | **`RenewableEnergyConverterTypeALvPnts`** | Voltage points for low voltage active current management (Lvpnt0, Lvpnt1). | [required]
+**`lvpl1`** | **`Float64`** | LVPL gain. | [required]
+**`lvpl_sw`** | **`Bool`** | Low voltage power logic (LVPL) switch. (`false`: LVPL not present, `true`: LVPL present). | [required]
+**`q_ref`** | **`Union{Absent,Float64,Nothing}`** | Initial condition of reactive power from power flow. | [optional]
+**`r_source`** | **`Union{Absent,Float64,Nothing}`** | Output resistor used for the Thevenin Equivalent. | [optional]
+**`rrpwr`** | **`Float64`** | Low Voltage Power Logic (LVPL) ramp rate limit. | [required]
+**`t_fltr`** | **`Float64`** | Voltage filter time constant for low voltage active current management. Units: s. | [required]
+**`t_g`** | **`Float64`** | Converter time constant. Units: s. | [required]
+**`vo_lim`** | **`Float64`** | Voltage limit for high voltage reactive current management. | [required]
+**`x_source`** | **`Union{Absent,Float64,Nothing}`** | Output reactance used for the Thevenin Equivalent. | [optional]
+**`zerox`** | **`Float64`** | LVPL characteristic voltage 1. | [required]

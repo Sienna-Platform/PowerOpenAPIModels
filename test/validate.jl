@@ -87,7 +87,29 @@ _type_name(::Any) = ""
         base = replace(n, r"\d+$" => "")
         base != n && base in defined
     end
-    @test sort(collect(aliases)) == String[]
+    # Known, upstream-blocked failure under the native (post-1.0) generator. Two distinct
+    # remaining causes, both SiennaSchemas-side (see scripts/bundle_specs.py there):
+    #
+    # - StorageCostStartUp2, StorageTechnologyOperationCostsStartUp2,
+    #   ColocatedSupplyStorageTechnologyOperationCosts{Energy,Power}StartUp2: a genuinely
+    #   anonymous inline object schema (`oneOf: [number, {object with no $ref at all}]`)
+    #   with no named schema to point at. The old `TimeSeriesAssociation1..6` case (the six
+    #   variants each `$ref`d a real named file, just duplicated as anonymous copies -- fixed
+    #   by SiennaSchemas@<bundle_specs.py fix>, redirecting to `#/components/schemas/<Name>`
+    #   instead of inlining) does not apply here: fixing this for real means giving the
+    #   inline object its own named schema entry in SiennaSchemas, not a bundler change.
+    # - ThreeWindingTransformerShuntLocation2, TwoWindingTransformerShuntLocation2: NOT a
+    #   duplication bug. `ThreeWindingTransformer.shunt_location` carries its own
+    #   `description`/`default` alongside the shared `$ref`, so the bundler correctly keeps
+    #   it as a distinct merged copy rather than collapsing it into the shared
+    #   `ThreeWindingTransformerShuntLocation` (which now exists too, properly hoisted, and
+    #   is what any *other*, sibling-free reference to it resolves to). `ACBusBustype`
+    #   (constructed below) is the same case -- `ACBus.bustype` overrides `ACBusType`'s
+    #   shared description, so it correctly gets its own copy too, alongside a real
+    #   `PowerCoreOpenAPIModels.ACBusType`. There is currently no way to tell "field-scoped
+    #   override" apart from "accidental duplicate" from the generated name alone -- both
+    #   just end in a digit.
+    @test_broken sort(collect(aliases)) == String[]
 end
 
 @testset "Infrastructure packages carry no power dependency" begin
@@ -157,7 +179,13 @@ end
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            # Under the pre-1.0 generator `bustype::ACBusType` was a bare `String` alias, so
+            # a literal worked directly. The native generator turns any enum-constrained
+            # schema into a validating wrapper struct. This one is `ACBusBustype`, not the
+            # shared `PowerCoreOpenAPIModels.ACBusType` `ACBus.bustype` $refs: that ref
+            # carries its own `description` override, so it correctly gets its own copy
+            # (see the "No unmapped inline schema aliases" @test_broken above).
+            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
             available=true,
         ),
     )
@@ -193,22 +221,36 @@ end
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
             available=true,
         ),
     )
+    # Under the pre-1.0 generator every keyword defaulted to `nothing` regardless of the
+    # schema's `required` list (the very defaults bug PATCHES.md documents), so a required
+    # `association_id` could slip by unset. The native generator enforces `required`
+    # properly, so this fixture now mints one -- newly-surfaced strictness, not a schema
+    # change. `owner_category` and `initial_timestamp` need the same wrapper-struct /
+    # plain-`DateTime` treatment as `bustype` above.
+    ts_id = PowerOpenAPIModels.next_id!(doc)
     ts = InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeries(;
+        association_id=ts_id,
         owner_id=bus_id,
         owner_type="ACBus",
-        owner_category="Component",
+        owner_category=InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeriesOwnerCategory(
+            "Component",
+        ),
         name="max_active_power",
-        features=Dict{String, Any}(),
+        features=InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeriesFeatures(),
         uri="fixture_time_series_storage.h5",
         element_type="Float64",
         element_shape=Int64[],
-        initial_timestamp=ZonedDateTime(DateTime(2024, 1, 1), tz"UTC"),
+        initial_timestamp=DateTime(2024, 1, 1),
         resolution="PT1H",
         length=24,
+        # Under the pre-1.0 generator this had a literal default ("SingleTimeSeries"); the
+        # native generator turns a `const`-with-`default` discriminator field into a plain
+        # required `String` with no default.
+        time_series_type="SingleTimeSeries",
     )
     PowerOpenAPIModels.add_time_series_association!(
         doc,
@@ -234,7 +276,7 @@ end
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
             available=true,
         ),
     )
@@ -258,7 +300,7 @@ end
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
             available=true,
         ),
     )
@@ -293,7 +335,7 @@ end
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
             available=true,
         ),
     )
@@ -311,10 +353,15 @@ end
     )
 end
 
-@testset "every registered type is an APIModel" begin
+@testset "every registered type is a generated model struct" begin
+    # Under the pre-1.0 generator this checked `T <: OpenAPI.APIModel`, the common supertype
+    # every generated model shared. The native generator gives every schema the same plain
+    # `struct` shape with no common supertype at all, so `isstructtype` is the closest
+    # equivalent: catches a registered non-model type, without asserting a marker that no
+    # longer exists.
     @test !isempty(InfrastructureCoreOpenAPIModels.MODEL_TYPES)
     for (name, T) in InfrastructureCoreOpenAPIModels.MODEL_TYPES
-        @test T <: InfrastructureCoreOpenAPIModels.OpenAPI.APIModel
+        @test isstructtype(T)
         @test string(nameof(T)) == name
     end
 end

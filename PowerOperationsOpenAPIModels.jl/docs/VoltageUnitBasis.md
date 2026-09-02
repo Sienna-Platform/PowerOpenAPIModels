@@ -1,11 +1,7 @@
 # VoltageUnitBasis
 
+Unit basis a voltage setpoint is stored in. NATURAL_UNITS: kilovolts. COMPONENT_BASE: per-unit on the component's own base voltage (the connected bus's base voltage for AC setpoints — PSS/E RAW native for FACTS VSET — and the device voltage base PSS/E supplies for DC-line converters and CZ=2 transformer windings). There is no separate system-base option: bus-base per-unit is the device base for voltage.
 
-## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+## Allowed values
+- `NATURAL_UNITS`
+- `COMPONENT_BASE`

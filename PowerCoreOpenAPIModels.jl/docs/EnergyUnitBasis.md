@@ -1,11 +1,7 @@
 # EnergyUnitBasis
 
+Unit basis a stored-energy quantity is recorded in (distinct from EnergyUnit, which names fuel energy content). MWH: megawatt-hours, the conventional interchange form. MWMIN: megawatt-minutes, consistent with the minutes basis used for operational durations, so a duration computed as energy over power comes out in minutes with no hidden factor of 60. Defaults to MWH: MWMIN is supported, not preferred.
 
-## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+## Allowed values
+- `MWH`
+- `MWMIN`

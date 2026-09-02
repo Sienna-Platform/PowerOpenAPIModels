@@ -1,4 +1,4 @@
-# Generated from the declared model types. Do not edit.
+# Generated from the frozen pre-1.0 registered-name set. Do not edit.
 #
 # Runs in __init__ because the registry lives in another module: state
 # mutated there during precompilation would not be saved.
@@ -28,7 +28,6 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(StartUpStages)
     InfrastructureCoreOpenAPIModels.register_model_type!(StorageCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(StorageCostStartUp)
-    InfrastructureCoreOpenAPIModels.register_model_type!(StorageCostStartUpOneOf)
     InfrastructureCoreOpenAPIModels.register_model_type!(ThermalGenerationCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(ThermalGenerationCostStartUp)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesAverageRateCurve)
