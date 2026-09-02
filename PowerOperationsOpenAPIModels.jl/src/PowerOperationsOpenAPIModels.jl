@@ -4,10 +4,7 @@ using OpenAPI, JSON3, HTTP
 using InfrastructureCoreOpenAPIModels
 using PowerCoreOpenAPIModels
 
-include("models/model_ACBus.jl")
 include("models/model_AGC.jl")
-include("models/model_Arc.jl")
-include("models/model_Area.jl")
 include("models/model_AreaInterchange.jl")
 include("models/model_BilateralConfirmation.jl")
 include("models/model_BilateralProduct.jl")
@@ -16,9 +13,7 @@ include("models/model_CombinedCycleAssociation.jl")
 include("models/model_CombinedCycleBlock.jl")
 include("models/model_CombinedCycleConfiguration.jl")
 include("models/model_CombinedCycleFractional.jl")
-include("models/model_DCBus.jl")
 include("models/model_DiscreteControlledACBranch.jl")
-include("models/model_EmissionsData.jl")
 include("models/model_EnergyReservoirStorageOperationCost.jl")
 include("models/model_EnergyReservoirStorage.jl")
 include("models/model_ExponentialLoad.jl")
@@ -43,7 +38,6 @@ include("models/model_InterruptiblePowerLoad.jl")
 include("models/model_InterruptibleStandardLoad.jl")
 include("models/model_Line.jl")
 include("models/model_LoadConformity.jl")
-include("models/model_LoadZone.jl")
 include("models/model_MarketStage.jl")
 include("models/model_MonitoredLine.jl")
 include("models/model_MotorLoad.jl")
@@ -93,18 +87,13 @@ include("models/model_VoltageUnitBasis.jl")
 include("units.jl")
 include("register.jl")
 
-export ACBus
 export AGC
-export Arc
-export Area
 export AreaInterchange
 export BilateralTransaction
 export CombinedCycleAssociation
 export CombinedCycleBlock
 export CombinedCycleFractional
-export DCBus
 export DiscreteControlledACBranch
-export EmissionsData
 export EnergyReservoirStorage
 export EnergyReservoirStorageOperationCost
 export ExponentialLoad
@@ -128,7 +117,6 @@ export InterruptiblePowerLoad
 export InterruptiblePowerLoadOperationCost
 export InterruptibleStandardLoad
 export Line
-export LoadZone
 export MonitoredLine
 export MotorLoad
 export OfflineReserve

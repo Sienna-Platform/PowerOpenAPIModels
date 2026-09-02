@@ -48,10 +48,6 @@ end
 
 function OpenAPI.validate_property(::Type{ TimeSeriesIncrementalCurve }, name::Symbol, val)
 
-    if name === Symbol("curve_type")
-        OpenAPI.validate_param(name, "TimeSeriesIncrementalCurve", :enum, val, ["TIME_SERIES_INCREMENTAL"])
-    end
-
 
 
 

@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **`new_demand_mw`** | **`Float64`** | The value of the peak demand to be used for new DemandRequirements. Units: MW. | [optional] [default to 0.0]
 **`new_construction_year`** | **`Int64`** | The year in which the new demand requirement will be installed. Should only be used for new demand requirements. | [optional] [default to 2020]
 **`region`** | **`Vector{Int64}`** | Location where the component applies. Can be a zone or node. | [optional] [default to nothing]
-**`value_of_lost_load`** | **`Float64`** | Value of unserved load. Units: USD/MWh. | [default to nothing]
+**`value_of_lost_load`** | **`Float64`** | Value of unserved load. Units: USD/MWh. | [optional] [default to nothing]
 **`unserved_demand_curve`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
 **`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
 

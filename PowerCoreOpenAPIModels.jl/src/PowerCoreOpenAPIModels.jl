@@ -3,8 +3,12 @@ module PowerCoreOpenAPIModels
 using OpenAPI, JSON3, HTTP
 using InfrastructureCoreOpenAPIModels
 
+include("models/model_ACBus.jl")
 include("models/model_ACBusType.jl")
 include("models/model_AdmittanceUnitBasis.jl")
+include("models/model_Arc.jl")
+include("models/model_Area.jl")
+include("models/model_DCBus.jl")
 include("models/model_DbdPnts.jl")
 include("models/model_EmissionBasis.jl")
 include("models/model_EnergyUnit.jl")
@@ -19,7 +23,9 @@ include("models/model_AverageRateCurve.jl")
 include("models/model_IncrementalCurve.jl")
 include("models/model_InputOutputCurveFunctionData.jl")
 include("models/model_InputOutputCurve.jl")
+include("models/model_LoadZone.jl")
 include("models/model_MassUnit.jl")
+include("models/model_OutageFactors.jl")
 include("models/model_PollutantType.jl")
 include("models/model_PrimeMovers.jl")
 include("models/model_ProductionVariableCostCurve.jl")
@@ -40,7 +46,9 @@ include("models/model_TimeSeriesInputOutputCurve.jl")
 include("models/model_TurbinePump.jl")
 include("models/model_TwoTerminalLoss.jl")
 include("models/model_ValueCurve.jl")
+include("models/model_CapitalCost.jl")
 include("models/model_CostCurve.jl")
+include("models/model_EmissionsData.jl")
 include("models/model_FuelCurve.jl")
 include("models/model_ImportExportCost.jl")
 include("models/model_ImportExportTimeSeriesCost.jl")
@@ -48,13 +56,20 @@ include("models/model_LoadCost.jl")
 include("models/model_MarketBidCost.jl")
 include("models/model_MarketBidTimeSeriesCost.jl")
 include("models/model_RenewableGenerationCost.jl")
+include("models/model_StorageCapitalCost.jl")
 include("models/model_StorageCost.jl")
 include("units.jl")
 include("register.jl")
 
+export ACBus
+export Arc
+export Area
 export AverageRateCurve
+export CapitalCost
 export CostCurve
+export DCBus
 export DbdPnts
+export EmissionsData
 export FdbdPnts
 export FuelCurve
 export GenericOperationCost
@@ -68,12 +83,15 @@ export IncrementalCurveFunctionData
 export InputOutputCurve
 export InputOutputCurveFunctionData
 export LoadCost
+export LoadZone
 export MarketBidCost
 export MarketBidTimeSeriesCost
+export OutageFactors
 export ProductionVariableCostCurve
 export RenewableGenerationCost
 export StartUpShutDown
 export StartUpStages
+export StorageCapitalCost
 export StorageCost
 export StorageCostStartUp
 export StorageCostStartUpOneOf

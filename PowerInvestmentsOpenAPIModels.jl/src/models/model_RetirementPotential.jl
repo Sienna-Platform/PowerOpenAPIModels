@@ -10,31 +10,36 @@ Supplemental attribute defining which existing generators mapped to a supply tec
         eligible_generators=nothing,
         planned_retirement_year=nothing,
         build_year=nothing,
+        retirement_cost=nothing,
     )
 
     - id::Int64 : ID for individual component.
     - eligible_generators::Vector{String} : Names of individual generation units mapped to a technology that are eligible for retirement.
     - planned_retirement_year::Dict{String, Int64} : Optional dictionary to indicate the year in which the forced/planned retirement will occur.
     - build_year::Dict{String, Int64} : Optional dictionary to indicate the year in which existing generators in the base system were built.
+    - retirement_cost::ValueCurve
 """
 Base.@kwdef mutable struct RetirementPotential <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     eligible_generators::Union{Nothing, Vector{String}} = nothing
     planned_retirement_year::Union{Nothing, Dict{String, Int64}} = nothing
     build_year::Union{Nothing, Dict{String, Int64}} = nothing
+    retirement_cost = nothing # spec type: Union{ Nothing, ValueCurve }
 
-    function RetirementPotential(id, eligible_generators, planned_retirement_year, build_year, )
-        o = new(id, eligible_generators, planned_retirement_year, build_year, )
+    function RetirementPotential(id, eligible_generators, planned_retirement_year, build_year, retirement_cost, )
+        o = new(id, eligible_generators, planned_retirement_year, build_year, retirement_cost, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type RetirementPotential
 
-const _property_types_RetirementPotential = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("eligible_generators")=>Union{Nothing, Vector{String}}, Symbol("planned_retirement_year")=>Union{Nothing, Dict{String, Int64}}, Symbol("build_year")=>Union{Nothing, Dict{String, Int64}}, )
+const _property_types_RetirementPotential = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("eligible_generators")=>Union{Nothing, Vector{String}}, Symbol("planned_retirement_year")=>Union{Nothing, Dict{String, Int64}}, Symbol("build_year")=>Union{Nothing, Dict{String, Int64}}, Symbol("retirement_cost")=>Union{Nothing, ValueCurve}, )
 OpenAPI.property_type(::Type{ RetirementPotential }, name::Symbol) = _property_types_RetirementPotential[name]
 
 function OpenAPI.check_required(o::RetirementPotential)
     o.id === nothing && (return false)
+    o.eligible_generators === nothing && (return false)
+    o.retirement_cost === nothing && (return false)
     true
 end
 
@@ -43,9 +48,11 @@ function OpenAPI.validate_properties(o::RetirementPotential)
     OpenAPI.validate_property(RetirementPotential, Symbol("eligible_generators"), o.eligible_generators)
     OpenAPI.validate_property(RetirementPotential, Symbol("planned_retirement_year"), o.planned_retirement_year)
     OpenAPI.validate_property(RetirementPotential, Symbol("build_year"), o.build_year)
+    OpenAPI.validate_property(RetirementPotential, Symbol("retirement_cost"), o.retirement_cost)
 end
 
 function OpenAPI.validate_property(::Type{ RetirementPotential }, name::Symbol, val)
+
 
 
 

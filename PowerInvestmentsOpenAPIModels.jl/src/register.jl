@@ -4,8 +4,6 @@
 # mutated there during precompilation would not be saved.
 
 function __init__()
-    InfrastructureCoreOpenAPIModels.register_model_type!(AggregateRetirementPotential)
-    InfrastructureCoreOpenAPIModels.register_model_type!(AggregateRetrofitPotential)
     InfrastructureCoreOpenAPIModels.register_model_type!(AggregateTransportTechnology)
     InfrastructureCoreOpenAPIModels.register_model_type!(CapacityReserveMargin)
     InfrastructureCoreOpenAPIModels.register_model_type!(CarbonCaps)
@@ -20,14 +18,16 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(MinimumCapacityRequirements)
     InfrastructureCoreOpenAPIModels.register_model_type!(NodalACTransportTechnology)
     InfrastructureCoreOpenAPIModels.register_model_type!(NodalHVDCTransportTechnology)
-    InfrastructureCoreOpenAPIModels.register_model_type!(Node)
     InfrastructureCoreOpenAPIModels.register_model_type!(PortfolioFinancialData)
     InfrastructureCoreOpenAPIModels.register_model_type!(RetirementPotential)
     InfrastructureCoreOpenAPIModels.register_model_type!(RetrofitPotential)
     InfrastructureCoreOpenAPIModels.register_model_type!(StorageTechnology)
+    InfrastructureCoreOpenAPIModels.register_model_type!(StorageTechnologyCapacityLimitsCharge)
+    InfrastructureCoreOpenAPIModels.register_model_type!(StorageTechnologyCapacityLimitsDischarge)
+    InfrastructureCoreOpenAPIModels.register_model_type!(StorageTechnologyCapacityLimitsEnergy)
     InfrastructureCoreOpenAPIModels.register_model_type!(SupplyTechnology)
+    InfrastructureCoreOpenAPIModels.register_model_type!(SupplyTechnologyCapacityLimits)
     InfrastructureCoreOpenAPIModels.register_model_type!(TechnologyFinancialData)
     InfrastructureCoreOpenAPIModels.register_model_type!(TopologyMapping)
-    InfrastructureCoreOpenAPIModels.register_model_type!(Zone)
     return nothing
 end

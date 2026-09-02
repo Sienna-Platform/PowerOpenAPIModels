@@ -61,7 +61,6 @@ function OpenAPI.check_required(o::DemandRequirement)
     o.id === nothing && (return false)
     o.name === nothing && (return false)
     o.power_systems_type === nothing && (return false)
-    o.value_of_lost_load === nothing && (return false)
     true
 end
 

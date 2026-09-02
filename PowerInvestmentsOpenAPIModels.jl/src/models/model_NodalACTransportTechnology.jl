@@ -29,7 +29,7 @@ Nodal representation of candidate AC transmission lines between two regions. Alo
     - start_node::Int64 : Start node for transport technology.
     - end_node::Int64 : End node for transport technology.
     - capacity_limits::MinMax
-    - capital_costs::ValueCurve
+    - capital_costs::CapitalCost
     - resistance::Float64 : Technology resistance in Ohms. Units: ohm.
     - voltage::Float64 : Voltage rating of transmission line. Units: kV.
     - unit_size::Float64 : Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW.
@@ -45,7 +45,7 @@ Base.@kwdef mutable struct NodalACTransportTechnology <: OpenAPI.APIModel
     start_node::Union{Nothing, Int64} = nothing
     end_node::Union{Nothing, Int64} = nothing
     capacity_limits = nothing # spec type: Union{ Nothing, MinMax }
-    capital_costs = nothing # spec type: Union{ Nothing, ValueCurve }
+    capital_costs = nothing # spec type: Union{ Nothing, CapitalCost }
     resistance::Union{Nothing, Float64} = 0.0
     voltage::Union{Nothing, Float64} = 0.0
     unit_size::Union{Nothing, Float64} = 0.0
@@ -60,7 +60,7 @@ Base.@kwdef mutable struct NodalACTransportTechnology <: OpenAPI.APIModel
     end
 end # type NodalACTransportTechnology
 
-const _property_types_NodalACTransportTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("start_node")=>Union{Nothing, Int64}, Symbol("end_node")=>Union{Nothing, Int64}, Symbol("capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs")=>Union{Nothing, ValueCurve}, Symbol("resistance")=>Union{Nothing, Float64}, Symbol("voltage")=>Union{Nothing, Float64}, Symbol("unit_size")=>Union{Nothing, Float64}, Symbol("reactance")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
+const _property_types_NodalACTransportTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("start_node")=>Union{Nothing, Int64}, Symbol("end_node")=>Union{Nothing, Int64}, Symbol("capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs")=>Union{Nothing, CapitalCost}, Symbol("resistance")=>Union{Nothing, Float64}, Symbol("voltage")=>Union{Nothing, Float64}, Symbol("unit_size")=>Union{Nothing, Float64}, Symbol("reactance")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
 OpenAPI.property_type(::Type{ NodalACTransportTechnology }, name::Symbol) = _property_types_NodalACTransportTechnology[name]
 
 function OpenAPI.check_required(o::NodalACTransportTechnology)
