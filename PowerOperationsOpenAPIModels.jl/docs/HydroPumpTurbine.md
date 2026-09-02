@@ -29,7 +29,7 @@ Name | Type | Description | Notes
 **`minimum_time`** | [**`*TurbinePump`**](TurbinePump.md) |  | [optional] [default to nothing]
 **`travel_time`** | **`Float64`** | Downstream (from reservoir into turbine) travel time. Set to &#x60;null&#x60; if not applicable. Units: min. | [optional] [default to nothing]
 **`conversion_factor`** | **`Float64`** | Conversion factor from flow/volume to energy: m^3 -&gt; p.u-hr. Units: 1. | [optional] [default to 1.0]
-**`must_run`** | **`Bool`** | Whether the unit must run (i.e., cannot be curtailed). | [optional] [default to false]
+**`commitment_mode`** | **`String`** | Commitment mode of the unit. | [optional] [default to "COMMITTED"]
 **`prime_mover_type`** | **`String`** | Prime mover technology according to EIA 923. | [optional] [default to "PS"]
 **`dynamic_injector`** | **`Int64`** | ID of the corresponding dynamic injection device, if any. | [optional] [default to nothing]
 

@@ -10,6 +10,7 @@ A thermal generator, such as a fossil fuel or nuclear generator, that can start-
         name=nothing,
         available=nothing,
         status=nothing,
+        commitment_mode="COMMITTED",
         bus=nothing,
         active_power=nothing,
         reactive_power=nothing,
@@ -27,14 +28,14 @@ A thermal generator, such as a fossil fuel or nuclear generator, that can start-
         base_power=nothing,
         power_units=nothing,
         time_at_status=600000.0,
-        must_run=false,
         dynamic_injector=nothing,
     )
 
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
-    - status::Bool : Initial commitment condition at the start of a simulation (&#x60;true&#x60; &#x3D; on or &#x60;false&#x60; &#x3D; off).
+    - status::String : Operating state of the unit at the start of a simulation.
+    - commitment_mode::String : Commitment mode of the unit.
     - bus::Int64 : ID of the bus that this component is connected to.
     - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
     - reactive_power::Float64 : Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
@@ -51,15 +52,15 @@ A thermal generator, such as a fossil fuel or nuclear generator, that can start-
     - operation_cost::ThermalMultiStartOperationCost
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
     - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
-    - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. Units: min.
-    - must_run::Bool : Set to &#x60;true&#x60; if the unit is must run.
+    - time_at_status::Float64 : Time the generator has been in its current status. Units: min.
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
 Base.@kwdef mutable struct ThermalMultiStart <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     name::Union{Nothing, String} = nothing
     available::Union{Nothing, Bool} = nothing
-    status::Union{Nothing, Bool} = nothing
+    status::Union{Nothing, String} = nothing
+    commitment_mode::Union{Nothing, String} = "COMMITTED"
     bus::Union{Nothing, Int64} = nothing
     active_power::Union{Nothing, Float64} = nothing
     reactive_power::Union{Nothing, Float64} = nothing
@@ -77,17 +78,16 @@ Base.@kwdef mutable struct ThermalMultiStart <: OpenAPI.APIModel
     base_power::Union{Nothing, Float64} = nothing
     power_units::Union{Nothing, String} = nothing
     time_at_status::Union{Nothing, Float64} = 600000.0
-    must_run::Union{Nothing, Bool} = false
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function ThermalMultiStart(id, name, available, status, bus, active_power, reactive_power, rating, prime_mover_type, fuel, active_power_limits, reactive_power_limits, ramp_limits, power_trajectory, time_limits, start_time_limits, start_types, operation_cost, base_power, power_units, time_at_status, must_run, dynamic_injector, )
-        o = new(id, name, available, status, bus, active_power, reactive_power, rating, prime_mover_type, fuel, active_power_limits, reactive_power_limits, ramp_limits, power_trajectory, time_limits, start_time_limits, start_types, operation_cost, base_power, power_units, time_at_status, must_run, dynamic_injector, )
+    function ThermalMultiStart(id, name, available, status, commitment_mode, bus, active_power, reactive_power, rating, prime_mover_type, fuel, active_power_limits, reactive_power_limits, ramp_limits, power_trajectory, time_limits, start_time_limits, start_types, operation_cost, base_power, power_units, time_at_status, dynamic_injector, )
+        o = new(id, name, available, status, commitment_mode, bus, active_power, reactive_power, rating, prime_mover_type, fuel, active_power_limits, reactive_power_limits, ramp_limits, power_trajectory, time_limits, start_time_limits, start_types, operation_cost, base_power, power_units, time_at_status, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type ThermalMultiStart
 
-const _property_types_ThermalMultiStart = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("fuel")=>Union{Nothing, String}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("power_trajectory")=>Union{Nothing, StartUpShutDown}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("start_time_limits")=>Union{Nothing, StartUpStages}, Symbol("start_types")=>Union{Nothing, Int64}, Symbol("operation_cost")=>Union{Nothing, ThermalMultiStartOperationCost}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("time_at_status")=>Union{Nothing, Float64}, Symbol("must_run")=>Union{Nothing, Bool}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_ThermalMultiStart = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, String}, Symbol("commitment_mode")=>Union{Nothing, String}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("fuel")=>Union{Nothing, String}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("power_trajectory")=>Union{Nothing, StartUpShutDown}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("start_time_limits")=>Union{Nothing, StartUpStages}, Symbol("start_types")=>Union{Nothing, Int64}, Symbol("operation_cost")=>Union{Nothing, ThermalMultiStartOperationCost}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("time_at_status")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ ThermalMultiStart }, name::Symbol) = _property_types_ThermalMultiStart[name]
 
 function OpenAPI.check_required(o::ThermalMultiStart)
@@ -114,6 +114,7 @@ function OpenAPI.validate_properties(o::ThermalMultiStart)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("name"), o.name)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("available"), o.available)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("status"), o.status)
+    OpenAPI.validate_property(ThermalMultiStart, Symbol("commitment_mode"), o.commitment_mode)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("bus"), o.bus)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("active_power"), o.active_power)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("reactive_power"), o.reactive_power)
@@ -131,7 +132,6 @@ function OpenAPI.validate_properties(o::ThermalMultiStart)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("base_power"), o.base_power)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("power_units"), o.power_units)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("time_at_status"), o.time_at_status)
-    OpenAPI.validate_property(ThermalMultiStart, Symbol("must_run"), o.must_run)
     OpenAPI.validate_property(ThermalMultiStart, Symbol("dynamic_injector"), o.dynamic_injector)
 end
 
@@ -139,6 +139,15 @@ function OpenAPI.validate_property(::Type{ ThermalMultiStart }, name::Symbol, va
 
 
 
+
+    if name === Symbol("status")
+        OpenAPI.validate_param(name, "ThermalMultiStart", :enum, val, ["OFFLINE", "STARTUP", "ONLINE", "SHUTDOWN"])
+    end
+
+
+    if name === Symbol("commitment_mode")
+        OpenAPI.validate_param(name, "ThermalMultiStart", :enum, val, ["UNCOMMITTED", "COMMITTED", "SELF_SCHEDULED", "RELIABILITY", "MUST_RUN"])
+    end
 
 
 
@@ -167,7 +176,6 @@ function OpenAPI.validate_property(::Type{ ThermalMultiStart }, name::Symbol, va
     if name === Symbol("power_units")
         OpenAPI.validate_param(name, "ThermalMultiStart", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
     end
-
 
 
 
