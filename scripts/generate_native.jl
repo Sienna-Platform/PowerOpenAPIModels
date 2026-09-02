@@ -196,13 +196,25 @@ for (domain, _, _, bases) in DOMAINS
 end
 
 # ── Phase 4: assemble and write each package ────────────────────────────────────────
+# One file per struct, same layout as the old openapi-generator pipeline
+# (src/models/model_<Name>.jl, included from the top module file) so a regeneration diffs
+# type-by-type instead of replacing one giant file. The `_SPEC`/`ABSENT`/`_decode`/`_encode`
+# preamble that a chunk's code needs is only ever emitted once, in the top module file, same
+# as it always was for `using OpenAPI, JSON3, HTTP`.
+#
 # The preamble already names the module `modname` -- that's what was passed to
 # OpenAPI.client -- so nothing to rewrite there.
 for (domain, pkgdir, modname, bases) in DOMAINS
     preamble, _, _ = RAW[domain]
     chunks = KEPT_CHUNKS[domain]
     dest = joinpath(REPO, pkgdir, "src")
-    mkpath(dest)
+    models_dest = joinpath(dest, "models")
+    rm(models_dest; force=true, recursive=true)
+    mkpath(models_dest)
+
+    for c in chunks
+        write(joinpath(models_dest, "model_$(c.name).jl"), c.text)
+    end
 
     lines_out = IOBuffer()
     println(lines_out, preamble)
@@ -210,10 +222,14 @@ for (domain, pkgdir, modname, bases) in DOMAINS
         println(lines_out, "using $(MODULE_FOR_DOMAIN[b])")
     end
     println(lines_out)
+    # Original (dependency) order, not alphabetical: a synthesized nested type like
+    # `DataSourceExtra` is generated immediately before the struct that references it
+    # (`DataSource`), and Julia needs that type to exist by the time the referencing struct's
+    # `include` runs.
     for c in chunks
-        print(lines_out, c.text)
-        println(lines_out)
+        println(lines_out, "include(\"models/model_$(c.name).jl\")")
     end
+    println(lines_out)
 
     has_units = emit_units_for(domain, dest, SCHEMA_DIR, UNIT_FACTORS, UNIT_BY_UNIT)
     has_document = domain == "infrastructure-core" && isfile(joinpath(dest, "document.jl"))
@@ -267,7 +283,6 @@ for (domain, pkgdir, modname, bases) in DOMAINS
     println(lines_out, "end # module $modname")
 
     write(joinpath(dest, "$modname.jl"), String(take!(lines_out)))
-    rm(joinpath(dest, "models"); force=true, recursive=true)
     rm(joinpath(dest, "apis"); force=true, recursive=true)
     rm(joinpath(REPO, pkgdir, "docs"); force=true, recursive=true)
 

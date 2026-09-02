@@ -1,0 +1,2 @@
+@doc "    Period\n\nA time period as an ISO-8601 duration string, used for `resolution`, `horizon`, and `interval`. Two kinds, which are never equal even when their spans coincide: fixed spans (`PT1H`, `PT5M`, down to a one-millisecond floor of `PT0.001S`) and calendar spans (`P1M`, `P1Y`), whose length depends on the calendar. `PT0S` is the canonical interval of a single-window forecast. More than three fractional-second digits is rejected, so a series on a grid finer than a millisecond is not storable at all rather than storable and unreadable."
+const Period = String
