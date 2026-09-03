@@ -9,25 +9,28 @@ Supplemental attribute recording a component&#39;s forced outage status directly
         id=nothing,
         outage_status=nothing,
         monitored_components=Int64[],
+        identifier=nothing,
     )
 
     - id::Int64
     - outage_status::Float64
     - monitored_components::Vector{Int64} : IDs of devices whose post-contingency state should be modeled when this outage occurs. Empty by default; semantics of an empty list are decided by the downstream consumer.
+    - identifier::String : Optional user-supplied identifier for the outage, such as a name or a block id. Null when not set.
 """
 Base.@kwdef mutable struct FixedForcedOutage <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     outage_status::Union{Nothing, Float64} = nothing
     monitored_components::Union{Nothing, Vector{Int64}} = Int64[]
+    identifier::Union{Nothing, String} = nothing
 
-    function FixedForcedOutage(id, outage_status, monitored_components, )
-        o = new(id, outage_status, monitored_components, )
+    function FixedForcedOutage(id, outage_status, monitored_components, identifier, )
+        o = new(id, outage_status, monitored_components, identifier, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type FixedForcedOutage
 
-const _property_types_FixedForcedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("outage_status")=>Union{Nothing, Float64}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, )
+const _property_types_FixedForcedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("outage_status")=>Union{Nothing, Float64}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, Symbol("identifier")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ FixedForcedOutage }, name::Symbol) = _property_types_FixedForcedOutage[name]
 
 function OpenAPI.check_required(o::FixedForcedOutage)
@@ -40,6 +43,7 @@ function OpenAPI.validate_properties(o::FixedForcedOutage)
     OpenAPI.validate_property(FixedForcedOutage, Symbol("id"), o.id)
     OpenAPI.validate_property(FixedForcedOutage, Symbol("outage_status"), o.outage_status)
     OpenAPI.validate_property(FixedForcedOutage, Symbol("monitored_components"), o.monitored_components)
+    OpenAPI.validate_property(FixedForcedOutage, Symbol("identifier"), o.identifier)
 end
 
 function OpenAPI.validate_property(::Type{ FixedForcedOutage }, name::Symbol, val)
@@ -49,4 +53,5 @@ function OpenAPI.validate_property(::Type{ FixedForcedOutage }, name::Symbol, va
     if name === Symbol("monitored_components")
         OpenAPI.validate_param(name, "FixedForcedOutage", :uniqueItems, val, true)
     end
+
 end
