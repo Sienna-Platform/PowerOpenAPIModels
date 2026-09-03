@@ -16,6 +16,7 @@ Cost representation for time-varying market bids of energy and ancillary service
         incremental_slope=false,
         decremental_slope=false,
         curve_style=0,
+        curve_multihour=0,
     )
 
     - cost_type::String
@@ -28,6 +29,7 @@ Cost representation for time-varying market bids of energy and ancillary service
     - incremental_slope::Bool : Linear-interpolation flag for the incremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve.
     - decremental_slope::Bool : Linear-interpolation flag for the decremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve.
     - curve_style::Int64 : Curve-clearing style for the bid: 0 &#x3D; CURVE (ordinary divisible price-setting curve, default); 1 &#x3D; FIXED (clears as one indivisible all-or-nothing package over its period); 2 &#x3D; VARIABLE (divisible quantity, block-priced, cannot set the settlement-point price). Corresponds to ERCOT&#39;s DAM PriceCurve curveStyle field (CURVE/FIXED/VARIABLE). A non-zero value is mutually exclusive with incremental_slope/decremental_slope.
+    - curve_multihour::Int64 : Multi-hour block indicator for the bid: 0 &#x3D; SINGLE_HOUR (default; each hour of the bid clears independently); 1 &#x3D; MULTI_HOUR (the bid must be awarded as one block across every hour it covers). Corresponds to ERCOT&#39;s DAM PriceCurve multiHourBlock field (false/true). Independent of curve_style: curve_style is the quantity structure, curve_multihour is the time structure, and they compose.
 """
 Base.@kwdef mutable struct MarketBidTimeSeriesCost <: OpenAPI.APIModel
     cost_type::Union{Nothing, String} = "MARKET_BID_TIME_SERIES"
@@ -40,15 +42,16 @@ Base.@kwdef mutable struct MarketBidTimeSeriesCost <: OpenAPI.APIModel
     incremental_slope::Union{Nothing, Bool} = false
     decremental_slope::Union{Nothing, Bool} = false
     curve_style::Union{Nothing, Int64} = 0
+    curve_multihour::Union{Nothing, Int64} = 0
 
-    function MarketBidTimeSeriesCost(cost_type, minimum_energy_offer, start_up_association_id, shut_down, incremental_offer_curves, decremental_offer_curves, ancillary_service_offers, incremental_slope, decremental_slope, curve_style, )
-        o = new(cost_type, minimum_energy_offer, start_up_association_id, shut_down, incremental_offer_curves, decremental_offer_curves, ancillary_service_offers, incremental_slope, decremental_slope, curve_style, )
+    function MarketBidTimeSeriesCost(cost_type, minimum_energy_offer, start_up_association_id, shut_down, incremental_offer_curves, decremental_offer_curves, ancillary_service_offers, incremental_slope, decremental_slope, curve_style, curve_multihour, )
+        o = new(cost_type, minimum_energy_offer, start_up_association_id, shut_down, incremental_offer_curves, decremental_offer_curves, ancillary_service_offers, incremental_slope, decremental_slope, curve_style, curve_multihour, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type MarketBidTimeSeriesCost
 
-const _property_types_MarketBidTimeSeriesCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("minimum_energy_offer")=>Union{Nothing, TimeSeriesInputOutputCurve}, Symbol("start_up_association_id")=>Union{Nothing, Int64}, Symbol("shut_down")=>Union{Nothing, TimeSeriesInputOutputCurve}, Symbol("incremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("decremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("ancillary_service_offers")=>Union{Nothing, Vector{Int64}}, Symbol("incremental_slope")=>Union{Nothing, Bool}, Symbol("decremental_slope")=>Union{Nothing, Bool}, Symbol("curve_style")=>Union{Nothing, Int64}, )
+const _property_types_MarketBidTimeSeriesCost = Dict{Symbol,Type}(Symbol("cost_type")=>Union{Nothing, String}, Symbol("minimum_energy_offer")=>Union{Nothing, TimeSeriesInputOutputCurve}, Symbol("start_up_association_id")=>Union{Nothing, Int64}, Symbol("shut_down")=>Union{Nothing, TimeSeriesInputOutputCurve}, Symbol("incremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("decremental_offer_curves")=>Union{Nothing, CostCurve}, Symbol("ancillary_service_offers")=>Union{Nothing, Vector{Int64}}, Symbol("incremental_slope")=>Union{Nothing, Bool}, Symbol("decremental_slope")=>Union{Nothing, Bool}, Symbol("curve_style")=>Union{Nothing, Int64}, Symbol("curve_multihour")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ MarketBidTimeSeriesCost }, name::Symbol) = _property_types_MarketBidTimeSeriesCost[name]
 
 function OpenAPI.check_required(o::MarketBidTimeSeriesCost)
@@ -73,6 +76,7 @@ function OpenAPI.validate_properties(o::MarketBidTimeSeriesCost)
     OpenAPI.validate_property(MarketBidTimeSeriesCost, Symbol("incremental_slope"), o.incremental_slope)
     OpenAPI.validate_property(MarketBidTimeSeriesCost, Symbol("decremental_slope"), o.decremental_slope)
     OpenAPI.validate_property(MarketBidTimeSeriesCost, Symbol("curve_style"), o.curve_style)
+    OpenAPI.validate_property(MarketBidTimeSeriesCost, Symbol("curve_multihour"), o.curve_multihour)
 end
 
 function OpenAPI.validate_property(::Type{ MarketBidTimeSeriesCost }, name::Symbol, val)
@@ -92,6 +96,11 @@ function OpenAPI.validate_property(::Type{ MarketBidTimeSeriesCost }, name::Symb
 
     if name === Symbol("curve_style")
         OpenAPI.validate_param(name, "MarketBidTimeSeriesCost", :enum, val, [0, 1, 2])
+    end
+
+
+    if name === Symbol("curve_multihour")
+        OpenAPI.validate_param(name, "MarketBidTimeSeriesCost", :enum, val, [0, 1])
     end
 
 end
