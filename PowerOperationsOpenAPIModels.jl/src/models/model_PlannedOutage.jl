@@ -9,25 +9,28 @@ Supplemental attribute describing outages that are scheduled in advance, naming 
         id=nothing,
         outage_schedule=nothing,
         monitored_components=Int64[],
+        identifier=nothing,
     )
 
     - id::Int64
     - outage_schedule::String
     - monitored_components::Vector{Int64} : IDs of devices whose post-contingency state should be modeled when this outage occurs. Empty by default; semantics of an empty list are decided by the downstream consumer.
+    - identifier::String : Optional user-supplied identifier for the outage, such as a name or a block id. Null when not set.
 """
 Base.@kwdef mutable struct PlannedOutage <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     outage_schedule::Union{Nothing, String} = nothing
     monitored_components::Union{Nothing, Vector{Int64}} = Int64[]
+    identifier::Union{Nothing, String} = nothing
 
-    function PlannedOutage(id, outage_schedule, monitored_components, )
-        o = new(id, outage_schedule, monitored_components, )
+    function PlannedOutage(id, outage_schedule, monitored_components, identifier, )
+        o = new(id, outage_schedule, monitored_components, identifier, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type PlannedOutage
 
-const _property_types_PlannedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("outage_schedule")=>Union{Nothing, String}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, )
+const _property_types_PlannedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("outage_schedule")=>Union{Nothing, String}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, Symbol("identifier")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ PlannedOutage }, name::Symbol) = _property_types_PlannedOutage[name]
 
 function OpenAPI.check_required(o::PlannedOutage)
@@ -40,6 +43,7 @@ function OpenAPI.validate_properties(o::PlannedOutage)
     OpenAPI.validate_property(PlannedOutage, Symbol("id"), o.id)
     OpenAPI.validate_property(PlannedOutage, Symbol("outage_schedule"), o.outage_schedule)
     OpenAPI.validate_property(PlannedOutage, Symbol("monitored_components"), o.monitored_components)
+    OpenAPI.validate_property(PlannedOutage, Symbol("identifier"), o.identifier)
 end
 
 function OpenAPI.validate_property(::Type{ PlannedOutage }, name::Symbol, val)
@@ -49,4 +53,5 @@ function OpenAPI.validate_property(::Type{ PlannedOutage }, name::Symbol, val)
     if name === Symbol("monitored_components")
         OpenAPI.validate_param(name, "PlannedOutage", :uniqueItems, val, true)
     end
+
 end

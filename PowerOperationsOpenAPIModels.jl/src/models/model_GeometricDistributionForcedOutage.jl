@@ -10,27 +10,30 @@ Supplemental attribute describing forced outages whose transitions follow geomet
         mean_time_to_recovery=0.0,
         outage_transition_probability=0.0,
         monitored_components=Int64[],
+        identifier=nothing,
     )
 
     - id::Int64
     - mean_time_to_recovery::Float64 : Mean time elapsed between a failure and the return to service, in minutes. Units: min.
     - outage_transition_probability::Float64 : Probability of transitioning into a forced outage in one minute, the same time step &#x60;mean_time_to_recovery&#x60; is stated in.
     - monitored_components::Vector{Int64} : IDs of devices whose post-contingency state should be modeled when this outage occurs. Empty by default; semantics of an empty list are decided by the downstream consumer.
+    - identifier::String : Optional user-supplied identifier for the outage, such as a name or a block id. Null when not set.
 """
 Base.@kwdef mutable struct GeometricDistributionForcedOutage <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     mean_time_to_recovery::Union{Nothing, Float64} = 0.0
     outage_transition_probability::Union{Nothing, Float64} = 0.0
     monitored_components::Union{Nothing, Vector{Int64}} = Int64[]
+    identifier::Union{Nothing, String} = nothing
 
-    function GeometricDistributionForcedOutage(id, mean_time_to_recovery, outage_transition_probability, monitored_components, )
-        o = new(id, mean_time_to_recovery, outage_transition_probability, monitored_components, )
+    function GeometricDistributionForcedOutage(id, mean_time_to_recovery, outage_transition_probability, monitored_components, identifier, )
+        o = new(id, mean_time_to_recovery, outage_transition_probability, monitored_components, identifier, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type GeometricDistributionForcedOutage
 
-const _property_types_GeometricDistributionForcedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("mean_time_to_recovery")=>Union{Nothing, Float64}, Symbol("outage_transition_probability")=>Union{Nothing, Float64}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, )
+const _property_types_GeometricDistributionForcedOutage = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("mean_time_to_recovery")=>Union{Nothing, Float64}, Symbol("outage_transition_probability")=>Union{Nothing, Float64}, Symbol("monitored_components")=>Union{Nothing, Vector{Int64}}, Symbol("identifier")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ GeometricDistributionForcedOutage }, name::Symbol) = _property_types_GeometricDistributionForcedOutage[name]
 
 function OpenAPI.check_required(o::GeometricDistributionForcedOutage)
@@ -43,6 +46,7 @@ function OpenAPI.validate_properties(o::GeometricDistributionForcedOutage)
     OpenAPI.validate_property(GeometricDistributionForcedOutage, Symbol("mean_time_to_recovery"), o.mean_time_to_recovery)
     OpenAPI.validate_property(GeometricDistributionForcedOutage, Symbol("outage_transition_probability"), o.outage_transition_probability)
     OpenAPI.validate_property(GeometricDistributionForcedOutage, Symbol("monitored_components"), o.monitored_components)
+    OpenAPI.validate_property(GeometricDistributionForcedOutage, Symbol("identifier"), o.identifier)
 end
 
 function OpenAPI.validate_property(::Type{ GeometricDistributionForcedOutage }, name::Symbol, val)
@@ -53,4 +57,5 @@ function OpenAPI.validate_property(::Type{ GeometricDistributionForcedOutage }, 
     if name === Symbol("monitored_components")
         OpenAPI.validate_param(name, "GeometricDistributionForcedOutage", :uniqueItems, val, true)
     end
+
 end
