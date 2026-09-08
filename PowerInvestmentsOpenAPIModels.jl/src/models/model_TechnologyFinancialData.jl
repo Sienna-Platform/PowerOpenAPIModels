@@ -3,7 +3,7 @@
 
 
 @doc raw"""TechnologyFinancialData
-Struct containing relevant financial information for a technology.
+Financial data for a candidate technology: the capital recovery period used to derive overnight capital cost from annualized investment cost, the dollar-year its cost data is reported in, and the debt fraction, debt rate, return on equity, and tax rate that together set its cost of capital.
 
     TechnologyFinancialData(;
         capital_recovery_period=nothing,

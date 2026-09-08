@@ -3,7 +3,7 @@
 
 
 @doc raw"""CostCurve
-Buy offer curves whose value curve is a time-series-backed piecewise incremental curve. Only the TIME_SERIES_INCREMENTAL variant is admissible here; any other variant is rejected by the consuming constructor.
+Variable operation cost of a device expressed directly in currency. Wraps a &#x60;ValueCurve&#x60; that may be in input-output, incremental, or average-rate form, with &#x60;power_units&#x60; declaring the basis of the x axis and &#x60;vom_cost&#x60; adding a proportional variable operation and maintenance term.
 
     CostCurve(;
         power_units="NATURAL_UNITS",

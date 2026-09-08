@@ -6,25 +6,25 @@
 A pair of values representing planned and forced outage factors as fractions of total availability.
 
     OutageFactors(;
-        max=nothing,
-        min=nothing,
+        planned=nothing,
+        forced=nothing,
     )
 
-    - max::Float64
-    - min::Float64
+    - planned::Float64
+    - forced::Float64
 """
 Base.@kwdef mutable struct OutageFactors <: OpenAPI.APIModel
-    max::Union{Nothing, Float64} = nothing
-    min::Union{Nothing, Float64} = nothing
+    planned::Union{Nothing, Float64} = nothing
+    forced::Union{Nothing, Float64} = nothing
 
-    function OutageFactors(max, min, )
-        o = new(max, min, )
+    function OutageFactors(planned, forced, )
+        o = new(planned, forced, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type OutageFactors
 
-const _property_types_OutageFactors = Dict{Symbol,Type}(Symbol("max")=>Union{Nothing, Float64}, Symbol("min")=>Union{Nothing, Float64}, )
+const _property_types_OutageFactors = Dict{Symbol,Type}(Symbol("planned")=>Union{Nothing, Float64}, Symbol("forced")=>Union{Nothing, Float64}, )
 OpenAPI.property_type(::Type{ OutageFactors }, name::Symbol) = _property_types_OutageFactors[name]
 
 function OpenAPI.check_required(o::OutageFactors)
@@ -32,8 +32,8 @@ function OpenAPI.check_required(o::OutageFactors)
 end
 
 function OpenAPI.validate_properties(o::OutageFactors)
-    OpenAPI.validate_property(OutageFactors, Symbol("max"), o.max)
-    OpenAPI.validate_property(OutageFactors, Symbol("min"), o.min)
+    OpenAPI.validate_property(OutageFactors, Symbol("planned"), o.planned)
+    OpenAPI.validate_property(OutageFactors, Symbol("forced"), o.forced)
 end
 
 function OpenAPI.validate_property(::Type{ OutageFactors }, name::Symbol, val)

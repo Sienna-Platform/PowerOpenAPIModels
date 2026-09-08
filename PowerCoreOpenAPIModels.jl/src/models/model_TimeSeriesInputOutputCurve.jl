@@ -3,7 +3,7 @@
 
 
 @doc raw"""TimeSeriesInputOutputCurve
-Shut-down cost as a time-series-backed linear curve. Only the TIME_SERIES_LINEAR function-data variant is admissible here; the consuming constructor rejects any other.
+A time-series-backed input-output curve. The static counterpart is InputOutputCurve.
 
     TimeSeriesInputOutputCurve(;
         curve_type="TIME_SERIES_INPUT_OUTPUT",
@@ -43,10 +43,6 @@ function OpenAPI.validate_properties(o::TimeSeriesInputOutputCurve)
 end
 
 function OpenAPI.validate_property(::Type{ TimeSeriesInputOutputCurve }, name::Symbol, val)
-
-    if name === Symbol("curve_type")
-        OpenAPI.validate_param(name, "TimeSeriesInputOutputCurve", :enum, val, ["TIME_SERIES_INPUT_OUTPUT"])
-    end
 
 
 

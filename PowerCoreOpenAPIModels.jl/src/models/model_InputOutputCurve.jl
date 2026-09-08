@@ -3,7 +3,7 @@
 
 
 @doc raw"""InputOutputCurve
-Fuel consumed during startup, as a curve in the unit&#39;s fuel units.
+A curve whose y values are the total input &#x60;f(x)&#x60; at production level &#x60;x&#x60; — currency per hour against MW in a cost curve, fuel per hour against MW in a fuel curve. The y axis is an absolute quantity, not a rate; use &#x60;IncrementalCurve&#x60; for marginal-rate data.
 
     InputOutputCurve(;
         curve_type="INPUT_OUTPUT",
