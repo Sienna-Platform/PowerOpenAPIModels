@@ -3,7 +3,7 @@
 
 
 @doc raw"""SwitchedAdmittance
-A switched admittance, with discrete steps to adjust the admittance.  Most often used in power flow studies, iterating over the steps to see impacts of admittance on the results. Total admittance is calculated as: &#x60;Y&#x60; + &#x60;number_of_steps&#x60; * &#x60;Y_increase&#x60;.
+A switched admittance, with discrete steps to adjust the admittance.  Most often used in power flow studies, iterating over the steps to see impacts of admittance on the results. Total admittance is &#x60;number_engaged&#x60; * &#x60;Y_increase&#x60;, unless &#x60;solved_admittance&#x60; is set, in which case that value is the effective admittance. There is no fixed base admittance: a PSS/E SWITCHED SHUNT record carries only BINIT and the per-block increments.
 
     SwitchedAdmittance(;
         id=nothing,
@@ -11,10 +11,10 @@ A switched admittance, with discrete steps to adjust the admittance.  Most often
         available=nothing,
         bus=nothing,
         admittance_units="COMPONENT_MVAR",
-        Y=nothing,
-        initial_status=nothing,
+        number_engaged=nothing,
         number_of_steps=nothing,
         Y_increase=nothing,
+        solved_admittance=nothing,
         admittance_limits=MinMax(; max=1.0, min=1.0),
         control_mode="FIXED",
         regulated_bus_number=0,
@@ -25,11 +25,11 @@ A switched admittance, with discrete steps to adjust the admittance.  Most often
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
     - bus::Int64 : ID of the bus that this component is connected to.
-    - admittance_units::String : Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
-    - Y::ComplexNumber
-    - initial_status::Vector{Int64} : Vector of initial switched shunt status, one for in-service and zero for out-of-service for block i (1 through 8).
+    - admittance_units::String : Unit basis for the shunt admittance fields. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
+    - number_engaged::Vector{Int64} : Vector with the number of steps currently engaged (switched in) for each adjustable shunt block. For example, &#x60;number_engaged[2]&#x60; is the number of steps in service at block 2, and cannot exceed &#x60;number_of_steps[2]&#x60;.
     - number_of_steps::Vector{Int64} : Vector with number of steps for each adjustable shunt block. For example, &#x60;number_of_steps[2]&#x60; are the number of available steps for admittance increment at block 2.
     - Y_increase::Vector{ComplexNumber} : Vector with admittance increment step for each adjustable shunt block. For example, &#x60;Y_increase[2]&#x60; is the complex admittance increment for each step at block 2. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
+    - solved_admittance::Float64 : Solved-case switched shunt admittance (PSS/E BINIT); when present it is the shunt&#39;s effective admittance, used in place of &#x60;number_engaged&#x60; * &#x60;Y_increase&#x60;. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
     - admittance_limits::MinMax
     - control_mode::String : Switched-shunt control mode (PSS/E MODSW).
     - regulated_bus_number::Int64 : Bus number whose voltage/quantity this shunt regulates; 0 means local bus (PSS/E SWREM/NREG). Units: 1.
@@ -41,23 +41,23 @@ Base.@kwdef mutable struct SwitchedAdmittance <: OpenAPI.APIModel
     available::Union{Nothing, Bool} = nothing
     bus::Union{Nothing, Int64} = nothing
     admittance_units::Union{Nothing, String} = "COMPONENT_MVAR"
-    Y = nothing # spec type: Union{ Nothing, ComplexNumber }
-    initial_status::Union{Nothing, Vector{Int64}} = nothing
+    number_engaged::Union{Nothing, Vector{Int64}} = nothing
     number_of_steps::Union{Nothing, Vector{Int64}} = nothing
     Y_increase::Union{Nothing, Vector} = nothing # spec type: Union{ Nothing, Vector{ComplexNumber} }
+    solved_admittance::Union{Nothing, Float64} = nothing
     admittance_limits = MinMax(; max=1.0, min=1.0) # spec type: Union{ Nothing, MinMax }
     control_mode::Union{Nothing, String} = "FIXED"
     regulated_bus_number::Union{Nothing, Int64} = 0
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function SwitchedAdmittance(id, name, available, bus, admittance_units, Y, initial_status, number_of_steps, Y_increase, admittance_limits, control_mode, regulated_bus_number, dynamic_injector, )
-        o = new(id, name, available, bus, admittance_units, Y, initial_status, number_of_steps, Y_increase, admittance_limits, control_mode, regulated_bus_number, dynamic_injector, )
+    function SwitchedAdmittance(id, name, available, bus, admittance_units, number_engaged, number_of_steps, Y_increase, solved_admittance, admittance_limits, control_mode, regulated_bus_number, dynamic_injector, )
+        o = new(id, name, available, bus, admittance_units, number_engaged, number_of_steps, Y_increase, solved_admittance, admittance_limits, control_mode, regulated_bus_number, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type SwitchedAdmittance
 
-const _property_types_SwitchedAdmittance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("Y")=>Union{Nothing, ComplexNumber}, Symbol("initial_status")=>Union{Nothing, Vector{Int64}}, Symbol("number_of_steps")=>Union{Nothing, Vector{Int64}}, Symbol("Y_increase")=>Union{Nothing, Vector{ComplexNumber}}, Symbol("admittance_limits")=>Union{Nothing, MinMax}, Symbol("control_mode")=>Union{Nothing, String}, Symbol("regulated_bus_number")=>Union{Nothing, Int64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_SwitchedAdmittance = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("number_engaged")=>Union{Nothing, Vector{Int64}}, Symbol("number_of_steps")=>Union{Nothing, Vector{Int64}}, Symbol("Y_increase")=>Union{Nothing, Vector{ComplexNumber}}, Symbol("solved_admittance")=>Union{Nothing, Float64}, Symbol("admittance_limits")=>Union{Nothing, MinMax}, Symbol("control_mode")=>Union{Nothing, String}, Symbol("regulated_bus_number")=>Union{Nothing, Int64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ SwitchedAdmittance }, name::Symbol) = _property_types_SwitchedAdmittance[name]
 
 function OpenAPI.check_required(o::SwitchedAdmittance)
@@ -65,7 +65,6 @@ function OpenAPI.check_required(o::SwitchedAdmittance)
     o.name === nothing && (return false)
     o.available === nothing && (return false)
     o.bus === nothing && (return false)
-    o.Y === nothing && (return false)
     true
 end
 
@@ -75,10 +74,10 @@ function OpenAPI.validate_properties(o::SwitchedAdmittance)
     OpenAPI.validate_property(SwitchedAdmittance, Symbol("available"), o.available)
     OpenAPI.validate_property(SwitchedAdmittance, Symbol("bus"), o.bus)
     OpenAPI.validate_property(SwitchedAdmittance, Symbol("admittance_units"), o.admittance_units)
-    OpenAPI.validate_property(SwitchedAdmittance, Symbol("Y"), o.Y)
-    OpenAPI.validate_property(SwitchedAdmittance, Symbol("initial_status"), o.initial_status)
+    OpenAPI.validate_property(SwitchedAdmittance, Symbol("number_engaged"), o.number_engaged)
     OpenAPI.validate_property(SwitchedAdmittance, Symbol("number_of_steps"), o.number_of_steps)
     OpenAPI.validate_property(SwitchedAdmittance, Symbol("Y_increase"), o.Y_increase)
+    OpenAPI.validate_property(SwitchedAdmittance, Symbol("solved_admittance"), o.solved_admittance)
     OpenAPI.validate_property(SwitchedAdmittance, Symbol("admittance_limits"), o.admittance_limits)
     OpenAPI.validate_property(SwitchedAdmittance, Symbol("control_mode"), o.control_mode)
     OpenAPI.validate_property(SwitchedAdmittance, Symbol("regulated_bus_number"), o.regulated_bus_number)

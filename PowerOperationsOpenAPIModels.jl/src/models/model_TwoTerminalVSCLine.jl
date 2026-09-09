@@ -24,7 +24,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
         dc_setpoint_from=0.0,
         ac_setpoint_from=1.0,
         rated_ac_voltage_from=0.0,
-        converter_loss_from=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
+        converter_loss_from=LossCurve(; power_units="NATURAL_UNITS", value_curve=LossValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))))),
         max_dc_current_from=100000000,
         rating_from=100000000,
         reactive_power_limits_from=MinMax(; max=0.0, min=0.0),
@@ -38,7 +38,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
         dc_setpoint_to=0.0,
         ac_setpoint_to=1.0,
         rated_ac_voltage_to=0.0,
-        converter_loss_to=InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))),
+        converter_loss_to=LossCurve(; power_units="NATURAL_UNITS", value_curve=LossValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))))),
         max_dc_current_to=100000000,
         rating_to=100000000,
         reactive_power_limits_to=MinMax(; max=0.0, min=0.0),
@@ -72,7 +72,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
     - dc_setpoint_from::Float64 : Converter DC setpoint in the &#x60;from&#x60; bus converter. When &#x60;dc_control_from&#x60; regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the &#x60;from&#x60; bus; if negative, the converter is withdrawing power from the AC network at the &#x60;from&#x60; bus. Units: per dc_control_from — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
     - ac_setpoint_from::Float64 : Converter AC setpoint in the &#x60;from&#x60; bus converter. When &#x60;ac_control_from&#x60; regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_from — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
     - rated_ac_voltage_from::Float64 : Rated (base) AC voltage at the &#x60;from&#x60; converter&#39;s AC terminal in kV. Used as the AC voltage base for interpreting ac_setpoint_from when ac_control_from is AC_VOLTAGE; 0.0 means unspecified (the setpoint is taken as per-unit directly). Units: kV.
-    - converter_loss_from::InputOutputCurve
+    - converter_loss_from::LossCurve
     - max_dc_current_from::Float64 : Maximum stable dc current limits. Units: A.
     - rating_from::Float64 : Converter rating in the &#x60;from&#x60; bus. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
     - reactive_power_limits_from::MinMax
@@ -86,7 +86,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
     - dc_setpoint_to::Float64 : Converter DC setpoint in the &#x60;to&#x60; bus converter. When &#x60;dc_control_to&#x60; regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the &#x60;to&#x60; bus; if negative, the converter is withdrawing power from the AC network at the &#x60;to&#x60; bus. Units: per dc_control_to — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
     - ac_setpoint_to::Float64 : Converter AC setpoint in the &#x60;to&#x60; bus converter. When &#x60;ac_control_to&#x60; regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_to — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
     - rated_ac_voltage_to::Float64 : Rated (base) AC voltage at the &#x60;to&#x60; converter&#39;s AC terminal in kV. Used as the AC voltage base for interpreting ac_setpoint_to when ac_control_to is AC_VOLTAGE; 0.0 means unspecified (the setpoint is taken as per-unit directly). Units: kV.
-    - converter_loss_to::InputOutputCurve
+    - converter_loss_to::LossCurve
     - max_dc_current_to::Float64 : Maximum stable dc current limits. Units: A.
     - rating_to::Float64 : Converter rating in the &#x60;to&#x60; bus. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
     - reactive_power_limits_to::MinMax
@@ -120,7 +120,7 @@ Base.@kwdef mutable struct TwoTerminalVSCLine <: OpenAPI.APIModel
     dc_setpoint_from::Union{Nothing, Float64} = 0.0
     ac_setpoint_from::Union{Nothing, Float64} = 1.0
     rated_ac_voltage_from::Union{Nothing, Float64} = 0.0
-    converter_loss_from = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
+    converter_loss_from = LossCurve(; power_units="NATURAL_UNITS", value_curve=LossValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))))) # spec type: Union{ Nothing, LossCurve }
     max_dc_current_from::Union{Nothing, Float64} = 100000000
     rating_from::Union{Nothing, Float64} = 100000000
     reactive_power_limits_from = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
@@ -134,7 +134,7 @@ Base.@kwdef mutable struct TwoTerminalVSCLine <: OpenAPI.APIModel
     dc_setpoint_to::Union{Nothing, Float64} = 0.0
     ac_setpoint_to::Union{Nothing, Float64} = 1.0
     rated_ac_voltage_to::Union{Nothing, Float64} = 0.0
-    converter_loss_to = InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))) # spec type: Union{ Nothing, InputOutputCurve }
+    converter_loss_to = LossCurve(; power_units="NATURAL_UNITS", value_curve=LossValueCurve(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0))))) # spec type: Union{ Nothing, LossCurve }
     max_dc_current_to::Union{Nothing, Float64} = 100000000
     rating_to::Union{Nothing, Float64} = 100000000
     reactive_power_limits_to = MinMax(; max=0.0, min=0.0) # spec type: Union{ Nothing, MinMax }
@@ -156,7 +156,7 @@ Base.@kwdef mutable struct TwoTerminalVSCLine <: OpenAPI.APIModel
     end
 end # type TwoTerminalVSCLine
 
-const _property_types_TwoTerminalVSCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("g")=>Union{Nothing, Float64}, Symbol("dc_current")=>Union{Nothing, Float64}, Symbol("reactive_power_from")=>Union{Nothing, Float64}, Symbol("dc_control_from")=>Union{Nothing, String}, Symbol("ac_control_from")=>Union{Nothing, String}, Symbol("setpoint_voltage_units")=>Union{Nothing, String}, Symbol("dc_setpoint_from")=>Union{Nothing, Float64}, Symbol("ac_setpoint_from")=>Union{Nothing, Float64}, Symbol("rated_ac_voltage_from")=>Union{Nothing, Float64}, Symbol("converter_loss_from")=>Union{Nothing, InputOutputCurve}, Symbol("max_dc_current_from")=>Union{Nothing, Float64}, Symbol("rating_from")=>Union{Nothing, Float64}, Symbol("reactive_power_limits_from")=>Union{Nothing, MinMax}, Symbol("power_factor_weighting_fraction_from")=>Union{Nothing, Float64}, Symbol("voltage_units")=>Union{Nothing, String}, Symbol("voltage_limits_from")=>Union{Nothing, MinMax}, Symbol("dc_voltage_droop_from")=>Union{Nothing, Float64}, Symbol("reactive_power_to")=>Union{Nothing, Float64}, Symbol("dc_control_to")=>Union{Nothing, String}, Symbol("ac_control_to")=>Union{Nothing, String}, Symbol("dc_setpoint_to")=>Union{Nothing, Float64}, Symbol("ac_setpoint_to")=>Union{Nothing, Float64}, Symbol("rated_ac_voltage_to")=>Union{Nothing, Float64}, Symbol("converter_loss_to")=>Union{Nothing, InputOutputCurve}, Symbol("max_dc_current_to")=>Union{Nothing, Float64}, Symbol("rating_to")=>Union{Nothing, Float64}, Symbol("reactive_power_limits_to")=>Union{Nothing, MinMax}, Symbol("power_factor_weighting_fraction_to")=>Union{Nothing, Float64}, Symbol("voltage_limits_to")=>Union{Nothing, MinMax}, Symbol("dc_voltage_droop_to")=>Union{Nothing, Float64}, Symbol("rated_dc_voltage")=>Union{Nothing, Float64}, Symbol("remote_bus_control_from")=>Union{Nothing, Int64}, Symbol("remote_bus_control_to")=>Union{Nothing, Int64}, Symbol("rmpct_from")=>Union{Nothing, Float64}, Symbol("rmpct_to")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
+const _property_types_TwoTerminalVSCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, Symbol("admittance_units")=>Union{Nothing, String}, Symbol("g")=>Union{Nothing, Float64}, Symbol("dc_current")=>Union{Nothing, Float64}, Symbol("reactive_power_from")=>Union{Nothing, Float64}, Symbol("dc_control_from")=>Union{Nothing, String}, Symbol("ac_control_from")=>Union{Nothing, String}, Symbol("setpoint_voltage_units")=>Union{Nothing, String}, Symbol("dc_setpoint_from")=>Union{Nothing, Float64}, Symbol("ac_setpoint_from")=>Union{Nothing, Float64}, Symbol("rated_ac_voltage_from")=>Union{Nothing, Float64}, Symbol("converter_loss_from")=>Union{Nothing, LossCurve}, Symbol("max_dc_current_from")=>Union{Nothing, Float64}, Symbol("rating_from")=>Union{Nothing, Float64}, Symbol("reactive_power_limits_from")=>Union{Nothing, MinMax}, Symbol("power_factor_weighting_fraction_from")=>Union{Nothing, Float64}, Symbol("voltage_units")=>Union{Nothing, String}, Symbol("voltage_limits_from")=>Union{Nothing, MinMax}, Symbol("dc_voltage_droop_from")=>Union{Nothing, Float64}, Symbol("reactive_power_to")=>Union{Nothing, Float64}, Symbol("dc_control_to")=>Union{Nothing, String}, Symbol("ac_control_to")=>Union{Nothing, String}, Symbol("dc_setpoint_to")=>Union{Nothing, Float64}, Symbol("ac_setpoint_to")=>Union{Nothing, Float64}, Symbol("rated_ac_voltage_to")=>Union{Nothing, Float64}, Symbol("converter_loss_to")=>Union{Nothing, LossCurve}, Symbol("max_dc_current_to")=>Union{Nothing, Float64}, Symbol("rating_to")=>Union{Nothing, Float64}, Symbol("reactive_power_limits_to")=>Union{Nothing, MinMax}, Symbol("power_factor_weighting_fraction_to")=>Union{Nothing, Float64}, Symbol("voltage_limits_to")=>Union{Nothing, MinMax}, Symbol("dc_voltage_droop_to")=>Union{Nothing, Float64}, Symbol("rated_dc_voltage")=>Union{Nothing, Float64}, Symbol("remote_bus_control_from")=>Union{Nothing, Int64}, Symbol("remote_bus_control_to")=>Union{Nothing, Int64}, Symbol("rmpct_from")=>Union{Nothing, Float64}, Symbol("rmpct_to")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ TwoTerminalVSCLine }, name::Symbol) = _property_types_TwoTerminalVSCLine[name]
 
 function OpenAPI.check_required(o::TwoTerminalVSCLine)

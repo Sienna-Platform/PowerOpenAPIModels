@@ -8,36 +8,48 @@ Supplemental attribute defining which existing generators mapped to a supply tec
     RetrofitPotential(;
         id=nothing,
         eligible_generators=nothing,
+        retrofit_fraction=1.0,
+        retrofit_cost=nothing,
     )
 
     - id::Int64 : ID for individual component.
     - eligible_generators::Vector{String} : Names of individual generation units mapped to this technology that can be retrofitted.
+    - retrofit_fraction::Float64 : Fraction of existing capacity that is eligible for retrofits. Units: 1.
+    - retrofit_cost::ValueCurve
 """
 Base.@kwdef mutable struct RetrofitPotential <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     eligible_generators::Union{Nothing, Vector{String}} = nothing
+    retrofit_fraction::Union{Nothing, Float64} = 1.0
+    retrofit_cost = nothing # spec type: Union{ Nothing, ValueCurve }
 
-    function RetrofitPotential(id, eligible_generators, )
-        o = new(id, eligible_generators, )
+    function RetrofitPotential(id, eligible_generators, retrofit_fraction, retrofit_cost, )
+        o = new(id, eligible_generators, retrofit_fraction, retrofit_cost, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type RetrofitPotential
 
-const _property_types_RetrofitPotential = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("eligible_generators")=>Union{Nothing, Vector{String}}, )
+const _property_types_RetrofitPotential = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("eligible_generators")=>Union{Nothing, Vector{String}}, Symbol("retrofit_fraction")=>Union{Nothing, Float64}, Symbol("retrofit_cost")=>Union{Nothing, ValueCurve}, )
 OpenAPI.property_type(::Type{ RetrofitPotential }, name::Symbol) = _property_types_RetrofitPotential[name]
 
 function OpenAPI.check_required(o::RetrofitPotential)
     o.id === nothing && (return false)
+    o.eligible_generators === nothing && (return false)
+    o.retrofit_cost === nothing && (return false)
     true
 end
 
 function OpenAPI.validate_properties(o::RetrofitPotential)
     OpenAPI.validate_property(RetrofitPotential, Symbol("id"), o.id)
     OpenAPI.validate_property(RetrofitPotential, Symbol("eligible_generators"), o.eligible_generators)
+    OpenAPI.validate_property(RetrofitPotential, Symbol("retrofit_fraction"), o.retrofit_fraction)
+    OpenAPI.validate_property(RetrofitPotential, Symbol("retrofit_cost"), o.retrofit_cost)
 end
 
 function OpenAPI.validate_property(::Type{ RetrofitPotential }, name::Symbol, val)
+
+
 
 
 end

@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **`reactive_power_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`dc_current`** | **`Float64`** | DC current on the converter. Units: A. | [optional] [default to 0.0]
 **`max_dc_current`** | **`Float64`** | Maximum stable dc current limits. Units: A. | [optional] [default to 100000000]
-**`loss_function`** | [**`*InputOutputCurve`**](InputOutputCurve.md) |  | [optional] [default to nothing]
+**`loss_function`** | [**`*LossCurve`**](LossCurve.md) |  | [optional] [default to nothing]
 **`dc_control`** | **`String`** | DC-side control mode of the converter. | [optional] [default to "DC_VOLTAGE"]
 **`ac_control`** | **`String`** | AC-side control mode of the converter. | [optional] [default to "AC_REACTIVE_POWER"]
 **`voltage_setpoint_units`** | **`String`** | Unit basis for the DC/AC voltage setpoints. | [optional] [default to "COMPONENT_BASE"]

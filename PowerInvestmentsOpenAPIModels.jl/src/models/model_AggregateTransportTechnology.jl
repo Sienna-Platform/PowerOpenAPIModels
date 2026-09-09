@@ -27,7 +27,7 @@ An aggregated representation of a transmission interchange between two regions. 
     - start_region::Int64 : Start region for transport technology.
     - end_region::Int64 : End region for transport technology.
     - capacity_limits::MinMax
-    - capital_costs::ValueCurve
+    - capital_costs::CapitalCost
     - line_loss::Float64 : Transmission loss for each transport technology. Units: 1.
     - unit_size::Float64 : Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW.
     - requirements::Vector{Int64} : List of requirement IDs associated with the component.
@@ -41,7 +41,7 @@ Base.@kwdef mutable struct AggregateTransportTechnology <: OpenAPI.APIModel
     start_region::Union{Nothing, Int64} = nothing
     end_region::Union{Nothing, Int64} = nothing
     capacity_limits = nothing # spec type: Union{ Nothing, MinMax }
-    capital_costs = nothing # spec type: Union{ Nothing, ValueCurve }
+    capital_costs = nothing # spec type: Union{ Nothing, CapitalCost }
     line_loss::Union{Nothing, Float64} = nothing
     unit_size::Union{Nothing, Float64} = nothing
     requirements::Union{Nothing, Vector{Int64}} = Int64[]
@@ -54,7 +54,7 @@ Base.@kwdef mutable struct AggregateTransportTechnology <: OpenAPI.APIModel
     end
 end # type AggregateTransportTechnology
 
-const _property_types_AggregateTransportTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("start_region")=>Union{Nothing, Int64}, Symbol("end_region")=>Union{Nothing, Int64}, Symbol("capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs")=>Union{Nothing, ValueCurve}, Symbol("line_loss")=>Union{Nothing, Float64}, Symbol("unit_size")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
+const _property_types_AggregateTransportTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("start_region")=>Union{Nothing, Int64}, Symbol("end_region")=>Union{Nothing, Int64}, Symbol("capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs")=>Union{Nothing, CapitalCost}, Symbol("line_loss")=>Union{Nothing, Float64}, Symbol("unit_size")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
 OpenAPI.property_type(::Type{ AggregateTransportTechnology }, name::Symbol) = _property_types_AggregateTransportTechnology[name]
 
 function OpenAPI.check_required(o::AggregateTransportTechnology)

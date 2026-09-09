@@ -32,7 +32,7 @@ A hybrid system co-locating a thermal unit, electric load, storage, and/or renew
     - id::Int64 : Unique integer identifier for this component.
     - name::String : Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name.
     - available::Bool : Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations.
-    - status::Bool : Initial commitment condition at the start of a simulation (&#x60;true&#x60; &#x3D; on or &#x60;false&#x60; &#x3D; off).
+    - status::String : Operating state of the unit at the start of a simulation.
     - bus::Int64 : ID of the bus that this component is connected to.
     - active_power::Float64 : Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
     - reactive_power::Float64 : Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
@@ -55,7 +55,7 @@ Base.@kwdef mutable struct HybridSystem <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
     name::Union{Nothing, String} = nothing
     available::Union{Nothing, Bool} = nothing
-    status::Union{Nothing, Bool} = nothing
+    status::Union{Nothing, String} = nothing
     bus::Union{Nothing, Int64} = nothing
     active_power::Union{Nothing, Float64} = nothing
     reactive_power::Union{Nothing, Float64} = nothing
@@ -81,7 +81,7 @@ Base.@kwdef mutable struct HybridSystem <: OpenAPI.APIModel
     end
 end # type HybridSystem
 
-const _property_types_HybridSystem = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("operation_cost")=>Union{Nothing, MarketBidCost}, Symbol("thermal_unit")=>Union{Nothing, Int64}, Symbol("electric_load")=>Union{Nothing, Int64}, Symbol("storage")=>Union{Nothing, Int64}, Symbol("renewable_unit")=>Union{Nothing, Int64}, Symbol("interconnection_impedance")=>Union{Nothing, ComplexNumber}, Symbol("interconnection_rating")=>Union{Nothing, Float64}, Symbol("input_active_power_limits")=>Union{Nothing, MinMax}, Symbol("output_active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("interconnection_efficiency")=>Union{Nothing, InOut}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_HybridSystem = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("status")=>Union{Nothing, String}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("operation_cost")=>Union{Nothing, MarketBidCost}, Symbol("thermal_unit")=>Union{Nothing, Int64}, Symbol("electric_load")=>Union{Nothing, Int64}, Symbol("storage")=>Union{Nothing, Int64}, Symbol("renewable_unit")=>Union{Nothing, Int64}, Symbol("interconnection_impedance")=>Union{Nothing, ComplexNumber}, Symbol("interconnection_rating")=>Union{Nothing, Float64}, Symbol("input_active_power_limits")=>Union{Nothing, MinMax}, Symbol("output_active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("interconnection_efficiency")=>Union{Nothing, InOut}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ HybridSystem }, name::Symbol) = _property_types_HybridSystem[name]
 
 function OpenAPI.check_required(o::HybridSystem)
@@ -126,6 +126,10 @@ function OpenAPI.validate_property(::Type{ HybridSystem }, name::Symbol, val)
 
 
 
+
+    if name === Symbol("status")
+        OpenAPI.validate_param(name, "HybridSystem", :enum, val, ["OFFLINE", "ONLINE", "STARTUP", "SHUTDOWN"])
+    end
 
 
 

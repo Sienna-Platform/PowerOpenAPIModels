@@ -15,7 +15,7 @@ A High Voltage DC line, which must be connected to an ACBus on each end. This mo
         active_power_limits_to=nothing,
         reactive_power_limits_from=nothing,
         reactive_power_limits_to=nothing,
-        loss=TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))),
+        loss=nothing,
         base_power=nothing,
         power_units=nothing,
     )
@@ -29,7 +29,7 @@ A High Voltage DC line, which must be connected to an ACBus on each end. This mo
     - active_power_limits_to::MinMax
     - reactive_power_limits_from::MinMax
     - reactive_power_limits_to::MinMax
-    - loss::TwoTerminalLoss
+    - loss::LossCurve
     - base_power::Float64 : System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
     - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
 """
@@ -43,7 +43,7 @@ Base.@kwdef mutable struct TwoTerminalGenericHVDCLine <: OpenAPI.APIModel
     active_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_from = nothing # spec type: Union{ Nothing, MinMax }
     reactive_power_limits_to = nothing # spec type: Union{ Nothing, MinMax }
-    loss = TwoTerminalLoss(InputOutputCurve(; curve_type="INPUT_OUTPUT", function_data=InputOutputCurveFunctionData(LinearFunctionData(; constant_term=0.0, function_type="LINEAR", proportional_term=0.0)))) # spec type: Union{ Nothing, TwoTerminalLoss }
+    loss = nothing # spec type: Union{ Nothing, LossCurve }
     base_power::Union{Nothing, Float64} = nothing
     power_units::Union{Nothing, String} = nothing
 
@@ -54,7 +54,7 @@ Base.@kwdef mutable struct TwoTerminalGenericHVDCLine <: OpenAPI.APIModel
     end
 end # type TwoTerminalGenericHVDCLine
 
-const _property_types_TwoTerminalGenericHVDCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_from")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_to")=>Union{Nothing, MinMax}, Symbol("loss")=>Union{Nothing, TwoTerminalLoss}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
+const _property_types_TwoTerminalGenericHVDCLine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("active_power_flow")=>Union{Nothing, Float64}, Symbol("arc")=>Union{Nothing, Int64}, Symbol("active_power_limits_from")=>Union{Nothing, MinMax}, Symbol("active_power_limits_to")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_from")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits_to")=>Union{Nothing, MinMax}, Symbol("loss")=>Union{Nothing, LossCurve}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, )
 OpenAPI.property_type(::Type{ TwoTerminalGenericHVDCLine }, name::Symbol) = _property_types_TwoTerminalGenericHVDCLine[name]
 
 function OpenAPI.check_required(o::TwoTerminalGenericHVDCLine)

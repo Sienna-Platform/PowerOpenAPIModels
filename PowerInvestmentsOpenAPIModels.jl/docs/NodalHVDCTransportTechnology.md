@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **`start_node`** | **`Int64`** | Start node for transport technology. | [default to nothing]
 **`end_node`** | **`Int64`** | End node for transport technology. | [default to nothing]
 **`capacity_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
-**`capital_costs`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
+**`capital_costs`** | [**`*CapitalCost`**](CapitalCost.md) |  | [optional] [default to nothing]
 **`line_loss`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
 **`unit_size`** | **`Float64`** | Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW. | [optional] [default to nothing]
 **`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]

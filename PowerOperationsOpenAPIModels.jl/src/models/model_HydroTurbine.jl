@@ -17,6 +17,9 @@ A hydropower generator that must have a &#x60;HydroReservoir&#x60; attached, sui
         reactive_power_limits=nothing,
         base_power=nothing,
         power_units=nothing,
+        status="OFFLINE",
+        time_at_status=600000.0,
+        commitment_mode="COMMITTED",
         operation_cost=nothing,
         powerhouse_elevation=0.0,
         ramp_limits=nothing,
@@ -41,6 +44,9 @@ A hydropower generator that must have a &#x60;HydroReservoir&#x60; attached, sui
     - reactive_power_limits::MinMax
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
     - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
+    - status::String : Operating state of the unit at the start of a simulation.
+    - time_at_status::Float64 : Time the generator has been in its current &#x60;status&#x60;. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
+    - commitment_mode::String : Commitment mode of the unit.
     - operation_cost::HydroDispatchOperationCost
     - powerhouse_elevation::Float64 : Height level above the sea level of the powerhouse on which the turbine is installed. Units: m.
     - ramp_limits::UpDown
@@ -65,6 +71,9 @@ Base.@kwdef mutable struct HydroTurbine <: OpenAPI.APIModel
     reactive_power_limits = nothing # spec type: Union{ Nothing, MinMax }
     base_power::Union{Nothing, Float64} = nothing
     power_units::Union{Nothing, String} = nothing
+    status::Union{Nothing, String} = "OFFLINE"
+    time_at_status::Union{Nothing, Float64} = 600000.0
+    commitment_mode::Union{Nothing, String} = "COMMITTED"
     operation_cost = nothing # spec type: Union{ Nothing, HydroDispatchOperationCost }
     powerhouse_elevation::Union{Nothing, Float64} = 0.0
     ramp_limits = nothing # spec type: Union{ Nothing, UpDown }
@@ -77,14 +86,14 @@ Base.@kwdef mutable struct HydroTurbine <: OpenAPI.APIModel
     travel_time::Union{Nothing, Float64} = nothing
     dynamic_injector::Union{Nothing, Int64} = nothing
 
-    function HydroTurbine(id, name, available, bus, active_power, reactive_power, rating, active_power_limits, reactive_power_limits, base_power, power_units, operation_cost, powerhouse_elevation, ramp_limits, time_limits, outflow_limits, efficiency, turbine_type, conversion_factor, prime_mover_type, travel_time, dynamic_injector, )
-        o = new(id, name, available, bus, active_power, reactive_power, rating, active_power_limits, reactive_power_limits, base_power, power_units, operation_cost, powerhouse_elevation, ramp_limits, time_limits, outflow_limits, efficiency, turbine_type, conversion_factor, prime_mover_type, travel_time, dynamic_injector, )
+    function HydroTurbine(id, name, available, bus, active_power, reactive_power, rating, active_power_limits, reactive_power_limits, base_power, power_units, status, time_at_status, commitment_mode, operation_cost, powerhouse_elevation, ramp_limits, time_limits, outflow_limits, efficiency, turbine_type, conversion_factor, prime_mover_type, travel_time, dynamic_injector, )
+        o = new(id, name, available, bus, active_power, reactive_power, rating, active_power_limits, reactive_power_limits, base_power, power_units, status, time_at_status, commitment_mode, operation_cost, powerhouse_elevation, ramp_limits, time_limits, outflow_limits, efficiency, turbine_type, conversion_factor, prime_mover_type, travel_time, dynamic_injector, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type HydroTurbine
 
-const _property_types_HydroTurbine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("operation_cost")=>Union{Nothing, HydroDispatchOperationCost}, Symbol("powerhouse_elevation")=>Union{Nothing, Float64}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("outflow_limits")=>Union{Nothing, MinMax}, Symbol("efficiency")=>Union{Nothing, Float64}, Symbol("turbine_type")=>Union{Nothing, String}, Symbol("conversion_factor")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("travel_time")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_HydroTurbine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("status")=>Union{Nothing, String}, Symbol("time_at_status")=>Union{Nothing, Float64}, Symbol("commitment_mode")=>Union{Nothing, String}, Symbol("operation_cost")=>Union{Nothing, HydroDispatchOperationCost}, Symbol("powerhouse_elevation")=>Union{Nothing, Float64}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("outflow_limits")=>Union{Nothing, MinMax}, Symbol("efficiency")=>Union{Nothing, Float64}, Symbol("turbine_type")=>Union{Nothing, String}, Symbol("conversion_factor")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("travel_time")=>Union{Nothing, Float64}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ HydroTurbine }, name::Symbol) = _property_types_HydroTurbine[name]
 
 function OpenAPI.check_required(o::HydroTurbine)
@@ -114,6 +123,9 @@ function OpenAPI.validate_properties(o::HydroTurbine)
     OpenAPI.validate_property(HydroTurbine, Symbol("reactive_power_limits"), o.reactive_power_limits)
     OpenAPI.validate_property(HydroTurbine, Symbol("base_power"), o.base_power)
     OpenAPI.validate_property(HydroTurbine, Symbol("power_units"), o.power_units)
+    OpenAPI.validate_property(HydroTurbine, Symbol("status"), o.status)
+    OpenAPI.validate_property(HydroTurbine, Symbol("time_at_status"), o.time_at_status)
+    OpenAPI.validate_property(HydroTurbine, Symbol("commitment_mode"), o.commitment_mode)
     OpenAPI.validate_property(HydroTurbine, Symbol("operation_cost"), o.operation_cost)
     OpenAPI.validate_property(HydroTurbine, Symbol("powerhouse_elevation"), o.powerhouse_elevation)
     OpenAPI.validate_property(HydroTurbine, Symbol("ramp_limits"), o.ramp_limits)
@@ -141,6 +153,17 @@ function OpenAPI.validate_property(::Type{ HydroTurbine }, name::Symbol, val)
 
     if name === Symbol("power_units")
         OpenAPI.validate_param(name, "HydroTurbine", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
+    end
+
+
+    if name === Symbol("status")
+        OpenAPI.validate_param(name, "HydroTurbine", :enum, val, ["OFFLINE", "ONLINE", "STARTUP", "SHUTDOWN"])
+    end
+
+
+
+    if name === Symbol("commitment_mode")
+        OpenAPI.validate_param(name, "HydroTurbine", :enum, val, ["UNCOMMITTED", "COMMITTED", "SELF_SCHEDULED", "RELIABILITY", "MUST_RUN"])
     end
 
 

@@ -20,7 +20,7 @@ A hydropower generator without a reservoir, suitable for modeling run-of-river h
         time_limits=nothing,
         base_power=nothing,
         power_units=nothing,
-        status=false,
+        status="OFFLINE",
         time_at_status=600000.0,
         operation_cost=nothing,
         dynamic_injector=nothing,
@@ -40,8 +40,8 @@ A hydropower generator without a reservoir, suitable for modeling run-of-river h
     - time_limits::UpDown
     - base_power::Float64 : Base power of the unit for per unitization. Units: MVA.
     - power_units::String : Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit.
-    - status::Bool : Initial commitment condition at the start of a simulation (&#x60;true&#x60; &#x3D; on or &#x60;false&#x60; &#x3D; off).
-    - time_at_status::Float64 : Time the generator has been on or off, as indicated by &#x60;status&#x60;. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
+    - status::String : Operating state of the unit at the start of a simulation.
+    - time_at_status::Float64 : Time the generator has been in its current &#x60;status&#x60;. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
     - operation_cost::HydroDispatchOperationCost
     - dynamic_injector::Int64 : ID of the corresponding dynamic injection device, if any.
 """
@@ -60,7 +60,7 @@ Base.@kwdef mutable struct HydroDispatch <: OpenAPI.APIModel
     time_limits = nothing # spec type: Union{ Nothing, UpDown }
     base_power::Union{Nothing, Float64} = nothing
     power_units::Union{Nothing, String} = nothing
-    status::Union{Nothing, Bool} = false
+    status::Union{Nothing, String} = "OFFLINE"
     time_at_status::Union{Nothing, Float64} = 600000.0
     operation_cost = nothing # spec type: Union{ Nothing, HydroDispatchOperationCost }
     dynamic_injector::Union{Nothing, Int64} = nothing
@@ -72,7 +72,7 @@ Base.@kwdef mutable struct HydroDispatch <: OpenAPI.APIModel
     end
 end # type HydroDispatch
 
-const _property_types_HydroDispatch = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("status")=>Union{Nothing, Bool}, Symbol("time_at_status")=>Union{Nothing, Float64}, Symbol("operation_cost")=>Union{Nothing, HydroDispatchOperationCost}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
+const _property_types_HydroDispatch = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("bus")=>Union{Nothing, Int64}, Symbol("active_power")=>Union{Nothing, Float64}, Symbol("reactive_power")=>Union{Nothing, Float64}, Symbol("rating")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("active_power_limits")=>Union{Nothing, MinMax}, Symbol("reactive_power_limits")=>Union{Nothing, MinMax}, Symbol("ramp_limits")=>Union{Nothing, UpDown}, Symbol("time_limits")=>Union{Nothing, UpDown}, Symbol("base_power")=>Union{Nothing, Float64}, Symbol("power_units")=>Union{Nothing, String}, Symbol("status")=>Union{Nothing, String}, Symbol("time_at_status")=>Union{Nothing, Float64}, Symbol("operation_cost")=>Union{Nothing, HydroDispatchOperationCost}, Symbol("dynamic_injector")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ HydroDispatch }, name::Symbol) = _property_types_HydroDispatch[name]
 
 function OpenAPI.check_required(o::HydroDispatch)
@@ -135,6 +135,10 @@ function OpenAPI.validate_property(::Type{ HydroDispatch }, name::Symbol, val)
         OpenAPI.validate_param(name, "HydroDispatch", :enum, val, ["COMPONENT_BASE", "NATURAL_UNITS"])
     end
 
+
+    if name === Symbol("status")
+        OpenAPI.validate_param(name, "HydroDispatch", :enum, val, ["OFFLINE", "ONLINE", "STARTUP", "SHUTDOWN"])
+    end
 
 
 

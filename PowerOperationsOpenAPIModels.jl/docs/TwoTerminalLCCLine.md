@@ -44,7 +44,7 @@ Name | Type | Description | Notes
 **`active_power_limits_to`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`reactive_power_limits_from`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
 **`reactive_power_limits_to`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
-**`loss`** | [**`*TwoTerminalLoss`**](TwoTerminalLoss.md) |  | [optional] [default to nothing]
+**`loss`** | [**`*LossCurve`**](LossCurve.md) |  | [optional] [default to nothing]
 **`base_power`** | **`Float64`** | System base power for per-unitization of this component&#39;s per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [default to nothing]
 **`power_units`** | **`String`** | Unit basis for this component&#39;s power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component&#39;s own base_power. NATURAL_UNITS: the field&#39;s physical unit. | [default to nothing]
 

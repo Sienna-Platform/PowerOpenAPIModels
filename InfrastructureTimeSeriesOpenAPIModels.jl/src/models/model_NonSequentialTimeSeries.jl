@@ -3,7 +3,7 @@
 
 
 @doc raw"""NonSequentialTimeSeries
-An irregular static time series, sampled at explicit timestamps rather than on a grid. Deliberately carries neither &#x60;initial_timestamp&#x60; nor &#x60;resolution&#x60;: an irregular series has no fixed cadence and its key holds no timestamp. The timestamp vector itself lives in the store, content-addressed, and is not carried here.
+An irregular static time series, sampled at explicit timestamps rather than on a grid. Deliberately carries neither &#x60;initial_timestamp&#x60; nor &#x60;resolution&#x60;: an irregular series has no fixed cadence and its key holds no timestamp. The timestamp vector itself lives in the store rather than here, content-addressed so that many irregular series sharing one time axis store it once; &#x60;timestamps_uri&#x60; names which axis this series sits on, so a document plus the store&#39;s arrays describe the series completely.
 
     NonSequentialTimeSeries(;
         association_id=nothing,
@@ -14,6 +14,7 @@ An irregular static time series, sampled at explicit timestamps rather than on a
         name=nothing,
         features=nothing,
         uri=nothing,
+        timestamps_uri=nothing,
         data_hash=nothing,
         element_type=nothing,
         element_shape=nothing,
@@ -35,6 +36,7 @@ An irregular static time series, sampled at explicit timestamps rather than on a
     - name::String : Time series name (e.g. max_active_power). Part of the series&#39; identity, and often carrying a disambiguating suffix; &#x60;component_field&#x60; records what the values are for.
     - features::Dict{String, TimeSeriesFeatureValue} : User-defined key/value tags that are part of the series&#39; identity: two series differing only by a feature are distinct series. Feature names that collide with a field of a series or of the tuple addressing one are rejected.
     - uri::String : Locator for the dense data, unique within one store. No required format — typically a file path or an HDF5 dataset path; the backing store decides what it means and resolves it (infrastore uses its content hash as this value). Never parsed or interpreted here. This layer records where the values are, never the values.
+    - timestamps_uri::String : Locator for this series&#39; explicit timestamp vector, unique within one store — &#x60;uri&#x60;&#39;s counterpart for the time axis, with the same contract: no required format, never parsed or interpreted here, and resolved by the backing store (infrastore uses the axis&#39;s content hash, the same value it keys the shared vector under). A locator rather than the vector itself because the axis is shared: a cohort of irregular series on one axis names it once each, where inlining the timestamps would repeat the whole vector per row. Optional, so a producer that predates it is still valid, and absent from the other five types, which have no explicit axis. Without it a document cannot say which of the store&#39;s axes a row sits on, and the row cannot be reconstructed from the document — the store cannot infer it either, since arrays are content-addressed and two irregular series with identical values on different axes share one stored array. A consumer restoring rows from a document therefore requires it.
     - data_hash::String : Content hash of the stored array: SHA-256, hex-encoded. Optional — not every producer computes it.
     - element_type::String : What one timestep&#39;s values mean and how they are laid out. The physical dtype of the stored bytes derives from this and is not recorded separately. Unlike &#x60;units&#x60; and &#x60;quantity_kind&#x60; this is not a user-facing label — the writing package derives it from the array.
     - element_shape::Vector{Int64} : Per-step element shape: the trailing dims after time. An empty array means a scalar element.
@@ -56,6 +58,7 @@ Base.@kwdef mutable struct NonSequentialTimeSeries <: OpenAPI.APIModel
     name::Union{Nothing, String} = nothing
     features::Union{Nothing, Dict} = nothing # spec type: Union{ Nothing, Dict{String, TimeSeriesFeatureValue} }
     uri::Union{Nothing, String} = nothing
+    timestamps_uri::Union{Nothing, String} = nothing
     data_hash::Union{Nothing, String} = nothing
     element_type::Union{Nothing, String} = nothing
     element_shape::Union{Nothing, Vector{Int64}} = nothing
@@ -68,14 +71,14 @@ Base.@kwdef mutable struct NonSequentialTimeSeries <: OpenAPI.APIModel
     application_data::Union{Nothing, String} = nothing
     length::Union{Nothing, Int64} = nothing
 
-    function NonSequentialTimeSeries(association_id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, array_shape, units, quantity_kind, unit_system, time_reference, component_field, application_data, length, )
-        o = new(association_id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, data_hash, element_type, element_shape, array_shape, units, quantity_kind, unit_system, time_reference, component_field, application_data, length, )
+    function NonSequentialTimeSeries(association_id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, timestamps_uri, data_hash, element_type, element_shape, array_shape, units, quantity_kind, unit_system, time_reference, component_field, application_data, length, )
+        o = new(association_id, owner_id, owner_type, owner_category, time_series_type, name, features, uri, timestamps_uri, data_hash, element_type, element_shape, array_shape, units, quantity_kind, unit_system, time_reference, component_field, application_data, length, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type NonSequentialTimeSeries
 
-const _property_types_NonSequentialTimeSeries = Dict{Symbol,Type}(Symbol("association_id")=>Union{Nothing, Int64}, Symbol("owner_id")=>Union{Nothing, Int64}, Symbol("owner_type")=>Union{Nothing, String}, Symbol("owner_category")=>Union{Nothing, String}, Symbol("time_series_type")=>Union{Nothing, String}, Symbol("name")=>Union{Nothing, String}, Symbol("features")=>Union{Nothing, Dict{String, TimeSeriesFeatureValue}}, Symbol("uri")=>Union{Nothing, String}, Symbol("data_hash")=>Union{Nothing, String}, Symbol("element_type")=>Union{Nothing, String}, Symbol("element_shape")=>Union{Nothing, Vector{Int64}}, Symbol("array_shape")=>Union{Nothing, Vector{Int64}}, Symbol("units")=>Union{Nothing, String}, Symbol("quantity_kind")=>Union{Nothing, String}, Symbol("unit_system")=>Union{Nothing, String}, Symbol("time_reference")=>Union{Nothing, String}, Symbol("component_field")=>Union{Nothing, String}, Symbol("application_data")=>Union{Nothing, String}, Symbol("length")=>Union{Nothing, Int64}, )
+const _property_types_NonSequentialTimeSeries = Dict{Symbol,Type}(Symbol("association_id")=>Union{Nothing, Int64}, Symbol("owner_id")=>Union{Nothing, Int64}, Symbol("owner_type")=>Union{Nothing, String}, Symbol("owner_category")=>Union{Nothing, String}, Symbol("time_series_type")=>Union{Nothing, String}, Symbol("name")=>Union{Nothing, String}, Symbol("features")=>Union{Nothing, Dict{String, TimeSeriesFeatureValue}}, Symbol("uri")=>Union{Nothing, String}, Symbol("timestamps_uri")=>Union{Nothing, String}, Symbol("data_hash")=>Union{Nothing, String}, Symbol("element_type")=>Union{Nothing, String}, Symbol("element_shape")=>Union{Nothing, Vector{Int64}}, Symbol("array_shape")=>Union{Nothing, Vector{Int64}}, Symbol("units")=>Union{Nothing, String}, Symbol("quantity_kind")=>Union{Nothing, String}, Symbol("unit_system")=>Union{Nothing, String}, Symbol("time_reference")=>Union{Nothing, String}, Symbol("component_field")=>Union{Nothing, String}, Symbol("application_data")=>Union{Nothing, String}, Symbol("length")=>Union{Nothing, Int64}, )
 OpenAPI.property_type(::Type{ NonSequentialTimeSeries }, name::Symbol) = _property_types_NonSequentialTimeSeries[name]
 
 function OpenAPI.check_required(o::NonSequentialTimeSeries)
@@ -102,6 +105,7 @@ function OpenAPI.validate_properties(o::NonSequentialTimeSeries)
     OpenAPI.validate_property(NonSequentialTimeSeries, Symbol("name"), o.name)
     OpenAPI.validate_property(NonSequentialTimeSeries, Symbol("features"), o.features)
     OpenAPI.validate_property(NonSequentialTimeSeries, Symbol("uri"), o.uri)
+    OpenAPI.validate_property(NonSequentialTimeSeries, Symbol("timestamps_uri"), o.timestamps_uri)
     OpenAPI.validate_property(NonSequentialTimeSeries, Symbol("data_hash"), o.data_hash)
     OpenAPI.validate_property(NonSequentialTimeSeries, Symbol("element_type"), o.element_type)
     OpenAPI.validate_property(NonSequentialTimeSeries, Symbol("element_shape"), o.element_shape)
@@ -128,6 +132,7 @@ function OpenAPI.validate_property(::Type{ NonSequentialTimeSeries }, name::Symb
     if name === Symbol("time_series_type")
         OpenAPI.validate_param(name, "NonSequentialTimeSeries", :enum, val, ["NonSequentialTimeSeries"])
     end
+
 
 
 

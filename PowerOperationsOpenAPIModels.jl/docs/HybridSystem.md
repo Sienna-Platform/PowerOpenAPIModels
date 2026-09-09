@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [default to nothing]
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., &#x60;PowerLoad&#x60;) must have unique names, but components of different types (e.g., &#x60;PowerLoad&#x60; and &#x60;ACBus&#x60;) can have the same name. | [default to nothing]
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (&#x60;true&#x60;) or disconnected, offline, or down (&#x60;false&#x60;). Unavailable components are excluded during simulations. | [default to nothing]
-**`status`** | **`Bool`** | Initial commitment condition at the start of a simulation (&#x60;true&#x60; &#x3D; on or &#x60;false&#x60; &#x3D; off). | [default to nothing]
+**`status`** | **`String`** | Operating state of the unit at the start of a simulation. | [default to nothing]
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [default to nothing]
 **`active_power`** | **`Float64`** | Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [default to nothing]
 **`reactive_power`** | **`Float64`** | Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [default to nothing]

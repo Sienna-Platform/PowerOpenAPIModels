@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **`start_node`** | **`Int64`** | Start node for transport technology. | [default to nothing]
 **`end_node`** | **`Int64`** | End node for transport technology. | [default to nothing]
 **`capacity_limits`** | [**`*MinMax`**](MinMax.md) |  | [optional] [default to nothing]
-**`capital_costs`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
+**`capital_costs`** | [**`*CapitalCost`**](CapitalCost.md) |  | [optional] [default to nothing]
 **`resistance`** | **`Float64`** | Technology resistance in Ohms. Units: ohm. | [optional] [default to 0.0]
 **`voltage`** | **`Float64`** | Voltage rating of transmission line. Units: kV. | [optional] [default to 0.0]
 **`unit_size`** | **`Float64`** | Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW. | [optional] [default to 0.0]
