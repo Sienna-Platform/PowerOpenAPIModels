@@ -3,7 +3,7 @@
 
 
 @doc raw"""SEXS
-Parameters of Simplified Excitation System Model - SEXS in PSSE.
+Parameters of Simplified Excitation System Model - SEXS in PSSE
 
     SEXS(;
         id=nothing,
@@ -15,13 +15,13 @@ Parameters of Simplified Excitation System Model - SEXS in PSSE.
         V_ref=1.0,
     )
 
-    - id::Int64 : Unique integer identifier for this component.
-    - Ta_Tb::Float64 : Ratio of lead and lag time constants.
-    - Tb::Float64 : Lag time constant. Units: s.
-    - K::Float64 : Gain.
-    - Te::Float64 : Field circuit time constant. Units: s.
+    - id::Int64 : Unique integer identifier for this component
+    - Ta_Tb::Float64 : Ratio of lead and lag time constants
+    - Tb::Float64 : Lag time constant. Units: s
+    - K::Float64 : Gain
+    - Te::Float64 : Field circuit time constant. Units: s
     - V_lim::MinMax
-    - V_ref::Float64 : Reference Voltage Set-point.
+    - V_ref::Float64 : Reference voltage set-point
 """
 Base.@kwdef mutable struct SEXS <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -39,8 +39,8 @@ Base.@kwdef mutable struct SEXS <: OpenAPI.APIModel
     end
 end # type SEXS
 
-const _property_types_SEXS = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("Ta_Tb")=>Union{Nothing, Float64}, Symbol("Tb")=>Union{Nothing, Float64}, Symbol("K")=>Union{Nothing, Float64}, Symbol("Te")=>Union{Nothing, Float64}, Symbol("V_lim")=>Union{Nothing, MinMax}, Symbol("V_ref")=>Union{Nothing, Float64}, )
-OpenAPI.property_type(::Type{ SEXS }, name::Symbol) = _property_types_SEXS[name]
+const _property_types_SEXS = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("Ta_Tb")=>"Float64", Symbol("Tb")=>"Float64", Symbol("K")=>"Float64", Symbol("Te")=>"Float64", Symbol("V_lim")=>"MinMax", Symbol("V_ref")=>"Float64", )
+OpenAPI.property_type(::Type{ SEXS }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SEXS[name]))}
 
 function OpenAPI.check_required(o::SEXS)
     o.id === nothing && (return false)

@@ -3,7 +3,7 @@
 
 
 @doc raw"""SteamTurbineGov1
-Steam Turbine-Governor. This model considers both TGOV1 or TGOV1DU in PSS/E.
+Steam Turbine-Governor. This model considers both TGOV1 or TGOV1DU in PSS/E
 
     SteamTurbineGov1(;
         id=nothing,
@@ -19,17 +19,17 @@ Steam Turbine-Governor. This model considers both TGOV1 or TGOV1DU in PSS/E.
         P_ref=nothing,
     )
 
-    - id::Int64 : Unique integer identifier for this component.
-    - R::Float64 : Droop parameter.
-    - T1::Float64 : Governor time constant. Units: s.
+    - id::Int64 : Unique integer identifier for this component
+    - R::Float64 : Droop parameter
+    - T1::Float64 : Governor time constant. Units: s
     - valve_position_limits::MinMax
-    - T2::Float64 : Lead Lag Lead Time constant. Units: s.
-    - T3::Float64 : Lead Lag Lag Time constant. Units: s.
-    - D_T::Float64 : Turbine Damping.
-    - DB_h::Float64 : Deadband for overspeed.
-    - DB_l::Float64 : Deadband for underspeed.
-    - T_rate::Float64 : Turbine Rate. If zero, generator base is used. Units: MW.
-    - P_ref::Float64 : Reference Power Set-point.
+    - T2::Float64 : Lead-lag lead time constant. Units: s
+    - T3::Float64 : Lead-lag lag time constant. Units: s
+    - D_T::Float64 : Turbine damping
+    - DB_h::Float64 : Deadband for overspeed
+    - DB_l::Float64 : Deadband for underspeed
+    - T_rate::Float64 : Turbine Rate. If zero, generator base is used. Units: MW
+    - P_ref::Float64 : Reference power set-point
 """
 Base.@kwdef mutable struct SteamTurbineGov1 <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -51,8 +51,8 @@ Base.@kwdef mutable struct SteamTurbineGov1 <: OpenAPI.APIModel
     end
 end # type SteamTurbineGov1
 
-const _property_types_SteamTurbineGov1 = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("R")=>Union{Nothing, Float64}, Symbol("T1")=>Union{Nothing, Float64}, Symbol("valve_position_limits")=>Union{Nothing, MinMax}, Symbol("T2")=>Union{Nothing, Float64}, Symbol("T3")=>Union{Nothing, Float64}, Symbol("D_T")=>Union{Nothing, Float64}, Symbol("DB_h")=>Union{Nothing, Float64}, Symbol("DB_l")=>Union{Nothing, Float64}, Symbol("T_rate")=>Union{Nothing, Float64}, Symbol("P_ref")=>Union{Nothing, Float64}, )
-OpenAPI.property_type(::Type{ SteamTurbineGov1 }, name::Symbol) = _property_types_SteamTurbineGov1[name]
+const _property_types_SteamTurbineGov1 = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("R")=>"Float64", Symbol("T1")=>"Float64", Symbol("valve_position_limits")=>"MinMax", Symbol("T2")=>"Float64", Symbol("T3")=>"Float64", Symbol("D_T")=>"Float64", Symbol("DB_h")=>"Float64", Symbol("DB_l")=>"Float64", Symbol("T_rate")=>"Float64", Symbol("P_ref")=>"Float64", )
+OpenAPI.property_type(::Type{ SteamTurbineGov1 }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_SteamTurbineGov1[name]))}
 
 function OpenAPI.check_required(o::SteamTurbineGov1)
     o.id === nothing && (return false)

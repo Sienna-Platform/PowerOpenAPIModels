@@ -3,7 +3,7 @@
 
 
 @doc raw"""RoundRotorMachine
-Parameters of 4-states round-rotor synchronous machine with quadratic/exponential saturation: IEEE Std 1110 5.3.2 (Model 2.2). GENROU or GENROE model in PSSE and PSLF.
+Parameters of 4-states round-rotor synchronous machine with quadratic/exponential saturation: IEEE Std 1110 5.3.2 (Model 2.2). GENROU or GENROE model in PSSE and PSLF
 
     RoundRotorMachine(;
         id=nothing,
@@ -19,31 +19,21 @@ Parameters of 4-states round-rotor synchronous machine with quadratic/exponentia
         Xd_pp=nothing,
         Xl=nothing,
         Se=nothing,
-        gamma_d1=nothing,
-        gamma_q1=nothing,
-        gamma_d2=nothing,
-        gamma_q2=nothing,
-        gamma_qd=nothing,
     )
 
-    - id::Int64 : Unique integer identifier for this component.
-    - R::Float64 : Armature resistance.
-    - Td0_p::Float64 : Time constant of transient d-axis voltage. Units: s.
-    - Td0_pp::Float64 : Time constant of sub-transient d-axis voltage. Units: s.
-    - Tq0_p::Float64 : Time constant of transient q-axis voltage. Units: s.
-    - Tq0_pp::Float64 : Time constant of sub-transient q-axis voltage. Units: s.
-    - Xd::Float64 : Reactance after EMF in d-axis.
-    - Xq::Float64 : Reactance after EMF in q-axis.
-    - Xd_p::Float64 : Transient reactance after EMF in d-axis.
-    - Xq_p::Float64 : Transient reactance after EMF in q-axis.
-    - Xd_pp::Float64 : Sub-Transient reactance after EMF in d-axis. Note: Xd_pp &#x3D; Xq_pp.
-    - Xl::Float64 : Stator leakage reactance.
-    - Se::Vector{Float64} : Saturation factor at 1 and 1.2 pu flux: S(1.0) &#x3D; B(|psi_pp|-A)^2.
-    - gamma_d1::Float64 : Do not modify
-    - gamma_q1::Float64 : Do not modify
-    - gamma_d2::Float64 : Do not modify
-    - gamma_q2::Float64 : Do not modify
-    - gamma_qd::Float64 : Do not modify
+    - id::Int64 : Unique integer identifier for this component
+    - R::Float64 : Armature resistance
+    - Td0_p::Float64 : Time constant of transient d-axis voltage. Units: s
+    - Td0_pp::Float64 : Time constant of sub-transient d-axis voltage. Units: s
+    - Tq0_p::Float64 : Time constant of transient q-axis voltage. Units: s
+    - Tq0_pp::Float64 : Time constant of sub-transient q-axis voltage. Units: s
+    - Xd::Float64 : Reactance after EMF in d-axis
+    - Xq::Float64 : Reactance after EMF in q-axis
+    - Xd_p::Float64 : Transient reactance after EMF in d-axis
+    - Xq_p::Float64 : Transient reactance after EMF in q-axis
+    - Xd_pp::Float64 : Sub-Transient reactance after EMF in d-axis. Note: Xd_pp &#x3D; Xq_pp
+    - Xl::Float64 : Stator leakage reactance
+    - Se::Vector{Float64} : Saturation factor at 1 and 1.2 pu flux: S(1.0) &#x3D; B(|psi_pp|-A)^2
 """
 Base.@kwdef mutable struct RoundRotorMachine <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -59,21 +49,16 @@ Base.@kwdef mutable struct RoundRotorMachine <: OpenAPI.APIModel
     Xd_pp::Union{Nothing, Float64} = nothing
     Xl::Union{Nothing, Float64} = nothing
     Se::Union{Nothing, Vector{Float64}} = nothing
-    gamma_d1::Union{Nothing, Float64} = nothing
-    gamma_q1::Union{Nothing, Float64} = nothing
-    gamma_d2::Union{Nothing, Float64} = nothing
-    gamma_q2::Union{Nothing, Float64} = nothing
-    gamma_qd::Union{Nothing, Float64} = nothing
 
-    function RoundRotorMachine(id, R, Td0_p, Td0_pp, Tq0_p, Tq0_pp, Xd, Xq, Xd_p, Xq_p, Xd_pp, Xl, Se, gamma_d1, gamma_q1, gamma_d2, gamma_q2, gamma_qd, )
-        o = new(id, R, Td0_p, Td0_pp, Tq0_p, Tq0_pp, Xd, Xq, Xd_p, Xq_p, Xd_pp, Xl, Se, gamma_d1, gamma_q1, gamma_d2, gamma_q2, gamma_qd, )
+    function RoundRotorMachine(id, R, Td0_p, Td0_pp, Tq0_p, Tq0_pp, Xd, Xq, Xd_p, Xq_p, Xd_pp, Xl, Se, )
+        o = new(id, R, Td0_p, Td0_pp, Tq0_p, Tq0_pp, Xd, Xq, Xd_p, Xq_p, Xd_pp, Xl, Se, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type RoundRotorMachine
 
-const _property_types_RoundRotorMachine = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("R")=>Union{Nothing, Float64}, Symbol("Td0_p")=>Union{Nothing, Float64}, Symbol("Td0_pp")=>Union{Nothing, Float64}, Symbol("Tq0_p")=>Union{Nothing, Float64}, Symbol("Tq0_pp")=>Union{Nothing, Float64}, Symbol("Xd")=>Union{Nothing, Float64}, Symbol("Xq")=>Union{Nothing, Float64}, Symbol("Xd_p")=>Union{Nothing, Float64}, Symbol("Xq_p")=>Union{Nothing, Float64}, Symbol("Xd_pp")=>Union{Nothing, Float64}, Symbol("Xl")=>Union{Nothing, Float64}, Symbol("Se")=>Union{Nothing, Vector{Float64}}, Symbol("gamma_d1")=>Union{Nothing, Float64}, Symbol("gamma_q1")=>Union{Nothing, Float64}, Symbol("gamma_d2")=>Union{Nothing, Float64}, Symbol("gamma_q2")=>Union{Nothing, Float64}, Symbol("gamma_qd")=>Union{Nothing, Float64}, )
-OpenAPI.property_type(::Type{ RoundRotorMachine }, name::Symbol) = _property_types_RoundRotorMachine[name]
+const _property_types_RoundRotorMachine = Dict{Symbol,String}(Symbol("id")=>"Int64", Symbol("R")=>"Float64", Symbol("Td0_p")=>"Float64", Symbol("Td0_pp")=>"Float64", Symbol("Tq0_p")=>"Float64", Symbol("Tq0_pp")=>"Float64", Symbol("Xd")=>"Float64", Symbol("Xq")=>"Float64", Symbol("Xd_p")=>"Float64", Symbol("Xq_p")=>"Float64", Symbol("Xd_pp")=>"Float64", Symbol("Xl")=>"Float64", Symbol("Se")=>"Vector{Float64}", )
+OpenAPI.property_type(::Type{ RoundRotorMachine }, name::Symbol) = Union{Nothing,eval(Base.Meta.parse(_property_types_RoundRotorMachine[name]))}
 
 function OpenAPI.check_required(o::RoundRotorMachine)
     o.id === nothing && (return false)
@@ -89,11 +74,6 @@ function OpenAPI.check_required(o::RoundRotorMachine)
     o.Xd_pp === nothing && (return false)
     o.Xl === nothing && (return false)
     o.Se === nothing && (return false)
-    o.gamma_d1 === nothing && (return false)
-    o.gamma_q1 === nothing && (return false)
-    o.gamma_d2 === nothing && (return false)
-    o.gamma_q2 === nothing && (return false)
-    o.gamma_qd === nothing && (return false)
     true
 end
 
@@ -111,11 +91,6 @@ function OpenAPI.validate_properties(o::RoundRotorMachine)
     OpenAPI.validate_property(RoundRotorMachine, Symbol("Xd_pp"), o.Xd_pp)
     OpenAPI.validate_property(RoundRotorMachine, Symbol("Xl"), o.Xl)
     OpenAPI.validate_property(RoundRotorMachine, Symbol("Se"), o.Se)
-    OpenAPI.validate_property(RoundRotorMachine, Symbol("gamma_d1"), o.gamma_d1)
-    OpenAPI.validate_property(RoundRotorMachine, Symbol("gamma_q1"), o.gamma_q1)
-    OpenAPI.validate_property(RoundRotorMachine, Symbol("gamma_d2"), o.gamma_d2)
-    OpenAPI.validate_property(RoundRotorMachine, Symbol("gamma_q2"), o.gamma_q2)
-    OpenAPI.validate_property(RoundRotorMachine, Symbol("gamma_qd"), o.gamma_qd)
 end
 
 function OpenAPI.validate_property(::Type{ RoundRotorMachine }, name::Symbol, val)
@@ -136,9 +111,4 @@ function OpenAPI.validate_property(::Type{ RoundRotorMachine }, name::Symbol, va
         OpenAPI.validate_param(name, "RoundRotorMachine", :maxItems, val, 2)
         OpenAPI.validate_param(name, "RoundRotorMachine", :minItems, val, 2)
     end
-
-
-
-
-
 end
