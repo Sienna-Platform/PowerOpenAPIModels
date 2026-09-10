@@ -1,15 +1,11 @@
 # CombinedCycleAssociation
 
+Association between a CombinedCycleBlock plant and a CT or CA unit, identifying which HRSG the unit feeds into or receives from. Supports n-to-m relationships: a single CT or CA can participate in multiple HRSGs by appearing in multiple rows.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`plant_id`** | **`Int64`** | ID of the parent CombinedCycleBlock supplemental attribute | [default to nothing]
-**`entity_id`** | **`Int64`** | ID of the CT or CA generating unit | [default to nothing]
-**`role`** | **`String`** | Role of the entity within the combined cycle block (combustion turbine input or combustion-augmented steam output) | [default to nothing]
-**`hrsg_index`** | **`Int64`** | HRSG (heat recovery steam generator) index this unit is associated with | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`entity_id`** | **`Int64`** | ID of the CT or CA generating unit | [required]
+**`hrsg_index`** | **`Int64`** | HRSG (heat recovery steam generator) index this unit is associated with | [required]
+**`plant_id`** | **`Int64`** | ID of the parent CombinedCycleBlock supplemental attribute | [required]
+**`role`** | **`CombinedCycleAssociationRole`** | Role of the entity within the combined cycle block (combustion turbine input or combustion-augmented steam output) | [required]

@@ -4,56 +4,32 @@ CODEGEN_IMAGE ?= ghcr.io/sienna-platform/power-codegen:latest
 # Association, GeographicInfo, DataSource, the shared MinMax/InOut/UpDown/... value types) into
 # a separate `infrastructure-core` bundle -- see openapi-config-infrastructure-core.json and
 # scripts/check_layering.py there. InfrastructureCoreOpenAPIModels.jl is that bundle's own
-# package, generated and deduped like every other domain in scripts/reorganize.jl's base chain.
+# package, generated and deduped like every other domain in scripts/generate_native.jl's base
+# chain.
 #
-# Order matches the dependency chain in scripts/reorganize.jl: a domain's bases must be
-# generated before it, because dedup reads the bases' output directories.
+# Order matches the dependency chain in scripts/generate_native.jl: a domain's bases must be
+# generated before it, because dedup reads the bases' kept-name sets.
 DOMAINS := infrastructure-core timeseries core operations investments dynamics
-
-# Package name per domain. The generate loop used to derive this by upper-casing
-# the domain's first letter, which yields PowerTimeseriesOpenAPIModels for
-# `timeseries` -- the interior capital in TimeSeries cannot be derived from a
-# lowercase domain name, and `infrastructure-core` (a hyphenated domain mapping to an
-# interior-capitalized name) makes the case stronger still. Explicit beats clever here.
-PKGNAME_infrastructure-core := InfrastructureCoreOpenAPIModels
-PKGNAME_timeseries          := InfrastructureTimeSeriesOpenAPIModels
-PKGNAME_core                := PowerCoreOpenAPIModels
-PKGNAME_operations          := PowerOperationsOpenAPIModels
-PKGNAME_investments         := PowerInvestmentsOpenAPIModels
-PKGNAME_dynamics            := PowerDynamicsOpenAPIModels
 
 .PHONY: generate generate-docker clean validate schema-version
 
+# OpenAPI.jl 1.0's native pure-Julia generator (OpenAPI.client) replaces the Java
+# openapi-generator + Docker pipeline: no JVM, no jar download, generate-docker below is now
+# just `julia` in a container. See scripts/generate_native.jl's header for how the per-domain
+# dedup this used to get from reorganize.jl works against the native generator's one-file-
+# per-domain output instead.
 generate:
-	@# materialize_defaults.jl and reorganize.jl's unit emission read
-	@# dist/openapi-<domain>-bundled.json rather than the SiennaSchemas sources, and
-	@# neither can tell a stale bundle from a fresh one. --check is read-only, which
-	@# matters because $(SCHEMA_DIR) is mounted read-only under generate-docker; drift
-	@# is a SiennaSchemas-side bug to surface, not to fix by regenerating a copy here.
+	@# scripts/generate_native.jl reads dist/openapi-<domain>-bundled.json rather than the
+	@# SiennaSchemas sources, and can't tell a stale bundle from a fresh one. --check is
+	@# read-only, which matters because $(SCHEMA_DIR) is mounted read-only under
+	@# generate-docker; drift is a SiennaSchemas-side bug to surface, not to fix by
+	@# regenerating a copy here.
 	cd $(SCHEMA_DIR) && python3 scripts/bundle_specs.py --check
-	$(foreach d,$(DOMAINS), \
-	  echo "Generating $(d)"; \
-	  cd $(SCHEMA_DIR) && openapi-generator generate \
-	    -c openapi-config-$(d).json -g julia-client \
-	    -o $(CURDIR)/generated/$(d) \
-	    --additional-properties=packageName=$(PKGNAME_$(d)) \
-	    > /dev/null; \
-	)
 	@# Resolve fresh: the repo is bind-mounted into the codegen container, so a
 	@# manifest written by the host's Julia would be read by a different version.
 	rm -f scripts/Manifest.toml
 	julia --project=scripts -e 'using Pkg; Pkg.instantiate()'
-	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/reorganize.jl
-	@# openapi-generator's julia-client drops object/array schema defaults (see
-	@# PATCHES.md); this rewrites the affected field initializers in place, after the
-	@# model files have reached their final package location.
-	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/materialize_defaults.jl
-	@# Replaces the per-call eval(Base.Meta.parse(...)) OpenAPI.property_type mechanism
-	@# with a precomputed Dict{Symbol,Type} lookup (see PowerOpenAPIModels#7). Must run
-	@# last: it flips property-type resolution from lazy/order-agnostic to eager/
-	@# order-sensitive, so it also depends on materialize_defaults.jl having already run
-	@# its own defaults pass against the original (still order-agnostic) mechanism.
-	julia --project=scripts scripts/fix_property_types.jl
+	SCHEMA_DIR=$(abspath $(SCHEMA_DIR)) julia --project=scripts scripts/generate_native.jl
 
 generate-docker:
 	docker run --rm \
@@ -81,7 +57,7 @@ schema-version:
 	fi
 
 clean:
-	rm -rf generated/ */src/models */src/apis */docs
+	rm -rf .native_raw/
 
 validate:
 	julia test/validate.jl

@@ -51,13 +51,16 @@ using TimeZones
 end
 
 # The check above catches one name claimed by two packages. It cannot see the other way a
-# generated type gets duplicated: openapi-generator materializes an anonymous copy of a
-# shared schema at every reference site it cannot resolve to a named component, then
-# disambiguates the copies with a numeric suffix. Those copies are byte-identical to the
-# original apart from the name, and they fragment the API -- a value deserialized at one
-# field site cannot be passed where another site's copy is expected. The cure is an
-# `inlineSchemaNameMappings` entry per copy in the SiennaSchemas generator config, so a
-# `<Base><N>` type whose `<Base>` also exists means such an entry is missing.
+# generated type gets duplicated: the generator materializes an anonymous copy of a shared
+# schema at every reference site it cannot resolve to a named component, then disambiguates
+# the copies with a numeric suffix. Those copies are byte-identical to the original apart
+# from the name, and they fragment the API -- a value deserialized at one field site cannot
+# be passed where another site's copy is expected. So a `<Base><N>` type whose `<Base>` also
+# exists means a reference site failed to resolve.
+#
+# The pre-1.0 Java toolchain papered this over with an `inlineSchemaNameMappings` entry per
+# copy in the SiennaSchemas generator config. The native generator reads no such config, so
+# the duplication has to be prevented in the bundle instead -- see the @test_broken note.
 #
 # Keyed on the base existing, not on the suffix: `SteamTurbineGov1` is a real
 # PowerSystems type name and must not be flagged.
@@ -153,11 +156,19 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        # `ACBus` lives in PowerCore now, not Operations: the schemas moved the Topology
+        # folder under Core (SiennaSchemas f2a3290).
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            # Under the pre-1.0 generator `bustype::ACBusType` was a bare `String` alias, so
+            # a literal worked directly. The native generator turns any enum-constrained
+            # schema into a validating wrapper struct, hence the constructor call. It is the
+            # shared `ACBusType` rather than a per-property copy: the bundler now emits a
+            # reference for a `$ref` whose siblings are only annotations, instead of inlining
+            # the target once per reference site.
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
@@ -172,7 +183,7 @@ end
         @test PowerOpenAPIModels.get_description(back) == "round-trip fixture"
         @test PowerOpenAPIModels.get_frequency(back) == 50.0
         # Buckets come back concretely typed, not as Vector{Any}.
-        @test eltype(back.components["ACBus"]) === PowerOperationsOpenAPIModels.ACBus
+        @test eltype(back.components["ACBus"]) === PowerCoreOpenAPIModels.ACBus
         @test PowerOpenAPIModels.get_ext(back, bus_id)["Zone"] == "1"
         # Ids already handed out are not reissued after a read.
         @test PowerOpenAPIModels.next_id!(back) > bus_id
@@ -189,26 +200,38 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
+    # Under the pre-1.0 generator every keyword defaulted to `nothing` regardless of the
+    # schema's `required` list (the very defaults bug PATCHES.md documents), so a required
+    # `association_id` could slip by unset. The native generator enforces `required`
+    # properly, so this fixture now mints one -- newly-surfaced strictness, not a schema
+    # change. `owner_category` and `initial_timestamp` need the same wrapper-struct /
+    # plain-`DateTime` treatment as `bustype` above.
+    ts_id = PowerOpenAPIModels.next_id!(doc)
     ts = InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeries(;
+        association_id=ts_id,
         owner_id=bus_id,
         owner_type="ACBus",
-        owner_category="Component",
+        owner_category=InfrastructureTimeSeriesOpenAPIModels.OwnerCategory("Component"),
         name="max_active_power",
-        features=Dict{String, Any}(),
+        features=InfrastructureTimeSeriesOpenAPIModels.TimeSeriesFeatures(),
         uri="fixture_time_series_storage.h5",
         element_type="Float64",
         element_shape=Int64[],
-        initial_timestamp=ZonedDateTime(DateTime(2024, 1, 1), tz"UTC"),
+        initial_timestamp=DateTime(2024, 1, 1),
         resolution="PT1H",
         length=24,
+        # Under the pre-1.0 generator this had a literal default ("SingleTimeSeries"); the
+        # native generator turns a `const`-with-`default` discriminator field into a plain
+        # required `String` with no default.
+        time_series_type="SingleTimeSeries",
     )
     PowerOpenAPIModels.add_time_series_association!(
         doc,
@@ -230,11 +253,11 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
@@ -254,11 +277,11 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
@@ -289,11 +312,11 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype="REF",
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
@@ -311,6 +334,7 @@ end
     )
 end
 
+<<<<<<< HEAD
 # `PortfolioDocument` is hand-written for the same reason as `SystemDocument` (typed
 # heterogeneous `components` buckets openapi-generator cannot express), so it can drift from
 # its schema the same way and is asserted the same way.
@@ -416,9 +440,17 @@ end
 end
 
 @testset "every registered type is an APIModel" begin
+=======
+@testset "every registered type is a generated model struct" begin
+    # Under the pre-1.0 generator this checked `T <: OpenAPI.APIModel`, the common supertype
+    # every generated model shared. The native generator gives every schema the same plain
+    # `struct` shape with no common supertype at all, so `isstructtype` is the closest
+    # equivalent: catches a registered non-model type, without asserting a marker that no
+    # longer exists.
+>>>>>>> origin/jd/openapi_deps_update
     @test !isempty(InfrastructureCoreOpenAPIModels.MODEL_TYPES)
     for (name, T) in InfrastructureCoreOpenAPIModels.MODEL_TYPES
-        @test T <: InfrastructureCoreOpenAPIModels.OpenAPI.APIModel
+        @test isstructtype(T)
         @test string(nameof(T)) == name
     end
 end

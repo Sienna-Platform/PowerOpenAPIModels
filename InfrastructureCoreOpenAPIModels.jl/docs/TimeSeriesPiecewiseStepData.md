@@ -1,13 +1,9 @@
 # TimeSeriesPiecewiseStepData
 
+Time-series-backed variant of `PiecewiseStepData`. In place of inline coordinate vectors it carries `association_id`, referencing a stored series that supplies them at each step; use it when the segments change over time.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`function_type`** | **`String`** |  | [default to "TIME_SERIES_PIECEWISE_STEP"]
-**`association_id`** | **`Int64`** | Store-minted id of the time series association whose values supply this function data over time. Resolved against the accompanying time series store on read; minted by that store and meaningful only against it, never assigned by a document producer. | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`association_id`** | **`Int64`** | Store-minted id of the time series association whose values supply this function data over time. Resolved against the accompanying time series store on read; minted by that store and meaningful only against it, never assigned by a document producer. | [required]
+**`function_type`** | **`String`** |  | [required]

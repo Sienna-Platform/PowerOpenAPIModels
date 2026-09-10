@@ -1,11 +1,9 @@
 # BilateralProduct
 
+Traded product of a bilateral transaction. ENERGY: energy. CAPACITY: capacity. ANCILLARY_SERVICE: an ancillary service. LOAD_OBLIGATION: a load obligation transfer.
 
-## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+## Allowed values
+- `ENERGY`
+- `CAPACITY`
+- `ANCILLARY_SERVICE`
+- `LOAD_OBLIGATION`

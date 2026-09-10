@@ -1,4 +1,4 @@
-# Generated from the declared model types. Do not edit.
+# Generated from the frozen pre-1.0 registered-name set. Do not edit.
 #
 # Runs in __init__ because the registry lives in another module: state
 # mutated there during precompilation would not be saved.
@@ -12,7 +12,9 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(CombinedCycleFractional)
     InfrastructureCoreOpenAPIModels.register_model_type!(DiscreteControlledACBranch)
     InfrastructureCoreOpenAPIModels.register_model_type!(EnergyReservoirStorage)
-    InfrastructureCoreOpenAPIModels.register_model_type!(EnergyReservoirStorageOperationCost)
+    InfrastructureCoreOpenAPIModels.register_model_type!(
+        EnergyReservoirStorageOperationCost,
+    )
     InfrastructureCoreOpenAPIModels.register_model_type!(ExponentialLoad)
     InfrastructureCoreOpenAPIModels.register_model_type!(FACTSControlDevice)
     InfrastructureCoreOpenAPIModels.register_model_type!(FixedAdmittance)
@@ -31,7 +33,9 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(ImpedanceCorrectionData)
     InfrastructureCoreOpenAPIModels.register_model_type!(InterconnectingConverter)
     InfrastructureCoreOpenAPIModels.register_model_type!(InterruptiblePowerLoad)
-    InfrastructureCoreOpenAPIModels.register_model_type!(InterruptiblePowerLoadOperationCost)
+    InfrastructureCoreOpenAPIModels.register_model_type!(
+        InterruptiblePowerLoadOperationCost,
+    )
     InfrastructureCoreOpenAPIModels.register_model_type!(InterruptibleStandardLoad)
     InfrastructureCoreOpenAPIModels.register_model_type!(Line)
     InfrastructureCoreOpenAPIModels.register_model_type!(MonitoredLine)

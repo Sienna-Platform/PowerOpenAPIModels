@@ -1,13 +1,9 @@
 # RenewablePowerPlant
 
+Attribute to represent renewable power plants. Point of common coupling (PCC) connections between units are recorded as PlantAssociation rows with role='pcc'.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** |  | [default to nothing]
-**`name`** | **`String`** | Name of the renewable power plant | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`id`** | **`Int64`** |  | [required]
+**`name`** | **`String`** | Name of the renewable power plant | [required]

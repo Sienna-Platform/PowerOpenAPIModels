@@ -1,18 +1,17 @@
 FROM julia:1.11-bookworm
 
+# OpenAPI.jl 1.0's native pure-Julia generator (OpenAPI.client) replaced the Java
+# openapi-generator + Docker JVM toolchain this image used to carry -- no JRE, no jar
+# download, no `openapi-generator` shim. make/python3 remain: make drives the pipeline, and
+# python3 runs SiennaSchemas' own scripts/bundle_specs.py --check.
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends default-jre-headless make curl ca-certificates python3 && \
+    apt-get install -y --no-install-recommends make python3 && \
     rm -rf /var/lib/apt/lists/*
 
-ARG OPENAPI_GENERATOR_VERSION=7.20.0
-RUN curl -fsSL -o /usr/local/bin/openapi-generator-cli.jar \
-      "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${OPENAPI_GENERATOR_VERSION}/openapi-generator-cli-${OPENAPI_GENERATOR_VERSION}.jar" && \
-    printf '#!/bin/sh\nexec java -jar /usr/local/bin/openapi-generator-cli.jar "$@"\n' > /usr/local/bin/openapi-generator && \
-    chmod +x /usr/local/bin/openapi-generator
-
-# reorganize.jl reads the SiennaSchemas bundles to emit units.jl, so JSON must be
-# in the depot before the repo is mounted at /output.
-RUN julia -e 'using Pkg; Pkg.add(name="JSON", version="1")'
+# scripts/generate_native.jl reads the SiennaSchemas bundles directly (JSON) and generates
+# through OpenAPI.jl 1.0, not yet on the General registry (see scripts/Project.toml's
+# [sources] pin) -- both must be in the depot before the repo is mounted at /output.
+RUN julia -e 'using Pkg; Pkg.add(name="JSON", version="1"); Pkg.add(url="https://github.com/JuliaComputing/OpenAPI.jl.git", rev="v1.0.0")'
 
 WORKDIR /output
 ENTRYPOINT ["make", "generate", "SCHEMA_DIR=/schemas"]

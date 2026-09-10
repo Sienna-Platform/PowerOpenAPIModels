@@ -39,9 +39,9 @@ using PowerOpenAPIModels
 
 ## Regenerating Stubs
 
-Models are auto-generated from OpenAPI schemas in [SiennaSchemas](https://github.com/Sienna-Platform/SiennaSchemas). There are two ways to regenerate locally:
+Models are auto-generated from OpenAPI schemas in [SiennaSchemas](https://github.com/Sienna-Platform/SiennaSchemas), via OpenAPI.jl 1.0's native pure-Julia generator (`OpenAPI.client`) -- no Java, no Docker required for a local run. There are two ways to regenerate:
 
-### Via local openapi-generator
+### Locally
 
 ```bash
 # Uses ../SiennaSchemas by default

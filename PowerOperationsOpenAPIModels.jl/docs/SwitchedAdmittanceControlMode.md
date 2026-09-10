@@ -1,0 +1,12 @@
+# SwitchedAdmittanceControlMode
+
+Switched-shunt control mode (PSS/E MODSW).
+
+## Allowed values
+- `UNDEFINED`
+- `FIXED`
+- `DISCRETE_VOLTAGE`
+- `CONTINUOUS_VOLTAGE`
+- `DISCRETE_REACTIVE_PLANT`
+- `DISCRETE_REACTIVE_VSC`
+- `DISCRETE_ADMITTANCE_REMOTE`
