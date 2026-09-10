@@ -15,7 +15,6 @@ Name | Type | Description | Notes
 **`region`** | **`Vector{Int64}`** | Location where the component applies. Can be a zone or node. | [optional] [default to nothing]
 **`value_of_lost_load`** | **`Float64`** | Value of unserved load. Units: USD/MWh. | [optional] [default to nothing]
 **`unserved_demand_curve`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
-**`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

@@ -21,7 +21,6 @@ Demand-side technology such as an electric vehicle fleet or a hydrogen electroly
         shift_variable_cost=nothing,
         curtailment_cost=nothing,
         max_demand_curtailment=nothing,
-        requirements=Int64[],
     )
 
     - id::Int64 : ID for individual component.
@@ -39,7 +38,6 @@ Demand-side technology such as an electric vehicle fleet or a hydrogen electroly
     - shift_variable_cost::ValueCurve
     - curtailment_cost::ValueCurve
     - max_demand_curtailment::Float64 : Maximum fraction of demand that can be curtailed. Units: 1.
-    - requirements::Vector{Int64} : List of requirement IDs associated with the component.
 """
 Base.@kwdef mutable struct DemandSideTechnology <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -57,16 +55,15 @@ Base.@kwdef mutable struct DemandSideTechnology <: OpenAPI.APIModel
     shift_variable_cost = nothing # spec type: Union{ Nothing, ValueCurve }
     curtailment_cost = nothing # spec type: Union{ Nothing, ValueCurve }
     max_demand_curtailment::Union{Nothing, Float64} = nothing
-    requirements::Union{Nothing, Vector{Int64}} = Int64[]
 
-    function DemandSideTechnology(id, name, available, region, power_systems_type, technology_efficiency, price_per_unit, min_power, peak_demand_mw, max_demand_delay, max_demand_advance, demand_energy_efficiency, shift_variable_cost, curtailment_cost, max_demand_curtailment, requirements, )
-        o = new(id, name, available, region, power_systems_type, technology_efficiency, price_per_unit, min_power, peak_demand_mw, max_demand_delay, max_demand_advance, demand_energy_efficiency, shift_variable_cost, curtailment_cost, max_demand_curtailment, requirements, )
+    function DemandSideTechnology(id, name, available, region, power_systems_type, technology_efficiency, price_per_unit, min_power, peak_demand_mw, max_demand_delay, max_demand_advance, demand_energy_efficiency, shift_variable_cost, curtailment_cost, max_demand_curtailment, )
+        o = new(id, name, available, region, power_systems_type, technology_efficiency, price_per_unit, min_power, peak_demand_mw, max_demand_delay, max_demand_advance, demand_energy_efficiency, shift_variable_cost, curtailment_cost, max_demand_curtailment, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type DemandSideTechnology
 
-const _property_types_DemandSideTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("technology_efficiency")=>Union{Nothing, Float64}, Symbol("price_per_unit")=>Union{Nothing, ValueCurve}, Symbol("min_power")=>Union{Nothing, Float64}, Symbol("peak_demand_mw")=>Union{Nothing, Float64}, Symbol("max_demand_delay")=>Union{Nothing, Float64}, Symbol("max_demand_advance")=>Union{Nothing, Float64}, Symbol("demand_energy_efficiency")=>Union{Nothing, Float64}, Symbol("shift_variable_cost")=>Union{Nothing, ValueCurve}, Symbol("curtailment_cost")=>Union{Nothing, ValueCurve}, Symbol("max_demand_curtailment")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, )
+const _property_types_DemandSideTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("technology_efficiency")=>Union{Nothing, Float64}, Symbol("price_per_unit")=>Union{Nothing, ValueCurve}, Symbol("min_power")=>Union{Nothing, Float64}, Symbol("peak_demand_mw")=>Union{Nothing, Float64}, Symbol("max_demand_delay")=>Union{Nothing, Float64}, Symbol("max_demand_advance")=>Union{Nothing, Float64}, Symbol("demand_energy_efficiency")=>Union{Nothing, Float64}, Symbol("shift_variable_cost")=>Union{Nothing, ValueCurve}, Symbol("curtailment_cost")=>Union{Nothing, ValueCurve}, Symbol("max_demand_curtailment")=>Union{Nothing, Float64}, )
 OpenAPI.property_type(::Type{ DemandSideTechnology }, name::Symbol) = _property_types_DemandSideTechnology[name]
 
 function OpenAPI.check_required(o::DemandSideTechnology)
@@ -93,11 +90,9 @@ function OpenAPI.validate_properties(o::DemandSideTechnology)
     OpenAPI.validate_property(DemandSideTechnology, Symbol("shift_variable_cost"), o.shift_variable_cost)
     OpenAPI.validate_property(DemandSideTechnology, Symbol("curtailment_cost"), o.curtailment_cost)
     OpenAPI.validate_property(DemandSideTechnology, Symbol("max_demand_curtailment"), o.max_demand_curtailment)
-    OpenAPI.validate_property(DemandSideTechnology, Symbol("requirements"), o.requirements)
 end
 
 function OpenAPI.validate_property(::Type{ DemandSideTechnology }, name::Symbol, val)
-
 
 
 

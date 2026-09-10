@@ -26,7 +26,6 @@ Candidate storage technology in a region. Charge capacity, discharge capacity, a
         efficiency=nothing,
         losses=1.0,
         lifetime=100,
-        requirements=Int64[],
         financial_data=nothing,
     )
 
@@ -50,7 +49,6 @@ Candidate storage technology in a region. Charge capacity, discharge capacity, a
     - efficiency::InOut
     - losses::Float64 : Self-discharge of storage (fraction of energy stored per hour). Units: 1.
     - lifetime::Int64 : Maximum number of years a technology can be active once installed. Units: yr.
-    - requirements::Vector{Int64} : List of requirement IDs associated with the component.
     - financial_data::TechnologyFinancialData
 """
 Base.@kwdef mutable struct StorageTechnology <: OpenAPI.APIModel
@@ -74,17 +72,16 @@ Base.@kwdef mutable struct StorageTechnology <: OpenAPI.APIModel
     efficiency = nothing # spec type: Union{ Nothing, InOut }
     losses::Union{Nothing, Float64} = 1.0
     lifetime::Union{Nothing, Int64} = 100
-    requirements::Union{Nothing, Vector{Int64}} = Int64[]
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
 
-    function StorageTechnology(id, name, available, region, power_systems_type, min_discharge_fraction, prime_mover_type, storage_tech, capital_costs, operation_costs, unit_size_discharge, unit_size_charge, unit_size_energy, capacity_limits_charge, capacity_limits_discharge, capacity_limits_energy, duration_limits, efficiency, losses, lifetime, requirements, financial_data, )
-        o = new(id, name, available, region, power_systems_type, min_discharge_fraction, prime_mover_type, storage_tech, capital_costs, operation_costs, unit_size_discharge, unit_size_charge, unit_size_energy, capacity_limits_charge, capacity_limits_discharge, capacity_limits_energy, duration_limits, efficiency, losses, lifetime, requirements, financial_data, )
+    function StorageTechnology(id, name, available, region, power_systems_type, min_discharge_fraction, prime_mover_type, storage_tech, capital_costs, operation_costs, unit_size_discharge, unit_size_charge, unit_size_energy, capacity_limits_charge, capacity_limits_discharge, capacity_limits_energy, duration_limits, efficiency, losses, lifetime, financial_data, )
+        o = new(id, name, available, region, power_systems_type, min_discharge_fraction, prime_mover_type, storage_tech, capital_costs, operation_costs, unit_size_discharge, unit_size_charge, unit_size_energy, capacity_limits_charge, capacity_limits_discharge, capacity_limits_energy, duration_limits, efficiency, losses, lifetime, financial_data, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type StorageTechnology
 
-const _property_types_StorageTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("min_discharge_fraction")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("storage_tech")=>Union{Nothing, String}, Symbol("capital_costs")=>Union{Nothing, StorageCapitalCost}, Symbol("operation_costs")=>Union{Nothing, StorageCost}, Symbol("unit_size_discharge")=>Union{Nothing, Float64}, Symbol("unit_size_charge")=>Union{Nothing, Float64}, Symbol("unit_size_energy")=>Union{Nothing, Float64}, Symbol("capacity_limits_charge")=>Union{Nothing, StorageTechnologyCapacityLimitsCharge}, Symbol("capacity_limits_discharge")=>Union{Nothing, StorageTechnologyCapacityLimitsDischarge}, Symbol("capacity_limits_energy")=>Union{Nothing, StorageTechnologyCapacityLimitsEnergy}, Symbol("duration_limits")=>Union{Nothing, MinMax}, Symbol("efficiency")=>Union{Nothing, InOut}, Symbol("losses")=>Union{Nothing, Float64}, Symbol("lifetime")=>Union{Nothing, Int64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
+const _property_types_StorageTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("min_discharge_fraction")=>Union{Nothing, Float64}, Symbol("prime_mover_type")=>Union{Nothing, String}, Symbol("storage_tech")=>Union{Nothing, String}, Symbol("capital_costs")=>Union{Nothing, StorageCapitalCost}, Symbol("operation_costs")=>Union{Nothing, StorageCost}, Symbol("unit_size_discharge")=>Union{Nothing, Float64}, Symbol("unit_size_charge")=>Union{Nothing, Float64}, Symbol("unit_size_energy")=>Union{Nothing, Float64}, Symbol("capacity_limits_charge")=>Union{Nothing, StorageTechnologyCapacityLimitsCharge}, Symbol("capacity_limits_discharge")=>Union{Nothing, StorageTechnologyCapacityLimitsDischarge}, Symbol("capacity_limits_energy")=>Union{Nothing, StorageTechnologyCapacityLimitsEnergy}, Symbol("duration_limits")=>Union{Nothing, MinMax}, Symbol("efficiency")=>Union{Nothing, InOut}, Symbol("losses")=>Union{Nothing, Float64}, Symbol("lifetime")=>Union{Nothing, Int64}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
 OpenAPI.property_type(::Type{ StorageTechnology }, name::Symbol) = _property_types_StorageTechnology[name]
 
 function OpenAPI.check_required(o::StorageTechnology)
@@ -118,7 +115,6 @@ function OpenAPI.validate_properties(o::StorageTechnology)
     OpenAPI.validate_property(StorageTechnology, Symbol("efficiency"), o.efficiency)
     OpenAPI.validate_property(StorageTechnology, Symbol("losses"), o.losses)
     OpenAPI.validate_property(StorageTechnology, Symbol("lifetime"), o.lifetime)
-    OpenAPI.validate_property(StorageTechnology, Symbol("requirements"), o.requirements)
     OpenAPI.validate_property(StorageTechnology, Symbol("financial_data"), o.financial_data)
 end
 
@@ -138,7 +134,6 @@ function OpenAPI.validate_property(::Type{ StorageTechnology }, name::Symbol, va
     if name === Symbol("storage_tech")
         OpenAPI.validate_param(name, "StorageTechnology", :enum, val, ["PTES", "LIB", "LAB", "FLWB", "SIB", "ZIB", "HGS", "LAES", "OTHER_CHEM", "OTHER_MECH", "OTHER_THERM"])
     end
-
 
 
 

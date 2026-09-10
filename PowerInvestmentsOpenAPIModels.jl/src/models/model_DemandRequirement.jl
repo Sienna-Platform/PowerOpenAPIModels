@@ -17,7 +17,6 @@ Demand requirements for a region. New demand enters at a stated peak in its cons
         region=nothing,
         value_of_lost_load=nothing,
         unserved_demand_curve=nothing,
-        requirements=Int64[],
     )
 
     - id::Int64 : ID for individual component.
@@ -31,7 +30,6 @@ Demand requirements for a region. New demand enters at a stated peak in its cons
     - region::Vector{Int64} : Location where the component applies. Can be a zone or node.
     - value_of_lost_load::Float64 : Value of unserved load. Units: USD/MWh.
     - unserved_demand_curve::ValueCurve
-    - requirements::Vector{Int64} : List of requirement IDs associated with the component.
 """
 Base.@kwdef mutable struct DemandRequirement <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -45,16 +43,15 @@ Base.@kwdef mutable struct DemandRequirement <: OpenAPI.APIModel
     region::Union{Nothing, Vector{Int64}} = nothing
     value_of_lost_load::Union{Nothing, Float64} = nothing
     unserved_demand_curve = nothing # spec type: Union{ Nothing, ValueCurve }
-    requirements::Union{Nothing, Vector{Int64}} = Int64[]
 
-    function DemandRequirement(id, name, available, power_systems_type, conformity, growth_rate, new_demand_mw, new_construction_year, region, value_of_lost_load, unserved_demand_curve, requirements, )
-        o = new(id, name, available, power_systems_type, conformity, growth_rate, new_demand_mw, new_construction_year, region, value_of_lost_load, unserved_demand_curve, requirements, )
+    function DemandRequirement(id, name, available, power_systems_type, conformity, growth_rate, new_demand_mw, new_construction_year, region, value_of_lost_load, unserved_demand_curve, )
+        o = new(id, name, available, power_systems_type, conformity, growth_rate, new_demand_mw, new_construction_year, region, value_of_lost_load, unserved_demand_curve, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type DemandRequirement
 
-const _property_types_DemandRequirement = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("conformity")=>Union{Nothing, String}, Symbol("growth_rate")=>Union{Nothing, Float64}, Symbol("new_demand_mw")=>Union{Nothing, Float64}, Symbol("new_construction_year")=>Union{Nothing, Int64}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("value_of_lost_load")=>Union{Nothing, Float64}, Symbol("unserved_demand_curve")=>Union{Nothing, ValueCurve}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, )
+const _property_types_DemandRequirement = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("conformity")=>Union{Nothing, String}, Symbol("growth_rate")=>Union{Nothing, Float64}, Symbol("new_demand_mw")=>Union{Nothing, Float64}, Symbol("new_construction_year")=>Union{Nothing, Int64}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("value_of_lost_load")=>Union{Nothing, Float64}, Symbol("unserved_demand_curve")=>Union{Nothing, ValueCurve}, )
 OpenAPI.property_type(::Type{ DemandRequirement }, name::Symbol) = _property_types_DemandRequirement[name]
 
 function OpenAPI.check_required(o::DemandRequirement)
@@ -76,11 +73,9 @@ function OpenAPI.validate_properties(o::DemandRequirement)
     OpenAPI.validate_property(DemandRequirement, Symbol("region"), o.region)
     OpenAPI.validate_property(DemandRequirement, Symbol("value_of_lost_load"), o.value_of_lost_load)
     OpenAPI.validate_property(DemandRequirement, Symbol("unserved_demand_curve"), o.unserved_demand_curve)
-    OpenAPI.validate_property(DemandRequirement, Symbol("requirements"), o.requirements)
 end
 
 function OpenAPI.validate_property(::Type{ DemandRequirement }, name::Symbol, val)
-
 
 
 

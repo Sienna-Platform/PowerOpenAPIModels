@@ -19,7 +19,6 @@ Supply technology co-located with storage behind a shared grid connection. The g
         operation_costs_inverter=nothing,
         inverter_efficiency=nothing,
         inverter_supply_ratio=nothing,
-        requirements=Int64[],
     )
 
     - id::Int64 : ID for individual component.
@@ -35,7 +34,6 @@ Supply technology co-located with storage behind a shared grid connection. The g
     - operation_costs_inverter::ProductionVariableCostCurve
     - inverter_efficiency::Float64 : Efficiency of AC to DC conversion of inverter. Units: 1.
     - inverter_supply_ratio::Float64 : Ratio of generation capacity to grid connection capacity. Units: 1.
-    - requirements::Vector{Int64} : List of requirement IDs associated with the component.
 """
 Base.@kwdef mutable struct ColocatedSupplyStorageTechnology <: OpenAPI.APIModel
     id::Union{Nothing, Int64} = nothing
@@ -51,16 +49,15 @@ Base.@kwdef mutable struct ColocatedSupplyStorageTechnology <: OpenAPI.APIModel
     operation_costs_inverter = nothing # spec type: Union{ Nothing, ProductionVariableCostCurve }
     inverter_efficiency::Union{Nothing, Float64} = nothing
     inverter_supply_ratio::Union{Nothing, Float64} = nothing
-    requirements::Union{Nothing, Vector{Int64}} = Int64[]
 
-    function ColocatedSupplyStorageTechnology(id, name, available, power_systems_type, region, financial_data, supply_technology, storage_technology, inverter_capacity_limits, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, requirements, )
-        o = new(id, name, available, power_systems_type, region, financial_data, supply_technology, storage_technology, inverter_capacity_limits, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, requirements, )
+    function ColocatedSupplyStorageTechnology(id, name, available, power_systems_type, region, financial_data, supply_technology, storage_technology, inverter_capacity_limits, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, )
+        o = new(id, name, available, power_systems_type, region, financial_data, supply_technology, storage_technology, inverter_capacity_limits, capital_costs_inverter, operation_costs_inverter, inverter_efficiency, inverter_supply_ratio, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type ColocatedSupplyStorageTechnology
 
-const _property_types_ColocatedSupplyStorageTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, Symbol("supply_technology")=>Union{Nothing, Int64}, Symbol("storage_technology")=>Union{Nothing, Int64}, Symbol("inverter_capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs_inverter")=>Union{Nothing, CapitalCost}, Symbol("operation_costs_inverter")=>Union{Nothing, ProductionVariableCostCurve}, Symbol("inverter_efficiency")=>Union{Nothing, Float64}, Symbol("inverter_supply_ratio")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, )
+const _property_types_ColocatedSupplyStorageTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("region")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, Symbol("supply_technology")=>Union{Nothing, Int64}, Symbol("storage_technology")=>Union{Nothing, Int64}, Symbol("inverter_capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs_inverter")=>Union{Nothing, CapitalCost}, Symbol("operation_costs_inverter")=>Union{Nothing, ProductionVariableCostCurve}, Symbol("inverter_efficiency")=>Union{Nothing, Float64}, Symbol("inverter_supply_ratio")=>Union{Nothing, Float64}, )
 OpenAPI.property_type(::Type{ ColocatedSupplyStorageTechnology }, name::Symbol) = _property_types_ColocatedSupplyStorageTechnology[name]
 
 function OpenAPI.check_required(o::ColocatedSupplyStorageTechnology)
@@ -91,11 +88,9 @@ function OpenAPI.validate_properties(o::ColocatedSupplyStorageTechnology)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("operation_costs_inverter"), o.operation_costs_inverter)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("inverter_efficiency"), o.inverter_efficiency)
     OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("inverter_supply_ratio"), o.inverter_supply_ratio)
-    OpenAPI.validate_property(ColocatedSupplyStorageTechnology, Symbol("requirements"), o.requirements)
 end
 
 function OpenAPI.validate_property(::Type{ ColocatedSupplyStorageTechnology }, name::Symbol, val)
-
 
 
 

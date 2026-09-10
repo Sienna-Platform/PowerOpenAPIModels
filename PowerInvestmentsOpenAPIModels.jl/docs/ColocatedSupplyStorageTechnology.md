@@ -17,7 +17,6 @@ Name | Type | Description | Notes
 **`operation_costs_inverter`** | [**`*ProductionVariableCostCurve`**](ProductionVariableCostCurve.md) |  | [default to nothing]
 **`inverter_efficiency`** | **`Float64`** | Efficiency of AC to DC conversion of inverter. Units: 1. | [default to nothing]
 **`inverter_supply_ratio`** | **`Float64`** | Ratio of generation capacity to grid connection capacity. Units: 1. | [default to nothing]
-**`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

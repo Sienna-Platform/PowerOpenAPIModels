@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **`capital_costs`** | [**`*CapitalCost`**](CapitalCost.md) |  | [optional] [default to nothing]
 **`line_loss`** | **`Float64`** | Transmission loss for each transport technology. Units: 1. | [optional] [default to nothing]
 **`unit_size`** | **`Float64`** | Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW. | [optional] [default to nothing]
-**`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
 **`financial_data`** | [**`*TechnologyFinancialData`**](TechnologyFinancialData.md) |  | [default to nothing]
 
 

@@ -16,7 +16,6 @@ Name | Type | Description | Notes
 **`voltage`** | **`Float64`** | Voltage rating of transmission line. Units: kV. | [optional] [default to 0.0]
 **`unit_size`** | **`Float64`** | Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW. | [optional] [default to 0.0]
 **`reactance`** | **`Float64`** | Series reactance for a line. Units: ohm. | [optional] [default to 0.0]
-**`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
 **`financial_data`** | [**`*TechnologyFinancialData`**](TechnologyFinancialData.md) |  | [default to nothing]
 
 

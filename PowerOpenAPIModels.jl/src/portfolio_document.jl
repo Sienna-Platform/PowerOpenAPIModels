@@ -23,6 +23,9 @@
 # Differences from SystemDocument, per the schema:
 #   adds    `data_source`, `aggregation` (required), `financial_data`, `investment_schedule`,
 #           `base_system_file`
+#   keeps   `requirements_associations`, an Investments-layer `RequirementAssociation` table
+#           linking each policy requirement to a member subject to it, with its own
+#           `requirements_membership` dedup cache
 #   drops   `frequency`, `plant_associations`, `combined_cycle_associations`,
 #           `service_associations`, `trading_hub_associations` (and their membership caches)
 #
@@ -51,11 +54,20 @@ CostCurve or FuelCurve), intrinsic to that curve.
 `components` values are concrete `Vector{T}`, so per-type iteration stays inferable behind a
 function barrier even though the field itself is untyped.
 
-`counter` and `component_types_by_id` are build-time scaffolding and are not serialized:
-everything they hold is recoverable from the emitted rows. `counter`'s ids come from one counter
-shared by every type; `component_types_by_id` lets [`add_supplemental_attribute!`](@ref) check
-membership in O(1) instead of rescanning `components`, and
-[`portfolio_document_from_json`](@ref) rebuilds it once after a bulk load.
+`counter`, `component_types_by_id`, and `requirements_membership` are build-time scaffolding and
+are not serialized: everything they hold is recoverable from the emitted rows. `counter`'s ids
+come from one counter shared by every type; `component_types_by_id` lets
+[`add_supplemental_attribute!`](@ref) check membership in O(1) instead of rescanning
+`components`, and `requirements_membership` lets [`add_requirement_association!`](@ref) reject a
+duplicate `(requirement_id, entity_id)` pair in O(1) instead of rescanning
+`requirements_associations` — each add path is the sole writer of its cache, and
+[`portfolio_document_from_json`](@ref) rebuilds both once after a bulk load.
+
+`requirements_associations` is a concrete `Vector{RequirementAssociation}`, an Investments-layer
+type this umbrella can name directly (unlike `SystemDocument`'s Operations-layer association
+tables): each row's `requirement_id` names the policy requirement and its `entity_id` names a
+member the requirement applies to. Callers construct the row and hand it to
+[`add_requirement_association!`](@ref).
 
 `aggregation` is the qualified type name of the regional aggregation the portfolio groups its
 regions by — a type identifier resolved by the consumer, not a component in the document, and
@@ -78,6 +90,7 @@ struct PortfolioDocument
     components::Dict{String, Vector}
     supplemental_attributes::Vector{OpenAPI.APIModel}
     supplemental_attribute_associations::Vector{SupplementalAttributeAssociation}
+    requirements_associations::Vector{RequirementAssociation}
     investment_schedule::Union{Nothing, Dict{String, Any}}
     time_series_associations::Vector{TimeSeriesAssociation}
     ext::Dict{Int, Dict{String, Any}}
@@ -85,6 +98,7 @@ struct PortfolioDocument
     time_series_storage_file::Union{Nothing, String}
     counter::Base.RefValue{Int}
     component_types_by_id::Dict{Int, String}
+    requirements_membership::Set{Tuple{Int, Int}}
 end
 
 """
@@ -111,6 +125,7 @@ function PortfolioDocument(
         Dict{String, Vector}(),
         Vector{OpenAPI.APIModel}(),
         Vector{SupplementalAttributeAssociation}(),
+        Vector{RequirementAssociation}(),
         _optional_schedule(investment_schedule),
         Vector{TimeSeriesAssociation}(),
         Dict{Int, Dict{String, Any}}(),
@@ -118,6 +133,7 @@ function PortfolioDocument(
         _optional_string(time_series_storage_file),
         Ref(0),
         Dict{Int, String}(),
+        Set{Tuple{Int, Int}}(),
     )
 end
 
@@ -132,6 +148,39 @@ get_financial_data(doc::PortfolioDocument) = doc.financial_data
 get_investment_schedule(doc::PortfolioDocument) = doc.investment_schedule
 get_base_system_file(doc::PortfolioDocument) = doc.base_system_file
 get_time_series_storage_file(doc::PortfolioDocument) = doc.time_series_storage_file
+
+# ── builder (PortfolioDocument-specific association writers) ─────────────────────────
+
+"""
+Record that `assoc` (a caller-constructed `RequirementAssociation`) links a policy requirement to
+one member subject to it: `requirement_id` names the requirement and `entity_id` names the member.
+
+One row per (requirement, member) pair. Duplicate pairs are rejected rather than collapsed —
+checked in O(1) against `requirements_membership` rather than rescanning
+`requirements_associations`.
+
+This is the document's one guard against a duplicate association row; callers must not rescan
+`requirements_associations` themselves before calling this.
+"""
+function add_requirement_association!(
+    doc::PortfolioDocument,
+    assoc::RequirementAssociation,
+)
+    requirement_id = assoc.requirement_id
+    entity_id = assoc.entity_id
+    key = (Int(requirement_id), Int(entity_id))
+    if key in doc.requirements_membership
+        throw(
+            InfrastructureCoreOpenAPIModels.DocumentFormatError(
+                "duplicate requirement membership: requirement_id=$requirement_id " *
+                "entity_id=$entity_id",
+            ),
+        )
+    end
+    push!(doc.requirements_associations, assoc)
+    push!(doc.requirements_membership, key)
+    return nothing
+end
 
 # ── validation ─────────────────────────────────────────────────────────────────────
 
@@ -192,6 +241,23 @@ function validate_document(doc::PortfolioDocument)
         end
     end
 
+    # requirement_id and entity_id both name components: a policy requirement is a component,
+    # and entity_id names another component subject to it — neither is a supplemental attribute.
+    for assoc in doc.requirements_associations
+        _check_ref(
+            component_ids,
+            assoc.requirement_id,
+            "RequirementAssociation",
+            "entity_id=$(assoc.entity_id)",
+        )
+        _check_ref(
+            component_ids,
+            assoc.entity_id,
+            "RequirementAssociation",
+            "requirement_id=$(assoc.requirement_id)",
+        )
+    end
+
     # `.value` because `TimeSeriesAssociation` is the oneOf wrapper: the per-type structs hold
     # the columns, and `OpenAPI.OneOfAPIModel` forwards no field access.
     for assoc in doc.time_series_associations
@@ -237,6 +303,7 @@ function document_tree(doc::PortfolioDocument)
         "supplemental_attributes" => doc.supplemental_attributes,
         "supplemental_attribute_associations" =>
             doc.supplemental_attribute_associations,
+        "requirements_associations" => doc.requirements_associations,
         "time_series_associations" => doc.time_series_associations,
         # Keyed by component id, which is unique across every type.
         "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
@@ -334,6 +401,18 @@ function portfolio_document_from_json(raw::AbstractDict; source::AbstractString=
             _require(raw, "supplemental_attribute_associations", source),
         ),
     )
+    append!(
+        doc.requirements_associations,
+        _rows(
+            RequirementAssociation,
+            _require(raw, "requirements_associations", source),
+        ),
+    )
+    # Bulk-loaded above rather than through `add_requirement_association!`, so
+    # `requirements_membership` needs its one rebuild pass here.
+    for assoc in doc.requirements_associations
+        push!(doc.requirements_membership, (Int(assoc.requirement_id), Int(assoc.entity_id)))
+    end
     append!(
         doc.time_series_associations,
         _rows(TimeSeriesAssociation, _require(raw, "time_series_associations", source)),

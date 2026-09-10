@@ -23,7 +23,6 @@ Name | Type | Description | Notes
 **`time_limits`** | [**`*UpDown`**](UpDown.md) |  | [optional] [default to nothing]
 **`start_fuel_mmbtu_per_mw`** | **`Float64`** | Startup fuel use per MW of nameplate capacity of each generator. Units: MMBtu/MW. | [optional] [default to 0.0]
 **`lifetime`** | **`Int64`** | Maximum number of years a technology can be active once installed. Units: yr. | [optional] [default to 100]
-**`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
 **`financial_data`** | [**`*TechnologyFinancialData`**](TechnologyFinancialData.md) |  | [default to nothing]
 
 

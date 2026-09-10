@@ -16,7 +16,6 @@ A nodal representation of candidate HVDC transmission lines between two regions,
         capital_costs=nothing,
         line_loss=nothing,
         unit_size=nothing,
-        requirements=Int64[],
         financial_data=nothing,
     )
 
@@ -30,7 +29,6 @@ A nodal representation of candidate HVDC transmission lines between two regions,
     - capital_costs::CapitalCost
     - line_loss::ValueCurve
     - unit_size::Float64 : Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW.
-    - requirements::Vector{Int64} : List of requirement IDs associated with the component.
     - financial_data::TechnologyFinancialData
 """
 Base.@kwdef mutable struct NodalHVDCTransportTechnology <: OpenAPI.APIModel
@@ -44,17 +42,16 @@ Base.@kwdef mutable struct NodalHVDCTransportTechnology <: OpenAPI.APIModel
     capital_costs = nothing # spec type: Union{ Nothing, CapitalCost }
     line_loss = nothing # spec type: Union{ Nothing, ValueCurve }
     unit_size::Union{Nothing, Float64} = nothing
-    requirements::Union{Nothing, Vector{Int64}} = Int64[]
     financial_data = nothing # spec type: Union{ Nothing, TechnologyFinancialData }
 
-    function NodalHVDCTransportTechnology(id, name, available, power_systems_type, start_node, end_node, capacity_limits, capital_costs, line_loss, unit_size, requirements, financial_data, )
-        o = new(id, name, available, power_systems_type, start_node, end_node, capacity_limits, capital_costs, line_loss, unit_size, requirements, financial_data, )
+    function NodalHVDCTransportTechnology(id, name, available, power_systems_type, start_node, end_node, capacity_limits, capital_costs, line_loss, unit_size, financial_data, )
+        o = new(id, name, available, power_systems_type, start_node, end_node, capacity_limits, capital_costs, line_loss, unit_size, financial_data, )
         OpenAPI.validate_properties(o)
         return o
     end
 end # type NodalHVDCTransportTechnology
 
-const _property_types_NodalHVDCTransportTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("start_node")=>Union{Nothing, Int64}, Symbol("end_node")=>Union{Nothing, Int64}, Symbol("capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs")=>Union{Nothing, CapitalCost}, Symbol("line_loss")=>Union{Nothing, ValueCurve}, Symbol("unit_size")=>Union{Nothing, Float64}, Symbol("requirements")=>Union{Nothing, Vector{Int64}}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
+const _property_types_NodalHVDCTransportTechnology = Dict{Symbol,Type}(Symbol("id")=>Union{Nothing, Int64}, Symbol("name")=>Union{Nothing, String}, Symbol("available")=>Union{Nothing, Bool}, Symbol("power_systems_type")=>Union{Nothing, String}, Symbol("start_node")=>Union{Nothing, Int64}, Symbol("end_node")=>Union{Nothing, Int64}, Symbol("capacity_limits")=>Union{Nothing, MinMax}, Symbol("capital_costs")=>Union{Nothing, CapitalCost}, Symbol("line_loss")=>Union{Nothing, ValueCurve}, Symbol("unit_size")=>Union{Nothing, Float64}, Symbol("financial_data")=>Union{Nothing, TechnologyFinancialData}, )
 OpenAPI.property_type(::Type{ NodalHVDCTransportTechnology }, name::Symbol) = _property_types_NodalHVDCTransportTechnology[name]
 
 function OpenAPI.check_required(o::NodalHVDCTransportTechnology)
@@ -79,12 +76,10 @@ function OpenAPI.validate_properties(o::NodalHVDCTransportTechnology)
     OpenAPI.validate_property(NodalHVDCTransportTechnology, Symbol("capital_costs"), o.capital_costs)
     OpenAPI.validate_property(NodalHVDCTransportTechnology, Symbol("line_loss"), o.line_loss)
     OpenAPI.validate_property(NodalHVDCTransportTechnology, Symbol("unit_size"), o.unit_size)
-    OpenAPI.validate_property(NodalHVDCTransportTechnology, Symbol("requirements"), o.requirements)
     OpenAPI.validate_property(NodalHVDCTransportTechnology, Symbol("financial_data"), o.financial_data)
 end
 
 function OpenAPI.validate_property(::Type{ NodalHVDCTransportTechnology }, name::Symbol, val)
-
 
 
 

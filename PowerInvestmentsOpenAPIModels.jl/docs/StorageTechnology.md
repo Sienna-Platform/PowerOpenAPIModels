@@ -24,7 +24,6 @@ Name | Type | Description | Notes
 **`efficiency`** | [**`*InOut`**](InOut.md) |  | [optional] [default to nothing]
 **`losses`** | **`Float64`** | Self-discharge of storage (fraction of energy stored per hour). Units: 1. | [optional] [default to 1.0]
 **`lifetime`** | **`Int64`** | Maximum number of years a technology can be active once installed. Units: yr. | [optional] [default to 100]
-**`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
 **`financial_data`** | [**`*TechnologyFinancialData`**](TechnologyFinancialData.md) |  | [default to nothing]
 
 

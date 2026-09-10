@@ -19,7 +19,6 @@ Name | Type | Description | Notes
 **`shift_variable_cost`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
 **`curtailment_cost`** | [**`*ValueCurve`**](ValueCurve.md) |  | [optional] [default to nothing]
 **`max_demand_curtailment`** | **`Float64`** | Maximum fraction of demand that can be curtailed. Units: 1. | [optional] [default to nothing]
-**`requirements`** | **`Vector{Int64}`** | List of requirement IDs associated with the component. | [optional] [default to nothing]
 
 
 [[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)

@@ -15,6 +15,7 @@ include("models/model_HourlyMatching.jl")
 include("models/model_MaximumCapacityRequirements.jl")
 include("models/model_MinimumCapacityRequirements.jl")
 include("models/model_PortfolioFinancialData.jl")
+include("models/model_RequirementAssociation.jl")
 include("models/model_RetirementPotential.jl")
 include("models/model_RetrofitPotential.jl")
 include("models/model_StorageTechnologyCapacityLimitsCharge.jl")
@@ -47,6 +48,7 @@ export MinimumCapacityRequirements
 export NodalACTransportTechnology
 export NodalHVDCTransportTechnology
 export PortfolioFinancialData
+export RequirementAssociation
 export RetirementPotential
 export RetrofitPotential
 export StorageTechnology
