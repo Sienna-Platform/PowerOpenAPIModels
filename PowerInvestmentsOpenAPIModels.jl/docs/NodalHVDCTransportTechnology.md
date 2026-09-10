@@ -6,10 +6,10 @@ A nodal representation of candidate HVDC transmission lines between two regions,
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). | [required]
-**`capacity_limits`** | **`Union{Absent,NodalHVDCTransportTechnologyCapacityLimits,Nothing}`** | Allowable capacity for a transmission line. Units: MW. | [optional]
-**`capital_costs`** | **`Union{Absent,NodalHVDCTransportTechnologyCapitalCosts,Nothing}`** | Cost of adding new capacity to the nodal transmission line. Units: USD/MW. | [optional]
+**`capacity_limits`** | **`Union{Absent,MinMax,Nothing}`** | Allowable capacity for a transmission line. Units: MW. | [optional]
+**`capital_costs`** | **`Union{Absent,CapitalCost,Nothing}`** | Capital and interconnection cost of adding new capacity to the nodal transmission line (capital cost in USD/MW). | [optional]
 **`end_node`** | **`Int64`** | End node for transport technology. | [required]
-**`financial_data`** | **`NodalHVDCTransportTechnologyFinancialData`** | Struct containing relevant financial information for a technology. | [required]
+**`financial_data`** | **`TechnologyFinancialData`** | Struct containing relevant financial information for a technology. | [required]
 **`id`** | **`Int64`** | ID for individual component. | [required]
 **`line_loss`** | **`Union{Absent,NodalHVDCTransportTechnologyLineLoss,Nothing}`** | Loss model coefficients. Accepts a linear model with a constant loss and a proportional loss rate, or a Piecewise loss with N segments for different proportional losses. All terms are defined as fraction of installed nameplate capacity. Units: 1. | [optional]
 **`name`** | **`String`** | Name of the component. | [required]

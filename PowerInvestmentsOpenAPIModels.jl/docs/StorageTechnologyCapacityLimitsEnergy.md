@@ -1,9 +1,8 @@
 # StorageTechnologyCapacityLimitsEnergy
 
-Allowable installed energy capacity for a storage technology. Units: MWh.
+Allowable installed energy capacity for a storage technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MWh.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`max`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
-**`min`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`value`** | **`Union{MinMax,MinMaxByKey}`** |  | [required]

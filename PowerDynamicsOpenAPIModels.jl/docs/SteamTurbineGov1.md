@@ -15,4 +15,4 @@ Name | Type | Description | Notes
 **`t3`** | **`Float64`** | Lead Lag Lag Time constant. Units: s. | [required]
 **`t_rate`** | **`Float64`** | Turbine Rate. If zero, generator base is used. Units: MW. | [required]
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
-**`valve_position_limits`** | **`SteamTurbineGov1ValvePositionLimits`** | Valve position limits. | [required]
+**`valve_position_limits`** | **`MinMax`** | Valve position limits. | [required]

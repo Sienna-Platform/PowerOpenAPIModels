@@ -19,14 +19,7 @@ Dates = "1"
 HTTP = "1 - 2"
 InfrastructureCoreOpenAPIModels = "0.1"
 JSON = "1"
-OpenAPI = "1"
+OpenAPI = "1.1"
 PowerCoreOpenAPIModels = "0.1"
 UUIDs = "1"
 julia = "1.10"
-
-# OpenAPI.jl 1.0.0 is not yet on the General registry; pin the git tag so the native
-# pure-Julia generator (scripts/generate_native.jl) can use it, and so this package's own
-# generated code -- which the native runtime's ABSENT/immutable-struct shape requires -- can
-# load.
-[sources]
-OpenAPI = { url = "https://github.com/JuliaComputing/OpenAPI.jl.git", rev = "v1.0.0" }

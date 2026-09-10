@@ -60,8 +60,10 @@ const UNIT_VOCABULARY = Dict{Tuple{String, String}, Float64}(
     ("VolumeFlowRate", "m3/s") => 1.0,
 )
 
-has_conversion_factor(q::AbstractString, u::AbstractString) = haskey(UNIT_VOCABULARY, (String(q), String(u)))
-conversion_factor(q::AbstractString, u::AbstractString) = UNIT_VOCABULARY[(String(q), String(u))]
+has_conversion_factor(q::AbstractString, u::AbstractString) =
+    haskey(UNIT_VOCABULARY, (String(q), String(u)))
+conversion_factor(q::AbstractString, u::AbstractString) =
+    UNIT_VOCABULARY[(String(q), String(u))]
 
 has_declared_unit(::Type, ::Val) = false
 has_unit_base(::Type, ::Val) = false
@@ -80,4 +82,3 @@ end
 declared_unit(o::T, v::Val) where {T} = declared_unit(T, v)
 declared_quantity(o::T, v::Val) where {T} = declared_quantity(T, v)
 unit_base(o::T, v::Val) where {T} = unit_base(T, v)
-

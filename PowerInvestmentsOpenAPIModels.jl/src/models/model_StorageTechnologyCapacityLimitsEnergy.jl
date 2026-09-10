@@ -1,37 +1,76 @@
-@doc "    StorageTechnologyCapacityLimitsEnergy\n\nAllowable installed energy capacity for a storage technology. Units: MWh."
-Base.@kwdef struct StorageTechnologyCapacityLimitsEnergy
-    max::Union{Absent,Float64,Nothing} = ABSENT
-    min::Union{Absent,Float64,Nothing} = ABSENT
-    additional_properties::Dict{String,Any} = Dict{String,Any}()
-end
-_decode(::Type{StorageTechnologyCapacityLimitsEnergy}, value) = _decode(StorageTechnologyCapacityLimitsEnergy, value, true)
-function _decode(::Type{StorageTechnologyCapacityLimitsEnergy}, _openapi_raw, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-4643c51d11717913e8d0.json", pointer = "/components/schemas/StorageTechnology/properties/capacity_limits_energy"), _openapi_raw, "decoding StorageTechnologyCapacityLimitsEnergy"; direction = :neutral)
-    _openapi_object = _object(_openapi_raw, "StorageTechnologyCapacityLimitsEnergy")
-    _openapi_field_max = haskey(_openapi_object, "max") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["max"], _openapi_validate) : ABSENT
-    _openapi_field_min = haskey(_openapi_object, "min") ? _decode(Union{Absent,Float64,Nothing}, _openapi_object["min"], _openapi_validate) : ABSENT
-    _openapi_additional_properties = Dict{String,Any}()
-    for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("max","min") && continue
-        _openapi_additional_properties[String(_openapi_key)] = _decode(Any, _openapi_item, _openapi_validate)
-    end
-    return StorageTechnologyCapacityLimitsEnergy(; max = _openapi_field_max, min = _openapi_field_min, additional_properties = _openapi_additional_properties)
-end
-function _encode(_openapi_value::StorageTechnologyCapacityLimitsEnergy)
-    _openapi_output = JSON.Object{String,Any}()
-    _openapi_value.max isa Absent || (_openapi_output["max"] = _encode(_openapi_value.max))
-    _openapi_value.min isa Absent || (_openapi_output["min"] = _encode(_openapi_value.min))
-    for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
-        haskey(_openapi_output, _openapi_key) && throw(ArgumentError("additional property conflicts with declared field: " * _openapi_key))
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
-    end
-    return _validate_schema(_SPEC, (resource = "https://openapi.invalid/schema/root-4643c51d11717913e8d0.json", pointer = "/components/schemas/StorageTechnology/properties/capacity_limits_energy"), _openapi_output, "encoding StorageTechnologyCapacityLimitsEnergy"; direction = :neutral)
-end
+"""
+    StorageTechnologyCapacityLimitsEnergy
 
-function _form_fields(_openapi_value::StorageTechnologyCapacityLimitsEnergy)
-    _openapi_output = Pair{String,Any}[]
-    _openapi_value.max isa Absent || push!(_openapi_output, "max" => _openapi_value.max)
-    _openapi_value.min isa Absent || push!(_openapi_output, "min" => _openapi_value.min)
-    append!(_openapi_output, collect(_openapi_value.additional_properties))
-    return _openapi_output
+Allowable installed energy capacity for a storage technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MWh.
+"""
+struct StorageTechnologyCapacityLimitsEnergy <: OneOfAPIModel
+    value::Union{MinMax, MinMaxByKey}
+end
+_decode(::Type{StorageTechnologyCapacityLimitsEnergy}, value) =
+    _decode(StorageTechnologyCapacityLimitsEnergy, value, true)
+function _decode(
+    ::Type{StorageTechnologyCapacityLimitsEnergy},
+    value,
+    _openapi_validate::Bool,
+)
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        (
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            pointer="/components/schemas/StorageTechnology/properties/capacity_limits_energy",
+        ),
+        value,
+        "decoding StorageTechnologyCapacityLimitsEnergy";
+        direction=:neutral,
+    )
+    matches = Any[]
+    if !_openapi_validate || _schema_valid(
+        _SPEC,
+        (
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            pointer="/components/schemas/MinMax",
+        ),
+        value;
+        direction=:neutral,
+    )
+        try
+            push!(matches, _decode(MinMax, value, _openapi_validate))
+        catch error
+            error isa DecodeError || rethrow()
+        end
+    end
+    if !_openapi_validate || _schema_valid(
+        _SPEC,
+        (
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            pointer="/components/schemas/MinMaxByKey",
+        ),
+        value;
+        direction=:neutral,
+    )
+        try
+            push!(matches, _decode(MinMaxByKey, value, _openapi_validate))
+        catch error
+            error isa DecodeError || rethrow()
+        end
+    end
+    isempty(matches) && throw(
+        DecodeError(
+            "anyOf value did not select a variant of StorageTechnologyCapacityLimitsEnergy",
+        ),
+    )
+    return StorageTechnologyCapacityLimitsEnergy(first(matches))
+end
+function _encode(value::StorageTechnologyCapacityLimitsEnergy)
+    output = _encode(value.value)
+    return _validate_schema(
+        _SPEC,
+        (
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            pointer="/components/schemas/StorageTechnology/properties/capacity_limits_energy",
+        ),
+        output,
+        "encoding StorageTechnologyCapacityLimitsEnergy";
+        direction=:neutral,
+    )
 end

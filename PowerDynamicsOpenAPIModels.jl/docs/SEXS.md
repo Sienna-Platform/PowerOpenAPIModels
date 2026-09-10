@@ -9,6 +9,6 @@ Name | Type | Description | Notes
 **`ta_tb`** | **`Float64`** | Ratio of lead and lag time constants. | [required]
 **`tb`** | **`Float64`** | Lag time constant. Units: s. | [required]
 **`te`** | **`Float64`** | Field circuit time constant. Units: s. | [required]
-**`v_lim`** | **`SEXSVLim`** | Field voltage limits. | [required]
+**`v_lim`** | **`MinMax`** | Field voltage limits. | [required]
 **`v_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference Voltage Set-point. | [optional]
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]

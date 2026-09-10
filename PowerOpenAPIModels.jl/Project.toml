@@ -18,7 +18,7 @@ Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 InfrastructureCoreOpenAPIModels = "0.1"
 InfrastructureTimeSeriesOpenAPIModels = "0.1"
 JSON = "1"
-OpenAPI = "1"
+OpenAPI = "1.1"
 PowerCoreOpenAPIModels = "0.1"
 PowerDynamicsOpenAPIModels = "0.1"
 PowerInvestmentsOpenAPIModels = "0.1"
@@ -31,10 +31,3 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
 test = ["Test"]
-
-# OpenAPI.jl 1.0.0 is not yet on the General registry; pin the git tag so the native
-# pure-Julia generator (scripts/generate_native.jl) can use it, and so this package's own
-# hand-written document.jl -- adapted to the native runtime's ABSENT/immutable-struct shape
-# -- can load.
-[sources]
-OpenAPI = { url = "https://github.com/JuliaComputing/OpenAPI.jl.git", rev = "v1.0.0" }

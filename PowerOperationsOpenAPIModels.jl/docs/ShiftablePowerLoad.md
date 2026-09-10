@@ -8,7 +8,7 @@ These loads are used to model demand response. This load has a target demand pro
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`active_power`** | **`Float64`** | Initial steady state active power demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
-**`active_power_limits`** | **`ShiftablePowerLoadActivePowerLimits`** | Minimum and maximum stable active power levels. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
+**`active_power_limits`** | **`MinMax`** | Minimum and maximum stable active power levels. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [required]
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [required]
@@ -19,5 +19,5 @@ Name | Type | Description | Notes
 **`max_reactive_power`** | **`Float64`** | Maximum reactive power that this load can demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [required]
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
 **`operation_cost`** | **`ShiftablePowerLoadOperationCost`** | Operational cost of interrupting load. or MarketBidCost | [required]
-**`power_units`** | **`ShiftablePowerLoadPowerUnits`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
+**`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`reactive_power`** | **`Float64`** | Initial steady state reactive power demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [required]

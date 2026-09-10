@@ -16,4 +16,4 @@ Name | Type | Description | Notes
 **`region`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Location where the component applies. Can be a zone or node. | [optional]
 **`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
 **`unserved_demand_curve`** | **`Union{Absent,DemandRequirementUnservedDemandCurve,Nothing}`** | Piecewise curve to scale the cost of unserved load based on the value of lost load. Units: USD/MWh. | [optional]
-**`value_of_lost_load`** | **`Float64`** | Value of unserved load. Units: USD/MWh. | [required]
+**`value_of_lost_load`** | **`Union{Absent,Float64,Nothing}`** | Value of unserved load. Units: USD/MWh. | [optional]

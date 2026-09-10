@@ -4,20 +4,17 @@
 # mutated there during precompilation would not be saved.
 
 function __init__()
-    InfrastructureCoreOpenAPIModels.register_model_type!(ACBus)
     InfrastructureCoreOpenAPIModels.register_model_type!(AGC)
-    InfrastructureCoreOpenAPIModels.register_model_type!(Arc)
-    InfrastructureCoreOpenAPIModels.register_model_type!(Area)
     InfrastructureCoreOpenAPIModels.register_model_type!(AreaInterchange)
     InfrastructureCoreOpenAPIModels.register_model_type!(BilateralTransaction)
     InfrastructureCoreOpenAPIModels.register_model_type!(CombinedCycleAssociation)
     InfrastructureCoreOpenAPIModels.register_model_type!(CombinedCycleBlock)
     InfrastructureCoreOpenAPIModels.register_model_type!(CombinedCycleFractional)
-    InfrastructureCoreOpenAPIModels.register_model_type!(DCBus)
     InfrastructureCoreOpenAPIModels.register_model_type!(DiscreteControlledACBranch)
-    InfrastructureCoreOpenAPIModels.register_model_type!(EmissionsData)
     InfrastructureCoreOpenAPIModels.register_model_type!(EnergyReservoirStorage)
-    InfrastructureCoreOpenAPIModels.register_model_type!(EnergyReservoirStorageOperationCost)
+    InfrastructureCoreOpenAPIModels.register_model_type!(
+        EnergyReservoirStorageOperationCost,
+    )
     InfrastructureCoreOpenAPIModels.register_model_type!(ExponentialLoad)
     InfrastructureCoreOpenAPIModels.register_model_type!(FACTSControlDevice)
     InfrastructureCoreOpenAPIModels.register_model_type!(FixedAdmittance)
@@ -36,10 +33,11 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(ImpedanceCorrectionData)
     InfrastructureCoreOpenAPIModels.register_model_type!(InterconnectingConverter)
     InfrastructureCoreOpenAPIModels.register_model_type!(InterruptiblePowerLoad)
-    InfrastructureCoreOpenAPIModels.register_model_type!(InterruptiblePowerLoadOperationCost)
+    InfrastructureCoreOpenAPIModels.register_model_type!(
+        InterruptiblePowerLoadOperationCost,
+    )
     InfrastructureCoreOpenAPIModels.register_model_type!(InterruptibleStandardLoad)
     InfrastructureCoreOpenAPIModels.register_model_type!(Line)
-    InfrastructureCoreOpenAPIModels.register_model_type!(LoadZone)
     InfrastructureCoreOpenAPIModels.register_model_type!(MonitoredLine)
     InfrastructureCoreOpenAPIModels.register_model_type!(MotorLoad)
     InfrastructureCoreOpenAPIModels.register_model_type!(OfflineReserve)
