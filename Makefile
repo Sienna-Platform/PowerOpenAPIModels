@@ -2,7 +2,7 @@ SCHEMA_DIR ?= ../SiennaSchemas
 CODEGEN_IMAGE ?= ghcr.io/sienna-platform/power-codegen:latest
 # SiennaSchemas splits its purely-administrative/association schemas (SupplementalAttribute-
 # Association, GeographicInfo, DataSource, the shared MinMax/InOut/UpDown/... value types) into
-# a separate `infrastructure-core` bundle -- see openapi-config-infrastructure-core.json and
+# a separate `infrastructure-core` bundle -- see openapi-infrastructure-core.json and
 # scripts/check_layering.py there. InfrastructureCoreOpenAPIModels.jl is that bundle's own
 # package, generated and deduped like every other domain in scripts/generate_native.jl's base
 # chain.
