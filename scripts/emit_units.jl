@@ -341,15 +341,28 @@ function emit_discriminated(io, prefix, by_unit, type_name, prop, spec)
     return true
 end
 
+"""
+The Julia field name the generator produces for a schema property.
+
+The generator lowercases every field name -- all 1877 generated struct fields are lowercase,
+including the handful of schema properties that are not (`FixedAdmittance.Y`, `Source.R_th`,
+`SEXS.Tb`, `RECurrentControlB.T_iq`, `SteamTurbineGov1.T1`). The unit metadata here is keyed
+by `Val{:field}`, so emitting the schema's spelling produced a `Val{:Y}` method for a struct
+whose field is `y`: `has_declared_unit(FixedAdmittance, Val(:y))` came back false and the
+declared unit was unreachable. Eleven properties across five structs were affected.
+"""
+julia_field(prop) = lowercase(String(prop))
+
 function emit_type(io, prefix, by_unit, type_name, schema)
     properties = get(schema, "properties", nothing)
     if isnothing(properties)
         return
     end
-    for (prop, spec) in pairs(properties)
+    for (schema_prop, spec) in pairs(properties)
         if !(spec isa AbstractDict)
             continue
         end
+        prop = julia_field(schema_prop)
         discriminated = false
         if haskey(spec, "x-units") && haskey(spec, "x-unit-discriminator")
             discriminated = emit_discriminated(io, prefix, by_unit, type_name, prop, spec)

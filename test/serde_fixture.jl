@@ -14,25 +14,9 @@ const SERDE_FIXTURES = (
 @testset "serde fixture: $unit_system" for (unit_system, filename) in SERDE_FIXTURES
     path = joinpath(SERDE_FIXTURE_DIR, filename)
 
-    # Known, upstream-blocked failure under the native (post-1.0) generator: both vendored
-    # fixtures store `ThermalStandard.status` as a bare JSON boolean (all 7 rows, in both
-    # files) from whatever older PowerFlowFileParser/schema snapshot produced them, while the
-    # current schema types `status` as a 4-state string enum (`ThermalStandardStatus`). The
-    # pre-1.0 generator never enforced `type`/`enum` on decode, so this mismatch decoded
-    # silently; the native generator's real JSON-Schema validation now correctly rejects it.
-    # Fixing this for real means re-vendoring the fixtures from a current PowerFlowFileParser
-    # run, not patching the checked-in JSON by hand here.
-    doc = try
-        # read_document calls validate_document internally, so a successful read already
-        # certifies the document: ids unique, every reference resolvable.
-        PowerOpenAPIModels.read_document(path)
-    catch e
-        e isa InfrastructureCoreOpenAPIModels.OpenAPI.Runtime.SchemaValidationError ||
-            rethrow()
-        @test_broken false
-        nothing
-    end
-    doc === nothing && continue
+    # read_document calls validate_document internally, so a successful read already
+    # certifies the document: ids unique, every reference resolvable.
+    doc = PowerOpenAPIModels.read_document(path)
 
     @testset "component typing" begin
         total = 0
@@ -93,37 +77,24 @@ end
     # unit-basis discriminator) is genuinely per-unit-on-own-base_power in COMPONENT_BASE:
     # assert that physical relationship directly, across every line, and that at least one
     # line actually differs numerically.
-    # Known, upstream-blocked failure: see the `ThermalStandard.status` note in the "serde
-    # fixture" testset above -- both fixtures fail decode for the same reason.
-    natural, device = try
-        (
-            PowerOpenAPIModels.read_document(
-                joinpath(SERDE_FIXTURE_DIR, "case14_operations.NATURAL_UNITS.json"),
-            ),
-            PowerOpenAPIModels.read_document(
-                joinpath(SERDE_FIXTURE_DIR, "case14_operations.COMPONENT_BASE.json"),
-            ),
-        )
-    catch e
-        e isa InfrastructureCoreOpenAPIModels.OpenAPI.Runtime.SchemaValidationError ||
-            rethrow()
-        @test_broken false
-        nothing, nothing
-    end
-    if natural !== nothing
-        natural_lines =
-            Dict(l.id => l for l in PowerOpenAPIModels.get_components(natural, "Line"))
-        device_lines =
-            Dict(l.id => l for l in PowerOpenAPIModels.get_components(device, "Line"))
-        @test keys(natural_lines) == keys(device_lines)
-        differed = 0
-        for (id, nat) in natural_lines
-            dev = device_lines[id]
-            @test dev.rating ≈ nat.rating / nat.base_power
-            if dev.rating != nat.rating
-                differed += 1
-            end
+    natural = PowerOpenAPIModels.read_document(
+        joinpath(SERDE_FIXTURE_DIR, "case14_operations.NATURAL_UNITS.json"),
+    )
+    device = PowerOpenAPIModels.read_document(
+        joinpath(SERDE_FIXTURE_DIR, "case14_operations.COMPONENT_BASE.json"),
+    )
+    natural_lines =
+        Dict(l.id => l for l in PowerOpenAPIModels.get_components(natural, "Line"))
+    device_lines =
+        Dict(l.id => l for l in PowerOpenAPIModels.get_components(device, "Line"))
+    @test keys(natural_lines) == keys(device_lines)
+    differed = 0
+    for (id, nat) in natural_lines
+        dev = device_lines[id]
+        @test dev.rating ≈ nat.rating / nat.base_power
+        if dev.rating != nat.rating
+            differed += 1
         end
-        @test differed > 0
     end
+    @test differed > 0
 end

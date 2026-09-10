@@ -51,13 +51,16 @@ using TimeZones
 end
 
 # The check above catches one name claimed by two packages. It cannot see the other way a
-# generated type gets duplicated: openapi-generator materializes an anonymous copy of a
-# shared schema at every reference site it cannot resolve to a named component, then
-# disambiguates the copies with a numeric suffix. Those copies are byte-identical to the
-# original apart from the name, and they fragment the API -- a value deserialized at one
-# field site cannot be passed where another site's copy is expected. The cure is an
-# `inlineSchemaNameMappings` entry per copy in the SiennaSchemas generator config, so a
-# `<Base><N>` type whose `<Base>` also exists means such an entry is missing.
+# generated type gets duplicated: the generator materializes an anonymous copy of a shared
+# schema at every reference site it cannot resolve to a named component, then disambiguates
+# the copies with a numeric suffix. Those copies are byte-identical to the original apart
+# from the name, and they fragment the API -- a value deserialized at one field site cannot
+# be passed where another site's copy is expected. So a `<Base><N>` type whose `<Base>` also
+# exists means a reference site failed to resolve.
+#
+# The pre-1.0 Java toolchain papered this over with an `inlineSchemaNameMappings` entry per
+# copy in the SiennaSchemas generator config. The native generator reads no such config, so
+# the duplication has to be prevented in the bundle instead -- see the @test_broken note.
 #
 # Keyed on the base existing, not on the suffix: `SteamTurbineGov1` is a real
 # PowerSystems type name and must not be flagged.
@@ -87,29 +90,7 @@ _type_name(::Any) = ""
         base = replace(n, r"\d+$" => "")
         base != n && base in defined
     end
-    # Known, upstream-blocked failure under the native (post-1.0) generator. Two distinct
-    # remaining causes, both SiennaSchemas-side (see scripts/bundle_specs.py there):
-    #
-    # - StorageCostStartUp2, StorageTechnologyOperationCostsStartUp2,
-    #   ColocatedSupplyStorageTechnologyOperationCosts{Energy,Power}StartUp2: a genuinely
-    #   anonymous inline object schema (`oneOf: [number, {object with no $ref at all}]`)
-    #   with no named schema to point at. The old `TimeSeriesAssociation1..6` case (the six
-    #   variants each `$ref`d a real named file, just duplicated as anonymous copies -- fixed
-    #   by SiennaSchemas@<bundle_specs.py fix>, redirecting to `#/components/schemas/<Name>`
-    #   instead of inlining) does not apply here: fixing this for real means giving the
-    #   inline object its own named schema entry in SiennaSchemas, not a bundler change.
-    # - ThreeWindingTransformerShuntLocation2, TwoWindingTransformerShuntLocation2: NOT a
-    #   duplication bug. `ThreeWindingTransformer.shunt_location` carries its own
-    #   `description`/`default` alongside the shared `$ref`, so the bundler correctly keeps
-    #   it as a distinct merged copy rather than collapsing it into the shared
-    #   `ThreeWindingTransformerShuntLocation` (which now exists too, properly hoisted, and
-    #   is what any *other*, sibling-free reference to it resolves to). `ACBusBustype`
-    #   (constructed below) is the same case -- `ACBus.bustype` overrides `ACBusType`'s
-    #   shared description, so it correctly gets its own copy too, alongside a real
-    #   `PowerCoreOpenAPIModels.ACBusType`. There is currently no way to tell "field-scoped
-    #   override" apart from "accidental duplicate" from the generated name alone -- both
-    #   just end in a digit.
-    @test_broken sort(collect(aliases)) == String[]
+    @test sort(collect(aliases)) == String[]
 end
 
 @testset "Infrastructure packages carry no power dependency" begin
@@ -175,17 +156,19 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        # `ACBus` lives in PowerCore now, not Operations: the schemas moved the Topology
+        # folder under Core (SiennaSchemas f2a3290).
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
             # Under the pre-1.0 generator `bustype::ACBusType` was a bare `String` alias, so
             # a literal worked directly. The native generator turns any enum-constrained
-            # schema into a validating wrapper struct. This one is `ACBusBustype`, not the
-            # shared `PowerCoreOpenAPIModels.ACBusType` `ACBus.bustype` $refs: that ref
-            # carries its own `description` override, so it correctly gets its own copy
-            # (see the "No unmapped inline schema aliases" @test_broken above).
-            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
+            # schema into a validating wrapper struct, hence the constructor call. It is the
+            # shared `ACBusType` rather than a per-property copy: the bundler now emits a
+            # reference for a `$ref` whose siblings are only annotations, instead of inlining
+            # the target once per reference site.
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
@@ -200,7 +183,7 @@ end
         @test PowerOpenAPIModels.get_description(back) == "round-trip fixture"
         @test PowerOpenAPIModels.get_frequency(back) == 50.0
         # Buckets come back concretely typed, not as Vector{Any}.
-        @test eltype(back.components["ACBus"]) === PowerOperationsOpenAPIModels.ACBus
+        @test eltype(back.components["ACBus"]) === PowerCoreOpenAPIModels.ACBus
         @test PowerOpenAPIModels.get_ext(back, bus_id)["Zone"] == "1"
         # Ids already handed out are not reissued after a read.
         @test PowerOpenAPIModels.next_id!(back) > bus_id
@@ -217,11 +200,11 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
@@ -236,11 +219,9 @@ end
         association_id=ts_id,
         owner_id=bus_id,
         owner_type="ACBus",
-        owner_category=InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeriesOwnerCategory(
-            "Component",
-        ),
+        owner_category=InfrastructureTimeSeriesOpenAPIModels.OwnerCategory("Component"),
         name="max_active_power",
-        features=InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeriesFeatures(),
+        features=InfrastructureTimeSeriesOpenAPIModels.TimeSeriesFeatures(),
         uri="fixture_time_series_storage.h5",
         element_type="Float64",
         element_shape=Int64[],
@@ -272,11 +253,11 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
@@ -296,11 +277,11 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )
@@ -331,11 +312,11 @@ end
     bus_id = PowerOpenAPIModels.next_id!(doc)
     PowerOpenAPIModels.add_component!(
         doc,
-        PowerOperationsOpenAPIModels.ACBus(;
+        PowerCoreOpenAPIModels.ACBus(;
             id=bus_id,
             name="b1",
             number=1,
-            bustype=PowerOperationsOpenAPIModels.ACBusBustype("REF"),
+            bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
             available=true,
         ),
     )

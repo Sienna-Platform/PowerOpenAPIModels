@@ -24,6 +24,8 @@ include(joinpath(@__DIR__, "normalize_bundle.jl"))
 include(joinpath(@__DIR__, "emit_units.jl"))
 include(joinpath(@__DIR__, "emit_docs.jl"))
 include(joinpath(@__DIR__, "registered_names.jl"))
+include(joinpath(@__DIR__, "prettify.jl"))
+include(joinpath(@__DIR__, "supertypes.jl"))
 
 const UNIT_VOCAB = load_unit_vocabulary(joinpath(SCHEMA_DIR, "Core", "units.json"))
 const UNIT_FACTORS = UNIT_VOCAB[1]
@@ -77,6 +79,12 @@ struct Chunk
     name::String
     text::String
 end
+
+# Included after `Chunk`: its signatures dispatch on it.
+include(joinpath(@__DIR__, "dedup_structs.jl"))
+# Included after dedup_structs.jl: reuses its `generated_type_name`.
+include(joinpath(@__DIR__, "const_defaults.jl"))
+include(joinpath(@__DIR__, "primitive_oneof_decode.jl"))
 
 """
 Run OpenAPI.client() on `domain`'s normalized bundle; return the raw generated module text.
@@ -196,6 +204,76 @@ for (domain, _, _, bases) in DOMAINS
     KEPT_NAMES[domain] = Set(c.name for c in kept)
 end
 
+# ── Phase 3a: collapse per-reference-site copies onto the shared type ──────────────
+# See dedup_structs.jl for why these copies exist and what evidence a merge requires.
+const PUBLISHED_NAMES = published_schema_names(SCHEMA_DIR, [d for (d, _, _, _) in DOMAINS])
+const DUPLICATE_RENAMES = build_rename_map(KEPT_CHUNKS, PUBLISHED_NAMES)
+
+# Source of truth for the const-default pass (Phase 4): generated struct name -> its const
+# fields, read from the same bundled specs.
+const CONST_FIELDS = load_const_fields(SCHEMA_DIR, [d for (d, _, _, _) in DOMAINS])
+
+if !isempty(DUPLICATE_RENAMES)
+    for (domain, _, _, _) in DOMAINS
+        kept = Chunk[]
+        for c in KEPT_CHUNKS[domain]
+            haskey(DUPLICATE_RENAMES, c.name) && continue
+            push!(kept, Chunk(c.name, apply_renames(c.text, DUPLICATE_RENAMES)))
+        end
+        KEPT_CHUNKS[domain] = topo_order(kept)
+        KEPT_NAMES[domain] = Set(c.name for c in kept)
+    end
+    by_survivor = Dict{String, Vector{String}}()
+    for (from, to) in DUPLICATE_RENAMES
+        push!(get!(by_survivor, to, String[]), from)
+    end
+    println("Collapsed $(length(DUPLICATE_RENAMES)) duplicate type(s) onto shared types:")
+    for survivor in sort!(collect(keys(by_survivor)))
+        println("  $survivor <- ", join(sort!(by_survivor[survivor]), ", "))
+    end
+end
+
+# ── Phase 3b: reconcile the frozen registered-name set with what exists now ────────
+# `REGISTERED_NAMES` is frozen from the pre-1.0 `register.jl` files, so it goes stale as the
+# schemas move: a type the schemas delete would be registered anyway and `register.jl` would
+# fail to load (`UndefVarError: TwoTerminalLoss`, after the loss-curve wrappers collapsed),
+# and a type that moves between packages would be registered from the package that no longer
+# owns it. Reconcile against the names actually generated, and say out loud what moved or
+# went away -- silently dropping a name would hide a real schema deletion.
+const OWNER_OF_NAME = Dict{String, String}()
+for (domain, _, _, _) in DOMAINS
+    for name in KEPT_NAMES[domain]
+        OWNER_OF_NAME[name] = domain
+    end
+end
+
+const FROZEN_ALL = Set{String}(name for names in values(REGISTERED_NAMES) for name in names)
+
+"""
+Names `domain`'s `register.jl` should register: every frozen name the generated output says
+this domain now owns, wherever it was frozen.
+"""
+function registered_for(domain)
+    return sort!([n for n in FROZEN_ALL if get(OWNER_OF_NAME, n, "") == domain])
+end
+
+let
+    vanished = sort!([n for n in FROZEN_ALL if !haskey(OWNER_OF_NAME, n)])
+    isempty(vanished) || println(
+        "Frozen registered name(s) no longer generated, dropped from register.jl: " *
+        join(vanished, ", "),
+    )
+    moved = String[]
+    for (frozen_domain, names) in REGISTERED_NAMES, name in names
+        haskey(OWNER_OF_NAME, name) || continue
+        owner = OWNER_OF_NAME[name]
+        owner == frozen_domain || push!(moved, "$name: $frozen_domain -> $owner")
+    end
+    isempty(moved) || println(
+        "Frozen registered name(s) that changed package: " * join(sort!(moved), ", "),
+    )
+end
+
 # ── Phase 4: assemble and write each package ────────────────────────────────────────
 # One file per struct, same layout as the old openapi-generator pipeline
 # (src/models/model_<Name>.jl, included from the top module file) so a regeneration diffs
@@ -205,6 +283,8 @@ end
 #
 # The preamble already names the module `modname` -- that's what was passed to
 # OpenAPI.client -- so nothing to rewrite there.
+const TOTAL_DEFAULTED = Ref(0)
+
 for (domain, pkgdir, modname, bases) in DOMAINS
     preamble, _, _ = RAW[domain]
     chunks = KEPT_CHUNKS[domain]
@@ -213,9 +293,22 @@ for (domain, pkgdir, modname, bases) in DOMAINS
     rm(models_dest; force=true, recursive=true)
     mkpath(models_dest)
 
+    # `rewrite_docstring` runs here rather than on the chunk itself: `emit_docs_for` below
+    # parses the generator's original `@doc "…"` one-liner to rebuild docs/<Name>.md.
+    written = String[]
+    domain_defaulted = 0
     for c in chunks
-        write(joinpath(models_dest, "model_$(c.name).jl"), c.text)
+        path = joinpath(models_dest, "model_$(c.name).jl")
+        text, n = default_const_fields(
+            add_supertype(c.text),
+            get(CONST_FIELDS, c.name, EMPTY_CONST_FIELDS),
+        )
+        domain_defaulted += n
+        text = patch_primitive_oneof(text, c.name)
+        write(path, rewrite_docstring(text))
+        push!(written, path)
     end
+    TOTAL_DEFAULTED[] += domain_defaulted
 
     lines_out = IOBuffer()
     println(lines_out, preamble)
@@ -223,6 +316,12 @@ for (domain, pkgdir, modname, bases) in DOMAINS
         println(lines_out, "using $(MODULE_FOR_DOMAIN[b])")
     end
     println(lines_out)
+    # The model supertypes have to exist before the first `include` that uses one. In the
+    # base package that means emitting them here; every other package inherits them through
+    # the `using` above.
+    if domain == "infrastructure-core"
+        println(lines_out, SUPERTYPE_DEFINITIONS)
+    end
     # Original (dependency) order, not alphabetical: a synthesized nested type like
     # `DataSourceExtra` is generated immediately before the struct that references it
     # (`DataSource`), and Julia needs that type to exist by the time the referencing struct's
@@ -234,7 +333,7 @@ for (domain, pkgdir, modname, bases) in DOMAINS
 
     has_units = emit_units_for(domain, dest, SCHEMA_DIR, UNIT_FACTORS, UNIT_BY_UNIT)
     has_document = domain == "infrastructure-core" && isfile(joinpath(dest, "document.jl"))
-    registered = get(REGISTERED_NAMES, domain, String[])
+    registered = registered_for(domain)
     has_registry = !isempty(registered)
     if has_registry
         accessor = domain == "infrastructure-core" ? "" : "InfrastructureCoreOpenAPIModels."
@@ -269,6 +368,9 @@ for (domain, pkgdir, modname, bases) in DOMAINS
         for name in UNIT_EXPORTS
             println(lines_out, "export $name")
         end
+        for name in SUPERTYPE_EXPORTS
+            println(lines_out, "export $name")
+        end
     end
     if !isempty(bases)
         println(lines_out)
@@ -283,8 +385,16 @@ for (domain, pkgdir, modname, bases) in DOMAINS
     println(lines_out)
     println(lines_out, "end # module $modname")
 
-    write(joinpath(dest, "$modname.jl"), String(take!(lines_out)))
+    module_path = joinpath(dest, "$modname.jl")
+    write(module_path, String(take!(lines_out)))
+    push!(written, module_path)
     rm(joinpath(dest, "apis"); force=true, recursive=true)
+
+    for extra in ("units.jl", "document.jl", "register.jl")
+        path = joinpath(dest, extra)
+        isfile(path) && push!(written, path)
+    end
+    format_paths(written)
 
     docs_dest = joinpath(REPO, pkgdir, "docs")
     rm(docs_dest; force=true, recursive=true)
@@ -292,8 +402,11 @@ for (domain, pkgdir, modname, bases) in DOMAINS
 
     println(
         "Wrote $pkgdir/src/$modname.jl: $(length(chunks)) new type(s), " *
-        "$(length(bases)) base package(s)",
+        "$(length(bases)) base package(s), $(length(written)) file(s) formatted, " *
+        "$domain_defaulted const field(s) defaulted",
     )
 end
+
+println("Defaulted $(TOTAL_DEFAULTED[]) const discriminator field(s) across all packages")
 
 get(ENV, "KEEP_RAW", "") == "1" || rm(RAW_DIR; force=true, recursive=true)
