@@ -8,6 +8,7 @@ A hydropower generator that must have a `HydroReservoir` attached, suitable for 
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
+  - `commitment_mode`: Commitment mode of the unit.
   - `conversion_factor`: Conversion factor from flow/volume to energy: m^3 -> p.u-hr. Units: 1.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
   - `efficiency`: Turbine efficiency [0, 1.0].
@@ -22,6 +23,8 @@ A hydropower generator that must have a `HydroReservoir` attached, suitable for 
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+  - `status`: Operating state of the unit at the start of a simulation.
+  - `time_at_status`: Time the generator has been in its current `status`. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
   - `time_limits`: Minimum up and minimum down time limits. Units: min.
   - `travel_time`: Downstream (from reservoir into turbine) travel time. Set to `null` if not applicable. Units: min.
   - `turbine_type`: Type of the turbine.
@@ -32,6 +35,7 @@ Base.@kwdef struct HydroTurbine <: APIModel
     available::Bool
     base_power::Float64
     bus::Int64
+    commitment_mode::Union{Absent, CommitmentModes, Nothing} = ABSENT
     conversion_factor::Union{Absent, Float64, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
     efficiency::Union{Absent, Float64, Nothing} = ABSENT
@@ -39,13 +43,15 @@ Base.@kwdef struct HydroTurbine <: APIModel
     name::String
     operation_cost::HydroTurbineOperationCost
     outflow_limits::Union{Absent, MinMax, Nothing} = ABSENT
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     powerhouse_elevation::Union{Absent, Float64, Nothing} = ABSENT
-    prime_mover_type::Union{Absent, PrimeMovers, Nothing} = ABSENT
+    prime_mover_type::Union{Absent, Nothing, PrimeMovers} = ABSENT
     ramp_limits::Union{Absent, UpDown, Nothing} = ABSENT
     rating::Float64
     reactive_power::Float64
     reactive_power_limits::Union{Absent, MinMax, Nothing} = ABSENT
+    status::Union{Absent, Nothing, OperationalStates} = ABSENT
+    time_at_status::Union{Absent, Float64, Nothing} = ABSENT
     time_limits::Union{Absent, UpDown, Nothing} = ABSENT
     travel_time::Union{Absent, Union{Float64, Nothing}} = ABSENT
     turbine_type::Union{Absent, HydroTurbineTurbineType, Nothing} = ABSENT
@@ -56,7 +62,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroTurbine",
         ),
         _openapi_raw,
@@ -86,6 +92,13 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_field_bus =
         _decode(Int64, _required(_openapi_object, "bus", "HydroTurbine"), _openapi_validate)
+    _openapi_field_commitment_mode =
+        haskey(_openapi_object, "commitment_mode") ?
+        _decode(
+            Union{Absent, CommitmentModes, Nothing},
+            _openapi_object["commitment_mode"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_conversion_factor =
         haskey(_openapi_object, "conversion_factor") ?
         _decode(
@@ -127,7 +140,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "HydroTurbine"),
         _openapi_validate,
     )
@@ -141,7 +154,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_prime_mover_type =
         haskey(_openapi_object, "prime_mover_type") ?
         _decode(
-            Union{Absent, PrimeMovers, Nothing},
+            Union{Absent, Nothing, PrimeMovers},
             _openapi_object["prime_mover_type"],
             _openapi_validate,
         ) : ABSENT
@@ -167,6 +180,20 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
         _decode(
             Union{Absent, MinMax, Nothing},
             _openapi_object["reactive_power_limits"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_status =
+        haskey(_openapi_object, "status") ?
+        _decode(
+            Union{Absent, Nothing, OperationalStates},
+            _openapi_object["status"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_time_at_status =
+        haskey(_openapi_object, "time_at_status") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["time_at_status"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_time_limits =
@@ -198,6 +225,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
             "available",
             "base_power",
             "bus",
+            "commitment_mode",
             "conversion_factor",
             "dynamic_injector",
             "efficiency",
@@ -212,6 +240,8 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
             "rating",
             "reactive_power",
             "reactive_power_limits",
+            "status",
+            "time_at_status",
             "time_limits",
             "travel_time",
             "turbine_type",
@@ -225,6 +255,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
         available=_openapi_field_available,
         base_power=_openapi_field_base_power,
         bus=_openapi_field_bus,
+        commitment_mode=_openapi_field_commitment_mode,
         conversion_factor=_openapi_field_conversion_factor,
         dynamic_injector=_openapi_field_dynamic_injector,
         efficiency=_openapi_field_efficiency,
@@ -239,6 +270,8 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
         rating=_openapi_field_rating,
         reactive_power=_openapi_field_reactive_power,
         reactive_power_limits=_openapi_field_reactive_power_limits,
+        status=_openapi_field_status,
+        time_at_status=_openapi_field_time_at_status,
         time_limits=_openapi_field_time_limits,
         travel_time=_openapi_field_travel_time,
         turbine_type=_openapi_field_turbine_type,
@@ -258,6 +291,8 @@ function _encode(_openapi_value::HydroTurbine)
     _openapi_value.base_power isa Absent ||
         (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
     _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+    _openapi_value.commitment_mode isa Absent ||
+        (_openapi_output["commitment_mode"] = _encode(_openapi_value.commitment_mode))
     _openapi_value.conversion_factor isa Absent ||
         (_openapi_output["conversion_factor"] = _encode(_openapi_value.conversion_factor))
     _openapi_value.dynamic_injector isa Absent ||
@@ -289,6 +324,10 @@ function _encode(_openapi_value::HydroTurbine)
         _openapi_output["reactive_power_limits"] =
             _encode(_openapi_value.reactive_power_limits)
     )
+    _openapi_value.status isa Absent ||
+        (_openapi_output["status"] = _encode(_openapi_value.status))
+    _openapi_value.time_at_status isa Absent ||
+        (_openapi_output["time_at_status"] = _encode(_openapi_value.time_at_status))
     _openapi_value.time_limits isa Absent ||
         (_openapi_output["time_limits"] = _encode(_openapi_value.time_limits))
     _openapi_value.travel_time isa Absent ||
@@ -306,7 +345,7 @@ function _encode(_openapi_value::HydroTurbine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroTurbine",
         ),
         _openapi_output,
@@ -326,6 +365,8 @@ function _form_fields(_openapi_value::HydroTurbine)
     _openapi_value.base_power isa Absent ||
         push!(_openapi_output, "base_power" => _openapi_value.base_power)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.commitment_mode isa Absent ||
+        push!(_openapi_output, "commitment_mode" => _openapi_value.commitment_mode)
     _openapi_value.conversion_factor isa Absent ||
         push!(_openapi_output, "conversion_factor" => _openapi_value.conversion_factor)
     _openapi_value.dynamic_injector isa Absent ||
@@ -356,6 +397,10 @@ function _form_fields(_openapi_value::HydroTurbine)
         _openapi_output,
         "reactive_power_limits" => _openapi_value.reactive_power_limits,
     )
+    _openapi_value.status isa Absent ||
+        push!(_openapi_output, "status" => _openapi_value.status)
+    _openapi_value.time_at_status isa Absent ||
+        push!(_openapi_output, "time_at_status" => _openapi_value.time_at_status)
     _openapi_value.time_limits isa Absent ||
         push!(_openapi_output, "time_limits" => _openapi_value.time_limits)
     _openapi_value.travel_time isa Absent ||

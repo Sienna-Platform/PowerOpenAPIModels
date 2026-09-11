@@ -1,7 +1,7 @@
 """
     NonSequentialTimeSeries
 
-An irregular static time series, sampled at explicit timestamps rather than on a grid. Deliberately carries neither `initial_timestamp` nor `resolution`: an irregular series has no fixed cadence and its key holds no timestamp. The timestamp vector itself lives in the store, content-addressed, and is not carried here.
+An irregular static time series, sampled at explicit timestamps rather than on a grid. Deliberately carries neither `initial_timestamp` nor `resolution`: an irregular series has no fixed cadence and its key holds no timestamp. The timestamp vector itself lives in the store rather than here, content-addressed so that many irregular series sharing one time axis store it once; `timestamps_uri` names which axis this series sits on, so a document plus the store's arrays describe the series completely.
 
   - `application_data`: Opaque, package-owned payload (typically JSON) carried verbatim for an application to reconstruct its own domain objects. Never parsed or interpreted here, and end users are not expected to set it. Element typing does not belong here — that is `element_type`.
   - `array_shape`: Full native shape of the stored array, in the order the store holds it: the first axis is the array's length and the trailing axes end with `element_shape`. Static types are `[length, *element_shape]`; a deterministic forecast stacks windows as `[horizon_count, count, *element_shape]`; probabilistic and scenarios forecasts add a percentile or scenario axis in front of that. Optional, and redundant for the static types, where it is exactly `[length] + element_shape`. It earns its place on the forecasts, whose array layout is a convention the producing package owns rather than a rule this layer enforces, so the stored geometry cannot be reconstructed from `horizon`, `count`, `percentiles`, and `scenario_count` alone. A consumer that has it should prefer it; one that does not falls back to those fields, which is exact for the static types and a best effort for the forecasts.
@@ -19,6 +19,7 @@ An irregular static time series, sampled at explicit timestamps rather than on a
   - `quantity_kind`: Kind of physical quantity the values measure (e.g. ActivePower, ReactivePower, ElectricalEnergy). Coarser than `units` but finer than a dimension: ActivePower, ReactivePower, and ApparentPower share the dimension {M:1,L:2,T:-3}, so a dimension cannot tell them apart and a quantity kind can. It is also the only record of what the values measure when `unit_system` is a per-unit basis.
   - `time_reference`: How this series' timestamps were spelled, so a read hands back what the write declared instead of relabelling everything UTC. Absent means unspecified, which is not a claim the timestamps were written as UTC.
   - `time_series_type`: Discriminator. Fixed to NonSequentialTimeSeries for this schema, pinned with `const` to match this repo's existing discriminators (Core/common.json's `curve_type`), which generate a plain string literal in both toolchains.
+  - `timestamps_uri`: Locator for this series' explicit timestamp vector, unique within one store — `uri`'s counterpart for the time axis, with the same contract: no required format, never parsed or interpreted here, and resolved by the backing store (infrastore uses the axis's content hash, the same value it keys the shared vector under). A locator rather than the vector itself because the axis is shared: a cohort of irregular series on one axis names it once each, where inlining the timestamps would repeat the whole vector per row. Optional, so a producer that predates it is still valid, and absent from the other five types, which have no explicit axis. Without it a document cannot say which of the store's axes a row sits on, and the row cannot be reconstructed from the document — the store cannot infer it either, since arrays are content-addressed and two irregular series with identical values on different axes share one stored array. A consumer restoring rows from a document therefore requires it.
   - `unit_system`: Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a COMPONENT_BASE series back to natural units needs the owning component's base_power. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS.
   - `units`: Unit label for the series values. Set by whoever creates the series and returned unchanged; not part of the series' identity, so two series differing only in this label are duplicates. Meaningless on its own when `unit_system` is a per-unit basis, where the values are dimensionless. By convention drawn from the unit vocabulary in Core/units.json, though this field is a free-text label the store does not validate against it.
   - `uri`: Locator for the dense data, unique within one store. No required format — typically a file path or an HDF5 dataset path; the backing store decides what it means and resolves it (infrastore uses its content hash as this value). Never parsed or interpreted here. This layer records where the values are, never the values.
@@ -30,7 +31,7 @@ Base.@kwdef struct NonSequentialTimeSeries <: APIModel
     component_field::Union{Absent, Nothing, String} = ABSENT
     data_hash::Union{Absent, Nothing, String} = ABSENT
     element_shape::Vector{Int64}
-    element_type::String
+    element_type::ElementType
     features::TimeSeriesFeatures
     length::Int64
     name::String
@@ -38,9 +39,10 @@ Base.@kwdef struct NonSequentialTimeSeries <: APIModel
     owner_id::Int64
     owner_type::String
     quantity_kind::Union{Absent, Nothing, String} = ABSENT
-    time_reference::Union{Absent, Nothing, String} = ABSENT
+    time_reference::Union{Absent, Nothing, TimeReference} = ABSENT
     time_series_type::String = "NonSequentialTimeSeries"
-    unit_system::Union{Absent, VoltageUnitBasis, Nothing} = ABSENT
+    timestamps_uri::Union{Absent, Nothing, String} = ABSENT
+    unit_system::Union{Absent, Nothing, UnitSystem} = ABSENT
     units::Union{Absent, Nothing, String} = ABSENT
     uri::String
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -51,7 +53,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json",
+            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
             pointer="/components/schemas/NonSequentialTimeSeries",
         ),
         _openapi_raw,
@@ -98,7 +100,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
         _openapi_validate,
     )
     _openapi_field_element_type = _decode(
-        String,
+        ElementType,
         _required(_openapi_object, "element_type", "NonSequentialTimeSeries"),
         _openapi_validate,
     )
@@ -142,7 +144,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
     _openapi_field_time_reference =
         haskey(_openapi_object, "time_reference") ?
         _decode(
-            Union{Absent, Nothing, String},
+            Union{Absent, Nothing, TimeReference},
             _openapi_object["time_reference"],
             _openapi_validate,
         ) : ABSENT
@@ -151,10 +153,17 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
         _required(_openapi_object, "time_series_type", "NonSequentialTimeSeries"),
         _openapi_validate,
     )
+    _openapi_field_timestamps_uri =
+        haskey(_openapi_object, "timestamps_uri") ?
+        _decode(
+            Union{Absent, Nothing, String},
+            _openapi_object["timestamps_uri"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_unit_system =
         haskey(_openapi_object, "unit_system") ?
         _decode(
-            Union{Absent, VoltageUnitBasis, Nothing},
+            Union{Absent, Nothing, UnitSystem},
             _openapi_object["unit_system"],
             _openapi_validate,
         ) : ABSENT
@@ -189,6 +198,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
             "quantity_kind",
             "time_reference",
             "time_series_type",
+            "timestamps_uri",
             "unit_system",
             "units",
             "uri",
@@ -213,6 +223,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
         quantity_kind=_openapi_field_quantity_kind,
         time_reference=_openapi_field_time_reference,
         time_series_type=_openapi_field_time_series_type,
+        timestamps_uri=_openapi_field_timestamps_uri,
         unit_system=_openapi_field_unit_system,
         units=_openapi_field_units,
         uri=_openapi_field_uri,
@@ -253,6 +264,8 @@ function _encode(_openapi_value::NonSequentialTimeSeries)
         (_openapi_output["time_reference"] = _encode(_openapi_value.time_reference))
     _openapi_value.time_series_type isa Absent ||
         (_openapi_output["time_series_type"] = _encode(_openapi_value.time_series_type))
+    _openapi_value.timestamps_uri isa Absent ||
+        (_openapi_output["timestamps_uri"] = _encode(_openapi_value.timestamps_uri))
     _openapi_value.unit_system isa Absent ||
         (_openapi_output["unit_system"] = _encode(_openapi_value.unit_system))
     _openapi_value.units isa Absent ||
@@ -269,7 +282,7 @@ function _encode(_openapi_value::NonSequentialTimeSeries)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json",
+            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
             pointer="/components/schemas/NonSequentialTimeSeries",
         ),
         _openapi_output,
@@ -311,6 +324,8 @@ function _form_fields(_openapi_value::NonSequentialTimeSeries)
         push!(_openapi_output, "time_reference" => _openapi_value.time_reference)
     _openapi_value.time_series_type isa Absent ||
         push!(_openapi_output, "time_series_type" => _openapi_value.time_series_type)
+    _openapi_value.timestamps_uri isa Absent ||
+        push!(_openapi_output, "timestamps_uri" => _openapi_value.timestamps_uri)
     _openapi_value.unit_system isa Absent ||
         push!(_openapi_output, "unit_system" => _openapi_value.unit_system)
     _openapi_value.units isa Absent ||

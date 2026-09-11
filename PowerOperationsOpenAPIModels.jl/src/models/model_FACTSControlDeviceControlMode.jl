@@ -1,7 +1,7 @@
 """
     FACTSControlDeviceControlMode
 
-Control mode. Used to describe the behavior of the control device. in psy5 a required param with an option to be nothing
+Operating mode of a FACTS control device. `OOS` (out-of-service): both series and shunt links are open. `NML` (normal): both series and shunt links are operating. `BYP` (bypass): the series link is bypassed (acts as a zero-impedance line) and the shunt link operates as a STATCOM (reactive-only).
 """
 struct FACTSControlDeviceControlMode <: EnumAPIModel
     value::String
@@ -18,8 +18,8 @@ function _decode(::Type{FACTSControlDeviceControlMode}, value, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
-            pointer="/components/schemas/FACTSControlDevice/properties/control_mode",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
+            pointer="/components/schemas/FACTSControlDeviceControlMode",
         ),
         value,
         "decoding FACTSControlDeviceControlMode";
@@ -32,8 +32,8 @@ function _encode(value::FACTSControlDeviceControlMode)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
-            pointer="/components/schemas/FACTSControlDevice/properties/control_mode",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
+            pointer="/components/schemas/FACTSControlDeviceControlMode",
         ),
         output,
         "encoding FACTSControlDeviceControlMode";

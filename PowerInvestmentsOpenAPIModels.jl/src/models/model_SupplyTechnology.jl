@@ -27,9 +27,9 @@ Candidate generation technology for a region, representing either a thermal or a
 Base.@kwdef struct SupplyTechnology <: APIModel
     available::Union{Absent, Bool, Nothing} = ABSENT
     capacity_limits::Union{Absent, Nothing, SupplyTechnologyCapacityLimits} = ABSENT
-    capital_costs::Union{Absent, Nothing, CapitalCost} = ABSENT
-    cofire_level_limits::Union{Absent, Nothing, SupplyTechnologyCofireLevelLimits} = ABSENT
-    cofire_start_limits::Union{Absent, Nothing, SupplyTechnologyCofireStartLimits} = ABSENT
+    capital_costs::Union{Absent, CapitalCost, Nothing} = ABSENT
+    cofire_level_limits::Union{Absent, Nothing, MinMaxByKey} = ABSENT
+    cofire_start_limits::Union{Absent, Nothing, MinMaxByKey} = ABSENT
     financial_data::TechnologyFinancialData
     fuel::Union{Absent, Nothing, Vector{ThermalFuels}} = ABSENT
     id::Int64
@@ -52,7 +52,7 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/SupplyTechnology",
         ),
         _openapi_raw,
@@ -77,21 +77,21 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
     _openapi_field_capital_costs =
         haskey(_openapi_object, "capital_costs") ?
         _decode(
-            Union{Absent, Nothing, CapitalCost},
+            Union{Absent, CapitalCost, Nothing},
             _openapi_object["capital_costs"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_cofire_level_limits =
         haskey(_openapi_object, "cofire_level_limits") ?
         _decode(
-            Union{Absent, Nothing, SupplyTechnologyCofireLevelLimits},
+            Union{Absent, Nothing, MinMaxByKey},
             _openapi_object["cofire_level_limits"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_cofire_start_limits =
         haskey(_openapi_object, "cofire_start_limits") ?
         _decode(
-            Union{Absent, Nothing, SupplyTechnologyCofireStartLimits},
+            Union{Absent, Nothing, MinMaxByKey},
             _openapi_object["cofire_start_limits"],
             _openapi_validate,
         ) : ABSENT
@@ -303,7 +303,7 @@ function _encode(_openapi_value::SupplyTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/SupplyTechnology",
         ),
         _openapi_output,

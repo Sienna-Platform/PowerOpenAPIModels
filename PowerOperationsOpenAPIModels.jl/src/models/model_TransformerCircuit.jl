@@ -41,8 +41,8 @@ Base.@kwdef struct TransformerCircuit <: APIModel
     controlled_quantity_limits::Union{Absent, Nothing, MinMax} = ABSENT
     id::Int64
     number_of_tap_positions::Union{Absent, Int64, Nothing} = ABSENT
-    parameter_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
-    power_units::VoltageUnitBasis
+    parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
+    power_units::UnitSystem
     r::Union{Absent, Float64, Nothing} = ABSENT
     rating::Union{Absent, Float64, Nothing} = ABSENT
     rating_b::Union{Absent, Float64, Nothing} = ABSENT
@@ -58,7 +58,7 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TransformerCircuit",
         ),
         _openapi_raw,
@@ -147,12 +147,12 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
-            Union{Absent, Nothing, VoltageUnitBasis},
+            Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "TransformerCircuit"),
         _openapi_validate,
     )
@@ -325,7 +325,7 @@ function _encode(_openapi_value::TransformerCircuit)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TransformerCircuit",
         ),
         _openapi_output,

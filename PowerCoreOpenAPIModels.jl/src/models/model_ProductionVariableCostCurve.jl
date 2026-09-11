@@ -12,7 +12,7 @@ function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ProductionVariableCostCurve",
         ),
         value,
@@ -33,28 +33,28 @@ function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::
             "COST" => (
                 CostCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
                     pointer="/components/schemas/CostCurve",
                 ),
             ),
             "CostCurve" => (
                 CostCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
                     pointer="/components/schemas/CostCurve",
                 ),
             ),
             "FUEL" => (
                 FuelCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
                     pointer="/components/schemas/FuelCurve",
                 ),
             ),
             "FuelCurve" => (
                 FuelCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
                     pointer="/components/schemas/FuelCurve",
                 ),
             ),
@@ -81,7 +81,7 @@ function _encode(value::ProductionVariableCostCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ProductionVariableCostCurve",
         ),
         output,

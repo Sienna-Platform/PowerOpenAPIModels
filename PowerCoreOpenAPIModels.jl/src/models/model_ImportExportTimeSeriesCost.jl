@@ -23,7 +23,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ImportExportTimeSeriesCost",
         ),
         _openapi_raw,
@@ -131,7 +131,7 @@ function _encode(_openapi_value::ImportExportTimeSeriesCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ImportExportTimeSeriesCost",
         ),
         _openapi_output,

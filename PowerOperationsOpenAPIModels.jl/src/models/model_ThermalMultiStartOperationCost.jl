@@ -17,7 +17,7 @@ function _decode(::Type{ThermalMultiStartOperationCost}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ThermalMultiStart/properties/operation_cost",
         ),
         value,
@@ -38,56 +38,56 @@ function _decode(::Type{ThermalMultiStartOperationCost}, value, _openapi_validat
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "ImportExportTimeSeriesCost" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "MarketBidCost" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MarketBidTimeSeriesCost" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "THERMAL" => (
                 ThermalGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ThermalGenerationCost",
                 ),
             ),
             "ThermalGenerationCost" => (
                 ThermalGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ThermalGenerationCost",
                 ),
             ),
@@ -114,7 +114,7 @@ function _encode(value::ThermalMultiStartOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ThermalMultiStart/properties/operation_cost",
         ),
         output,

@@ -50,7 +50,7 @@ Base.@kwdef struct InterruptibleStandardLoad <: APIModel
     max_impedance_reactive_power::Union{Absent, Float64, Nothing} = ABSENT
     name::String
     operation_cost::InterruptibleStandardLoadOperationCost
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{InterruptibleStandardLoad}, value) =
@@ -59,7 +59,7 @@ function _decode(::Type{InterruptibleStandardLoad}, _openapi_raw, _openapi_valid
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterruptibleStandardLoad",
         ),
         _openapi_raw,
@@ -196,7 +196,7 @@ function _decode(::Type{InterruptibleStandardLoad}, _openapi_raw, _openapi_valid
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "InterruptibleStandardLoad"),
         _openapi_validate,
     )
@@ -330,7 +330,7 @@ function _encode(_openapi_value::InterruptibleStandardLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterruptibleStandardLoad",
         ),
         _openapi_output,

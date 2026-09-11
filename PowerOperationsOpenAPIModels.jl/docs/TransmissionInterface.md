@@ -11,5 +11,5 @@ Name | Type | Description | Notes
 **`direction_mapping`** | **`Union{Absent,Nothing,TransmissionInterfaceDirectionMapping}`** | Dictionary of the line `name`s in the interface and their direction of flow (1 or -1) relative to the flow of the interface. | [optional]
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
-**`power_units`** | **`VoltageUnitBasis`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
+**`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`violation_penalty`** | **`Union{Absent,Float64,Nothing}`** | Penalty cost for violating the flow limits in the interface. | [optional]

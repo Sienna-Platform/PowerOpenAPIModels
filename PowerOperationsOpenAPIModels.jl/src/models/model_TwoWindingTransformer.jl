@@ -13,7 +13,7 @@ All series electrical data — the modeled arc, tap, phase shift, series impedan
   - `shunt_location`: Placement of `magnetizing_shunt` on the two sides of the circuit arc.
 """
 Base.@kwdef struct TwoWindingTransformer <: APIModel
-    admittance_units::Union{Absent, Nothing, AdmittanceUnitBasis} = ABSENT
+    admittance_units::Union{Absent, AdmittanceUnitBasis, Nothing} = ABSENT
     circuit::Int64
     id::Int64
     magnetizing_shunt::Union{Absent, Nothing, ComplexNumber} = ABSENT
@@ -26,7 +26,7 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoWindingTransformer",
         ),
         _openapi_raw,
@@ -37,7 +37,7 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
         _decode(
-            Union{Absent, Nothing, AdmittanceUnitBasis},
+            Union{Absent, AdmittanceUnitBasis, Nothing},
             _openapi_object["admittance_units"],
             _openapi_validate,
         ) : ABSENT
@@ -117,7 +117,7 @@ function _encode(_openapi_value::TwoWindingTransformer)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoWindingTransformer",
         ),
         _openapi_output,

@@ -23,7 +23,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/DemandSideTechnology/properties/curtailment_cost",
         ),
         value,
@@ -44,84 +44,84 @@ function _decode(
             "AVERAGE_RATE" => (
                 AverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/AverageRateCurve",
                 ),
             ),
             "AverageRateCurve" => (
                 AverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/AverageRateCurve",
                 ),
             ),
             "INCREMENTAL" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/IncrementalCurve",
                 ),
             ),
             "INPUT_OUTPUT" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/InputOutputCurve",
                 ),
             ),
             "IncrementalCurve" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/IncrementalCurve",
                 ),
             ),
             "InputOutputCurve" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/InputOutputCurve",
                 ),
             ),
             "TIME_SERIES_AVERAGE_RATE" => (
                 TimeSeriesAverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/TimeSeriesAverageRateCurve",
                 ),
             ),
             "TIME_SERIES_INCREMENTAL" => (
                 TimeSeriesIncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/TimeSeriesIncrementalCurve",
                 ),
             ),
             "TIME_SERIES_INPUT_OUTPUT" => (
                 TimeSeriesInputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/TimeSeriesInputOutputCurve",
                 ),
             ),
             "TimeSeriesAverageRateCurve" => (
                 TimeSeriesAverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/TimeSeriesAverageRateCurve",
                 ),
             ),
             "TimeSeriesIncrementalCurve" => (
                 TimeSeriesIncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/TimeSeriesIncrementalCurve",
                 ),
             ),
             "TimeSeriesInputOutputCurve" => (
                 TimeSeriesInputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
                     pointer="/components/schemas/TimeSeriesInputOutputCurve",
                 ),
             ),
@@ -150,7 +150,7 @@ function _encode(value::DemandSideTechnologyCurtailmentCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/DemandSideTechnology/properties/curtailment_cost",
         ),
         output,

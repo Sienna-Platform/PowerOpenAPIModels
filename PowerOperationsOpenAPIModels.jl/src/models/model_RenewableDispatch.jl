@@ -32,7 +32,7 @@ Base.@kwdef struct RenewableDispatch <: APIModel
     name::String
     operation_cost::RenewableDispatchOperationCost
     power_factor::Float64
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     prime_mover_type::PrimeMovers
     rating::Float64
     reactive_power::Float64
@@ -44,7 +44,7 @@ function _decode(::Type{RenewableDispatch}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/RenewableDispatch",
         ),
         _openapi_raw,
@@ -100,7 +100,7 @@ function _decode(::Type{RenewableDispatch}, _openapi_raw, _openapi_validate::Boo
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "RenewableDispatch"),
         _openapi_validate,
     )
@@ -206,7 +206,7 @@ function _encode(_openapi_value::RenewableDispatch)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/RenewableDispatch",
         ),
         _openapi_output,

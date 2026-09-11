@@ -7,7 +7,7 @@ All series electrical data — the modeled arc, tap, phase shift, series impedan
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`admittance_units`** | **`Union{Absent,Nothing,AdmittanceUnitBasis}`** | Unit basis for the magnetizing_shunt admittance. | [optional]
+**`admittance_units`** | **`Union{Absent,AdmittanceUnitBasis,Nothing}`** | Unit basis for the magnetizing_shunt admittance. | [optional]
 **`circuit`** | **`Int64`** | The `TransformerCircuit` carrying this transformer's series electrical data. | [required]
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
 **`magnetizing_shunt`** | **`Union{Absent,Nothing,ComplexNumber}`** | Magnetizing shunt admittance referenced to the circuit's `base_voltage_primary`. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr, COMPONENT_BASE: pu . | [optional]

@@ -24,14 +24,14 @@ A three-winding transformer, modeled as an equivalent star: each referenced `Tra
   - `x_31`: Measured reactance, referenced to the tertiary winding's base voltage, from tertiary to primary windings (X3-1 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
 """
 Base.@kwdef struct ThreeWindingTransformer <: APIModel
-    admittance_units::Union{Absent, Nothing, AdmittanceUnitBasis} = ABSENT
+    admittance_units::Union{Absent, AdmittanceUnitBasis, Nothing} = ABSENT
     base_power_12::Union{Absent, Float64, Nothing} = ABSENT
     base_power_23::Union{Absent, Float64, Nothing} = ABSENT
     base_power_31::Union{Absent, Float64, Nothing} = ABSENT
     id::Int64
     magnetizing_shunt::Union{Absent, Nothing, ComplexNumber} = ABSENT
     name::String
-    parameter_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
+    parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
     primary_circuit::Int64
     r_12::Union{Absent, Float64, Nothing} = ABSENT
     r_23::Union{Absent, Float64, Nothing} = ABSENT
@@ -51,7 +51,7 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ThreeWindingTransformer",
         ),
         _openapi_raw,
@@ -62,7 +62,7 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
         _decode(
-            Union{Absent, Nothing, AdmittanceUnitBasis},
+            Union{Absent, AdmittanceUnitBasis, Nothing},
             _openapi_object["admittance_units"],
             _openapi_validate,
         ) : ABSENT
@@ -107,7 +107,7 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
-            Union{Absent, Nothing, VoltageUnitBasis},
+            Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             _openapi_validate,
         ) : ABSENT
@@ -279,7 +279,7 @@ function _encode(_openapi_value::ThreeWindingTransformer)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ThreeWindingTransformer",
         ),
         _openapi_output,

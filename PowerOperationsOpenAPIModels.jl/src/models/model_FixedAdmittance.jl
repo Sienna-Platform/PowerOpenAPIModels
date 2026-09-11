@@ -16,7 +16,7 @@ Most often used in dynamics or AC power flow studies as a source of reactive pow
 """
 Base.@kwdef struct FixedAdmittance <: APIModel
     y::ComplexNumber
-    admittance_units::Union{Absent, ShuntAdmittanceUnitBasis, Nothing} = ABSENT
+    admittance_units::Union{Absent, Nothing, ShuntAdmittanceUnitBasis} = ABSENT
     available::Bool
     base_power::Float64
     bus::Int64
@@ -30,7 +30,7 @@ function _decode(::Type{FixedAdmittance}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/FixedAdmittance",
         ),
         _openapi_raw,
@@ -46,7 +46,7 @@ function _decode(::Type{FixedAdmittance}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
         _decode(
-            Union{Absent, ShuntAdmittanceUnitBasis, Nothing},
+            Union{Absent, Nothing, ShuntAdmittanceUnitBasis},
             _openapi_object["admittance_units"],
             _openapi_validate,
         ) : ABSENT
@@ -135,7 +135,7 @@ function _encode(_openapi_value::FixedAdmittance)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/FixedAdmittance",
         ),
         _openapi_output,

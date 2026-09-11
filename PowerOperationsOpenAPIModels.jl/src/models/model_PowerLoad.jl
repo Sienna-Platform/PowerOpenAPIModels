@@ -23,13 +23,13 @@ Base.@kwdef struct PowerLoad <: APIModel
     available::Bool
     base_power::Float64
     bus::Int64
-    conformity::Union{Absent, Nothing, LoadConformity} = ABSENT
+    conformity::Union{Absent, LoadConformity, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
     id::Int64
     max_active_power::Float64
     max_reactive_power::Float64
     name::String
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     reactive_power::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -38,7 +38,7 @@ function _decode(::Type{PowerLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PowerLoad",
         ),
         _openapi_raw,
@@ -66,7 +66,7 @@ function _decode(::Type{PowerLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_conformity =
         haskey(_openapi_object, "conformity") ?
         _decode(
-            Union{Absent, Nothing, LoadConformity},
+            Union{Absent, LoadConformity, Nothing},
             _openapi_object["conformity"],
             _openapi_validate,
         ) : ABSENT
@@ -92,7 +92,7 @@ function _decode(::Type{PowerLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_name =
         _decode(String, _required(_openapi_object, "name", "PowerLoad"), _openapi_validate)
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "PowerLoad"),
         _openapi_validate,
     )
@@ -171,7 +171,7 @@ function _encode(_openapi_value::PowerLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PowerLoad",
         ),
         _openapi_output,

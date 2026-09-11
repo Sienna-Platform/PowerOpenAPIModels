@@ -4,7 +4,7 @@
 Minimum and maximum allowable installed capacity for a technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MW.
 """
 struct SupplyTechnologyCapacityLimits <: OneOfAPIModel
-    value::Union{MinMax, SupplyTechnologyCapacityLimits2}
+    value::Union{MinMax, MinMaxByKey}
 end
 _decode(::Type{SupplyTechnologyCapacityLimits}, value) =
     _decode(SupplyTechnologyCapacityLimits, value, true)
@@ -12,7 +12,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/SupplyTechnology/properties/capacity_limits",
         ),
         value,
@@ -23,7 +23,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/MinMax",
         ),
         value;
@@ -38,17 +38,14 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
-            pointer="/components/schemas/SupplyTechnology/properties/capacity_limits/anyOf/1",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
+            pointer="/components/schemas/MinMaxByKey",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(
-                matches,
-                _decode(SupplyTechnologyCapacityLimits2, value, _openapi_validate),
-            )
+            push!(matches, _decode(MinMaxByKey, value, _openapi_validate))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -65,7 +62,7 @@ function _encode(value::SupplyTechnologyCapacityLimits)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/SupplyTechnology/properties/capacity_limits",
         ),
         output,

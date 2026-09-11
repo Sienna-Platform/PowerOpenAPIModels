@@ -8,7 +8,7 @@ Most often used in dynamics or AC power flow studies as a source of reactive pow
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`y`** | **`ComplexNumber`** | Fixed admittance. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr . | [required]
-**`admittance_units`** | **`Union{Absent,ShuntAdmittanceUnitBasis,Nothing}`** | Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage). | [optional]
+**`admittance_units`** | **`Union{Absent,Nothing,ShuntAdmittanceUnitBasis}`** | Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage). | [optional]
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
 **`base_power`** | **`Float64`** | System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [required]
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [required]

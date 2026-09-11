@@ -24,9 +24,9 @@ Base.@kwdef struct TwoTerminalGenericHVDCLine <: APIModel
     available::Bool
     base_power::Float64
     id::Int64
-    loss::Union{Absent, Nothing, TwoTerminalGenericHVDCLineLoss} = ABSENT
+    loss::Union{Absent, LossCurve, Nothing} = ABSENT
     name::String
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     reactive_power_limits_from::MinMax
     reactive_power_limits_to::MinMax
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -37,7 +37,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoTerminalGenericHVDCLine",
         ),
         _openapi_raw,
@@ -87,7 +87,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     _openapi_field_loss =
         haskey(_openapi_object, "loss") ?
         _decode(
-            Union{Absent, Nothing, TwoTerminalGenericHVDCLineLoss},
+            Union{Absent, LossCurve, Nothing},
             _openapi_object["loss"],
             _openapi_validate,
         ) : ABSENT
@@ -97,7 +97,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "TwoTerminalGenericHVDCLine"),
         _openapi_validate,
     )
@@ -197,7 +197,7 @@ function _encode(_openapi_value::TwoTerminalGenericHVDCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoTerminalGenericHVDCLine",
         ),
         _openapi_output,

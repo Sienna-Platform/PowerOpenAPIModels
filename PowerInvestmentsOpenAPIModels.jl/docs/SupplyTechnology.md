@@ -7,9 +7,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`available`** | **`Union{Absent,Bool,Nothing}`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). | [optional]
 **`capacity_limits`** | **`Union{Absent,Nothing,SupplyTechnologyCapacityLimits}`** | Minimum and maximum allowable installed capacity for a technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MW. | [optional]
-**`capital_costs`** | **`Union{Absent,Nothing,CapitalCost}`** | Capital and interconnection cost for investing in a technology (capital cost in USD/MW). | [optional]
-**`cofire_level_limits`** | **`Union{Absent,Nothing,SupplyTechnologyCofireLevelLimits}`** | Minimum and maximum blending level of each fuel during normal generation process for multi-fuel generator. Units: 1. | [optional]
-**`cofire_start_limits`** | **`Union{Absent,Nothing,SupplyTechnologyCofireStartLimits}`** | Minimum and maximum blending level of each fuel during start-up process for multi-fuel generator. Units: 1. | [optional]
+**`capital_costs`** | **`Union{Absent,CapitalCost,Nothing}`** | Capital and interconnection cost for investing in a technology (capital cost in USD/MW). | [optional]
+**`cofire_level_limits`** | **`Union{Absent,Nothing,MinMaxByKey}`** | Minimum and maximum blending level of each fuel during normal generation process for multi-fuel generator. Units: 1. | [optional]
+**`cofire_start_limits`** | **`Union{Absent,Nothing,MinMaxByKey}`** | Minimum and maximum blending level of each fuel during start-up process for multi-fuel generator. Units: 1. | [optional]
 **`financial_data`** | **`TechnologyFinancialData`** | Struct containing relevant financial information for a technology. | [required]
 **`fuel`** | **`Union{Absent,Nothing,Vector{ThermalFuels}}`** | Fuel type according to IEA. | [optional]
 **`id`** | **`Int64`** | ID for individual component. | [required]

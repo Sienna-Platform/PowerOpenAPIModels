@@ -16,7 +16,7 @@ Supplemental attribute describing the emission of a single pollutant from a host
 Base.@kwdef struct EmissionsData <: APIModel
     available::Union{Absent, Bool, Nothing} = ABSENT
     basis::EmissionBasis
-    emission_rate::EmissionsDataEmissionRate
+    emission_rate::ValueCurve
     energy_unit::EnergyUnit
     gwp::Union{Absent, Float64, Nothing} = ABSENT
     id::Int64
@@ -31,7 +31,7 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/EmissionsData",
         ),
         _openapi_raw,
@@ -52,7 +52,7 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
         _openapi_validate,
     )
     _openapi_field_emission_rate = _decode(
-        EmissionsDataEmissionRate,
+        ValueCurve,
         _required(_openapi_object, "emission_rate", "EmissionsData"),
         _openapi_validate,
     )
@@ -156,7 +156,7 @@ function _encode(_openapi_value::EmissionsData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/EmissionsData",
         ),
         _openapi_output,

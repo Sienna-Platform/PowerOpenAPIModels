@@ -24,7 +24,7 @@ Base.@kwdef struct OfflineReserve <: APIModel
     requirement::Union{Absent, Float64, Nothing} = ABSENT
     sustained_time::Union{Absent, Float64, Nothing} = ABSENT
     time_frame::Float64
-    variable::Union{Absent, Nothing, CostCurve} = ABSENT
+    variable::Union{Absent, CostCurve, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{OfflineReserve}, value) = _decode(OfflineReserve, value, true)
@@ -32,7 +32,7 @@ function _decode(::Type{OfflineReserve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/OfflineReserve",
         ),
         _openapi_raw,
@@ -98,7 +98,7 @@ function _decode(::Type{OfflineReserve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_variable =
         haskey(_openapi_object, "variable") ?
         _decode(
-            Union{Absent, Nothing, CostCurve},
+            Union{Absent, CostCurve, Nothing},
             _openapi_object["variable"],
             _openapi_validate,
         ) : ABSENT
@@ -169,7 +169,7 @@ function _encode(_openapi_value::OfflineReserve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/OfflineReserve",
         ),
         _openapi_output,

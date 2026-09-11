@@ -17,7 +17,7 @@ Base.@kwdef struct HydroReservoir <: APIModel
     available::Bool
     downstream_turbines::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     evaporative_loss::Union{Absent, Float64, Nothing} = ABSENT
-    head_to_volume_factor::HydroReservoirHeadToVolumeFactor
+    head_to_volume_factor::FunctionData
     id::Int64
     inflow::Float64
     initial_level::Float64
@@ -38,7 +38,7 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroReservoir",
         ),
         _openapi_raw,
@@ -66,7 +66,7 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
             _openapi_validate,
         ) : ABSENT
     _openapi_field_head_to_volume_factor = _decode(
-        HydroReservoirHeadToVolumeFactor,
+        FunctionData,
         _required(_openapi_object, "head_to_volume_factor", "HydroReservoir"),
         _openapi_validate,
     )
@@ -244,7 +244,7 @@ function _encode(_openapi_value::HydroReservoir)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroReservoir",
         ),
         _openapi_output,

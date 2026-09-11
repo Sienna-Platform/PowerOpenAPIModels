@@ -35,20 +35,20 @@ Base.@kwdef struct Deterministic <: APIModel
     count::Int64
     data_hash::Union{Absent, Nothing, String} = ABSENT
     element_shape::Vector{Int64}
-    element_type::String
+    element_type::ElementType
     features::TimeSeriesFeatures
-    horizon::String
+    horizon::Period
     initial_timestamp::Dates.DateTime
-    interval::String
+    interval::Period
     name::String
     owner_category::OwnerCategory
     owner_id::Int64
     owner_type::String
     quantity_kind::Union{Absent, Nothing, String} = ABSENT
-    resolution::String
-    time_reference::Union{Absent, Nothing, String} = ABSENT
+    resolution::Period
+    time_reference::Union{Absent, Nothing, TimeReference} = ABSENT
     time_series_type::String = "Deterministic"
-    unit_system::Union{Absent, VoltageUnitBasis, Nothing} = ABSENT
+    unit_system::Union{Absent, Nothing, UnitSystem} = ABSENT
     units::Union{Absent, Nothing, String} = ABSENT
     uri::String
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -58,7 +58,7 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json",
+            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
             pointer="/components/schemas/Deterministic",
         ),
         _openapi_raw,
@@ -110,7 +110,7 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
         _openapi_validate,
     )
     _openapi_field_element_type = _decode(
-        String,
+        ElementType,
         _required(_openapi_object, "element_type", "Deterministic"),
         _openapi_validate,
     )
@@ -120,7 +120,7 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
         _openapi_validate,
     )
     _openapi_field_horizon = _decode(
-        String,
+        Period,
         _required(_openapi_object, "horizon", "Deterministic"),
         _openapi_validate,
     )
@@ -130,7 +130,7 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
         _openapi_validate,
     )
     _openapi_field_interval = _decode(
-        String,
+        Period,
         _required(_openapi_object, "interval", "Deterministic"),
         _openapi_validate,
     )
@@ -162,14 +162,14 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
             _openapi_validate,
         ) : ABSENT
     _openapi_field_resolution = _decode(
-        String,
+        Period,
         _required(_openapi_object, "resolution", "Deterministic"),
         _openapi_validate,
     )
     _openapi_field_time_reference =
         haskey(_openapi_object, "time_reference") ?
         _decode(
-            Union{Absent, Nothing, String},
+            Union{Absent, Nothing, TimeReference},
             _openapi_object["time_reference"],
             _openapi_validate,
         ) : ABSENT
@@ -181,7 +181,7 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_unit_system =
         haskey(_openapi_object, "unit_system") ?
         _decode(
-            Union{Absent, VoltageUnitBasis, Nothing},
+            Union{Absent, Nothing, UnitSystem},
             _openapi_object["unit_system"],
             _openapi_validate,
         ) : ABSENT
@@ -312,7 +312,7 @@ function _encode(_openapi_value::Deterministic)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-6d38bd66b0c6b6ed2d32.json",
+            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
             pointer="/components/schemas/Deterministic",
         ),
         _openapi_output,

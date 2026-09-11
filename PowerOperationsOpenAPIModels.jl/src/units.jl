@@ -2263,6 +2263,18 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{HydroTurbine},
+    ::Val{:time_at_status},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{HydroTurbine},
+    ::Val{:time_at_status},
+) = "min"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{HydroTurbine},
+    ::Val{:time_at_status},
+) = "OperationalDuration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{HydroTurbine},
     ::Val{:powerhouse_elevation},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
@@ -5021,30 +5033,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{Substation},
     ::Val{:grounding_resistance},
 ) = "Resistance"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SwitchedAdmittance}, ::Val{:y}) =
-    true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::SwitchedAdmittance, ::Val{:y})
-    if string(o.admittance_units) == "NATURAL_UNITS"
-        return "S"
-    end
-    if string(o.admittance_units) == "COMPONENT_MVAR"
-        return "MVAr"
-    end
-    error(
-        "SwitchedAdmittance.y: no unit declared for admittance_units=$(o.admittance_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::SwitchedAdmittance, ::Val{:y})
-    if string(o.admittance_units) == "NATURAL_UNITS"
-        return "Susceptance"
-    end
-    if string(o.admittance_units) == "COMPONENT_MVAR"
-        return "ReactivePower"
-    end
-    error(
-        "SwitchedAdmittance.y: no unit declared for admittance_units=$(o.admittance_units)",
-    )
-end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{SwitchedAdmittance},
     ::Val{:y_increase},
@@ -5075,6 +5063,38 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     end
     error(
         "SwitchedAdmittance.y_increase: no unit declared for admittance_units=$(o.admittance_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{SwitchedAdmittance},
+    ::Val{:solved_admittance},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::SwitchedAdmittance,
+    ::Val{:solved_admittance},
+)
+    if string(o.admittance_units) == "NATURAL_UNITS"
+        return "S"
+    end
+    if string(o.admittance_units) == "COMPONENT_MVAR"
+        return "MVAr"
+    end
+    error(
+        "SwitchedAdmittance.solved_admittance: no unit declared for admittance_units=$(o.admittance_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::SwitchedAdmittance,
+    ::Val{:solved_admittance},
+)
+    if string(o.admittance_units) == "NATURAL_UNITS"
+        return "Susceptance"
+    end
+    if string(o.admittance_units) == "COMPONENT_MVAR"
+        return "ReactivePower"
+    end
+    error(
+        "SwitchedAdmittance.solved_admittance: no unit declared for admittance_units=$(o.admittance_units)",
     )
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(

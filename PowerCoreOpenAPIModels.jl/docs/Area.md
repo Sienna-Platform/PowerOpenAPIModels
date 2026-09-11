@@ -11,4 +11,4 @@ Name | Type | Description | Notes
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
 **`peak_active_power`** | **`Union{Absent,Float64,Nothing}`** | Peak active power in the area. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
 **`peak_reactive_power`** | **`Union{Absent,Float64,Nothing}`** | Peak reactive power in the area. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
-**`power_units`** | **`VoltageUnitBasis`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
+**`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]

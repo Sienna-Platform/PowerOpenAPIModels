@@ -31,8 +31,8 @@ Base.@kwdef struct Line <: APIModel
     g::Union{Absent, FromTo, Nothing} = ABSENT
     id::Int64
     name::String
-    parameter_units::Union{Absent, VoltageUnitBasis, Nothing} = ABSENT
-    power_units::VoltageUnitBasis
+    parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
+    power_units::UnitSystem
     r::Float64
     rating::Float64
     rating_b::Union{Absent, Float64, Nothing} = ABSENT
@@ -46,7 +46,7 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/Line",
         ),
         _openapi_raw,
@@ -88,12 +88,12 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
-            Union{Absent, VoltageUnitBasis, Nothing},
+            Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "Line"),
         _openapi_validate,
     )
@@ -210,7 +210,7 @@ function _encode(_openapi_value::Line)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/Line",
         ),
         _openapi_output,

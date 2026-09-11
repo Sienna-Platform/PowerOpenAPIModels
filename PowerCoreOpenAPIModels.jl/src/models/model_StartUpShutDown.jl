@@ -13,7 +13,7 @@ function _decode(::Type{StartUpShutDown}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/StartUpShutDown",
         ),
         _openapi_raw,
@@ -64,7 +64,7 @@ function _encode(_openapi_value::StartUpShutDown)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/StartUpShutDown",
         ),
         _openapi_output,

@@ -5,4 +5,4 @@ Allowable installed energy capacity for a storage technology, given either as a 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`value`** | **`Union{MinMax,StorageTechnologyCapacityLimitsEnergy2}`** |  | [required]
+**`value`** | **`Union{MinMax,MinMaxByKey}`** |  | [required]

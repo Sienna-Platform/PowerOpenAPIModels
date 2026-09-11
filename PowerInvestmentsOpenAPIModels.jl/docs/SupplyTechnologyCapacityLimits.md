@@ -5,4 +5,4 @@ Minimum and maximum allowable installed capacity for a technology, given either 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`value`** | **`Union{MinMax,SupplyTechnologyCapacityLimits2}`** |  | [required]
+**`value`** | **`Union{MinMax,MinMaxByKey}`** |  | [required]

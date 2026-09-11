@@ -4,7 +4,8 @@
 Cost representation for time-varying market bids of energy and ancillary services. The static counterpart is MarketBidCost.
 
   - `ancillary_service_offers`: IDs of the ancillary service components that this bid offers into.
-  - `curve_style`: Curve-clearing style for the bid: 0 = CURVE (ordinary divisible price-setting curve, default); 1 = FIXED (clears as one indivisible all-or-nothing package over its period); 2 = VARIABLE (divisible quantity, block-priced, cannot set the settlement-point price). Corresponds to ERCOT's DAM PriceCurve curveStyle field (CURVE/FIXED/VARIABLE). A non-zero value is mutually exclusive with incremental_slope/decremental_slope.
+  - `curve_multistep`: Multi-step block indicator for the bid: 0 = SINGLE_STEP (default; each step of the bid clears independently); 1 = MULTI_STEP (the bid must be awarded as one block across every step it covers). Counted in model steps so it applies at any resolution. Independent of curve_style: curve_style is the quantity structure, curve_multistep is the time structure, and they compose.
+  - `curve_style`: Curve-clearing style for the bid: 0 = VARIABLE (default; continuous quantity with one or more segments); 1 = FIXED (all-or-nothing block with a single segment). FIXED is mutually exclusive with incremental_slope/decremental_slope and requires a single-segment offer curve.
   - `decremental_offer_curves`: Buy offer curves whose value curve is a time-series-backed piecewise incremental curve. Only the TIME_SERIES_INCREMENTAL variant is admissible here; any other variant is rejected by the consuming constructor.
   - `decremental_slope`: Linear-interpolation flag for the decremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve.
   - `incremental_offer_curves`: Sell offer curves whose value curve is a time-series-backed piecewise incremental curve. Only the TIME_SERIES_INCREMENTAL variant is admissible here; any other variant is rejected by the consuming constructor.
@@ -16,7 +17,8 @@ Cost representation for time-varying market bids of energy and ancillary service
 Base.@kwdef struct MarketBidTimeSeriesCost <: APIModel
     ancillary_service_offers::Vector{Int64}
     cost_type::String = "MARKET_BID_TIME_SERIES"
-    curve_style::Union{Absent, MarketBidTimeSeriesCostCurveStyle, Nothing} = ABSENT
+    curve_multistep::Union{Absent, CurveMultiStep, Nothing} = ABSENT
+    curve_style::Union{Absent, CurveStyles, Nothing} = ABSENT
     decremental_offer_curves::CostCurve
     decremental_slope::Union{Absent, Bool, Nothing} = ABSENT
     incremental_offer_curves::CostCurve
@@ -32,7 +34,7 @@ function _decode(::Type{MarketBidTimeSeriesCost}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/MarketBidTimeSeriesCost",
         ),
         _openapi_raw,
@@ -50,10 +52,17 @@ function _decode(::Type{MarketBidTimeSeriesCost}, _openapi_raw, _openapi_validat
         _required(_openapi_object, "cost_type", "MarketBidTimeSeriesCost"),
         _openapi_validate,
     )
+    _openapi_field_curve_multistep =
+        haskey(_openapi_object, "curve_multistep") ?
+        _decode(
+            Union{Absent, CurveMultiStep, Nothing},
+            _openapi_object["curve_multistep"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_curve_style =
         haskey(_openapi_object, "curve_style") ?
         _decode(
-            Union{Absent, MarketBidTimeSeriesCostCurveStyle, Nothing},
+            Union{Absent, CurveStyles, Nothing},
             _openapi_object["curve_style"],
             _openapi_validate,
         ) : ABSENT
@@ -101,6 +110,7 @@ function _decode(::Type{MarketBidTimeSeriesCost}, _openapi_raw, _openapi_validat
         String(_openapi_key) in (
             "ancillary_service_offers",
             "cost_type",
+            "curve_multistep",
             "curve_style",
             "decremental_offer_curves",
             "decremental_slope",
@@ -116,6 +126,7 @@ function _decode(::Type{MarketBidTimeSeriesCost}, _openapi_raw, _openapi_validat
     return MarketBidTimeSeriesCost(;
         ancillary_service_offers=_openapi_field_ancillary_service_offers,
         cost_type=_openapi_field_cost_type,
+        curve_multistep=_openapi_field_curve_multistep,
         curve_style=_openapi_field_curve_style,
         decremental_offer_curves=_openapi_field_decremental_offer_curves,
         decremental_slope=_openapi_field_decremental_slope,
@@ -135,6 +146,8 @@ function _encode(_openapi_value::MarketBidTimeSeriesCost)
     )
     _openapi_value.cost_type isa Absent ||
         (_openapi_output["cost_type"] = _encode(_openapi_value.cost_type))
+    _openapi_value.curve_multistep isa Absent ||
+        (_openapi_output["curve_multistep"] = _encode(_openapi_value.curve_multistep))
     _openapi_value.curve_style isa Absent ||
         (_openapi_output["curve_style"] = _encode(_openapi_value.curve_style))
     _openapi_value.decremental_offer_curves isa Absent || (
@@ -170,7 +183,7 @@ function _encode(_openapi_value::MarketBidTimeSeriesCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/MarketBidTimeSeriesCost",
         ),
         _openapi_output,
@@ -187,6 +200,8 @@ function _form_fields(_openapi_value::MarketBidTimeSeriesCost)
     )
     _openapi_value.cost_type isa Absent ||
         push!(_openapi_output, "cost_type" => _openapi_value.cost_type)
+    _openapi_value.curve_multistep isa Absent ||
+        push!(_openapi_output, "curve_multistep" => _openapi_value.curve_multistep)
     _openapi_value.curve_style isa Absent ||
         push!(_openapi_output, "curve_style" => _openapi_value.curve_style)
     _openapi_value.decremental_offer_curves isa Absent || push!(

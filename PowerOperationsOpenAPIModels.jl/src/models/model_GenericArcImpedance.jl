@@ -24,8 +24,8 @@ Base.@kwdef struct GenericArcImpedance <: APIModel
     id::Int64
     max_flow::Float64
     name::String
-    parameter_units::Union{Absent, VoltageUnitBasis, Nothing} = ABSENT
-    power_units::VoltageUnitBasis
+    parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
+    power_units::UnitSystem
     r::Float64
     reactive_power_flow::Float64
     x::Float64
@@ -36,7 +36,7 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/GenericArcImpedance",
         ),
         _openapi_raw,
@@ -82,12 +82,12 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
-            Union{Absent, VoltageUnitBasis, Nothing},
+            Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "GenericArcImpedance"),
         _openapi_validate,
     )
@@ -176,7 +176,7 @@ function _encode(_openapi_value::GenericArcImpedance)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/GenericArcImpedance",
         ),
         _openapi_output,

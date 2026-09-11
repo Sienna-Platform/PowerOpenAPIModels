@@ -5,4 +5,4 @@ Allowable installed power capacity for charging of a storage technology, given e
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`value`** | **`Union{MinMax,StorageTechnologyCapacityLimitsCharge2}`** |  | [required]
+**`value`** | **`Union{MinMax,MinMaxByKey}`** |  | [required]

@@ -32,7 +32,7 @@ Base.@kwdef struct StandardLoad <: APIModel
     available::Bool
     base_power::Float64
     bus::Int64
-    conformity::Union{Absent, Nothing, LoadConformity} = ABSENT
+    conformity::Union{Absent, LoadConformity, Nothing} = ABSENT
     constant_active_power::Union{Absent, Float64, Nothing} = ABSENT
     constant_reactive_power::Union{Absent, Float64, Nothing} = ABSENT
     current_active_power::Union{Absent, Float64, Nothing} = ABSENT
@@ -48,7 +48,7 @@ Base.@kwdef struct StandardLoad <: APIModel
     max_impedance_active_power::Union{Absent, Float64, Nothing} = ABSENT
     max_impedance_reactive_power::Union{Absent, Float64, Nothing} = ABSENT
     name::String
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{StandardLoad}, value) = _decode(StandardLoad, value, true)
@@ -56,7 +56,7 @@ function _decode(::Type{StandardLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/StandardLoad",
         ),
         _openapi_raw,
@@ -79,7 +79,7 @@ function _decode(::Type{StandardLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_conformity =
         haskey(_openapi_object, "conformity") ?
         _decode(
-            Union{Absent, Nothing, LoadConformity},
+            Union{Absent, LoadConformity, Nothing},
             _openapi_object["conformity"],
             _openapi_validate,
         ) : ABSENT
@@ -182,7 +182,7 @@ function _decode(::Type{StandardLoad}, _openapi_raw, _openapi_validate::Bool)
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "StandardLoad"),
         _openapi_validate,
     )
@@ -312,7 +312,7 @@ function _encode(_openapi_value::StandardLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/StandardLoad",
         ),
         _openapi_output,

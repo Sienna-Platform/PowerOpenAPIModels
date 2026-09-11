@@ -30,7 +30,7 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
   - `voltage_setpoint_units`: Unit basis for the DC/AC voltage setpoints.
 """
 Base.@kwdef struct InterconnectingConverter <: APIModel
-    ac_control::Union{Absent, VSCACControlModes, Nothing} = ABSENT
+    ac_control::Union{Absent, Nothing, VSCACControlModes} = ABSENT
     ac_setpoint::Union{Absent, Float64, Nothing} = ABSENT
     active_power::Float64
     active_power_limits::MinMax
@@ -38,23 +38,23 @@ Base.@kwdef struct InterconnectingConverter <: APIModel
     base_power::Float64
     bus::Int64
     dc_bus::Int64
-    dc_control::Union{Absent, VSCDCControlModes, Nothing} = ABSENT
+    dc_control::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
     dc_current::Union{Absent, Float64, Nothing} = ABSENT
     dc_setpoint::Union{Absent, Float64, Nothing} = ABSENT
     dc_voltage_droop::Union{Absent, Float64, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
     id::Int64
-    loss_function::Union{Absent, InterconnectingConverterLossFunction, Nothing} = ABSENT
+    loss_function::Union{Absent, LossCurve, Nothing} = ABSENT
     max_dc_current::Union{Absent, Float64, Nothing} = ABSENT
     name::String
     power_factor_weighting_fraction::Union{Absent, Float64, Nothing} = ABSENT
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     rating::Float64
     reactive_power_limits::Union{Absent, MinMax, Nothing} = ABSENT
     remote_bus_control::Union{Absent, Union{Int64, Nothing}} = ABSENT
     rmpct::Union{Absent, Float64, Nothing} = ABSENT
     voltage_limits::Union{Absent, MinMax, Nothing} = ABSENT
-    voltage_setpoint_units::Union{Absent, VoltageUnitBasis, Nothing} = ABSENT
+    voltage_setpoint_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{InterconnectingConverter}, value) =
@@ -63,7 +63,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterconnectingConverter",
         ),
         _openapi_raw,
@@ -74,7 +74,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_field_ac_control =
         haskey(_openapi_object, "ac_control") ?
         _decode(
-            Union{Absent, VSCACControlModes, Nothing},
+            Union{Absent, Nothing, VSCACControlModes},
             _openapi_object["ac_control"],
             _openapi_validate,
         ) : ABSENT
@@ -118,7 +118,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_field_dc_control =
         haskey(_openapi_object, "dc_control") ?
         _decode(
-            Union{Absent, VSCDCControlModes, Nothing},
+            Union{Absent, Nothing, VSCDCControlModes},
             _openapi_object["dc_control"],
             _openapi_validate,
         ) : ABSENT
@@ -158,7 +158,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_field_loss_function =
         haskey(_openapi_object, "loss_function") ?
         _decode(
-            Union{Absent, InterconnectingConverterLossFunction, Nothing},
+            Union{Absent, LossCurve, Nothing},
             _openapi_object["loss_function"],
             _openapi_validate,
         ) : ABSENT
@@ -182,7 +182,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "InterconnectingConverter"),
         _openapi_validate,
     )
@@ -222,7 +222,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_field_voltage_setpoint_units =
         haskey(_openapi_object, "voltage_setpoint_units") ?
         _decode(
-            Union{Absent, VoltageUnitBasis, Nothing},
+            Union{Absent, Nothing, VoltageUnitBasis},
             _openapi_object["voltage_setpoint_units"],
             _openapi_validate,
         ) : ABSENT
@@ -356,7 +356,7 @@ function _encode(_openapi_value::InterconnectingConverter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterconnectingConverter",
         ),
         _openapi_output,

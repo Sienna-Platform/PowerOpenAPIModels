@@ -4,7 +4,7 @@
 Allowable installed power capacity for charging of a storage technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MW.
 """
 struct StorageTechnologyCapacityLimitsCharge <: OneOfAPIModel
-    value::Union{MinMax, StorageTechnologyCapacityLimitsCharge2}
+    value::Union{MinMax, MinMaxByKey}
 end
 _decode(::Type{StorageTechnologyCapacityLimitsCharge}, value) =
     _decode(StorageTechnologyCapacityLimitsCharge, value, true)
@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/StorageTechnology/properties/capacity_limits_charge",
         ),
         value,
@@ -27,7 +27,7 @@ function _decode(
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/MinMax",
         ),
         value;
@@ -42,17 +42,14 @@ function _decode(
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
-            pointer="/components/schemas/StorageTechnology/properties/capacity_limits_charge/anyOf/1",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
+            pointer="/components/schemas/MinMaxByKey",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(
-                matches,
-                _decode(StorageTechnologyCapacityLimitsCharge2, value, _openapi_validate),
-            )
+            push!(matches, _decode(MinMaxByKey, value, _openapi_validate))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -69,7 +66,7 @@ function _encode(value::StorageTechnologyCapacityLimitsCharge)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/StorageTechnology/properties/capacity_limits_charge",
         ),
         output,

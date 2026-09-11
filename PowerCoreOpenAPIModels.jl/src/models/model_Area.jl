@@ -18,7 +18,7 @@ Base.@kwdef struct Area <: APIModel
     name::String
     peak_active_power::Union{Absent, Float64, Nothing} = ABSENT
     peak_reactive_power::Union{Absent, Float64, Nothing} = ABSENT
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{Area}, value) = _decode(Area, value, true)
@@ -26,7 +26,7 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/Area",
         ),
         _openapi_raw,
@@ -65,7 +65,7 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "Area"),
         _openapi_validate,
     )
@@ -122,7 +122,7 @@ function _encode(_openapi_value::Area)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/Area",
         ),
         _openapi_output,

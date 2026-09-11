@@ -17,5 +17,5 @@ Name | Type | Description | Notes
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
 **`l`** | **`Float64`** | Total series inductance, split equally on both sides of the shunt capacitance. Per-unit on this line's `base_current`. Units: pu. | [required]
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
-**`parameter_units`** | **`Union{Absent,Nothing,VoltageUnitBasis}`** | Unit basis for this line's impedance field (r). | [optional]
+**`parameter_units`** | **`Union{Absent,ImpedanceUnitBasis,Nothing}`** | Unit basis for this line's impedance field (r). | [optional]
 **`r`** | **`Float64`** | Total series resistance, split equally on both sides of the shunt capacitance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [required]

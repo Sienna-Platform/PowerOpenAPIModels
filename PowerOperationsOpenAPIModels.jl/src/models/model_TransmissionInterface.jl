@@ -20,7 +20,7 @@ Base.@kwdef struct TransmissionInterface <: APIModel
         ABSENT
     id::Int64
     name::String
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     violation_penalty::Union{Absent, Float64, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -29,7 +29,7 @@ function _decode(::Type{TransmissionInterface}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TransmissionInterface",
         ),
         _openapi_raw,
@@ -70,7 +70,7 @@ function _decode(::Type{TransmissionInterface}, _openapi_raw, _openapi_validate:
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "TransmissionInterface"),
         _openapi_validate,
     )
@@ -138,7 +138,7 @@ function _encode(_openapi_value::TransmissionInterface)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TransmissionInterface",
         ),
         _openapi_output,

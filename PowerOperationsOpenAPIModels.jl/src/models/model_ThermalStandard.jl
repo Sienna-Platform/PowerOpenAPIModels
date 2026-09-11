@@ -10,10 +10,10 @@ This is a standard representation with options to include a minimum up time, min
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the unit for per unitization. Must be positive; a zero base would make per-unit conversion undefined. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
+  - `commitment_mode`: Commitment mode of the unit.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
   - `fuel`: Prime mover fuel according to EIA 923.
   - `id`: Unique integer identifier for this component.
-  - `must_run`: Set to `true` if the unit is must run.
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `operation_cost`: Operating cost of generation, or a MarketBidCost.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
@@ -22,8 +22,8 @@ This is a standard representation with options to include a minimum up time, min
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `status`: Initial commitment condition at the start of a simulation (`true` = on or `false` = off).
-  - `time_at_status`: Time the generator has been on or off, as indicated by `status`. Units: min.
+  - `status`: Operating state of the unit at the start of a simulation.
+  - `time_at_status`: Time the generator has been in its current status. Units: min.
   - `time_limits`: Minimum up and minimum down time limits. Units: min.
 """
 Base.@kwdef struct ThermalStandard <: APIModel
@@ -32,19 +32,19 @@ Base.@kwdef struct ThermalStandard <: APIModel
     available::Bool
     base_power::Float64
     bus::Int64
+    commitment_mode::Union{Absent, CommitmentModes, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
     fuel::Union{Absent, Nothing, ThermalFuels} = ABSENT
     id::Int64
-    must_run::Union{Absent, Bool, Nothing} = ABSENT
     name::String
     operation_cost::ThermalStandardOperationCost
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     prime_mover_type::Union{Absent, Nothing, PrimeMovers} = ABSENT
     ramp_limits::Union{Absent, Nothing, UpDown} = ABSENT
     rating::Float64
     reactive_power::Float64
     reactive_power_limits::Union{Absent, Nothing, MinMax} = ABSENT
-    status::Bool
+    status::OperationalStates
     time_at_status::Union{Absent, Float64, Nothing} = ABSENT
     time_limits::Union{Absent, Nothing, UpDown} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -54,7 +54,7 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ThermalStandard",
         ),
         _openapi_raw,
@@ -87,6 +87,13 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
         _required(_openapi_object, "bus", "ThermalStandard"),
         _openapi_validate,
     )
+    _openapi_field_commitment_mode =
+        haskey(_openapi_object, "commitment_mode") ?
+        _decode(
+            Union{Absent, CommitmentModes, Nothing},
+            _openapi_object["commitment_mode"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
         _decode(
@@ -106,13 +113,6 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
         _required(_openapi_object, "id", "ThermalStandard"),
         _openapi_validate,
     )
-    _openapi_field_must_run =
-        haskey(_openapi_object, "must_run") ?
-        _decode(
-            Union{Absent, Bool, Nothing},
-            _openapi_object["must_run"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_name = _decode(
         String,
         _required(_openapi_object, "name", "ThermalStandard"),
@@ -124,7 +124,7 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "ThermalStandard"),
         _openapi_validate,
     )
@@ -160,7 +160,7 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
             _openapi_validate,
         ) : ABSENT
     _openapi_field_status = _decode(
-        Bool,
+        OperationalStates,
         _required(_openapi_object, "status", "ThermalStandard"),
         _openapi_validate,
     )
@@ -186,10 +186,10 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
             "available",
             "base_power",
             "bus",
+            "commitment_mode",
             "dynamic_injector",
             "fuel",
             "id",
-            "must_run",
             "name",
             "operation_cost",
             "power_units",
@@ -211,10 +211,10 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
         available=_openapi_field_available,
         base_power=_openapi_field_base_power,
         bus=_openapi_field_bus,
+        commitment_mode=_openapi_field_commitment_mode,
         dynamic_injector=_openapi_field_dynamic_injector,
         fuel=_openapi_field_fuel,
         id=_openapi_field_id,
-        must_run=_openapi_field_must_run,
         name=_openapi_field_name,
         operation_cost=_openapi_field_operation_cost,
         power_units=_openapi_field_power_units,
@@ -242,13 +242,13 @@ function _encode(_openapi_value::ThermalStandard)
     _openapi_value.base_power isa Absent ||
         (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
     _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+    _openapi_value.commitment_mode isa Absent ||
+        (_openapi_output["commitment_mode"] = _encode(_openapi_value.commitment_mode))
     _openapi_value.dynamic_injector isa Absent ||
         (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
     _openapi_value.fuel isa Absent ||
         (_openapi_output["fuel"] = _encode(_openapi_value.fuel))
     _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.must_run isa Absent ||
-        (_openapi_output["must_run"] = _encode(_openapi_value.must_run))
     _openapi_value.name isa Absent ||
         (_openapi_output["name"] = _encode(_openapi_value.name))
     _openapi_value.operation_cost isa Absent ||
@@ -284,7 +284,7 @@ function _encode(_openapi_value::ThermalStandard)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ThermalStandard",
         ),
         _openapi_output,
@@ -304,12 +304,12 @@ function _form_fields(_openapi_value::ThermalStandard)
     _openapi_value.base_power isa Absent ||
         push!(_openapi_output, "base_power" => _openapi_value.base_power)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.commitment_mode isa Absent ||
+        push!(_openapi_output, "commitment_mode" => _openapi_value.commitment_mode)
     _openapi_value.dynamic_injector isa Absent ||
         push!(_openapi_output, "dynamic_injector" => _openapi_value.dynamic_injector)
     _openapi_value.fuel isa Absent || push!(_openapi_output, "fuel" => _openapi_value.fuel)
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
-    _openapi_value.must_run isa Absent ||
-        push!(_openapi_output, "must_run" => _openapi_value.must_run)
     _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
     _openapi_value.operation_cost isa Absent ||
         push!(_openapi_output, "operation_cost" => _openapi_value.operation_cost)

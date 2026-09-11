@@ -58,13 +58,12 @@ Base.@kwdef struct TwoTerminalVSCLine <: APIModel
     active_power_flow::Float64
     active_power_limits_from::MinMax
     active_power_limits_to::MinMax
-    admittance_units::Union{Absent, Nothing, AdmittanceUnitBasis} = ABSENT
+    admittance_units::Union{Absent, AdmittanceUnitBasis, Nothing} = ABSENT
     arc::Int64
     available::Bool
     base_power::Float64
-    converter_loss_from::Union{Absent, Nothing, TwoTerminalVSCLineConverterLossFrom} =
-        ABSENT
-    converter_loss_to::Union{Absent, Nothing, TwoTerminalVSCLineConverterLossTo} = ABSENT
+    converter_loss_from::Union{Absent, LossCurve, Nothing} = ABSENT
+    converter_loss_to::Union{Absent, LossCurve, Nothing} = ABSENT
     dc_control_from::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
     dc_control_to::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
     dc_current::Union{Absent, Float64, Nothing} = ABSENT
@@ -79,7 +78,7 @@ Base.@kwdef struct TwoTerminalVSCLine <: APIModel
     name::String
     power_factor_weighting_fraction_from::Union{Absent, Float64, Nothing} = ABSENT
     power_factor_weighting_fraction_to::Union{Absent, Float64, Nothing} = ABSENT
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     rated_ac_voltage_from::Union{Absent, Float64, Nothing} = ABSENT
     rated_ac_voltage_to::Union{Absent, Float64, Nothing} = ABSENT
     rated_dc_voltage::Union{Absent, Float64, Nothing} = ABSENT
@@ -105,7 +104,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoTerminalVSCLine",
         ),
         _openapi_raw,
@@ -159,7 +158,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
         _decode(
-            Union{Absent, Nothing, AdmittanceUnitBasis},
+            Union{Absent, AdmittanceUnitBasis, Nothing},
             _openapi_object["admittance_units"],
             _openapi_validate,
         ) : ABSENT
@@ -181,14 +180,14 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_field_converter_loss_from =
         haskey(_openapi_object, "converter_loss_from") ?
         _decode(
-            Union{Absent, Nothing, TwoTerminalVSCLineConverterLossFrom},
+            Union{Absent, LossCurve, Nothing},
             _openapi_object["converter_loss_from"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_converter_loss_to =
         haskey(_openapi_object, "converter_loss_to") ?
         _decode(
-            Union{Absent, Nothing, TwoTerminalVSCLineConverterLossTo},
+            Union{Absent, LossCurve, Nothing},
             _openapi_object["converter_loss_to"],
             _openapi_validate,
         ) : ABSENT
@@ -284,7 +283,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "TwoTerminalVSCLine"),
         _openapi_validate,
     )
@@ -651,7 +650,7 @@ function _encode(_openapi_value::TwoTerminalVSCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoTerminalVSCLine",
         ),
         _openapi_output,

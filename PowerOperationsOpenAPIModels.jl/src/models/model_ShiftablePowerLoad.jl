@@ -33,7 +33,7 @@ Base.@kwdef struct ShiftablePowerLoad <: APIModel
     max_reactive_power::Float64
     name::String
     operation_cost::ShiftablePowerLoadOperationCost
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     reactive_power::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -42,7 +42,7 @@ function _decode(::Type{ShiftablePowerLoad}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ShiftablePowerLoad",
         ),
         _openapi_raw,
@@ -113,7 +113,7 @@ function _decode(::Type{ShiftablePowerLoad}, _openapi_raw, _openapi_validate::Bo
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "ShiftablePowerLoad"),
         _openapi_validate,
     )
@@ -204,7 +204,7 @@ function _encode(_openapi_value::ShiftablePowerLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ShiftablePowerLoad",
         ),
         _openapi_output,

@@ -20,7 +20,7 @@ function _decode(::Type{TwoWindingTransformerShuntLocation}, value, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoWindingTransformerShuntLocation",
         ),
         value,
@@ -34,7 +34,7 @@ function _encode(value::TwoWindingTransformerShuntLocation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoWindingTransformerShuntLocation",
         ),
         output,

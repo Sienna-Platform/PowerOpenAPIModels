@@ -45,7 +45,7 @@ Base.@kwdef struct StorageTechnology <: APIModel
     losses::Union{Absent, Float64, Nothing} = ABSENT
     min_discharge_fraction::Union{Absent, Float64, Nothing} = ABSENT
     name::String
-    operation_costs::Union{Absent, Nothing, StorageTechnologyOperationCosts} = ABSENT
+    operation_costs::Union{Absent, Nothing, StorageCost} = ABSENT
     power_systems_type::String
     prime_mover_type::Union{Absent, Nothing, PrimeMovers} = ABSENT
     region::Union{Absent, Nothing, Vector{Int64}} = ABSENT
@@ -60,7 +60,7 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/StorageTechnology",
         ),
         _openapi_raw,
@@ -154,7 +154,7 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
     _openapi_field_operation_costs =
         haskey(_openapi_object, "operation_costs") ?
         _decode(
-            Union{Absent, Nothing, StorageTechnologyOperationCosts},
+            Union{Absent, Nothing, StorageCost},
             _openapi_object["operation_costs"],
             _openapi_validate,
         ) : ABSENT
@@ -320,7 +320,7 @@ function _encode(_openapi_value::StorageTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/StorageTechnology",
         ),
         _openapi_output,

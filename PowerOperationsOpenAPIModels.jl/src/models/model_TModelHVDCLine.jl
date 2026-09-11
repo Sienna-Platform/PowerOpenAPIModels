@@ -29,7 +29,7 @@ Base.@kwdef struct TModelHVDCLine <: APIModel
     id::Int64
     l::Float64
     name::String
-    parameter_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
+    parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
     r::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -38,7 +38,7 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TModelHVDCLine",
         ),
         _openapi_raw,
@@ -99,7 +99,7 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
-            Union{Absent, Nothing, VoltageUnitBasis},
+            Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             _openapi_validate,
         ) : ABSENT
@@ -179,7 +179,7 @@ function _encode(_openapi_value::TModelHVDCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TModelHVDCLine",
         ),
         _openapi_output,

@@ -20,8 +20,8 @@ For hydro generators with an upper reservoir, see `HydroReservoir`.
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `status`: Initial commitment condition at the start of a simulation (`true` = on or `false` = off).
-  - `time_at_status`: Time the generator has been on or off, as indicated by `status`. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
+  - `status`: Operating state of the unit at the start of a simulation.
+  - `time_at_status`: Time the generator has been in its current `status`. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
   - `time_limits`: Minimum up and minimum down time limits. Units: min.
 """
 Base.@kwdef struct HydroDispatch <: APIModel
@@ -34,13 +34,13 @@ Base.@kwdef struct HydroDispatch <: APIModel
     id::Int64
     name::String
     operation_cost::HydroDispatchOperationCost
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     prime_mover_type::PrimeMovers
     ramp_limits::Union{Absent, UpDown, Nothing} = ABSENT
     rating::Float64
     reactive_power::Float64
     reactive_power_limits::Union{Absent, MinMax, Nothing} = ABSENT
-    status::Union{Absent, Bool, Nothing} = ABSENT
+    status::Union{Absent, Nothing, OperationalStates} = ABSENT
     time_at_status::Union{Absent, Float64, Nothing} = ABSENT
     time_limits::Union{Absent, UpDown, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -50,7 +50,7 @@ function _decode(::Type{HydroDispatch}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroDispatch",
         ),
         _openapi_raw,
@@ -103,7 +103,7 @@ function _decode(::Type{HydroDispatch}, _openapi_raw, _openapi_validate::Bool)
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "HydroDispatch"),
         _openapi_validate,
     )
@@ -139,7 +139,7 @@ function _decode(::Type{HydroDispatch}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_status =
         haskey(_openapi_object, "status") ?
         _decode(
-            Union{Absent, Bool, Nothing},
+            Union{Absent, Nothing, OperationalStates},
             _openapi_object["status"],
             _openapi_validate,
         ) : ABSENT
@@ -255,7 +255,7 @@ function _encode(_openapi_value::HydroDispatch)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroDispatch",
         ),
         _openapi_output,

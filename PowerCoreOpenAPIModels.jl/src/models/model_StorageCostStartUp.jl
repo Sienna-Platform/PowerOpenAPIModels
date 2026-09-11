@@ -1,12 +1,12 @@
 struct StorageCostStartUp <: OneOfAPIModel
-    value::Union{Float64, StorageCostStartUp2}
+    value::Union{ChargeDischarge, Float64}
 end
 _decode(::Type{StorageCostStartUp}, value) = _decode(StorageCostStartUp, value, true)
 function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/StorageCost/properties/start_up",
         ),
         value,
@@ -17,7 +17,7 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/StorageCost/properties/start_up/oneOf/0",
         ),
         value;
@@ -32,14 +32,14 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
-            pointer="/components/schemas/StorageCost/properties/start_up/oneOf/1",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            pointer="/components/schemas/ChargeDischarge",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(StorageCostStartUp2, value, _openapi_validate))
+            push!(matches, _decode(ChargeDischarge, value, _openapi_validate))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -54,7 +54,7 @@ function _encode(value::StorageCostStartUp)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-eed3ff16ac6cf871058a.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/StorageCost/properties/start_up",
         ),
         output,

@@ -14,4 +14,4 @@ Name | Type | Description | Notes
 **`requirement`** | **`Union{Absent,Float64,Nothing}`** | The value of required reserves. Units: MW. | [optional]
 **`sustained_time`** | **`Union{Absent,Float64,Nothing}`** | The time reserve contribution must be sustained at a specified level. Units: min. | [optional]
 **`time_frame`** | **`Float64`** | The saturation time frame to provide reserve contribution. Units: min. | [required]
-**`variable`** | **`Union{Absent,Nothing,CostCurve}`** | Operating reserve demand curve, either static or time-series-backed. Time series values are carried via `time_series_associations` in the sidecar, never inline. Omit when the reserve has no demand curve. | [optional]
+**`variable`** | **`Union{Absent,CostCurve,Nothing}`** | Operating reserve demand curve, either static or time-series-backed. Time series values are carried via `time_series_associations` in the sidecar, never inline. Omit when the reserve has no demand curve. | [optional]

@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **`losses`** | **`Union{Absent,Float64,Nothing}`** | Self-discharge of storage (fraction of energy stored per hour). Units: 1. | [optional]
 **`min_discharge_fraction`** | **`Union{Absent,Float64,Nothing}`** | Minimum discharge as a fraction of total discharge capacity. Units: 1. | [optional]
 **`name`** | **`String`** | Name of the component. | [required]
-**`operation_costs`** | **`Union{Absent,Nothing,StorageTechnologyOperationCosts}`** | Fixed and variable O&M costs for a storage technology. Units: USD/MWh. | [optional]
+**`operation_costs`** | **`Union{Absent,Nothing,StorageCost}`** | Fixed and variable O&M costs for a storage technology. Units: USD/MWh. | [optional]
 **`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
 **`prime_mover_type`** | **`Union{Absent,Nothing,PrimeMovers}`** | Prime mover for generator. | [optional]
 **`region`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Location where the component applies. Can be a zone or node. | [optional]

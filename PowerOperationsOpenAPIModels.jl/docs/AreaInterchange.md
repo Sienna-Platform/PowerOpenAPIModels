@@ -12,5 +12,5 @@ Name | Type | Description | Notes
 **`from_area`** | **`Int64`** | Area from which the power is extracted. | [required]
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
-**`power_units`** | **`VoltageUnitBasis`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
+**`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`to_area`** | **`Int64`** | Area to which the power is injected. | [required]

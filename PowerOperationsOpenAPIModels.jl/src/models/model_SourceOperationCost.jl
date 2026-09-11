@@ -11,7 +11,7 @@ function _decode(::Type{SourceOperationCost}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/Source/properties/operation_cost",
         ),
         value,
@@ -28,42 +28,42 @@ function _decode(::Type{SourceOperationCost}, value, _openapi_validate::Bool)
             "IMPORTEXPORT" => (
                 ImportExportCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportCost",
                 ),
             ),
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "ImportExportCost" => (
                 ImportExportCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportCost",
                 ),
             ),
             "ImportExportTimeSeriesCost" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "MarketBidTimeSeriesCost" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -88,7 +88,7 @@ function _encode(value::SourceOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/Source/properties/operation_cost",
         ),
         output,

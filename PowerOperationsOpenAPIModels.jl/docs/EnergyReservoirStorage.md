@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
 **`operation_cost`** | **`EnergyReservoirStorageOperationCost`** | Operating cost of storage. or MarketBidCost | [required]
 **`output_active_power_limits`** | **`MinMax`** | Minimum and maximum limits on the output active power (i.e., discharging). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
-**`power_units`** | **`VoltageUnitBasis`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
+**`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`prime_mover_type`** | **`PrimeMovers`** | Prime mover technology according to EIA 923. | [required]
 **`ramp_limits`** | **`Union{Absent,UpDown,Nothing}`** | Ramp up and ramp down limits. Units: per power_units — NATURAL_UNITS: MW/min, COMPONENT_BASE: pu/min . | [optional]
 **`rating`** | **`Float64`** | Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [required]

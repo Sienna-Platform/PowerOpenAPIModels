@@ -10,13 +10,14 @@ A hydropower pumped turbine that needs to have two `HydroReservoir`s attached, s
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
+  - `commitment_mode`: Commitment mode of the unit.
   - `conversion_factor`: Conversion factor from flow/volume to energy: m^3 -> p.u-hr. Units: 1.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
   - `efficiency`: Turbine/Pump efficiency [0, 1.0].
   - `id`: Unique integer identifier for this component.
   - `minimum_time`: Minimum operating time for the specific mode. Units: min.
-  - `must_run`: Whether the unit must run (i.e., cannot be curtailed).
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `operating_mode`: Which mode the pumped-storage unit is operating in at the start of a simulation: pumping, generating, or idle.
   - `operation_cost`: Operating cost of generation. or MarketBidCost; default PSY.HydroGenerationCost(nothing)
   - `outflow_limits`: Turbine/Pump outflow limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: m3/s.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
@@ -26,8 +27,8 @@ A hydropower pumped turbine that needs to have two `HydroReservoir`s attached, s
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `status`: Initial Operating status of a pumped-storage hydro unit. See `HydroPumpTurbineStatus` for reference.
-  - `time_at_status`: Time the generator has been on or off, as indicated by `status`. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
+  - `status`: Operating state of the unit at the start of a simulation.
+  - `time_at_status`: Time the generator has been in its current `status`. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
   - `time_limits`: Minimum up and minimum down time limits. in psy5 a required param with an option to be nothing Units: min.
   - `transition_time`: Transition time to switch into the specific mode. Units: min.
   - `travel_time`: Downstream (from reservoir into turbine) travel time. Set to `null` if not applicable. Units: min.
@@ -40,23 +41,24 @@ Base.@kwdef struct HydroPumpTurbine <: APIModel
     available::Bool
     base_power::Float64
     bus::Int64
+    commitment_mode::Union{Absent, CommitmentModes, Nothing} = ABSENT
     conversion_factor::Union{Absent, Float64, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
-    efficiency::Union{Absent, TurbinePump, Nothing} = ABSENT
+    efficiency::Union{Absent, Nothing, TurbinePump} = ABSENT
     id::Int64
     minimum_time::Union{Absent, TurbinePump, Nothing} = ABSENT
-    must_run::Union{Absent, Bool, Nothing} = ABSENT
     name::String
+    operating_mode::Union{Absent, HydroPumpTurbineOperatingMode, Nothing} = ABSENT
     operation_cost::HydroPumpTurbineOperationCost
     outflow_limits::Union{Absent, MinMax, Nothing} = ABSENT
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     powerhouse_elevation::Float64
-    prime_mover_type::Union{Absent, PrimeMovers, Nothing} = ABSENT
+    prime_mover_type::Union{Absent, Nothing, PrimeMovers} = ABSENT
     ramp_limits::Union{Absent, UpDown, Nothing} = ABSENT
     rating::Float64
     reactive_power::Float64
     reactive_power_limits::Union{Absent, MinMax, Nothing} = ABSENT
-    status::Union{Absent, HydroPumpTurbineStatus, Nothing} = ABSENT
+    status::Union{Absent, Nothing, OperationalStates} = ABSENT
     time_at_status::Union{Absent, Float64, Nothing} = ABSENT
     time_limits::Union{Absent, UpDown, Nothing} = ABSENT
     transition_time::Union{Absent, TurbinePump, Nothing} = ABSENT
@@ -68,7 +70,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroPumpTurbine",
         ),
         _openapi_raw,
@@ -113,6 +115,13 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
         _required(_openapi_object, "bus", "HydroPumpTurbine"),
         _openapi_validate,
     )
+    _openapi_field_commitment_mode =
+        haskey(_openapi_object, "commitment_mode") ?
+        _decode(
+            Union{Absent, CommitmentModes, Nothing},
+            _openapi_object["commitment_mode"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_conversion_factor =
         haskey(_openapi_object, "conversion_factor") ?
         _decode(
@@ -130,7 +139,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
     _openapi_field_efficiency =
         haskey(_openapi_object, "efficiency") ?
         _decode(
-            Union{Absent, TurbinePump, Nothing},
+            Union{Absent, Nothing, TurbinePump},
             _openapi_object["efficiency"],
             _openapi_validate,
         ) : ABSENT
@@ -146,18 +155,18 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
             _openapi_object["minimum_time"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_must_run =
-        haskey(_openapi_object, "must_run") ?
-        _decode(
-            Union{Absent, Bool, Nothing},
-            _openapi_object["must_run"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_name = _decode(
         String,
         _required(_openapi_object, "name", "HydroPumpTurbine"),
         _openapi_validate,
     )
+    _openapi_field_operating_mode =
+        haskey(_openapi_object, "operating_mode") ?
+        _decode(
+            Union{Absent, HydroPumpTurbineOperatingMode, Nothing},
+            _openapi_object["operating_mode"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_operation_cost = _decode(
         HydroPumpTurbineOperationCost,
         _required(_openapi_object, "operation_cost", "HydroPumpTurbine"),
@@ -171,7 +180,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "HydroPumpTurbine"),
         _openapi_validate,
     )
@@ -183,7 +192,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
     _openapi_field_prime_mover_type =
         haskey(_openapi_object, "prime_mover_type") ?
         _decode(
-            Union{Absent, PrimeMovers, Nothing},
+            Union{Absent, Nothing, PrimeMovers},
             _openapi_object["prime_mover_type"],
             _openapi_validate,
         ) : ABSENT
@@ -214,7 +223,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
     _openapi_field_status =
         haskey(_openapi_object, "status") ?
         _decode(
-            Union{Absent, HydroPumpTurbineStatus, Nothing},
+            Union{Absent, Nothing, OperationalStates},
             _openapi_object["status"],
             _openapi_validate,
         ) : ABSENT
@@ -256,13 +265,14 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
             "available",
             "base_power",
             "bus",
+            "commitment_mode",
             "conversion_factor",
             "dynamic_injector",
             "efficiency",
             "id",
             "minimum_time",
-            "must_run",
             "name",
+            "operating_mode",
             "operation_cost",
             "outflow_limits",
             "power_units",
@@ -289,13 +299,14 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
         available=_openapi_field_available,
         base_power=_openapi_field_base_power,
         bus=_openapi_field_bus,
+        commitment_mode=_openapi_field_commitment_mode,
         conversion_factor=_openapi_field_conversion_factor,
         dynamic_injector=_openapi_field_dynamic_injector,
         efficiency=_openapi_field_efficiency,
         id=_openapi_field_id,
         minimum_time=_openapi_field_minimum_time,
-        must_run=_openapi_field_must_run,
         name=_openapi_field_name,
+        operating_mode=_openapi_field_operating_mode,
         operation_cost=_openapi_field_operation_cost,
         outflow_limits=_openapi_field_outflow_limits,
         power_units=_openapi_field_power_units,
@@ -332,6 +343,8 @@ function _encode(_openapi_value::HydroPumpTurbine)
     _openapi_value.base_power isa Absent ||
         (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
     _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+    _openapi_value.commitment_mode isa Absent ||
+        (_openapi_output["commitment_mode"] = _encode(_openapi_value.commitment_mode))
     _openapi_value.conversion_factor isa Absent ||
         (_openapi_output["conversion_factor"] = _encode(_openapi_value.conversion_factor))
     _openapi_value.dynamic_injector isa Absent ||
@@ -341,10 +354,10 @@ function _encode(_openapi_value::HydroPumpTurbine)
     _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
     _openapi_value.minimum_time isa Absent ||
         (_openapi_output["minimum_time"] = _encode(_openapi_value.minimum_time))
-    _openapi_value.must_run isa Absent ||
-        (_openapi_output["must_run"] = _encode(_openapi_value.must_run))
     _openapi_value.name isa Absent ||
         (_openapi_output["name"] = _encode(_openapi_value.name))
+    _openapi_value.operating_mode isa Absent ||
+        (_openapi_output["operating_mode"] = _encode(_openapi_value.operating_mode))
     _openapi_value.operation_cost isa Absent ||
         (_openapi_output["operation_cost"] = _encode(_openapi_value.operation_cost))
     _openapi_value.outflow_limits isa Absent ||
@@ -388,7 +401,7 @@ function _encode(_openapi_value::HydroPumpTurbine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroPumpTurbine",
         ),
         _openapi_output,
@@ -414,6 +427,8 @@ function _form_fields(_openapi_value::HydroPumpTurbine)
     _openapi_value.base_power isa Absent ||
         push!(_openapi_output, "base_power" => _openapi_value.base_power)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.commitment_mode isa Absent ||
+        push!(_openapi_output, "commitment_mode" => _openapi_value.commitment_mode)
     _openapi_value.conversion_factor isa Absent ||
         push!(_openapi_output, "conversion_factor" => _openapi_value.conversion_factor)
     _openapi_value.dynamic_injector isa Absent ||
@@ -423,9 +438,9 @@ function _form_fields(_openapi_value::HydroPumpTurbine)
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.minimum_time isa Absent ||
         push!(_openapi_output, "minimum_time" => _openapi_value.minimum_time)
-    _openapi_value.must_run isa Absent ||
-        push!(_openapi_output, "must_run" => _openapi_value.must_run)
     _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
+    _openapi_value.operating_mode isa Absent ||
+        push!(_openapi_output, "operating_mode" => _openapi_value.operating_mode)
     _openapi_value.operation_cost isa Absent ||
         push!(_openapi_output, "operation_cost" => _openapi_value.operation_cost)
     _openapi_value.outflow_limits isa Absent ||

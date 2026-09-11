@@ -21,7 +21,7 @@ A hybrid system co-locating a thermal unit, electric load, storage, and/or renew
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `renewable_unit`: ID of a renewable generator with supertype `RenewableGen`, if any.
-  - `status`: Initial commitment condition at the start of a simulation (`true` = on or `false` = off).
+  - `status`: Operating state of the unit at the start of a simulation.
   - `storage`: ID of an energy storage system with supertype `Storage`, if any.
   - `thermal_unit`: ID of a thermal generator with supertype `ThermalGen`, if any.
 """
@@ -38,13 +38,13 @@ Base.@kwdef struct HybridSystem <: APIModel
     interconnection_impedance::Union{Absent, ComplexNumber, Nothing} = ABSENT
     interconnection_rating::Union{Absent, Union{Float64, Nothing}} = ABSENT
     name::String
-    operation_cost::HybridSystemOperationCost
+    operation_cost::MarketBidCost
     output_active_power_limits::Union{Absent, MinMax, Nothing} = ABSENT
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     reactive_power::Float64
     reactive_power_limits::Union{Absent, MinMax, Nothing} = ABSENT
     renewable_unit::Union{Absent, Union{Int64, Nothing}} = ABSENT
-    status::Bool
+    status::OperationalStates
     storage::Union{Absent, Union{Int64, Nothing}} = ABSENT
     thermal_unit::Union{Absent, Union{Int64, Nothing}} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -54,7 +54,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HybridSystem",
         ),
         _openapi_raw,
@@ -129,7 +129,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
         _openapi_validate,
     )
     _openapi_field_operation_cost = _decode(
-        HybridSystemOperationCost,
+        MarketBidCost,
         _required(_openapi_object, "operation_cost", "HybridSystem"),
         _openapi_validate,
     )
@@ -141,7 +141,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "HybridSystem"),
         _openapi_validate,
     )
@@ -165,7 +165,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
             _openapi_validate,
         ) : ABSENT
     _openapi_field_status = _decode(
-        Bool,
+        OperationalStates,
         _required(_openapi_object, "status", "HybridSystem"),
         _openapi_validate,
     )
@@ -301,7 +301,7 @@ function _encode(_openapi_value::HybridSystem)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HybridSystem",
         ),
         _openapi_output,

@@ -5,4 +5,4 @@ Allowable installed power capacity for discharging of a storage technology, give
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`value`** | **`Union{MinMax,StorageTechnologyCapacityLimitsDischarge2}`** |  | [required]
+**`value`** | **`Union{MinMax,MinMaxByKey}`** |  | [required]

@@ -1,35 +1,33 @@
-Base.@kwdef struct StorageTechnologyCapacityLimitsCharge2 <: APIModel
+"""
+    MinMaxByKey
+
+A mapping from a stringified float key to the `MinMax` bound that applies at that key.
+"""
+Base.@kwdef struct MinMaxByKey <: APIModel
     additional_properties::Dict{String, MinMax} = Dict{String, MinMax}()
 end
-_decode(::Type{StorageTechnologyCapacityLimitsCharge2}, value) =
-    _decode(StorageTechnologyCapacityLimitsCharge2, value, true)
-function _decode(
-    ::Type{StorageTechnologyCapacityLimitsCharge2},
-    _openapi_raw,
-    _openapi_validate::Bool,
-)
+_decode(::Type{MinMaxByKey}, value) = _decode(MinMaxByKey, value, true)
+function _decode(::Type{MinMaxByKey}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
-            pointer="/components/schemas/StorageTechnology/properties/capacity_limits_charge/anyOf/1",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            pointer="/components/schemas/MinMaxByKey",
         ),
         _openapi_raw,
-        "decoding StorageTechnologyCapacityLimitsCharge2";
+        "decoding MinMaxByKey";
         direction=:neutral,
     )
-    _openapi_object = _object(_openapi_raw, "StorageTechnologyCapacityLimitsCharge2")
+    _openapi_object = _object(_openapi_raw, "MinMaxByKey")
     _openapi_additional_properties = Dict{String, MinMax}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in () && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(MinMax, _openapi_item, _openapi_validate)
     end
-    return StorageTechnologyCapacityLimitsCharge2(;
-        additional_properties=_openapi_additional_properties,
-    )
+    return MinMaxByKey(; additional_properties=_openapi_additional_properties)
 end
-function _encode(_openapi_value::StorageTechnologyCapacityLimitsCharge2)
+function _encode(_openapi_value::MinMaxByKey)
     _openapi_output = JSON.Object{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -42,16 +40,16 @@ function _encode(_openapi_value::StorageTechnologyCapacityLimitsCharge2)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-384713fc06a7c2e0ea0f.json",
-            pointer="/components/schemas/StorageTechnology/properties/capacity_limits_charge/anyOf/1",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            pointer="/components/schemas/MinMaxByKey",
         ),
         _openapi_output,
-        "encoding StorageTechnologyCapacityLimitsCharge2";
+        "encoding MinMaxByKey";
         direction=:neutral,
     )
 end
 
-function _form_fields(_openapi_value::StorageTechnologyCapacityLimitsCharge2)
+function _form_fields(_openapi_value::MinMaxByKey)
     _openapi_output = Pair{String, Any}[]
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output

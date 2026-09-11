@@ -3,24 +3,23 @@
 
 A switched admittance, with discrete steps to adjust the admittance.
 
-Most often used in power flow studies, iterating over the steps to see impacts of admittance on the results. Total admittance is calculated as: `Y` + `number_of_steps` * `Y_increase`.
+Most often used in power flow studies, iterating over the steps to see impacts of admittance on the results. Total admittance is `number_engaged` * `Y_increase`, unless `solved_admittance` is set, in which case that value is the effective admittance. There is no fixed base admittance: a PSS/E SWITCHED SHUNT record carries only BINIT and the per-block increments.
 
-  - `y`: Initial admittance at N = 0. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
   - `y_increase`: Vector with admittance increment step for each adjustable shunt block. For example, `Y_increase[2]` is the complex admittance increment for each step at block 2. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
   - `admittance_limits`: Shunt admittance limits for switched shunt model. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
-  - `admittance_units`: Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
+  - `admittance_units`: Unit basis for the shunt admittance fields. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `bus`: ID of the bus that this component is connected to.
-  - `control_mode`: Switched-shunt control mode (PSS/E MODSW).
+  - `control_mode`: Switched-shunt control mode.
   - `dynamic_injector`: ID of the corresponding dynamic injection model for admittance, if any.
   - `id`: Unique integer identifier for this component.
-  - `initial_status`: Vector of initial switched shunt status, one for in-service and zero for out-of-service for block i (1 through 8).
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `number_engaged`: Vector with the number of steps currently engaged (switched in) for each adjustable shunt block. For example, `number_engaged[2]` is the number of steps in service at block 2, and cannot exceed `number_of_steps[2]`.
   - `number_of_steps`: Vector with number of steps for each adjustable shunt block. For example, `number_of_steps[2]` are the number of available steps for admittance increment at block 2.
   - `regulated_bus_number`: Bus number whose voltage/quantity this shunt regulates; 0 means local bus (PSS/E SWREM/NREG). Units: 1.
+  - `solved_admittance`: Solved-case switched shunt admittance (PSS/E BINIT); when present it is the shunt's effective admittance, used in place of `number_engaged` * `Y_increase`. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
 """
 Base.@kwdef struct SwitchedAdmittance <: APIModel
-    y::ComplexNumber
     y_increase::Union{Absent, Nothing, Vector{ComplexNumber}} = ABSENT
     admittance_limits::Union{Absent, Nothing, MinMax} = ABSENT
     admittance_units::Union{Absent, Nothing, ShuntAdmittanceUnitBasis} = ABSENT
@@ -29,10 +28,11 @@ Base.@kwdef struct SwitchedAdmittance <: APIModel
     control_mode::Union{Absent, Nothing, SwitchedAdmittanceControlMode} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
     id::Int64
-    initial_status::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     name::String
+    number_engaged::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     number_of_steps::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     regulated_bus_number::Union{Absent, Int64, Nothing} = ABSENT
+    solved_admittance::Union{Absent, Union{Float64, Nothing}} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{SwitchedAdmittance}, value) = _decode(SwitchedAdmittance, value, true)
@@ -40,7 +40,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/SwitchedAdmittance",
         ),
         _openapi_raw,
@@ -48,11 +48,6 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SwitchedAdmittance")
-    _openapi_field_y = _decode(
-        ComplexNumber,
-        _required(_openapi_object, "Y", "SwitchedAdmittance"),
-        _openapi_validate,
-    )
     _openapi_field_y_increase =
         haskey(_openapi_object, "Y_increase") ?
         _decode(
@@ -103,18 +98,18 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
         _required(_openapi_object, "id", "SwitchedAdmittance"),
         _openapi_validate,
     )
-    _openapi_field_initial_status =
-        haskey(_openapi_object, "initial_status") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["initial_status"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_name = _decode(
         String,
         _required(_openapi_object, "name", "SwitchedAdmittance"),
         _openapi_validate,
     )
+    _openapi_field_number_engaged =
+        haskey(_openapi_object, "number_engaged") ?
+        _decode(
+            Union{Absent, Nothing, Vector{Int64}},
+            _openapi_object["number_engaged"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_number_of_steps =
         haskey(_openapi_object, "number_of_steps") ?
         _decode(
@@ -129,10 +124,16 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["regulated_bus_number"],
             _openapi_validate,
         ) : ABSENT
+    _openapi_field_solved_admittance =
+        haskey(_openapi_object, "solved_admittance") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["solved_admittance"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
-            "Y",
             "Y_increase",
             "admittance_limits",
             "admittance_units",
@@ -141,16 +142,16 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             "control_mode",
             "dynamic_injector",
             "id",
-            "initial_status",
             "name",
+            "number_engaged",
             "number_of_steps",
             "regulated_bus_number",
+            "solved_admittance",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return SwitchedAdmittance(;
-        y=_openapi_field_y,
         y_increase=_openapi_field_y_increase,
         admittance_limits=_openapi_field_admittance_limits,
         admittance_units=_openapi_field_admittance_units,
@@ -159,16 +160,16 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
         control_mode=_openapi_field_control_mode,
         dynamic_injector=_openapi_field_dynamic_injector,
         id=_openapi_field_id,
-        initial_status=_openapi_field_initial_status,
         name=_openapi_field_name,
+        number_engaged=_openapi_field_number_engaged,
         number_of_steps=_openapi_field_number_of_steps,
         regulated_bus_number=_openapi_field_regulated_bus_number,
+        solved_admittance=_openapi_field_solved_admittance,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::SwitchedAdmittance)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.y isa Absent || (_openapi_output["Y"] = _encode(_openapi_value.y))
     _openapi_value.y_increase isa Absent ||
         (_openapi_output["Y_increase"] = _encode(_openapi_value.y_increase))
     _openapi_value.admittance_limits isa Absent ||
@@ -183,16 +184,18 @@ function _encode(_openapi_value::SwitchedAdmittance)
     _openapi_value.dynamic_injector isa Absent ||
         (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
     _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.initial_status isa Absent ||
-        (_openapi_output["initial_status"] = _encode(_openapi_value.initial_status))
     _openapi_value.name isa Absent ||
         (_openapi_output["name"] = _encode(_openapi_value.name))
+    _openapi_value.number_engaged isa Absent ||
+        (_openapi_output["number_engaged"] = _encode(_openapi_value.number_engaged))
     _openapi_value.number_of_steps isa Absent ||
         (_openapi_output["number_of_steps"] = _encode(_openapi_value.number_of_steps))
     _openapi_value.regulated_bus_number isa Absent || (
         _openapi_output["regulated_bus_number"] =
             _encode(_openapi_value.regulated_bus_number)
     )
+    _openapi_value.solved_admittance isa Absent ||
+        (_openapi_output["solved_admittance"] = _encode(_openapi_value.solved_admittance))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -204,7 +207,7 @@ function _encode(_openapi_value::SwitchedAdmittance)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/SwitchedAdmittance",
         ),
         _openapi_output,
@@ -215,7 +218,6 @@ end
 
 function _form_fields(_openapi_value::SwitchedAdmittance)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.y isa Absent || push!(_openapi_output, "Y" => _openapi_value.y)
     _openapi_value.y_increase isa Absent ||
         push!(_openapi_output, "Y_increase" => _openapi_value.y_increase)
     _openapi_value.admittance_limits isa Absent ||
@@ -230,15 +232,17 @@ function _form_fields(_openapi_value::SwitchedAdmittance)
     _openapi_value.dynamic_injector isa Absent ||
         push!(_openapi_output, "dynamic_injector" => _openapi_value.dynamic_injector)
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
-    _openapi_value.initial_status isa Absent ||
-        push!(_openapi_output, "initial_status" => _openapi_value.initial_status)
     _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
+    _openapi_value.number_engaged isa Absent ||
+        push!(_openapi_output, "number_engaged" => _openapi_value.number_engaged)
     _openapi_value.number_of_steps isa Absent ||
         push!(_openapi_output, "number_of_steps" => _openapi_value.number_of_steps)
     _openapi_value.regulated_bus_number isa Absent || push!(
         _openapi_output,
         "regulated_bus_number" => _openapi_value.regulated_bus_number,
     )
+    _openapi_value.solved_admittance isa Absent ||
+        push!(_openapi_output, "solved_admittance" => _openapi_value.solved_admittance)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

@@ -49,7 +49,7 @@ function _decode(::Type{ActiveRenewableControllerAB}, _openapi_raw, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-832ddeca7e6e67b0c295.json",
+            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
             pointer="/components/schemas/ActiveRenewableControllerAB",
         ),
         _openapi_raw,
@@ -247,7 +247,7 @@ function _encode(_openapi_value::ActiveRenewableControllerAB)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-832ddeca7e6e67b0c295.json",
+            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
             pointer="/components/schemas/ActiveRenewableControllerAB",
         ),
         _openapi_output,

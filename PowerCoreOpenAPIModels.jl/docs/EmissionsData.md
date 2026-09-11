@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`available`** | **`Union{Absent,Bool,Nothing}`** | Whether this attribute is active | [optional]
 **`basis`** | **`EmissionBasis`** | FUEL_INPUT (mass per unit of heat input) or POWER_OUTPUT (mass per unit of electrical output) | [required]
-**`emission_rate`** | **`EmissionsDataEmissionRate`** | Emission rate as a ValueCurve, typically an IncrementalCurve with LinearFunctionData (constant or linearly varying rate) or PiecewiseStepData (piecewise step rates). Rates must be non-negative and finite. | [required]
+**`emission_rate`** | **`ValueCurve`** | Emission rate as a ValueCurve, typically an IncrementalCurve with LinearFunctionData (constant or linearly varying rate) or PiecewiseStepData (piecewise step rates). Rates must be non-negative and finite. | [required]
 **`energy_unit`** | **`EnergyUnit`** | Energy unit for the rate denominator. Must be MMBTU or GJ when basis is FUEL_INPUT, and MWH when basis is POWER_OUTPUT. | [required]
 **`gwp`** | **`Union{Absent,Float64,Nothing}`** | GWP100 multiplier for CO2-equivalent reporting. Must be finite and non-negative. Units: 1. | [optional]
 **`id`** | **`Int64`** |  | [required]

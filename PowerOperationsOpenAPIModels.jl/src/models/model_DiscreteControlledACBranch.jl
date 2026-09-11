@@ -36,7 +36,7 @@ Base.@kwdef struct DiscreteControlledACBranch <: APIModel
         DiscreteControlledACBranchNormalBranchStatus,
         Nothing,
     } = ABSENT
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     r::Float64
     rating::Float64
     reactive_power_flow::Float64
@@ -49,7 +49,7 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/DiscreteControlledACBranch",
         ),
         _openapi_raw,
@@ -109,7 +109,7 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "DiscreteControlledACBranch"),
         _openapi_validate,
     )
@@ -215,7 +215,7 @@ function _encode(_openapi_value::DiscreteControlledACBranch)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/DiscreteControlledACBranch",
         ),
         _openapi_output,

@@ -8,7 +8,7 @@ Most often used in AC power flow studies as a control of voltage and, active and
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `bus`: Sending end bus number.
-  - `control_mode`: Control mode. Used to describe the behavior of the control device. in psy5 a required param with an option to be nothing
+  - `control_mode`: Control mode. Used to describe the behavior of the control device.
   - `dynamic_injector`: ID of the corresponding dynamic injection model for FACTS control device, if any.
   - `id`: Unique integer identifier for this component.
   - `max_reactive_power`: Independent maximum reactive power ceiling; the device reactive limit is min(the current/susceptance law on max_shunt_current, this value). Non-binding at the 9999.0 default. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
@@ -31,12 +31,12 @@ Base.@kwdef struct FACTSControlDevice <: APIModel
     max_reactive_power::Union{Absent, Float64, Nothing} = ABSENT
     max_shunt_current::Float64
     name::String
-    power_units::VoltageUnitBasis
+    power_units::UnitSystem
     reactive_power_required::Float64
     regulated_bus_number::Union{Absent, Int64, Nothing} = ABSENT
     shunt_control_type::Union{Absent, FACTSControlDeviceShuntControlType, Nothing} = ABSENT
     voltage_setpoint::Float64
-    voltage_setpoint_units::Union{Absent, VoltageUnitBasis, Nothing} = ABSENT
+    voltage_setpoint_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{FACTSControlDevice}, value) = _decode(FACTSControlDevice, value, true)
@@ -44,7 +44,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/FACTSControlDevice",
         ),
         _openapi_raw,
@@ -104,7 +104,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
         _openapi_validate,
     )
     _openapi_field_power_units = _decode(
-        VoltageUnitBasis,
+        UnitSystem,
         _required(_openapi_object, "power_units", "FACTSControlDevice"),
         _openapi_validate,
     )
@@ -135,7 +135,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
     _openapi_field_voltage_setpoint_units =
         haskey(_openapi_object, "voltage_setpoint_units") ?
         _decode(
-            Union{Absent, VoltageUnitBasis, Nothing},
+            Union{Absent, Nothing, VoltageUnitBasis},
             _openapi_object["voltage_setpoint_units"],
             _openapi_validate,
         ) : ABSENT
@@ -227,7 +227,7 @@ function _encode(_openapi_value::FACTSControlDevice)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-efb5741410bb1a426ad0.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/FACTSControlDevice",
         ),
         _openapi_output,

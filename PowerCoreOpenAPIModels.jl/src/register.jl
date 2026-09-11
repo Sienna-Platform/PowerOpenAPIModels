@@ -40,7 +40,6 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesIncrementalCurve)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesInputOutputCurve)
     InfrastructureCoreOpenAPIModels.register_model_type!(TurbinePump)
-    InfrastructureCoreOpenAPIModels.register_model_type!(TwoTerminalLoss)
     InfrastructureCoreOpenAPIModels.register_model_type!(ValueCurve)
     return nothing
 end
