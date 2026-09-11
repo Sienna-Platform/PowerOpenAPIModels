@@ -1,7 +1,7 @@
 """
     AverageRateCurve
 
-A curve whose y values are the average rate f(x)/x at production level x, e.g. a heat rate table's MBTU/MWh against MW. `initial_input` anchors conversion to an InputOutputCurve. Use IncrementalCurve for marginal rates.
+A curve whose y values are the average rate `f(x)/x` at production level `x` — total cost or fuel divided by output, the form heat rate tables use when they report MBTU/MWh against MW. `initial_input` records the total input at the minimum production point and is what makes conversion to an `InputOutputCurve` possible. Use `IncrementalCurve` when the data gives marginal rather than average rates.
 """
 Base.@kwdef struct AverageRateCurve <: APIModel
     curve_type::String = "AVERAGE_RATE"
@@ -15,7 +15,7 @@ function _decode(::Type{AverageRateCurve}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/AverageRateCurve",
         ),
         _openapi_raw,
@@ -83,7 +83,7 @@ function _encode(_openapi_value::AverageRateCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/AverageRateCurve",
         ),
         _openapi_output,

@@ -21,7 +21,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterruptiblePowerLoad/properties/operation_cost",
         ),
         value,
@@ -42,56 +42,56 @@ function _decode(
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "ImportExportTimeSeriesCost" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "LOAD" => (
                 LoadCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/LoadCost",
                 ),
             ),
             "LoadCost" => (
                 LoadCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/LoadCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "MarketBidCost" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MarketBidTimeSeriesCost" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -120,7 +120,7 @@ function _encode(value::InterruptiblePowerLoadOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterruptiblePowerLoad/properties/operation_cost",
         ),
         output,

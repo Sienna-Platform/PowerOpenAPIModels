@@ -1,10 +1,10 @@
 """
     FixedForcedOutage
 
-Records a component's forced outage status directly rather than as a probability. outage_status is 1 when outaged, 0 when available; may be backed by a time series from simulation or historical records.
+Supplemental attribute recording a component's forced outage status directly, rather than as a probability. `outage_status` is 1 when the component is outaged and 0 when it is available, and it can be backed by a time series drawn from a stochastic simulation or from historical records.
 
   - `identifier`: Optional user-supplied identifier for the outage, such as a name or a block id. Null when not set.
-  - `monitored_components`: IDs of devices whose post-contingency state to model for this outage. Empty by default.
+  - `monitored_components`: IDs of devices whose post-contingency state should be modeled when this outage occurs. Empty by default; semantics of an empty list are decided by the downstream consumer.
 """
 Base.@kwdef struct FixedForcedOutage <: APIModel
     id::Int64
@@ -18,7 +18,7 @@ function _decode(::Type{FixedForcedOutage}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/FixedForcedOutage",
         ),
         _openapi_raw,
@@ -87,7 +87,7 @@ function _encode(_openapi_value::FixedForcedOutage)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/FixedForcedOutage",
         ),
         _openapi_output,

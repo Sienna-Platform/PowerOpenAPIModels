@@ -1,11 +1,11 @@
 """
     GeometricDistributionForcedOutage
 
-Describes forced outages whose transitions follow geometric distributions, parameterized by the probability of entering an outage and the mean time to recovery. Both probabilities may be backed by time series.
+Supplemental attribute describing forced outages whose transitions follow geometric distributions, parameterized by the probability of entering an outage and the mean time to recovery. Both the outage and recovery probabilities can be backed by time series.
 
   - `identifier`: Optional user-supplied identifier for the outage, such as a name or a block id. Null when not set.
   - `mean_time_to_recovery`: Mean time elapsed between a failure and the return to service, in minutes. Units: min.
-  - `monitored_components`: IDs of devices whose post-contingency state to model for this outage. Empty by default.
+  - `monitored_components`: IDs of devices whose post-contingency state should be modeled when this outage occurs. Empty by default; semantics of an empty list are decided by the downstream consumer.
   - `outage_transition_probability`: Probability of transitioning into a forced outage in one minute, the same time step `mean_time_to_recovery` is stated in.
 """
 Base.@kwdef struct GeometricDistributionForcedOutage <: APIModel
@@ -26,7 +26,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/GeometricDistributionForcedOutage",
         ),
         _openapi_raw,
@@ -116,7 +116,7 @@ function _encode(_openapi_value::GeometricDistributionForcedOutage)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/GeometricDistributionForcedOutage",
         ),
         _openapi_output,

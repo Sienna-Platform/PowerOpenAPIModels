@@ -3,7 +3,7 @@
 
 Time-series-backed variant of `PiecewiseStepData`. In place of inline coordinate vectors it carries `association_id`, referencing a stored series that supplies them at each step; use it when the segments change over time.
 
-  - `association_id`: Id of the time series association supplying this function data's values over time. Resolved against that store; not assigned by a document producer.
+  - `association_id`: Store-minted id of the time series association whose values supply this function data over time. Resolved against the accompanying time series store on read; minted by that store and meaningful only against it, never assigned by a document producer.
 """
 Base.@kwdef struct TimeSeriesPiecewiseStepData <: APIModel
     association_id::Int64
@@ -16,7 +16,7 @@ function _decode(::Type{TimeSeriesPiecewiseStepData}, _openapi_raw, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
             pointer="/components/schemas/TimeSeriesPiecewiseStepData",
         ),
         _openapi_raw,
@@ -63,7 +63,7 @@ function _encode(_openapi_value::TimeSeriesPiecewiseStepData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
             pointer="/components/schemas/TimeSeriesPiecewiseStepData",
         ),
         _openapi_output,

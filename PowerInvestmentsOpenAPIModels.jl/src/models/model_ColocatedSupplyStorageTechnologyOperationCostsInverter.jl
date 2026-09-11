@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/ColocatedSupplyStorageTechnology/properties/operation_costs_inverter",
         ),
         value,
@@ -37,28 +37,28 @@ function _decode(
             "COST" => (
                 CostCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
                     pointer="/components/schemas/CostCurve",
                 ),
             ),
             "CostCurve" => (
                 CostCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
                     pointer="/components/schemas/CostCurve",
                 ),
             ),
             "FUEL" => (
                 FuelCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
                     pointer="/components/schemas/FuelCurve",
                 ),
             ),
             "FuelCurve" => (
                 FuelCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
                     pointer="/components/schemas/FuelCurve",
                 ),
             ),
@@ -87,7 +87,7 @@ function _encode(value::ColocatedSupplyStorageTechnologyOperationCostsInverter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/ColocatedSupplyStorageTechnology/properties/operation_costs_inverter",
         ),
         output,

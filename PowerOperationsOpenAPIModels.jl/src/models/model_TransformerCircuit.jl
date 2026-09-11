@@ -1,7 +1,9 @@
 """
     TransformerCircuit
 
-Data defining one modeled arc of a transformer. A TwoWindingTransformer has one circuit; a ThreeWindingTransformer has three, each connecting a terminal bus to the star bus. Circuit `available` is the source of truth for availability.
+The data defining one modeled arc of a transformer.
+
+A `TwoWindingTransformer` has one circuit; a `ThreeWindingTransformer` has three, each connecting a terminal bus to the star bus. Circuit `available` is the single source of truth for availability; the owning transformer derives its availability from its circuits. `r`/`x` are the circuit impedance (for a two-winding transformer, the series impedance; for a three-winding transformer, the star-leg equivalent), in pu (device base) on `base_power` referenced to `base_voltage_primary`. Tap-changer / phase-shifter control is described by the flat control fields: `control_objective = UNDEFINED` means the circuit has no control block. For a `TwoWindingTransformer`, the single circuit's `base_power` is the transformer's device base.
 
   - `active_power_flow`: Initial condition of active power flow through this circuit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `alpha`: Initial condition of phase shift across this circuit. Units: rad.
@@ -16,7 +18,7 @@ Data defining one modeled arc of a transformer. A TwoWindingTransformer has one 
   - `id`: Unique integer identifier for this component.
   - `number_of_tap_positions`: Number of tap positions (PSS/E NTP).
   - `parameter_units`: Unit basis for this circuit's impedance fields (r, x).
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `r`: Circuit resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `rating`: Thermal rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `rating_b`: Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
@@ -56,7 +58,7 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TransformerCircuit",
         ),
         _openapi_raw,
@@ -323,7 +325,7 @@ function _encode(_openapi_value::TransformerCircuit)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TransformerCircuit",
         ),
         _openapi_output,

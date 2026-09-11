@@ -1,7 +1,7 @@
 """
     StorageTechnologyCapacityLimitsEnergy
 
-Allowable installed energy capacity: a single bound applied to all capacity, or a mapping from a stringified float key to the bound at that key. Units: MWh.
+Allowable installed energy capacity for a storage technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MWh.
 """
 struct StorageTechnologyCapacityLimitsEnergy <: OneOfAPIModel
     value::Union{MinMax, MinMaxByKey}
@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/StorageTechnology/properties/capacity_limits_energy",
         ),
         value,
@@ -27,7 +27,7 @@ function _decode(
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/MinMax",
         ),
         value;
@@ -42,7 +42,7 @@ function _decode(
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/MinMaxByKey",
         ),
         value;
@@ -66,7 +66,7 @@ function _encode(value::StorageTechnologyCapacityLimitsEnergy)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/StorageTechnology/properties/capacity_limits_energy",
         ),
         output,

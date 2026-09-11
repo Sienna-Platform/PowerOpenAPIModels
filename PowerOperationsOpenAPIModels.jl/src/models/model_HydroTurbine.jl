@@ -3,9 +3,9 @@
 
 A hydropower generator that must have a `HydroReservoir` attached, suitable for modeling independent turbines and reservoirs.
 
-  - `active_power`: Initial active power set point. The steady-state operating point for power flow; an optional starting point for other solvers. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `active_power`: Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits`: Minimum and maximum stable active power levels. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `commitment_mode`: Commitment mode of the unit.
@@ -13,10 +13,10 @@ A hydropower generator that must have a `HydroReservoir` attached, suitable for 
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
   - `efficiency`: Turbine efficiency [0, 1.0].
   - `id`: Unique integer identifier for this component.
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `operation_cost`: Operating cost of generation. or MarketBidCost; default PSY.HydroGenerationCost(nothing)
   - `outflow_limits`: Turbine outflow limits. Set to `null` if not applicable. Units: m3/s.
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `powerhouse_elevation`: Height level above the sea level of the powerhouse on which the turbine is installed. Units: m.
   - `prime_mover_type`: Prime mover technology according to EIA 923.
   - `ramp_limits`: Ramp up and ramp down limits. Units: per power_units — NATURAL_UNITS: MW/min, COMPONENT_BASE: pu/min .
@@ -62,7 +62,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroTurbine",
         ),
         _openapi_raw,
@@ -345,7 +345,7 @@ function _encode(_openapi_value::HydroTurbine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroTurbine",
         ),
         _openapi_output,

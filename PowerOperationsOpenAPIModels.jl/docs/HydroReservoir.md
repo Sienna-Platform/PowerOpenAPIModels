@@ -1,6 +1,6 @@
 # HydroReservoir
 
-A hydropower reservoir feeding, or fed by, its turbines. Storage level, inflow, outflow, and spillage use the basis named by level_data_type: volume, head, or energy. Associations set its place in a cascade.
+A hydropower reservoir feeding, or fed by, the turbines attached to it. Storage level, inflow, outflow, and spillage are recorded in the basis named by `level_data_type` — volume, head, or energy — and the upstream and downstream associations set the reservoir's place in a cascade.
 
 ## Properties
 Name | Type | Description | Notes

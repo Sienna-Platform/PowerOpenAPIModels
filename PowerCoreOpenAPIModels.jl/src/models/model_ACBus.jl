@@ -5,13 +5,13 @@ An AC bus.
 
   - `angle`: Angle of the bus. Units: rad.
   - `area`: ID of the area containing the bus.
-  - `available`: Whether the component is connected and online (true) or disconnected, offline, or down (false). Distinct from the ISOLATED enum value.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. This field should not be confused with the ISOLATED enum value.
   - `base_voltage`: The base voltage. Units: kV.
   - `bustype`: Used to describe the connectivity and behavior of this bus. in psy5 a required param with an option to be nothing
   - `id`: Unique integer identifier for this component.
   - `load_zone`: ID of the load zone containing the bus.
   - `magnitude`: Voltage as a multiple of `base_voltage`. Units: pu.
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `number`: A unique bus identification number (positive integer).
   - `voltage_limits`: Limits on the voltage variation as multiples of `base_voltage`. Units: pu.
 """
@@ -34,7 +34,7 @@ function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ACBus",
         ),
         _openapi_raw,
@@ -163,7 +163,7 @@ function _encode(_openapi_value::ACBus)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ACBus",
         ),
         _openapi_output,

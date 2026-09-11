@@ -4,13 +4,13 @@
 A Synchronous Machine connected to the system to provide inertia or reactive power support.
 
   - `active_power_losses`: Active power loss incurred by having the unit online. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
   - `id`: Unique integer identifier for this component.
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
@@ -34,7 +34,7 @@ function _decode(::Type{SynchronousCondenser}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/SynchronousCondenser",
         ),
         _openapi_raw,
@@ -173,7 +173,7 @@ function _encode(_openapi_value::SynchronousCondenser)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/SynchronousCondenser",
         ),
         _openapi_output,

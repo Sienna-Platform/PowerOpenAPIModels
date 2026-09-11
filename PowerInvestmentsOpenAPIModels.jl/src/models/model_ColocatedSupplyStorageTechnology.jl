@@ -1,7 +1,7 @@
 """
     ColocatedSupplyStorageTechnology
 
-Supply technology co-located with storage behind a shared grid connection. Generation and storage are referenced by id; the coupling inverter carries its own capacity limits, capital and operating costs, and efficiency.
+Supply technology co-located with storage behind a shared grid connection. The generation and storage portions are referenced by id (`supply_technology` and `storage_technology`); the inverter that couples them to the grid carries its own capacity limits, capital and operating costs, and efficiency.
 
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`).
   - `capital_costs_inverter`: Capital and interconnection cost for investing in inverter capacity (capital cost in USD/MW).
@@ -45,7 +45,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/ColocatedSupplyStorageTechnology",
         ),
         _openapi_raw,
@@ -244,7 +244,7 @@ function _encode(_openapi_value::ColocatedSupplyStorageTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/ColocatedSupplyStorageTechnology",
         ),
         _openapi_output,

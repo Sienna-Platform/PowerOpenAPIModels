@@ -5,8 +5,8 @@ A hybrid system co-locating a thermal unit, electric load, storage, and/or renew
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`active_power`** | **`Float64`** | Initial active power set point. The steady-state operating point for power flow; an optional starting point for other solvers. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
-**`available`** | **`Bool`** | Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations. | [required]
+**`active_power`** | **`Float64`** | Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization, which is commonly the same as `interconnection_rating`. Units: MVA. | [required]
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [required]
 **`dynamic_injector`** | **`Union{Absent,Union{Int64,Nothing}}`** | ID of the corresponding dynamic injection device, if any. | [optional]
@@ -16,10 +16,10 @@ Name | Type | Description | Notes
 **`interconnection_efficiency`** | **`Union{Absent,InOut,Nothing}`** | Efficiency [0, 1.0] at the grid interconnection to model losses `in` and `out` of the common DC-side conversion. Set to `null` if not applicable. | [optional]
 **`interconnection_impedance`** | **`Union{Absent,ComplexNumber,Nothing}`** | Impedance between the hybrid system and the grid interconnection. Per-unit on `base_power`. Units: pu. | [optional]
 **`interconnection_rating`** | **`Union{Absent,Union{Float64,Nothing}}`** | Maximum rating of the hybrid system's interconnection with the transmission network. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
-**`name`** | **`String`** | Name of the component. Unique among components of the same type; components of different types may share a name. | [required]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
 **`operation_cost`** | **`MarketBidCost`** | `MarketBidCost` of operating the hybrid system. | [required]
 **`output_active_power_limits`** | **`Union{Absent,MinMax,Nothing}`** | Minimum and maximum stable output active power levels. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
-**`power_units`** | **`UnitSystem`** | Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit. | [required]
+**`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`reactive_power`** | **`Float64`** | Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [required]
 **`reactive_power_limits`** | **`Union{Absent,MinMax,Nothing}`** | Minimum and maximum reactive power limits. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
 **`renewable_unit`** | **`Union{Absent,Union{Int64,Nothing}}`** | ID of a renewable generator with supertype `RenewableGen`, if any. | [optional]

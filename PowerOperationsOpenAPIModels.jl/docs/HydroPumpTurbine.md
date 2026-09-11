@@ -5,11 +5,11 @@ A hydropower pumped turbine that needs to have two `HydroReservoir`s attached, s
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`active_power`** | **`Float64`** | Initial active power set point of the turbine unit: the steady-state operating point for power flow, and an optional starting point for other solvers. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
+**`active_power`** | **`Float64`** | Initial active power set point of the turbine unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
 **`active_power_limits`** | **`MinMax`** | Minimum and maximum stable active power levels for the turbine. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
 **`active_power_limits_pump`** | **`MinMax`** | Minimum and maximum stable active power levels for the pump. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
-**`active_power_pump`** | **`Union{Absent,Float64,Nothing}`** | Initial active power set point of the pump unit: the steady-state operating point for power flow, and an optional starting point for other solvers. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
-**`available`** | **`Bool`** | Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations. | [required]
+**`active_power_pump`** | **`Union{Absent,Float64,Nothing}`** | Initial active power set point of the pump unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
+**`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization. Units: MVA. | [required]
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [required]
 **`commitment_mode`** | **`Union{Absent,CommitmentModes,Nothing}`** | Commitment mode of the unit. | [optional]
@@ -18,11 +18,11 @@ Name | Type | Description | Notes
 **`efficiency`** | **`Union{Absent,Nothing,TurbinePump}`** | Turbine/Pump efficiency [0, 1.0]. | [optional]
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
 **`minimum_time`** | **`Union{Absent,TurbinePump,Nothing}`** | Minimum operating time for the specific mode. Units: min. | [optional]
-**`name`** | **`String`** | Name of the component. Unique among components of the same type; components of different types may share a name. | [required]
+**`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
 **`operating_mode`** | **`Union{Absent,HydroPumpTurbineOperatingMode,Nothing}`** | Which mode the pumped-storage unit is operating in at the start of a simulation: pumping, generating, or idle. | [optional]
 **`operation_cost`** | **`HydroPumpTurbineOperationCost`** | Operating cost of generation. or MarketBidCost; default PSY.HydroGenerationCost(nothing) | [required]
 **`outflow_limits`** | **`Union{Absent,MinMax,Nothing}`** | Turbine/Pump outflow limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: m3/s. | [optional]
-**`power_units`** | **`UnitSystem`** | Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit. | [required]
+**`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`powerhouse_elevation`** | **`Float64`** | Height level above the sea level of the powerhouse on which the turbine is installed. Units: m. | [required]
 **`prime_mover_type`** | **`Union{Absent,Nothing,PrimeMovers}`** | Prime mover technology according to EIA 923. | [optional]
 **`ramp_limits`** | **`Union{Absent,UpDown,Nothing}`** | Ramp up and ramp down limits. in psy5 a required param with an option to be nothing Units: per power_units — NATURAL_UNITS: MW/min, COMPONENT_BASE: pu/min . | [optional]

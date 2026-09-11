@@ -1,7 +1,7 @@
 """
     VSCDCControlModes
 
-DC-side control mode of a VSC terminal. DC_POWER: controls active power to the DC side. DC_VOLTAGE: controls DC-side voltage. DC_VOLTAGE_DROOP: P-Vdc droop, V_dc = dc_setpoint - droop_gain * P_c.
+DC-side control mode of a voltage-source-converter (VSC) terminal. DC_POWER: converter controls active power transferred to the DC side. DC_VOLTAGE: converter controls the DC-side voltage. DC_VOLTAGE_DROOP: P-Vdc droop, V_dc = dc_setpoint - droop_gain * P_c.
 """
 struct VSCDCControlModes <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{VSCDCControlModes}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/VSCDCControlModes",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::VSCDCControlModes)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/VSCDCControlModes",
         ),
         output,

@@ -1,7 +1,7 @@
 """
     ShuntAdmittanceUnitBasis
 
-Unit basis for fixed and switched shunts, omitting COMPONENT_BASE since a shunt has no device MVA rating. NATURAL_UNITS: physical siemens. COMPONENT_MVAR: reactive power at unity voltage.
+Subset of AdmittanceUnitBasis for fixed and switched shunts: omits COMPONENT_BASE because a shunt has no device MVA rating to per-unitize against. NATURAL_UNITS: physical siemens. COMPONENT_MVAR: reactive power at unity voltage (Mvar for susceptance, MW for conductance) — PSS/E RAW native for shunts.
 """
 struct ShuntAdmittanceUnitBasis <: EnumAPIModel
     value::String
@@ -17,7 +17,7 @@ function _decode(::Type{ShuntAdmittanceUnitBasis}, value, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ShuntAdmittanceUnitBasis",
         ),
         value,
@@ -31,7 +31,7 @@ function _encode(value::ShuntAdmittanceUnitBasis)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ShuntAdmittanceUnitBasis",
         ),
         output,

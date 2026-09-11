@@ -1,6 +1,8 @@
 # TransformerCircuit
 
-Data defining one modeled arc of a transformer. A TwoWindingTransformer has one circuit; a ThreeWindingTransformer has three, each connecting a terminal bus to the star bus. Circuit `available` is the source of truth for availability.
+The data defining one modeled arc of a transformer.
+
+A `TwoWindingTransformer` has one circuit; a `ThreeWindingTransformer` has three, each connecting a terminal bus to the star bus. Circuit `available` is the single source of truth for availability; the owning transformer derives its availability from its circuits. `r`/`x` are the circuit impedance (for a two-winding transformer, the series impedance; for a three-winding transformer, the star-leg equivalent), in pu (device base) on `base_power` referenced to `base_voltage_primary`. Tap-changer / phase-shifter control is described by the flat control fields: `control_objective = UNDEFINED` means the circuit has no control block. For a `TwoWindingTransformer`, the single circuit's `base_power` is the transformer's device base.
 
 ## Properties
 Name | Type | Description | Notes
@@ -18,7 +20,7 @@ Name | Type | Description | Notes
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
 **`number_of_tap_positions`** | **`Union{Absent,Int64,Nothing}`** | Number of tap positions (PSS/E NTP). | [optional]
 **`parameter_units`** | **`Union{Absent,ImpedanceUnitBasis,Nothing}`** | Unit basis for this circuit's impedance fields (r, x). | [optional]
-**`power_units`** | **`UnitSystem`** | Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit. | [required]
+**`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`r`** | **`Union{Absent,Float64,Nothing}`** | Circuit resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [optional]
 **`rating`** | **`Union{Absent,Float64,Nothing}`** | Thermal rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
 **`rating_b`** | **`Union{Absent,Float64,Nothing}`** | Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]

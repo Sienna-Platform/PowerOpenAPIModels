@@ -7,7 +7,7 @@ function _decode(::Type{HydroReservoirOperationCost}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroReservoir/properties/operation_cost",
         ),
         value,
@@ -28,42 +28,42 @@ function _decode(::Type{HydroReservoirOperationCost}, value, _openapi_validate::
             "HYDRO_RES" => (
                 HydroReservoirCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/HydroReservoirCost",
                 ),
             ),
             "HydroReservoirCost" => (
                 HydroReservoirCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/HydroReservoirCost",
                 ),
             ),
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "ImportExportTimeSeriesCost" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "MarketBidTimeSeriesCost" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -90,7 +90,7 @@ function _encode(value::HydroReservoirOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/HydroReservoir/properties/operation_cost",
         ),
         output,

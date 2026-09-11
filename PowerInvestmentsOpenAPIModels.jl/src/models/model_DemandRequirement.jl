@@ -4,7 +4,7 @@
 Demand requirements for a region. New demand enters at a stated peak in its construction year and scales forward by a growth rate; `value_of_lost_load` and `unserved_demand_curve` price whatever portion goes unserved.
 
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`).
-  - `conformity`: How the demand requirement should conform to the load profile of existing technologies. Only used for new demand requirements.
+  - `conformity`: Indicator of how the demand requirement should conform to the load profile of existing technologies in the system. Should only be used for new demand requirements.
   - `growth_rate`: The annual growth rate of the demand requirement, used to scale present-day loads into future projections. Should only be used for conforming loads. Units: 1.
   - `id`: ID for individual component.
   - `name`: Name of the component.
@@ -37,7 +37,7 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/DemandRequirement",
         ),
         _openapi_raw,
@@ -198,7 +198,7 @@ function _encode(_openapi_value::DemandRequirement)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/DemandRequirement",
         ),
         _openapi_output,

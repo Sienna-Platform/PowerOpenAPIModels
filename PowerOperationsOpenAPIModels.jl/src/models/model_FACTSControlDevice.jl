@@ -5,16 +5,16 @@ Facts control devices.
 
 Most often used in AC power flow studies as a control of voltage and, active and reactive power.
 
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `bus`: Sending end bus number.
   - `control_mode`: Control mode. Used to describe the behavior of the control device.
   - `dynamic_injector`: ID of the corresponding dynamic injection model for FACTS control device, if any.
   - `id`: Unique integer identifier for this component.
-  - `max_reactive_power`: Independent maximum reactive power ceiling: the device limit is the lesser of this value and the current/susceptance law. Non-binding at the 9999.0 default. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+  - `max_reactive_power`: Independent maximum reactive power ceiling; the device reactive limit is min(the current/susceptance law on max_shunt_current, this value). Non-binding at the 9999.0 default. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `max_shunt_current`: Maximum shunt current at the sending end bus; entered at unity voltage. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `reactive_power_required`: Total reactive power required to hold voltage at sending bus, as a fraction in the range 0-1. Units: 1.
   - `regulated_bus_number`: Bus whose voltage this device regulates; 0 means local (sending) bus (PSS/E FCREG). Units: 1.
   - `shunt_control_type`: Device class selecting the reactive-limit law (SVC vs STATCOM).
@@ -44,7 +44,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/FACTSControlDevice",
         ),
         _openapi_raw,
@@ -227,7 +227,7 @@ function _encode(_openapi_value::FACTSControlDevice)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/FACTSControlDevice",
         ),
         _openapi_output,

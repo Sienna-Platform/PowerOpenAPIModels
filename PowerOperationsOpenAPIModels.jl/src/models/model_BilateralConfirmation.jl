@@ -1,7 +1,7 @@
 """
     BilateralConfirmation
 
-Confirmation status a bilateral transaction settled under. DUAL_CONFIRM: both confirmed. UNILATERAL_BUYER/SELLER: only that side. FIRST_REPORTER_DEEMED: first-reported side deemed confirmed. EXACT_MATCH_OR_REJECT: exact match only.
+Confirmation status a bilateral transaction settled under. DUAL_CONFIRM: both counterparties confirmed. UNILATERAL_BUYER: only the buyer confirmed. UNILATERAL_SELLER: only the seller confirmed. FIRST_REPORTER_DEEMED: the first-reported side is deemed confirmed. EXACT_MATCH_OR_REJECT: accepted only on an exact match between counterparties, otherwise rejected.
 """
 struct BilateralConfirmation <: EnumAPIModel
     value::String
@@ -21,7 +21,7 @@ function _decode(::Type{BilateralConfirmation}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/BilateralConfirmation",
         ),
         value,
@@ -35,7 +35,7 @@ function _encode(value::BilateralConfirmation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/BilateralConfirmation",
         ),
         output,

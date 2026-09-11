@@ -1,7 +1,7 @@
 """
     Substation
 
-Represents a substation grouping node buses and switching devices of a full-topology network model. Attach to every member component. Attach GeographicInfo separately for geospatial data.
+Supplemental attribute representing a substation that groups node buses and switching devices of a full-topology (node-breaker) network model. Attach the attribute to every member component. Geospatial data is not stored here; attach a GeographicInfo attribute to the member components instead.
 
   - `grounding_resistance`: Substation grounding DC resistance. Units: ohm.
   - `name`: Name of the substation
@@ -19,7 +19,7 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/Substation",
         ),
         _openapi_raw,
@@ -77,7 +77,7 @@ function _encode(_openapi_value::Substation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/Substation",
         ),
         _openapi_output,

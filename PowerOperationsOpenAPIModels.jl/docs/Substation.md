@@ -1,6 +1,6 @@
 # Substation
 
-Represents a substation grouping node buses and switching devices of a full-topology network model. Attach to every member component. Attach GeographicInfo separately for geospatial data.
+Supplemental attribute representing a substation that groups node buses and switching devices of a full-topology (node-breaker) network model. Attach the attribute to every member component. Geospatial data is not stored here; attach a GeographicInfo attribute to the member components instead.
 
 ## Properties
 Name | Type | Description | Notes

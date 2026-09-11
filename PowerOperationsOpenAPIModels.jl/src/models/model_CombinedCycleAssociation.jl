@@ -1,7 +1,7 @@
 """
     CombinedCycleAssociation
 
-Association between a CombinedCycleBlock plant and a CT or CA unit, identifying which HRSG the unit feeds into or receives from. Supports n-to-m: one CT or CA can appear in multiple HRSG rows.
+Association between a CombinedCycleBlock plant and a CT or CA unit, identifying which HRSG the unit feeds into or receives from. Supports n-to-m relationships: a single CT or CA can participate in multiple HRSGs by appearing in multiple rows.
 
   - `entity_id`: ID of the CT or CA generating unit
   - `hrsg_index`: HRSG (heat recovery steam generator) index this unit is associated with
@@ -21,7 +21,7 @@ function _decode(::Type{CombinedCycleAssociation}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/CombinedCycleAssociation",
         ),
         _openapi_raw,
@@ -84,7 +84,7 @@ function _encode(_openapi_value::CombinedCycleAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/CombinedCycleAssociation",
         ),
         _openapi_output,

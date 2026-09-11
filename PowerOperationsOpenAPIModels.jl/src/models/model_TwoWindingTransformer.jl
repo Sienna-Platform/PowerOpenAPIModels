@@ -1,13 +1,15 @@
 """
     TwoWindingTransformer
 
-A two-winding transformer connecting two buses. All series electrical data lives on the single TransformerCircuit it references; availability is circuit-level. magnetizing_shunt and shunt_location are transformer-level.
+A two-winding transformer connecting two buses.
+
+All series electrical data — the modeled arc, tap, phase shift, series impedance `r`/`x`, ratings, per-winding base power, base voltages, and control — lives on the single `TransformerCircuit` referenced by `circuit`; availability is circuit-level. The `magnetizing_shunt` admittance and its `shunt_location` are transformer-level. The model uses an equivalent circuit assuming the impedance is on the high-voltage side and allocates iron losses and magnetizing susceptance according to `shunt_location`. The transformer's device base is the circuit's `base_power`.
 
   - `admittance_units`: Unit basis for the magnetizing_shunt admittance.
   - `circuit`: The `TransformerCircuit` carrying this transformer's series electrical data.
   - `id`: Unique integer identifier for this component.
   - `magnetizing_shunt`: Magnetizing shunt admittance referenced to the circuit's `base_voltage_primary`. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr, COMPONENT_BASE: pu .
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `shunt_location`: Placement of `magnetizing_shunt` on the two sides of the circuit arc.
 """
 Base.@kwdef struct TwoWindingTransformer <: APIModel
@@ -24,7 +26,7 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoWindingTransformer",
         ),
         _openapi_raw,
@@ -115,7 +117,7 @@ function _encode(_openapi_value::TwoWindingTransformer)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TwoWindingTransformer",
         ),
         _openapi_output,

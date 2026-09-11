@@ -1,7 +1,7 @@
 """
     ImpedanceUnitBasis
 
-Unit basis a branch/injection impedance is stored in. NATURAL_UNITS: physical ohms. COMPONENT_BASE: per-unit on the component's own base_power and voltage. A branch's shunt admittance halves share the branch's basis.
+Unit basis a branch/injection impedance is stored in. NATURAL_UNITS: physical ohms (PSS/E RAW native for DC-line impedances). COMPONENT_BASE: per-unit on the component's own base (base_power MVA and voltage base); components whose per-unit data was historically on the system base record that system base in base_power, so there is no separate system-base option. PSS/E supplies device base for DC-line converters and CZ=2 transformer windings. A branch's shunt admittance halves (b, g) share the branch's one basis: NATURAL_UNITS stores them in siemens.
 """
 struct ImpedanceUnitBasis <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{ImpedanceUnitBasis}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ImpedanceUnitBasis",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::ImpedanceUnitBasis)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ImpedanceUnitBasis",
         ),
         output,

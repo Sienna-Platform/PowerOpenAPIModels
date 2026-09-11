@@ -1,7 +1,7 @@
 """
     CommitmentModes
 
-Why a committable unit is committed. UNCOMMITTED: not committed, available. COMMITTED: by the scheduling process. SELF_SCHEDULED: by its owner. RELIABILITY: by the system operator. MUST_RUN: required by contract or constraint.
+Why a committable unit is (or would be) committed, orthogonal to its operational state. UNCOMMITTED: not committed, offline but available. COMMITTED: committed by the scheduling process (a planning model's commitment decision or a cleared schedule). SELF_SCHEDULED: scheduled by its owner rather than by the scheduling process. RELIABILITY: committed by the system operator for reliability rather than by the scheduling process. MUST_RUN: required to run by contract or operating constraint.
 """
 struct CommitmentModes <: EnumAPIModel
     value::String
@@ -17,7 +17,7 @@ function _decode(::Type{CommitmentModes}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/CommitmentModes",
         ),
         value,
@@ -31,7 +31,7 @@ function _encode(value::CommitmentModes)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/CommitmentModes",
         ),
         output,

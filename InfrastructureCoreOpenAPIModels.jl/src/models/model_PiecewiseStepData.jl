@@ -1,7 +1,7 @@
 """
     PiecewiseStepData
 
-Data for a step function, constant on each segment: x coordinates of segment endpoints plus one y value per segment. Values are per-segment rates, not absolute. x_coords ascends with at least two entries; y_coords holds one fewer.
+Data for a step function, constant on each segment, defined by the x coordinates of the segment endpoints and one y value per segment. The y values are per-segment rates, not absolute values; use `PiecewiseLinearData` when the data gives a value at each point. `x_coords` ascends and holds at least two entries, and `y_coords` holds exactly one fewer.
 """
 Base.@kwdef struct PiecewiseStepData <: APIModel
     function_type::String = "PIECEWISE_STEP"
@@ -14,7 +14,7 @@ function _decode(::Type{PiecewiseStepData}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
             pointer="/components/schemas/PiecewiseStepData",
         ),
         _openapi_raw,
@@ -69,7 +69,7 @@ function _encode(_openapi_value::PiecewiseStepData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
             pointer="/components/schemas/PiecewiseStepData",
         ),
         _openapi_output,

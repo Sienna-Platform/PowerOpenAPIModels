@@ -1,7 +1,7 @@
 """
     TradingHubAssociation
 
-Links a trading hub to one associated entity. One record per (hub, member) pair. entity_id may name a bus or a market transaction settling at the hub; no member-type discriminator is needed.
+Links a trading hub to one associated entity. One record per (hub, member) pair. `entity_id` may name a bus (hub membership) or a market transaction settling at the hub, resolved through the entity registry, so no member-type discriminator is needed — the same shape as ServiceAssociation.
 
   - `entity_id`: ID of the associated entity: a bus or a market transaction.
   - `trading_hub_id`: ID of the trading hub the association belongs to.
@@ -16,7 +16,7 @@ function _decode(::Type{TradingHubAssociation}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TradingHubAssociation",
         ),
         _openapi_raw,
@@ -63,7 +63,7 @@ function _encode(_openapi_value::TradingHubAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TradingHubAssociation",
         ),
         _openapi_output,

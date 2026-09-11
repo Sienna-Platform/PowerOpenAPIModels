@@ -1,11 +1,13 @@
 """
     ExponentialLoad
 
-A voltage-dependent ZIP load, most commonly used for dynamics modeling. Models active power as P = P0 * V^alpha and reactive power as Q = Q0 * V^beta. See StandardLoad for a three-part formulation, or PowerLoad for no voltage dependency.
+A voltage-dependent ZIP load, most commonly used for dynamics modeling.
+
+An `ExponentialLoad` models active power as P = P0 * V^α and reactive power as Q = Q0 * V^β, where the exponents α and β select govern the voltage dependency. For an alternative three-part formulation of the ZIP model, see `StandardLoad`. For a simpler load model with no voltage dependency, see `PowerLoad`.
 
   - `active_power`: Active power coefficient, P0. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `alpha`: Exponent relating voltage dependency for active power. 0 = constant power only, 1 = constant current only, and 2 = constant impedance only.
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `beta`: Exponent relating voltage dependency for reactive power. 0 = constant power only, 1 = constant current only, and 2 = constant impedance only.
   - `bus`: ID of the bus that this component is connected to.
@@ -14,8 +16,8 @@ A voltage-dependent ZIP load, most commonly used for dynamics modeling. Models a
   - `id`: Unique integer identifier for this component.
   - `max_active_power`: Maximum active power that this load can demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `max_reactive_power`: Maximum reactive power that this load can demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `reactive_power`: Reactive power coefficient, Q0. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
 """
 Base.@kwdef struct ExponentialLoad <: APIModel
@@ -40,7 +42,7 @@ function _decode(::Type{ExponentialLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ExponentialLoad",
         ),
         _openapi_raw,
@@ -200,7 +202,7 @@ function _encode(_openapi_value::ExponentialLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ExponentialLoad",
         ),
         _openapi_output,

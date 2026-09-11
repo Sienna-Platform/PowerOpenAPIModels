@@ -1,9 +1,9 @@
 """
     ImpedanceCorrectionData
 
-One row of an impedance correction table, linked to a transformer. The curve defines intervals over tap ratio or angle shift; other fields name the winding and whether the controlled quantity is a turns ratio or a phase angle.
+Supplemental attribute carrying one row of an impedance correction table, linked to a transformer. The correction curve defines intervals over tap ratio or angle shift, and the accompanying fields name which winding the row applies to and whether the controlled quantity is an off-nominal turns ratio or a phase angle shift.
 
-  - `impedance_correction_curve`: Data for a piecewise linear function defined by (x, y) points, interpolated linearly between them. Values are absolute at each x, not per-segment slopes. Points run in ascending x order.
+  - `impedance_correction_curve`: Data for a piecewise linear function defined by (x, y) points and interpolated linearly between consecutive ones. The y values are absolute values at each x, not per-segment slopes; use `PiecewiseStepData` when the data gives per-segment rates. Points run in ascending x order, and two of them define one segment.
 """
 Base.@kwdef struct ImpedanceCorrectionData <: APIModel
     id::Int64
@@ -19,7 +19,7 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ImpedanceCorrectionData",
         ),
         _openapi_raw,
@@ -101,7 +101,7 @@ function _encode(_openapi_value::ImpedanceCorrectionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ImpedanceCorrectionData",
         ),
         _openapi_output,

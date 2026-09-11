@@ -1,10 +1,10 @@
 """
     SupplyTechnology
 
-Candidate generation technology for a region: thermal or renewable. Carries capital and operating cost of new capacity plus operating characteristics: capacity limits, ramp and time limits, outage derating, fuel, and start-up fuel use.
+Candidate generation technology for a region, representing either a thermal or a renewable generation technology. It carries the capital and operating cost of new capacity together with the operating characteristics the added units take on — capacity limits, ramp and time limits, outage derating, fuel, and start-up fuel use.
 
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`).
-  - `capacity_limits`: Minimum and maximum allowable installed capacity: a single bound applied to all capacity, or a mapping from a stringified float key to the bound at that key. Units: MW.
+  - `capacity_limits`: Minimum and maximum allowable installed capacity for a technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MW.
   - `capital_costs`: Capital and interconnection cost for investing in a technology (capital cost in USD/MW).
   - `cofire_level_limits`: Minimum and maximum blending level of each fuel during normal generation process for multi-fuel generator. Units: 1.
   - `cofire_start_limits`: Minimum and maximum blending level of each fuel during start-up process for multi-fuel generator. Units: 1.
@@ -54,7 +54,7 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/SupplyTechnology",
         ),
         _openapi_raw,
@@ -316,7 +316,7 @@ function _encode(_openapi_value::SupplyTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/SupplyTechnology",
         ),
         _openapi_output,

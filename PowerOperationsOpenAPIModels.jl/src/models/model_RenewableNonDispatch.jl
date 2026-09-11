@@ -1,17 +1,21 @@
 """
     RenewableNonDispatch
 
-A non-dispatchable (non-curtailable, must-take) renewable generator. Output equals its max_active_power time series by default, e.g. an aggregation of behind-the-meter solar. For curtailable generation, see RenewableDispatch.
+A non-dispatchable (i.e., non-curtailable or must-take) renewable generator.
 
-  - `active_power`: Initial active power set point. The steady-state operating point for power flow; an optional starting point for other solvers. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+Its output is equal to its `max_active_power` time series by default. Example use: an aggregation of behind-the-meter distributed energy resources like rooftop solar. For curtailable or downward dispatachable generation, see `RenewableDispatch`.
+
+Renewable generators do not have a `max_active_power` parameter, which is instead calculated when calling `get_max_active_power()`.
+
+  - `active_power`: Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
   - `id`: Unique integer identifier for this component.
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `power_factor`: Power factor [0, 1] set-point, used in some production cost modeling and in load flow if the unit is connected to a `PQ` bus. Units: 1.
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `prime_mover_type`: Prime mover technology according to EIA 923.
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit, used in some production cost modeling simulations. To set the reactive power in a load flow, use `power_factor`. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
@@ -36,7 +40,7 @@ function _decode(::Type{RenewableNonDispatch}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/RenewableNonDispatch",
         ),
         _openapi_raw,
@@ -176,7 +180,7 @@ function _encode(_openapi_value::RenewableNonDispatch)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/RenewableNonDispatch",
         ),
         _openapi_output,

@@ -1,7 +1,7 @@
 """
     SupplyTechnologyCapacityLimits
 
-Minimum and maximum allowable installed capacity: a single bound applied to all capacity, or a mapping from a stringified float key to the bound at that key. Units: MW.
+Minimum and maximum allowable installed capacity for a technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MW.
 """
 struct SupplyTechnologyCapacityLimits <: OneOfAPIModel
     value::Union{MinMax, MinMaxByKey}
@@ -12,7 +12,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/SupplyTechnology/properties/capacity_limits",
         ),
         value,
@@ -23,7 +23,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/MinMax",
         ),
         value;
@@ -38,7 +38,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/MinMaxByKey",
         ),
         value;
@@ -62,7 +62,7 @@ function _encode(value::SupplyTechnologyCapacityLimits)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/SupplyTechnology/properties/capacity_limits",
         ),
         output,

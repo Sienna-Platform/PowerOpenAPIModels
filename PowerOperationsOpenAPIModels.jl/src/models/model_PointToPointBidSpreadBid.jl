@@ -12,7 +12,7 @@ function _decode(::Type{PointToPointBidSpreadBid}, value, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PointToPointBid/properties/spread_bid",
         ),
         value,
@@ -33,28 +33,28 @@ function _decode(::Type{PointToPointBidSpreadBid}, value, _openapi_validate::Boo
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "MarketBidCost" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MarketBidTimeSeriesCost" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -81,7 +81,7 @@ function _encode(value::PointToPointBidSpreadBid)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PointToPointBid/properties/spread_bid",
         ),
         output,

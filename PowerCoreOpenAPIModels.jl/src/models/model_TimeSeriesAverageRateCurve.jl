@@ -3,7 +3,7 @@
 
 A time-series-backed average rate curve. The static counterpart is AverageRateCurve.
 
-  - `function_data`: Only TIME_SERIES_LINEAR or TIME_SERIES_PIECEWISE_STEP is admissible here; other FunctionData variants are rejected.
+  - `function_data`: Only TIME_SERIES_LINEAR or TIME_SERIES_PIECEWISE_STEP is admissible here; all other FunctionData variants, static or time-series-backed, are rejected by the consuming constructor.
   - `initial_input_association_id`: Store-minted id of the time series supplying the initial input value, or null.
   - `input_at_zero_association_id`: Store-minted id of the time series supplying the input at zero output, or null.
 """
@@ -20,7 +20,7 @@ function _decode(::Type{TimeSeriesAverageRateCurve}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/TimeSeriesAverageRateCurve",
         ),
         _openapi_raw,
@@ -96,7 +96,7 @@ function _encode(_openapi_value::TimeSeriesAverageRateCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/TimeSeriesAverageRateCurve",
         ),
         _openapi_output,

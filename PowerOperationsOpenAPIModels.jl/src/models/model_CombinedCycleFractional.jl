@@ -1,9 +1,9 @@
 """
     CombinedCycleFractional
 
-Represents combined cycle generation when each unit models a specific configuration and aggregate heat rate. Operation exclusion groups are recorded as PlantAssociation rows with role='exclusion'.
+Attribute to represent combined cycle generation when each unit represents a specific configuration and aggregate heat rate. Operation exclusion groups (only units in the same group can operate simultaneously) are recorded as PlantAssociation rows with role='exclusion'.
 
-  - `configuration`: Shaft and turbine arrangement of a combined cycle plant: one shaft with one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or Other.
+  - `configuration`: Shaft and turbine arrangement of a combined cycle plant: a single shaft carrying one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or `Other` for any arrangement outside these.
   - `name`: Name of the combined cycle fractional plant
 """
 Base.@kwdef struct CombinedCycleFractional <: APIModel
@@ -18,7 +18,7 @@ function _decode(::Type{CombinedCycleFractional}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/CombinedCycleFractional",
         ),
         _openapi_raw,
@@ -72,7 +72,7 @@ function _encode(_openapi_value::CombinedCycleFractional)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/CombinedCycleFractional",
         ),
         _openapi_output,

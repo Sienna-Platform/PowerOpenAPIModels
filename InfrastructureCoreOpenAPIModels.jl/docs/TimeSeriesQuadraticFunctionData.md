@@ -5,5 +5,5 @@ Time-series-backed variant of `QuadraticFunctionData`. In place of inline coeffi
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`association_id`** | **`Int64`** | Id of the time series association supplying this function data's values over time. Resolved against that store; not assigned by a document producer. | [required]
+**`association_id`** | **`Int64`** | Store-minted id of the time series association whose values supply this function data over time. Resolved against the accompanying time series store on read; minted by that store and meaningful only against it, never assigned by a document producer. | [required]
 **`function_type`** | **`String`** |  | [required]

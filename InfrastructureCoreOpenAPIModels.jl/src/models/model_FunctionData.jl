@@ -1,7 +1,7 @@
 """
     FunctionData
 
-Raw mathematical data defining f(x): coefficients or point tables with no units attached. `function_type` selects linear, quadratic, piecewise linear, or piecewise constant. TIME_SERIES_* variants reference a stored series.
+Raw mathematical data defining a function `f(x)` — coefficients or point tables with no units or interpretation attached. `function_type` selects the shape: linear, quadratic, piecewise linear through (x, y) points, or piecewise constant between x endpoints. What `x` and `y` stand for is supplied by whatever wraps this, and the `TIME_SERIES_*` variants hold a reference to a stored series in place of the numbers.
 """
 struct FunctionData <: OneOfAPIModel
     value::Union{
@@ -20,7 +20,7 @@ function _decode(::Type{FunctionData}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
             pointer="/components/schemas/FunctionData",
         ),
         value,
@@ -37,112 +37,112 @@ function _decode(::Type{FunctionData}, value, _openapi_validate::Bool)
             "LINEAR" => (
                 LinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/LinearFunctionData",
                 ),
             ),
             "LinearFunctionData" => (
                 LinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/LinearFunctionData",
                 ),
             ),
             "PIECEWISE_LINEAR" => (
                 PiecewiseLinearData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/PiecewiseLinearData",
                 ),
             ),
             "PIECEWISE_STEP" => (
                 PiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/PiecewiseStepData",
                 ),
             ),
             "PiecewiseLinearData" => (
                 PiecewiseLinearData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/PiecewiseLinearData",
                 ),
             ),
             "PiecewiseStepData" => (
                 PiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/PiecewiseStepData",
                 ),
             ),
             "QUADRATIC" => (
                 QuadraticFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/QuadraticFunctionData",
                 ),
             ),
             "QuadraticFunctionData" => (
                 QuadraticFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/QuadraticFunctionData",
                 ),
             ),
             "TIME_SERIES_LINEAR" => (
                 TimeSeriesLinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/TimeSeriesLinearFunctionData",
                 ),
             ),
             "TIME_SERIES_PIECEWISE_LINEAR" => (
                 TimeSeriesPiecewiseLinearData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/TimeSeriesPiecewiseLinearData",
                 ),
             ),
             "TIME_SERIES_PIECEWISE_STEP" => (
                 TimeSeriesPiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/TimeSeriesPiecewiseStepData",
                 ),
             ),
             "TIME_SERIES_QUADRATIC" => (
                 TimeSeriesQuadraticFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/TimeSeriesQuadraticFunctionData",
                 ),
             ),
             "TimeSeriesLinearFunctionData" => (
                 TimeSeriesLinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/TimeSeriesLinearFunctionData",
                 ),
             ),
             "TimeSeriesPiecewiseLinearData" => (
                 TimeSeriesPiecewiseLinearData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/TimeSeriesPiecewiseLinearData",
                 ),
             ),
             "TimeSeriesPiecewiseStepData" => (
                 TimeSeriesPiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/TimeSeriesPiecewiseStepData",
                 ),
             ),
             "TimeSeriesQuadraticFunctionData" => (
                 TimeSeriesQuadraticFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+                    resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
                     pointer="/components/schemas/TimeSeriesQuadraticFunctionData",
                 ),
             ),
@@ -164,7 +164,7 @@ function _encode(value::FunctionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
+            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
             pointer="/components/schemas/FunctionData",
         ),
         output,

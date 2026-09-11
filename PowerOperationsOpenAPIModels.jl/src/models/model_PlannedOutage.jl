@@ -4,7 +4,7 @@
 Supplemental attribute describing outages that are scheduled in advance, naming the time series that carries the schedule.
 
   - `identifier`: Optional user-supplied identifier for the outage, such as a name or a block id. Null when not set.
-  - `monitored_components`: IDs of devices whose post-contingency state to model for this outage. Empty by default.
+  - `monitored_components`: IDs of devices whose post-contingency state should be modeled when this outage occurs. Empty by default; semantics of an empty list are decided by the downstream consumer.
 """
 Base.@kwdef struct PlannedOutage <: APIModel
     id::Int64
@@ -18,7 +18,7 @@ function _decode(::Type{PlannedOutage}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PlannedOutage",
         ),
         _openapi_raw,
@@ -84,7 +84,7 @@ function _encode(_openapi_value::PlannedOutage)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PlannedOutage",
         ),
         _openapi_output,

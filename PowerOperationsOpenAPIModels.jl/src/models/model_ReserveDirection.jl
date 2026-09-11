@@ -1,7 +1,7 @@
 """
     ReserveDirection
 
-Direction a reserve product is procured in. UP increases generation or reduces load above expected demand. DOWN decreases generation or increases load below it. SYMMETRIC procures the same quantity both ways.
+Direction a reserve product is procured in. `UP` increases generation or reduces load when demand exceeds its expected level; `DOWN` decreases generation or increases load when demand falls below it; `SYMMETRIC` procures the same quantity in both directions. Upstream this distinction is a type parameter on the reserve; here it is flattened into a property.
 """
 struct ReserveDirection <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{ReserveDirection}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ReserveDirection",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::ReserveDirection)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ReserveDirection",
         ),
         output,

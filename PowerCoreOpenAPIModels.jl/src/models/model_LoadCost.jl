@@ -3,7 +3,7 @@
 
 Cost representation for controllable load units
 
-  - `variable_operation_cost`: Variable operation cost of a device in currency. Wraps a ValueCurve in input-output, incremental, or average-rate form; `power_units` sets the x-axis basis and `vom_cost` adds a proportional O&M term.
+  - `variable_operation_cost`: Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term.
 """
 Base.@kwdef struct LoadCost <: APIModel
     cost_type::Union{Absent, Nothing, String} = ABSENT
@@ -16,7 +16,7 @@ function _decode(::Type{LoadCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/LoadCost",
         ),
         _openapi_raw,
@@ -78,7 +78,7 @@ function _encode(_openapi_value::LoadCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/LoadCost",
         ),
         _openapi_output,

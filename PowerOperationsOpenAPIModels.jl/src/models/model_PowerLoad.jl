@@ -1,10 +1,12 @@
 """
     PowerLoad
 
-A static power load, used in power flow and operational optimizations. Consumes a set amount of power via active_power or a max_active_power time series. See InterruptiblePowerLoad or StandardLoad for alternatives.
+A static power load, most commonly used for operational models such as power flow and operational optimizations.
+
+This load consumes a set amount of power (set by `active_power` for a power flow simulation or a `max_active_power` time series for an operational simulation). For loads that can be compensated for load interruptions through demand response programs, see `InterruptiblePowerLoad`. For voltage-dependent loads used in dynamics modeling, see `StandardLoad`.
 
   - `active_power`: Initial steady-state active power demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `conformity`: Indicates whether the specified load is conforming or non-conforming.
@@ -12,8 +14,8 @@ A static power load, used in power flow and operational optimizations. Consumes 
   - `id`: Unique integer identifier for this component.
   - `max_active_power`: Maximum active power that this load can demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `max_reactive_power`: Maximum reactive power that this load can demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `reactive_power`: Initial steady-state reactive power demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
 """
 Base.@kwdef struct PowerLoad <: APIModel
@@ -36,7 +38,7 @@ function _decode(::Type{PowerLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PowerLoad",
         ),
         _openapi_raw,
@@ -169,7 +171,7 @@ function _encode(_openapi_value::PowerLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PowerLoad",
         ),
         _openapi_output,

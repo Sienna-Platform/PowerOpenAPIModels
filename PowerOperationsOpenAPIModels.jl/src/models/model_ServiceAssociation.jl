@@ -1,7 +1,7 @@
 """
     ServiceAssociation
 
-Links a service to one contributing component. One record per (service, member) pair. entity_id may name a Device, a Branch (TransmissionInterface), or another Service (GroupReserve), so no member-type discriminator is needed.
+Links a service to one component that contributes to it. One record per (service, member) pair: the many-to-many reserve-participation relation is normalized here rather than carried as a list on either side, so each membership is an individually addressable row. The type of either side is resolved through the entity registry rather than duplicated here, matching the shape of PlantAssociation and SupplementalAttributeAssociation. `entity_id` may name a Device (the reserve case), a Branch (TransmissionInterface), or another Service (GroupReserve), so no member-type discriminator is needed. The data model library stores the same relation on the device side as `Device.services`.
 
   - `entity_id`: ID of the contributing member: a Device, a Branch, or another Service.
   - `service_id`: ID of the service the membership belongs to.
@@ -16,7 +16,7 @@ function _decode(::Type{ServiceAssociation}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ServiceAssociation",
         ),
         _openapi_raw,
@@ -63,7 +63,7 @@ function _encode(_openapi_value::ServiceAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ServiceAssociation",
         ),
         _openapi_output,

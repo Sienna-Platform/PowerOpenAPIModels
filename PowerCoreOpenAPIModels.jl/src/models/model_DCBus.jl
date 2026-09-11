@@ -4,12 +4,12 @@
 A DC bus.
 
   - `area`: ID of the area containing the DC bus.
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_voltage`: The base voltage. in psy5 a required param with an option to be nothing Units: kV.
   - `id`: Unique integer identifier for this component.
   - `load_zone`: ID of the load zone containing the DC bus.
   - `magnitude`: Voltage as a multiple of `base_voltage`. in psy5 a required param with an option to be nothing Units: pu.
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `number`: A unique bus identification number (positive integer).
   - `voltage_limits`: Limits on the voltage variation as multiples of `base_voltage`. in psy5 a required param with an option to be nothing Units: pu.
 """
@@ -30,7 +30,7 @@ function _decode(::Type{DCBus}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/DCBus",
         ),
         _openapi_raw,
@@ -137,7 +137,7 @@ function _encode(_openapi_value::DCBus)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/DCBus",
         ),
         _openapi_output,

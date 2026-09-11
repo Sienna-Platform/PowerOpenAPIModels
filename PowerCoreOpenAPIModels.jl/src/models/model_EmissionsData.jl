@@ -1,11 +1,11 @@
 """
     EmissionsData
 
-Describes emission of a single pollutant from a host component: pollutant identity (CO2, NOx, etc.) plus an emission rate as a ValueCurve. One instance can attach to one or many components.
+Supplemental attribute describing the emission of a single pollutant from a host component. Combines pollutant identity (CO2, NOx, etc.) with an emission rate expressed as a ValueCurve (supporting constant, linear, or piecewise relationships between fuel consumption / power output and emissions). One EmissionsData instance can be attached to one or many components.
 
   - `available`: Whether this attribute is active
   - `basis`: FUEL_INPUT (mass per unit of heat input) or POWER_OUTPUT (mass per unit of electrical output)
-  - `emission_rate`: Emission rate as a ValueCurve, typically an IncrementalCurve with LinearFunctionData or PiecewiseStepData. Rates must be non-negative and finite.
+  - `emission_rate`: Emission rate as a ValueCurve, typically an IncrementalCurve with LinearFunctionData (constant or linearly varying rate) or PiecewiseStepData (piecewise step rates). Rates must be non-negative and finite.
   - `energy_unit`: Energy unit for the rate denominator. Must be MMBTU or GJ when basis is FUEL_INPUT, and MWH when basis is POWER_OUTPUT.
   - `gwp`: GWP100 multiplier for CO2-equivalent reporting. Must be finite and non-negative. Units: 1.
   - `mass_unit`: Mass unit of the emission rate numerator
@@ -31,7 +31,7 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/EmissionsData",
         ),
         _openapi_raw,
@@ -156,7 +156,7 @@ function _encode(_openapi_value::EmissionsData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/EmissionsData",
         ),
         _openapi_output,

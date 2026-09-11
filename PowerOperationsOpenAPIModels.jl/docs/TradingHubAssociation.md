@@ -1,6 +1,6 @@
 # TradingHubAssociation
 
-Links a trading hub to one associated entity. One record per (hub, member) pair. entity_id may name a bus or a market transaction settling at the hub; no member-type discriminator is needed.
+Links a trading hub to one associated entity. One record per (hub, member) pair. `entity_id` may name a bus (hub membership) or a market transaction settling at the hub, resolved through the entity registry, so no member-type discriminator is needed — the same shape as ServiceAssociation.
 
 ## Properties
 Name | Type | Description | Notes

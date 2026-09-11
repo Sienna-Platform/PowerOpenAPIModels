@@ -1,7 +1,7 @@
 """
     ThreeWindingTransformerShuntLocation
 
-Placement of a ThreeWindingTransformer's magnetizing shunt admittance. PRIMARY: applied on the winding-1 terminal side. STAR: applied at the star node.
+Placement of a `ThreeWindingTransformer`'s magnetizing shunt admittance in the equivalent star model. PRIMARY: the full magnetizing shunt is applied on the winding-1 (primary) terminal side. STAR: the full magnetizing shunt is applied at the star node.
 """
 struct ThreeWindingTransformerShuntLocation <: EnumAPIModel
     value::String
@@ -24,7 +24,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ThreeWindingTransformerShuntLocation",
         ),
         value,
@@ -38,7 +38,7 @@ function _encode(value::ThreeWindingTransformerShuntLocation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/ThreeWindingTransformerShuntLocation",
         ),
         output,

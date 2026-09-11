@@ -1,13 +1,13 @@
 """
     StorageTechnology
 
-Candidate storage technology in a region. Charge, discharge, and energy capacity are added independently with their own capital cost, unit size, and limits; efficiency and self-discharge complete it.
+Candidate storage technology in a region. Charge capacity, discharge capacity, and energy capacity are added independently, each with its own capital cost, unit size, and capacity limits; charge and discharge efficiency, self-discharge losses, and limits on the ratio of energy to discharge capacity complete the description.
 
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`).
-  - `capacity_limits_charge`: Allowable installed charging capacity: a single bound applied to all capacity, or a mapping from a stringified float key to the bound at that key. Units: MW.
-  - `capacity_limits_discharge`: Allowable installed discharging capacity: a single bound applied to all capacity, or a mapping from a stringified float key to the bound at that key. Units: MW.
-  - `capacity_limits_energy`: Allowable installed energy capacity: a single bound applied to all capacity, or a mapping from a stringified float key to the bound at that key. Units: MWh.
-  - `capital_costs`: Capital and interconnection cost for a storage technology's charge, discharge, and energy capacity (charge/discharge in USD/MW, energy in USD/MWh).
+  - `capacity_limits_charge`: Allowable installed power capacity for charging of a storage technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MW.
+  - `capacity_limits_discharge`: Allowable installed power capacity for discharging of a storage technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MW.
+  - `capacity_limits_energy`: Allowable installed energy capacity for a storage technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MWh.
+  - `capital_costs`: Capital and interconnection cost for investing in a storage technology's charge, discharge, and energy capacity (charge and discharge in USD/MW, energy in USD/MWh).
   - `duration_limits`: Minimum and maximum duration limits (energy to discharge capacity ratio) for a storage technology (minutes). Units: min.
   - `efficiency`: Efficiency of charging storage, fraction of total charge (in) and discharge (out) capacity. Units: 1.
   - `financial_data`: Struct containing relevant financial information for a technology.
@@ -62,7 +62,7 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/StorageTechnology",
         ),
         _openapi_raw,
@@ -333,7 +333,7 @@ function _encode(_openapi_value::StorageTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/StorageTechnology",
         ),
         _openapi_output,

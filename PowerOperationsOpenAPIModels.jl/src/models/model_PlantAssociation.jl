@@ -1,7 +1,7 @@
 """
     PlantAssociation
 
-Association between a power plant supplemental attribute and a generating unit, identifying the unit's group within the plant: shafts, penstocks, PCCs, or exclusion groups. group_index semantics depend on the parent plant's type.
+Association between a power plant supplemental attribute and a generating unit, identifying the group the unit belongs to within the plant. Covers 1-to-n cases: ThermalPowerPlant shafts, HydroPowerPlant penstocks, RenewablePowerPlant PCCs, and CombinedCycleFractional exclusion groups. The semantics of group_index are determined by the parent plant's type.
 
   - `entity_id`: ID of the generating unit (entity) participating in the plant
   - `group_index`: Group number within the plant (shaft, penstock, PCC, or exclusion group, depending on the parent plant's type)
@@ -18,7 +18,7 @@ function _decode(::Type{PlantAssociation}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PlantAssociation",
         ),
         _openapi_raw,
@@ -73,7 +73,7 @@ function _encode(_openapi_value::PlantAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/PlantAssociation",
         ),
         _openapi_output,

@@ -1,7 +1,7 @@
 """
     NodalACTransportTechnology
 
-Nodal representation of candidate AC transmission lines between two regions. Carries capacity limits, a capital cost curve, and electrical characteristics: resistance, series reactance, voltage rating. Added in discrete units of unit_size.
+Nodal representation of candidate AC transmission lines between two regions. Alongside capacity limits and a capital cost curve it carries the electrical characteristics of the line — resistance, series reactance, and voltage rating — and is added in discrete units of `unit_size`.
 
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`).
   - `capacity_limits`: Allowable capacity for a transmission line. Units: MW.
@@ -41,7 +41,7 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/NodalACTransportTechnology",
         ),
         _openapi_raw,
@@ -212,7 +212,7 @@ function _encode(_openapi_value::NodalACTransportTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
+            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
             pointer="/components/schemas/NodalACTransportTechnology",
         ),
         _openapi_output,

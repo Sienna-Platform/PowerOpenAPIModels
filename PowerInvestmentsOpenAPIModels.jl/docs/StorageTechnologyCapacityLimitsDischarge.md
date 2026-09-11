@@ -1,6 +1,6 @@
 # StorageTechnologyCapacityLimitsDischarge
 
-Allowable installed discharging capacity: a single bound applied to all capacity, or a mapping from a stringified float key to the bound at that key. Units: MW.
+Allowable installed power capacity for discharging of a storage technology, given either as a single bound applied to all capacity or as a mapping from a float key (stringified) to the bound that applies at that key. Units: MW.
 
 ## Properties
 Name | Type | Description | Notes

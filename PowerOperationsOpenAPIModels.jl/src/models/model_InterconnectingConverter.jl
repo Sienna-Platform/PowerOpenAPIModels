@@ -7,7 +7,7 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
   - `ac_setpoint`: AC-voltage magnitude target (when `ac_control` regulates AC voltage) or power factor setpoint (otherwise). Units: per ac_control — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
   - `active_power`: Active power on the DC side. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits`: Minimum and maximum stable active power levels. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the converter for per unitization. Units: MVA.
   - `bus`: ID of the bus on the AC side of this converter.
   - `dc_bus`: ID of the bus on the DC side of this converter.
@@ -19,9 +19,9 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
   - `id`: Unique integer identifier for this component.
   - `loss_function`: Linear or quadratic loss function with respect to the converter current.
   - `max_dc_current`: Maximum stable dc current limits. Units: A.
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
-  - `power_factor_weighting_fraction`: Weight for reducing active vs. reactive power when the converter rating is violated: 0 reduces only active power, 1 only reactive, values between weight both. Units: 1.
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `power_factor_weighting_fraction`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `rating`: Maximum output power rating of the converter. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `remote_bus_control`: Number of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE`; null regulates its own terminal bus.
@@ -63,7 +63,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterconnectingConverter",
         ),
         _openapi_raw,
@@ -356,7 +356,7 @@ function _encode(_openapi_value::InterconnectingConverter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterconnectingConverter",
         ),
         _openapi_output,

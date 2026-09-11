@@ -1,6 +1,6 @@
 # TechnologyFinancialData
 
-Financial data for a candidate technology: the capital recovery period, the dollar-year its costs are reported in, and the debt fraction, debt rate, return on equity, and tax rate setting its cost of capital.
+Financial data for a candidate technology: the capital recovery period used to derive overnight capital cost from annualized investment cost, the dollar-year its cost data is reported in, and the debt fraction, debt rate, return on equity, and tax rate that together set its cost of capital.
 
 ## Properties
 Name | Type | Description | Notes

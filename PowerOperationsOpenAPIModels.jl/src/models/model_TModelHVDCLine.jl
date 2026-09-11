@@ -1,18 +1,20 @@
 """
     TModelHVDCLine
 
-A high-voltage DC line for modeling DC transmission networks. Connects to a DCBus on each end and uses a T-model of the line impedance, suitable for multi-terminal DC networks. Power fields are always natural units.
+A High Voltage DC transmission line for modeling DC transmission networks.
+
+This line must be connected to a `DCBus` on each end. It uses a T-Model of the line impedance. This is suitable for operational simulations with a multi-terminal DC network. This line has no independent per-component power base, so its power fields are always natural units.
 
   - `active_power_flow`: Initial condition of active power flow on the line. Units: MW.
   - `active_power_limits_from`: Minimum and maximum active power flows to the FROM node. Units: MW.
   - `active_power_limits_to`: Minimum and maximum active power flows to the TO node. Units: MW.
   - `arc`: An `Arc` defining this line `from` a bus `to` another bus.
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_current`: Base current for per-unitization of this line's per-unit fields — this DC line per-unitizes against a current base, not a power base. Units: A.
   - `c`: Shunt capacitance. Per-unit on this line's `base_current`. Units: pu.
   - `id`: Unique integer identifier for this component.
   - `l`: Total series inductance, split equally on both sides of the shunt capacitance. Per-unit on this line's `base_current`. Units: pu.
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `parameter_units`: Unit basis for this line's impedance field (r).
   - `r`: Total series resistance, split equally on both sides of the shunt capacitance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
 """
@@ -36,7 +38,7 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TModelHVDCLine",
         ),
         _openapi_raw,
@@ -177,7 +179,7 @@ function _encode(_openapi_value::TModelHVDCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/TModelHVDCLine",
         ),
         _openapi_output,

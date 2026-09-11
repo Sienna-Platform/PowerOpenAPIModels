@@ -1,9 +1,13 @@
 """
     InterruptibleStandardLoad
 
-An interruptible, voltage-dependent ZIP load whose demand can be curtailed subject to an interruption cost. Like StandardLoad, splits demand into Z, I, and P terms, but carries an operation_cost for interrupting the load.
+An interruptible, voltage-dependent ZIP load whose demand can be curtailed through demand response programs, subject to an interruption cost.
 
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+Like `StandardLoad`, it breaks the ZIP into three pieces: Z (constant impedance), I (constant current), and P (constant power), according to `P = P_P * V^0 + P_I * V^1 + P_Z * V^2` for active power and `Q = Q_P * V^0 + Q_I * V^1 + Q_Z * V^2` for reactive power. (Voltage V is in per unit.) Unlike `StandardLoad`, it carries an `operation_cost` for interrupting the load.
+
+For a non-interruptible ZIP load, see `StandardLoad`. For an interruptible constant-power load, see `InterruptiblePowerLoad`.
+
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `base_power`: Base power of the load for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `conformity`: Indicates whether the specified load is conforming or non-conforming.
@@ -21,9 +25,9 @@ An interruptible, voltage-dependent ZIP load whose demand can be curtailed subje
   - `max_current_reactive_power`: Maximum reactive power drawn by constant current load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `max_impedance_active_power`: Maximum active power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `max_impedance_reactive_power`: Maximum reactive power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `name`: Name of the component. Components of the same type (e.g., `InterruptibleStandardLoad`) must have unique names, but components of different types (e.g., `InterruptibleStandardLoad` and `ACBus`) can have the same name.
   - `operation_cost`: Operational cost of interrupting load. or MarketBidCost
-  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
 """
 Base.@kwdef struct InterruptibleStandardLoad <: APIModel
     available::Bool
@@ -55,7 +59,7 @@ function _decode(::Type{InterruptibleStandardLoad}, _openapi_raw, _openapi_valid
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterruptibleStandardLoad",
         ),
         _openapi_raw,
@@ -326,7 +330,7 @@ function _encode(_openapi_value::InterruptibleStandardLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/InterruptibleStandardLoad",
         ),
         _openapi_output,

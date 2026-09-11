@@ -1,7 +1,7 @@
 """
     ACBusType
 
-Classification of an AC bus for power flow. PQ fixes active/reactive injections, solving for voltage and angle. PV fixes power and voltage magnitude. REF names the angle reference. SLACK balances mismatch. ISOLATED marks a disconnected bus.
+Classification of an AC bus for power flow, following the MATPOWER bus-type convention. `PQ` fixes the active and reactive injections and solves for voltage magnitude and angle; `PV` fixes active power and voltage magnitude and solves for reactive power and angle; `REF` names the reference for the system voltage angle; `SLACK` balances the system active and reactive mismatch and sets the reference angle; `ISOLATED` marks a bus not connected to the network.
 """
 struct ACBusType <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{ACBusType}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ACBusType",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::ACBusType)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/ACBusType",
         ),
         output,

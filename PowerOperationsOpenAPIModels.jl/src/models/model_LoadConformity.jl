@@ -1,7 +1,7 @@
 """
     LoadConformity
 
-How a load tracks voltage and frequency variation in dynamic studies. CONFORMING responds predictably, following standard practice. NON_CONFORMING does not, e.g. a constant power load. UNDEFINED leaves it unstated.
+WECC classification of how a load tracks voltage and frequency variation, used in dynamic studies to decide how it is modeled during a disturbance. `CONFORMING` responds predictably and follows standard load modeling practice; `NON_CONFORMING` does not, as with a constant power load or one behind a complex control system; `UNDEFINED` leaves the classification unstated.
 """
 struct LoadConformity <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{LoadConformity}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/LoadConformity",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::LoadConformity)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/LoadConformity",
         ),
         output,

@@ -1,7 +1,7 @@
 """
     SwitchedAdmittanceControlMode
 
-Control mode of a switched shunt admittance. UNDEFINED: unspecified. FIXED: constant value. CONTINUOUS_VOLTAGE: adjusts continuously. DISCRETE_* modes switch blocks stepwise to control voltage, reactive power, or a remote bus's admittance.
+Control mode of a switched shunt admittance. `UNDEFINED` leaves the mode unspecified; `FIXED` holds the admittance at a constant value; `CONTINUOUS_VOLTAGE` adjusts it continuously to control voltage. The `DISCRETE_*` modes switch blocks in discrete steps to control voltage, a plant's reactive power, a voltage-source-converter terminal's reactive power, or a remote bus's admittance, respectively.
 """
 struct SwitchedAdmittanceControlMode <: EnumAPIModel
     value::String
@@ -26,7 +26,7 @@ function _decode(::Type{SwitchedAdmittanceControlMode}, value, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/SwitchedAdmittanceControlMode",
         ),
         value,
@@ -40,7 +40,7 @@ function _encode(value::SwitchedAdmittanceControlMode)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/SwitchedAdmittanceControlMode",
         ),
         output,

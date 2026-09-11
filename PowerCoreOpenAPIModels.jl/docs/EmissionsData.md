@@ -1,13 +1,13 @@
 # EmissionsData
 
-Describes emission of a single pollutant from a host component: pollutant identity (CO2, NOx, etc.) plus an emission rate as a ValueCurve. One instance can attach to one or many components.
+Supplemental attribute describing the emission of a single pollutant from a host component. Combines pollutant identity (CO2, NOx, etc.) with an emission rate expressed as a ValueCurve (supporting constant, linear, or piecewise relationships between fuel consumption / power output and emissions). One EmissionsData instance can be attached to one or many components.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`available`** | **`Union{Absent,Bool,Nothing}`** | Whether this attribute is active | [optional]
 **`basis`** | **`EmissionBasis`** | FUEL_INPUT (mass per unit of heat input) or POWER_OUTPUT (mass per unit of electrical output) | [required]
-**`emission_rate`** | **`ValueCurve`** | Emission rate as a ValueCurve, typically an IncrementalCurve with LinearFunctionData or PiecewiseStepData. Rates must be non-negative and finite. | [required]
+**`emission_rate`** | **`ValueCurve`** | Emission rate as a ValueCurve, typically an IncrementalCurve with LinearFunctionData (constant or linearly varying rate) or PiecewiseStepData (piecewise step rates). Rates must be non-negative and finite. | [required]
 **`energy_unit`** | **`EnergyUnit`** | Energy unit for the rate denominator. Must be MMBTU or GJ when basis is FUEL_INPUT, and MWH when basis is POWER_OUTPUT. | [required]
 **`gwp`** | **`Union{Absent,Float64,Nothing}`** | GWP100 multiplier for CO2-equivalent reporting. Must be finite and non-negative. Units: 1. | [optional]
 **`id`** | **`Int64`** |  | [required]

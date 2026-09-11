@@ -7,12 +7,12 @@ Automatic generation control (AGC) for the system or a certain `Area` within the
   - `k_i`: PID Integral Constant.
   - `k_p`: PID Proportional Constant.
   - `area`: ID of the area controlled by the AGC.
-  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `bias`: Area frequency bias. Units: MW/Hz.
   - `delta_t`: PID Discretization period. Units: s.
   - `id`: Unique integer identifier for this component.
   - `initial_ace`: Initial condition for ACE.
-  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
 """
 Base.@kwdef struct AGC <: APIModel
     k_d::Float64
@@ -32,7 +32,7 @@ function _decode(::Type{AGC}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/AGC",
         ),
         _openapi_raw,
@@ -127,7 +127,7 @@ function _encode(_openapi_value::AGC)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
+            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
             pointer="/components/schemas/AGC",
         ),
         _openapi_output,

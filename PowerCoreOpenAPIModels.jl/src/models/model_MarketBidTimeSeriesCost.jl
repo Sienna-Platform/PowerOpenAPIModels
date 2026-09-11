@@ -4,14 +4,14 @@
 Cost representation for time-varying market bids of energy and ancillary services. The static counterpart is MarketBidCost.
 
   - `ancillary_service_offers`: IDs of the ancillary service components that this bid offers into.
-  - `curve_multistep`: Multi-step block indicator: 0 = SINGLE_STEP (default; independent steps), 1 = MULTI_STEP (one block across every step). Independent of curve_style.
-  - `curve_style`: Curve-clearing style for the bid: 0 = VARIABLE (default; continuous, one or more segments), 1 = FIXED (all-or-nothing, single segment).
-  - `decremental_offer_curves`: Buy offer curves as time-series-backed piecewise incremental curves. Only the TIME_SERIES_INCREMENTAL variant is admissible; others are rejected.
+  - `curve_multistep`: Multi-step block indicator for the bid: 0 = SINGLE_STEP (default; each step of the bid clears independently); 1 = MULTI_STEP (the bid must be awarded as one block across every step it covers). Counted in model steps so it applies at any resolution. Independent of curve_style: curve_style is the quantity structure, curve_multistep is the time structure, and they compose.
+  - `curve_style`: Curve-clearing style for the bid: 0 = VARIABLE (default; continuous quantity with one or more segments); 1 = FIXED (all-or-nothing block with a single segment). FIXED is mutually exclusive with incremental_slope/decremental_slope and requires a single-segment offer curve.
+  - `decremental_offer_curves`: Buy offer curves whose value curve is a time-series-backed piecewise incremental curve. Only the TIME_SERIES_INCREMENTAL variant is admissible here; any other variant is rejected by the consuming constructor.
   - `decremental_slope`: Linear-interpolation flag for the decremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve.
-  - `incremental_offer_curves`: Sell offer curves as time-series-backed piecewise incremental curves. Only the TIME_SERIES_INCREMENTAL variant is admissible; others are rejected.
+  - `incremental_offer_curves`: Sell offer curves whose value curve is a time-series-backed piecewise incremental curve. Only the TIME_SERIES_INCREMENTAL variant is admissible here; any other variant is rejected by the consuming constructor.
   - `incremental_slope`: Linear-interpolation flag for the incremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve.
-  - `minimum_energy_offer`: Minimum-energy offer as a time-series-backed linear curve, in \$/MWh at the curve's minimum power. Only the TIME_SERIES_LINEAR variant is admissible.
-  - `shut_down`: Shut-down cost as a time-series-backed linear curve. Only the TIME_SERIES_LINEAR variant is admissible.
+  - `minimum_energy_offer`: Minimum-energy offer: cost to operate at minimum stable level, in \$/MWh at the curve's minimum power, stored as submitted. \$/h sources convert at parse (MEO = no-load cost / P_min). Time-series-backed linear curve; only the TIME_SERIES_LINEAR function-data variant is admissible here — the consuming constructor rejects any other.
+  - `shut_down`: Shut-down cost as a time-series-backed linear curve. Only the TIME_SERIES_LINEAR function-data variant is admissible here; the consuming constructor rejects any other.
   - `start_up_association_id`: Store-minted id of a time series of three-stage (hot, warm, cold) start-up costs.
 """
 Base.@kwdef struct MarketBidTimeSeriesCost <: APIModel
@@ -34,7 +34,7 @@ function _decode(::Type{MarketBidTimeSeriesCost}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/MarketBidTimeSeriesCost",
         ),
         _openapi_raw,
@@ -183,7 +183,7 @@ function _encode(_openapi_value::MarketBidTimeSeriesCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
+            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
             pointer="/components/schemas/MarketBidTimeSeriesCost",
         ),
         _openapi_output,
