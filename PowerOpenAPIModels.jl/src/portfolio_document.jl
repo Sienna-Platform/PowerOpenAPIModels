@@ -88,7 +88,7 @@ struct PortfolioDocument
     aggregation::String
     financial_data::Union{Nothing, PortfolioFinancialData}
     components::Dict{String, Vector}
-    supplemental_attributes::Vector{OpenAPI.APIModel}
+    supplemental_attributes::Vector{Any}
     supplemental_attribute_associations::Vector{SupplementalAttributeAssociation}
     requirements_associations::Vector{RequirementAssociation}
     investment_schedule::Union{Nothing, Dict{String, Any}}
@@ -123,7 +123,7 @@ function PortfolioDocument(
         String(aggregation),
         financial_data,
         Dict{String, Vector}(),
-        Vector{OpenAPI.APIModel}(),
+        Vector{Any}(),
         Vector{SupplementalAttributeAssociation}(),
         Vector{RequirementAssociation}(),
         _optional_schedule(investment_schedule),
@@ -286,7 +286,7 @@ end
 """
 The document as a tree of model objects, ready for a single JSON encoding pass.
 
-`JSON.lower(::OpenAPI.APIModel)` yields a wrapper that iterates properties and skips the unset
+`JSON.lower(::Any)` yields a wrapper that iterates properties and skips the unset
 ones, so nesting and optional fields need no handling here. `base_system_file` and
 `time_series_storage_file` are required-but-nullable keys, so they are always present (as JSON
 `null` when absent); `name`/`description`/`data_source`/`financial_data`/`investment_schedule`
