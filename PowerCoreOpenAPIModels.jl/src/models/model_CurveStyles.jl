@@ -1,7 +1,7 @@
 """
     CurveStyles
 
-Curve-clearing style for a bid: 0 = VARIABLE (default; continuous quantity with one or more segments); 1 = FIXED (all-or-nothing block with a single segment). FIXED is mutually exclusive with incremental_slope/decremental_slope and requires a single-segment offer curve.
+Curve-clearing style for a bid: 0 = VARIABLE (default; continuous, one or more segments), 1 = FIXED (all-or-nothing, single segment). FIXED requires a single-segment offer curve.
 """
 struct CurveStyles <: EnumAPIModel
     value::Int64
@@ -15,7 +15,7 @@ function _decode(::Type{CurveStyles}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/CurveStyles",
         ),
         value,
@@ -29,7 +29,7 @@ function _encode(value::CurveStyles)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/CurveStyles",
         ),
         output,

@@ -1,28 +1,28 @@
 """
     NonSequentialTimeSeries
 
-An irregular static time series, sampled at explicit timestamps rather than on a grid. Deliberately carries neither `initial_timestamp` nor `resolution`: an irregular series has no fixed cadence and its key holds no timestamp. The timestamp vector itself lives in the store rather than here, content-addressed so that many irregular series sharing one time axis store it once; `timestamps_uri` names which axis this series sits on, so a document plus the store's arrays describe the series completely.
+An irregular static time series sampled at explicit timestamps rather than on a grid. Carries no initial_timestamp or resolution. Its timestamp vector lives in the store; timestamps_uri names which axis it sits on.
 
-  - `application_data`: Opaque, package-owned payload (typically JSON) carried verbatim for an application to reconstruct its own domain objects. Never parsed or interpreted here, and end users are not expected to set it. Element typing does not belong here — that is `element_type`.
-  - `array_shape`: Full native shape of the stored array, in the order the store holds it: the first axis is the array's length and the trailing axes end with `element_shape`. Static types are `[length, *element_shape]`; a deterministic forecast stacks windows as `[horizon_count, count, *element_shape]`; probabilistic and scenarios forecasts add a percentile or scenario axis in front of that. Optional, and redundant for the static types, where it is exactly `[length] + element_shape`. It earns its place on the forecasts, whose array layout is a convention the producing package owns rather than a rule this layer enforces, so the stored geometry cannot be reconstructed from `horizon`, `count`, `percentiles`, and `scenario_count` alone. A consumer that has it should prefer it; one that does not falls back to those fields, which is exact for the static types and a best effort for the forecasts.
-  - `association_id`: Surrogate id of this association, minted by the store that holds it. Assigned once when the association is created and never changed: renaming the series or reassigning its owner leaves it alone, so a consumer may persist it as a durable reference. Ids are never reused, and they are store-local — resolve one against the same store the document was exported from, not against an independently built store. Assigned by the store, never by a document author.
-  - `component_field`: The field on the owning component or supplemental attribute whose value these values are the time-varying form of (e.g. max_active_power, rating). Free-form: it names a field in the consumer's own object model. Records what the values are for, where `name` only says which series they are.
+  - `application_data`: Opaque payload, typically JSON, carried verbatim for the owning application to reconstruct its own objects. Never parsed here.
+  - `array_shape`: Full native shape of the stored array: length, then `element_shape`. Forecasts add a horizon/percentile/scenario axis. Optional for static types.
+  - `association_id`: Surrogate id for this association, minted by the store. Fixed once assigned and never reused; a consumer may persist it as a durable reference.
+  - `component_field`: Field on the owning object whose time-varying values these are (e.g. max_active_power). Free-form; records what the values are for.
   - `data_hash`: Content hash of the stored array: SHA-256, hex-encoded. Optional — not every producer computes it.
   - `element_shape`: Per-step element shape: the trailing dims after time. An empty array means a scalar element.
-  - `element_type`: What one timestep's values mean and how they are laid out. The physical dtype of the stored bytes derives from this and is not recorded separately. Unlike `units` and `quantity_kind` this is not a user-facing label — the writing package derives it from the array.
-  - `features`: User-defined key/value tags that are part of the series' identity: two series differing only by a feature are distinct series. Feature names that collide with a field of a series or of the tuple addressing one are rejected.
-  - `length`: Number of timesteps. Together with `name` this is what identifies the series: its explicit, strictly-increasing timestamp vector lives in the store, content-addressed so that many irregular series sharing one time axis store it once.
-  - `name`: Time series name (e.g. max_active_power). Part of the series' identity, and often carrying a disambiguating suffix; `component_field` records what the values are for.
+  - `element_type`: What one timestep's values mean and how they are laid out. The stored dtype derives from this and is not recorded separately.
+  - `features`: User-defined key/value tags, part of the series' identity: two series differing only by a feature are distinct. Names cannot collide with another series field.
+  - `length`: Number of timesteps. Together with name, identifies the series; its explicit, strictly-increasing timestamp vector lives in the store, content-addressed.
+  - `name`: Series name (e.g. max_active_power), part of its identity. `component_field` records what the values represent.
   - `owner_category`: Whether the owner is a component or a supplemental attribute.
-  - `owner_id`: ID of the owning component or supplemental attribute. The producing data layer allocates both from one id stream, so an `owner_id` never collides across the two categories; `owner_category` remains required because the store's catalog contract still supports independent streams from other producers, and it is still the store's disambiguator.
+  - `owner_id`: ID of the owning component or supplemental attribute. `owner_category` says which.
   - `owner_type`: Type name of the owning entity. Descriptive, not part of the series' identity.
-  - `quantity_kind`: Kind of physical quantity the values measure (e.g. ActivePower, ReactivePower, ElectricalEnergy). Coarser than `units` but finer than a dimension: ActivePower, ReactivePower, and ApparentPower share the dimension {M:1,L:2,T:-3}, so a dimension cannot tell them apart and a quantity kind can. It is also the only record of what the values measure when `unit_system` is a per-unit basis.
-  - `time_reference`: How this series' timestamps were spelled, so a read hands back what the write declared instead of relabelling everything UTC. Absent means unspecified, which is not a claim the timestamps were written as UTC.
-  - `time_series_type`: Discriminator. Fixed to NonSequentialTimeSeries for this schema, pinned with `const` to match this repo's existing discriminators (Core/common.json's `curve_type`), which generate a plain string literal in both toolchains.
-  - `timestamps_uri`: Locator for this series' explicit timestamp vector, unique within one store — `uri`'s counterpart for the time axis, with the same contract: no required format, never parsed or interpreted here, and resolved by the backing store (infrastore uses the axis's content hash, the same value it keys the shared vector under). A locator rather than the vector itself because the axis is shared: a cohort of irregular series on one axis names it once each, where inlining the timestamps would repeat the whole vector per row. Optional, so a producer that predates it is still valid, and absent from the other five types, which have no explicit axis. Without it a document cannot say which of the store's axes a row sits on, and the row cannot be reconstructed from the document — the store cannot infer it either, since arrays are content-addressed and two irregular series with identical values on different axes share one stored array. A consumer restoring rows from a document therefore requires it.
-  - `unit_system`: Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a COMPONENT_BASE series back to natural units needs the owning component's base_power. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS.
-  - `units`: Unit label for the series values. Set by whoever creates the series and returned unchanged; not part of the series' identity, so two series differing only in this label are duplicates. Meaningless on its own when `unit_system` is a per-unit basis, where the values are dimensionless. By convention drawn from the unit vocabulary in Core/units.json, though this field is a free-text label the store does not validate against it.
-  - `uri`: Locator for the dense data, unique within one store. No required format — typically a file path or an HDF5 dataset path; the backing store decides what it means and resolves it (infrastore uses its content hash as this value). Never parsed or interpreted here. This layer records where the values are, never the values.
+  - `quantity_kind`: Physical quantity the values measure (e.g. ActivePower, ReactivePower). Finer-grained than a dimension; the only quantity record when `unit_system` is per-unit.
+  - `time_reference`: How this series' timestamps are spelled, returned as declared rather than relabeled as UTC. Absent means unspecified, not a UTC claim.
+  - `time_series_type`: Discriminator, fixed to NonSequentialTimeSeries for this schema.
+  - `timestamps_uri`: Locator for this series' explicit timestamp vector, unique within one store. Optional; absent from the other five types, which have no explicit axis.
+  - `unit_system`: Basis the series values are already expressed in. A declaration only; nothing here rescales values. Absent means unspecified, not NATURAL_UNITS.
+  - `units`: Unit label for the series values, set by the writer. Drawn from the vocabulary in Core/units.json by convention, not validated against it.
+  - `uri`: Locator for the dense data, unique within its store. Format is store-defined, often a file or dataset path. Never parsed or interpreted here.
 """
 Base.@kwdef struct NonSequentialTimeSeries <: APIModel
     application_data::Union{Absent, Nothing, String} = ABSENT
@@ -53,7 +53,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/NonSequentialTimeSeries",
         ),
         _openapi_raw,
@@ -282,7 +282,7 @@ function _encode(_openapi_value::NonSequentialTimeSeries)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/NonSequentialTimeSeries",
         ),
         _openapi_output,

@@ -3,11 +3,11 @@
 
 A hydropower pumped turbine that needs to have two `HydroReservoir`s attached, suitable for modeling independent pumped hydro with reservoirs.
 
-  - `active_power`: Initial active power set point of the turbine unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `active_power`: Initial active power set point of the turbine unit: the steady-state operating point for power flow, and an optional starting point for other solvers. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits`: Minimum and maximum stable active power levels for the turbine. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits_pump`: Minimum and maximum stable active power levels for the pump. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `active_power_pump`: Initial active power set point of the pump unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `active_power_pump`: Initial active power set point of the pump unit: the steady-state operating point for power flow, and an optional starting point for other solvers. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `commitment_mode`: Commitment mode of the unit.
@@ -16,11 +16,11 @@ A hydropower pumped turbine that needs to have two `HydroReservoir`s attached, s
   - `efficiency`: Turbine/Pump efficiency [0, 1.0].
   - `id`: Unique integer identifier for this component.
   - `minimum_time`: Minimum operating time for the specific mode. Units: min.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
   - `operating_mode`: Which mode the pumped-storage unit is operating in at the start of a simulation: pumping, generating, or idle.
   - `operation_cost`: Operating cost of generation. or MarketBidCost; default PSY.HydroGenerationCost(nothing)
   - `outflow_limits`: Turbine/Pump outflow limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: m3/s.
-  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
+  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
   - `powerhouse_elevation`: Height level above the sea level of the powerhouse on which the turbine is installed. Units: m.
   - `prime_mover_type`: Prime mover technology according to EIA 923.
   - `ramp_limits`: Ramp up and ramp down limits. in psy5 a required param with an option to be nothing Units: per power_units — NATURAL_UNITS: MW/min, COMPONENT_BASE: pu/min .
@@ -70,7 +70,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/HydroPumpTurbine",
         ),
         _openapi_raw,
@@ -401,7 +401,7 @@ function _encode(_openapi_value::HydroPumpTurbine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/HydroPumpTurbine",
         ),
         _openapi_output,

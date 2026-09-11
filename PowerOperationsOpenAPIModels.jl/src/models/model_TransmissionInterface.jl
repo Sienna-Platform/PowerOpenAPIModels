@@ -4,12 +4,12 @@
 A collection of transmission branches whose combined flow is monitored and constrained as an interface.
 
   - `active_power_flow_limits`: Minimum and maximum active power flow limits on the interface. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `direction_mapping`: Dictionary of the line `name`s in the interface and their direction of flow (1 or -1) relative to the flow of the interface.
   - `id`: Unique integer identifier for this component.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
-  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
   - `violation_penalty`: Penalty cost for violating the flow limits in the interface.
 """
 Base.@kwdef struct TransmissionInterface <: APIModel
@@ -29,7 +29,7 @@ function _decode(::Type{TransmissionInterface}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TransmissionInterface",
         ),
         _openapi_raw,
@@ -138,7 +138,7 @@ function _encode(_openapi_value::TransmissionInterface)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TransmissionInterface",
         ),
         _openapi_output,

@@ -1,18 +1,18 @@
 """
     TwoTerminalGenericHVDCLine
 
-A High Voltage DC line, which must be connected to an ACBus on each end. This model is appropriate for operational simulations with a linearized DC power flow approximation with losses proportional to the power flow. For modeling a DC network, see TModelHVDCLine.
+A high-voltage DC line connected to an ACBus on each end, for operational simulations with a linearized DC power flow approximation and losses proportional to flow. For modeling a DC network, see TModelHVDCLine.
 
   - `active_power_flow`: Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits_from`: Minimum and maximum active power flows to the FROM node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits_to`: Minimum and maximum active power flows to the TO node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `arc`: An Arc defining this line `from` a bus `to` another bus.
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `id`: Unique integer identifier for this component.
-  - `loss`: Loss model coefficients. It accepts a linear model with a constant loss and a proportional loss rate (MW of loss per MW of flow). It also accepts a Piecewise loss, with N segments to specify different proportional losses for different segments.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
-  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
+  - `loss`: Loss model coefficients: a linear model with constant loss and proportional rate (MW loss per MW flow), or a piecewise loss with N segments.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
   - `reactive_power_limits_from`: Minimum and maximum reactive power limits to the FROM node. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits_to`: Minimum and maximum reactive power limits to the TO node. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
 """
@@ -37,7 +37,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TwoTerminalGenericHVDCLine",
         ),
         _openapi_raw,
@@ -197,7 +197,7 @@ function _encode(_openapi_value::TwoTerminalGenericHVDCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TwoTerminalGenericHVDCLine",
         ),
         _openapi_output,

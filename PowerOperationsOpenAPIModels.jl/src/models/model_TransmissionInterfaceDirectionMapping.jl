@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TransmissionInterface/properties/direction_mapping",
         ),
         _openapi_raw,
@@ -47,7 +47,7 @@ function _encode(_openapi_value::TransmissionInterfaceDirectionMapping)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TransmissionInterface/properties/direction_mapping",
         ),
         _openapi_output,

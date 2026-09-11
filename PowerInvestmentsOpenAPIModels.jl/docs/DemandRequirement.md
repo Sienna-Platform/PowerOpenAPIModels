@@ -6,7 +6,7 @@ Demand requirements for a region. New demand enters at a stated peak in its cons
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`available`** | **`Union{Absent,Bool,Nothing}`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). | [optional]
-**`conformity`** | **`Union{Absent,Nothing,String}`** | Indicator of how the demand requirement should conform to the load profile of existing technologies in the system. Should only be used for new demand requirements. | [optional]
+**`conformity`** | **`Union{Absent,Nothing,String}`** | How the demand requirement should conform to the load profile of existing technologies. Only used for new demand requirements. | [optional]
 **`growth_rate`** | **`Union{Absent,Float64,Nothing}`** | The annual growth rate of the demand requirement, used to scale present-day loads into future projections. Should only be used for conforming loads. Units: 1. | [optional]
 **`id`** | **`Int64`** | ID for individual component. | [required]
 **`name`** | **`String`** | Name of the component. | [required]

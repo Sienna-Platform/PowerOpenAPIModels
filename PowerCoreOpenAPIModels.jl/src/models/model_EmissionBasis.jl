@@ -1,7 +1,7 @@
 """
     EmissionBasis
 
-What an emission rate is measured against: `FUEL_INPUT` for mass per unit of heat input, `POWER_OUTPUT` for mass per unit of electrical output. The choice constrains the accompanying energy unit — a heat unit for `FUEL_INPUT`, `MWH` for `POWER_OUTPUT`.
+What an emission rate is measured against: FUEL_INPUT for mass per unit of heat input, POWER_OUTPUT for mass per unit of electrical output. The choice constrains the paired energy unit.
 """
 struct EmissionBasis <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{EmissionBasis}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/EmissionBasis",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::EmissionBasis)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/EmissionBasis",
         ),
         output,

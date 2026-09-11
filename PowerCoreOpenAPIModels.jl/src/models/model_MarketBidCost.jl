@@ -4,14 +4,14 @@
 Cost representation for static (non-time-varying) market bids of energy and ancillary services.
 
   - `ancillary_service_offers`: IDs of the ancillary service components that this market bid offers into.
-  - `curve_multistep`: Multi-step block indicator for the bid: 0 = SINGLE_STEP (default; each step of the bid clears independently); 1 = MULTI_STEP (the bid must be awarded as one block across every step it covers). Counted in model steps so it applies at any resolution. Independent of curve_style: curve_style is the quantity structure, curve_multistep is the time structure, and they compose.
-  - `curve_style`: Curve-clearing style for the bid: 0 = VARIABLE (default; continuous quantity with one or more segments); 1 = FIXED (all-or-nothing block with a single segment). FIXED is mutually exclusive with incremental_slope/decremental_slope and requires a single-segment offer curve.
+  - `curve_multistep`: Multi-step block indicator: 0 = SINGLE_STEP (default; independent steps), 1 = MULTI_STEP (one block across every step). Independent of curve_style.
+  - `curve_style`: Curve-clearing style for the bid: 0 = VARIABLE (default; continuous, one or more segments), 1 = FIXED (all-or-nothing, single segment).
   - `decremental_offer_curves`: Buy offer curves data as a `CostCurve` of `PiecewiseIncrementalCurve`.
   - `decremental_slope`: Linear-interpolation flag for the decremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve.
   - `incremental_offer_curves`: Sell offer curves data as a `CostCurve` of `PiecewiseIncrementalCurve`.
   - `incremental_slope`: Linear-interpolation flag for the incremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve.
-  - `minimum_energy_offer`: Minimum-energy offer: cost to operate at minimum stable level, in \$/MWh at the curve's minimum power, stored as submitted. \$/h sources convert at parse (MEO = no-load cost / P_min). Legacy scalar promotion: a bare scalar value `s` from a legacy source converts to an `InputOutputCurve` of `LinearFunctionData` with `constant_term = s` and `proportional_term = 0`.
-  - `shut_down`: Shut-down cost. Legacy scalar promotion: a bare scalar value `s` from a legacy source converts to an `InputOutputCurve` of `LinearFunctionData` with `constant_term = s` and `proportional_term = 0`.
+  - `minimum_energy_offer`: Minimum-energy offer: cost to run at minimum stable level, in \$/MWh at the curve's minimum power. A bare scalar `s` promotes to constant_term = s.
+  - `shut_down`: Shut-down cost. A bare scalar `s` promotes to an InputOutputCurve with constant_term = s, proportional_term = 0.
   - `start_up`: Start-up cost at different stages of the thermal cycle (hot, warm, cold).
 """
 Base.@kwdef struct MarketBidCost <: APIModel
@@ -33,7 +33,7 @@ function _decode(::Type{MarketBidCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/MarketBidCost",
         ),
         _openapi_raw,
@@ -182,7 +182,7 @@ function _encode(_openapi_value::MarketBidCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/MarketBidCost",
         ),
         _openapi_output,

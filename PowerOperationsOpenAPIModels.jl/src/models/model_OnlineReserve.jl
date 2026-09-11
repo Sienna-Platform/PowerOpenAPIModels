@@ -1,19 +1,19 @@
 """
     OnlineReserve
 
-A reserve product provided by devices already synchronized with the system. The procurement requirement is static unless a `requirement` time series is attached, in which case `requirement` is the scaling factor. Attach an Operating Reserve Demand Curve through `variable` to price the requirement rather than enforce it; omit `variable` when the reserve has no demand curve.
+A reserve from devices already synchronized with the system. The requirement is static unless a requirement time series is attached, in which case it is the scaling factor. variable prices it instead of enforcing it.
 
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `deployed_fraction`: Fraction of service procurement that is assumed to be actually deployed. Most commonly, this is assumed to be either 0.0 or 1.0.
   - `id`: Unique integer identifier for this component.
   - `max_output_fraction`: The maximum fraction of each device's output that can be assigned to the service.
   - `max_participation_factor`: The maximum portion [0, 1.0] of the reserve that can be contributed per device.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
   - `requirement`: The value of required reserves. Units: MW.
   - `reserve_direction`: Whether the reserve is an upward, downward, or symmetric reserve product.
   - `sustained_time`: The time reserve contribution must be sustained at a specified level. Units: min.
   - `time_frame`: The saturation time frame to provide reserve contribution. Units: min.
-  - `variable`: Operating reserve demand curve, either static or time-series-backed. Time series values are carried via `time_series_associations` in the sidecar, never inline. Omit when the reserve has no demand curve.
+  - `variable`: Operating reserve demand curve, static or time-series-backed. Time series values are carried via `time_series_associations`. Omit if there is no demand curve.
 """
 Base.@kwdef struct OnlineReserve <: APIModel
     available::Bool
@@ -34,7 +34,7 @@ function _decode(::Type{OnlineReserve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/OnlineReserve",
         ),
         _openapi_raw,
@@ -177,7 +177,7 @@ function _encode(_openapi_value::OnlineReserve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/OnlineReserve",
         ),
         _openapi_output,

@@ -17,7 +17,7 @@ function _decode(::Type{RenewableDispatchOperationCost}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/RenewableDispatch/properties/operation_cost",
         ),
         value,
@@ -38,56 +38,56 @@ function _decode(::Type{RenewableDispatchOperationCost}, value, _openapi_validat
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "ImportExportTimeSeriesCost" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "MarketBidCost" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MarketBidTimeSeriesCost" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "RENEWABLE" => (
                 RenewableGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/RenewableGenerationCost",
                 ),
             ),
             "RenewableGenerationCost" => (
                 RenewableGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/RenewableGenerationCost",
                 ),
             ),
@@ -114,7 +114,7 @@ function _encode(value::RenewableDispatchOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/RenewableDispatch/properties/operation_cost",
         ),
         output,

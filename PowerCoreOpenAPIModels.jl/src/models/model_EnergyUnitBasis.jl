@@ -1,7 +1,7 @@
 """
     EnergyUnitBasis
 
-Unit basis a stored-energy quantity is recorded in (distinct from EnergyUnit, which names fuel energy content). MWH: megawatt-hours, the conventional interchange form. MWMIN: megawatt-minutes, consistent with the minutes basis used for operational durations, so a duration computed as energy over power comes out in minutes with no hidden factor of 60. Defaults to MWH: MWMIN is supported, not preferred.
+Unit basis a stored-energy quantity is recorded in. MWH: megawatt-hours, the default. MWMIN: megawatt-minutes, matching the minutes basis for operational durations.
 """
 struct EnergyUnitBasis <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{EnergyUnitBasis}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/EnergyUnitBasis",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::EnergyUnitBasis)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/EnergyUnitBasis",
         ),
         output,

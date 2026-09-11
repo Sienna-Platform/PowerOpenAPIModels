@@ -1,13 +1,11 @@
 """
     ShiftablePowerLoad
 
-A static power load that can be partially or completed shifted to later time periods.
-
-These loads are used to model demand response. This load has a target demand profile (set by a `max_active_power` time series for an operational simulation). Load in the profile can be shifted to later time periods to aid in satisfying other system needs; however, any shifted load must be served within a designated time horizon (e.g., 24 hours), which is set by `load_balance_time_horizon`.
+A static power load, used to model demand response, that can be partially or fully shifted to later periods. Has a target demand profile; shifted load must be served within a horizon set by load_balance_time_horizon.
 
   - `active_power`: Initial steady state active power demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits`: Minimum and maximum stable active power levels. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
@@ -15,9 +13,9 @@ These loads are used to model demand response. This load has a target demand pro
   - `load_balance_time_horizon`: Number of time periods over which load must be balanced.
   - `max_active_power`: Maximum active power that this load can demand. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `max_reactive_power`: Maximum reactive power that this load can demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
   - `operation_cost`: Operational cost of interrupting load. or MarketBidCost
-  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
+  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
   - `reactive_power`: Initial steady state reactive power demand. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
 """
 Base.@kwdef struct ShiftablePowerLoad <: APIModel
@@ -42,7 +40,7 @@ function _decode(::Type{ShiftablePowerLoad}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/ShiftablePowerLoad",
         ),
         _openapi_raw,
@@ -204,7 +202,7 @@ function _encode(_openapi_value::ShiftablePowerLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/ShiftablePowerLoad",
         ),
         _openapi_output,

@@ -1,13 +1,9 @@
 """
     StandardLoad
 
-A voltage-dependent ZIP load, most commonly used for dynamics modeling.
+A voltage-dependent ZIP load, used for dynamics modeling. Splits demand into Z (impedance), I (current), and P (power) terms. See ExponentialLoad for an exponential formulation, or PowerLoad for no voltage dependency.
 
-A `StandardLoad` breaks the ZIP into three pieces: Z (constant impedance), I (constant current), and P (constant power), according to `P = P_P * V^0 + P_I * V^1 + P_Z * V^2` for active power and `Q = Q_P * V^0 + Q_I * V^1 + Q_Z * V^2` for reactive power. (Voltage V is in per unit.)
-
-For an alternative exponential formulation of the ZIP model, see `ExponentialLoad`. For a simpler load model with no voltage dependency, see `PowerLoad`.
-
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `base_power`: Base power of the load for per unitization. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `conformity`: Indicates whether the specified load is conforming or non-conforming.
@@ -25,8 +21,8 @@ For an alternative exponential formulation of the ZIP model, see `ExponentialLoa
   - `max_current_reactive_power`: Maximum reactive power drawn by constant current load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `max_impedance_active_power`: Maximum active power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `max_impedance_reactive_power`: Maximum reactive power drawn by constant impedance load. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
-  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
 """
 Base.@kwdef struct StandardLoad <: APIModel
     available::Bool
@@ -56,7 +52,7 @@ function _decode(::Type{StandardLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/StandardLoad",
         ),
         _openapi_raw,
@@ -312,7 +308,7 @@ function _encode(_openapi_value::StandardLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/StandardLoad",
         ),
         _openapi_output,

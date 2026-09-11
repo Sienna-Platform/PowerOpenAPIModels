@@ -1,12 +1,12 @@
 """
     SupplementalAttributeAssociation
 
-Links a supplemental attribute to the component it describes — the JSON form of a row in the store's `supplemental_attribute_associations` catalog table, field-for-field. `component_type` and `attribute_type` are denormalized labels carried for filtering and reporting, not identity: identity is the `(component_id, attribute_id)` pair. Lives in Core because either side may be a Core or an Operations type. Unlike `components`, `supplemental_attributes` is a flat, untyped array, so `attribute_type` is this record's only per-row type discriminator.
+Links a supplemental attribute to the component it describes: one row per (component_id, attribute_id) pair. `component_type` and `attribute_type` are denormalized labels for filtering, not part of the row's identity.
 
   - `attribute_id`: ID of the supplemental attribute.
-  - `attribute_type`: Schema title of the referenced supplemental attribute (e.g. "EmissionsData", "GeographicInfo"). A free-form string, not an enum: new attribute types are added elsewhere in this repo continuously, and a closed enum here would go stale.
+  - `attribute_type`: Schema title of the referenced supplemental attribute (e.g. EmissionsData). Free-form, not an enum: attribute types are added continuously.
   - `component_id`: ID of the component the attribute describes.
-  - `component_type`: Type name of the component the attribute describes. A denormalized label matching the relational mirror's column, used for filtering; not part of the row's identity, which is the `(component_id, attribute_id)` pair.
+  - `component_type`: Type name of the component the attribute describes. A denormalized label for filtering; not part of the row's identity.
 """
 Base.@kwdef struct SupplementalAttributeAssociation <: APIModel
     attribute_id::Int64
@@ -25,7 +25,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
+            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
             pointer="/components/schemas/SupplementalAttributeAssociation",
         ),
         _openapi_raw,
@@ -89,7 +89,7 @@ function _encode(_openapi_value::SupplementalAttributeAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
+            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
             pointer="/components/schemas/SupplementalAttributeAssociation",
         ),
         _openapi_output,

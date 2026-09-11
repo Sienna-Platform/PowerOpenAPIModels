@@ -1,6 +1,6 @@
 # PlantAssociation
 
-Association between a power plant supplemental attribute and a generating unit, identifying the group the unit belongs to within the plant. Covers 1-to-n cases: ThermalPowerPlant shafts, HydroPowerPlant penstocks, RenewablePowerPlant PCCs, and CombinedCycleFractional exclusion groups. The semantics of group_index are determined by the parent plant's type.
+Association between a power plant supplemental attribute and a generating unit, identifying the unit's group within the plant: shafts, penstocks, PCCs, or exclusion groups. group_index semantics depend on the parent plant's type.
 
 ## Properties
 Name | Type | Description | Notes

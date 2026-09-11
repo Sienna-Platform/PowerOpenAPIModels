@@ -1,7 +1,7 @@
 """
     NodalHVDCTransportTechnology
 
-A nodal representation of candidate HVDC transmission lines between two regions, added in discrete units of `unit_size` and characterized by capacity limits, a capital cost curve, and a loss model expressed as a fraction of installed nameplate capacity.
+Nodal representation of candidate HVDC transmission lines between two regions, added in discrete units of unit_size. Characterized by capacity limits, a capital cost curve, and a loss model as a fraction of installed capacity.
 
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`).
   - `capacity_limits`: Allowable capacity for a transmission line. Units: MW.
@@ -9,7 +9,7 @@ A nodal representation of candidate HVDC transmission lines between two regions,
   - `end_node`: End node for transport technology.
   - `financial_data`: Struct containing relevant financial information for a technology.
   - `id`: ID for individual component.
-  - `line_loss`: Loss model coefficients. Accepts a linear model with a constant loss and a proportional loss rate, or a Piecewise loss with N segments for different proportional losses. All terms are defined as fraction of installed nameplate capacity. Units: 1.
+  - `line_loss`: Loss model coefficients: a linear model with constant loss and proportional rate, or a piecewise loss with N segments. Fraction of installed capacity. Units: 1.
   - `name`: Name of the component.
   - `power_systems_type`: Corresponding type to be used in PCM modeling.
   - `requirements`: List of requirement IDs associated with the component.
@@ -41,7 +41,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
             pointer="/components/schemas/NodalHVDCTransportTechnology",
         ),
         _openapi_raw,
@@ -190,7 +190,7 @@ function _encode(_openapi_value::NodalHVDCTransportTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
             pointer="/components/schemas/NodalHVDCTransportTechnology",
         ),
         _openapi_output,

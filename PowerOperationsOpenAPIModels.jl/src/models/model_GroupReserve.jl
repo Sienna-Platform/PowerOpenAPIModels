@@ -1,14 +1,14 @@
 """
     GroupReserve
 
-A reserve product met by a group of individual reserves. The group requirement is additional to each member's own requirement, and a device contributing to a member reserve also counts toward the group. Membership is carried by `ServiceAssociation` rows, not by a field here.
+A reserve product met by a group of individual reserves. The group requirement is additional to each member's own; a device contributing to a member reserve also counts toward the group. Membership is carried by ServiceAssociation rows.
 
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `id`: Unique integer identifier for this component.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
   - `requirement`: The value of required reserves. Units: MW.
   - `reserve_direction`: Whether the reserve is an upward, downward, or symmetric reserve product.
-  - `variable`: Operating reserve demand curve for the group, either static or time-series-backed. A group carrying a curve is elastic: its requirement is priced by the curve rather than enforced. Time series values are carried via `time_series_associations` in the sidecar, never inline. Omit when the group has no demand curve.
+  - `variable`: Operating reserve demand curve for the group, static or time-series-backed. A curve makes the group elastic, priced rather than enforced. Omit if none.
 """
 Base.@kwdef struct GroupReserve <: APIModel
     available::Bool
@@ -24,7 +24,7 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/GroupReserve",
         ),
         _openapi_raw,
@@ -103,7 +103,7 @@ function _encode(_openapi_value::GroupReserve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/GroupReserve",
         ),
         _openapi_output,

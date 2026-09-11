@@ -45,7 +45,7 @@ function _decode(::Type{DemandSideTechnology}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
             pointer="/components/schemas/DemandSideTechnology",
         ),
         _openapi_raw,
@@ -252,7 +252,7 @@ function _encode(_openapi_value::DemandSideTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
             pointer="/components/schemas/DemandSideTechnology",
         ),
         _openapi_output,

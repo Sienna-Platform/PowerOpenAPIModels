@@ -1,7 +1,7 @@
 """
     NodalHVDCTransportTechnologyLineLoss
 
-Loss model coefficients. Accepts a linear model with a constant loss and a proportional loss rate, or a Piecewise loss with N segments for different proportional losses. All terms are defined as fraction of installed nameplate capacity. Units: 1.
+Loss model coefficients: a linear model with constant loss and proportional rate, or a piecewise loss with N segments. Fraction of installed capacity. Units: 1.
 """
 struct NodalHVDCTransportTechnologyLineLoss <: OneOfAPIModel
     value::Union{
@@ -23,7 +23,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
             pointer="/components/schemas/NodalHVDCTransportTechnology/properties/line_loss",
         ),
         value,
@@ -44,84 +44,84 @@ function _decode(
             "AVERAGE_RATE" => (
                 AverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/AverageRateCurve",
                 ),
             ),
             "AverageRateCurve" => (
                 AverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/AverageRateCurve",
                 ),
             ),
             "INCREMENTAL" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/IncrementalCurve",
                 ),
             ),
             "INPUT_OUTPUT" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/InputOutputCurve",
                 ),
             ),
             "IncrementalCurve" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/IncrementalCurve",
                 ),
             ),
             "InputOutputCurve" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/InputOutputCurve",
                 ),
             ),
             "TIME_SERIES_AVERAGE_RATE" => (
                 TimeSeriesAverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/TimeSeriesAverageRateCurve",
                 ),
             ),
             "TIME_SERIES_INCREMENTAL" => (
                 TimeSeriesIncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/TimeSeriesIncrementalCurve",
                 ),
             ),
             "TIME_SERIES_INPUT_OUTPUT" => (
                 TimeSeriesInputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/TimeSeriesInputOutputCurve",
                 ),
             ),
             "TimeSeriesAverageRateCurve" => (
                 TimeSeriesAverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/TimeSeriesAverageRateCurve",
                 ),
             ),
             "TimeSeriesIncrementalCurve" => (
                 TimeSeriesIncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/TimeSeriesIncrementalCurve",
                 ),
             ),
             "TimeSeriesInputOutputCurve" => (
                 TimeSeriesInputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+                    resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
                     pointer="/components/schemas/TimeSeriesInputOutputCurve",
                 ),
             ),
@@ -150,7 +150,7 @@ function _encode(value::NodalHVDCTransportTechnologyLineLoss)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
             pointer="/components/schemas/NodalHVDCTransportTechnology/properties/line_loss",
         ),
         output,

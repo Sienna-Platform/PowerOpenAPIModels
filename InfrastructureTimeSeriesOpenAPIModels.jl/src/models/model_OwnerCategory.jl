@@ -1,7 +1,7 @@
 """
     OwnerCategory
 
-Whether a time series' owner is a component or a supplemental attribute. The producing data layer allocates both kinds of id from one stream, so an owner_id never names one of each; the category is required regardless, because the store's catalog contract still supports independent streams from other producers and remains the store's disambiguator. These are the display and serde spellings; the store's catalog holds them as the integer codes 0 and 1.
+Whether a time series' owner is a component or a supplemental attribute. Required regardless of id, since the store's catalog contract supports independent id streams from other producers.
 """
 struct OwnerCategory <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{OwnerCategory}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/OwnerCategory",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::OwnerCategory)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/OwnerCategory",
         ),
         output,

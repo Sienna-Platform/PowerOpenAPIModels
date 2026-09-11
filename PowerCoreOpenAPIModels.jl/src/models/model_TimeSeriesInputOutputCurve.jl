@@ -3,7 +3,7 @@
 
 A time-series-backed input-output curve. The static counterpart is InputOutputCurve.
 
-  - `function_data`: Only TIME_SERIES_LINEAR, TIME_SERIES_QUADRATIC, or TIME_SERIES_PIECEWISE_LINEAR is admissible here; the static variants and TIME_SERIES_PIECEWISE_STEP are invalid and rejected by the consuming constructor.
+  - `function_data`: Only TIME_SERIES_LINEAR, TIME_SERIES_QUADRATIC, or TIME_SERIES_PIECEWISE_LINEAR is admissible; other variants are rejected.
   - `input_at_zero`: Optional explicit input value at zero output. A number here, unlike the incremental and average-rate variants, where it is a time series reference.
 """
 Base.@kwdef struct TimeSeriesInputOutputCurve <: APIModel
@@ -18,7 +18,7 @@ function _decode(::Type{TimeSeriesInputOutputCurve}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/TimeSeriesInputOutputCurve",
         ),
         _openapi_raw,
@@ -75,7 +75,7 @@ function _encode(_openapi_value::TimeSeriesInputOutputCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/TimeSeriesInputOutputCurve",
         ),
         _openapi_output,

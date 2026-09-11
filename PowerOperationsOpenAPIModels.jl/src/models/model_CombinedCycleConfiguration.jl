@@ -1,7 +1,7 @@
 """
     CombinedCycleConfiguration
 
-Shaft and turbine arrangement of a combined cycle plant: a single shaft carrying one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or `Other` for any arrangement outside these.
+Shaft and turbine arrangement of a combined cycle plant: one shaft with one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or Other.
 """
 struct CombinedCycleConfiguration <: EnumAPIModel
     value::String
@@ -22,7 +22,7 @@ function _decode(::Type{CombinedCycleConfiguration}, value, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/CombinedCycleConfiguration",
         ),
         value,
@@ -36,7 +36,7 @@ function _encode(value::CombinedCycleConfiguration)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/CombinedCycleConfiguration",
         ),
         output,

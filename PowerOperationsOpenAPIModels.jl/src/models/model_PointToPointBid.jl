@@ -8,7 +8,7 @@ A priced point-to-point spread bid (e.g. an up-to-congestion or PTP obligation b
   - `id`: Unique integer identifier for this component.
   - `linked_crr`: Identifier of a linked congestion-right instrument, when the market couples the bid to one.
   - `max_active_power`: MW envelope for the bid. Units: MW.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
   - `price_limits`: Tariff bid-price bounds on the spread. Units: USD/MWh.
   - `spread_bid`: Willingness-to-pay curve on the to-minus-from price spread, as an offer-curve operating cost (incremental side only).
   - `to_id`: ID of the sink terminal (injection side), resolved through the entity registry: a topology record or a trading hub; must differ from `from_id`.
@@ -30,7 +30,7 @@ function _decode(::Type{PointToPointBid}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/PointToPointBid",
         ),
         _openapi_raw,
@@ -144,7 +144,7 @@ function _encode(_openapi_value::PointToPointBid)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/PointToPointBid",
         ),
         _openapi_output,

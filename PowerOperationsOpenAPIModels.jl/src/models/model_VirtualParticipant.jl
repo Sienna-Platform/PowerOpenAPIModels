@@ -1,13 +1,13 @@
 """
     VirtualParticipant
 
-A virtual (convergence) market participant. Supply offers map to the operating cost's incremental offer curves; demand bids map to decremental offer curves. Settles either at a settlement point or at associated trading hubs — the two are mutually exclusive; hub membership is carried as TradingHubAssociation rows rather than a list on this record, matching the trading hub's own membership convention.
+A virtual (convergence) market participant. Supply offers map to incremental offer curves; demand bids map to decremental offer curves. Settles at a settlement point or at trading hubs, carried as TradingHubAssociation rows.
 
   - `available`: Indicator of whether the participant is available for market clearing (`true`) or not (`false`).
   - `id`: Unique integer identifier for this component.
   - `max_demand`: Maximum envelope for the decremental (demand) side. Units: MW.
   - `max_supply`: Maximum envelope for the incremental (supply) side. Units: MW.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
   - `operation_cost`: Bid curves as an offer-curve operating cost.
   - `settlement_point_id`: ID of the location this participant settles at — a bus, area, or load zone. `null` when the participant settles at trading hubs instead.
 """
@@ -26,7 +26,7 @@ function _decode(::Type{VirtualParticipant}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/VirtualParticipant",
         ),
         _openapi_raw,
@@ -124,7 +124,7 @@ function _encode(_openapi_value::VirtualParticipant)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/VirtualParticipant",
         ),
         _openapi_output,

@@ -4,15 +4,15 @@
 A bilaterally negotiated trade reported into the settlement ledger. Settlement-only: it carries no power-balance impact and never clears against a market model. It exists for round-tripping submissions and offline settlement.
 
   - `active_power_association_id`: Store-minted id of the time series supplying the trade's delivered active-power schedule, or null when `max_active_power` alone describes the trade.
-  - `buyer_id`: External participant identifier for the buying counterparty, as reported on the transaction. Not a component reference: buyers are not represented in the entity registry.
+  - `buyer_id`: External participant identifier for the buying counterparty, as reported on the transaction. Not a component reference.
   - `confirmation`: Confirmation status the transaction settled under.
   - `from_id`: ID of the source location, resolved through the entity registry: a topology record or a trading hub.
   - `id`: Unique integer identifier for this component.
   - `market`: Market stage the transaction was reported against.
   - `max_active_power`: MW envelope of the transaction. Units: MW.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
   - `product`: Traded product.
-  - `seller_id`: External participant identifier for the selling counterparty, as reported on the transaction. Not a component reference: sellers are not represented in the entity registry.
+  - `seller_id`: External participant identifier for the selling counterparty, as reported on the transaction. Not a component reference.
   - `to_id`: ID of the sink location, resolved through the entity registry: a topology record or a trading hub. `null` for a single-location trade.
 """
 Base.@kwdef struct BilateralTransaction <: APIModel
@@ -34,7 +34,7 @@ function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/BilateralTransaction",
         ),
         _openapi_raw,
@@ -170,7 +170,7 @@ function _encode(_openapi_value::BilateralTransaction)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/BilateralTransaction",
         ),
         _openapi_output,

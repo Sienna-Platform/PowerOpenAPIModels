@@ -1,7 +1,7 @@
 """
     SwitchedAdmittanceControlMode
 
-Control mode of a switched shunt admittance. `UNDEFINED` leaves the mode unspecified. `FIXED` holds the admittance at a constant value. `DISCRETE_VOLTAGE` switches blocks in discrete steps to control voltage. `CONTINUOUS_VOLTAGE` adjusts the admittance continuously to control voltage. `DISCRETE_REACTIVE_PLANT` switches blocks in discrete steps to control reactive power from a plant. `DISCRETE_REACTIVE_VSC` switches blocks in discrete steps to control reactive power from a voltage-source-converter terminal. `DISCRETE_ADMITTANCE_REMOTE` switches blocks in discrete steps to control a remote bus's admittance.
+Control mode of a switched shunt admittance. UNDEFINED: unspecified. FIXED: constant value. CONTINUOUS_VOLTAGE: adjusts continuously. DISCRETE_* modes switch blocks stepwise to control voltage, reactive power, or a remote bus's admittance.
 """
 struct SwitchedAdmittanceControlMode <: EnumAPIModel
     value::String
@@ -26,7 +26,7 @@ function _decode(::Type{SwitchedAdmittanceControlMode}, value, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/SwitchedAdmittanceControlMode",
         ),
         value,
@@ -40,7 +40,7 @@ function _encode(value::SwitchedAdmittanceControlMode)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/SwitchedAdmittanceControlMode",
         ),
         output,

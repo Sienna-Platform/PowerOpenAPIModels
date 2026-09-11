@@ -7,12 +7,12 @@ Most often used in dynamics or AC power flow studies as a source of reactive pow
 
   - `y`: Fixed admittance. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
   - `admittance_units`: Unit basis for the shunt admittance Y. COMPONENT_MVAR is PSS/E RAW native (Mvar/MW at unity voltage).
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `bus`: ID of the bus that this component is connected to.
   - `dynamic_injector`: ID of the corresponding dynamic injection model for admittance, if any.
   - `id`: Unique integer identifier for this component.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
 """
 Base.@kwdef struct FixedAdmittance <: APIModel
     y::ComplexNumber
@@ -30,7 +30,7 @@ function _decode(::Type{FixedAdmittance}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/FixedAdmittance",
         ),
         _openapi_raw,
@@ -135,7 +135,7 @@ function _encode(_openapi_value::FixedAdmittance)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/FixedAdmittance",
         ),
         _openapi_output,

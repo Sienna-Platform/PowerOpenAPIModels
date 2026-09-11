@@ -1,7 +1,7 @@
 """
     PiecewiseLinearData
 
-Data for a piecewise linear function defined by (x, y) points and interpolated linearly between consecutive ones. The y values are absolute values at each x, not per-segment slopes; use `PiecewiseStepData` when the data gives per-segment rates. Points run in ascending x order, and two of them define one segment.
+Data for a piecewise linear function defined by (x, y) points, interpolated linearly between them. Values are absolute at each x, not per-segment slopes. Points run in ascending x order.
 """
 Base.@kwdef struct PiecewiseLinearData <: APIModel
     function_type::String = "PIECEWISE_LINEAR"
@@ -13,7 +13,7 @@ function _decode(::Type{PiecewiseLinearData}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
+            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
             pointer="/components/schemas/PiecewiseLinearData",
         ),
         _openapi_raw,
@@ -60,7 +60,7 @@ function _encode(_openapi_value::PiecewiseLinearData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
+            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
             pointer="/components/schemas/PiecewiseLinearData",
         ),
         _openapi_output,

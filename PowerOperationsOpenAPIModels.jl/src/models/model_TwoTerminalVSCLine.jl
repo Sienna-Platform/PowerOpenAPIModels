@@ -1,39 +1,39 @@
 """
     TwoTerminalVSCLine
 
-A High Voltage Voltage-Source Converter DC line, which must be connected to an ACBus on each end. This model is appropriate for operational simulations with a linearized DC power flow approximation with losses using a voltage-current model. For modeling a DC network, see TModelHVDCLine.
+A high-voltage voltage-source-converter DC line connected to an ACBus on each end, for a linearized DC power flow approximation with a voltage-current loss model. For a DC network, see TModelHVDCLine.
 
   - `ac_control_from`: AC-side control mode of the `from` converter.
   - `ac_control_to`: AC-side control mode of the `to` converter.
-  - `ac_setpoint_from`: Converter AC setpoint in the `from` bus converter. When `ac_control_from` regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_from — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `ac_setpoint_to`: Converter AC setpoint in the `to` bus converter. When `ac_control_to` regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_to — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
+  - `ac_setpoint_from`: Converter AC setpoint at the `from` bus: AC voltage when ac_control_from regulates voltage, or power factor setpoint when it controls reactive power. Units: per ac_control_from — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
+  - `ac_setpoint_to`: Converter AC setpoint at the `to` bus: AC voltage when ac_control_to regulates voltage, or power factor setpoint when it controls reactive power. Units: per ac_control_to — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
   - `active_power_flow`: Initial condition of active power flowing from the from-bus to the to-bus in DC. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits_from`: Minimum and maximum active power flows to the FROM node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits_to`: Minimum and maximum active power flows to the TO node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `admittance_units`: Unit basis for the series conductance g.
   - `arc`: An Arc defining this line `from` a bus `to` another bus.
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
+  - `available`: Whether the component is online (true) or offline (false). Unavailable components are excluded from simulations.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `converter_loss_from`: Loss model coefficients in the `from` bus converter. It accepts a linear model or quadratic. Same converter data is used in both ends.
   - `converter_loss_to`: Loss model coefficients in the `to` bus converter. It accepts a linear model or quadratic. Same converter data is used in both ends.
   - `dc_control_from`: DC-side control mode of the `from` converter.
   - `dc_control_to`: DC-side control mode of the `to` converter.
   - `dc_current`: DC current on the converter flowing in the DC line, from `from` bus to `to` bus. Units: A.
-  - `dc_setpoint_from`: Converter DC setpoint in the `from` bus converter. When `dc_control_from` regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the `from` bus; if negative, the converter is withdrawing power from the AC network at the `from` bus. Units: per dc_control_from — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `dc_setpoint_to`: Converter DC setpoint in the `to` bus converter. When `dc_control_to` regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the `to` bus; if negative, the converter is withdrawing power from the AC network at the `to` bus. Units: per dc_control_to — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
+  - `dc_setpoint_from`: Converter DC setpoint at the `from` bus: DC voltage, or DC power demand in MW (positive supplies the AC network, negative withdraws from it). Units: per dc_control_from — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
+  - `dc_setpoint_to`: Converter DC setpoint at the `to` bus: DC voltage, or DC power demand in MW (positive supplies the AC network, negative withdraws from it). Units: per dc_control_to — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
   - `dc_voltage_droop_from`: DC-voltage droop gain on the `from` converter, used when `dc_control_from` is `DC_VOLTAGE_DROOP`: `V_dc = dc_setpoint_from - dc_voltage_droop_from * P_c`. Units: pu.
   - `dc_voltage_droop_to`: DC-voltage droop gain on the `to` converter, used when `dc_control_to` is `DC_VOLTAGE_DROOP`: `V_dc = dc_setpoint_to - dc_voltage_droop_to * P_c`. Units: pu.
   - `g`: Series conductance of the DC line. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MW, COMPONENT_BASE: pu .
   - `id`: Unique integer identifier for this component.
   - `max_dc_current_from`: Maximum stable dc current limits. Units: A.
   - `max_dc_current_to`: Maximum stable dc current limits. Units: A.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
-  - `power_factor_weighting_fraction_from`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
-  - `power_factor_weighting_fraction_to`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
-  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
-  - `rated_ac_voltage_from`: Rated (base) AC voltage at the `from` converter's AC terminal in kV. Used as the AC voltage base for interpreting ac_setpoint_from when ac_control_from is AC_VOLTAGE; 0.0 means unspecified (the setpoint is taken as per-unit directly). Units: kV.
-  - `rated_ac_voltage_to`: Rated (base) AC voltage at the `to` converter's AC terminal in kV. Used as the AC voltage base for interpreting ac_setpoint_to when ac_control_to is AC_VOLTAGE; 0.0 means unspecified (the setpoint is taken as per-unit directly). Units: kV.
-  - `rated_dc_voltage`: Rated (base) DC voltage of the link in kV. Used as the DC voltage base for interpreting DC-voltage setpoints; 0.0 means unspecified (DC-voltage setpoints are taken as per-unit directly). Units: kV.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `power_factor_weighting_fraction_from`: Weight for reducing active vs. reactive power when the converter rating is violated: 0 reduces only active power, 1 only reactive, values between weight both. Units: 1.
+  - `power_factor_weighting_fraction_to`: Weight for reducing active vs. reactive power when the converter rating is violated: 0 reduces only active power, 1 only reactive, values between weight both. Units: 1.
+  - `power_units`: Unit basis for this component's power fields (power, ratings, ramp rates): COMPONENT_BASE per unit on base_power, NATURAL_UNITS the field's own unit.
+  - `rated_ac_voltage_from`: Rated (base) AC voltage at the `from` converter's AC terminal. Used as the voltage base under AC_VOLTAGE control; 0.0 means unspecified (per-unit). Units: kV.
+  - `rated_ac_voltage_to`: Rated (base) AC voltage at the `to` converter's AC terminal. Used as the voltage base under AC_VOLTAGE control; 0.0 means unspecified (per-unit). Units: kV.
+  - `rated_dc_voltage`: Rated (base) DC voltage of the link. Used as the DC voltage base for DC-voltage setpoints; 0.0 means unspecified (setpoints taken as per-unit). Units: kV.
   - `rating`: Maximum output power rating of the converter. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `rating_from`: Converter rating in the `from` bus. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `rating_to`: Converter rating in the `to` bus. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
@@ -45,10 +45,10 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
   - `remote_bus_control_to`: Number of the AC bus whose voltage the `to` converter regulates when `ac_control_to` is `AC_VOLTAGE`; null regulates its own terminal bus.
   - `rmpct_from`: Percent of the total Mvar required to hold the voltage at the bus regulated by the `from` converter that is contributed by this converter. Units: 1.
   - `rmpct_to`: Percent of the total Mvar required to hold the voltage at the bus regulated by the `to` converter that is contributed by this converter. Units: 1.
-  - `setpoint_voltage_units`: Unit basis for the DC_VOLTAGE/DC_VOLTAGE_DROOP/AC_VOLTAGE branches of dc_setpoint_from/to and ac_setpoint_from/to. Independent of voltage_units, which covers voltage_limits_from/to only.
-  - `voltage_limits_from`: Limits on the Voltage at the DC `from` Bus in kV. The DC base voltage is the `dc_setpoint` of the converter with `dc_voltage_control` enabled; exactly one converter must control the DC voltage. Units: kV. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
-  - `voltage_limits_to`: Limits on the Voltage at the DC `to` Bus in kV. The DC base voltage is the `dc_setpoint` of the converter with `dc_voltage_control` enabled; exactly one converter must control the DC voltage. Units: kV. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
-  - `voltage_units`: Unit basis for the DC bus voltage limits (voltage_limits_from/to only). Independent of setpoint_voltage_units, which covers dc_setpoint_from/to and ac_setpoint_from/to.
+  - `setpoint_voltage_units`: Unit basis for the DC_VOLTAGE/DC_VOLTAGE_DROOP/AC_VOLTAGE branches of the setpoint properties. Independent of voltage_units, which covers voltage_limits only.
+  - `voltage_limits_from`: Limits on voltage at the DC `from` bus. The DC base voltage is the dc_setpoint of whichever converter controls DC voltage. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `voltage_limits_to`: Limits on voltage at the DC `to` bus. The DC base voltage is the dc_setpoint of whichever converter controls DC voltage. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `voltage_units`: Unit basis for the DC bus voltage limits only. Independent of setpoint_voltage_units, which covers the setpoint properties.
 """
 Base.@kwdef struct TwoTerminalVSCLine <: APIModel
     ac_control_from::Union{Absent, Nothing, VSCACControlModes} = ABSENT
@@ -104,7 +104,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TwoTerminalVSCLine",
         ),
         _openapi_raw,
@@ -650,7 +650,7 @@ function _encode(_openapi_value::TwoTerminalVSCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TwoTerminalVSCLine",
         ),
         _openapi_output,

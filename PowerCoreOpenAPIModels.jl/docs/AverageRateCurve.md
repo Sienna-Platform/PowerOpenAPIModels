@@ -1,6 +1,6 @@
 # AverageRateCurve
 
-A curve whose y values are the average rate `f(x)/x` at production level `x` — total cost or fuel divided by output, the form heat rate tables use when they report MBTU/MWh against MW. `initial_input` records the total input at the minimum production point and is what makes conversion to an `InputOutputCurve` possible. Use `IncrementalCurve` when the data gives marginal rather than average rates.
+A curve whose y values are the average rate f(x)/x at production level x, e.g. a heat rate table's MBTU/MWh against MW. `initial_input` anchors conversion to an InputOutputCurve. Use IncrementalCurve for marginal rates.
 
 ## Properties
 Name | Type | Description | Notes

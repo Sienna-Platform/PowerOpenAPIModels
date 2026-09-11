@@ -1,7 +1,7 @@
 """
     TimeSeriesFeatureValue
 
-One feature value. Four kinds, matching the backing store's feature-value type: int, float, bool, str. `anyOf` rather than `oneOf` is required, not stylistic: JSON Schema's `integer` is a subset of `number`, so an integer instance matches both branches and `oneOf` — which demands exactly one match — would reject every integer feature. A float feature is compared and hashed by its bit pattern rather than by IEEE comparison, so 0.0 and -0.0 are two different series; NaN and negative zero are rejected on write because the catalog cannot store either faithfully.
+One feature value: int, float, bool, or str. anyOf (not oneOf) because JSON Schema's integer is a subset of number. A float is compared and hashed by bit pattern, so 0.0 and -0.0 differ; NaN and negative zero are rejected on write.
 """
 struct TimeSeriesFeatureValue <: OneOfAPIModel
     value::Union{Bool, Float64, Int64, String}
@@ -12,7 +12,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/TimeSeriesFeatureValue",
         ),
         value,
@@ -23,7 +23,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/TimeSeriesFeatureValue/anyOf/0",
         ),
         value;
@@ -38,7 +38,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/TimeSeriesFeatureValue/anyOf/1",
         ),
         value;
@@ -53,7 +53,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/TimeSeriesFeatureValue/anyOf/2",
         ),
         value;
@@ -68,7 +68,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/TimeSeriesFeatureValue/anyOf/3",
         ),
         value;
@@ -89,7 +89,7 @@ function _encode(value::TimeSeriesFeatureValue)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/TimeSeriesFeatureValue",
         ),
         output,

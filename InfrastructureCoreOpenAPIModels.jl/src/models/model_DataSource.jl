@@ -1,7 +1,7 @@
 """
     DataSource
 
-Records data provenance for a component's field values: which organization or dataset the data came from, the URL it was retrieved from, and when it was retrieved. Mirrors the `DataSource` supplemental attribute from the upstream data layer, with two deliberate divergences: `organization` is optional here although it is required upstream, and `extra` is narrowed from an any-valued map to a string-valued one. Linked to the entity it describes through Core/Associations/SupplementalAttributeAssociation.json with attribute_type: "DataSource".
+Records data provenance for a component's field values: the organization or dataset it came from, the URL retrieved from, and when. Linked to the entity it describes via SupplementalAttributeAssociation with attribute_type: DataSource.
 
   - `confidence`: Confidence qualifier, e.g. 'high', 'medium'.
   - `dataset`: Dataset identifier within the publishing organization, e.g. 'EIA-860 2023, Schedule 3'.
@@ -33,7 +33,7 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
+            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
             pointer="/components/schemas/DataSource",
         ),
         _openapi_raw,
@@ -172,7 +172,7 @@ function _encode(_openapi_value::DataSource)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
+            resource="https://openapi.invalid/schema/root-72cdaa70f32045f54611.json",
             pointer="/components/schemas/DataSource",
         ),
         _openapi_output,

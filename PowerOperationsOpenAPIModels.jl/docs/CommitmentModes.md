@@ -1,6 +1,6 @@
 # CommitmentModes
 
-Why a committable unit is (or would be) committed, orthogonal to its operational state. UNCOMMITTED: not committed, offline but available. COMMITTED: committed by the scheduling process (a planning model's commitment decision or a cleared schedule). SELF_SCHEDULED: scheduled by its owner rather than by the scheduling process. RELIABILITY: committed by the system operator for reliability rather than by the scheduling process. MUST_RUN: required to run by contract or operating constraint.
+Why a committable unit is committed. UNCOMMITTED: not committed, available. COMMITTED: by the scheduling process. SELF_SCHEDULED: by its owner. RELIABILITY: by the system operator. MUST_RUN: required by contract or constraint.
 
 ## Allowed values
 - `UNCOMMITTED`

@@ -3,7 +3,7 @@
 
 Attribute to represent combined cycle generation by block configuration that shares heat recovery conversions. CT and CA unit assignments to HRSGs are recorded as CombinedCycleAssociation rows.
 
-  - `configuration`: Shaft and turbine arrangement of a combined cycle plant: a single shaft carrying one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or `Other` for any arrangement outside these.
+  - `configuration`: Shaft and turbine arrangement of a combined cycle plant: one shaft with one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or Other.
   - `heat_recovery_to_steam_factor`: Factor for heat recovery to steam conversion
   - `name`: Name of the combined cycle block
 """
@@ -19,7 +19,7 @@ function _decode(::Type{CombinedCycleBlock}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/CombinedCycleBlock",
         ),
         _openapi_raw,
@@ -86,7 +86,7 @@ function _encode(_openapi_value::CombinedCycleBlock)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/CombinedCycleBlock",
         ),
         _openapi_output,

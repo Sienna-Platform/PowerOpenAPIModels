@@ -1,7 +1,7 @@
 """
     HydroReservoir
 
-A hydropower reservoir feeding, or fed by, the turbines attached to it. Storage level, inflow, outflow, and spillage are recorded in the basis named by `level_data_type` — volume, head, or energy — and the upstream and downstream associations set the reservoir's place in a cascade.
+A hydropower reservoir feeding, or fed by, its turbines. Storage level, inflow, outflow, and spillage use the basis named by level_data_type: volume, head, or energy. Associations set its place in a cascade.
 
   - `evaporative_loss`: Standing loss from evaporation as a fraction of the reservoir's stored volume/energy lost per hour. Units: 1.
   - `head_to_volume_factor`: `FunctionData` mapping reservoir head to stored volume.
@@ -38,7 +38,7 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/HydroReservoir",
         ),
         _openapi_raw,
@@ -244,7 +244,7 @@ function _encode(_openapi_value::HydroReservoir)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/HydroReservoir",
         ),
         _openapi_output,

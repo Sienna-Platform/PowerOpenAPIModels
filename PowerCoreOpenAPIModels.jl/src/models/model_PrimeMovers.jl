@@ -1,7 +1,7 @@
 """
     PrimeMovers
 
-Prime mover of a generating unit — the engine, turbine, water wheel, or similar machine that drives the generator — using the code set from the EIA Form 923 instructions. `PVe` is photovoltaic, spelled that way so it does not collide with the `PV` bus type.
+Prime mover of a generating unit: the engine, turbine, water wheel, or similar machine driving the generator. PVe is photovoltaic, spelled to avoid colliding with the PV bus type.
 """
 struct PrimeMovers <: EnumAPIModel
     value::String
@@ -39,7 +39,7 @@ function _decode(::Type{PrimeMovers}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/PrimeMovers",
         ),
         value,
@@ -53,7 +53,7 @@ function _encode(value::PrimeMovers)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/PrimeMovers",
         ),
         output,

@@ -1,7 +1,7 @@
 """
     TechnologyFinancialData
 
-Financial data for a candidate technology: the capital recovery period used to derive overnight capital cost from annualized investment cost, the dollar-year its cost data is reported in, and the debt fraction, debt rate, return on equity, and tax rate that together set its cost of capital.
+Financial data for a candidate technology: the capital recovery period, the dollar-year its costs are reported in, and the debt fraction, debt rate, return on equity, and tax rate setting its cost of capital.
 
   - `capital_recovery_period`: Period over which capital costs are recovered for net present value calculations. Units: yr.
   - `debt_fraction`: Fraction of capital costs financed through debt. Units: 1.
@@ -25,7 +25,7 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
             pointer="/components/schemas/TechnologyFinancialData",
         ),
         _openapi_raw,
@@ -115,7 +115,7 @@ function _encode(_openapi_value::TechnologyFinancialData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-ad22d6f45caa296f80ba.json",
             pointer="/components/schemas/TechnologyFinancialData",
         ),
         _openapi_output,

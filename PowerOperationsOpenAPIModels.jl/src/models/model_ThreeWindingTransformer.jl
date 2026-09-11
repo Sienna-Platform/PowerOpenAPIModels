@@ -1,7 +1,7 @@
 """
     ThreeWindingTransformer
 
-A three-winding transformer, modeled as an equivalent star: each referenced `TransformerCircuit` connects a terminal bus to the star (hidden) bus and carries that winding's series electrical data; availability is circuit-level. The pairwise measured impedances `r_12`/`x_12`, `r_23`/`x_23`, `r_31`/`x_31` (PSS/E CZ = 1, each in pu on the corresponding `base_power_12`/`base_power_23`/`base_power_31` and referenced to the first-index winding's base voltage) are optional and must be set together or all be absent; the star-leg impedances derived from them at parse time live on the circuits and are not synced back. Power-flow and Ybus assembly read the per-circuit star-leg impedances, not the pairwise fields. The model is described in Chapter 3.6 of J.D. Glover, M.S. Sarma and T. Overbye: Power Systems Analysis and Design.
+A three-winding transformer modeled as an equivalent star: each TransformerCircuit connects a terminal bus to the star bus, carrying that winding's series data. r_12/x_12, r_23/x_23, r_31/x_31 are optional, set together or all absent.
 
   - `admittance_units`: Unit basis for the magnetizing_shunt admittance.
   - `base_power_12`: Base power for per unitization for primary-secondary windings. Units: MVA.
@@ -9,8 +9,8 @@ A three-winding transformer, modeled as an equivalent star: each referenced `Tra
   - `base_power_31`: Base power for per unitization for tertiary-primary windings. Units: MVA.
   - `id`: Unique integer identifier for this component.
   - `magnetizing_shunt`: Magnetizing shunt admittance referenced to the primary circuit's base voltage. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr, COMPONENT_BASE: pu .
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
-  - `parameter_units`: Unit basis for the pairwise measured impedance fields (r_12, x_12, r_23, x_23, r_31, x_31). PSS/E supplies a single CZ flag for the whole three-winding transformer record, so one basis governs all three winding pairs.
+  - `name`: Name of the component. Unique among components of the same type; components of different types may share a name.
+  - `parameter_units`: Unit basis for the pairwise measured impedance fields (r_12, x_12, r_23, x_23, r_31, x_31). One basis governs all three winding pairs.
   - `primary_circuit`: The primary `TransformerCircuit` connecting the primary bus to the star bus.
   - `r_12`: Measured resistance, referenced to the primary winding's base voltage, from primary to secondary windings (R1-2 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `r_23`: Measured resistance, referenced to the secondary winding's base voltage, from secondary to tertiary windings (R2-3 in PSS/E). Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
@@ -51,7 +51,7 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/ThreeWindingTransformer",
         ),
         _openapi_raw,
@@ -279,7 +279,7 @@ function _encode(_openapi_value::ThreeWindingTransformer)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/ThreeWindingTransformer",
         ),
         _openapi_output,

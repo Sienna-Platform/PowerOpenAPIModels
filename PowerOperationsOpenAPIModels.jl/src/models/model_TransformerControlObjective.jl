@@ -1,7 +1,7 @@
 """
     TransformerControlObjective
 
-Control objective of a transformer tap changer or phase shifter: a fixed tap position with no automatic adjustment (`FIXED`), or regulation of voltage magnitude at the controlled bus, reactive power flow, active power flow, asymmetric active power flow, or a DC line. Each regulating objective has a paired `_DISABLED` value naming the same control block while it is out of service, and `UNDEFINED` means no control objective is stated.
+Control objective of a tap changer or phase shifter: FIXED (no adjustment), or regulation of voltage, reactive power, active power, asymmetric power, or a DC line. Each has a paired _DISABLED value; UNDEFINED means none stated.
 """
 struct TransformerControlObjective <: EnumAPIModel
     value::String
@@ -30,7 +30,7 @@ function _decode(::Type{TransformerControlObjective}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TransformerControlObjective",
         ),
         value,
@@ -44,7 +44,7 @@ function _encode(value::TransformerControlObjective)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TransformerControlObjective",
         ),
         output,

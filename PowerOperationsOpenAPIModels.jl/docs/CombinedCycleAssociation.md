@@ -1,6 +1,6 @@
 # CombinedCycleAssociation
 
-Association between a CombinedCycleBlock plant and a CT or CA unit, identifying which HRSG the unit feeds into or receives from. Supports n-to-m relationships: a single CT or CA can participate in multiple HRSGs by appearing in multiple rows.
+Association between a CombinedCycleBlock plant and a CT or CA unit, identifying which HRSG the unit feeds into or receives from. Supports n-to-m: one CT or CA can appear in multiple HRSG rows.
 
 ## Properties
 Name | Type | Description | Notes

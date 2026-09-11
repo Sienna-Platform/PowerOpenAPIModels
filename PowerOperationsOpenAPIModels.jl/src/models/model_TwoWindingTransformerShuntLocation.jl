@@ -1,7 +1,7 @@
 """
     TwoWindingTransformerShuntLocation
 
-Placement of a `TwoWindingTransformer`'s magnetizing shunt admittance on the two sides of its single circuit arc. PRIMARY: the full magnetizing shunt is applied on the primary (from) side. SECONDARY: the full magnetizing shunt is applied on the secondary (to) side. SPLIT: the full complex magnetizing shunt value is applied on BOTH sides.
+Placement of a TwoWindingTransformer's magnetizing shunt admittance. PRIMARY: applied on the primary side. SECONDARY: applied on the secondary side. SPLIT: applied on both sides.
 """
 struct TwoWindingTransformerShuntLocation <: EnumAPIModel
     value::String
@@ -20,7 +20,7 @@ function _decode(::Type{TwoWindingTransformerShuntLocation}, value, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TwoWindingTransformerShuntLocation",
         ),
         value,
@@ -34,7 +34,7 @@ function _encode(value::TwoWindingTransformerShuntLocation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/TwoWindingTransformerShuntLocation",
         ),
         output,

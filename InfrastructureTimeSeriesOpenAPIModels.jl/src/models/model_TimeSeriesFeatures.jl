@@ -1,7 +1,7 @@
 """
     TimeSeriesFeatures
 
-User-defined key/value tags forming part of a series' identity. A map, matching the backing store's feature-map type (a BTreeMap whose sort order is load-bearing, because the hash of the feature map keys the catalog's uniqueness index). The excluded property names each already name a field of a time series or of the tuple that addresses one: consumers routinely spread a feature map into keyword arguments, where a feature called `name` or `resolution` would shadow the real field and silently change what a query means. The comparison is exact and case-sensitive — `resolution` is reserved, `Resolution` is not.
+User-defined key/value tags forming part of a series' identity. Excludes names already used by a series field or by the tuple addressing one, since a feature would otherwise shadow that field. Comparison is exact and case-sensitive.
 """
 Base.@kwdef struct TimeSeriesFeatures <: APIModel
     additional_properties::Dict{String, TimeSeriesFeatureValue} =
@@ -12,7 +12,7 @@ function _decode(::Type{TimeSeriesFeatures}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/TimeSeriesFeatures",
         ),
         _openapi_raw,
@@ -41,7 +41,7 @@ function _encode(_openapi_value::TimeSeriesFeatures)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
+            resource="https://openapi.invalid/schema/root-463dad90dca1b0053108.json",
             pointer="/components/schemas/TimeSeriesFeatures",
         ),
         _openapi_output,

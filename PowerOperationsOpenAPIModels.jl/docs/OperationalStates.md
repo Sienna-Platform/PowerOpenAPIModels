@@ -1,6 +1,6 @@
 # OperationalStates
 
-The running on/off lifecycle of an in-service committable unit, mutually exclusive. OFFLINE: shut down and not synchronized. ONLINE: synchronized and able to produce. STARTUP: in its start-up sequence. SHUTDOWN: in its shut-down sequence. Availability is not one of these values: a unit on outage is `available = false`; an OFFLINE unit with `available = true` is in service and eligible for re-commitment and off-line ancillary services.
+The on/off lifecycle of an in-service committable unit. OFFLINE: shut down. ONLINE: synchronized and producing. STARTUP/SHUTDOWN: mid-transition. Distinct from availability: an outaged unit has available = false regardless of state.
 
 ## Allowed values
 - `OFFLINE`

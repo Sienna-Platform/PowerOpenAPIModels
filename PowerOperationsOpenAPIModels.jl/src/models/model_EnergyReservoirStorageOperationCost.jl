@@ -21,7 +21,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/EnergyReservoirStorage/properties/operation_cost",
         ),
         value,
@@ -42,56 +42,56 @@ function _decode(
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "ImportExportTimeSeriesCost" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "MarketBidCost" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/MarketBidCost",
                 ),
             ),
             "MarketBidTimeSeriesCost" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/MarketBidTimeSeriesCost",
                 ),
             ),
             "STORAGE" => (
                 StorageCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/StorageCost",
                 ),
             ),
             "StorageCost" => (
                 StorageCost,
                 (
-                    resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+                    resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
                     pointer="/components/schemas/StorageCost",
                 ),
             ),
@@ -120,7 +120,7 @@ function _encode(value::EnergyReservoirStorageOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-7e224747fa2ab31185c8.json",
+            resource="https://openapi.invalid/schema/root-93346ccf4b7969b6d994.json",
             pointer="/components/schemas/EnergyReservoirStorage/properties/operation_cost",
         ),
         output,

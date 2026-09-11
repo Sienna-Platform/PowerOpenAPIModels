@@ -1,7 +1,7 @@
 """
     IncrementalCurve
 
-A curve whose y values are the marginal rate `f'(x)` at production level `x` — the native form for market bid stacks and incremental heat rate data. `initial_input` records the total input at the minimum production point, anchoring the absolute level and enabling conversion to an `InputOutputCurve`. Use `InputOutputCurve` when the data gives total cost at each output level.
+A curve whose y values are the marginal rate f'(x) at production level x, the native form for bid stacks and incremental heat rate data. `initial_input` anchors the absolute level, enabling conversion to an InputOutputCurve.
 """
 Base.@kwdef struct IncrementalCurve <: APIModel
     curve_type::String = "INCREMENTAL"
@@ -15,7 +15,7 @@ function _decode(::Type{IncrementalCurve}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/IncrementalCurve",
         ),
         _openapi_raw,
@@ -83,7 +83,7 @@ function _encode(_openapi_value::IncrementalCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
+            resource="https://openapi.invalid/schema/root-73b8f5d70ab200b425bf.json",
             pointer="/components/schemas/IncrementalCurve",
         ),
         _openapi_output,
