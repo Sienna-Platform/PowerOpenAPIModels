@@ -1,24 +1,20 @@
 # HydroTurbineGov
 
+Hydro turbine-governor
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`R`** | **`Float64`** | Permanent droop parameter | [default to nothing]
-**`r`** | **`Float64`** | Temporary droop | [default to nothing]
-**`Tr`** | **`Float64`** | Governor time constant | [default to nothing]
-**`Tf`** | **`Float64`** | Filter time constant | [default to nothing]
-**`Tg`** | **`Float64`** | Servo time constant | [default to nothing]
-**`VELM`** | **`Float64`** | Gate velocity limit | [default to nothing]
-**`gate_position_limits`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`Tw`** | **`Float64`** | Water time constant | [default to nothing]
-**`At`** | **`Float64`** | Turbine gain | [default to nothing]
-**`D_T`** | **`Float64`** | Turbine damping | [default to nothing]
-**`q_nl`** | **`Float64`** | No power flow | [default to nothing]
-**`P_ref`** | **`Float64`** | Reference load set-point | [optional] [default to 1.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`at`** | **`Float64`** | Turbine gain | [required]
+**`d_t`** | **`Float64`** | Turbine damping | [required]
+**`p_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference load set-point | [optional]
+**`r`** | **`Float64`** | Permanent droop parameter | [required]
+**`tf`** | **`Float64`** | Filter time constant | [required]
+**`tg`** | **`Float64`** | Servo time constant | [required]
+**`tr`** | **`Float64`** | Governor time constant | [required]
+**`tw`** | **`Float64`** | Water time constant | [required]
+**`velm`** | **`Float64`** | Gate velocity limit | [required]
+**`gate_position_limits`** | **`MinMax`** | Gate position limits | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
+**`q_nl`** | **`Float64`** | No power flow | [required]
+**`r_2`** | **`Float64`** | Temporary droop | [required]

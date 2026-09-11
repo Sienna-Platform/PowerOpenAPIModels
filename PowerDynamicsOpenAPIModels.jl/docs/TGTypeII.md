@@ -1,17 +1,13 @@
 # TGTypeII
 
+Parameters of a turbine governor type II
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`R`** | **`Float64`** | Droop parameter | [default to nothing]
-**`T1`** | **`Float64`** | Transient gain time constant | [default to nothing]
-**`T2`** | **`Float64`** | Power fraction time constant | [default to nothing]
-**`tau_limits`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`P_ref`** | **`Float64`** | Reference power set-point | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`p_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference power set-point | [optional]
+**`r`** | **`Float64`** | Droop parameter | [required]
+**`t1`** | **`Float64`** | Transient gain time constant | [required]
+**`t2`** | **`Float64`** | Power fraction time constant | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
+**`tau_limits`** | **`MinMax`** | Power limits into the governor | [required]

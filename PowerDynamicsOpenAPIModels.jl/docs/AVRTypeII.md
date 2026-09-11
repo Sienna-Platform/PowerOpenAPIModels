@@ -1,23 +1,19 @@
 # AVRTypeII
 
+Parameters of an Automatic Voltage Regulator Type II - Typical static exciter model
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`K0`** | **`Float64`** | Regulator gain | [default to nothing]
-**`T1`** | **`Float64`** | First pole in s | [default to nothing]
-**`T2`** | **`Float64`** | First zero in s | [default to nothing]
-**`T3`** | **`Float64`** | First pole in s | [default to nothing]
-**`T4`** | **`Float64`** | First zero in s | [optional] [default to nothing]
-**`Te`** | **`Float64`** | Field circuit time constant | [default to nothing]
-**`Tr`** | **`Float64`** | Voltage measurement time constant | [default to nothing]
-**`Va_lim`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`Ae`** | **`Float64`** | 1st ceiling coefficient | [default to nothing]
-**`Be`** | **`Float64`** | 2nd ceiling coefficient | [default to nothing]
-**`V_ref`** | **`Float64`** | Reference voltage set-point | [optional] [default to 1.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`ae`** | **`Float64`** | 1st ceiling coefficient | [required]
+**`be`** | **`Float64`** | 2nd ceiling coefficient | [required]
+**`k0`** | **`Float64`** | Regulator gain | [required]
+**`t1`** | **`Float64`** | First pole in s | [required]
+**`t2`** | **`Float64`** | First zero in s | [required]
+**`t3`** | **`Float64`** | First pole in s | [required]
+**`t4`** | **`Union{Absent,Float64,Nothing}`** | First zero in s | [optional]
+**`te`** | **`Float64`** | Field circuit time constant | [required]
+**`tr`** | **`Float64`** | Voltage measurement time constant | [required]
+**`v_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference voltage set-point | [optional]
+**`va_lim`** | **`MinMax`** | Limits for pi controller | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]

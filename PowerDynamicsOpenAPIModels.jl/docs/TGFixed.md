@@ -1,14 +1,10 @@
 # TGFixed
 
+Parameters of a fixed Turbine Governor that returns a fixed mechanical torque given by the product of P_ref*efficiency
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`efficiency`** | **`Float64`** | Efficiency factor that multiplies P_ref | [default to nothing]
-**`P_ref`** | **`Float64`** | Reference power set-point | [optional] [default to 1.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`p_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference power set-point | [optional]
+**`efficiency`** | **`Float64`** | Efficiency factor that multiplies P_ref | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]

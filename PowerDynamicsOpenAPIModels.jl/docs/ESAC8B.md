@@ -1,25 +1,21 @@
 # ESAC8B
 
+Excitation System AC8B. Used to represent the Basler Digital Excitation Control System (DECS) with PID controller in PSSE
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`Tr`** | **`Float64`** | Regulator input filter time constant | [default to nothing]
-**`Kp`** | **`Float64`** | Regulator proportional PID gain | [default to nothing]
-**`Ki`** | **`Float64`** | Regulator integral PID gain | [default to nothing]
-**`Kd`** | **`Float64`** | Regulator derivative PID gain | [default to nothing]
-**`Td`** | **`Float64`** | Regulator derivative PID time constant | [default to nothing]
-**`Ka`** | **`Float64`** | Regulator output gain | [default to nothing]
-**`Ta`** | **`Float64`** | Regulator output lag time constant | [default to nothing]
-**`Vr_lim`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`Te`** | **`Float64`** | Exciter field time constant | [default to nothing]
-**`Ke`** | **`Float64`** | Exciter field proportional constant | [default to nothing]
-**`E_sat`** | **`Vector{Float64}`** | Exciter output voltage for saturation factor | [default to nothing]
-**`Se`** | **`Vector{Float64}`** | Exciter saturation factor at exciter output voltage | [default to nothing]
-**`V_ref`** | **`Float64`** | Reference voltage set-point | [optional] [default to 1.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`e_sat`** | **`Vector{Float64}`** | Exciter output voltage for saturation factor | [required]
+**`ka`** | **`Float64`** | Regulator output gain | [required]
+**`kd`** | **`Float64`** | Regulator derivative PID gain | [required]
+**`ke`** | **`Float64`** | Exciter field proportional constant | [required]
+**`ki`** | **`Float64`** | Regulator integral PID gain | [required]
+**`kp`** | **`Float64`** | Regulator proportional PID gain | [required]
+**`se`** | **`Vector{Float64}`** | Exciter saturation factor at exciter output voltage | [required]
+**`ta`** | **`Float64`** | Regulator output lag time constant | [required]
+**`td`** | **`Float64`** | Regulator derivative PID time constant | [required]
+**`te`** | **`Float64`** | Exciter field time constant | [required]
+**`tr`** | **`Float64`** | Regulator input filter time constant | [required]
+**`v_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference voltage set-point | [optional]
+**`vr_lim`** | **`MinMax`** | Limits for excitor field voltage | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]

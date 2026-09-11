@@ -1,24 +1,20 @@
 # SimpleMarconatoMachine
 
+Parameters of 4-states synchronous machine: Simplified Marconato model The derivative of stator fluxes (ψd and ψq) is neglected and ωψd = ψd and ωψq = ψq is assumed (i.e. ω=1.0). This is standard when transmission network dynamics is neglected
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`R`** | **`Float64`** | Resistance after EMF | [default to nothing]
-**`Xd`** | **`Float64`** | Reactance after EMF in d-axis | [default to nothing]
-**`Xq`** | **`Float64`** | Reactance after EMF in q-axis | [default to nothing]
-**`Xd_p`** | **`Float64`** | Transient reactance after EMF in d-axis | [default to nothing]
-**`Xq_p`** | **`Float64`** | Transient reactance after EMF in q-axis | [default to nothing]
-**`Xd_pp`** | **`Float64`** | Sub-Transient reactance after EMF in d-axis | [default to nothing]
-**`Xq_pp`** | **`Float64`** | Sub-Transient reactance after EMF in q-axis | [default to nothing]
-**`Td0_p`** | **`Float64`** | Time constant of transient d-axis voltage | [default to nothing]
-**`Tq0_p`** | **`Float64`** | Time constant of transient q-axis voltage | [default to nothing]
-**`Td0_pp`** | **`Float64`** | Time constant of sub-transient d-axis voltage | [default to nothing]
-**`Tq0_pp`** | **`Float64`** | Time constant of sub-transient q-axis voltage | [default to nothing]
-**`T_AA`** | **`Float64`** | Time constant of d-axis additional leakage | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`r`** | **`Float64`** | Resistance after EMF | [required]
+**`t_aa`** | **`Float64`** | Time constant of d-axis additional leakage | [required]
+**`td0_p`** | **`Float64`** | Time constant of transient d-axis voltage | [required]
+**`td0_pp`** | **`Float64`** | Time constant of sub-transient d-axis voltage | [required]
+**`tq0_p`** | **`Float64`** | Time constant of transient q-axis voltage | [required]
+**`tq0_pp`** | **`Float64`** | Time constant of sub-transient q-axis voltage | [required]
+**`xd`** | **`Float64`** | Reactance after EMF in d-axis | [required]
+**`xd_p`** | **`Float64`** | Transient reactance after EMF in d-axis | [required]
+**`xd_pp`** | **`Float64`** | Sub-Transient reactance after EMF in d-axis | [required]
+**`xq`** | **`Float64`** | Reactance after EMF in q-axis | [required]
+**`xq_p`** | **`Float64`** | Transient reactance after EMF in q-axis | [required]
+**`xq_pp`** | **`Float64`** | Sub-Transient reactance after EMF in q-axis | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]

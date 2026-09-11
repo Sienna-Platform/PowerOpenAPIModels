@@ -36,7 +36,7 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
+            resource="https://openapi.invalid/schema/root-d5d2d2b15ebff194ab18.json",
             pointer="/components/schemas/RECurrentControlB",
         ),
         _openapi_raw,
@@ -176,7 +176,7 @@ function _encode(_openapi_value::RECurrentControlB)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
+            resource="https://openapi.invalid/schema/root-d5d2d2b15ebff194ab18.json",
             pointer="/components/schemas/RECurrentControlB",
         ),
         _openapi_output,

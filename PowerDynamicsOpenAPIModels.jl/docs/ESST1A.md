@@ -1,30 +1,26 @@
 # ESST1A
 
+This excitation system supplies power through a transformer from the generator terminals and its regulated by a controlled rectifier (via thyristors). Parameters of IEEE Std 421.5 Type ST1A Excitacion System. ESST1A in PSSE and PSLF
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`UEL_flags`** | **`Int64`** | Code input for Underexcitization limiter (UEL) entry | [default to nothing]
-**`PSS_flags`** | **`Int64`** | Code input for Power System Stabilizer (PSS) or (VOS) entry | [default to nothing]
-**`Tr`** | **`Float64`** | Regulator input filter time constant | [default to nothing]
-**`Vi_lim`** | **`Vector{Float64}`** | Voltage error limits (regulator input) | [default to nothing]
-**`Tc`** | **`Float64`** | First regulator numerator (lead) time constant | [default to nothing]
-**`Tb`** | **`Float64`** | First regulator denominator (lag) time constant | [default to nothing]
-**`Tc1`** | **`Float64`** | Second regulator numerator (lead) time constant | [default to nothing]
-**`Tb1`** | **`Float64`** | Second regulator denominator (lag) time constant | [default to nothing]
-**`Ka`** | **`Float64`** | Voltage regulator gain | [default to nothing]
-**`Ta`** | **`Float64`** | Voltage regulator time constant | [default to nothing]
-**`Va_lim`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`Vr_lim`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`Kc`** | **`Float64`** | Rectifier loading factor proportional to commutating reactance | [default to nothing]
-**`Kf`** | **`Float64`** | Rate feedback gain | [default to nothing]
-**`Tf`** | **`Float64`** | Rate feedback time constant | [default to nothing]
-**`K_lr`** | **`Float64`** | Exciter output current limiter gain | [default to nothing]
-**`I_lr`** | **`Float64`** | Exciter output current limit reference | [default to nothing]
-**`V_ref`** | **`Float64`** | Reference voltage set-point | [optional] [default to 1.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`i_lr`** | **`Float64`** | Exciter output current limit reference | [required]
+**`k_lr`** | **`Float64`** | Exciter output current limiter gain | [required]
+**`ka`** | **`Float64`** | Voltage regulator gain | [required]
+**`kc`** | **`Float64`** | Rectifier loading factor proportional to commutating reactance | [required]
+**`kf`** | **`Float64`** | Rate feedback gain | [required]
+**`pss_flags`** | **`Int64`** | Code input for Power System Stabilizer (PSS) or (VOS) entry | [required]
+**`ta`** | **`Float64`** | Voltage regulator time constant | [required]
+**`tb`** | **`Float64`** | First regulator denominator (lag) time constant | [required]
+**`tb1`** | **`Float64`** | Second regulator denominator (lag) time constant | [required]
+**`tc`** | **`Float64`** | First regulator numerator (lead) time constant | [required]
+**`tc1`** | **`Float64`** | Second regulator numerator (lead) time constant | [required]
+**`tf`** | **`Float64`** | Rate feedback time constant | [required]
+**`tr`** | **`Float64`** | Regulator input filter time constant | [required]
+**`uel_flags`** | **`Int64`** | Code input for Underexcitization limiter (UEL) entry | [required]
+**`v_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference voltage set-point | [optional]
+**`va_lim`** | **`MinMax`** | Limits for regulator output | [required]
+**`vi_lim`** | **`Vector{Float64}`** | Voltage error limits (regulator input) | [required]
+**`vr_lim`** | **`MinMax`** | Limits for excitor output | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]

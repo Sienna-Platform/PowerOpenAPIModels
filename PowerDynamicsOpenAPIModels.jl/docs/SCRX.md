@@ -1,20 +1,16 @@
 # SCRX
 
+This exciter is based on an IEEE type SCRX solid state exciter. The output field voltage is varied by a control system to maintain the system voltage at Vref. Please note that this exciter model has no initialization capabilities - this means that it will respond to whatever inputs it receives regardless of the state of the machine model
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`Ta_Tb`** | **`Float64`** | Lead input constant ratio | [default to nothing]
-**`Tb`** | **`Float64`** | Lag input constant | [default to nothing]
-**`K`** | **`Float64`** | Regulator gain | [default to nothing]
-**`Te`** | **`Float64`** | Regulator time constant | [default to nothing]
-**`Efd_lim`** | [**`*MinMax`**](MinMax.md) |  | [default to nothing]
-**`switch`** | **`Int64`** | Switch | [default to nothing]
-**`rc_rfd`** | **`Float64`** | Field current capability. Set &#x3D; 0 for negative current capability. Typical value 10 | [default to nothing]
-**`V_ref`** | **`Float64`** | Reference voltage set-point | [optional] [default to 1.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`efd_lim`** | **`MinMax`** | Field voltage regulator limits (regulator output) | [required]
+**`k`** | **`Float64`** | Regulator gain | [required]
+**`ta_tb`** | **`Float64`** | Lead input constant ratio | [required]
+**`tb`** | **`Float64`** | Lag input constant | [required]
+**`te`** | **`Float64`** | Regulator time constant | [required]
+**`v_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference voltage set-point | [optional]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
+**`rc_rfd`** | **`Float64`** | Field current capability. Set = 0 for negative current capability. Typical value 10 | [required]
+**`switch`** | **`Int64`** | Switch | [required]

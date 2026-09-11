@@ -1,14 +1,10 @@
 # SingleMass
 
+Parameters of single mass shaft model. Typically represents the rotor mass
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`H`** | **`Float64`** | Rotor inertia constant in MWs/MVA | [default to nothing]
-**`D`** | **`Float64`** | Rotor natural damping | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`d`** | **`Float64`** | Rotor natural damping | [required]
+**`h`** | **`Float64`** | Rotor inertia constant in MWs/MVA | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]

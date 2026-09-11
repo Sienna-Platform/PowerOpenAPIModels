@@ -1,14 +1,10 @@
 # RoundRotorExponential
 
+4-states round-rotor synchronous machine with exponential saturation: IEEE Std 1110 §5.3.2 (Model 2.2). GENROE model in PSSE and PSLF
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`id`** | **`Int64`** | Unique integer identifier for this component | [default to nothing]
-**`base_machine`** | **`Int64`** | Round Rotor machine parameters | [default to nothing]
-**`saturation_coeffs`** | **`Vector{Float64}`** | Derived saturation coefficients for the exponential saturation model, computed from the Se input | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`base_machine`** | **`Int64`** | Round Rotor machine parameters | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
+**`saturation_coeffs`** | **`Vector{Float64}`** | Derived saturation coefficients for the exponential saturation model, computed from the Se input | [required]

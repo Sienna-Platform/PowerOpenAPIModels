@@ -1,19 +1,19 @@
 """
     SteamTurbineGov1
 
-Steam Turbine-Governor. This model considers both TGOV1 or TGOV1DU in PSS/E.
+Steam Turbine-Governor. This model considers both TGOV1 or TGOV1DU in PSS/E
 
-  - `db_h`: Deadband for overspeed.
-  - `db_l`: Deadband for underspeed.
-  - `d_t`: Turbine Damping.
-  - `p_ref`: Reference Power Set-point.
-  - `r`: Droop parameter.
-  - `t1`: Governor time constant. Units: s.
-  - `t2`: Lead Lag Lead Time constant. Units: s.
-  - `t3`: Lead Lag Lag Time constant. Units: s.
-  - `t_rate`: Turbine Rate. If zero, generator base is used. Units: MW.
-  - `id`: Unique integer identifier for this component.
-  - `valve_position_limits`: Valve position limits.
+  - `db_h`: Deadband for overspeed
+  - `db_l`: Deadband for underspeed
+  - `d_t`: Turbine damping
+  - `p_ref`: Reference power set-point
+  - `r`: Droop parameter
+  - `t1`: Governor time constant. Units: s
+  - `t2`: Lead-lag lead time constant. Units: s
+  - `t3`: Lead-lag lag time constant. Units: s
+  - `t_rate`: Turbine Rate. If zero, generator base is used. Units: MW
+  - `id`: Unique integer identifier for this component
+  - `valve_position_limits`: Valve position limits
 """
 Base.@kwdef struct SteamTurbineGov1 <: APIModel
     db_h::Float64
@@ -34,7 +34,7 @@ function _decode(::Type{SteamTurbineGov1}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
+            resource="https://openapi.invalid/schema/root-d5d2d2b15ebff194ab18.json",
             pointer="/components/schemas/SteamTurbineGov1",
         ),
         _openapi_raw,
@@ -163,7 +163,7 @@ function _encode(_openapi_value::SteamTurbineGov1)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
+            resource="https://openapi.invalid/schema/root-d5d2d2b15ebff194ab18.json",
             pointer="/components/schemas/SteamTurbineGov1",
         ),
         _openapi_output,
