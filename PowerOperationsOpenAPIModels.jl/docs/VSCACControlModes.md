@@ -1,11 +1,7 @@
 # VSCACControlModes
 
+AC-side control mode of a voltage-source-converter (VSC) terminal. AC_REACTIVE_POWER: converter controls reactive power / fixed power factor. AC_VOLTAGE: converter controls the AC-side voltage magnitude.
 
-## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+## Allowed values
+- `AC_REACTIVE_POWER`
+- `AC_VOLTAGE`

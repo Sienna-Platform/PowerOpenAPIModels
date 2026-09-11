@@ -1,15 +1,11 @@
 # StartUpStages
 
+A triple of values, one for each stage of a thermal unit's start-up: `hot`, `warm`, and `cold`.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`startup_stages_type`** | **`String`** |  | [optional] [default to "STAGES"]
-**`cold`** | **`Float64`** |  | [default to nothing]
-**`hot`** | **`Float64`** |  | [default to nothing]
-**`warm`** | **`Float64`** |  | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`cold`** | **`Float64`** |  | [required]
+**`hot`** | **`Float64`** |  | [required]
+**`startup_stages_type`** | **`Union{Absent,Nothing,String}`** |  | [optional]
+**`warm`** | **`Float64`** |  | [required]

@@ -1,15 +1,11 @@
 # IncrementalCurve
 
+A curve whose y values are the marginal rate `f'(x)` at production level `x` — the native form for market bid stacks and incremental heat rate data. `initial_input` records the total input at the minimum production point, anchoring the absolute level and enabling conversion to an `InputOutputCurve`. Use `InputOutputCurve` when the data gives total cost at each output level.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`curve_type`** | **`String`** |  | [default to "INCREMENTAL"]
-**`function_data`** | [**`*IncrementalCurveFunctionData`**](IncrementalCurveFunctionData.md) |  | [default to nothing]
-**`initial_input`** | **`Float64`** |  | [optional] [default to nothing]
-**`input_at_zero`** | **`Float64`** |  | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`curve_type`** | **`String`** |  | [required]
+**`function_data`** | **`IncrementalCurveFunctionData`** |  | [required]
+**`initial_input`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`input_at_zero`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
