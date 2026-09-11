@@ -48,9 +48,26 @@ function _require(raw::AbstractDict, key::AbstractString, where_::AbstractString
 end
 
 """
+Encode one model row to a plain JSON-safe object.
+
+The native (post-1.0) generator has no `JSON.lower` hook the way the old 0.2.x runtime did
+(where `JSON.lower(::OpenAPI.APIModel)` let `JSON.print` walk a raw model instance directly,
+skipping unset fields on its own); each generated module instead installs a method on the
+shared `OpenAPI.Runtime._encode` generic function, so encoding is explicit here.
+"""
+_encode_row(model) = OpenAPI.Runtime._encode(model)
+
+"""
+Function barrier: one specialization per concrete component vector, each row encoded to a
+plain JSON-safe object.
+"""
+_bucket(components::Vector) = [_encode_row(c) for c in components]
+
+"""
 Deserialize one row into `T`.
 """
-_row(::Type{T}, raw::AbstractDict) where {T} = OpenAPI.from_json(T, Dict{String, Any}(raw))
+_row(::Type{T}, raw::AbstractDict) where {T} =
+    OpenAPI.Runtime._decode(T, Dict{String, Any}(raw))
 
 function _rows(::Type{T}, raws) where {T}
     return T[_row(T, raw) for raw in raws]
@@ -63,18 +80,13 @@ function _put_optional!(tree::AbstractDict, key::AbstractString, value)
 end
 
 """
-Function barrier: one specialization per concrete component vector.
-"""
-_bucket(components::Vector{T}) where {T <: OpenAPI.APIModel} = collect(components)
-
-"""
 The `id` of a model row.
 
 Errors when it is unset: every component and supplemental attribute in a document is
 referenced by id, so a row without one cannot be linked to anything and is malformed input
 rather than an absence to tolerate.
 """
-function _model_id(model::OpenAPI.APIModel)
+function _model_id(model)
     if !hasproperty(model, :id)
         throw(
             InfrastructureCoreOpenAPIModels.DocumentFormatError(
@@ -85,8 +97,8 @@ function _model_id(model::OpenAPI.APIModel)
     return _require_id(getproperty(model, :id), model)
 end
 
-_require_id(id::Integer, ::OpenAPI.APIModel) = Int(id)
-function _require_id(::Nothing, model::OpenAPI.APIModel)
+_require_id(id::Integer, model) = Int(id)
+function _require_id(::Union{Nothing, OpenAPI.Runtime.Absent}, model)
     throw(
         InfrastructureCoreOpenAPIModels.DocumentFormatError(
             "$(nameof(typeof(model))) has an unset id",
@@ -152,7 +164,7 @@ component_type_names(doc::DocumentType) = sort!(collect(keys(doc.components)))
 Components of one type, in the order they were added.
 """
 function get_components(doc::DocumentType, type_name::AbstractString)
-    return get(doc.components, String(type_name), Vector{OpenAPI.APIModel}())
+    return get(doc.components, String(type_name), Vector{Any}())
 end
 
 """
@@ -172,10 +184,10 @@ function next_id!(doc::DocumentType)
 end
 
 """
-Note that ids `1:highest` are already in use, so `next_id!` does not reissue them.
+Note that ids `1:n` are already in use, so `next_id!` does not reissue them.
 
-For a writer that assigns ids itself (reproducing a document's original ids, say) rather than
-drawing every one from `next_id!`.
+For a writer that assigns ids itself (reproducing a document's original ids, say) rather
+than drawing every one from `next_id!`.
 """
 function reserve_ids!(doc::DocumentType, highest::Int)
     if highest > doc.counter[]
@@ -190,7 +202,7 @@ Add a component to its type's bucket.
 Also records the component's id in `component_types_by_id`, the cache
 [`add_supplemental_attribute!`](@ref) reads instead of rescanning `components`.
 """
-function add_component!(doc::DocumentType, component::T) where {T <: OpenAPI.APIModel}
+function add_component!(doc::DocumentType, component::T) where {T}
     type_name = string(nameof(T))
     bucket = get!(doc.components, type_name) do
         return Vector{T}()
@@ -204,14 +216,19 @@ end
 Record a supplemental attribute and the component it describes.
 
 Attributes are held in one flat list rather than bucketed by type: nothing iterates them per
-type, and the association carries both the link and the `attribute_type` a reader needs to pick
-a converter. The row mirrors infrastore's `supplemental_attribute_associations` catalog row
-field-for-field, so it also carries the component's type name as a denormalized label — resolved
-from the document, which is why the component must be added before its attribute.
+type, and the association carries both the link and the `attribute_type` a reader needs to
+pick a converter. The row mirrors infrastore's `supplemental_attribute_associations` catalog
+row field-for-field, so it also carries the component's type name as a denormalized label —
+resolved from the document, which is why the component must be added before its attribute.
+
+Plant-family groupings (shaft/penstock/PCC/exclusion-group) and combined-cycle HRSG
+assignments are recorded separately, via [`add_plant_association!`](@ref) and
+[`add_combined_cycle_association!`](@ref); service membership via
+[`add_service_association!`](@ref). None of the three reuses this table.
 """
 function add_supplemental_attribute!(
     doc::DocumentType,
-    attribute::OpenAPI.APIModel,
+    attribute::Any,
     component_id::Integer,
 )
     if !haskey(doc.component_types_by_id, Int(component_id))
@@ -246,8 +263,8 @@ end
 """
 Record source data that no schema field claims, against the component it came from.
 
-Recorded debt, not an extension point — every key here is a field the data model should
-eventually name. Empty extras are dropped rather than stored as an empty object.
+This is recorded debt, not an extension point — every key here is a field the data model
+should eventually name. Empty extras are dropped rather than stored as an empty object.
 """
 function set_ext!(doc::DocumentType, component_id::Integer, extras::AbstractDict)
     if isempty(extras)

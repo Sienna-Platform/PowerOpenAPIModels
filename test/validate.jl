@@ -334,7 +334,6 @@ end
     )
 end
 
-<<<<<<< HEAD
 # `PortfolioDocument` is hand-written for the same reason as `SystemDocument` (typed
 # heterogeneous `components` buckets openapi-generator cannot express), so it can drift from
 # its schema the same way and is asserted the same way.
@@ -439,15 +438,12 @@ end
     )
 end
 
-@testset "every registered type is an APIModel" begin
-=======
 @testset "every registered type is a generated model struct" begin
     # Under the pre-1.0 generator this checked `T <: OpenAPI.APIModel`, the common supertype
     # every generated model shared. The native generator gives every schema the same plain
     # `struct` shape with no common supertype at all, so `isstructtype` is the closest
     # equivalent: catches a registered non-model type, without asserting a marker that no
     # longer exists.
->>>>>>> origin/jd/openapi_deps_update
     @test !isempty(InfrastructureCoreOpenAPIModels.MODEL_TYPES)
     for (name, T) in InfrastructureCoreOpenAPIModels.MODEL_TYPES
         @test isstructtype(T)

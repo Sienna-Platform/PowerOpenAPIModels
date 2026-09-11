@@ -133,108 +133,7 @@ get_description(doc::SystemDocument) = doc.description
 get_frequency(doc::SystemDocument) = doc.frequency
 get_time_series_storage_file(doc::SystemDocument) = doc.time_series_storage_file
 
-<<<<<<< HEAD:PowerOpenAPIModels.jl/src/system_document.jl
 # ── builder (SystemDocument-specific association writers) ───────────────────────────
-=======
-"""
-Type names present, sorted, so serialized output is deterministic across builds.
-"""
-component_type_names(doc::SystemDocument) = sort!(collect(keys(doc.components)))
-
-"""
-Components of one type, in the order they were added.
-"""
-function get_components(doc::SystemDocument, type_name::AbstractString)
-    return get(doc.components, String(type_name), Vector{Any}())
-end
-
-"""
-Supplemental attributes of one type, in the order they were added.
-"""
-function get_supplemental_attributes(doc::SystemDocument, type_name::AbstractString)
-    wanted = String(type_name)
-    return [a for a in doc.supplemental_attributes if string(nameof(typeof(a))) == wanted]
-end
-
-# ── builder ──────────────────────────────────────────────────────────────────────
-
-"""
-Allocate an id from the document-wide counter.
-"""
-function next_id!(doc::SystemDocument)
-    doc.counter[] += 1
-    return doc.counter[]
-end
-
-"""
-Note that ids `1:n` are already in use, so `next_id!` does not reissue them.
-
-For a writer that assigns ids itself (reproducing a document's original ids, say) rather
-than drawing every one from `next_id!`.
-"""
-function reserve_ids!(doc::SystemDocument, highest::Int)
-    if highest > doc.counter[]
-        doc.counter[] = highest
-    end
-    return doc.counter[]
-end
-
-"""
-Add a component to its type's bucket.
-
-Also records the component's id in `component_types_by_id`, the cache
-[`add_supplemental_attribute!`](@ref) reads instead of rescanning `components`.
-"""
-function add_component!(doc::SystemDocument, component::T) where {T}
-    type_name = string(nameof(T))
-    bucket = get!(doc.components, type_name) do
-        return Vector{T}()
-    end
-    push!(bucket, component)
-    doc.component_types_by_id[_model_id(component)] = type_name
-    return nothing
-end
-
-"""
-Record a supplemental attribute and the component it describes.
-
-Attributes are held in one flat list rather than bucketed by type: nothing iterates them per
-type, and the association carries both the link and the `attribute_type` a reader needs to
-pick a converter. The row mirrors infrastore's `supplemental_attribute_associations` catalog
-row field-for-field, so it also carries the component's type name as a denormalized label —
-resolved from the document, which is why the component must be added before its attribute.
-
-Plant-family groupings (shaft/penstock/PCC/exclusion-group) and combined-cycle HRSG
-assignments are recorded separately, via [`add_plant_association!`](@ref) and
-[`add_combined_cycle_association!`](@ref); service membership via
-[`add_service_association!`](@ref). None of the three reuses this table.
-"""
-function add_supplemental_attribute!(
-    doc::SystemDocument,
-    attribute::Any,
-    component_id::Integer,
-)
-    if !haskey(doc.component_types_by_id, Int(component_id))
-        throw(
-            InfrastructureCoreOpenAPIModels.DocumentFormatError(
-                "add_supplemental_attribute!: component id $(component_id) is not in the " *
-                "document — add the component before associating an attribute with it",
-            ),
-        )
-    end
-    push!(doc.supplemental_attributes, attribute)
-    push!(
-        doc.supplemental_attribute_associations,
-        SupplementalAttributeAssociation(;
-            component_id=Int(component_id),
-            component_type=doc.component_types_by_id[Int(component_id)],
-            attribute_id=_model_id(attribute),
-            attribute_type=string(nameof(typeof(attribute))),
-        ),
-    )
-    return nothing
-end
->>>>>>> origin/jd/openapi_deps_update:PowerOpenAPIModels.jl/src/document.jl
 
 """
 Record a plant-family group membership: `assoc` is a caller-constructed `PlantAssociation`
@@ -316,114 +215,7 @@ function add_trading_hub_association!(doc::SystemDocument, assoc::T) where {T}
     return nothing
 end
 
-<<<<<<< HEAD:PowerOpenAPIModels.jl/src/system_document.jl
 # ── validation ─────────────────────────────────────────────────────────────────────
-=======
-"""
-Record one time series metadata row. The values themselves are the consumer's business.
-"""
-function add_time_series_association!(doc::SystemDocument, assoc::TimeSeriesAssociation)
-    push!(doc.time_series_associations, assoc)
-    return nothing
-end
-
-"""
-Record source data that no schema field claims, against the component it came from.
-
-This is recorded debt, not an extension point — every key here is a field the data model
-should eventually name. Empty extras are dropped rather than stored as an empty object.
-"""
-function set_ext!(doc::SystemDocument, component_id::Integer, extras::AbstractDict)
-    if isempty(extras)
-        return nothing
-    end
-    doc.ext[Int(component_id)] = Dict{String, Any}(extras)
-    return nothing
-end
-
-function get_ext(doc::SystemDocument, component_id::Integer)
-    return get(doc.ext, Int(component_id), Dict{String, Any}())
-end
-
-# ── ids and validation ───────────────────────────────────────────────────────────
-
-"""
-The `id` of a model row.
-
-Errors when it is unset: every component and supplemental attribute in a document is
-referenced by id, so a row without one cannot be linked to anything and is malformed input
-rather than an absence to tolerate.
-"""
-function _model_id(model)
-    if !hasproperty(model, :id)
-        throw(
-            InfrastructureCoreOpenAPIModels.DocumentFormatError(
-                "$(nameof(typeof(model))) has no id field, so it cannot appear in a document",
-            ),
-        )
-    end
-    return _require_id(getproperty(model, :id), model)
-end
-
-_require_id(id::Integer, model) = Int(id)
-function _require_id(::Union{Nothing, OpenAPI.Runtime.Absent}, model)
-    throw(
-        InfrastructureCoreOpenAPIModels.DocumentFormatError(
-            "$(nameof(typeof(model))) has an unset id",
-        ),
-    )
-end
-
-"""
-Every component id in the document, erroring on a duplicate.
-"""
-function _component_ids(doc::SystemDocument)
-    ids = Set{Int}()
-    for type_name in component_type_names(doc)
-        for component in doc.components[type_name]
-            id = _model_id(component)
-            if id in ids
-                throw(
-                    InfrastructureCoreOpenAPIModels.DocumentFormatError(
-                        "duplicate id=$id (second occurrence on a $type_name) — ids are " *
-                        "unique across every type, not per type",
-                    ),
-                )
-            end
-            push!(ids, id)
-        end
-    end
-    return ids
-end
-
-function _attribute_ids(doc::SystemDocument)
-    ids = Set{Int}()
-    for attribute in doc.supplemental_attributes
-        id = _model_id(attribute)
-        if id in ids
-            throw(
-                InfrastructureCoreOpenAPIModels.DocumentFormatError(
-                    "duplicate supplemental attribute id=$id",
-                ),
-            )
-        end
-        push!(ids, id)
-    end
-    return ids
-end
-
-function _check_ref(ids::Set{Int}, id, what::AbstractString, context::AbstractString)
-    if !(id in ids)
-        throw(
-            InfrastructureCoreOpenAPIModels.DocumentFormatError(
-                "$what references unresolved id=$id ($context) — every reference must name " *
-                "a row present in the same document",
-            ),
-        )
-    end
-    return nothing
-end
->>>>>>> origin/jd/openapi_deps_update:PowerOpenAPIModels.jl/src/document.jl
 
 """
 Check that the document is internally consistent: ids unique, every reference resolvable.
@@ -565,26 +357,6 @@ end
 # ── writing ──────────────────────────────────────────────────────────────────────
 
 """
-<<<<<<< HEAD:PowerOpenAPIModels.jl/src/system_document.jl
-The document as a tree of model objects, ready for a single JSON encoding pass.
-=======
-Encode one model row to a plain JSON-safe object.
-
-The native (post-1.0) generator has no `JSON.lower` hook the way the old 0.2.x runtime did
-(where `JSON.lower(::OpenAPI.APIModel)` let `JSON.print` walk a raw model instance directly,
-skipping unset fields on its own); each generated module instead installs a method on the
-shared `OpenAPI.Runtime._encode` generic function, so encoding is explicit here.
-"""
-_encode_row(model) = OpenAPI.Runtime._encode(model)
-
-"""
-Function barrier: one specialization per concrete component vector, each row encoded to a
-plain JSON-safe object.
-"""
-_bucket(components::Vector) = [_encode_row(c) for c in components]
->>>>>>> origin/jd/openapi_deps_update:PowerOpenAPIModels.jl/src/document.jl
-
-"""
 The document as a tree of plain JSON-safe values, ready for a single JSON encoding pass.
 
 Every model row is pre-encoded via [`_encode_row`](@ref) rather than embedded raw: encoding a
@@ -652,32 +424,6 @@ end
 
 # ── reading ──────────────────────────────────────────────────────────────────────
 
-<<<<<<< HEAD:PowerOpenAPIModels.jl/src/system_document.jl
-=======
-function _require(raw::AbstractDict, key::AbstractString, where_::AbstractString)
-    if !haskey(raw, key)
-        throw(
-            InfrastructureCoreOpenAPIModels.DocumentFormatError(
-                "$where_ is missing the required field \"$key\"",
-            ),
-        )
-    end
-    return raw[key]
-end
-
-_optional(raw::AbstractDict, key::AbstractString) = get(raw, key, nothing)
-
-"""
-Deserialize one row into `T`.
-"""
-_row(::Type{T}, raw::AbstractDict) where {T} =
-    OpenAPI.Runtime._decode(T, Dict{String, Any}(raw))
-
-function _rows(::Type{T}, raws) where {T}
-    return T[_row(T, raw) for raw in raws]
-end
-
->>>>>>> origin/jd/openapi_deps_update:PowerOpenAPIModels.jl/src/document.jl
 """
 Build a [`SystemDocument`](@ref) from already-parsed JSON.
 
