@@ -1,0 +1,41 @@
+# GeneralGovModel
+
+GE General Governor/Turbine Model. The GeneralGovModel (GGOV1) model is a general purpose governor model used for a variety of prime movers controlled by proportional-integral-derivative (PID) governors including gas turbines
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**`a_set`** | **`Float64`** | Acceleration limiter setpoint | [required]
+**`dm`** | **`Float64`** | Mechanical damping coefficient | [required]
+**`k_turb`** | **`Float64`** | Turbine gain | [required]
+**`ka`** | **`Float64`** | Acceleration limiter gain | [required]
+**`kd_gov`** | **`Float64`** | Governor derivative gain | [required]
+**`ki_gov`** | **`Float64`** | Governor integral gain | [required]
+**`ki_load`** | **`Float64`** | Load integral gain for PI controller | [required]
+**`ki_mw`** | **`Float64`** | Power controller (reset) gain | [required]
+**`kp_gov`** | **`Float64`** | Governor proportional gain | [required]
+**`kp_load`** | **`Float64`** | Load limiter proportional gain for PI controller | [required]
+**`ld_ref`** | **`Float64`** | Load limiter integral gain for PI controller | [required]
+**`p_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference power set-point | [optional]
+**`r`** | **`Union{Absent,Float64,Nothing}`** | Speed droop parameter | [optional]
+**`r_close`** | **`Float64`** | Maximum valve closing rate | [required]
+**`r_lim`** | **`UpDown`** | Maximum rate of load increase | [required]
+**`r_open`** | **`Float64`** | Maximum valve opening rate | [required]
+**`r_select`** | **`Union{Absent,Int64,Nothing}`** | Feedback signal for governor droop | [optional]
+**`t_act`** | **`Float64`** | Actuator time constant | [required]
+**`t_eng`** | **`Float64`** | Transport lag time constant for diesel engine | [required]
+**`t_rate`** | **`Float64`** | Turbine rating | [required]
+**`ta`** | **`Float64`** | Acceleration limiter time constant | [required]
+**`tb`** | **`Float64`** | Turbine lag time constant | [required]
+**`tc`** | **`Float64`** | Turbine lead time constant | [required]
+**`td_gov`** | **`Float64`** | Governor derivative time constant | [required]
+**`tf_load`** | **`Float64`** | Load limiter time constant | [required]
+**`tpelec`** | **`Float64`** | Electrical power transducer time constant | [required]
+**`tsa`** | **`Float64`** | Temperature detection lead time constant | [required]
+**`tsb`** | **`Float64`** | Temperature detection lag time constant | [required]
+**`wf_nl`** | **`Float64`** | No load fuel flow | [required]
+**`db`** | **`Float64`** | Speed governor deadband | [required]
+**`fuel_flag`** | **`Int64`** | Flag switch for fuel source characteristic | [required]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
+**`speed_error_signal`** | **`MinMax`** | Speed error signal limits | [required]
+**`valve_position_limits`** | **`MinMax`** | Valve position limits | [required]

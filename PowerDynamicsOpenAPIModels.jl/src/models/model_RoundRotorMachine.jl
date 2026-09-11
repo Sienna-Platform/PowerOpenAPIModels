@@ -1,26 +1,21 @@
 """
     RoundRotorMachine
 
-Parameters of 4-states round-rotor synchronous machine with quadratic/exponential saturation: IEEE Std 1110 5.3.2 (Model 2.2). GENROU or GENROE model in PSSE and PSLF.
+Parameters of 4-states round-rotor synchronous machine with quadratic/exponential saturation: IEEE Std 1110 5.3.2 (Model 2.2). GENROU or GENROE model in PSSE and PSLF
 
-  - `r`: Armature resistance.
-  - `se`: Saturation factor at 1 and 1.2 pu flux: S(1.0) = B(|psi_pp|-A)^2.
-  - `td0_p`: Time constant of transient d-axis voltage. Units: s.
-  - `td0_pp`: Time constant of sub-transient d-axis voltage. Units: s.
-  - `tq0_p`: Time constant of transient q-axis voltage. Units: s.
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage. Units: s.
-  - `xd`: Reactance after EMF in d-axis.
-  - `xd_p`: Transient reactance after EMF in d-axis.
-  - `xd_pp`: Sub-Transient reactance after EMF in d-axis. Note: Xd_pp = Xq_pp.
-  - `xl`: Stator leakage reactance.
-  - `xq`: Reactance after EMF in q-axis.
-  - `xq_p`: Transient reactance after EMF in q-axis.
-  - `gamma_d1`: Do not modify
-  - `gamma_d2`: Do not modify
-  - `gamma_q1`: Do not modify
-  - `gamma_q2`: Do not modify
-  - `gamma_qd`: Do not modify
-  - `id`: Unique integer identifier for this component.
+  - `r`: Armature resistance
+  - `se`: Saturation factor at 1 and 1.2 pu flux: S(1.0) = B(|psi_pp|-A)^2
+  - `td0_p`: Time constant of transient d-axis voltage. Units: s
+  - `td0_pp`: Time constant of sub-transient d-axis voltage. Units: s
+  - `tq0_p`: Time constant of transient q-axis voltage. Units: s
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage. Units: s
+  - `xd`: Reactance after EMF in d-axis
+  - `xd_p`: Transient reactance after EMF in d-axis
+  - `xd_pp`: Sub-Transient reactance after EMF in d-axis. Note: Xd_pp = Xq_pp
+  - `xl`: Stator leakage reactance
+  - `xq`: Reactance after EMF in q-axis
+  - `xq_p`: Transient reactance after EMF in q-axis
+  - `id`: Unique integer identifier for this component
 """
 Base.@kwdef struct RoundRotorMachine <: APIModel
     r::Float64
@@ -35,11 +30,6 @@ Base.@kwdef struct RoundRotorMachine <: APIModel
     xl::Float64
     xq::Float64
     xq_p::Float64
-    gamma_d1::Float64
-    gamma_d2::Float64
-    gamma_q1::Float64
-    gamma_q2::Float64
-    gamma_qd::Float64
     id::Int64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -48,7 +38,7 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
+            resource="https://openapi.invalid/schema/root-d5d2d2b15ebff194ab18.json",
             pointer="/components/schemas/RoundRotorMachine",
         ),
         _openapi_raw,
@@ -116,31 +106,6 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
         _required(_openapi_object, "Xq_p", "RoundRotorMachine"),
         _openapi_validate,
     )
-    _openapi_field_gamma_d1 = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_d1", "RoundRotorMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_gamma_d2 = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_d2", "RoundRotorMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_gamma_q1 = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_q1", "RoundRotorMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_gamma_q2 = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_q2", "RoundRotorMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_gamma_qd = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_qd", "RoundRotorMachine"),
-        _openapi_validate,
-    )
     _openapi_field_id = _decode(
         Int64,
         _required(_openapi_object, "id", "RoundRotorMachine"),
@@ -161,11 +126,6 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
             "Xl",
             "Xq",
             "Xq_p",
-            "gamma_d1",
-            "gamma_d2",
-            "gamma_q1",
-            "gamma_q2",
-            "gamma_qd",
             "id",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
@@ -184,11 +144,6 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
         xl=_openapi_field_xl,
         xq=_openapi_field_xq,
         xq_p=_openapi_field_xq_p,
-        gamma_d1=_openapi_field_gamma_d1,
-        gamma_d2=_openapi_field_gamma_d2,
-        gamma_q1=_openapi_field_gamma_q1,
-        gamma_q2=_openapi_field_gamma_q2,
-        gamma_qd=_openapi_field_gamma_qd,
         id=_openapi_field_id,
         additional_properties=_openapi_additional_properties,
     )
@@ -214,16 +169,6 @@ function _encode(_openapi_value::RoundRotorMachine)
     _openapi_value.xq isa Absent || (_openapi_output["Xq"] = _encode(_openapi_value.xq))
     _openapi_value.xq_p isa Absent ||
         (_openapi_output["Xq_p"] = _encode(_openapi_value.xq_p))
-    _openapi_value.gamma_d1 isa Absent ||
-        (_openapi_output["gamma_d1"] = _encode(_openapi_value.gamma_d1))
-    _openapi_value.gamma_d2 isa Absent ||
-        (_openapi_output["gamma_d2"] = _encode(_openapi_value.gamma_d2))
-    _openapi_value.gamma_q1 isa Absent ||
-        (_openapi_output["gamma_q1"] = _encode(_openapi_value.gamma_q1))
-    _openapi_value.gamma_q2 isa Absent ||
-        (_openapi_output["gamma_q2"] = _encode(_openapi_value.gamma_q2))
-    _openapi_value.gamma_qd isa Absent ||
-        (_openapi_output["gamma_qd"] = _encode(_openapi_value.gamma_qd))
     _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -236,7 +181,7 @@ function _encode(_openapi_value::RoundRotorMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
+            resource="https://openapi.invalid/schema/root-d5d2d2b15ebff194ab18.json",
             pointer="/components/schemas/RoundRotorMachine",
         ),
         _openapi_output,
@@ -264,16 +209,6 @@ function _form_fields(_openapi_value::RoundRotorMachine)
     _openapi_value.xl isa Absent || push!(_openapi_output, "Xl" => _openapi_value.xl)
     _openapi_value.xq isa Absent || push!(_openapi_output, "Xq" => _openapi_value.xq)
     _openapi_value.xq_p isa Absent || push!(_openapi_output, "Xq_p" => _openapi_value.xq_p)
-    _openapi_value.gamma_d1 isa Absent ||
-        push!(_openapi_output, "gamma_d1" => _openapi_value.gamma_d1)
-    _openapi_value.gamma_d2 isa Absent ||
-        push!(_openapi_output, "gamma_d2" => _openapi_value.gamma_d2)
-    _openapi_value.gamma_q1 isa Absent ||
-        push!(_openapi_output, "gamma_q1" => _openapi_value.gamma_q1)
-    _openapi_value.gamma_q2 isa Absent ||
-        push!(_openapi_output, "gamma_q2" => _openapi_value.gamma_q2)
-    _openapi_value.gamma_qd isa Absent ||
-        push!(_openapi_output, "gamma_qd" => _openapi_value.gamma_qd)
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output

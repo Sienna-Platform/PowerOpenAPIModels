@@ -49,7 +49,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
+            resource="https://openapi.invalid/schema/root-d5d2d2b15ebff194ab18.json",
             pointer="/components/schemas/RenewableEnergyConverterTypeA",
         ),
         _openapi_raw,
@@ -230,7 +230,7 @@ function _encode(_openapi_value::RenewableEnergyConverterTypeA)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-bee6ed16a68502995310.json",
+            resource="https://openapi.invalid/schema/root-d5d2d2b15ebff194ab18.json",
             pointer="/components/schemas/RenewableEnergyConverterTypeA",
         ),
         _openapi_output,
