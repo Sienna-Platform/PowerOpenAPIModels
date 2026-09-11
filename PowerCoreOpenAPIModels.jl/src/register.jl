@@ -1,12 +1,17 @@
-# Generated from the declared model types. Do not edit.
+# Generated from the frozen pre-1.0 registered-name set. Do not edit.
 #
 # Runs in __init__ because the registry lives in another module: state
 # mutated there during precompilation would not be saved.
 
 function __init__()
+    InfrastructureCoreOpenAPIModels.register_model_type!(ACBus)
+    InfrastructureCoreOpenAPIModels.register_model_type!(Arc)
+    InfrastructureCoreOpenAPIModels.register_model_type!(Area)
     InfrastructureCoreOpenAPIModels.register_model_type!(AverageRateCurve)
     InfrastructureCoreOpenAPIModels.register_model_type!(CostCurve)
+    InfrastructureCoreOpenAPIModels.register_model_type!(DCBus)
     InfrastructureCoreOpenAPIModels.register_model_type!(DbdPnts)
+    InfrastructureCoreOpenAPIModels.register_model_type!(EmissionsData)
     InfrastructureCoreOpenAPIModels.register_model_type!(FdbdPnts)
     InfrastructureCoreOpenAPIModels.register_model_type!(FuelCurve)
     InfrastructureCoreOpenAPIModels.register_model_type!(GenericOperationCost)
@@ -20,6 +25,7 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(InputOutputCurve)
     InfrastructureCoreOpenAPIModels.register_model_type!(InputOutputCurveFunctionData)
     InfrastructureCoreOpenAPIModels.register_model_type!(LoadCost)
+    InfrastructureCoreOpenAPIModels.register_model_type!(LoadZone)
     InfrastructureCoreOpenAPIModels.register_model_type!(MarketBidCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(MarketBidTimeSeriesCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(ProductionVariableCostCurve)
@@ -28,14 +34,12 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(StartUpStages)
     InfrastructureCoreOpenAPIModels.register_model_type!(StorageCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(StorageCostStartUp)
-    InfrastructureCoreOpenAPIModels.register_model_type!(StorageCostStartUpOneOf)
     InfrastructureCoreOpenAPIModels.register_model_type!(ThermalGenerationCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(ThermalGenerationCostStartUp)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesAverageRateCurve)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesIncrementalCurve)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesInputOutputCurve)
     InfrastructureCoreOpenAPIModels.register_model_type!(TurbinePump)
-    InfrastructureCoreOpenAPIModels.register_model_type!(TwoTerminalLoss)
     InfrastructureCoreOpenAPIModels.register_model_type!(ValueCurve)
     return nothing
 end

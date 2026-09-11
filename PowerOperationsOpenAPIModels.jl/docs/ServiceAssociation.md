@@ -1,13 +1,9 @@
 # ServiceAssociation
 
+Links a service to one component that contributes to it. One record per (service, member) pair: the many-to-many reserve-participation relation is normalized here rather than carried as a list on either side, so each membership is an individually addressable row. The type of either side is resolved through the entity registry rather than duplicated here, matching the shape of PlantAssociation and SupplementalAttributeAssociation. `entity_id` may name a Device (the reserve case), a Branch (TransmissionInterface), or another Service (GroupReserve), so no member-type discriminator is needed. The data model library stores the same relation on the device side as `Device.services`.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`service_id`** | **`Int64`** | ID of the service the membership belongs to. | [default to nothing]
-**`entity_id`** | **`Int64`** | ID of the contributing member: a Device, a Branch, or another Service. | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`entity_id`** | **`Int64`** | ID of the contributing member: a Device, a Branch, or another Service. | [required]
+**`service_id`** | **`Int64`** | ID of the service the membership belongs to. | [required]

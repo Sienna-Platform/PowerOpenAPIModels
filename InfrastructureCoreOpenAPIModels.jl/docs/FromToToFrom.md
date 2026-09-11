@@ -1,13 +1,9 @@
 # FromToToFrom
 
+A pair of values for a directed edge, one for each orientation: `from_to` and `to_from`. The two are carried separately because the quantity need not be equal in the two directions.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`from_to`** | **`Float64`** |  | [optional] [default to nothing]
-**`to_from`** | **`Float64`** |  | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`from_to`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`to_from`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

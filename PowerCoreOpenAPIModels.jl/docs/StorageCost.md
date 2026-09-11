@@ -1,19 +1,15 @@
 # StorageCost
 
+Cost representation for storage units
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`cost_type`** | **`String`** |  | [optional] [default to "STORAGE"]
-**`charge_variable_cost`** | [**`*CostCurve`**](CostCurve.md) |  | [optional] [default to nothing]
-**`discharge_variable_cost`** | [**`*CostCurve`**](CostCurve.md) |  | [optional] [default to nothing]
-**`fixed`** | **`Float64`** |  | [default to 0.0]
-**`shut_down`** | **`Float64`** |  | [default to 0.0]
-**`start_up`** | [**`*StorageCostStartUp`**](StorageCostStartUp.md) |  | [default to nothing]
-**`energy_shortage_cost`** | **`Float64`** |  | [optional] [default to 0.0]
-**`energy_surplus_cost`** | **`Float64`** |  | [optional] [default to 0.0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`charge_variable_cost`** | **`Union{Absent,CostCurve,Nothing}`** | Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term. | [optional]
+**`cost_type`** | **`Union{Absent,Nothing,String}`** |  | [optional]
+**`discharge_variable_cost`** | **`Union{Absent,CostCurve,Nothing}`** | Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term. | [optional]
+**`energy_shortage_cost`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`energy_surplus_cost`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`fixed`** | **`Float64`** |  | [required]
+**`shut_down`** | **`Float64`** |  | [required]
+**`start_up`** | **`StorageCostStartUp`** |  | [required]

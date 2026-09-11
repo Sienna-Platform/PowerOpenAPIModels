@@ -1,13 +1,9 @@
 # ComplexNumber
 
+A complex number, given as its `real` and `imag` parts.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`real`** | **`Float64`** |  | [optional] [default to nothing]
-**`imag`** | **`Float64`** |  | [optional] [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`imag`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`real`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

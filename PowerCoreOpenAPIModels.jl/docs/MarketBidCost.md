@@ -1,21 +1,18 @@
 # MarketBidCost
 
+Cost representation for static (non-time-varying) market bids of energy and ancillary services.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`cost_type`** | **`String`** |  | [optional] [default to "MARKET_BID"]
-**`minimum_energy_offer`** | [**`*InputOutputCurve`**](InputOutputCurve.md) |  | [default to nothing]
-**`start_up`** | [**`*StartUpStages`**](StartUpStages.md) |  | [default to nothing]
-**`shut_down`** | [**`*InputOutputCurve`**](InputOutputCurve.md) |  | [default to nothing]
-**`incremental_offer_curves`** | [**`*CostCurve`**](CostCurve.md) |  | [default to nothing]
-**`decremental_offer_curves`** | [**`*CostCurve`**](CostCurve.md) |  | [default to nothing]
-**`ancillary_service_offers`** | **`Vector{Int64}`** | IDs of the ancillary service components that this market bid offers into. | [default to nothing]
-**`incremental_slope`** | **`Bool`** | Linear-interpolation flag for the incremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve. | [optional] [default to false]
-**`decremental_slope`** | **`Bool`** | Linear-interpolation flag for the decremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve. | [optional] [default to false]
-**`curve_style`** | **`Int64`** | Curve-clearing style for the bid: 0 &#x3D; CURVE (ordinary divisible price-setting curve, default); 1 &#x3D; FIXED (clears as one indivisible all-or-nothing package over its period); 2 &#x3D; VARIABLE (divisible quantity, block-priced, cannot set the settlement-point price). Corresponds to ERCOT&#39;s DAM PriceCurve curveStyle field (CURVE/FIXED/VARIABLE). A non-zero value is mutually exclusive with incremental_slope/decremental_slope. | [optional] [default to 0]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`ancillary_service_offers`** | **`Vector{Int64}`** | IDs of the ancillary service components that this market bid offers into. | [required]
+**`cost_type`** | **`Union{Absent,Nothing,String}`** |  | [optional]
+**`curve_multistep`** | **`Union{Absent,CurveMultiStep,Nothing}`** | Multi-step block indicator for the bid: 0 = SINGLE_STEP (default; each step of the bid clears independently); 1 = MULTI_STEP (the bid must be awarded as one block across every step it covers). Counted in model steps so it applies at any resolution. Independent of curve_style: curve_style is the quantity structure, curve_multistep is the time structure, and they compose. | [optional]
+**`curve_style`** | **`Union{Absent,CurveStyles,Nothing}`** | Curve-clearing style for the bid: 0 = VARIABLE (default; continuous quantity with one or more segments); 1 = FIXED (all-or-nothing block with a single segment). FIXED is mutually exclusive with incremental_slope/decremental_slope and requires a single-segment offer curve. | [optional]
+**`decremental_offer_curves`** | **`CostCurve`** | Buy offer curves data as a `CostCurve` of `PiecewiseIncrementalCurve`. | [required]
+**`decremental_slope`** | **`Union{Absent,Bool,Nothing}`** | Linear-interpolation flag for the decremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve. | [optional]
+**`incremental_offer_curves`** | **`CostCurve`** | Sell offer curves data as a `CostCurve` of `PiecewiseIncrementalCurve`. | [required]
+**`incremental_slope`** | **`Union{Absent,Bool,Nothing}`** | Linear-interpolation flag for the incremental offer curves; false (default) is the step interpretation. Mutually exclusive with block groups on the same curve. | [optional]
+**`minimum_energy_offer`** | **`InputOutputCurve`** | Minimum-energy offer: cost to operate at minimum stable level, in $/MWh at the curve's minimum power, stored as submitted. $/h sources convert at parse (MEO = no-load cost / P_min). Legacy scalar promotion: a bare scalar value `s` from a legacy source converts to an `InputOutputCurve` of `LinearFunctionData` with `constant_term = s` and `proportional_term = 0`. | [required]
+**`shut_down`** | **`InputOutputCurve`** | Shut-down cost. Legacy scalar promotion: a bare scalar value `s` from a legacy source converts to an `InputOutputCurve` of `LinearFunctionData` with `constant_term = s` and `proportional_term = 0`. | [required]
+**`start_up`** | **`StartUpStages`** | Start-up cost at different stages of the thermal cycle (hot, warm, cold). | [required]

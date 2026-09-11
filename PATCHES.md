@@ -1,6 +1,14 @@
 # Patches to openapi-generator's julia-client (for a future upstream PR)
 
-Generator version: **7.20.0** (`openapi-generator-cli-7.20.0.jar`, per `Dockerfile`).
+> [!NOTE]
+> This repository moved to OpenAPI.jl 1.0's native pure-Julia generator (see
+> `scripts/generate_native.jl`), which does real JSON-Schema validation at decode/encode time
+> instead of the Java generator's hand-patched defaults -- the divergence documented below no
+> longer applies here. Left in place because the upstream PR against openapi-generator's Java
+> `julia-client` target is still valid for anyone still generating from it.
+
+Generator version: **7.20.0** (`openapi-generator-cli-7.20.0.jar`, superseded here, previously
+per `Dockerfile`).
 
 ## The divergence
 

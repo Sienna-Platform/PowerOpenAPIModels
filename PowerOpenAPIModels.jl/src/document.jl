@@ -60,11 +60,13 @@ document omits them; the schema marks all four optional, and a consumer with its
 container invent one.
 
 `plant_associations`, `combined_cycle_associations`, `service_associations`, and
-`trading_hub_associations` are untyped `Vector{OpenAPI.APIModel}`, like `components`:
+`trading_hub_associations` are untyped `Vector{Any}`, like `components`:
 `PlantAssociation`, `CombinedCycleAssociation`, `ServiceAssociation`, and
 `TradingHubAssociation` are Operations-layer generated types, and this Core package cannot
-depend on Operations. Callers construct the concrete row and hand it to
-[`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref),
+depend on Operations. `Any` rather than a common generated-model supertype: the native
+(post-1.0) generator gives every schema the same plain `struct` shape, with nothing like the
+old `OpenAPI.APIModel` to bound these against. Callers construct the concrete row and hand it
+to [`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref),
 [`add_service_association!`](@ref), or [`add_trading_hub_association!`](@ref);
 deserialization resolves the concrete type through the same [`model_type`](@ref) registry
 `components` uses.
@@ -74,12 +76,12 @@ struct SystemDocument
     description::Union{Nothing, String}
     frequency::Union{Nothing, Float64}
     components::Dict{String, Vector}
-    supplemental_attributes::Vector{OpenAPI.APIModel}
+    supplemental_attributes::Vector{Any}
     supplemental_attribute_associations::Vector{SupplementalAttributeAssociation}
-    plant_associations::Vector{OpenAPI.APIModel}
-    combined_cycle_associations::Vector{OpenAPI.APIModel}
-    service_associations::Vector{OpenAPI.APIModel}
-    trading_hub_associations::Vector{OpenAPI.APIModel}
+    plant_associations::Vector{Any}
+    combined_cycle_associations::Vector{Any}
+    service_associations::Vector{Any}
+    trading_hub_associations::Vector{Any}
     time_series_associations::Vector{TimeSeriesAssociation}
     ext::Dict{Int, Dict{String, Any}}
     time_series_storage_file::Union{Nothing, String}
@@ -103,12 +105,12 @@ function SystemDocument(;
         description,
         _optional_float(frequency),
         Dict{String, Vector}(),
-        Vector{OpenAPI.APIModel}(),
+        Vector{Any}(),
         Vector{SupplementalAttributeAssociation}(),
-        Vector{OpenAPI.APIModel}(),
-        Vector{OpenAPI.APIModel}(),
-        Vector{OpenAPI.APIModel}(),
-        Vector{OpenAPI.APIModel}(),
+        Vector{Any}(),
+        Vector{Any}(),
+        Vector{Any}(),
+        Vector{Any}(),
         Vector{TimeSeriesAssociation}(),
         Dict{Int, Dict{String, Any}}(),
         _optional_string(time_series_storage_file),
@@ -138,7 +140,7 @@ component_type_names(doc::SystemDocument) = sort!(collect(keys(doc.components)))
 Components of one type, in the order they were added.
 """
 function get_components(doc::SystemDocument, type_name::AbstractString)
-    return get(doc.components, String(type_name), Vector{OpenAPI.APIModel}())
+    return get(doc.components, String(type_name), Vector{Any}())
 end
 
 """
@@ -178,7 +180,7 @@ Add a component to its type's bucket.
 Also records the component's id in `component_types_by_id`, the cache
 [`add_supplemental_attribute!`](@ref) reads instead of rescanning `components`.
 """
-function add_component!(doc::SystemDocument, component::T) where {T <: OpenAPI.APIModel}
+function add_component!(doc::SystemDocument, component::T) where {T}
     type_name = string(nameof(T))
     bucket = get!(doc.components, type_name) do
         return Vector{T}()
@@ -204,7 +206,7 @@ assignments are recorded separately, via [`add_plant_association!`](@ref) and
 """
 function add_supplemental_attribute!(
     doc::SystemDocument,
-    attribute::OpenAPI.APIModel,
+    attribute::Any,
     component_id::Integer,
 )
     if !haskey(doc.component_types_by_id, Int(component_id))
@@ -233,11 +235,10 @@ Record a plant-family group membership: `assoc` is a caller-constructed `PlantAs
 naming the shaft (ThermalPowerPlant), penstock (HydroPowerPlant), PCC (RenewablePowerPlant),
 or exclusion group (CombinedCycleFractional) an entity belongs to.
 
-Generic over `T <: OpenAPI.APIModel`, like [`add_component!`](@ref): `PlantAssociation` is an
-Operations-layer type this Core package does not depend on, so the caller — which does —
-builds the row.
+Generic over `T`, like [`add_component!`](@ref): `PlantAssociation` is an Operations-layer
+type this Core package does not depend on, so the caller — which does — builds the row.
 """
-function add_plant_association!(doc::SystemDocument, assoc::T) where {T <: OpenAPI.APIModel}
+function add_plant_association!(doc::SystemDocument, assoc::T) where {T}
     push!(doc.plant_associations, assoc)
     return nothing
 end
@@ -246,12 +247,9 @@ end
 Record that a CT or CA unit feeds one HRSG within a CombinedCycleBlock plant: `assoc` is a
 caller-constructed `CombinedCycleAssociation`.
 
-Generic over `T <: OpenAPI.APIModel`, for the same reason as [`add_plant_association!`](@ref).
+Generic over `T`, for the same reason as [`add_plant_association!`](@ref).
 """
-function add_combined_cycle_association!(
-    doc::SystemDocument,
-    assoc::T,
-) where {T <: OpenAPI.APIModel}
+function add_combined_cycle_association!(doc::SystemDocument, assoc::T) where {T}
     push!(doc.combined_cycle_associations, assoc)
     return nothing
 end
@@ -263,17 +261,14 @@ member contributing to it: a Device, a Branch, or another Service.
 One row per (service, member) pair. Duplicate pairs are rejected rather than collapsed:
 eligibility rules overlap, so the same device matching one reserve twice means a malformed
 rule set rather than something to silently merge — checked in O(1) against `service_membership`
-rather than rescanning `service_associations`. Generic over `T <: OpenAPI.APIModel` for the
-same reason as [`add_plant_association!`](@ref); `service_id`/`entity_id` are read by
-property access rather than a concrete type annotation.
+rather than rescanning `service_associations`. Generic over `T` for the same reason as
+[`add_plant_association!`](@ref); `service_id`/`entity_id` are read by property access
+rather than a concrete type annotation.
 
 This is the document's one guard against a duplicate association row; callers must not
 rescan `service_associations` themselves before calling this.
 """
-function add_service_association!(
-    doc::SystemDocument,
-    assoc::T,
-) where {T <: OpenAPI.APIModel}
+function add_service_association!(doc::SystemDocument, assoc::T) where {T}
     service_id = assoc.service_id
     entity_id = assoc.entity_id
     key = (Int(service_id), Int(entity_id))
@@ -293,15 +288,12 @@ end
 Record that `assoc` (a caller-constructed `TradingHubAssociation`) links a trading hub to
 one associated entity: a member bus or a market transaction settling at the hub.
 
-Generic over `T <: OpenAPI.APIModel`, for the same reason as [`add_plant_association!`](@ref).
+Generic over `T`, for the same reason as [`add_plant_association!`](@ref).
 
 Duplicate `(trading_hub_id, entity_id)` pairs are rejected rather than collapsed, the same
 guard [`add_service_association!`](@ref) applies to service membership.
 """
-function add_trading_hub_association!(
-    doc::SystemDocument,
-    assoc::T,
-) where {T <: OpenAPI.APIModel}
+function add_trading_hub_association!(doc::SystemDocument, assoc::T) where {T}
     trading_hub_id = assoc.trading_hub_id
     entity_id = assoc.entity_id
     key = (Int(trading_hub_id), Int(entity_id))
@@ -353,7 +345,7 @@ Errors when it is unset: every component and supplemental attribute in a documen
 referenced by id, so a row without one cannot be linked to anything and is malformed input
 rather than an absence to tolerate.
 """
-function _model_id(model::OpenAPI.APIModel)
+function _model_id(model)
     if !hasproperty(model, :id)
         throw(
             InfrastructureCoreOpenAPIModels.DocumentFormatError(
@@ -364,8 +356,8 @@ function _model_id(model::OpenAPI.APIModel)
     return _require_id(getproperty(model, :id), model)
 end
 
-_require_id(id::Integer, ::OpenAPI.APIModel) = Int(id)
-function _require_id(::Nothing, model::OpenAPI.APIModel)
+_require_id(id::Integer, model) = Int(id)
+function _require_id(::Union{Nothing, OpenAPI.Runtime.Absent}, model)
     throw(
         InfrastructureCoreOpenAPIModels.DocumentFormatError(
             "$(nameof(typeof(model))) has an unset id",
@@ -537,8 +529,8 @@ function validate_document(doc::SystemDocument)
         )
     end
 
-    # `.value` because `TimeSeriesAssociation` is the oneOf wrapper: the six per-type
-    # structs hold the columns, and `OpenAPI.OneOfAPIModel` forwards no field access.
+    # `.value` because `TimeSeriesAssociation` is the oneOf wrapper: the six per-type structs
+    # hold the columns, one level down inside the `value::Union{...}` field.
     for assoc in doc.time_series_associations
         row = assoc.value
         _check_ref(all_ids, row.owner_id, "TimeSeriesAssociation", "name=$(row.name)")
@@ -563,17 +555,27 @@ end
 # ── writing ──────────────────────────────────────────────────────────────────────
 
 """
-Function barrier: one specialization per concrete component vector.
+Encode one model row to a plain JSON-safe object.
+
+The native (post-1.0) generator has no `JSON.lower` hook the way the old 0.2.x runtime did
+(where `JSON.lower(::OpenAPI.APIModel)` let `JSON.print` walk a raw model instance directly,
+skipping unset fields on its own); each generated module instead installs a method on the
+shared `OpenAPI.Runtime._encode` generic function, so encoding is explicit here.
 """
-_bucket(components::Vector{T}) where {T <: OpenAPI.APIModel} = collect(components)
+_encode_row(model) = OpenAPI.Runtime._encode(model)
 
 """
-The document as a tree of model objects, ready for a single JSON encoding pass.
+Function barrier: one specialization per concrete component vector, each row encoded to a
+plain JSON-safe object.
+"""
+_bucket(components::Vector) = [_encode_row(c) for c in components]
 
-`JSON.lower(::OpenAPI.APIModel)` yields a wrapper that iterates properties and skips the
-unset ones, so nesting and optional fields need no handling here. Encoding a row on its own
-with `OpenAPI.to_json` would return a `String` and produce a double-encoded document, which
-is why the whole tree is built first and printed once.
+"""
+The document as a tree of plain JSON-safe values, ready for a single JSON encoding pass.
+
+Every model row is pre-encoded via [`_encode_row`](@ref) rather than embedded raw: encoding a
+row on its own with `OpenAPI.Runtime._encode` already returns a plain object, not a `String`,
+so this still builds the whole tree before printing once rather than encoding twice.
 """
 function document_tree(doc::SystemDocument)
     components = Dict{String, Any}()
@@ -582,14 +584,14 @@ function document_tree(doc::SystemDocument)
     end
     tree = Dict{String, Any}(
         "components" => components,
-        "supplemental_attributes" => doc.supplemental_attributes,
+        "supplemental_attributes" => _bucket(doc.supplemental_attributes),
         "supplemental_attribute_associations" =>
-            doc.supplemental_attribute_associations,
-        "plant_associations" => doc.plant_associations,
-        "combined_cycle_associations" => doc.combined_cycle_associations,
-        "service_associations" => doc.service_associations,
-        "trading_hub_associations" => doc.trading_hub_associations,
-        "time_series_associations" => doc.time_series_associations,
+            _bucket(doc.supplemental_attribute_associations),
+        "plant_associations" => _bucket(doc.plant_associations),
+        "combined_cycle_associations" => _bucket(doc.combined_cycle_associations),
+        "service_associations" => _bucket(doc.service_associations),
+        "trading_hub_associations" => _bucket(doc.trading_hub_associations),
+        "time_series_associations" => _bucket(doc.time_series_associations),
         # Keyed by component id, which is unique across every type.
         "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
         "time_series_storage_file" => doc.time_series_storage_file,
@@ -658,7 +660,8 @@ _optional(raw::AbstractDict, key::AbstractString) = get(raw, key, nothing)
 """
 Deserialize one row into `T`.
 """
-_row(::Type{T}, raw::AbstractDict) where {T} = OpenAPI.from_json(T, Dict{String, Any}(raw))
+_row(::Type{T}, raw::AbstractDict) where {T} =
+    OpenAPI.Runtime._decode(T, Dict{String, Any}(raw))
 
 function _rows(::Type{T}, raws) where {T}
     return T[_row(T, raw) for raw in raws]
@@ -821,7 +824,9 @@ alone for the consumer to resolve relative to `path`.
 """
 function read_document(path::AbstractString)
     if !isfile(path)
-        throw(InfrastructureCoreOpenAPIModels.DocumentFormatError("no such document: $path"))
+        throw(
+            InfrastructureCoreOpenAPIModels.DocumentFormatError("no such document: $path"),
+        )
     end
     raw = JSON.parsefile(path; dicttype=Dict{String, Any})
     return document_from_json(raw; source=path)

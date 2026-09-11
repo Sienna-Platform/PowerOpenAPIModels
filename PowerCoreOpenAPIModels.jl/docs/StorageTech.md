@@ -1,11 +1,16 @@
 # StorageTech
 
+defines the storage technology used in an energy Storage system, based on the options in EIA form 923.
 
-## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+## Allowed values
+- `PTES`
+- `LIB`
+- `LAB`
+- `FLWB`
+- `SIB`
+- `ZIB`
+- `HGS`
+- `LAES`
+- `OTHER_CHEM`
+- `OTHER_MECH`
+- `OTHER_THERM`

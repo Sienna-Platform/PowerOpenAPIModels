@@ -1,11 +1,9 @@
-# Generated from the declared model types. Do not edit.
+# Generated from the frozen pre-1.0 registered-name set. Do not edit.
 #
 # Runs in __init__ because the registry lives in another module: state
 # mutated there during precompilation would not be saved.
 
 function __init__()
-    InfrastructureCoreOpenAPIModels.register_model_type!(AggregateRetirementPotential)
-    InfrastructureCoreOpenAPIModels.register_model_type!(AggregateRetrofitPotential)
     InfrastructureCoreOpenAPIModels.register_model_type!(AggregateTransportTechnology)
     InfrastructureCoreOpenAPIModels.register_model_type!(CapacityReserveMargin)
     InfrastructureCoreOpenAPIModels.register_model_type!(CarbonCaps)
@@ -20,7 +18,6 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(MinimumCapacityRequirements)
     InfrastructureCoreOpenAPIModels.register_model_type!(NodalACTransportTechnology)
     InfrastructureCoreOpenAPIModels.register_model_type!(NodalHVDCTransportTechnology)
-    InfrastructureCoreOpenAPIModels.register_model_type!(Node)
     InfrastructureCoreOpenAPIModels.register_model_type!(PortfolioFinancialData)
     InfrastructureCoreOpenAPIModels.register_model_type!(RetirementPotential)
     InfrastructureCoreOpenAPIModels.register_model_type!(RetrofitPotential)
@@ -28,6 +25,5 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(SupplyTechnology)
     InfrastructureCoreOpenAPIModels.register_model_type!(TechnologyFinancialData)
     InfrastructureCoreOpenAPIModels.register_model_type!(TopologyMapping)
-    InfrastructureCoreOpenAPIModels.register_model_type!(Zone)
     return nothing
 end

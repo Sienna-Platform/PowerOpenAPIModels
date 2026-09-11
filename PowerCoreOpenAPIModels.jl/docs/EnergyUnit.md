@@ -1,11 +1,8 @@
 # EnergyUnit
 
+Energy unit forming the denominator of an emission rate: `MMBTU` or `GJ` for a fuel-input basis, `MWH` for a power-output basis.
 
-## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+## Allowed values
+- `MMBTU`
+- `GJ`
+- `MWH`

@@ -1,14 +1,10 @@
 # HydroGenerationCost
 
+Cost representation for hydro gen units
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`cost_type`** | **`String`** |  | [optional] [default to "HYDRO_GEN"]
-**`fixed`** | **`Float64`** |  | [optional] [default to 0.0]
-**`variable_operation_cost`** | [**`*ProductionVariableCostCurve`**](ProductionVariableCostCurve.md) |  | [default to nothing]
-
-
-[[Back to Model list]](../README.md#models) [[Back to API list]](../README.md#api-endpoints) [[Back to README]](../README.md)
-
-
+**`cost_type`** | **`Union{Absent,Nothing,String}`** |  | [optional]
+**`fixed`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`variable_operation_cost`** | **`ProductionVariableCostCurve`** | Variable production cost of a device, selected by `variable_cost_type` between a curve denominated directly in currency (`COST`) and one denominated in fuel with a separate fuel price (`FUEL`). | [required]
