@@ -7,10 +7,10 @@ Supplemental attribute carrying one row of an impedance correction table, linked
 """
 Base.@kwdef struct ImpedanceCorrectionData <: APIModel
     id::Int64
-    impedance_correction_curve::PiecewiseLinearData
     table_number::Int64
-    transformer_control_mode::ImpedanceCorrectionDataTransformerControlMode
+    impedance_correction_curve::PiecewiseLinearData
     transformer_winding::ImpedanceCorrectionDataTransformerWinding
+    transformer_control_mode::ImpedanceCorrectionDataTransformerControlMode
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{ImpedanceCorrectionData}, value) =
@@ -19,8 +19,8 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/ImpedanceCorrectionData",
+            resource="https://openapi.invalid/schema/external-63a18554b31f83d6e538.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding ImpedanceCorrectionData";
@@ -32,19 +32,14 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
         _required(_openapi_object, "id", "ImpedanceCorrectionData"),
         _openapi_validate,
     )
-    _openapi_field_impedance_correction_curve = _decode(
-        PiecewiseLinearData,
-        _required(_openapi_object, "impedance_correction_curve", "ImpedanceCorrectionData"),
-        _openapi_validate,
-    )
     _openapi_field_table_number = _decode(
         Int64,
         _required(_openapi_object, "table_number", "ImpedanceCorrectionData"),
         _openapi_validate,
     )
-    _openapi_field_transformer_control_mode = _decode(
-        ImpedanceCorrectionDataTransformerControlMode,
-        _required(_openapi_object, "transformer_control_mode", "ImpedanceCorrectionData"),
+    _openapi_field_impedance_correction_curve = _decode(
+        PiecewiseLinearData,
+        _required(_openapi_object, "impedance_correction_curve", "ImpedanceCorrectionData"),
         _openapi_validate,
     )
     _openapi_field_transformer_winding = _decode(
@@ -52,43 +47,48 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
         _required(_openapi_object, "transformer_winding", "ImpedanceCorrectionData"),
         _openapi_validate,
     )
+    _openapi_field_transformer_control_mode = _decode(
+        ImpedanceCorrectionDataTransformerControlMode,
+        _required(_openapi_object, "transformer_control_mode", "ImpedanceCorrectionData"),
+        _openapi_validate,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
             "id",
-            "impedance_correction_curve",
             "table_number",
-            "transformer_control_mode",
+            "impedance_correction_curve",
             "transformer_winding",
+            "transformer_control_mode",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return ImpedanceCorrectionData(;
         id=_openapi_field_id,
-        impedance_correction_curve=_openapi_field_impedance_correction_curve,
         table_number=_openapi_field_table_number,
-        transformer_control_mode=_openapi_field_transformer_control_mode,
+        impedance_correction_curve=_openapi_field_impedance_correction_curve,
         transformer_winding=_openapi_field_transformer_winding,
+        transformer_control_mode=_openapi_field_transformer_control_mode,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::ImpedanceCorrectionData)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.table_number isa Absent ||
+        (_openapi_output["table_number"] = _encode(_openapi_value.table_number))
     _openapi_value.impedance_correction_curve isa Absent || (
         _openapi_output["impedance_correction_curve"] =
             _encode(_openapi_value.impedance_correction_curve)
     )
-    _openapi_value.table_number isa Absent ||
-        (_openapi_output["table_number"] = _encode(_openapi_value.table_number))
-    _openapi_value.transformer_control_mode isa Absent || (
-        _openapi_output["transformer_control_mode"] =
-            _encode(_openapi_value.transformer_control_mode)
-    )
     _openapi_value.transformer_winding isa Absent || (
         _openapi_output["transformer_winding"] =
             _encode(_openapi_value.transformer_winding)
+    )
+    _openapi_value.transformer_control_mode isa Absent || (
+        _openapi_output["transformer_control_mode"] =
+            _encode(_openapi_value.transformer_control_mode)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -101,8 +101,8 @@ function _encode(_openapi_value::ImpedanceCorrectionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/ImpedanceCorrectionData",
+            resource="https://openapi.invalid/schema/external-63a18554b31f83d6e538.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding ImpedanceCorrectionData";
@@ -113,18 +113,18 @@ end
 function _form_fields(_openapi_value::ImpedanceCorrectionData)
     _openapi_output = Pair{String, Any}[]
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
+    _openapi_value.table_number isa Absent ||
+        push!(_openapi_output, "table_number" => _openapi_value.table_number)
     _openapi_value.impedance_correction_curve isa Absent || push!(
         _openapi_output,
         "impedance_correction_curve" => _openapi_value.impedance_correction_curve,
     )
-    _openapi_value.table_number isa Absent ||
-        push!(_openapi_output, "table_number" => _openapi_value.table_number)
+    _openapi_value.transformer_winding isa Absent ||
+        push!(_openapi_output, "transformer_winding" => _openapi_value.transformer_winding)
     _openapi_value.transformer_control_mode isa Absent || push!(
         _openapi_output,
         "transformer_control_mode" => _openapi_value.transformer_control_mode,
     )
-    _openapi_value.transformer_winding isa Absent ||
-        push!(_openapi_output, "transformer_winding" => _openapi_value.transformer_winding)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

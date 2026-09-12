@@ -5,7 +5,7 @@ A triple of values, one for each stage of a thermal unit's start-up: `hot`, `war
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`startup_stages_type`** | **`Union{Absent,Nothing,String}`** |  | [optional]
 **`cold`** | **`Float64`** |  | [required]
 **`hot`** | **`Float64`** |  | [required]
-**`startup_stages_type`** | **`Union{Absent,Nothing,String}`** |  | [optional]
 **`warm`** | **`Float64`** |  | [required]

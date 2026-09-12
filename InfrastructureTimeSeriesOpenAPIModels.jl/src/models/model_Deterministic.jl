@@ -3,54 +3,54 @@
 
 A deterministic forecast: one horizon-length array per window, windows stepping by `interval`. One of a closed set of six canonical time series types owned by the data layer. This schema records the association and its metadata; the dense values live in the store named by `uri`.
 
-  - `application_data`: Opaque, package-owned payload (typically JSON) carried verbatim for an application to reconstruct its own domain objects. Never parsed or interpreted here, and end users are not expected to set it. Element typing does not belong here — that is `element_type`.
-  - `array_shape`: Full native shape of the stored array, in the order the store holds it: the first axis is the array's length and the trailing axes end with `element_shape`. Static types are `[length, *element_shape]`; a deterministic forecast stacks windows as `[horizon_count, count, *element_shape]`; probabilistic and scenarios forecasts add a percentile or scenario axis in front of that. Optional, and redundant for the static types, where it is exactly `[length] + element_shape`. It earns its place on the forecasts, whose array layout is a convention the producing package owns rather than a rule this layer enforces, so the stored geometry cannot be reconstructed from `horizon`, `count`, `percentiles`, and `scenario_count` alone. A consumer that has it should prefer it; one that does not falls back to those fields, which is exact for the static types and a best effort for the forecasts.
   - `association_id`: Surrogate id of this association, minted by the store that holds it. Assigned once when the association is created and never changed: renaming the series or reassigning its owner leaves it alone, so a consumer may persist it as a durable reference. Ids are never reused, and they are store-local — resolve one against the same store the document was exported from, not against an independently built store. Assigned by the store, never by a document author.
-  - `component_field`: The field on the owning component or supplemental attribute whose value these values are the time-varying form of (e.g. max_active_power, rating). Free-form: it names a field in the consumer's own object model. Records what the values are for, where `name` only says which series they are.
-  - `count`: Number of forecast windows. Descriptive, not part of the series' identity.
-  - `data_hash`: Content hash of the stored array: SHA-256, hex-encoded. Optional — not every producer computes it.
-  - `element_shape`: Per-step element shape: the trailing dims after time. An empty array means a scalar element.
-  - `element_type`: What one timestep's values mean and how they are laid out. The physical dtype of the stored bytes derives from this and is not recorded separately. Unlike `units` and `quantity_kind` this is not a user-facing label — the writing package derives it from the array.
-  - `features`: User-defined key/value tags that are part of the series' identity: two series differing only by a feature are distinct series. Feature names that collide with a field of a series or of the tuple addressing one are rejected.
-  - `horizon`: Length of one forecast window. Descriptive, not part of the series' identity.
-  - `initial_timestamp`: Start of the first forecast window.
-  - `interval`: Step between the start of consecutive forecast windows. Part of the series' identity: two forecasts of one variable at the same resolution but different intervals — a day-ahead and a real-time forecast — are distinct series. `PT0S` is the canonical interval of a single-window forecast, which has no second window to step to.
-  - `name`: Time series name (e.g. max_active_power). Part of the series' identity, and often carrying a disambiguating suffix; `component_field` records what the values are for.
-  - `owner_category`: Whether the owner is a component or a supplemental attribute.
   - `owner_id`: ID of the owning component or supplemental attribute. The producing data layer allocates both from one id stream, so an `owner_id` never collides across the two categories; `owner_category` remains required because the store's catalog contract still supports independent streams from other producers, and it is still the store's disambiguator.
   - `owner_type`: Type name of the owning entity. Descriptive, not part of the series' identity.
-  - `quantity_kind`: Kind of physical quantity the values measure (e.g. ActivePower, ReactivePower, ElectricalEnergy). Coarser than `units` but finer than a dimension: ActivePower, ReactivePower, and ApparentPower share the dimension {M:1,L:2,T:-3}, so a dimension cannot tell them apart and a quantity kind can. It is also the only record of what the values measure when `unit_system` is a per-unit basis.
-  - `resolution`: Cadence within a forecast window. Always present for a forecast, and part of the series' identity.
-  - `time_reference`: How this series' timestamps were spelled, so a read hands back what the write declared instead of relabelling everything UTC. Absent means unspecified, which is not a claim the timestamps were written as UTC.
+  - `owner_category`: Whether the owner is a component or a supplemental attribute.
   - `time_series_type`: Discriminator. Fixed to Deterministic for this schema, pinned with `const` to match this repo's existing discriminators (Core/common.json's `curve_type`), which generate a plain string literal in both toolchains.
-  - `unit_system`: Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a COMPONENT_BASE series back to natural units needs the owning component's base_power. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS.
-  - `units`: Unit label for the series values. Set by whoever creates the series and returned unchanged; not part of the series' identity, so two series differing only in this label are duplicates. Meaningless on its own when `unit_system` is a per-unit basis, where the values are dimensionless. By convention drawn from the unit vocabulary in Core/units.json, though this field is a free-text label the store does not validate against it.
+  - `name`: Time series name (e.g. max_active_power). Part of the series' identity, and often carrying a disambiguating suffix; `component_field` records what the values are for.
+  - `features`: User-defined key/value tags that are part of the series' identity: two series differing only by a feature are distinct series. Feature names that collide with a field of a series or of the tuple addressing one are rejected.
   - `uri`: Locator for the dense data, unique within one store. No required format — typically a file path or an HDF5 dataset path; the backing store decides what it means and resolves it (infrastore uses its content hash as this value). Never parsed or interpreted here. This layer records where the values are, never the values.
+  - `data_hash`: Content hash of the stored array: SHA-256, hex-encoded. Optional — not every producer computes it.
+  - `element_type`: What one timestep's values mean and how they are laid out. The physical dtype of the stored bytes derives from this and is not recorded separately. Unlike `units` and `quantity_kind` this is not a user-facing label — the writing package derives it from the array.
+  - `element_shape`: Per-step element shape: the trailing dims after time. An empty array means a scalar element.
+  - `array_shape`: Full native shape of the stored array, in the order the store holds it: the first axis is the array's length and the trailing axes end with `element_shape`. Static types are `[length, *element_shape]`; a deterministic forecast stacks windows as `[horizon_count, count, *element_shape]`; probabilistic and scenarios forecasts add a percentile or scenario axis in front of that. Optional, and redundant for the static types, where it is exactly `[length] + element_shape`. It earns its place on the forecasts, whose array layout is a convention the producing package owns rather than a rule this layer enforces, so the stored geometry cannot be reconstructed from `horizon`, `count`, `percentiles`, and `scenario_count` alone. A consumer that has it should prefer it; one that does not falls back to those fields, which is exact for the static types and a best effort for the forecasts.
+  - `units`: Unit label for the series values. Set by whoever creates the series and returned unchanged; not part of the series' identity, so two series differing only in this label are duplicates. Meaningless on its own when `unit_system` is a per-unit basis, where the values are dimensionless. By convention drawn from the unit vocabulary in Core/units.json, though this field is a free-text label the store does not validate against it.
+  - `quantity_kind`: Kind of physical quantity the values measure (e.g. ActivePower, ReactivePower, ElectricalEnergy). Coarser than `units` but finer than a dimension: ActivePower, ReactivePower, and ApparentPower share the dimension {M:1,L:2,T:-3}, so a dimension cannot tell them apart and a quantity kind can. It is also the only record of what the values measure when `unit_system` is a per-unit basis.
+  - `unit_system`: Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a COMPONENT_BASE series back to natural units needs the owning component's base_power. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS.
+  - `time_reference`: How this series' timestamps were spelled, so a read hands back what the write declared instead of relabelling everything UTC. Absent means unspecified, which is not a claim the timestamps were written as UTC.
+  - `component_field`: The field on the owning component or supplemental attribute whose value these values are the time-varying form of (e.g. max_active_power, rating). Free-form: it names a field in the consumer's own object model. Records what the values are for, where `name` only says which series they are.
+  - `application_data`: Opaque, package-owned payload (typically JSON) carried verbatim for an application to reconstruct its own domain objects. Never parsed or interpreted here, and end users are not expected to set it. Element typing does not belong here — that is `element_type`.
+  - `initial_timestamp`: Start of the first forecast window.
+  - `resolution`: Cadence within a forecast window. Always present for a forecast, and part of the series' identity.
+  - `horizon`: Length of one forecast window. Descriptive, not part of the series' identity.
+  - `interval`: Step between the start of consecutive forecast windows. Part of the series' identity: two forecasts of one variable at the same resolution but different intervals — a day-ahead and a real-time forecast — are distinct series. `PT0S` is the canonical interval of a single-window forecast, which has no second window to step to.
+  - `count`: Number of forecast windows. Descriptive, not part of the series' identity.
 """
 Base.@kwdef struct Deterministic <: APIModel
-    application_data::Union{Absent, Nothing, String} = ABSENT
-    array_shape::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     association_id::Int64
-    component_field::Union{Absent, Nothing, String} = ABSENT
-    count::Int64
-    data_hash::Union{Absent, Nothing, String} = ABSENT
-    element_shape::Vector{Int64}
-    element_type::ElementType
-    features::TimeSeriesFeatures
-    horizon::Period
-    initial_timestamp::Dates.DateTime
-    interval::Period
-    name::String
-    owner_category::OwnerCategory
     owner_id::Int64
     owner_type::String
-    quantity_kind::Union{Absent, Nothing, String} = ABSENT
-    resolution::Period
-    time_reference::Union{Absent, Nothing, TimeReference} = ABSENT
+    owner_category::OwnerCategory
     time_series_type::String = "Deterministic"
-    unit_system::Union{Absent, Nothing, UnitSystem} = ABSENT
-    units::Union{Absent, Nothing, String} = ABSENT
+    name::String
+    features::TimeSeriesFeatures
     uri::String
+    data_hash::Union{Absent, Nothing, String} = ABSENT
+    element_type::String
+    element_shape::Vector{Int64}
+    array_shape::Union{Absent, Nothing, Vector{Int64}} = ABSENT
+    units::Union{Absent, Nothing, String} = ABSENT
+    quantity_kind::Union{Absent, Nothing, String} = ABSENT
+    unit_system::Union{Absent, Nothing, UnitSystem} = ABSENT
+    time_reference::Union{Absent, Nothing, String} = ABSENT
+    component_field::Union{Absent, Nothing, String} = ABSENT
+    application_data::Union{Absent, Nothing, String} = ABSENT
+    initial_timestamp::Dates.DateTime
+    resolution::String
+    horizon::String
+    interval::String
+    count::Int64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{Deterministic}, value) = _decode(Deterministic, value, true)
@@ -58,90 +58,17 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-            pointer="/components/schemas/Deterministic",
+            resource="https://openapi.invalid/schema/external-a21ce49bf856547dc288.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding Deterministic";
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "Deterministic")
-    _openapi_field_application_data =
-        haskey(_openapi_object, "application_data") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["application_data"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_array_shape =
-        haskey(_openapi_object, "array_shape") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["array_shape"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_association_id = _decode(
         Int64,
         _required(_openapi_object, "association_id", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_component_field =
-        haskey(_openapi_object, "component_field") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["component_field"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_count = _decode(
-        Int64,
-        _required(_openapi_object, "count", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_data_hash =
-        haskey(_openapi_object, "data_hash") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["data_hash"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_element_shape = _decode(
-        Vector{Int64},
-        _required(_openapi_object, "element_shape", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_element_type = _decode(
-        ElementType,
-        _required(_openapi_object, "element_type", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_features = _decode(
-        TimeSeriesFeatures,
-        _required(_openapi_object, "features", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_horizon = _decode(
-        Period,
-        _required(_openapi_object, "horizon", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_initial_timestamp = _decode(
-        Dates.DateTime,
-        _required(_openapi_object, "initial_timestamp", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_interval = _decode(
-        Period,
-        _required(_openapi_object, "interval", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "Deterministic"),
-        _openapi_validate,
-    )
-    _openapi_field_owner_category = _decode(
-        OwnerCategory,
-        _required(_openapi_object, "owner_category", "Deterministic"),
         _openapi_validate,
     )
     _openapi_field_owner_id = _decode(
@@ -154,35 +81,53 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
         _required(_openapi_object, "owner_type", "Deterministic"),
         _openapi_validate,
     )
-    _openapi_field_quantity_kind =
-        haskey(_openapi_object, "quantity_kind") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["quantity_kind"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_resolution = _decode(
-        Period,
-        _required(_openapi_object, "resolution", "Deterministic"),
+    _openapi_field_owner_category = _decode(
+        OwnerCategory,
+        _required(_openapi_object, "owner_category", "Deterministic"),
         _openapi_validate,
     )
-    _openapi_field_time_reference =
-        haskey(_openapi_object, "time_reference") ?
-        _decode(
-            Union{Absent, Nothing, TimeReference},
-            _openapi_object["time_reference"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_time_series_type = _decode(
         String,
         _required(_openapi_object, "time_series_type", "Deterministic"),
         _openapi_validate,
     )
-    _openapi_field_unit_system =
-        haskey(_openapi_object, "unit_system") ?
+    _openapi_field_name = _decode(
+        String,
+        _required(_openapi_object, "name", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_features = _decode(
+        TimeSeriesFeatures,
+        _required(_openapi_object, "features", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_uri = _decode(
+        String,
+        _required(_openapi_object, "uri", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_data_hash =
+        haskey(_openapi_object, "data_hash") ?
         _decode(
-            Union{Absent, Nothing, UnitSystem},
-            _openapi_object["unit_system"],
+            Union{Absent, Nothing, String},
+            _openapi_object["data_hash"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_element_type = _decode(
+        String,
+        _required(_openapi_object, "element_type", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_element_shape = _decode(
+        Vector{Int64},
+        _required(_openapi_object, "element_shape", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_array_shape =
+        haskey(_openapi_object, "array_shape") ?
+        _decode(
+            Union{Absent, Nothing, Vector{Int64}},
+            _openapi_object["array_shape"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_units =
@@ -192,115 +137,170 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
             _openapi_object["units"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_uri = _decode(
+    _openapi_field_quantity_kind =
+        haskey(_openapi_object, "quantity_kind") ?
+        _decode(
+            Union{Absent, Nothing, String},
+            _openapi_object["quantity_kind"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_unit_system =
+        haskey(_openapi_object, "unit_system") ?
+        _decode(
+            Union{Absent, Nothing, UnitSystem},
+            _openapi_object["unit_system"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_time_reference =
+        haskey(_openapi_object, "time_reference") ?
+        _decode(
+            Union{Absent, Nothing, String},
+            _openapi_object["time_reference"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_component_field =
+        haskey(_openapi_object, "component_field") ?
+        _decode(
+            Union{Absent, Nothing, String},
+            _openapi_object["component_field"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_application_data =
+        haskey(_openapi_object, "application_data") ?
+        _decode(
+            Union{Absent, Nothing, String},
+            _openapi_object["application_data"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_initial_timestamp = _decode(
+        Dates.DateTime,
+        _required(_openapi_object, "initial_timestamp", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_resolution = _decode(
         String,
-        _required(_openapi_object, "uri", "Deterministic"),
+        _required(_openapi_object, "resolution", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_horizon = _decode(
+        String,
+        _required(_openapi_object, "horizon", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_interval = _decode(
+        String,
+        _required(_openapi_object, "interval", "Deterministic"),
+        _openapi_validate,
+    )
+    _openapi_field_count = _decode(
+        Int64,
+        _required(_openapi_object, "count", "Deterministic"),
         _openapi_validate,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
-            "application_data",
-            "array_shape",
             "association_id",
-            "component_field",
-            "count",
-            "data_hash",
-            "element_shape",
-            "element_type",
-            "features",
-            "horizon",
-            "initial_timestamp",
-            "interval",
-            "name",
-            "owner_category",
             "owner_id",
             "owner_type",
-            "quantity_kind",
-            "resolution",
-            "time_reference",
+            "owner_category",
             "time_series_type",
-            "unit_system",
-            "units",
+            "name",
+            "features",
             "uri",
+            "data_hash",
+            "element_type",
+            "element_shape",
+            "array_shape",
+            "units",
+            "quantity_kind",
+            "unit_system",
+            "time_reference",
+            "component_field",
+            "application_data",
+            "initial_timestamp",
+            "resolution",
+            "horizon",
+            "interval",
+            "count",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return Deterministic(;
-        application_data=_openapi_field_application_data,
-        array_shape=_openapi_field_array_shape,
         association_id=_openapi_field_association_id,
-        component_field=_openapi_field_component_field,
-        count=_openapi_field_count,
-        data_hash=_openapi_field_data_hash,
-        element_shape=_openapi_field_element_shape,
-        element_type=_openapi_field_element_type,
-        features=_openapi_field_features,
-        horizon=_openapi_field_horizon,
-        initial_timestamp=_openapi_field_initial_timestamp,
-        interval=_openapi_field_interval,
-        name=_openapi_field_name,
-        owner_category=_openapi_field_owner_category,
         owner_id=_openapi_field_owner_id,
         owner_type=_openapi_field_owner_type,
-        quantity_kind=_openapi_field_quantity_kind,
-        resolution=_openapi_field_resolution,
-        time_reference=_openapi_field_time_reference,
+        owner_category=_openapi_field_owner_category,
         time_series_type=_openapi_field_time_series_type,
-        unit_system=_openapi_field_unit_system,
-        units=_openapi_field_units,
+        name=_openapi_field_name,
+        features=_openapi_field_features,
         uri=_openapi_field_uri,
+        data_hash=_openapi_field_data_hash,
+        element_type=_openapi_field_element_type,
+        element_shape=_openapi_field_element_shape,
+        array_shape=_openapi_field_array_shape,
+        units=_openapi_field_units,
+        quantity_kind=_openapi_field_quantity_kind,
+        unit_system=_openapi_field_unit_system,
+        time_reference=_openapi_field_time_reference,
+        component_field=_openapi_field_component_field,
+        application_data=_openapi_field_application_data,
+        initial_timestamp=_openapi_field_initial_timestamp,
+        resolution=_openapi_field_resolution,
+        horizon=_openapi_field_horizon,
+        interval=_openapi_field_interval,
+        count=_openapi_field_count,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::Deterministic)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.application_data isa Absent ||
-        (_openapi_output["application_data"] = _encode(_openapi_value.application_data))
-    _openapi_value.array_shape isa Absent ||
-        (_openapi_output["array_shape"] = _encode(_openapi_value.array_shape))
     _openapi_value.association_id isa Absent ||
         (_openapi_output["association_id"] = _encode(_openapi_value.association_id))
-    _openapi_value.component_field isa Absent ||
-        (_openapi_output["component_field"] = _encode(_openapi_value.component_field))
-    _openapi_value.count isa Absent ||
-        (_openapi_output["count"] = _encode(_openapi_value.count))
-    _openapi_value.data_hash isa Absent ||
-        (_openapi_output["data_hash"] = _encode(_openapi_value.data_hash))
-    _openapi_value.element_shape isa Absent ||
-        (_openapi_output["element_shape"] = _encode(_openapi_value.element_shape))
-    _openapi_value.element_type isa Absent ||
-        (_openapi_output["element_type"] = _encode(_openapi_value.element_type))
-    _openapi_value.features isa Absent ||
-        (_openapi_output["features"] = _encode(_openapi_value.features))
-    _openapi_value.horizon isa Absent ||
-        (_openapi_output["horizon"] = _encode(_openapi_value.horizon))
-    _openapi_value.initial_timestamp isa Absent ||
-        (_openapi_output["initial_timestamp"] = _encode(_openapi_value.initial_timestamp))
-    _openapi_value.interval isa Absent ||
-        (_openapi_output["interval"] = _encode(_openapi_value.interval))
-    _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
-    _openapi_value.owner_category isa Absent ||
-        (_openapi_output["owner_category"] = _encode(_openapi_value.owner_category))
     _openapi_value.owner_id isa Absent ||
         (_openapi_output["owner_id"] = _encode(_openapi_value.owner_id))
     _openapi_value.owner_type isa Absent ||
         (_openapi_output["owner_type"] = _encode(_openapi_value.owner_type))
-    _openapi_value.quantity_kind isa Absent ||
-        (_openapi_output["quantity_kind"] = _encode(_openapi_value.quantity_kind))
-    _openapi_value.resolution isa Absent ||
-        (_openapi_output["resolution"] = _encode(_openapi_value.resolution))
-    _openapi_value.time_reference isa Absent ||
-        (_openapi_output["time_reference"] = _encode(_openapi_value.time_reference))
+    _openapi_value.owner_category isa Absent ||
+        (_openapi_output["owner_category"] = _encode(_openapi_value.owner_category))
     _openapi_value.time_series_type isa Absent ||
         (_openapi_output["time_series_type"] = _encode(_openapi_value.time_series_type))
-    _openapi_value.unit_system isa Absent ||
-        (_openapi_output["unit_system"] = _encode(_openapi_value.unit_system))
+    _openapi_value.name isa Absent ||
+        (_openapi_output["name"] = _encode(_openapi_value.name))
+    _openapi_value.features isa Absent ||
+        (_openapi_output["features"] = _encode(_openapi_value.features))
+    _openapi_value.uri isa Absent || (_openapi_output["uri"] = _encode(_openapi_value.uri))
+    _openapi_value.data_hash isa Absent ||
+        (_openapi_output["data_hash"] = _encode(_openapi_value.data_hash))
+    _openapi_value.element_type isa Absent ||
+        (_openapi_output["element_type"] = _encode(_openapi_value.element_type))
+    _openapi_value.element_shape isa Absent ||
+        (_openapi_output["element_shape"] = _encode(_openapi_value.element_shape))
+    _openapi_value.array_shape isa Absent ||
+        (_openapi_output["array_shape"] = _encode(_openapi_value.array_shape))
     _openapi_value.units isa Absent ||
         (_openapi_output["units"] = _encode(_openapi_value.units))
-    _openapi_value.uri isa Absent || (_openapi_output["uri"] = _encode(_openapi_value.uri))
+    _openapi_value.quantity_kind isa Absent ||
+        (_openapi_output["quantity_kind"] = _encode(_openapi_value.quantity_kind))
+    _openapi_value.unit_system isa Absent ||
+        (_openapi_output["unit_system"] = _encode(_openapi_value.unit_system))
+    _openapi_value.time_reference isa Absent ||
+        (_openapi_output["time_reference"] = _encode(_openapi_value.time_reference))
+    _openapi_value.component_field isa Absent ||
+        (_openapi_output["component_field"] = _encode(_openapi_value.component_field))
+    _openapi_value.application_data isa Absent ||
+        (_openapi_output["application_data"] = _encode(_openapi_value.application_data))
+    _openapi_value.initial_timestamp isa Absent ||
+        (_openapi_output["initial_timestamp"] = _encode(_openapi_value.initial_timestamp))
+    _openapi_value.resolution isa Absent ||
+        (_openapi_output["resolution"] = _encode(_openapi_value.resolution))
+    _openapi_value.horizon isa Absent ||
+        (_openapi_output["horizon"] = _encode(_openapi_value.horizon))
+    _openapi_value.interval isa Absent ||
+        (_openapi_output["interval"] = _encode(_openapi_value.interval))
+    _openapi_value.count isa Absent ||
+        (_openapi_output["count"] = _encode(_openapi_value.count))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -312,8 +312,8 @@ function _encode(_openapi_value::Deterministic)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-            pointer="/components/schemas/Deterministic",
+            resource="https://openapi.invalid/schema/external-a21ce49bf856547dc288.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding Deterministic";
@@ -323,50 +323,50 @@ end
 
 function _form_fields(_openapi_value::Deterministic)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.application_data isa Absent ||
-        push!(_openapi_output, "application_data" => _openapi_value.application_data)
-    _openapi_value.array_shape isa Absent ||
-        push!(_openapi_output, "array_shape" => _openapi_value.array_shape)
     _openapi_value.association_id isa Absent ||
         push!(_openapi_output, "association_id" => _openapi_value.association_id)
-    _openapi_value.component_field isa Absent ||
-        push!(_openapi_output, "component_field" => _openapi_value.component_field)
-    _openapi_value.count isa Absent ||
-        push!(_openapi_output, "count" => _openapi_value.count)
-    _openapi_value.data_hash isa Absent ||
-        push!(_openapi_output, "data_hash" => _openapi_value.data_hash)
-    _openapi_value.element_shape isa Absent ||
-        push!(_openapi_output, "element_shape" => _openapi_value.element_shape)
-    _openapi_value.element_type isa Absent ||
-        push!(_openapi_output, "element_type" => _openapi_value.element_type)
-    _openapi_value.features isa Absent ||
-        push!(_openapi_output, "features" => _openapi_value.features)
-    _openapi_value.horizon isa Absent ||
-        push!(_openapi_output, "horizon" => _openapi_value.horizon)
-    _openapi_value.initial_timestamp isa Absent ||
-        push!(_openapi_output, "initial_timestamp" => _openapi_value.initial_timestamp)
-    _openapi_value.interval isa Absent ||
-        push!(_openapi_output, "interval" => _openapi_value.interval)
-    _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
-    _openapi_value.owner_category isa Absent ||
-        push!(_openapi_output, "owner_category" => _openapi_value.owner_category)
     _openapi_value.owner_id isa Absent ||
         push!(_openapi_output, "owner_id" => _openapi_value.owner_id)
     _openapi_value.owner_type isa Absent ||
         push!(_openapi_output, "owner_type" => _openapi_value.owner_type)
-    _openapi_value.quantity_kind isa Absent ||
-        push!(_openapi_output, "quantity_kind" => _openapi_value.quantity_kind)
-    _openapi_value.resolution isa Absent ||
-        push!(_openapi_output, "resolution" => _openapi_value.resolution)
-    _openapi_value.time_reference isa Absent ||
-        push!(_openapi_output, "time_reference" => _openapi_value.time_reference)
+    _openapi_value.owner_category isa Absent ||
+        push!(_openapi_output, "owner_category" => _openapi_value.owner_category)
     _openapi_value.time_series_type isa Absent ||
         push!(_openapi_output, "time_series_type" => _openapi_value.time_series_type)
-    _openapi_value.unit_system isa Absent ||
-        push!(_openapi_output, "unit_system" => _openapi_value.unit_system)
+    _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
+    _openapi_value.features isa Absent ||
+        push!(_openapi_output, "features" => _openapi_value.features)
+    _openapi_value.uri isa Absent || push!(_openapi_output, "uri" => _openapi_value.uri)
+    _openapi_value.data_hash isa Absent ||
+        push!(_openapi_output, "data_hash" => _openapi_value.data_hash)
+    _openapi_value.element_type isa Absent ||
+        push!(_openapi_output, "element_type" => _openapi_value.element_type)
+    _openapi_value.element_shape isa Absent ||
+        push!(_openapi_output, "element_shape" => _openapi_value.element_shape)
+    _openapi_value.array_shape isa Absent ||
+        push!(_openapi_output, "array_shape" => _openapi_value.array_shape)
     _openapi_value.units isa Absent ||
         push!(_openapi_output, "units" => _openapi_value.units)
-    _openapi_value.uri isa Absent || push!(_openapi_output, "uri" => _openapi_value.uri)
+    _openapi_value.quantity_kind isa Absent ||
+        push!(_openapi_output, "quantity_kind" => _openapi_value.quantity_kind)
+    _openapi_value.unit_system isa Absent ||
+        push!(_openapi_output, "unit_system" => _openapi_value.unit_system)
+    _openapi_value.time_reference isa Absent ||
+        push!(_openapi_output, "time_reference" => _openapi_value.time_reference)
+    _openapi_value.component_field isa Absent ||
+        push!(_openapi_output, "component_field" => _openapi_value.component_field)
+    _openapi_value.application_data isa Absent ||
+        push!(_openapi_output, "application_data" => _openapi_value.application_data)
+    _openapi_value.initial_timestamp isa Absent ||
+        push!(_openapi_output, "initial_timestamp" => _openapi_value.initial_timestamp)
+    _openapi_value.resolution isa Absent ||
+        push!(_openapi_output, "resolution" => _openapi_value.resolution)
+    _openapi_value.horizon isa Absent ||
+        push!(_openapi_output, "horizon" => _openapi_value.horizon)
+    _openapi_value.interval isa Absent ||
+        push!(_openapi_output, "interval" => _openapi_value.interval)
+    _openapi_value.count isa Absent ||
+        push!(_openapi_output, "count" => _openapi_value.count)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

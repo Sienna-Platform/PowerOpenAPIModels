@@ -12,8 +12,8 @@ function _decode(::Type{SupplyTechnologyOperationCosts}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/SupplyTechnology/properties/operation_costs",
+            resource="https://openapi.invalid/schema/external-dcdd492f893366934ca1.json",
+            pointer="/properties/operation_costs",
         ),
         value,
         "decoding SupplyTechnologyOperationCosts";
@@ -33,43 +33,22 @@ function _decode(::Type{SupplyTechnologyOperationCosts}, value, _openapi_validat
             "HYDRO_GEN" => (
                 HydroGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-                    pointer="/components/schemas/HydroGenerationCost",
-                ),
-            ),
-            "HydroGenerationCost" => (
-                HydroGenerationCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-                    pointer="/components/schemas/HydroGenerationCost",
+                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    pointer="/\$defs/HydroGenerationCost",
                 ),
             ),
             "RENEWABLE" => (
                 RenewableGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-                    pointer="/components/schemas/RenewableGenerationCost",
-                ),
-            ),
-            "RenewableGenerationCost" => (
-                RenewableGenerationCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-                    pointer="/components/schemas/RenewableGenerationCost",
+                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    pointer="/\$defs/RenewableGenerationCost",
                 ),
             ),
             "THERMAL" => (
                 ThermalGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-                    pointer="/components/schemas/ThermalGenerationCost",
-                ),
-            ),
-            "ThermalGenerationCost" => (
-                ThermalGenerationCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-                    pointer="/components/schemas/ThermalGenerationCost",
+                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    pointer="/\$defs/ThermalGenerationCost",
                 ),
             ),
         ),
@@ -95,8 +74,8 @@ function _encode(value::SupplyTechnologyOperationCosts)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/SupplyTechnology/properties/operation_costs",
+            resource="https://openapi.invalid/schema/external-dcdd492f893366934ca1.json",
+            pointer="/properties/operation_costs",
         ),
         output,
         "encoding SupplyTechnologyOperationCosts";

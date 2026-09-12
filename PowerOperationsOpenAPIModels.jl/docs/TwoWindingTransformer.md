@@ -7,9 +7,9 @@ All series electrical data — the modeled arc, tap, phase shift, series impedan
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`admittance_units`** | **`Union{Absent,AdmittanceUnitBasis,Nothing}`** | Unit basis for the magnetizing_shunt admittance. | [optional]
-**`circuit`** | **`Int64`** | The `TransformerCircuit` carrying this transformer's series electrical data. | [required]
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
-**`magnetizing_shunt`** | **`Union{Absent,Nothing,ComplexNumber}`** | Magnetizing shunt admittance referenced to the circuit's `base_voltage_primary`. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr, COMPONENT_BASE: pu . | [optional]
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
+**`circuit`** | **`Int64`** | The `TransformerCircuit` carrying this transformer's series electrical data. | [required]
+**`admittance_units`** | **`Union{Absent,AdmittanceUnitBasis,Nothing}`** | Unit basis for the magnetizing_shunt admittance. | [optional]
+**`magnetizing_shunt`** | **`Union{Absent,Nothing,ComplexNumber}`** | Magnetizing shunt admittance referenced to the circuit's `base_voltage_primary`. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr, COMPONENT_BASE: pu . | [optional]
 **`shunt_location`** | **`Union{Absent,Nothing,TwoWindingTransformerShuntLocation}`** | Placement of `magnetizing_shunt` on the two sides of the circuit arc. | [optional]

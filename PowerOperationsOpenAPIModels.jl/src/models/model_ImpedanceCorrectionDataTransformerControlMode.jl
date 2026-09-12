@@ -19,8 +19,8 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/ImpedanceCorrectionData/properties/transformer_control_mode",
+            resource="https://openapi.invalid/schema/external-63a18554b31f83d6e538.json",
+            pointer="/properties/transformer_control_mode",
         ),
         value,
         "decoding ImpedanceCorrectionDataTransformerControlMode";
@@ -35,8 +35,8 @@ function _encode(value::ImpedanceCorrectionDataTransformerControlMode)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/ImpedanceCorrectionData/properties/transformer_control_mode",
+            resource="https://openapi.invalid/schema/external-63a18554b31f83d6e538.json",
+            pointer="/properties/transformer_control_mode",
         ),
         output,
         "encoding ImpedanceCorrectionDataTransformerControlMode";

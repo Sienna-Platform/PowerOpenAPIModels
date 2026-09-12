@@ -14,8 +14,8 @@ function _decode(::Type{PiecewiseStepData}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/PiecewiseStepData",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/PiecewiseStepData",
         ),
         _openapi_raw,
         "decoding PiecewiseStepData";
@@ -69,8 +69,8 @@ function _encode(_openapi_value::PiecewiseStepData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/PiecewiseStepData",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/PiecewiseStepData",
         ),
         _openapi_output,
         "encoding PiecewiseStepData";

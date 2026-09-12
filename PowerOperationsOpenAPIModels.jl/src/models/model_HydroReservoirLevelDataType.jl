@@ -12,8 +12,8 @@ function _decode(::Type{HydroReservoirLevelDataType}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/HydroReservoir/properties/level_data_type",
+            resource="https://openapi.invalid/schema/external-d7efd24f681bcc70f626.json",
+            pointer="/properties/level_data_type",
         ),
         value,
         "decoding HydroReservoirLevelDataType";
@@ -26,8 +26,8 @@ function _encode(value::HydroReservoirLevelDataType)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/HydroReservoir/properties/level_data_type",
+            resource="https://openapi.invalid/schema/external-d7efd24f681bcc70f626.json",
+            pointer="/properties/level_data_type",
         ),
         output,
         "encoding HydroReservoirLevelDataType";

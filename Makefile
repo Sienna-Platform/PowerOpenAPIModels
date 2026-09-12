@@ -19,12 +19,13 @@ DOMAINS := infrastructure-core timeseries core operations investments dynamics
 # dedup this used to get from reorganize.jl works against the native generator's one-file-
 # per-domain output instead.
 generate:
-	@# scripts/generate_native.jl reads dist/openapi-<domain>-bundled.json rather than the
-	@# SiennaSchemas sources, and can't tell a stale bundle from a fresh one. --check is
-	@# read-only, which matters because $(SCHEMA_DIR) is mounted read-only under
-	@# generate-docker; drift is a SiennaSchemas-side bug to surface, not to fix by
-	@# regenerating a copy here.
-	cd $(SCHEMA_DIR) && python3 scripts/bundle_specs.py --check
+	@# scripts/generate_native.jl reads $(SCHEMA_DIR)/openapi-<domain>.json and lets
+	@# OpenAPI.jl resolve the $$ref graph across files, so there is no built artifact to
+	@# go stale. The selectors must declare every schema they reach or the generator
+	@# names a shared type once per reference site; check_refs.py there is that gate,
+	@# and it is read-only, which matters because $(SCHEMA_DIR) is mounted read-only
+	@# under generate-docker.
+	cd $(SCHEMA_DIR) && python3 scripts/check_refs.py
 	@# Resolve fresh: the repo is bind-mounted into the codegen container, so a
 	@# manifest written by the host's Julia would be read by a different version.
 	rm -f scripts/Manifest.toml

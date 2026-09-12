@@ -3,58 +3,58 @@
 
 Interconnecting Power Converter (IPC) for transforming power from an ACBus to a DCBus.
 
-  - `ac_control`: AC-side control mode of the converter.
-  - `ac_setpoint`: AC-voltage magnitude target (when `ac_control` regulates AC voltage) or power factor setpoint (otherwise). Units: per ac_control — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `active_power`: Active power on the DC side. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `active_power_limits`: Minimum and maximum stable active power levels. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `id`: Unique integer identifier for this component.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
-  - `base_power`: Base power of the converter for per unitization. Units: MVA.
   - `bus`: ID of the bus on the AC side of this converter.
   - `dc_bus`: ID of the bus on the DC side of this converter.
-  - `dc_control`: DC-side control mode of the converter.
-  - `dc_current`: DC current on the converter. Units: A.
-  - `dc_setpoint`: DC-voltage target (when `dc_control` regulates DC voltage) or active-power order (otherwise). Units: per dc_control — DC_POWER: MW, DC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `dc_voltage_droop`: DC-voltage droop gain relating DC voltage to converter active power as `V_dc = dc_setpoint - dc_voltage_droop * P_c`. A value of 0.0 disables droop. Units: pu.
-  - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
-  - `id`: Unique integer identifier for this component.
-  - `loss_function`: Linear or quadratic loss function with respect to the converter current.
-  - `max_dc_current`: Maximum stable dc current limits. Units: A.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
-  - `power_factor_weighting_fraction`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
-  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
+  - `active_power`: Active power on the DC side. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `rating`: Maximum output power rating of the converter. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `active_power_limits`: Minimum and maximum stable active power levels. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `base_power`: Base power of the converter for per unitization. Units: MVA.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+  - `dc_current`: DC current on the converter. Units: A.
+  - `max_dc_current`: Maximum stable dc current limits. Units: A.
+  - `loss_function`: Linear or quadratic loss function with respect to the converter current.
+  - `dc_control`: DC-side control mode of the converter.
+  - `ac_control`: AC-side control mode of the converter.
+  - `voltage_setpoint_units`: Unit basis for the DC/AC voltage setpoints.
+  - `dc_setpoint`: DC-voltage target (when `dc_control` regulates DC voltage) or active-power order (otherwise). Units: per dc_control — DC_POWER: MW, DC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
+  - `ac_setpoint`: AC-voltage magnitude target (when `ac_control` regulates AC voltage) or power factor setpoint (otherwise). Units: per ac_control — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
+  - `dc_voltage_droop`: DC-voltage droop gain relating DC voltage to converter active power as `V_dc = dc_setpoint - dc_voltage_droop * P_c`. A value of 0.0 disables droop. Units: pu.
   - `remote_bus_control`: Number of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE`; null regulates its own terminal bus.
   - `rmpct`: Percent of the total Mvar required to hold the voltage at the bus regulated by this converter that is contributed by this converter. Units: 1.
+  - `power_factor_weighting_fraction`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
   - `voltage_limits`: Limits on the voltage at the DC bus in per unit. Units: pu.
-  - `voltage_setpoint_units`: Unit basis for the DC/AC voltage setpoints.
+  - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
 """
 Base.@kwdef struct InterconnectingConverter <: APIModel
-    ac_control::Union{Absent, Nothing, VSCACControlModes} = ABSENT
-    ac_setpoint::Union{Absent, Float64, Nothing} = ABSENT
-    active_power::Float64
-    active_power_limits::MinMax
+    id::Int64
+    name::String
     available::Bool
-    base_power::Float64
     bus::Int64
     dc_bus::Int64
-    dc_control::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
-    dc_current::Union{Absent, Float64, Nothing} = ABSENT
-    dc_setpoint::Union{Absent, Float64, Nothing} = ABSENT
-    dc_voltage_droop::Union{Absent, Float64, Nothing} = ABSENT
-    dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
-    id::Int64
-    loss_function::Union{Absent, LossCurve, Nothing} = ABSENT
-    max_dc_current::Union{Absent, Float64, Nothing} = ABSENT
-    name::String
-    power_factor_weighting_fraction::Union{Absent, Float64, Nothing} = ABSENT
-    power_units::UnitSystem
+    active_power::Float64
     rating::Float64
+    active_power_limits::MinMax
+    base_power::Float64
+    power_units::UnitSystem
     reactive_power_limits::Union{Absent, MinMax, Nothing} = ABSENT
+    dc_current::Union{Absent, Float64, Nothing} = ABSENT
+    max_dc_current::Union{Absent, Float64, Nothing} = ABSENT
+    loss_function::Union{Absent, LossCurve, Nothing} = ABSENT
+    dc_control::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
+    ac_control::Union{Absent, Nothing, VSCACControlModes} = ABSENT
+    voltage_setpoint_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
+    dc_setpoint::Union{Absent, Float64, Nothing} = ABSENT
+    ac_setpoint::Union{Absent, Float64, Nothing} = ABSENT
+    dc_voltage_droop::Union{Absent, Float64, Nothing} = ABSENT
     remote_bus_control::Union{Absent, Union{Int64, Nothing}} = ABSENT
     rmpct::Union{Absent, Float64, Nothing} = ABSENT
+    power_factor_weighting_fraction::Union{Absent, Float64, Nothing} = ABSENT
     voltage_limits::Union{Absent, MinMax, Nothing} = ABSENT
-    voltage_setpoint_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
+    dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{InterconnectingConverter}, value) =
@@ -63,46 +63,27 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/InterconnectingConverter",
+            resource="https://openapi.invalid/schema/external-5f3082148836754e0d8c.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding InterconnectingConverter";
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "InterconnectingConverter")
-    _openapi_field_ac_control =
-        haskey(_openapi_object, "ac_control") ?
-        _decode(
-            Union{Absent, Nothing, VSCACControlModes},
-            _openapi_object["ac_control"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_ac_setpoint =
-        haskey(_openapi_object, "ac_setpoint") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["ac_setpoint"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_active_power = _decode(
-        Float64,
-        _required(_openapi_object, "active_power", "InterconnectingConverter"),
+    _openapi_field_id = _decode(
+        Int64,
+        _required(_openapi_object, "id", "InterconnectingConverter"),
         _openapi_validate,
     )
-    _openapi_field_active_power_limits = _decode(
-        MinMax,
-        _required(_openapi_object, "active_power_limits", "InterconnectingConverter"),
+    _openapi_field_name = _decode(
+        String,
+        _required(_openapi_object, "name", "InterconnectingConverter"),
         _openapi_validate,
     )
     _openapi_field_available = _decode(
         Bool,
         _required(_openapi_object, "available", "InterconnectingConverter"),
-        _openapi_validate,
-    )
-    _openapi_field_base_power = _decode(
-        Float64,
-        _required(_openapi_object, "base_power", "InterconnectingConverter"),
         _openapi_validate,
     )
     _openapi_field_bus = _decode(
@@ -115,11 +96,36 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
         _required(_openapi_object, "dc_bus", "InterconnectingConverter"),
         _openapi_validate,
     )
-    _openapi_field_dc_control =
-        haskey(_openapi_object, "dc_control") ?
+    _openapi_field_active_power = _decode(
+        Float64,
+        _required(_openapi_object, "active_power", "InterconnectingConverter"),
+        _openapi_validate,
+    )
+    _openapi_field_rating = _decode(
+        Float64,
+        _required(_openapi_object, "rating", "InterconnectingConverter"),
+        _openapi_validate,
+    )
+    _openapi_field_active_power_limits = _decode(
+        MinMax,
+        _required(_openapi_object, "active_power_limits", "InterconnectingConverter"),
+        _openapi_validate,
+    )
+    _openapi_field_base_power = _decode(
+        Float64,
+        _required(_openapi_object, "base_power", "InterconnectingConverter"),
+        _openapi_validate,
+    )
+    _openapi_field_power_units = _decode(
+        UnitSystem,
+        _required(_openapi_object, "power_units", "InterconnectingConverter"),
+        _openapi_validate,
+    )
+    _openapi_field_reactive_power_limits =
+        haskey(_openapi_object, "reactive_power_limits") ?
         _decode(
-            Union{Absent, Nothing, VSCDCControlModes},
-            _openapi_object["dc_control"],
+            Union{Absent, MinMax, Nothing},
+            _openapi_object["reactive_power_limits"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_dc_current =
@@ -129,39 +135,6 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["dc_current"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_dc_setpoint =
-        haskey(_openapi_object, "dc_setpoint") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["dc_setpoint"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_dc_voltage_droop =
-        haskey(_openapi_object, "dc_voltage_droop") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["dc_voltage_droop"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_dynamic_injector =
-        haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
-            Union{Absent, Union{Int64, Nothing}},
-            _openapi_object["dynamic_injector"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "InterconnectingConverter"),
-        _openapi_validate,
-    )
-    _openapi_field_loss_function =
-        haskey(_openapi_object, "loss_function") ?
-        _decode(
-            Union{Absent, LossCurve, Nothing},
-            _openapi_object["loss_function"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_max_dc_current =
         haskey(_openapi_object, "max_dc_current") ?
         _decode(
@@ -169,33 +142,53 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["max_dc_current"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "InterconnectingConverter"),
-        _openapi_validate,
-    )
-    _openapi_field_power_factor_weighting_fraction =
-        haskey(_openapi_object, "power_factor_weighting_fraction") ?
+    _openapi_field_loss_function =
+        haskey(_openapi_object, "loss_function") ?
         _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["power_factor_weighting_fraction"],
+            Union{Absent, LossCurve, Nothing},
+            _openapi_object["loss_function"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_power_units = _decode(
-        UnitSystem,
-        _required(_openapi_object, "power_units", "InterconnectingConverter"),
-        _openapi_validate,
-    )
-    _openapi_field_rating = _decode(
-        Float64,
-        _required(_openapi_object, "rating", "InterconnectingConverter"),
-        _openapi_validate,
-    )
-    _openapi_field_reactive_power_limits =
-        haskey(_openapi_object, "reactive_power_limits") ?
+    _openapi_field_dc_control =
+        haskey(_openapi_object, "dc_control") ?
         _decode(
-            Union{Absent, MinMax, Nothing},
-            _openapi_object["reactive_power_limits"],
+            Union{Absent, Nothing, VSCDCControlModes},
+            _openapi_object["dc_control"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_ac_control =
+        haskey(_openapi_object, "ac_control") ?
+        _decode(
+            Union{Absent, Nothing, VSCACControlModes},
+            _openapi_object["ac_control"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_voltage_setpoint_units =
+        haskey(_openapi_object, "voltage_setpoint_units") ?
+        _decode(
+            Union{Absent, Nothing, VoltageUnitBasis},
+            _openapi_object["voltage_setpoint_units"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_dc_setpoint =
+        haskey(_openapi_object, "dc_setpoint") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["dc_setpoint"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_ac_setpoint =
+        haskey(_openapi_object, "ac_setpoint") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["ac_setpoint"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_dc_voltage_droop =
+        haskey(_openapi_object, "dc_voltage_droop") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["dc_voltage_droop"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_remote_bus_control =
@@ -212,6 +205,13 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["rmpct"],
             _openapi_validate,
         ) : ABSENT
+    _openapi_field_power_factor_weighting_fraction =
+        haskey(_openapi_object, "power_factor_weighting_fraction") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["power_factor_weighting_fraction"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_voltage_limits =
         haskey(_openapi_object, "voltage_limits") ?
         _decode(
@@ -219,132 +219,132 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["voltage_limits"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_voltage_setpoint_units =
-        haskey(_openapi_object, "voltage_setpoint_units") ?
+    _openapi_field_dynamic_injector =
+        haskey(_openapi_object, "dynamic_injector") ?
         _decode(
-            Union{Absent, Nothing, VoltageUnitBasis},
-            _openapi_object["voltage_setpoint_units"],
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["dynamic_injector"],
             _openapi_validate,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
-            "ac_control",
-            "ac_setpoint",
-            "active_power",
-            "active_power_limits",
+            "id",
+            "name",
             "available",
-            "base_power",
             "bus",
             "dc_bus",
-            "dc_control",
-            "dc_current",
-            "dc_setpoint",
-            "dc_voltage_droop",
-            "dynamic_injector",
-            "id",
-            "loss_function",
-            "max_dc_current",
-            "name",
-            "power_factor_weighting_fraction",
-            "power_units",
+            "active_power",
             "rating",
+            "active_power_limits",
+            "base_power",
+            "power_units",
             "reactive_power_limits",
+            "dc_current",
+            "max_dc_current",
+            "loss_function",
+            "dc_control",
+            "ac_control",
+            "voltage_setpoint_units",
+            "dc_setpoint",
+            "ac_setpoint",
+            "dc_voltage_droop",
             "remote_bus_control",
             "rmpct",
+            "power_factor_weighting_fraction",
             "voltage_limits",
-            "voltage_setpoint_units",
+            "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return InterconnectingConverter(;
-        ac_control=_openapi_field_ac_control,
-        ac_setpoint=_openapi_field_ac_setpoint,
-        active_power=_openapi_field_active_power,
-        active_power_limits=_openapi_field_active_power_limits,
+        id=_openapi_field_id,
+        name=_openapi_field_name,
         available=_openapi_field_available,
-        base_power=_openapi_field_base_power,
         bus=_openapi_field_bus,
         dc_bus=_openapi_field_dc_bus,
-        dc_control=_openapi_field_dc_control,
-        dc_current=_openapi_field_dc_current,
-        dc_setpoint=_openapi_field_dc_setpoint,
-        dc_voltage_droop=_openapi_field_dc_voltage_droop,
-        dynamic_injector=_openapi_field_dynamic_injector,
-        id=_openapi_field_id,
-        loss_function=_openapi_field_loss_function,
-        max_dc_current=_openapi_field_max_dc_current,
-        name=_openapi_field_name,
-        power_factor_weighting_fraction=_openapi_field_power_factor_weighting_fraction,
-        power_units=_openapi_field_power_units,
+        active_power=_openapi_field_active_power,
         rating=_openapi_field_rating,
+        active_power_limits=_openapi_field_active_power_limits,
+        base_power=_openapi_field_base_power,
+        power_units=_openapi_field_power_units,
         reactive_power_limits=_openapi_field_reactive_power_limits,
+        dc_current=_openapi_field_dc_current,
+        max_dc_current=_openapi_field_max_dc_current,
+        loss_function=_openapi_field_loss_function,
+        dc_control=_openapi_field_dc_control,
+        ac_control=_openapi_field_ac_control,
+        voltage_setpoint_units=_openapi_field_voltage_setpoint_units,
+        dc_setpoint=_openapi_field_dc_setpoint,
+        ac_setpoint=_openapi_field_ac_setpoint,
+        dc_voltage_droop=_openapi_field_dc_voltage_droop,
         remote_bus_control=_openapi_field_remote_bus_control,
         rmpct=_openapi_field_rmpct,
+        power_factor_weighting_fraction=_openapi_field_power_factor_weighting_fraction,
         voltage_limits=_openapi_field_voltage_limits,
-        voltage_setpoint_units=_openapi_field_voltage_setpoint_units,
+        dynamic_injector=_openapi_field_dynamic_injector,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::InterconnectingConverter)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.ac_control isa Absent ||
-        (_openapi_output["ac_control"] = _encode(_openapi_value.ac_control))
-    _openapi_value.ac_setpoint isa Absent ||
-        (_openapi_output["ac_setpoint"] = _encode(_openapi_value.ac_setpoint))
+    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.name isa Absent ||
+        (_openapi_output["name"] = _encode(_openapi_value.name))
+    _openapi_value.available isa Absent ||
+        (_openapi_output["available"] = _encode(_openapi_value.available))
+    _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+    _openapi_value.dc_bus isa Absent ||
+        (_openapi_output["dc_bus"] = _encode(_openapi_value.dc_bus))
     _openapi_value.active_power isa Absent ||
         (_openapi_output["active_power"] = _encode(_openapi_value.active_power))
+    _openapi_value.rating isa Absent ||
+        (_openapi_output["rating"] = _encode(_openapi_value.rating))
     _openapi_value.active_power_limits isa Absent || (
         _openapi_output["active_power_limits"] =
             _encode(_openapi_value.active_power_limits)
     )
-    _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
     _openapi_value.base_power isa Absent ||
         (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
-    _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
-    _openapi_value.dc_bus isa Absent ||
-        (_openapi_output["dc_bus"] = _encode(_openapi_value.dc_bus))
-    _openapi_value.dc_control isa Absent ||
-        (_openapi_output["dc_control"] = _encode(_openapi_value.dc_control))
-    _openapi_value.dc_current isa Absent ||
-        (_openapi_output["dc_current"] = _encode(_openapi_value.dc_current))
-    _openapi_value.dc_setpoint isa Absent ||
-        (_openapi_output["dc_setpoint"] = _encode(_openapi_value.dc_setpoint))
-    _openapi_value.dc_voltage_droop isa Absent ||
-        (_openapi_output["dc_voltage_droop"] = _encode(_openapi_value.dc_voltage_droop))
-    _openapi_value.dynamic_injector isa Absent ||
-        (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.loss_function isa Absent ||
-        (_openapi_output["loss_function"] = _encode(_openapi_value.loss_function))
-    _openapi_value.max_dc_current isa Absent ||
-        (_openapi_output["max_dc_current"] = _encode(_openapi_value.max_dc_current))
-    _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
-    _openapi_value.power_factor_weighting_fraction isa Absent || (
-        _openapi_output["power_factor_weighting_fraction"] =
-            _encode(_openapi_value.power_factor_weighting_fraction)
-    )
     _openapi_value.power_units isa Absent ||
         (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
-    _openapi_value.rating isa Absent ||
-        (_openapi_output["rating"] = _encode(_openapi_value.rating))
     _openapi_value.reactive_power_limits isa Absent || (
         _openapi_output["reactive_power_limits"] =
             _encode(_openapi_value.reactive_power_limits)
     )
-    _openapi_value.remote_bus_control isa Absent ||
-        (_openapi_output["remote_bus_control"] = _encode(_openapi_value.remote_bus_control))
-    _openapi_value.rmpct isa Absent ||
-        (_openapi_output["rmpct"] = _encode(_openapi_value.rmpct))
-    _openapi_value.voltage_limits isa Absent ||
-        (_openapi_output["voltage_limits"] = _encode(_openapi_value.voltage_limits))
+    _openapi_value.dc_current isa Absent ||
+        (_openapi_output["dc_current"] = _encode(_openapi_value.dc_current))
+    _openapi_value.max_dc_current isa Absent ||
+        (_openapi_output["max_dc_current"] = _encode(_openapi_value.max_dc_current))
+    _openapi_value.loss_function isa Absent ||
+        (_openapi_output["loss_function"] = _encode(_openapi_value.loss_function))
+    _openapi_value.dc_control isa Absent ||
+        (_openapi_output["dc_control"] = _encode(_openapi_value.dc_control))
+    _openapi_value.ac_control isa Absent ||
+        (_openapi_output["ac_control"] = _encode(_openapi_value.ac_control))
     _openapi_value.voltage_setpoint_units isa Absent || (
         _openapi_output["voltage_setpoint_units"] =
             _encode(_openapi_value.voltage_setpoint_units)
     )
+    _openapi_value.dc_setpoint isa Absent ||
+        (_openapi_output["dc_setpoint"] = _encode(_openapi_value.dc_setpoint))
+    _openapi_value.ac_setpoint isa Absent ||
+        (_openapi_output["ac_setpoint"] = _encode(_openapi_value.ac_setpoint))
+    _openapi_value.dc_voltage_droop isa Absent ||
+        (_openapi_output["dc_voltage_droop"] = _encode(_openapi_value.dc_voltage_droop))
+    _openapi_value.remote_bus_control isa Absent ||
+        (_openapi_output["remote_bus_control"] = _encode(_openapi_value.remote_bus_control))
+    _openapi_value.rmpct isa Absent ||
+        (_openapi_output["rmpct"] = _encode(_openapi_value.rmpct))
+    _openapi_value.power_factor_weighting_fraction isa Absent || (
+        _openapi_output["power_factor_weighting_fraction"] =
+            _encode(_openapi_value.power_factor_weighting_fraction)
+    )
+    _openapi_value.voltage_limits isa Absent ||
+        (_openapi_output["voltage_limits"] = _encode(_openapi_value.voltage_limits))
+    _openapi_value.dynamic_injector isa Absent ||
+        (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -356,8 +356,8 @@ function _encode(_openapi_value::InterconnectingConverter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/InterconnectingConverter",
+            resource="https://openapi.invalid/schema/external-5f3082148836754e0d8c.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding InterconnectingConverter";
@@ -367,60 +367,60 @@ end
 
 function _form_fields(_openapi_value::InterconnectingConverter)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.ac_control isa Absent ||
-        push!(_openapi_output, "ac_control" => _openapi_value.ac_control)
-    _openapi_value.ac_setpoint isa Absent ||
-        push!(_openapi_output, "ac_setpoint" => _openapi_value.ac_setpoint)
-    _openapi_value.active_power isa Absent ||
-        push!(_openapi_output, "active_power" => _openapi_value.active_power)
-    _openapi_value.active_power_limits isa Absent ||
-        push!(_openapi_output, "active_power_limits" => _openapi_value.active_power_limits)
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
+    _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
     _openapi_value.available isa Absent ||
         push!(_openapi_output, "available" => _openapi_value.available)
-    _openapi_value.base_power isa Absent ||
-        push!(_openapi_output, "base_power" => _openapi_value.base_power)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
     _openapi_value.dc_bus isa Absent ||
         push!(_openapi_output, "dc_bus" => _openapi_value.dc_bus)
-    _openapi_value.dc_control isa Absent ||
-        push!(_openapi_output, "dc_control" => _openapi_value.dc_control)
+    _openapi_value.active_power isa Absent ||
+        push!(_openapi_output, "active_power" => _openapi_value.active_power)
+    _openapi_value.rating isa Absent ||
+        push!(_openapi_output, "rating" => _openapi_value.rating)
+    _openapi_value.active_power_limits isa Absent ||
+        push!(_openapi_output, "active_power_limits" => _openapi_value.active_power_limits)
+    _openapi_value.base_power isa Absent ||
+        push!(_openapi_output, "base_power" => _openapi_value.base_power)
+    _openapi_value.power_units isa Absent ||
+        push!(_openapi_output, "power_units" => _openapi_value.power_units)
+    _openapi_value.reactive_power_limits isa Absent || push!(
+        _openapi_output,
+        "reactive_power_limits" => _openapi_value.reactive_power_limits,
+    )
     _openapi_value.dc_current isa Absent ||
         push!(_openapi_output, "dc_current" => _openapi_value.dc_current)
-    _openapi_value.dc_setpoint isa Absent ||
-        push!(_openapi_output, "dc_setpoint" => _openapi_value.dc_setpoint)
-    _openapi_value.dc_voltage_droop isa Absent ||
-        push!(_openapi_output, "dc_voltage_droop" => _openapi_value.dc_voltage_droop)
-    _openapi_value.dynamic_injector isa Absent ||
-        push!(_openapi_output, "dynamic_injector" => _openapi_value.dynamic_injector)
-    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
-    _openapi_value.loss_function isa Absent ||
-        push!(_openapi_output, "loss_function" => _openapi_value.loss_function)
     _openapi_value.max_dc_current isa Absent ||
         push!(_openapi_output, "max_dc_current" => _openapi_value.max_dc_current)
-    _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
+    _openapi_value.loss_function isa Absent ||
+        push!(_openapi_output, "loss_function" => _openapi_value.loss_function)
+    _openapi_value.dc_control isa Absent ||
+        push!(_openapi_output, "dc_control" => _openapi_value.dc_control)
+    _openapi_value.ac_control isa Absent ||
+        push!(_openapi_output, "ac_control" => _openapi_value.ac_control)
+    _openapi_value.voltage_setpoint_units isa Absent || push!(
+        _openapi_output,
+        "voltage_setpoint_units" => _openapi_value.voltage_setpoint_units,
+    )
+    _openapi_value.dc_setpoint isa Absent ||
+        push!(_openapi_output, "dc_setpoint" => _openapi_value.dc_setpoint)
+    _openapi_value.ac_setpoint isa Absent ||
+        push!(_openapi_output, "ac_setpoint" => _openapi_value.ac_setpoint)
+    _openapi_value.dc_voltage_droop isa Absent ||
+        push!(_openapi_output, "dc_voltage_droop" => _openapi_value.dc_voltage_droop)
+    _openapi_value.remote_bus_control isa Absent ||
+        push!(_openapi_output, "remote_bus_control" => _openapi_value.remote_bus_control)
+    _openapi_value.rmpct isa Absent ||
+        push!(_openapi_output, "rmpct" => _openapi_value.rmpct)
     _openapi_value.power_factor_weighting_fraction isa Absent || push!(
         _openapi_output,
         "power_factor_weighting_fraction" =>
             _openapi_value.power_factor_weighting_fraction,
     )
-    _openapi_value.power_units isa Absent ||
-        push!(_openapi_output, "power_units" => _openapi_value.power_units)
-    _openapi_value.rating isa Absent ||
-        push!(_openapi_output, "rating" => _openapi_value.rating)
-    _openapi_value.reactive_power_limits isa Absent || push!(
-        _openapi_output,
-        "reactive_power_limits" => _openapi_value.reactive_power_limits,
-    )
-    _openapi_value.remote_bus_control isa Absent ||
-        push!(_openapi_output, "remote_bus_control" => _openapi_value.remote_bus_control)
-    _openapi_value.rmpct isa Absent ||
-        push!(_openapi_output, "rmpct" => _openapi_value.rmpct)
     _openapi_value.voltage_limits isa Absent ||
         push!(_openapi_output, "voltage_limits" => _openapi_value.voltage_limits)
-    _openapi_value.voltage_setpoint_units isa Absent || push!(
-        _openapi_output,
-        "voltage_setpoint_units" => _openapi_value.voltage_setpoint_units,
-    )
+    _openapi_value.dynamic_injector isa Absent ||
+        push!(_openapi_output, "dynamic_injector" => _openapi_value.dynamic_injector)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

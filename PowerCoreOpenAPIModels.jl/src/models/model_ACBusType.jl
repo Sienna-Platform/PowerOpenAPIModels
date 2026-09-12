@@ -16,8 +16,8 @@ function _decode(::Type{ACBusType}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ACBusType",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ACBusType",
         ),
         value,
         "decoding ACBusType";
@@ -30,8 +30,8 @@ function _encode(value::ACBusType)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ACBusType",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ACBusType",
         ),
         output,
         "encoding ACBusType";

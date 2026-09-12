@@ -12,8 +12,8 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/SupplyTechnology/properties/capacity_limits",
+            resource="https://openapi.invalid/schema/external-dcdd492f893366934ca1.json",
+            pointer="/properties/capacity_limits",
         ),
         value,
         "decoding SupplyTechnologyCapacityLimits";
@@ -23,8 +23,8 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/MinMax",
+            resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+            pointer="/\$defs/MinMax",
         ),
         value;
         direction=:neutral,
@@ -38,8 +38,8 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/MinMaxByKey",
+            resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+            pointer="/\$defs/MinMaxByKey",
         ),
         value;
         direction=:neutral,
@@ -62,8 +62,8 @@ function _encode(value::SupplyTechnologyCapacityLimits)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/SupplyTechnology/properties/capacity_limits",
+            resource="https://openapi.invalid/schema/external-dcdd492f893366934ca1.json",
+            pointer="/properties/capacity_limits",
         ),
         output,
         "encoding SupplyTechnologyCapacityLimits";

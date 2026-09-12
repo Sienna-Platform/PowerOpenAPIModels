@@ -3,13 +3,13 @@
 
 Attribute to represent combined cycle generation when each unit represents a specific configuration and aggregate heat rate. Operation exclusion groups (only units in the same group can operate simultaneously) are recorded as PlantAssociation rows with role='exclusion'.
 
-  - `configuration`: Shaft and turbine arrangement of a combined cycle plant: a single shaft carrying one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or `Other` for any arrangement outside these.
   - `name`: Name of the combined cycle fractional plant
+  - `configuration`: Shaft and turbine arrangement of a combined cycle plant: a single shaft carrying one combustion and one steam turbine, separate shafts for the two, two or three combustion turbines feeding one steam turbine, or `Other` for any arrangement outside these.
 """
 Base.@kwdef struct CombinedCycleFractional <: APIModel
-    configuration::CombinedCycleConfiguration
     id::Int64
     name::String
+    configuration::CombinedCycleConfiguration
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{CombinedCycleFractional}, value) =
@@ -18,19 +18,14 @@ function _decode(::Type{CombinedCycleFractional}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/CombinedCycleFractional",
+            resource="https://openapi.invalid/schema/external-72a9a0bbd3bd9a78ca7d.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding CombinedCycleFractional";
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CombinedCycleFractional")
-    _openapi_field_configuration = _decode(
-        CombinedCycleConfiguration,
-        _required(_openapi_object, "configuration", "CombinedCycleFractional"),
-        _openapi_validate,
-    )
     _openapi_field_id = _decode(
         Int64,
         _required(_openapi_object, "id", "CombinedCycleFractional"),
@@ -41,26 +36,31 @@ function _decode(::Type{CombinedCycleFractional}, _openapi_raw, _openapi_validat
         _required(_openapi_object, "name", "CombinedCycleFractional"),
         _openapi_validate,
     )
+    _openapi_field_configuration = _decode(
+        CombinedCycleConfiguration,
+        _required(_openapi_object, "configuration", "CombinedCycleFractional"),
+        _openapi_validate,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("configuration", "id", "name") && continue
+        String(_openapi_key) in ("id", "name", "configuration") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return CombinedCycleFractional(;
-        configuration=_openapi_field_configuration,
         id=_openapi_field_id,
         name=_openapi_field_name,
+        configuration=_openapi_field_configuration,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::CombinedCycleFractional)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.configuration isa Absent ||
-        (_openapi_output["configuration"] = _encode(_openapi_value.configuration))
     _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
     _openapi_value.name isa Absent ||
         (_openapi_output["name"] = _encode(_openapi_value.name))
+    _openapi_value.configuration isa Absent ||
+        (_openapi_output["configuration"] = _encode(_openapi_value.configuration))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -72,8 +72,8 @@ function _encode(_openapi_value::CombinedCycleFractional)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/CombinedCycleFractional",
+            resource="https://openapi.invalid/schema/external-72a9a0bbd3bd9a78ca7d.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding CombinedCycleFractional";
@@ -83,10 +83,10 @@ end
 
 function _form_fields(_openapi_value::CombinedCycleFractional)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.configuration isa Absent ||
-        push!(_openapi_output, "configuration" => _openapi_value.configuration)
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
+    _openapi_value.configuration isa Absent ||
+        push!(_openapi_output, "configuration" => _openapi_value.configuration)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

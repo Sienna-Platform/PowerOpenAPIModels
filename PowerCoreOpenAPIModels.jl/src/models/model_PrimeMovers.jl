@@ -39,8 +39,8 @@ function _decode(::Type{PrimeMovers}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/PrimeMovers",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/PrimeMovers",
         ),
         value,
         "decoding PrimeMovers";
@@ -53,8 +53,8 @@ function _encode(value::PrimeMovers)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/PrimeMovers",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/PrimeMovers",
         ),
         output,
         "encoding PrimeMovers";

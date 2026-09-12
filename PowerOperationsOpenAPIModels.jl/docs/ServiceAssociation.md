@@ -5,5 +5,5 @@ Links a service to one component that contributes to it. One record per (service
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`entity_id`** | **`Int64`** | ID of the contributing member: a Device, a Branch, or another Service. | [required]
 **`service_id`** | **`Int64`** | ID of the service the membership belongs to. | [required]
+**`entity_id`** | **`Int64`** | ID of the contributing member: a Device, a Branch, or another Service. | [required]

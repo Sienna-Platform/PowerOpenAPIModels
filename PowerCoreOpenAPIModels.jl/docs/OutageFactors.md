@@ -5,5 +5,5 @@ A pair of values representing planned and forced outage factors as fractions of 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`forced`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
 **`planned`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`forced`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

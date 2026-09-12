@@ -6,8 +6,8 @@ function _decode(::Type{GeographicInfoGeoJson}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/GeographicInfo/properties/geo_json",
+            resource="https://openapi.invalid/schema/external-7ad3cf467fe1305802c0.json",
+            pointer="/properties/geo_json",
         ),
         _openapi_raw,
         "decoding GeographicInfoGeoJson";
@@ -35,8 +35,8 @@ function _encode(_openapi_value::GeographicInfoGeoJson)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/GeographicInfo/properties/geo_json",
+            resource="https://openapi.invalid/schema/external-7ad3cf467fe1305802c0.json",
+            pointer="/properties/geo_json",
         ),
         _openapi_output,
         "encoding GeographicInfoGeoJson";

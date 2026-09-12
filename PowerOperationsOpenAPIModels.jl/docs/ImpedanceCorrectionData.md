@@ -6,7 +6,7 @@ Supplemental attribute carrying one row of an impedance correction table, linked
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`id`** | **`Int64`** |  | [required]
-**`impedance_correction_curve`** | **`PiecewiseLinearData`** | Data for a piecewise linear function defined by (x, y) points and interpolated linearly between consecutive ones. The y values are absolute values at each x, not per-segment slopes; use `PiecewiseStepData` when the data gives per-segment rates. Points run in ascending x order, and two of them define one segment. | [required]
 **`table_number`** | **`Int64`** |  | [required]
-**`transformer_control_mode`** | **`ImpedanceCorrectionDataTransformerControlMode`** |  | [required]
+**`impedance_correction_curve`** | **`PiecewiseLinearData`** | Data for a piecewise linear function defined by (x, y) points and interpolated linearly between consecutive ones. The y values are absolute values at each x, not per-segment slopes; use `PiecewiseStepData` when the data gives per-segment rates. Points run in ascending x order, and two of them define one segment. | [required]
 **`transformer_winding`** | **`ImpedanceCorrectionDataTransformerWinding`** |  | [required]
+**`transformer_control_mode`** | **`ImpedanceCorrectionDataTransformerControlMode`** |  | [required]

@@ -20,23 +20,16 @@
 """
 Map every generated struct name to its `const` fields, as `{field_name => const_value}`.
 
-Scans `\$defs` and `components.schemas` in every domain's bundled spec -- the same two places
-`published_schema_names` (`dedup_structs.jl`) reads -- since a discriminator field is always a
-plain property on the schema itself, never behind further `\$ref`/`allOf` composition. A schema
-whose `const` and `default` disagree fails loudly: that is the schema contradicting itself, not
-something to paper over by preferring one value.
+Scans every schema each domain's selector declares -- the same set `published_schema_names`
+(`dedup_structs.jl`) reads -- since a discriminator field is always a plain property on the
+schema itself, never behind further `\$ref`/`allOf` composition. A schema whose `const` and
+`default` disagree fails loudly: that is the schema contradicting itself, not something to
+paper over by preferring one value.
 """
 function load_const_fields(schema_dir, domains)
     result = Dict{String, Dict{String, String}}()
     for domain in domains
-        path = joinpath(schema_dir, "dist", "openapi-$domain-bundled.json")
-        isfile(path) || continue
-        doc = JSON.parsefile(path; dicttype=Dict{String, Any})
-        sources = (
-            get(doc, "\$defs", Dict{String, Any}()),
-            get(get(doc, "components", Dict{String, Any}()), "schemas", Dict{String, Any}()),
-        )
-        for src in sources, (schema_name, body) in src
+        for (schema_name, body) in selector_definitions(schema_dir, domain)
             body isa AbstractDict || continue
             props = get(body, "properties", nothing)
             props === nothing && continue

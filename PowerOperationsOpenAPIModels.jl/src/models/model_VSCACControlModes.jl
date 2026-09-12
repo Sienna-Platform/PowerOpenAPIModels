@@ -16,8 +16,8 @@ function _decode(::Type{VSCACControlModes}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/VSCACControlModes",
+            resource="https://openapi.invalid/schema/external-ddecbf0b8a8ce9be5178.json",
+            pointer="/\$defs/VSCACControlModes",
         ),
         value,
         "decoding VSCACControlModes";
@@ -30,8 +30,8 @@ function _encode(value::VSCACControlModes)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/VSCACControlModes",
+            resource="https://openapi.invalid/schema/external-ddecbf0b8a8ce9be5178.json",
+            pointer="/\$defs/VSCACControlModes",
         ),
         output,
         "encoding VSCACControlModes";

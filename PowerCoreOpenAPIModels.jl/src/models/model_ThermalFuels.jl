@@ -50,8 +50,8 @@ function _decode(::Type{ThermalFuels}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ThermalFuels",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ThermalFuels",
         ),
         value,
         "decoding ThermalFuels";
@@ -64,8 +64,8 @@ function _encode(value::ThermalFuels)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ThermalFuels",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ThermalFuels",
         ),
         output,
         "encoding ThermalFuels";

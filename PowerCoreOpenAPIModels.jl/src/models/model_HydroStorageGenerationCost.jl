@@ -12,8 +12,8 @@ function _decode(::Type{HydroStorageGenerationCost}, value, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/HydroStorageGenerationCost",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/HydroStorageGenerationCost",
         ),
         value,
         "decoding HydroStorageGenerationCost";
@@ -33,29 +33,15 @@ function _decode(::Type{HydroStorageGenerationCost}, value, _openapi_validate::B
             "HYDRO_GEN" => (
                 HydroGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/HydroGenerationCost",
-                ),
-            ),
-            "HydroGenerationCost" => (
-                HydroGenerationCost,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/HydroGenerationCost",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/HydroGenerationCost",
                 ),
             ),
             "STORAGE" => (
                 StorageCost,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/StorageCost",
-                ),
-            ),
-            "StorageCost" => (
-                StorageCost,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/StorageCost",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/StorageCost",
                 ),
             ),
         ),
@@ -81,8 +67,8 @@ function _encode(value::HydroStorageGenerationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/HydroStorageGenerationCost",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/HydroStorageGenerationCost",
         ),
         output,
         "encoding HydroStorageGenerationCost";

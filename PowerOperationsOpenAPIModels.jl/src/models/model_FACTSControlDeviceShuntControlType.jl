@@ -20,8 +20,8 @@ function _decode(::Type{FACTSControlDeviceShuntControlType}, value, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/FACTSControlDevice/properties/shunt_control_type",
+            resource="https://openapi.invalid/schema/external-8fc75f1962f679b768d1.json",
+            pointer="/properties/shunt_control_type",
         ),
         value,
         "decoding FACTSControlDeviceShuntControlType";
@@ -34,8 +34,8 @@ function _encode(value::FACTSControlDeviceShuntControlType)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/FACTSControlDevice/properties/shunt_control_type",
+            resource="https://openapi.invalid/schema/external-8fc75f1962f679b768d1.json",
+            pointer="/properties/shunt_control_type",
         ),
         output,
         "encoding FACTSControlDeviceShuntControlType";

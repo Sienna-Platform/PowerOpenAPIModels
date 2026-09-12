@@ -20,8 +20,8 @@ function _decode(::Type{TimeSeriesAssociation}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-            pointer="/components/schemas/TimeSeriesAssociation",
+            resource="https://openapi.invalid/schema/external-00abfb53330f29dc90c7.json",
+            pointer="",
         ),
         value,
         "decoding TimeSeriesAssociation";
@@ -37,43 +37,43 @@ function _decode(::Type{TimeSeriesAssociation}, value, _openapi_validate::Bool)
             "Deterministic" => (
                 Deterministic,
                 (
-                    resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-                    pointer="/components/schemas/Deterministic",
+                    resource="https://openapi.invalid/schema/external-a21ce49bf856547dc288.json",
+                    pointer="",
                 ),
             ),
             "DeterministicSingleTimeSeries" => (
                 DeterministicSingleTimeSeries,
                 (
-                    resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-                    pointer="/components/schemas/DeterministicSingleTimeSeries",
+                    resource="https://openapi.invalid/schema/external-55ac9be8643f1f23b680.json",
+                    pointer="",
                 ),
             ),
             "NonSequentialTimeSeries" => (
                 NonSequentialTimeSeries,
                 (
-                    resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-                    pointer="/components/schemas/NonSequentialTimeSeries",
+                    resource="https://openapi.invalid/schema/external-b62bcb370c2b936c4b64.json",
+                    pointer="",
                 ),
             ),
             "Probabilistic" => (
                 Probabilistic,
                 (
-                    resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-                    pointer="/components/schemas/Probabilistic",
+                    resource="https://openapi.invalid/schema/external-04cf5b827c6fe29067a5.json",
+                    pointer="",
                 ),
             ),
             "Scenarios" => (
                 Scenarios,
                 (
-                    resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-                    pointer="/components/schemas/Scenarios",
+                    resource="https://openapi.invalid/schema/external-187a69af105bbfe4a51e.json",
+                    pointer="",
                 ),
             ),
             "SingleTimeSeries" => (
                 SingleTimeSeries,
                 (
-                    resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-                    pointer="/components/schemas/SingleTimeSeries",
+                    resource="https://openapi.invalid/schema/external-5cc161da1c6721e651e9.json",
+                    pointer="",
                 ),
             ),
         ),
@@ -97,8 +97,8 @@ function _encode(value::TimeSeriesAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-1873fb0493f6bd6e1ed3.json",
-            pointer="/components/schemas/TimeSeriesAssociation",
+            resource="https://openapi.invalid/schema/external-00abfb53330f29dc90c7.json",
+            pointer="",
         ),
         output,
         "encoding TimeSeriesAssociation";

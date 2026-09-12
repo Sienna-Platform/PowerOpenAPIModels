@@ -5,8 +5,8 @@ Supplemental attribute defining which existing generators mapped to a supply tec
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`build_year`** | **`Union{Absent,Nothing,RetirementPotentialBuildYear}`** | Optional dictionary to indicate the year in which existing generators in the base system were built. | [optional]
-**`eligible_generators`** | **`Vector{String}`** | Names of individual generation units mapped to a technology that are eligible for retirement. | [required]
 **`id`** | **`Int64`** | ID for individual component. | [required]
+**`eligible_generators`** | **`Vector{String}`** | Names of individual generation units mapped to a technology that are eligible for retirement. | [required]
 **`planned_retirement_year`** | **`Union{Absent,Nothing,RetirementPotentialPlannedRetirementYear}`** | Optional dictionary to indicate the year in which the forced/planned retirement will occur. | [optional]
+**`build_year`** | **`Union{Absent,Nothing,RetirementPotentialBuildYear}`** | Optional dictionary to indicate the year in which existing generators in the base system were built. | [optional]
 **`retirement_cost`** | **`RetirementPotentialRetirementCost`** | Cost associated with retiring the eligible generators. Units: USD/MW. | [required]

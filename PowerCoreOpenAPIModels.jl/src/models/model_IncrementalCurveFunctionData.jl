@@ -7,8 +7,8 @@ function _decode(::Type{IncrementalCurveFunctionData}, value, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/IncrementalCurve/properties/function_data",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/IncrementalCurve/properties/function_data",
         ),
         value,
         "decoding IncrementalCurveFunctionData";
@@ -28,29 +28,15 @@ function _decode(::Type{IncrementalCurveFunctionData}, value, _openapi_validate:
             "LINEAR" => (
                 LinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/LinearFunctionData",
-                ),
-            ),
-            "LinearFunctionData" => (
-                LinearFunctionData,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/LinearFunctionData",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/LinearFunctionData",
                 ),
             ),
             "PIECEWISE_STEP" => (
                 PiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/PiecewiseStepData",
-                ),
-            ),
-            "PiecewiseStepData" => (
-                PiecewiseStepData,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/PiecewiseStepData",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/PiecewiseStepData",
                 ),
             ),
         ),
@@ -76,8 +62,8 @@ function _encode(value::IncrementalCurveFunctionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/IncrementalCurve/properties/function_data",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/IncrementalCurve/properties/function_data",
         ),
         output,
         "encoding IncrementalCurveFunctionData";

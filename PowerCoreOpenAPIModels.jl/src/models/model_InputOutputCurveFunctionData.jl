@@ -7,8 +7,8 @@ function _decode(::Type{InputOutputCurveFunctionData}, value, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/InputOutputCurve/properties/function_data",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/InputOutputCurve/properties/function_data",
         ),
         value,
         "decoding InputOutputCurveFunctionData";
@@ -28,43 +28,22 @@ function _decode(::Type{InputOutputCurveFunctionData}, value, _openapi_validate:
             "LINEAR" => (
                 LinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/LinearFunctionData",
-                ),
-            ),
-            "LinearFunctionData" => (
-                LinearFunctionData,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/LinearFunctionData",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/LinearFunctionData",
                 ),
             ),
             "PIECEWISE_LINEAR" => (
                 PiecewiseLinearData,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/PiecewiseLinearData",
-                ),
-            ),
-            "PiecewiseLinearData" => (
-                PiecewiseLinearData,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/PiecewiseLinearData",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/PiecewiseLinearData",
                 ),
             ),
             "QUADRATIC" => (
                 QuadraticFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/QuadraticFunctionData",
-                ),
-            ),
-            "QuadraticFunctionData" => (
-                QuadraticFunctionData,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/QuadraticFunctionData",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/QuadraticFunctionData",
                 ),
             ),
         ),
@@ -90,8 +69,8 @@ function _encode(value::InputOutputCurveFunctionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/InputOutputCurve/properties/function_data",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/InputOutputCurve/properties/function_data",
         ),
         output,
         "encoding InputOutputCurveFunctionData";

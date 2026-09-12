@@ -11,8 +11,8 @@ function _decode(::Type{LossValueCurve}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/LossValueCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/LossValueCurve",
         ),
         value,
         "decoding LossValueCurve";
@@ -28,29 +28,15 @@ function _decode(::Type{LossValueCurve}, value, _openapi_validate::Bool)
             "INCREMENTAL" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/IncrementalCurve",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/IncrementalCurve",
                 ),
             ),
             "INPUT_OUTPUT" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/InputOutputCurve",
-                ),
-            ),
-            "IncrementalCurve" => (
-                IncrementalCurve,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/IncrementalCurve",
-                ),
-            ),
-            "InputOutputCurve" => (
-                InputOutputCurve,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/InputOutputCurve",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/InputOutputCurve",
                 ),
             ),
         ),
@@ -73,8 +59,8 @@ function _encode(value::LossValueCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/LossValueCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/LossValueCurve",
         ),
         output,
         "encoding LossValueCurve";

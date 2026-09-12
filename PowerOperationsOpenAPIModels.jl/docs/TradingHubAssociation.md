@@ -5,5 +5,5 @@ Links a trading hub to one associated entity. One record per (hub, member) pair.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`entity_id`** | **`Int64`** | ID of the associated entity: a bus or a market transaction. | [required]
 **`trading_hub_id`** | **`Int64`** | ID of the trading hub the association belongs to. | [required]
+**`entity_id`** | **`Int64`** | ID of the associated entity: a bus or a market transaction. | [required]

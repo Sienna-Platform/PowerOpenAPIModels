@@ -27,8 +27,8 @@ function _decode(::Type{StorageTech}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/StorageTech",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/StorageTech",
         ),
         value,
         "decoding StorageTech";
@@ -41,8 +41,8 @@ function _encode(value::StorageTech)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/StorageTech",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/StorageTech",
         ),
         output,
         "encoding StorageTech";

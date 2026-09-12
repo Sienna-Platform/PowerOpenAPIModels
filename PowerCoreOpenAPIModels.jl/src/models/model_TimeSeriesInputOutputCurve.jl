@@ -18,8 +18,8 @@ function _decode(::Type{TimeSeriesInputOutputCurve}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/TimeSeriesInputOutputCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/TimeSeriesInputOutputCurve",
         ),
         _openapi_raw,
         "decoding TimeSeriesInputOutputCurve";
@@ -75,8 +75,8 @@ function _encode(_openapi_value::TimeSeriesInputOutputCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/TimeSeriesInputOutputCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/TimeSeriesInputOutputCurve",
         ),
         _openapi_output,
         "encoding TimeSeriesInputOutputCurve";

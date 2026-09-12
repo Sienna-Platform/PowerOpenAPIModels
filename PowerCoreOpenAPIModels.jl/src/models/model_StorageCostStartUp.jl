@@ -6,8 +6,8 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/StorageCost/properties/start_up",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/StorageCost/properties/start_up",
         ),
         value,
         "decoding StorageCostStartUp";
@@ -17,8 +17,8 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/StorageCost/properties/start_up/oneOf/0",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/StorageCost/properties/start_up/oneOf/0",
         ),
         value;
         direction=:neutral,
@@ -32,8 +32,8 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ChargeDischarge",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ChargeDischarge",
         ),
         value;
         direction=:neutral,
@@ -54,8 +54,8 @@ function _encode(value::StorageCostStartUp)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/StorageCost/properties/start_up",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/StorageCost/properties/start_up",
         ),
         output,
         "encoding StorageCostStartUp";

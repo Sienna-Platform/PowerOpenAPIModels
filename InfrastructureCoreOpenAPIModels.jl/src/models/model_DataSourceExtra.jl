@@ -11,8 +11,8 @@ function _decode(::Type{DataSourceExtra}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/DataSource/properties/extra",
+            resource="https://openapi.invalid/schema/external-356d41e4a21f3a02de1b.json",
+            pointer="/properties/extra",
         ),
         _openapi_raw,
         "decoding DataSourceExtra";
@@ -40,8 +40,8 @@ function _encode(_openapi_value::DataSourceExtra)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/DataSource/properties/extra",
+            resource="https://openapi.invalid/schema/external-356d41e4a21f3a02de1b.json",
+            pointer="/properties/extra",
         ),
         _openapi_output,
         "encoding DataSourceExtra";

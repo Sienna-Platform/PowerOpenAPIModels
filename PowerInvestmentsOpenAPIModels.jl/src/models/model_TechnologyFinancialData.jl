@@ -4,19 +4,19 @@
 Financial data for a candidate technology: the capital recovery period used to derive overnight capital cost from annualized investment cost, the dollar-year its cost data is reported in, and the debt fraction, debt rate, return on equity, and tax rate that together set its cost of capital.
 
   - `capital_recovery_period`: Period over which capital costs are recovered for net present value calculations. Units: yr.
+  - `technology_base_year`: Base year for technology cost data used in NPV calculations.
   - `debt_fraction`: Fraction of capital costs financed through debt. Units: 1.
   - `debt_rate`: Interest rate on debt financing. Units: 1.
   - `return_on_equity`: Required rate of return on equity financing. Units: 1.
   - `tax_rate`: Tax rate applied to equity returns. Units: 1.
-  - `technology_base_year`: Base year for technology cost data used in NPV calculations.
 """
 Base.@kwdef struct TechnologyFinancialData <: APIModel
     capital_recovery_period::Int64
+    technology_base_year::Int64
     debt_fraction::Float64
     debt_rate::Float64
     return_on_equity::Float64
     tax_rate::Float64
-    technology_base_year::Int64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{TechnologyFinancialData}, value) =
@@ -25,8 +25,8 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/TechnologyFinancialData",
+            resource="https://openapi.invalid/schema/external-449af650398f96e4a1e7.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding TechnologyFinancialData";
@@ -36,6 +36,11 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
     _openapi_field_capital_recovery_period = _decode(
         Int64,
         _required(_openapi_object, "capital_recovery_period", "TechnologyFinancialData"),
+        _openapi_validate,
+    )
+    _openapi_field_technology_base_year = _decode(
+        Int64,
+        _required(_openapi_object, "technology_base_year", "TechnologyFinancialData"),
         _openapi_validate,
     )
     _openapi_field_debt_fraction = _decode(
@@ -58,31 +63,26 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
         _required(_openapi_object, "tax_rate", "TechnologyFinancialData"),
         _openapi_validate,
     )
-    _openapi_field_technology_base_year = _decode(
-        Int64,
-        _required(_openapi_object, "technology_base_year", "TechnologyFinancialData"),
-        _openapi_validate,
-    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
             "capital_recovery_period",
+            "technology_base_year",
             "debt_fraction",
             "debt_rate",
             "return_on_equity",
             "tax_rate",
-            "technology_base_year",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return TechnologyFinancialData(;
         capital_recovery_period=_openapi_field_capital_recovery_period,
+        technology_base_year=_openapi_field_technology_base_year,
         debt_fraction=_openapi_field_debt_fraction,
         debt_rate=_openapi_field_debt_rate,
         return_on_equity=_openapi_field_return_on_equity,
         tax_rate=_openapi_field_tax_rate,
-        technology_base_year=_openapi_field_technology_base_year,
         additional_properties=_openapi_additional_properties,
     )
 end
@@ -92,6 +92,10 @@ function _encode(_openapi_value::TechnologyFinancialData)
         _openapi_output["capital_recovery_period"] =
             _encode(_openapi_value.capital_recovery_period)
     )
+    _openapi_value.technology_base_year isa Absent || (
+        _openapi_output["technology_base_year"] =
+            _encode(_openapi_value.technology_base_year)
+    )
     _openapi_value.debt_fraction isa Absent ||
         (_openapi_output["debt_fraction"] = _encode(_openapi_value.debt_fraction))
     _openapi_value.debt_rate isa Absent ||
@@ -100,10 +104,6 @@ function _encode(_openapi_value::TechnologyFinancialData)
         (_openapi_output["return_on_equity"] = _encode(_openapi_value.return_on_equity))
     _openapi_value.tax_rate isa Absent ||
         (_openapi_output["tax_rate"] = _encode(_openapi_value.tax_rate))
-    _openapi_value.technology_base_year isa Absent || (
-        _openapi_output["technology_base_year"] =
-            _encode(_openapi_value.technology_base_year)
-    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -115,8 +115,8 @@ function _encode(_openapi_value::TechnologyFinancialData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/TechnologyFinancialData",
+            resource="https://openapi.invalid/schema/external-449af650398f96e4a1e7.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding TechnologyFinancialData";
@@ -130,6 +130,10 @@ function _form_fields(_openapi_value::TechnologyFinancialData)
         _openapi_output,
         "capital_recovery_period" => _openapi_value.capital_recovery_period,
     )
+    _openapi_value.technology_base_year isa Absent || push!(
+        _openapi_output,
+        "technology_base_year" => _openapi_value.technology_base_year,
+    )
     _openapi_value.debt_fraction isa Absent ||
         push!(_openapi_output, "debt_fraction" => _openapi_value.debt_fraction)
     _openapi_value.debt_rate isa Absent ||
@@ -138,10 +142,6 @@ function _form_fields(_openapi_value::TechnologyFinancialData)
         push!(_openapi_output, "return_on_equity" => _openapi_value.return_on_equity)
     _openapi_value.tax_rate isa Absent ||
         push!(_openapi_output, "tax_rate" => _openapi_value.tax_rate)
-    _openapi_value.technology_base_year isa Absent || push!(
-        _openapi_output,
-        "technology_base_year" => _openapi_value.technology_base_year,
-    )
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end
