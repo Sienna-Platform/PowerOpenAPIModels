@@ -20,7 +20,6 @@ Candidate storage technology in a region. Charge capacity, discharge capacity, a
   - `power_systems_type`: Corresponding type to be used in PCM modeling.
   - `prime_mover_type`: Prime mover for generator.
   - `region`: Location where the component applies. Can be a zone or node.
-  - `requirements`: List of requirement IDs associated with the component.
   - `storage_tech`: Storage Technology Type.
   - `unit_size_charge`: Used for discrete investment decisions. Unit size of charging capacity. Units: MW.
   - `unit_size_discharge`: Used for discrete investment decisions. Size of each unit of discharging capacity being built. Units: MW.
@@ -50,7 +49,6 @@ Base.@kwdef struct StorageTechnology <: APIModel
     power_systems_type::String
     prime_mover_type::Union{Absent, Nothing, PrimeMovers} = ABSENT
     region::Union{Absent, Nothing, Vector{Int64}} = ABSENT
-    requirements::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     storage_tech::StorageTech
     unit_size_charge::Union{Absent, Float64, Nothing} = ABSENT
     unit_size_discharge::Union{Absent, Float64, Nothing} = ABSENT
@@ -62,7 +60,7 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/StorageTechnology",
         ),
         _openapi_raw,
@@ -179,13 +177,6 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
             _openapi_object["region"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_requirements =
-        haskey(_openapi_object, "requirements") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["requirements"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_storage_tech = _decode(
         StorageTech,
         _required(_openapi_object, "storage_tech", "StorageTechnology"),
@@ -232,7 +223,6 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
             "power_systems_type",
             "prime_mover_type",
             "region",
-            "requirements",
             "storage_tech",
             "unit_size_charge",
             "unit_size_discharge",
@@ -259,7 +249,6 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
         power_systems_type=_openapi_field_power_systems_type,
         prime_mover_type=_openapi_field_prime_mover_type,
         region=_openapi_field_region,
-        requirements=_openapi_field_requirements,
         storage_tech=_openapi_field_storage_tech,
         unit_size_charge=_openapi_field_unit_size_charge,
         unit_size_discharge=_openapi_field_unit_size_discharge,
@@ -310,8 +299,6 @@ function _encode(_openapi_value::StorageTechnology)
         (_openapi_output["prime_mover_type"] = _encode(_openapi_value.prime_mover_type))
     _openapi_value.region isa Absent ||
         (_openapi_output["region"] = _encode(_openapi_value.region))
-    _openapi_value.requirements isa Absent ||
-        (_openapi_output["requirements"] = _encode(_openapi_value.requirements))
     _openapi_value.storage_tech isa Absent ||
         (_openapi_output["storage_tech"] = _encode(_openapi_value.storage_tech))
     _openapi_value.unit_size_charge isa Absent ||
@@ -333,7 +320,7 @@ function _encode(_openapi_value::StorageTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/StorageTechnology",
         ),
         _openapi_output,
@@ -384,8 +371,6 @@ function _form_fields(_openapi_value::StorageTechnology)
         push!(_openapi_output, "prime_mover_type" => _openapi_value.prime_mover_type)
     _openapi_value.region isa Absent ||
         push!(_openapi_output, "region" => _openapi_value.region)
-    _openapi_value.requirements isa Absent ||
-        push!(_openapi_output, "requirements" => _openapi_value.requirements)
     _openapi_value.storage_tech isa Absent ||
         push!(_openapi_output, "storage_tech" => _openapi_value.storage_tech)
     _openapi_value.unit_size_charge isa Absent ||

@@ -14,6 +14,5 @@ Name | Type | Description | Notes
 **`line_loss`** | **`Union{Absent,Float64,Nothing}`** | Transmission loss for each transport technology. Units: 1. | [optional]
 **`name`** | **`String`** | Name of the component. | [required]
 **`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
-**`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
 **`start_region`** | **`Int64`** | Start region for transport technology. | [required]
 **`unit_size`** | **`Union{Absent,Float64,Nothing}`** | Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW. | [optional]

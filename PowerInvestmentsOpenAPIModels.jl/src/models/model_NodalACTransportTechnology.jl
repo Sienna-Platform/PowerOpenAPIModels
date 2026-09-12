@@ -12,7 +12,6 @@ Nodal representation of candidate AC transmission lines between two regions. Alo
   - `name`: Name of the component.
   - `power_systems_type`: Corresponding type to be used in PCM modeling.
   - `reactance`: Series reactance for a line. Units: ohm.
-  - `requirements`: List of requirement IDs associated with the component.
   - `resistance`: Technology resistance in Ohms. Units: ohm.
   - `start_node`: Start node for transport technology.
   - `unit_size`: Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW.
@@ -28,7 +27,6 @@ Base.@kwdef struct NodalACTransportTechnology <: APIModel
     name::String
     power_systems_type::String
     reactance::Union{Absent, Float64, Nothing} = ABSENT
-    requirements::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     resistance::Union{Absent, Float64, Nothing} = ABSENT
     start_node::Int64
     unit_size::Union{Absent, Float64, Nothing} = ABSENT
@@ -41,7 +39,7 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/NodalACTransportTechnology",
         ),
         _openapi_raw,
@@ -100,13 +98,6 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
             _openapi_object["reactance"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_requirements =
-        haskey(_openapi_object, "requirements") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["requirements"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_resistance =
         haskey(_openapi_object, "resistance") ?
         _decode(
@@ -145,7 +136,6 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
             "name",
             "power_systems_type",
             "reactance",
-            "requirements",
             "resistance",
             "start_node",
             "unit_size",
@@ -164,7 +154,6 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
         name=_openapi_field_name,
         power_systems_type=_openapi_field_power_systems_type,
         reactance=_openapi_field_reactance,
-        requirements=_openapi_field_requirements,
         resistance=_openapi_field_resistance,
         start_node=_openapi_field_start_node,
         unit_size=_openapi_field_unit_size,
@@ -191,8 +180,6 @@ function _encode(_openapi_value::NodalACTransportTechnology)
         (_openapi_output["power_systems_type"] = _encode(_openapi_value.power_systems_type))
     _openapi_value.reactance isa Absent ||
         (_openapi_output["reactance"] = _encode(_openapi_value.reactance))
-    _openapi_value.requirements isa Absent ||
-        (_openapi_output["requirements"] = _encode(_openapi_value.requirements))
     _openapi_value.resistance isa Absent ||
         (_openapi_output["resistance"] = _encode(_openapi_value.resistance))
     _openapi_value.start_node isa Absent ||
@@ -212,7 +199,7 @@ function _encode(_openapi_value::NodalACTransportTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/NodalACTransportTechnology",
         ),
         _openapi_output,
@@ -239,8 +226,6 @@ function _form_fields(_openapi_value::NodalACTransportTechnology)
         push!(_openapi_output, "power_systems_type" => _openapi_value.power_systems_type)
     _openapi_value.reactance isa Absent ||
         push!(_openapi_output, "reactance" => _openapi_value.reactance)
-    _openapi_value.requirements isa Absent ||
-        push!(_openapi_output, "requirements" => _openapi_value.requirements)
     _openapi_value.resistance isa Absent ||
         push!(_openapi_output, "resistance" => _openapi_value.resistance)
     _openapi_value.start_node isa Absent ||

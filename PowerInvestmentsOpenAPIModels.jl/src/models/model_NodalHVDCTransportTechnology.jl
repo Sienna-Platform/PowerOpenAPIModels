@@ -12,7 +12,6 @@ A nodal representation of candidate HVDC transmission lines between two regions,
   - `line_loss`: Loss model coefficients. Accepts a linear model with a constant loss and a proportional loss rate, or a Piecewise loss with N segments for different proportional losses. All terms are defined as fraction of installed nameplate capacity. Units: 1.
   - `name`: Name of the component.
   - `power_systems_type`: Corresponding type to be used in PCM modeling.
-  - `requirements`: List of requirement IDs associated with the component.
   - `start_node`: Start node for transport technology.
   - `unit_size`: Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW.
 """
@@ -26,7 +25,6 @@ Base.@kwdef struct NodalHVDCTransportTechnology <: APIModel
     line_loss::Union{Absent, NodalHVDCTransportTechnologyLineLoss, Nothing} = ABSENT
     name::String
     power_systems_type::String
-    requirements::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     start_node::Int64
     unit_size::Union{Absent, Float64, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -41,7 +39,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/NodalHVDCTransportTechnology",
         ),
         _openapi_raw,
@@ -100,13 +98,6 @@ function _decode(
         _required(_openapi_object, "power_systems_type", "NodalHVDCTransportTechnology"),
         _openapi_validate,
     )
-    _openapi_field_requirements =
-        haskey(_openapi_object, "requirements") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["requirements"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_start_node = _decode(
         Int64,
         _required(_openapi_object, "start_node", "NodalHVDCTransportTechnology"),
@@ -131,7 +122,6 @@ function _decode(
             "line_loss",
             "name",
             "power_systems_type",
-            "requirements",
             "start_node",
             "unit_size",
         ) && continue
@@ -148,7 +138,6 @@ function _decode(
         line_loss=_openapi_field_line_loss,
         name=_openapi_field_name,
         power_systems_type=_openapi_field_power_systems_type,
-        requirements=_openapi_field_requirements,
         start_node=_openapi_field_start_node,
         unit_size=_openapi_field_unit_size,
         additional_properties=_openapi_additional_properties,
@@ -173,8 +162,6 @@ function _encode(_openapi_value::NodalHVDCTransportTechnology)
         (_openapi_output["name"] = _encode(_openapi_value.name))
     _openapi_value.power_systems_type isa Absent ||
         (_openapi_output["power_systems_type"] = _encode(_openapi_value.power_systems_type))
-    _openapi_value.requirements isa Absent ||
-        (_openapi_output["requirements"] = _encode(_openapi_value.requirements))
     _openapi_value.start_node isa Absent ||
         (_openapi_output["start_node"] = _encode(_openapi_value.start_node))
     _openapi_value.unit_size isa Absent ||
@@ -190,7 +177,7 @@ function _encode(_openapi_value::NodalHVDCTransportTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/NodalHVDCTransportTechnology",
         ),
         _openapi_output,
@@ -217,8 +204,6 @@ function _form_fields(_openapi_value::NodalHVDCTransportTechnology)
     _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
     _openapi_value.power_systems_type isa Absent ||
         push!(_openapi_output, "power_systems_type" => _openapi_value.power_systems_type)
-    _openapi_value.requirements isa Absent ||
-        push!(_openapi_output, "requirements" => _openapi_value.requirements)
     _openapi_value.start_node isa Absent ||
         push!(_openapi_output, "start_node" => _openapi_value.start_node)
     _openapi_value.unit_size isa Absent ||

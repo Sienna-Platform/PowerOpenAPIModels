@@ -154,8 +154,6 @@ const REGISTERED_NAMES = Dict{String, Vector{String}}(
         "VirtualParticipantOperationCost",
     ],
     "investments" => [
-        "AggregateRetirementPotential",
-        "AggregateRetrofitPotential",
         "AggregateTransportTechnology",
         "CapacityReserveMargin",
         "CarbonCaps",
@@ -170,7 +168,6 @@ const REGISTERED_NAMES = Dict{String, Vector{String}}(
         "MinimumCapacityRequirements",
         "NodalACTransportTechnology",
         "NodalHVDCTransportTechnology",
-        "Node",
         "PortfolioFinancialData",
         "RetirementPotential",
         "RetrofitPotential",
@@ -178,7 +175,6 @@ const REGISTERED_NAMES = Dict{String, Vector{String}}(
         "SupplyTechnology",
         "TechnologyFinancialData",
         "TopologyMapping",
-        "Zone",
     ],
     "dynamics" => [
         "ActiveRenewableControllerAB",

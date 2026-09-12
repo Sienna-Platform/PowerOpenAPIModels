@@ -334,6 +334,110 @@ end
     )
 end
 
+# `PortfolioDocument` is hand-written for the same reason as `SystemDocument` (typed
+# heterogeneous `components` buckets openapi-generator cannot express), so it can drift from
+# its schema the same way and is asserted the same way.
+@testset "PortfolioDocument matches its schema" begin
+    schema_path = joinpath(SCHEMA_DIR, "Investments", "PortfolioDocument.json")
+    if !isfile(schema_path)
+        @warn "PortfolioDocument.json not found; skipping drift check" schema_path
+    else
+        schema = InfrastructureCoreOpenAPIModels.JSON.parsefile(schema_path)
+        schema_fields = Set(keys(schema["properties"]))
+        # `counter`, `component_types_by_id`, and `requirements_membership` are build-time
+        # scaffolding that is deliberately not serialized.
+        struct_fields = setdiff(
+            Set(string.(fieldnames(PowerOpenAPIModels.PortfolioDocument))),
+            Set(["counter", "component_types_by_id", "requirements_membership"]),
+        )
+
+        @test isempty(setdiff(schema_fields, struct_fields))
+        @test isempty(setdiff(struct_fields, schema_fields))
+
+        # Every required field must be one the container always emits.
+        emitted = Set(
+            keys(
+                PowerOpenAPIModels.document_tree(
+                    PowerOpenAPIModels.PortfolioDocument("Zone"),
+                ),
+            ),
+        )
+        @test isempty(setdiff(Set(schema["required"]), emitted))
+    end
+end
+
+@testset "PortfolioDocument round-trips requirements_associations" begin
+    doc = PowerOpenAPIModels.PortfolioDocument("Zone"; name="validate")
+    # A policy requirement (the service) and a member subject to it. Both are components, so
+    # both ids resolve in `validate_document`; the member reuses a requirement type here only
+    # to keep the fixture minimal (its identity as a component id is all the ref-check needs).
+    requirement_id = PowerOpenAPIModels.next_id!(doc)
+    PowerOpenAPIModels.add_component!(
+        doc,
+        PowerInvestmentsOpenAPIModels.MaximumCapacityRequirements(;
+            id=requirement_id,
+            name="cap_req",
+            available=true,
+        ),
+    )
+    member_id = PowerOpenAPIModels.next_id!(doc)
+    PowerOpenAPIModels.add_component!(
+        doc,
+        PowerInvestmentsOpenAPIModels.MaximumCapacityRequirements(;
+            id=member_id,
+            name="member",
+            available=true,
+        ),
+    )
+    PowerOpenAPIModels.add_requirement_association!(
+        doc,
+        PowerInvestmentsOpenAPIModels.RequirementAssociation(;
+            requirement_id=requirement_id,
+            entity_id=member_id,
+        ),
+    )
+
+    # The membership cache is the document's one duplicate guard.
+    @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.add_requirement_association!(
+        doc,
+        PowerInvestmentsOpenAPIModels.RequirementAssociation(;
+            requirement_id=requirement_id,
+            entity_id=member_id,
+        ),
+    )
+
+    mktempdir() do dir
+        path = joinpath(dir, "portfolio.json")
+        PowerOpenAPIModels.write_document(doc, path)
+        back = PowerOpenAPIModels.read_portfolio_document(path)
+
+        @test PowerOpenAPIModels.get_name(back) == "validate"
+        @test PowerOpenAPIModels.get_aggregation(back) == "Zone"
+        @test length(back.requirements_associations) == 1
+        # A first-class Investments type, so the bucket comes back concretely typed.
+        @test eltype(back.requirements_associations) ===
+              PowerInvestmentsOpenAPIModels.RequirementAssociation
+        assoc = only(back.requirements_associations)
+        @test assoc.requirement_id == requirement_id
+        @test assoc.entity_id == member_id
+        # Membership rebuilt on read, so the duplicate guard survives a round trip.
+        @test (Int(requirement_id), Int(member_id)) in back.requirements_membership
+    end
+end
+
+@testset "PortfolioDocument requires requirements_associations" begin
+    # The field is required: a document omitting the key is malformed input, not an empty
+    # requirement set.
+    doc = PowerOpenAPIModels.PortfolioDocument("Zone")
+    raw = InfrastructureCoreOpenAPIModels.JSON.parse(
+        InfrastructureCoreOpenAPIModels.JSON.json(PowerOpenAPIModels.document_tree(doc)),
+    )
+    delete!(raw, "requirements_associations")
+    @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.portfolio_document_from_json(
+        raw,
+    )
+end
+
 @testset "every registered type is a generated model struct" begin
     # Under the pre-1.0 generator this checked `T <: OpenAPI.APIModel`, the common supertype
     # every generated model shared. The native generator gives every schema the same plain

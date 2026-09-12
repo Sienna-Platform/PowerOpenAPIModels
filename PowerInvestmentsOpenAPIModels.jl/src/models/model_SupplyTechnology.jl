@@ -20,7 +20,6 @@ Candidate generation technology for a region, representing either a thermal or a
   - `prime_mover_type`: Prime mover for generator.
   - `ramp_limits`: Maximum decrease and increase in output between operation periods. Units: MW/min.
   - `region`: Location where the component applies. Can be a zone or node.
-  - `requirements`: List of requirement IDs associated with the component.
   - `start_fuel_mmbtu_per_mw`: Startup fuel use per MW of nameplate capacity of each generator. Units: MMBtu/MW.
   - `time_limits`: Minimum amount of time a resource has to stay in the committed or shutdown state (minutes). Units: min.
   - `unit_size`: Used for discrete investment decisions. Size of each unit being built. Units: MW.
@@ -43,7 +42,6 @@ Base.@kwdef struct SupplyTechnology <: APIModel
     prime_mover_type::Union{Absent, Nothing, PrimeMovers} = ABSENT
     ramp_limits::Union{Absent, Nothing, UpDown} = ABSENT
     region::Union{Absent, Nothing, Vector{Int64}} = ABSENT
-    requirements::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     start_fuel_mmbtu_per_mw::Union{Absent, Float64, Nothing} = ABSENT
     time_limits::Union{Absent, Nothing, UpDown} = ABSENT
     unit_size::Union{Absent, Float64, Nothing} = ABSENT
@@ -54,7 +52,7 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/SupplyTechnology",
         ),
         _openapi_raw,
@@ -173,13 +171,6 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
             _openapi_object["region"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_requirements =
-        haskey(_openapi_object, "requirements") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["requirements"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_start_fuel_mmbtu_per_mw =
         haskey(_openapi_object, "start_fuel_mmbtu_per_mw") ?
         _decode(
@@ -221,7 +212,6 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
             "prime_mover_type",
             "ramp_limits",
             "region",
-            "requirements",
             "start_fuel_mmbtu_per_mw",
             "time_limits",
             "unit_size",
@@ -247,7 +237,6 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
         prime_mover_type=_openapi_field_prime_mover_type,
         ramp_limits=_openapi_field_ramp_limits,
         region=_openapi_field_region,
-        requirements=_openapi_field_requirements,
         start_fuel_mmbtu_per_mw=_openapi_field_start_fuel_mmbtu_per_mw,
         time_limits=_openapi_field_time_limits,
         unit_size=_openapi_field_unit_size,
@@ -295,8 +284,6 @@ function _encode(_openapi_value::SupplyTechnology)
         (_openapi_output["ramp_limits"] = _encode(_openapi_value.ramp_limits))
     _openapi_value.region isa Absent ||
         (_openapi_output["region"] = _encode(_openapi_value.region))
-    _openapi_value.requirements isa Absent ||
-        (_openapi_output["requirements"] = _encode(_openapi_value.requirements))
     _openapi_value.start_fuel_mmbtu_per_mw isa Absent || (
         _openapi_output["start_fuel_mmbtu_per_mw"] =
             _encode(_openapi_value.start_fuel_mmbtu_per_mw)
@@ -316,7 +303,7 @@ function _encode(_openapi_value::SupplyTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/SupplyTechnology",
         ),
         _openapi_output,
@@ -360,8 +347,6 @@ function _form_fields(_openapi_value::SupplyTechnology)
         push!(_openapi_output, "ramp_limits" => _openapi_value.ramp_limits)
     _openapi_value.region isa Absent ||
         push!(_openapi_output, "region" => _openapi_value.region)
-    _openapi_value.requirements isa Absent ||
-        push!(_openapi_output, "requirements" => _openapi_value.requirements)
     _openapi_value.start_fuel_mmbtu_per_mw isa Absent || push!(
         _openapi_output,
         "start_fuel_mmbtu_per_mw" => _openapi_value.start_fuel_mmbtu_per_mw,

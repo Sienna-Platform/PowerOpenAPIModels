@@ -16,7 +16,6 @@ Demand-side technology such as an electric vehicle fleet or a hydrogen electroly
   - `power_systems_type`: Corresponding type to be used in PCM modeling.
   - `price_per_unit`: Price or value per unit of output. Ex: USD per ton of hydrogen for electrolyzers. Units: USD/t.
   - `region`: Location where the component applies. Can be a zone or node.
-  - `requirements`: List of requirement IDs associated with the component.
   - `shift_variable_cost`: Variable operation and maintenance costs associated with flexible demand deferral/advancement. Units: USD/MWh.
   - `technology_efficiency`: MWh of electricity per unit of output. Ex: MWh per ton of hydrogen for electrolyzers. Units: 1.
 """
@@ -34,7 +33,6 @@ Base.@kwdef struct DemandSideTechnology <: APIModel
     power_systems_type::String
     price_per_unit::Union{Absent, DemandSideTechnologyPricePerUnit, Nothing} = ABSENT
     region::Union{Absent, Nothing, Vector{Int64}} = ABSENT
-    requirements::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     shift_variable_cost::Union{Absent, DemandSideTechnologyShiftVariableCost, Nothing} =
         ABSENT
     technology_efficiency::Union{Absent, Float64, Nothing} = ABSENT
@@ -45,7 +43,7 @@ function _decode(::Type{DemandSideTechnology}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/DemandSideTechnology",
         ),
         _openapi_raw,
@@ -136,13 +134,6 @@ function _decode(::Type{DemandSideTechnology}, _openapi_raw, _openapi_validate::
             _openapi_object["region"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_requirements =
-        haskey(_openapi_object, "requirements") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["requirements"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_shift_variable_cost =
         haskey(_openapi_object, "shift_variable_cost") ?
         _decode(
@@ -173,7 +164,6 @@ function _decode(::Type{DemandSideTechnology}, _openapi_raw, _openapi_validate::
             "power_systems_type",
             "price_per_unit",
             "region",
-            "requirements",
             "shift_variable_cost",
             "technology_efficiency",
         ) && continue
@@ -194,7 +184,6 @@ function _decode(::Type{DemandSideTechnology}, _openapi_raw, _openapi_validate::
         power_systems_type=_openapi_field_power_systems_type,
         price_per_unit=_openapi_field_price_per_unit,
         region=_openapi_field_region,
-        requirements=_openapi_field_requirements,
         shift_variable_cost=_openapi_field_shift_variable_cost,
         technology_efficiency=_openapi_field_technology_efficiency,
         additional_properties=_openapi_additional_properties,
@@ -231,8 +220,6 @@ function _encode(_openapi_value::DemandSideTechnology)
         (_openapi_output["price_per_unit"] = _encode(_openapi_value.price_per_unit))
     _openapi_value.region isa Absent ||
         (_openapi_output["region"] = _encode(_openapi_value.region))
-    _openapi_value.requirements isa Absent ||
-        (_openapi_output["requirements"] = _encode(_openapi_value.requirements))
     _openapi_value.shift_variable_cost isa Absent || (
         _openapi_output["shift_variable_cost"] =
             _encode(_openapi_value.shift_variable_cost)
@@ -252,7 +239,7 @@ function _encode(_openapi_value::DemandSideTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/DemandSideTechnology",
         ),
         _openapi_output,
@@ -291,8 +278,6 @@ function _form_fields(_openapi_value::DemandSideTechnology)
         push!(_openapi_output, "price_per_unit" => _openapi_value.price_per_unit)
     _openapi_value.region isa Absent ||
         push!(_openapi_output, "region" => _openapi_value.region)
-    _openapi_value.requirements isa Absent ||
-        push!(_openapi_output, "requirements" => _openapi_value.requirements)
     _openapi_value.shift_variable_cost isa Absent ||
         push!(_openapi_output, "shift_variable_cost" => _openapi_value.shift_variable_cost)
     _openapi_value.technology_efficiency isa Absent || push!(

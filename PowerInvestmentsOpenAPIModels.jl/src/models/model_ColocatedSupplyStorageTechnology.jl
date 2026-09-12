@@ -14,7 +14,6 @@ Supply technology co-located with storage behind a shared grid connection. The g
   - `operation_costs_inverter`: Operational costs for using inverter in co-located systems. Units: USD/MWh.
   - `power_systems_type`: Corresponding type to be used in PCM modeling.
   - `region`: Location where the component applies. Can be a zone or node.
-  - `requirements`: List of requirement IDs associated with the component.
   - `storage_technology`: The ID of the underlying storage technology co-located with the supply technology.
   - `supply_technology`: The ID of the underlying supply technology (e.g., wind or solar) co-located with storage.
 """
@@ -30,7 +29,6 @@ Base.@kwdef struct ColocatedSupplyStorageTechnology <: APIModel
     operation_costs_inverter::ColocatedSupplyStorageTechnologyOperationCostsInverter
     power_systems_type::String
     region::Union{Absent, Nothing, Vector{Int64}} = ABSENT
-    requirements::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     storage_technology::Int64
     supply_technology::Int64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -45,7 +43,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/ColocatedSupplyStorageTechnology",
         ),
         _openapi_raw,
@@ -134,13 +132,6 @@ function _decode(
             _openapi_object["region"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_requirements =
-        haskey(_openapi_object, "requirements") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["requirements"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_storage_technology = _decode(
         Int64,
         _required(
@@ -169,7 +160,6 @@ function _decode(
             "operation_costs_inverter",
             "power_systems_type",
             "region",
-            "requirements",
             "storage_technology",
             "supply_technology",
         ) && continue
@@ -188,7 +178,6 @@ function _decode(
         operation_costs_inverter=_openapi_field_operation_costs_inverter,
         power_systems_type=_openapi_field_power_systems_type,
         region=_openapi_field_region,
-        requirements=_openapi_field_requirements,
         storage_technology=_openapi_field_storage_technology,
         supply_technology=_openapi_field_supply_technology,
         additional_properties=_openapi_additional_properties,
@@ -227,8 +216,6 @@ function _encode(_openapi_value::ColocatedSupplyStorageTechnology)
         (_openapi_output["power_systems_type"] = _encode(_openapi_value.power_systems_type))
     _openapi_value.region isa Absent ||
         (_openapi_output["region"] = _encode(_openapi_value.region))
-    _openapi_value.requirements isa Absent ||
-        (_openapi_output["requirements"] = _encode(_openapi_value.requirements))
     _openapi_value.storage_technology isa Absent ||
         (_openapi_output["storage_technology"] = _encode(_openapi_value.storage_technology))
     _openapi_value.supply_technology isa Absent ||
@@ -244,7 +231,7 @@ function _encode(_openapi_value::ColocatedSupplyStorageTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/ColocatedSupplyStorageTechnology",
         ),
         _openapi_output,
@@ -283,8 +270,6 @@ function _form_fields(_openapi_value::ColocatedSupplyStorageTechnology)
         push!(_openapi_output, "power_systems_type" => _openapi_value.power_systems_type)
     _openapi_value.region isa Absent ||
         push!(_openapi_output, "region" => _openapi_value.region)
-    _openapi_value.requirements isa Absent ||
-        push!(_openapi_output, "requirements" => _openapi_value.requirements)
     _openapi_value.storage_technology isa Absent ||
         push!(_openapi_output, "storage_technology" => _openapi_value.storage_technology)
     _openapi_value.supply_technology isa Absent ||

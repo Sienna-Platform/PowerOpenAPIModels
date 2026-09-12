@@ -22,7 +22,6 @@ Name | Type | Description | Notes
 **`prime_mover_type`** | **`Union{Absent,Nothing,PrimeMovers}`** | Prime mover for generator. | [optional]
 **`ramp_limits`** | **`Union{Absent,Nothing,UpDown}`** | Maximum decrease and increase in output between operation periods. Units: MW/min. | [optional]
 **`region`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Location where the component applies. Can be a zone or node. | [optional]
-**`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
 **`start_fuel_mmbtu_per_mw`** | **`Union{Absent,Float64,Nothing}`** | Startup fuel use per MW of nameplate capacity of each generator. Units: MMBtu/MW. | [optional]
 **`time_limits`** | **`Union{Absent,Nothing,UpDown}`** | Minimum amount of time a resource has to stay in the committed or shutdown state (minutes). Units: min. | [optional]
 **`unit_size`** | **`Union{Absent,Float64,Nothing}`** | Used for discrete investment decisions. Size of each unit being built. Units: MW. | [optional]

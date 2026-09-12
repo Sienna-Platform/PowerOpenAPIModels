@@ -14,6 +14,5 @@ Name | Type | Description | Notes
 **`new_demand_mw`** | **`Union{Absent,Float64,Nothing}`** | The value of the peak demand to be used for new DemandRequirements. Units: MW. | [optional]
 **`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
 **`region`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Location where the component applies. Can be a zone or node. | [optional]
-**`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
 **`unserved_demand_curve`** | **`Union{Absent,DemandRequirementUnservedDemandCurve,Nothing}`** | Piecewise curve to scale the cost of unserved load based on the value of lost load. Units: USD/MWh. | [optional]
 **`value_of_lost_load`** | **`Union{Absent,Float64,Nothing}`** | Value of unserved load. Units: USD/MWh. | [optional]

@@ -16,6 +16,5 @@ Name | Type | Description | Notes
 **`operation_costs_inverter`** | **`ColocatedSupplyStorageTechnologyOperationCostsInverter`** | Operational costs for using inverter in co-located systems. Units: USD/MWh. | [required]
 **`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
 **`region`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Location where the component applies. Can be a zone or node. | [optional]
-**`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
 **`storage_technology`** | **`Int64`** | The ID of the underlying storage technology co-located with the supply technology. | [required]
 **`supply_technology`** | **`Int64`** | The ID of the underlying supply technology (e.g., wind or solar) co-located with storage. | [required]

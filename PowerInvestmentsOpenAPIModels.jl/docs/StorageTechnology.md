@@ -22,7 +22,6 @@ Name | Type | Description | Notes
 **`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
 **`prime_mover_type`** | **`Union{Absent,Nothing,PrimeMovers}`** | Prime mover for generator. | [optional]
 **`region`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Location where the component applies. Can be a zone or node. | [optional]
-**`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
 **`storage_tech`** | **`StorageTech`** | Storage Technology Type. | [required]
 **`unit_size_charge`** | **`Union{Absent,Float64,Nothing}`** | Used for discrete investment decisions. Unit size of charging capacity. Units: MW. | [optional]
 **`unit_size_discharge`** | **`Union{Absent,Float64,Nothing}`** | Used for discrete investment decisions. Size of each unit of discharging capacity being built. Units: MW. | [optional]

@@ -18,6 +18,5 @@ Name | Type | Description | Notes
 **`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
 **`price_per_unit`** | **`Union{Absent,DemandSideTechnologyPricePerUnit,Nothing}`** | Price or value per unit of output. Ex: USD per ton of hydrogen for electrolyzers. Units: USD/t. | [optional]
 **`region`** | **`Union{Absent,Nothing,Vector{Int64}}`** | Location where the component applies. Can be a zone or node. | [optional]
-**`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
 **`shift_variable_cost`** | **`Union{Absent,DemandSideTechnologyShiftVariableCost,Nothing}`** | Variable operation and maintenance costs associated with flexible demand deferral/advancement. Units: USD/MWh. | [optional]
 **`technology_efficiency`** | **`Union{Absent,Float64,Nothing}`** | MWh of electricity per unit of output. Ex: MWh per ton of hydrogen for electrolyzers. Units: 1. | [optional]

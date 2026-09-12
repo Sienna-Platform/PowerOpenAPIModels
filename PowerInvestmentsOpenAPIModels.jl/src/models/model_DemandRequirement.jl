@@ -12,7 +12,6 @@ Demand requirements for a region. New demand enters at a stated peak in its cons
   - `new_demand_mw`: The value of the peak demand to be used for new DemandRequirements. Units: MW.
   - `power_systems_type`: Corresponding type to be used in PCM modeling.
   - `region`: Location where the component applies. Can be a zone or node.
-  - `requirements`: List of requirement IDs associated with the component.
   - `unserved_demand_curve`: Piecewise curve to scale the cost of unserved load based on the value of lost load. Units: USD/MWh.
   - `value_of_lost_load`: Value of unserved load. Units: USD/MWh.
 """
@@ -26,7 +25,6 @@ Base.@kwdef struct DemandRequirement <: APIModel
     new_demand_mw::Union{Absent, Float64, Nothing} = ABSENT
     power_systems_type::String
     region::Union{Absent, Nothing, Vector{Int64}} = ABSENT
-    requirements::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     unserved_demand_curve::Union{Absent, DemandRequirementUnservedDemandCurve, Nothing} =
         ABSENT
     value_of_lost_load::Union{Absent, Float64, Nothing} = ABSENT
@@ -37,7 +35,7 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/DemandRequirement",
         ),
         _openapi_raw,
@@ -102,13 +100,6 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
             _openapi_object["region"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_requirements =
-        haskey(_openapi_object, "requirements") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["requirements"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_unserved_demand_curve =
         haskey(_openapi_object, "unserved_demand_curve") ?
         _decode(
@@ -135,7 +126,6 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
             "new_demand_mw",
             "power_systems_type",
             "region",
-            "requirements",
             "unserved_demand_curve",
             "value_of_lost_load",
         ) && continue
@@ -152,7 +142,6 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
         new_demand_mw=_openapi_field_new_demand_mw,
         power_systems_type=_openapi_field_power_systems_type,
         region=_openapi_field_region,
-        requirements=_openapi_field_requirements,
         unserved_demand_curve=_openapi_field_unserved_demand_curve,
         value_of_lost_load=_openapi_field_value_of_lost_load,
         additional_properties=_openapi_additional_properties,
@@ -179,8 +168,6 @@ function _encode(_openapi_value::DemandRequirement)
         (_openapi_output["power_systems_type"] = _encode(_openapi_value.power_systems_type))
     _openapi_value.region isa Absent ||
         (_openapi_output["region"] = _encode(_openapi_value.region))
-    _openapi_value.requirements isa Absent ||
-        (_openapi_output["requirements"] = _encode(_openapi_value.requirements))
     _openapi_value.unserved_demand_curve isa Absent || (
         _openapi_output["unserved_demand_curve"] =
             _encode(_openapi_value.unserved_demand_curve)
@@ -198,7 +185,7 @@ function _encode(_openapi_value::DemandRequirement)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-af9d0b5f8a5342306720.json",
+            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
             pointer="/components/schemas/DemandRequirement",
         ),
         _openapi_output,
@@ -227,8 +214,6 @@ function _form_fields(_openapi_value::DemandRequirement)
         push!(_openapi_output, "power_systems_type" => _openapi_value.power_systems_type)
     _openapi_value.region isa Absent ||
         push!(_openapi_output, "region" => _openapi_value.region)
-    _openapi_value.requirements isa Absent ||
-        push!(_openapi_output, "requirements" => _openapi_value.requirements)
     _openapi_value.unserved_demand_curve isa Absent || push!(
         _openapi_output,
         "unserved_demand_curve" => _openapi_value.unserved_demand_curve,

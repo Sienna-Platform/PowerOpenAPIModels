@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **`name`** | **`String`** | Name of the component. | [required]
 **`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
 **`reactance`** | **`Union{Absent,Float64,Nothing}`** | Series reactance for a line. Units: ohm. | [optional]
-**`requirements`** | **`Union{Absent,Nothing,Vector{Int64}}`** | List of requirement IDs associated with the component. | [optional]
 **`resistance`** | **`Union{Absent,Float64,Nothing}`** | Technology resistance in Ohms. Units: ohm. | [optional]
 **`start_node`** | **`Int64`** | Start node for transport technology. | [required]
 **`unit_size`** | **`Union{Absent,Float64,Nothing}`** | Used for integer investment decisions. Represents the rating capacity of individual new lines. Units: MW. | [optional]
