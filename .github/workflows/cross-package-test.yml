@@ -1,0 +1,158 @@
+name: CrossPackageTest
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      powersystems_ref:
+        # psy6's own test environment currently pins PowerTableDataParser to a revision
+        # requiring OpenAPI 0.2, which cannot resolve against these packages' OpenAPI 1.1.
+        # Until that pin moves, `jd/openapi-1x` is the ref that resolves.
+        description: PowerSystems.jl branch, tag, or sha to test against
+        default: psy6
+        required: false
+      infrastructuresystems_ref:
+        description: InfrastructureSystems.jl branch, tag, or sha to resolve against
+        default: IS4
+        required: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  POWERSYSTEMS_REF: ${{ github.event.inputs.powersystems_ref || 'psy6' }}
+  INFRASTRUCTURESYSTEMS_REF: ${{ github.event.inputs.infrastructuresystems_ref || 'IS4' }}
+
+jobs:
+  powersystems:
+    name: PowerSystems.jl (${{ github.event.inputs.powersystems_ref || 'psy6' }})
+    runs-on: ubuntu-latest
+    # Advisory, not a gate. The psy6 line moves on its own schedule and pins its other
+    # dependencies (PowerFlowFileParser, PowerSystemCaseBuilder, PowerTableDataParser) to
+    # branches of their own, so a red run here can mean "that line is mid-migration" as
+    # easily as "this change broke PowerSystems". Read the log before believing either.
+    continue-on-error: true
+    timeout-minutes: 120
+    steps:
+      - name: Check out this pull request
+        uses: actions/checkout@v4
+        with:
+          path: PowerOpenAPIModels
+
+      - name: Check out PowerSystems.jl
+        uses: actions/checkout@v4
+        with:
+          repository: Sienna-Platform/PowerSystems.jl
+          ref: ${{ env.POWERSYSTEMS_REF }}
+          path: PowerSystems.jl
+
+      # The psy6 line resolves against the IS4 branch, not a registered
+      # InfrastructureSystems release.
+      - name: Check out InfrastructureSystems.jl
+        uses: actions/checkout@v4
+        with:
+          repository: Sienna-Platform/InfrastructureSystems.jl
+          ref: ${{ env.INFRASTRUCTURESYSTEMS_REF }}
+          path: InfrastructureSystems.jl
+
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1"
+
+      - uses: julia-actions/cache@v2
+
+      # Repin rather than rely on how the chosen branch happens to pin us. Some branches
+      # pin these packages by relative path (which a sibling checkout would satisfy) and
+      # others by git `rev = "main"` -- and against a git pin this job would quietly test
+      # `main` instead of the pull request, passing while saying nothing. Rewriting the
+      # `[sources]` entries to this checkout is what makes the result mean something.
+      # Comments and key order are lost in the rewrite; the checkout is a throwaway.
+      - name: Point PowerSystems at this checkout
+        shell: julia --color=yes {0}
+        run: |
+            using TOML
+
+            OURS = [
+                "InfrastructureCoreOpenAPIModels",
+                "InfrastructureTimeSeriesOpenAPIModels",
+                "PowerCoreOpenAPIModels",
+                "PowerOperationsOpenAPIModels",
+                "PowerInvestmentsOpenAPIModels",
+                "PowerDynamicsOpenAPIModels",
+                "PowerOpenAPIModels",
+            ]
+            here = abspath("PowerOpenAPIModels")
+            infrastructure_systems = abspath("InfrastructureSystems.jl")
+
+            repinned = String[]
+            for project_path in
+                [joinpath("PowerSystems.jl", "Project.toml"),
+                 joinpath("PowerSystems.jl", "test", "Project.toml")]
+                isfile(project_path) || continue
+                project = TOML.parsefile(project_path)
+                sources = get!(project, "sources", Dict{String, Any}())
+                known = union(
+                    keys(get(project, "deps", Dict())),
+                    keys(get(project, "extras", Dict())),
+                )
+                for name in OURS
+                    name in known || continue
+                    sources[name] = Dict("path" => joinpath(here, "$name.jl"))
+                    push!(repinned, "$project_path: $name")
+                end
+                if "InfrastructureSystems" in known
+                    sources["InfrastructureSystems"] =
+                        Dict("path" => infrastructure_systems)
+                end
+                open(io -> TOML.print(io, project), project_path, "w")
+            end
+
+            isempty(repinned) &&
+                error("PowerSystems at this ref depends on none of these packages")
+            foreach(println, repinned)
+
+      - name: Instantiate PowerSystems' test environment
+        run: julia --project=PowerSystems.jl/test -e 'using Pkg; Pkg.instantiate()'
+
+      # Reads the manifest rather than trusting the rewrite: a `[sources]` entry Pkg
+      # ignored would leave a registry or git version here, and the suite below would then
+      # be testing something other than this pull request.
+      - name: Confirm the resolved manifest uses this checkout
+        shell: julia --color=yes {0}
+        run: |
+            using TOML
+
+            # In a function: a top-level `for` loop is soft scope, where `checked += 1`
+            # would bind a new local and fail on the read.
+            function check(manifest_path, here)
+                manifest = TOML.parsefile(manifest_path)
+                checked = 0
+                for (name, entries) in manifest["deps"]
+                    endswith(name, "OpenAPIModels") || continue
+                    for entry in entries
+                        path = get(entry, "path", nothing)
+                        (path !== nothing && startswith(abspath(path), here)) || error(
+                            "$name resolved to " *
+                            "$(something(path, "a registered version")), not to this " *
+                            "checkout",
+                        )
+                        checked += 1
+                    end
+                end
+                iszero(checked) &&
+                    error("no OpenAPI model package in the resolved manifest")
+                return checked
+            end
+
+            checked = check(
+                joinpath("PowerSystems.jl", "test", "Manifest.toml"),
+                abspath("PowerOpenAPIModels"),
+            )
+            println("$checked package(s) resolved to this checkout")
+
+      - name: Run PowerSystems' test suite
+        working-directory: PowerSystems.jl
+        run: julia --project=test test/runtests.jl
