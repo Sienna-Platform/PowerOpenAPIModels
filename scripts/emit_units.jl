@@ -404,9 +404,10 @@ function emit_units_for(
     schema_dir,
     factors,
     by_unit;
+    bases,
     accessor_module="InfrastructureCoreOpenAPIModels",
 )
-    schemas = selector_definitions(schema_dir, domain)
+    schemas = owned_definitions(schema_dir, domain, bases)
     prefix = ""
     if domain != "infrastructure-core"
         prefix = "$accessor_module."
@@ -433,7 +434,7 @@ function emit_units(schema_dir, repo_root)
     for (domain, pkg) in DOMAIN_TO_PKG
         dest = joinpath(repo_root, pkg, "src")
         isdir(dest) || continue
-        if emit_units_for(domain, dest, schema_dir, factors, by_unit)
+        if emit_units_for(domain, dest, schema_dir, factors, by_unit; bases=BASES_FOR_DOMAIN[domain])
             @info "Wrote $(joinpath(dest, "units.jl"))"
         end
     end

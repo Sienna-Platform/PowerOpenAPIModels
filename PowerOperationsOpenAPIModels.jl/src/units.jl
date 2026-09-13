@@ -4270,30 +4270,6 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     end
     error("TwoTerminalVSCLine.rating_to: no unit declared for power_units=$(o.power_units)")
 end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{ImportExportTimeSeriesCost},
-    ::Val{:energy_import_weekly_limit},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{ImportExportTimeSeriesCost},
-    ::Val{:energy_import_weekly_limit},
-) = "MWh"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{ImportExportTimeSeriesCost},
-    ::Val{:energy_import_weekly_limit},
-) = "ElectricalEnergy"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{ImportExportTimeSeriesCost},
-    ::Val{:energy_export_weekly_limit},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{ImportExportTimeSeriesCost},
-    ::Val{:energy_export_weekly_limit},
-) = "MWh"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{ImportExportTimeSeriesCost},
-    ::Val{:energy_export_weekly_limit},
-) = "ElectricalEnergy"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:base_power}) = true
 InfrastructureCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:base_power}) = "MVA"
 InfrastructureCoreOpenAPIModels.declared_quantity(
@@ -4487,30 +4463,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{Line},
     ::Val{:angle_limits},
 ) = "Angle"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{ImportExportCost},
-    ::Val{:energy_import_weekly_limit},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{ImportExportCost},
-    ::Val{:energy_import_weekly_limit},
-) = "MWh"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{ImportExportCost},
-    ::Val{:energy_import_weekly_limit},
-) = "ElectricalEnergy"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{ImportExportCost},
-    ::Val{:energy_export_weekly_limit},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{ImportExportCost},
-    ::Val{:energy_export_weekly_limit},
-) = "MWh"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{ImportExportCost},
-    ::Val{:energy_export_weekly_limit},
-) = "ElectricalEnergy"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoWindingTransformer},
     ::Val{:magnetizing_shunt},

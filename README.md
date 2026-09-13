@@ -66,11 +66,18 @@ make generate-docker CODEGEN_IMAGE=power-codegen
 
 ## Testing
 
-Either `make validate` or
-
 ```bash
-julia test/validate.jl
+make validate      # the generated packages match the schemas
+make precompile    # each package precompiles on its own
 ```
+
+`test/validate.jl` needs the test environment (`--project=test`), which is what `make
+validate` runs; calling `julia test/validate.jl` directly fails on a missing dependency. It
+also needs the schemas: set `SCHEMA_DIR` if the checkout is not the sibling `../SiennaSchemas`.
+
+## Releasing
+
+Seven packages, registered separately, in four dependency waves — see [RELEASING.md](RELEASING.md).
 
 ## Loading all models for testing
 

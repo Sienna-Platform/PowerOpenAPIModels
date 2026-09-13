@@ -93,6 +93,37 @@ _type_name(::Any) = ""
     @test sort(collect(aliases)) == String[]
 end
 
+# A selector declares every schema its domain reaches, shared types a base package owns
+# included, so a domain's declared set is wider than what its package defines. Unit methods
+# must follow ownership, not declaration: a method on a base package's type, emitted a second
+# time here, is a redefinition of that package's method. Julia makes that fatal -- "Method
+# overwriting is not permitted during Module precompilation" -- so the package silently stops
+# precompiling and every downstream load pays for it and warns. `owned_definitions` in
+# scripts/selector.jl is what keeps the two sets apart; this is the backstop.
+@testset "Unit methods are defined once, by the package that owns the type" begin
+    unit_sources = Dict{Symbol, Vector{String}}()
+    for pkg in [
+        InfrastructureCoreOpenAPIModels,
+        InfrastructureTimeSeriesOpenAPIModels,
+        PowerCoreOpenAPIModels,
+        PowerOperationsOpenAPIModels,
+        PowerInvestmentsOpenAPIModels,
+        PowerDynamicsOpenAPIModels,
+    ]
+        units = joinpath(pkgdir(pkg), "src", "units.jl")
+        isfile(units) || continue
+        for m in eachmatch(r"::Type\{([A-Za-z0-9_.]+)\}", read(units, String))
+            name = Symbol(last(split(m.captures[1], '.')))
+            push!(get!(unit_sources, name, String[]), string(pkg))
+        end
+    end
+    overlapping = [
+        "$name annotated in $(join(unique(pkgs), ", "))" for
+        (name, pkgs) in unit_sources if length(unique(pkgs)) > 1
+    ]
+    @test isempty(overlapping)
+end
+
 @testset "Infrastructure packages carry no power dependency" begin
     using TOML
     for pkg in ["InfrastructureCoreOpenAPIModels", "InfrastructureTimeSeriesOpenAPIModels"]

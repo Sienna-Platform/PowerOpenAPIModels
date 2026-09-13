@@ -323,7 +323,9 @@ for (domain, pkgdir, modname, bases) in DOMAINS
     end
     println(lines_out)
 
-    has_units = emit_units_for(domain, dest, SCHEMA_DIR, UNIT_FACTORS, UNIT_BY_UNIT)
+    has_units =
+        emit_units_for(domain, dest, SCHEMA_DIR, UNIT_FACTORS, UNIT_BY_UNIT;
+            bases=BASES_FOR_DOMAIN[domain])
     has_document = domain == "infrastructure-core" && isfile(joinpath(dest, "document.jl"))
     registered = registered_for(domain)
     has_registry = !isempty(registered)

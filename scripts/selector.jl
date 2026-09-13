@@ -67,3 +67,24 @@ function selector_definitions(schema_dir, domain)
     end
     return result
 end
+
+"""
+The components the domain *owns*: everything it declares, minus what its base packages
+declare.
+
+A selector declares every schema its domain reaches so the generator can name each one, so
+the declared set includes shared types a base package owns. Those arrive in the generated
+module as a `using` of the base package, not as a struct of this package's own -- and a
+method defined on such a type here would be a second definition of the base package's
+method. Julia rejects that during precompilation outright, so the distinction is
+load-bearing, not cosmetic.
+"""
+function owned_definitions(schema_dir, domain, bases)
+    declared = selector_definitions(schema_dir, domain)
+    for base in bases
+        for name in keys(selector_definitions(schema_dir, base))
+            delete!(declared, name)
+        end
+    end
+    return declared
+end
