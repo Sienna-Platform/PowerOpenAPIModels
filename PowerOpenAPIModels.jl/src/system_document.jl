@@ -75,7 +75,8 @@ depend on Operations. `Any` rather than a common generated-model supertype: the 
 old `OpenAPI.APIModel` to bound these against. Callers construct the concrete row and hand it
 to [`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref),
 [`add_service_association!`](@ref), or [`add_trading_hub_association!`](@ref);
-deserialization resolves the concrete type through the same [`model_type`](@ref) registry
+deserialization resolves the concrete type through the same
+[`model_type`](@ref InfrastructureCoreOpenAPIModels.model_type) registry
 `components` uses.
 """
 struct SystemDocument

@@ -23,9 +23,6 @@ const SERDE_FIXTURES = (
         for type_name in PowerOpenAPIModels.component_type_names(doc)
             components = PowerOpenAPIModels.get_components(doc, type_name)
             T = InfrastructureCoreOpenAPIModels.model_type(type_name)
-            # Under the pre-1.0 generator this checked `T <: OpenAPI.APIModel`; see the
-            # "every registered type is a generated model struct" testset in validate.jl for
-            # why `isstructtype` replaces it.
             @test isstructtype(T)
             @test eltype(components) === T
             total += length(components)
@@ -37,9 +34,7 @@ const SERDE_FIXTURES = (
         buses = PowerOpenAPIModels.get_components(doc, "ACBus")
         bus = only(filter(b -> b.id == 3, buses))
         @test bus.base_voltage == 138.0
-        # `bustype` is a validating wrapper struct now, not a bare `String`; see the
-        # `bustype=` fixtures in validate.jl for why (ACBus.bustype's $ref to the shared
-        # ACBusType carries its own description override, so it gets its own copy).
+        # `bustype` is a validating wrapper struct, not a bare `String`.
         @test bus.bustype.value == "REF"
 
         thermals = PowerOpenAPIModels.get_components(doc, "ThermalStandard")
