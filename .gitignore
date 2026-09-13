@@ -39,9 +39,6 @@ Manifest.toml
 .vscode
 *.h5
 
-# Pkg-resolution artifact from running test/validate.jl; not a curated
-# dependency file like scripts/Project.toml.
-test/Project.toml
 
 # Generated stubs from the old openapi-generator pipeline (cleaned up by `make clean`)
 generated/
