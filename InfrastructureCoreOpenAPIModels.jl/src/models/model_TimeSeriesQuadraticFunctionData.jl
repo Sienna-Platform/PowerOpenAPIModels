@@ -20,7 +20,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
             pointer="/\$defs/TimeSeriesQuadraticFunctionData",
         ),
         _openapi_raw,
@@ -67,7 +67,7 @@ function _encode(_openapi_value::TimeSeriesQuadraticFunctionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
             pointer="/\$defs/TimeSeriesQuadraticFunctionData",
         ),
         _openapi_output,

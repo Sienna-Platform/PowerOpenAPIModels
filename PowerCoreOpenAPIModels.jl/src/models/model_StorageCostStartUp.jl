@@ -6,7 +6,7 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/StorageCost/properties/start_up",
         ),
         value,
@@ -17,7 +17,7 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/StorageCost/properties/start_up/oneOf/0",
         ),
         value;
@@ -32,7 +32,7 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/ChargeDischarge",
         ),
         value;
@@ -54,7 +54,7 @@ function _encode(value::StorageCostStartUp)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/StorageCost/properties/start_up",
         ),
         output,

@@ -18,7 +18,7 @@ function _decode(::Type{CombinedCycleFractional}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-72a9a0bbd3bd9a78ca7d.json",
+            resource="https://openapi.invalid/schema/external-559209faaccbea4e364e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -72,7 +72,7 @@ function _encode(_openapi_value::CombinedCycleFractional)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-72a9a0bbd3bd9a78ca7d.json",
+            resource="https://openapi.invalid/schema/external-559209faaccbea4e364e.json",
             pointer="",
         ),
         _openapi_output,

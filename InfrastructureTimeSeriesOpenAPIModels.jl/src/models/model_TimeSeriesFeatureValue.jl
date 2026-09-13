@@ -12,7 +12,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbbaff9fba9188aac82e.json",
+            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
             pointer="/\$defs/TimeSeriesFeatureValue",
         ),
         value,
@@ -23,7 +23,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbbaff9fba9188aac82e.json",
+            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
             pointer="/\$defs/TimeSeriesFeatureValue/anyOf/0",
         ),
         value;
@@ -38,7 +38,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbbaff9fba9188aac82e.json",
+            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
             pointer="/\$defs/TimeSeriesFeatureValue/anyOf/1",
         ),
         value;
@@ -53,7 +53,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbbaff9fba9188aac82e.json",
+            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
             pointer="/\$defs/TimeSeriesFeatureValue/anyOf/2",
         ),
         value;
@@ -68,7 +68,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbbaff9fba9188aac82e.json",
+            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
             pointer="/\$defs/TimeSeriesFeatureValue/anyOf/3",
         ),
         value;
@@ -89,7 +89,7 @@ function _encode(value::TimeSeriesFeatureValue)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbbaff9fba9188aac82e.json",
+            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
             pointer="/\$defs/TimeSeriesFeatureValue",
         ),
         output,

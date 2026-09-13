@@ -12,7 +12,7 @@ function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/ProductionVariableCostCurve",
         ),
         value,
@@ -33,14 +33,14 @@ function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::
             "COST" => (
                 CostCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
                     pointer="/\$defs/CostCurve",
                 ),
             ),
             "FUEL" => (
                 FuelCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
                     pointer="/\$defs/FuelCurve",
                 ),
             ),
@@ -67,7 +67,7 @@ function _encode(value::ProductionVariableCostCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/ProductionVariableCostCurve",
         ),
         output,

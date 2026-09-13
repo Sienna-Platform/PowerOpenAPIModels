@@ -38,7 +38,7 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c224a69de806eccc4da3.json",
+            resource="https://openapi.invalid/schema/external-3ebeabbbbe6abb45db1e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -179,7 +179,7 @@ function _encode(_openapi_value::TModelHVDCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c224a69de806eccc4da3.json",
+            resource="https://openapi.invalid/schema/external-3ebeabbbbe6abb45db1e.json",
             pointer="",
         ),
         _openapi_output,

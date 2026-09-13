@@ -13,7 +13,7 @@ function _decode(::Type{GeographicInfo}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7ad3cf467fe1305802c0.json",
+            resource="https://openapi.invalid/schema/external-2aabf02bccc955bf88de.json",
             pointer="",
         ),
         _openapi_raw,
@@ -59,7 +59,7 @@ function _encode(_openapi_value::GeographicInfo)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7ad3cf467fe1305802c0.json",
+            resource="https://openapi.invalid/schema/external-2aabf02bccc955bf88de.json",
             pointer="",
         ),
         _openapi_output,

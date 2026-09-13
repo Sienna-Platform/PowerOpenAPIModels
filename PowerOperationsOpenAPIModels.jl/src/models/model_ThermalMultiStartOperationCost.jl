@@ -17,7 +17,7 @@ function _decode(::Type{ThermalMultiStartOperationCost}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b0f8123e2b4f7682d99a.json",
+            resource="https://openapi.invalid/schema/external-2a649abe3e7984a9c39a.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -38,28 +38,28 @@ function _decode(::Type{ThermalMultiStartOperationCost}, value, _openapi_validat
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
             "THERMAL" => (
                 ThermalGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
                     pointer="/\$defs/ThermalGenerationCost",
                 ),
             ),
@@ -86,7 +86,7 @@ function _encode(value::ThermalMultiStartOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b0f8123e2b4f7682d99a.json",
+            resource="https://openapi.invalid/schema/external-2a649abe3e7984a9c39a.json",
             pointer="/properties/operation_cost",
         ),
         output,

@@ -19,7 +19,7 @@ function _decode(::Type{RenewableGenerationCost}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/RenewableGenerationCost",
         ),
         _openapi_raw,
@@ -91,7 +91,7 @@ function _encode(_openapi_value::RenewableGenerationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/RenewableGenerationCost",
         ),
         _openapi_output,

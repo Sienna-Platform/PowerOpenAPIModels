@@ -7,7 +7,7 @@ function _decode(::Type{AverageRateCurveFunctionData}, value, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/AverageRateCurve/properties/function_data",
         ),
         value,
@@ -28,14 +28,14 @@ function _decode(::Type{AverageRateCurveFunctionData}, value, _openapi_validate:
             "LINEAR" => (
                 LinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
                     pointer="/\$defs/LinearFunctionData",
                 ),
             ),
             "PIECEWISE_STEP" => (
                 PiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
                     pointer="/\$defs/PiecewiseStepData",
                 ),
             ),
@@ -62,7 +62,7 @@ function _encode(value::AverageRateCurveFunctionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/AverageRateCurve/properties/function_data",
         ),
         output,

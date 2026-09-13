@@ -63,7 +63,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-55ac9be8643f1f23b680.json",
+            resource="https://openapi.invalid/schema/external-bb82ef18b047e37c804d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -317,7 +317,7 @@ function _encode(_openapi_value::DeterministicSingleTimeSeries)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-55ac9be8643f1f23b680.json",
+            resource="https://openapi.invalid/schema/external-bb82ef18b047e37c804d.json",
             pointer="",
         ),
         _openapi_output,

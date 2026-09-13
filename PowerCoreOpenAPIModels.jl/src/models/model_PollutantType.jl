@@ -29,7 +29,7 @@ function _decode(::Type{PollutantType}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/PollutantType",
         ),
         value,
@@ -43,7 +43,7 @@ function _encode(value::PollutantType)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/PollutantType",
         ),
         output,

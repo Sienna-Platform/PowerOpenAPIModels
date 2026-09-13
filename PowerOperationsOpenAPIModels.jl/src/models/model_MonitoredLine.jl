@@ -50,7 +50,7 @@ function _decode(::Type{MonitoredLine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ad60f196a4f3086c0a51.json",
+            resource="https://openapi.invalid/schema/external-de54efce0252c5b98748.json",
             pointer="",
         ),
         _openapi_raw,
@@ -239,7 +239,7 @@ function _encode(_openapi_value::MonitoredLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ad60f196a4f3086c0a51.json",
+            resource="https://openapi.invalid/schema/external-de54efce0252c5b98748.json",
             pointer="",
         ),
         _openapi_output,

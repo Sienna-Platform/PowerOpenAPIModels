@@ -20,7 +20,7 @@ function _decode(::Type{RetrofitPotential}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-111ea36693d5623d17e5.json",
+            resource="https://openapi.invalid/schema/external-16cedac303a10bb9798b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -87,7 +87,7 @@ function _encode(_openapi_value::RetrofitPotential)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-111ea36693d5623d17e5.json",
+            resource="https://openapi.invalid/schema/external-16cedac303a10bb9798b.json",
             pointer="",
         ),
         _openapi_output,

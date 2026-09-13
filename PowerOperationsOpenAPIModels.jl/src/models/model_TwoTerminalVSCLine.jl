@@ -104,7 +104,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f7e8f291c577c0e21b89.json",
+            resource="https://openapi.invalid/schema/external-9ecd50b82d9d3ac2dccf.json",
             pointer="",
         ),
         _openapi_raw,
@@ -650,7 +650,7 @@ function _encode(_openapi_value::TwoTerminalVSCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f7e8f291c577c0e21b89.json",
+            resource="https://openapi.invalid/schema/external-9ecd50b82d9d3ac2dccf.json",
             pointer="",
         ),
         _openapi_output,

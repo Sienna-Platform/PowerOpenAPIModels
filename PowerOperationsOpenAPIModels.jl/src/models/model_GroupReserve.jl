@@ -24,7 +24,7 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6ac3b98751d47b5d81a6.json",
+            resource="https://openapi.invalid/schema/external-bcfe96dbd48c95f26a63.json",
             pointer="",
         ),
         _openapi_raw,
@@ -103,7 +103,7 @@ function _encode(_openapi_value::GroupReserve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6ac3b98751d47b5d81a6.json",
+            resource="https://openapi.invalid/schema/external-bcfe96dbd48c95f26a63.json",
             pointer="",
         ),
         _openapi_output,

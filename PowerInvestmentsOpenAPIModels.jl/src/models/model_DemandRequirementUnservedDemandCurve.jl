@@ -23,7 +23,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-136488d5713e6fb8bb6e.json",
+            resource="https://openapi.invalid/schema/external-813de87b6fb714b267ea.json",
             pointer="/properties/unserved_demand_curve",
         ),
         value,
@@ -44,42 +44,42 @@ function _decode(
             "AVERAGE_RATE" => (
                 AverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/AverageRateCurve",
                 ),
             ),
             "INCREMENTAL" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/IncrementalCurve",
                 ),
             ),
             "INPUT_OUTPUT" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/InputOutputCurve",
                 ),
             ),
             "TIME_SERIES_AVERAGE_RATE" => (
                 TimeSeriesAverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/TimeSeriesAverageRateCurve",
                 ),
             ),
             "TIME_SERIES_INCREMENTAL" => (
                 TimeSeriesIncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/TimeSeriesIncrementalCurve",
                 ),
             ),
             "TIME_SERIES_INPUT_OUTPUT" => (
                 TimeSeriesInputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/TimeSeriesInputOutputCurve",
                 ),
             ),
@@ -108,7 +108,7 @@ function _encode(value::DemandRequirementUnservedDemandCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-136488d5713e6fb8bb6e.json",
+            resource="https://openapi.invalid/schema/external-813de87b6fb714b267ea.json",
             pointer="/properties/unserved_demand_curve",
         ),
         output,

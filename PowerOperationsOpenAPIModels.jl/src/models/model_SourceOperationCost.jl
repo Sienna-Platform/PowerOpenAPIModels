@@ -11,7 +11,7 @@ function _decode(::Type{SourceOperationCost}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-034b6f4750d46e52a129.json",
+            resource="https://openapi.invalid/schema/external-589c935ffa1ef1530dc8.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -28,21 +28,21 @@ function _decode(::Type{SourceOperationCost}, value, _openapi_validate::Bool)
             "IMPORTEXPORT" => (
                 ImportExportCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
                     pointer="/\$defs/ImportExportCost",
                 ),
             ),
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -67,7 +67,7 @@ function _encode(value::SourceOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-034b6f4750d46e52a129.json",
+            resource="https://openapi.invalid/schema/external-589c935ffa1ef1530dc8.json",
             pointer="/properties/operation_cost",
         ),
         output,

@@ -25,7 +25,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-92044e3d303c26633e58.json",
+            resource="https://openapi.invalid/schema/external-fec0a461ed269b329ddd.json",
             pointer="",
         ),
         _openapi_raw,
@@ -89,7 +89,7 @@ function _encode(_openapi_value::SupplementalAttributeAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-92044e3d303c26633e58.json",
+            resource="https://openapi.invalid/schema/external-fec0a461ed269b329ddd.json",
             pointer="",
         ),
         _openapi_output,

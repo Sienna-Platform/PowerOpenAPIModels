@@ -18,7 +18,7 @@ function _decode(::Type{HourlyMatching}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8bf3a0d73b9dd9044e34.json",
+            resource="https://openapi.invalid/schema/external-f43b07d269cc26eb3495.json",
             pointer="",
         ),
         _openapi_raw,
@@ -72,7 +72,7 @@ function _encode(_openapi_value::HourlyMatching)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8bf3a0d73b9dd9044e34.json",
+            resource="https://openapi.invalid/schema/external-f43b07d269cc26eb3495.json",
             pointer="",
         ),
         _openapi_output,

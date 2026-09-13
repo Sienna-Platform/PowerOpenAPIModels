@@ -60,7 +60,7 @@ function _decode(::Type{Scenarios}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-187a69af105bbfe4a51e.json",
+            resource="https://openapi.invalid/schema/external-97494af7a6d71c1b4b8c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -314,7 +314,7 @@ function _encode(_openapi_value::Scenarios)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-187a69af105bbfe4a51e.json",
+            resource="https://openapi.invalid/schema/external-97494af7a6d71c1b4b8c.json",
             pointer="",
         ),
         _openapi_output,

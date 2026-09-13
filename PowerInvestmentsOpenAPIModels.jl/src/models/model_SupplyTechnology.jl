@@ -52,7 +52,7 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dcdd492f893366934ca1.json",
+            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -303,7 +303,7 @@ function _encode(_openapi_value::SupplyTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dcdd492f893366934ca1.json",
+            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
             pointer="",
         ),
         _openapi_output,

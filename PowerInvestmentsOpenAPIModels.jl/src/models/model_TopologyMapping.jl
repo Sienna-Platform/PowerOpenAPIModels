@@ -16,7 +16,7 @@ function _decode(::Type{TopologyMapping}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b2dd53d2de64507aa91c.json",
+            resource="https://openapi.invalid/schema/external-a2797460ea2400b91729.json",
             pointer="",
         ),
         _openapi_raw,
@@ -64,7 +64,7 @@ function _encode(_openapi_value::TopologyMapping)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b2dd53d2de64507aa91c.json",
+            resource="https://openapi.invalid/schema/external-a2797460ea2400b91729.json",
             pointer="",
         ),
         _openapi_output,

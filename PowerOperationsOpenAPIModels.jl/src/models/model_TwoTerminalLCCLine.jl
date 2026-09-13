@@ -98,7 +98,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-eebfcfe10ee7b5630cfb.json",
+            resource="https://openapi.invalid/schema/external-2c4a3f68248fa9a1c12b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -608,7 +608,7 @@ function _encode(_openapi_value::TwoTerminalLCCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-eebfcfe10ee7b5630cfb.json",
+            resource="https://openapi.invalid/schema/external-2c4a3f68248fa9a1c12b.json",
             pointer="",
         ),
         _openapi_output,

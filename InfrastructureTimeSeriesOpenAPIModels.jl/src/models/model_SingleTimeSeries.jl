@@ -54,7 +54,7 @@ function _decode(::Type{SingleTimeSeries}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5cc161da1c6721e651e9.json",
+            resource="https://openapi.invalid/schema/external-b4bee6c783951387cd54.json",
             pointer="",
         ),
         _openapi_raw,
@@ -290,7 +290,7 @@ function _encode(_openapi_value::SingleTimeSeries)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5cc161da1c6721e651e9.json",
+            resource="https://openapi.invalid/schema/external-b4bee6c783951387cd54.json",
             pointer="",
         ),
         _openapi_output,

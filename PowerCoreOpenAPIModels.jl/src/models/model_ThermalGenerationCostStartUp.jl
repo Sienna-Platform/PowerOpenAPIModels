@@ -12,7 +12,7 @@ function _decode(::Type{ThermalGenerationCostStartUp}, value, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/ThermalGenerationCost/properties/start_up",
         ),
         value,
@@ -35,7 +35,7 @@ function _decode(::Type{ThermalGenerationCostStartUp}, value, _openapi_validate:
             "STAGES" => (
                 StartUpStages,
                 (
-                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
                     pointer="/\$defs/StartUpStages",
                 ),
             ),
@@ -62,7 +62,7 @@ function _encode(value::ThermalGenerationCostStartUp)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/ThermalGenerationCost/properties/start_up",
         ),
         output,

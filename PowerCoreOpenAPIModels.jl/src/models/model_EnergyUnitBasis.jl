@@ -16,7 +16,7 @@ function _decode(::Type{EnergyUnitBasis}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/EnergyUnitBasis",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::EnergyUnitBasis)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
             pointer="/\$defs/EnergyUnitBasis",
         ),
         output,

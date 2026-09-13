@@ -31,7 +31,7 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-aaa02c6118a1bb1914ad.json",
+            resource="https://openapi.invalid/schema/external-9c33aa51cc237ea2af5e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -156,7 +156,7 @@ function _encode(_openapi_value::EmissionsData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-aaa02c6118a1bb1914ad.json",
+            resource="https://openapi.invalid/schema/external-9c33aa51cc237ea2af5e.json",
             pointer="",
         ),
         _openapi_output,

@@ -21,7 +21,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-63a18554b31f83d6e538.json",
+            resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
             pointer="/properties/transformer_winding",
         ),
         value,
@@ -37,7 +37,7 @@ function _encode(value::ImpedanceCorrectionDataTransformerWinding)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-63a18554b31f83d6e538.json",
+            resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
             pointer="/properties/transformer_winding",
         ),
         output,

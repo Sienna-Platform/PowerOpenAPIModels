@@ -12,7 +12,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dcdd492f893366934ca1.json",
+            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
             pointer="/properties/capacity_limits",
         ),
         value,
@@ -23,7 +23,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+            resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
             pointer="/\$defs/MinMax",
         ),
         value;
@@ -38,7 +38,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if !_openapi_validate || _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+            resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
             pointer="/\$defs/MinMaxByKey",
         ),
         value;
@@ -62,7 +62,7 @@ function _encode(value::SupplyTechnologyCapacityLimits)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dcdd492f893366934ca1.json",
+            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
             pointer="/properties/capacity_limits",
         ),
         output,

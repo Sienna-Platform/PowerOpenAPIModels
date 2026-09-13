@@ -16,7 +16,7 @@ function _decode(::Type{OwnerCategory}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbbaff9fba9188aac82e.json",
+            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
             pointer="/\$defs/OwnerCategory",
         ),
         value,
@@ -30,7 +30,7 @@ function _encode(value::OwnerCategory)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbbaff9fba9188aac82e.json",
+            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
             pointer="/\$defs/OwnerCategory",
         ),
         output,

@@ -24,7 +24,7 @@ function _decode(::Type{CarbonCaps}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-095adee1ba942bb97f34.json",
+            resource="https://openapi.invalid/schema/external-536c1a6dc89f1d9a7957.json",
             pointer="",
         ),
         _openapi_raw,
@@ -103,7 +103,7 @@ function _encode(_openapi_value::CarbonCaps)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-095adee1ba942bb97f34.json",
+            resource="https://openapi.invalid/schema/external-536c1a6dc89f1d9a7957.json",
             pointer="",
         ),
         _openapi_output,

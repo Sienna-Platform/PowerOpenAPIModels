@@ -50,7 +50,7 @@ function _decode(::Type{HydroDispatch}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b2ccb618a91121803b01.json",
+            resource="https://openapi.invalid/schema/external-a5150d536943e6a6d583.json",
             pointer="",
         ),
         _openapi_raw,
@@ -255,7 +255,7 @@ function _encode(_openapi_value::HydroDispatch)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b2ccb618a91121803b01.json",
+            resource="https://openapi.invalid/schema/external-a5150d536943e6a6d583.json",
             pointer="",
         ),
         _openapi_output,

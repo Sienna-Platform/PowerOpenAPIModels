@@ -19,7 +19,7 @@ function _decode(::Type{DemandSideTechnologyPricePerUnit}, value, _openapi_valid
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0767ecaabd38db61c5ee.json",
+            resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
             pointer="/properties/price_per_unit",
         ),
         value,
@@ -40,42 +40,42 @@ function _decode(::Type{DemandSideTechnologyPricePerUnit}, value, _openapi_valid
             "AVERAGE_RATE" => (
                 AverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/AverageRateCurve",
                 ),
             ),
             "INCREMENTAL" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/IncrementalCurve",
                 ),
             ),
             "INPUT_OUTPUT" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/InputOutputCurve",
                 ),
             ),
             "TIME_SERIES_AVERAGE_RATE" => (
                 TimeSeriesAverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/TimeSeriesAverageRateCurve",
                 ),
             ),
             "TIME_SERIES_INCREMENTAL" => (
                 TimeSeriesIncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/TimeSeriesIncrementalCurve",
                 ),
             ),
             "TIME_SERIES_INPUT_OUTPUT" => (
                 TimeSeriesInputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-0c77f7276093a5d31ba5.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/TimeSeriesInputOutputCurve",
                 ),
             ),
@@ -102,7 +102,7 @@ function _encode(value::DemandSideTechnologyPricePerUnit)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0767ecaabd38db61c5ee.json",
+            resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
             pointer="/properties/price_per_unit",
         ),
         output,

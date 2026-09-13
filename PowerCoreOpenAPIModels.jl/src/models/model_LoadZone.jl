@@ -24,7 +24,7 @@ function _decode(::Type{LoadZone}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-fd539190dc347a23deea.json",
+            resource="https://openapi.invalid/schema/external-3254b6b0f37f88d39dbc.json",
             pointer="",
         ),
         _openapi_raw,
@@ -105,7 +105,7 @@ function _encode(_openapi_value::LoadZone)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-fd539190dc347a23deea.json",
+            resource="https://openapi.invalid/schema/external-3254b6b0f37f88d39dbc.json",
             pointer="",
         ),
         _openapi_output,

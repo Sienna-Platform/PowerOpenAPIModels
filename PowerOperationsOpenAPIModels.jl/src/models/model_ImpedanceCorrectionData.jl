@@ -19,7 +19,7 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-63a18554b31f83d6e538.json",
+            resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -101,7 +101,7 @@ function _encode(_openapi_value::ImpedanceCorrectionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-63a18554b31f83d6e538.json",
+            resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
             pointer="",
         ),
         _openapi_output,

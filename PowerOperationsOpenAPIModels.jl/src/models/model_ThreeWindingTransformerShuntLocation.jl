@@ -24,7 +24,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ddecbf0b8a8ce9be5178.json",
+            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
             pointer="/\$defs/ThreeWindingTransformerShuntLocation",
         ),
         value,
@@ -38,7 +38,7 @@ function _encode(value::ThreeWindingTransformerShuntLocation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ddecbf0b8a8ce9be5178.json",
+            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
             pointer="/\$defs/ThreeWindingTransformerShuntLocation",
         ),
         output,

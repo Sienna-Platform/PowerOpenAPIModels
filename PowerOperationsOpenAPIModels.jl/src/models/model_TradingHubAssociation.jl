@@ -16,7 +16,7 @@ function _decode(::Type{TradingHubAssociation}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b6633d19bfa180c620d4.json",
+            resource="https://openapi.invalid/schema/external-ebdabc70334966011247.json",
             pointer="",
         ),
         _openapi_raw,
@@ -63,7 +63,7 @@ function _encode(_openapi_value::TradingHubAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b6633d19bfa180c620d4.json",
+            resource="https://openapi.invalid/schema/external-ebdabc70334966011247.json",
             pointer="",
         ),
         _openapi_output,
