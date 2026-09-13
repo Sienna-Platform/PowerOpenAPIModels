@@ -1,0 +1,80 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate (julia ${{ matrix.julia-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # The floor every package declares in [compat], and the current release. A
+        # generated package that loads on one and not the other is a compat bug, and
+        # the floor is the one nobody tests locally. Both are pinned rather than
+        # written as "1": a moving channel turns somebody else's release into this
+        # repository's red build, with nothing in the diff to explain it.
+        julia-version: ["1.10", "1.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      # test/validate.jl reads Core/SystemDocument.json and the unit vocabulary from the
+      # schema release this output was generated against. .schema-version names it -- a
+      # release tag once the schemas are released, a commit sha between releases -- and
+      # either works as a checkout ref.
+      - name: Resolve the schema version this output was generated against
+        id: schema
+        run: echo "ref=$(cat .schema-version)" >> "$GITHUB_OUTPUT"
+
+      - name: Check out SiennaSchemas at that version
+        uses: actions/checkout@v4
+        with:
+          repository: Sienna-Platform/SiennaSchemas
+          ref: ${{ steps.schema.outputs.ref }}
+          path: SiennaSchemas
+
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.julia-version }}
+
+      - uses: julia-actions/cache@v2
+
+      # validate.jl does its own Pkg.develop of the seven packages, so there is nothing
+      # to instantiate first: test/Manifest.toml is git-ignored and a fresh checkout has
+      # none, which is the point -- CI resolves against the Project.toml bounds rather
+      # than a manifest someone's laptop pinned.
+      - name: Validate the generated packages
+        env:
+          SCHEMA_DIR: ${{ github.workspace }}/SiennaSchemas
+        run: julia --project=test test/validate.jl
+
+  precompile:
+    name: precompile (julia ${{ matrix.julia-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Precompilation is the part of loading that changes most between Julia
+        # releases, so it is checked on the same two versions rather than one.
+        julia-version: ["1.10", "1.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.julia-version }}
+
+      - uses: julia-actions/cache@v2
+
+      # See the header of test/precompile.jl for why `using` and `Pkg.precompile` both
+      # pass on the failure this catches.
+      - name: Precompile all seven
+        run: julia test/precompile.jl
