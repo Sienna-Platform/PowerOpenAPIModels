@@ -19,8 +19,10 @@ jobs:
       matrix:
         # The floor every package declares in [compat], and the current release. A
         # generated package that loads on one and not the other is a compat bug, and
-        # the floor is the one nobody tests locally.
-        julia-version: ["1.10", "1"]
+        # the floor is the one nobody tests locally. Both are pinned rather than
+        # written as "1": a moving channel turns somebody else's release into this
+        # repository's red build, with nothing in the diff to explain it.
+        julia-version: ["1.10", "1.13"]
     steps:
       - uses: actions/checkout@v4
 
@@ -55,14 +57,20 @@ jobs:
         run: julia --project=test test/validate.jl
 
   precompile:
-    name: precompile each package standalone
+    name: precompile (julia ${{ matrix.julia-version }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Precompilation is the part of loading that changes most between Julia
+        # releases, so it is checked on the same two versions rather than one.
+        julia-version: ["1.10", "1.13"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: julia-actions/setup-julia@v2
         with:
-          version: "1.10"
+          version: ${{ matrix.julia-version }}
 
       - uses: julia-actions/cache@v2
 

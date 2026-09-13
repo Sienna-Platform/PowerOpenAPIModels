@@ -6,8 +6,8 @@ why the tags are not just `v0.1.0`.
 
 ## Before you start
 
-- `main` is green: the **Test** workflow runs `test/validate.jl` on the `[compat]` floor and
-  the current Julia release, and `test/precompile.jl` on every package.
+- `main` is green: the **Test** workflow runs `test/validate.jl` and `test/precompile.jl` on
+  Julia 1.10 (the `[compat]` floor every package declares) and 1.13 (current).
 - `.schema-version` names a SiennaSchemas **release tag**, not a commit. The generated code
   has to be reproducible from a released schema version, or a consumer cannot regenerate it.
   Confirm with a regeneration that changes nothing:
