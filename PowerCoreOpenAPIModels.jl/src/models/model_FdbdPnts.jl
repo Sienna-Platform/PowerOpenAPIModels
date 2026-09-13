@@ -13,8 +13,8 @@ function _decode(::Type{FdbdPnts}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/FdbdPnts",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/FdbdPnts",
         ),
         _openapi_raw,
         "decoding FdbdPnts";
@@ -64,8 +64,8 @@ function _encode(_openapi_value::FdbdPnts)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/FdbdPnts",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/FdbdPnts",
         ),
         _openapi_output,
         "encoding FdbdPnts";

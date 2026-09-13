@@ -16,8 +16,8 @@ function _decode(::Type{BilateralProduct}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/BilateralProduct",
+            resource="https://openapi.invalid/schema/external-ddecbf0b8a8ce9be5178.json",
+            pointer="/\$defs/BilateralProduct",
         ),
         value,
         "decoding BilateralProduct";
@@ -30,8 +30,8 @@ function _encode(value::BilateralProduct)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/BilateralProduct",
+            resource="https://openapi.invalid/schema/external-ddecbf0b8a8ce9be5178.json",
+            pointer="/\$defs/BilateralProduct",
         ),
         output,
         "encoding BilateralProduct";

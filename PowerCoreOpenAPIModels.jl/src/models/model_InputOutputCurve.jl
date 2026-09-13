@@ -14,8 +14,8 @@ function _decode(::Type{InputOutputCurve}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/InputOutputCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/InputOutputCurve",
         ),
         _openapi_raw,
         "decoding InputOutputCurve";
@@ -71,8 +71,8 @@ function _encode(_openapi_value::InputOutputCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/InputOutputCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/InputOutputCurve",
         ),
         _openapi_output,
         "encoding InputOutputCurve";

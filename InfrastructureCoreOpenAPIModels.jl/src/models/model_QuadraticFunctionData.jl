@@ -15,8 +15,8 @@ function _decode(::Type{QuadraticFunctionData}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/QuadraticFunctionData",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/QuadraticFunctionData",
         ),
         _openapi_raw,
         "decoding QuadraticFunctionData";
@@ -80,8 +80,8 @@ function _encode(_openapi_value::QuadraticFunctionData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/QuadraticFunctionData",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/QuadraticFunctionData",
         ),
         _openapi_output,
         "encoding QuadraticFunctionData";

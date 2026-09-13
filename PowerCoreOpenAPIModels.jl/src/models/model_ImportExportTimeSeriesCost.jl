@@ -3,18 +3,18 @@
 
 Cost representation for time-varying imports and exports with neighboring areas. The static counterpart is ImportExportCost.
 
-  - `energy_export_weekly_limit`: Weekly limit on exported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base. Units: MWh.
-  - `energy_import_weekly_limit`: Weekly limit on imported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base. Units: MWh.
-  - `export_offer_curves`: Export price curves whose value curve admits only the TIME_SERIES_INCREMENTAL variant; any other variant is rejected by the consuming constructor.
   - `import_offer_curves`: Import price curves whose value curve admits only the TIME_SERIES_INCREMENTAL variant; any other variant is rejected by the consuming constructor.
+  - `export_offer_curves`: Export price curves whose value curve admits only the TIME_SERIES_INCREMENTAL variant; any other variant is rejected by the consuming constructor.
+  - `energy_import_weekly_limit`: Weekly limit on imported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base. Units: MWh.
+  - `energy_export_weekly_limit`: Weekly limit on exported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base. Units: MWh.
 """
 Base.@kwdef struct ImportExportTimeSeriesCost <: APIModel
-    ancillary_service_offers::Vector{Int64}
     cost_type::String = "IMPORT_EXPORT_TIME_SERIES"
-    energy_export_weekly_limit::Float64
-    energy_import_weekly_limit::Float64
-    export_offer_curves::CostCurve
     import_offer_curves::CostCurve
+    export_offer_curves::CostCurve
+    energy_import_weekly_limit::Float64
+    energy_export_weekly_limit::Float64
+    ancillary_service_offers::Vector{Int64}
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{ImportExportTimeSeriesCost}, value) =
@@ -23,35 +23,27 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ImportExportTimeSeriesCost",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ImportExportTimeSeriesCost",
         ),
         _openapi_raw,
         "decoding ImportExportTimeSeriesCost";
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ImportExportTimeSeriesCost")
-    _openapi_field_ancillary_service_offers = _decode(
-        Vector{Int64},
-        _required(
-            _openapi_object,
-            "ancillary_service_offers",
-            "ImportExportTimeSeriesCost",
-        ),
-        _openapi_validate,
-    )
     _openapi_field_cost_type = _decode(
         String,
         _required(_openapi_object, "cost_type", "ImportExportTimeSeriesCost"),
         _openapi_validate,
     )
-    _openapi_field_energy_export_weekly_limit = _decode(
-        Float64,
-        _required(
-            _openapi_object,
-            "energy_export_weekly_limit",
-            "ImportExportTimeSeriesCost",
-        ),
+    _openapi_field_import_offer_curves = _decode(
+        CostCurve,
+        _required(_openapi_object, "import_offer_curves", "ImportExportTimeSeriesCost"),
+        _openapi_validate,
+    )
+    _openapi_field_export_offer_curves = _decode(
+        CostCurve,
+        _required(_openapi_object, "export_offer_curves", "ImportExportTimeSeriesCost"),
         _openapi_validate,
     )
     _openapi_field_energy_import_weekly_limit = _decode(
@@ -63,62 +55,70 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
         ),
         _openapi_validate,
     )
-    _openapi_field_export_offer_curves = _decode(
-        CostCurve,
-        _required(_openapi_object, "export_offer_curves", "ImportExportTimeSeriesCost"),
+    _openapi_field_energy_export_weekly_limit = _decode(
+        Float64,
+        _required(
+            _openapi_object,
+            "energy_export_weekly_limit",
+            "ImportExportTimeSeriesCost",
+        ),
         _openapi_validate,
     )
-    _openapi_field_import_offer_curves = _decode(
-        CostCurve,
-        _required(_openapi_object, "import_offer_curves", "ImportExportTimeSeriesCost"),
+    _openapi_field_ancillary_service_offers = _decode(
+        Vector{Int64},
+        _required(
+            _openapi_object,
+            "ancillary_service_offers",
+            "ImportExportTimeSeriesCost",
+        ),
         _openapi_validate,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
-            "ancillary_service_offers",
             "cost_type",
-            "energy_export_weekly_limit",
-            "energy_import_weekly_limit",
-            "export_offer_curves",
             "import_offer_curves",
+            "export_offer_curves",
+            "energy_import_weekly_limit",
+            "energy_export_weekly_limit",
+            "ancillary_service_offers",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return ImportExportTimeSeriesCost(;
-        ancillary_service_offers=_openapi_field_ancillary_service_offers,
         cost_type=_openapi_field_cost_type,
-        energy_export_weekly_limit=_openapi_field_energy_export_weekly_limit,
-        energy_import_weekly_limit=_openapi_field_energy_import_weekly_limit,
-        export_offer_curves=_openapi_field_export_offer_curves,
         import_offer_curves=_openapi_field_import_offer_curves,
+        export_offer_curves=_openapi_field_export_offer_curves,
+        energy_import_weekly_limit=_openapi_field_energy_import_weekly_limit,
+        energy_export_weekly_limit=_openapi_field_energy_export_weekly_limit,
+        ancillary_service_offers=_openapi_field_ancillary_service_offers,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::ImportExportTimeSeriesCost)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.ancillary_service_offers isa Absent || (
-        _openapi_output["ancillary_service_offers"] =
-            _encode(_openapi_value.ancillary_service_offers)
-    )
     _openapi_value.cost_type isa Absent ||
         (_openapi_output["cost_type"] = _encode(_openapi_value.cost_type))
-    _openapi_value.energy_export_weekly_limit isa Absent || (
-        _openapi_output["energy_export_weekly_limit"] =
-            _encode(_openapi_value.energy_export_weekly_limit)
-    )
-    _openapi_value.energy_import_weekly_limit isa Absent || (
-        _openapi_output["energy_import_weekly_limit"] =
-            _encode(_openapi_value.energy_import_weekly_limit)
+    _openapi_value.import_offer_curves isa Absent || (
+        _openapi_output["import_offer_curves"] =
+            _encode(_openapi_value.import_offer_curves)
     )
     _openapi_value.export_offer_curves isa Absent || (
         _openapi_output["export_offer_curves"] =
             _encode(_openapi_value.export_offer_curves)
     )
-    _openapi_value.import_offer_curves isa Absent || (
-        _openapi_output["import_offer_curves"] =
-            _encode(_openapi_value.import_offer_curves)
+    _openapi_value.energy_import_weekly_limit isa Absent || (
+        _openapi_output["energy_import_weekly_limit"] =
+            _encode(_openapi_value.energy_import_weekly_limit)
+    )
+    _openapi_value.energy_export_weekly_limit isa Absent || (
+        _openapi_output["energy_export_weekly_limit"] =
+            _encode(_openapi_value.energy_export_weekly_limit)
+    )
+    _openapi_value.ancillary_service_offers isa Absent || (
+        _openapi_output["ancillary_service_offers"] =
+            _encode(_openapi_value.ancillary_service_offers)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -131,8 +131,8 @@ function _encode(_openapi_value::ImportExportTimeSeriesCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ImportExportTimeSeriesCost",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ImportExportTimeSeriesCost",
         ),
         _openapi_output,
         "encoding ImportExportTimeSeriesCost";
@@ -142,24 +142,24 @@ end
 
 function _form_fields(_openapi_value::ImportExportTimeSeriesCost)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.ancillary_service_offers isa Absent || push!(
-        _openapi_output,
-        "ancillary_service_offers" => _openapi_value.ancillary_service_offers,
-    )
     _openapi_value.cost_type isa Absent ||
         push!(_openapi_output, "cost_type" => _openapi_value.cost_type)
-    _openapi_value.energy_export_weekly_limit isa Absent || push!(
-        _openapi_output,
-        "energy_export_weekly_limit" => _openapi_value.energy_export_weekly_limit,
-    )
+    _openapi_value.import_offer_curves isa Absent ||
+        push!(_openapi_output, "import_offer_curves" => _openapi_value.import_offer_curves)
+    _openapi_value.export_offer_curves isa Absent ||
+        push!(_openapi_output, "export_offer_curves" => _openapi_value.export_offer_curves)
     _openapi_value.energy_import_weekly_limit isa Absent || push!(
         _openapi_output,
         "energy_import_weekly_limit" => _openapi_value.energy_import_weekly_limit,
     )
-    _openapi_value.export_offer_curves isa Absent ||
-        push!(_openapi_output, "export_offer_curves" => _openapi_value.export_offer_curves)
-    _openapi_value.import_offer_curves isa Absent ||
-        push!(_openapi_output, "import_offer_curves" => _openapi_value.import_offer_curves)
+    _openapi_value.energy_export_weekly_limit isa Absent || push!(
+        _openapi_output,
+        "energy_export_weekly_limit" => _openapi_value.energy_export_weekly_limit,
+    )
+    _openapi_value.ancillary_service_offers isa Absent || push!(
+        _openapi_output,
+        "ancillary_service_offers" => _openapi_value.ancillary_service_offers,
+    )
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

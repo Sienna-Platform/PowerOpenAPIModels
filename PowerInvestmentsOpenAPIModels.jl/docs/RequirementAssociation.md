@@ -5,5 +5,5 @@ Links a policy requirement to one member subject to it. One record per (requirem
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`entity_id`** | **`Int64`** | ID of the member the requirement applies to. | [required]
 **`requirement_id`** | **`Int64`** | ID of the policy requirement the membership belongs to. | [required]
+**`entity_id`** | **`Int64`** | ID of the member the requirement applies to. | [required]

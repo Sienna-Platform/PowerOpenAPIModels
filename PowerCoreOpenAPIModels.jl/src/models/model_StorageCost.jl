@@ -7,14 +7,14 @@ Cost representation for storage units
   - `discharge_variable_cost`: Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term.
 """
 Base.@kwdef struct StorageCost <: APIModel
-    charge_variable_cost::Union{Absent, CostCurve, Nothing} = ABSENT
     cost_type::Union{Absent, Nothing, String} = ABSENT
+    charge_variable_cost::Union{Absent, CostCurve, Nothing} = ABSENT
     discharge_variable_cost::Union{Absent, CostCurve, Nothing} = ABSENT
-    energy_shortage_cost::Union{Absent, Float64, Nothing} = ABSENT
-    energy_surplus_cost::Union{Absent, Float64, Nothing} = ABSENT
     fixed::Float64
     shut_down::Float64
     start_up::StorageCostStartUp
+    energy_shortage_cost::Union{Absent, Float64, Nothing} = ABSENT
+    energy_surplus_cost::Union{Absent, Float64, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{StorageCost}, value) = _decode(StorageCost, value, true)
@@ -22,21 +22,14 @@ function _decode(::Type{StorageCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/StorageCost",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/StorageCost",
         ),
         _openapi_raw,
         "decoding StorageCost";
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "StorageCost")
-    _openapi_field_charge_variable_cost =
-        haskey(_openapi_object, "charge_variable_cost") ?
-        _decode(
-            Union{Absent, CostCurve, Nothing},
-            _openapi_object["charge_variable_cost"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
         _decode(
@@ -44,25 +37,18 @@ function _decode(::Type{StorageCost}, _openapi_raw, _openapi_validate::Bool)
             _openapi_object["cost_type"],
             _openapi_validate,
         ) : ABSENT
+    _openapi_field_charge_variable_cost =
+        haskey(_openapi_object, "charge_variable_cost") ?
+        _decode(
+            Union{Absent, CostCurve, Nothing},
+            _openapi_object["charge_variable_cost"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_discharge_variable_cost =
         haskey(_openapi_object, "discharge_variable_cost") ?
         _decode(
             Union{Absent, CostCurve, Nothing},
             _openapi_object["discharge_variable_cost"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_energy_shortage_cost =
-        haskey(_openapi_object, "energy_shortage_cost") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["energy_shortage_cost"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_energy_surplus_cost =
-        haskey(_openapi_object, "energy_surplus_cost") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["energy_surplus_cost"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_fixed = _decode(
@@ -80,45 +66,65 @@ function _decode(::Type{StorageCost}, _openapi_raw, _openapi_validate::Bool)
         _required(_openapi_object, "start_up", "StorageCost"),
         _openapi_validate,
     )
+    _openapi_field_energy_shortage_cost =
+        haskey(_openapi_object, "energy_shortage_cost") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["energy_shortage_cost"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_energy_surplus_cost =
+        haskey(_openapi_object, "energy_surplus_cost") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["energy_surplus_cost"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
-            "charge_variable_cost",
             "cost_type",
+            "charge_variable_cost",
             "discharge_variable_cost",
-            "energy_shortage_cost",
-            "energy_surplus_cost",
             "fixed",
             "shut_down",
             "start_up",
+            "energy_shortage_cost",
+            "energy_surplus_cost",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return StorageCost(;
-        charge_variable_cost=_openapi_field_charge_variable_cost,
         cost_type=_openapi_field_cost_type,
+        charge_variable_cost=_openapi_field_charge_variable_cost,
         discharge_variable_cost=_openapi_field_discharge_variable_cost,
-        energy_shortage_cost=_openapi_field_energy_shortage_cost,
-        energy_surplus_cost=_openapi_field_energy_surplus_cost,
         fixed=_openapi_field_fixed,
         shut_down=_openapi_field_shut_down,
         start_up=_openapi_field_start_up,
+        energy_shortage_cost=_openapi_field_energy_shortage_cost,
+        energy_surplus_cost=_openapi_field_energy_surplus_cost,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::StorageCost)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.cost_type isa Absent ||
+        (_openapi_output["cost_type"] = _encode(_openapi_value.cost_type))
     _openapi_value.charge_variable_cost isa Absent || (
         _openapi_output["charge_variable_cost"] =
             _encode(_openapi_value.charge_variable_cost)
     )
-    _openapi_value.cost_type isa Absent ||
-        (_openapi_output["cost_type"] = _encode(_openapi_value.cost_type))
     _openapi_value.discharge_variable_cost isa Absent || (
         _openapi_output["discharge_variable_cost"] =
             _encode(_openapi_value.discharge_variable_cost)
     )
+    _openapi_value.fixed isa Absent ||
+        (_openapi_output["fixed"] = _encode(_openapi_value.fixed))
+    _openapi_value.shut_down isa Absent ||
+        (_openapi_output["shut_down"] = _encode(_openapi_value.shut_down))
+    _openapi_value.start_up isa Absent ||
+        (_openapi_output["start_up"] = _encode(_openapi_value.start_up))
     _openapi_value.energy_shortage_cost isa Absent || (
         _openapi_output["energy_shortage_cost"] =
             _encode(_openapi_value.energy_shortage_cost)
@@ -127,12 +133,6 @@ function _encode(_openapi_value::StorageCost)
         _openapi_output["energy_surplus_cost"] =
             _encode(_openapi_value.energy_surplus_cost)
     )
-    _openapi_value.fixed isa Absent ||
-        (_openapi_output["fixed"] = _encode(_openapi_value.fixed))
-    _openapi_value.shut_down isa Absent ||
-        (_openapi_output["shut_down"] = _encode(_openapi_value.shut_down))
-    _openapi_value.start_up isa Absent ||
-        (_openapi_output["start_up"] = _encode(_openapi_value.start_up))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -144,8 +144,8 @@ function _encode(_openapi_value::StorageCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/StorageCost",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/StorageCost",
         ),
         _openapi_output,
         "encoding StorageCost";
@@ -155,28 +155,28 @@ end
 
 function _form_fields(_openapi_value::StorageCost)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.cost_type isa Absent ||
+        push!(_openapi_output, "cost_type" => _openapi_value.cost_type)
     _openapi_value.charge_variable_cost isa Absent || push!(
         _openapi_output,
         "charge_variable_cost" => _openapi_value.charge_variable_cost,
     )
-    _openapi_value.cost_type isa Absent ||
-        push!(_openapi_output, "cost_type" => _openapi_value.cost_type)
     _openapi_value.discharge_variable_cost isa Absent || push!(
         _openapi_output,
         "discharge_variable_cost" => _openapi_value.discharge_variable_cost,
     )
-    _openapi_value.energy_shortage_cost isa Absent || push!(
-        _openapi_output,
-        "energy_shortage_cost" => _openapi_value.energy_shortage_cost,
-    )
-    _openapi_value.energy_surplus_cost isa Absent ||
-        push!(_openapi_output, "energy_surplus_cost" => _openapi_value.energy_surplus_cost)
     _openapi_value.fixed isa Absent ||
         push!(_openapi_output, "fixed" => _openapi_value.fixed)
     _openapi_value.shut_down isa Absent ||
         push!(_openapi_output, "shut_down" => _openapi_value.shut_down)
     _openapi_value.start_up isa Absent ||
         push!(_openapi_output, "start_up" => _openapi_value.start_up)
+    _openapi_value.energy_shortage_cost isa Absent || push!(
+        _openapi_output,
+        "energy_shortage_cost" => _openapi_value.energy_shortage_cost,
+    )
+    _openapi_value.energy_surplus_cost isa Absent ||
+        push!(_openapi_output, "energy_surplus_cost" => _openapi_value.energy_surplus_cost)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

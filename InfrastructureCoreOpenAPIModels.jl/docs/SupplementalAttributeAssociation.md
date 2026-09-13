@@ -5,7 +5,7 @@ Links a supplemental attribute to the component it describes — the JSON form o
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`attribute_id`** | **`Int64`** | ID of the supplemental attribute. | [required]
-**`attribute_type`** | **`String`** | Schema title of the referenced supplemental attribute (e.g. "EmissionsData", "GeographicInfo"). A free-form string, not an enum: new attribute types are added elsewhere in this repo continuously, and a closed enum here would go stale. | [required]
 **`component_id`** | **`Int64`** | ID of the component the attribute describes. | [required]
 **`component_type`** | **`String`** | Type name of the component the attribute describes. A denormalized label matching the relational mirror's column, used for filtering; not part of the row's identity, which is the `(component_id, attribute_id)` pair. | [required]
+**`attribute_id`** | **`Int64`** | ID of the supplemental attribute. | [required]
+**`attribute_type`** | **`String`** | Schema title of the referenced supplemental attribute (e.g. "EmissionsData", "GeographicInfo"). A free-form string, not an enum: new attribute types are added elsewhere in this repo continuously, and a closed enum here would go stale. | [required]

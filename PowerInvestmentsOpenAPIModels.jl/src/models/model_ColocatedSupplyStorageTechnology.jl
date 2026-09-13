@@ -3,34 +3,34 @@
 
 Supply technology co-located with storage behind a shared grid connection. The generation and storage portions are referenced by id (`supply_technology` and `storage_technology`); the inverter that couples them to the grid carries its own capacity limits, capital and operating costs, and efficiency.
 
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`).
-  - `capital_costs_inverter`: Capital and interconnection cost for investing in inverter capacity (capital cost in USD/MW).
-  - `financial_data`: Struct containing relevant financial information for a technology.
   - `id`: ID for individual component.
-  - `inverter_capacity_limits`: Limits on inverter capacity. Units: MW.
-  - `inverter_efficiency`: Efficiency of AC to DC conversion of inverter. Units: 1.
-  - `inverter_supply_ratio`: Ratio of generation capacity to grid connection capacity. Units: 1.
   - `name`: Name of the component.
-  - `operation_costs_inverter`: Operational costs for using inverter in co-located systems. Units: USD/MWh.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`).
   - `power_systems_type`: Corresponding type to be used in PCM modeling.
   - `region`: Location where the component applies. Can be a zone or node.
-  - `storage_technology`: The ID of the underlying storage technology co-located with the supply technology.
+  - `financial_data`: Struct containing relevant financial information for a technology.
   - `supply_technology`: The ID of the underlying supply technology (e.g., wind or solar) co-located with storage.
+  - `storage_technology`: The ID of the underlying storage technology co-located with the supply technology.
+  - `inverter_capacity_limits`: Limits on inverter capacity. Units: MW.
+  - `capital_costs_inverter`: Capital and interconnection cost for investing in inverter capacity (capital cost in USD/MW).
+  - `operation_costs_inverter`: Operational costs for using inverter in co-located systems. Units: USD/MWh.
+  - `inverter_efficiency`: Efficiency of AC to DC conversion of inverter. Units: 1.
+  - `inverter_supply_ratio`: Ratio of generation capacity to grid connection capacity. Units: 1.
 """
 Base.@kwdef struct ColocatedSupplyStorageTechnology <: APIModel
-    available::Union{Absent, Bool, Nothing} = ABSENT
-    capital_costs_inverter::CapitalCost
-    financial_data::TechnologyFinancialData
     id::Int64
-    inverter_capacity_limits::Union{Absent, MinMax, Nothing} = ABSENT
-    inverter_efficiency::Float64
-    inverter_supply_ratio::Float64
     name::String
-    operation_costs_inverter::ColocatedSupplyStorageTechnologyOperationCostsInverter
+    available::Union{Absent, Bool, Nothing} = ABSENT
     power_systems_type::String
     region::Union{Absent, Nothing, Vector{Int64}} = ABSENT
-    storage_technology::Int64
+    financial_data::TechnologyFinancialData
     supply_technology::Int64
+    storage_technology::Int64
+    inverter_capacity_limits::Union{Absent, MinMax, Nothing} = ABSENT
+    capital_costs_inverter::CapitalCost
+    operation_costs_inverter::ColocatedSupplyStorageTechnologyOperationCostsInverter
+    inverter_efficiency::Float64
+    inverter_supply_ratio::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{ColocatedSupplyStorageTechnology}, value) =
@@ -43,19 +43,71 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/ColocatedSupplyStorageTechnology",
+            resource="https://openapi.invalid/schema/external-8b4207e8484211f67fb3.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding ColocatedSupplyStorageTechnology";
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ColocatedSupplyStorageTechnology")
+    _openapi_field_id = _decode(
+        Int64,
+        _required(_openapi_object, "id", "ColocatedSupplyStorageTechnology"),
+        _openapi_validate,
+    )
+    _openapi_field_name = _decode(
+        String,
+        _required(_openapi_object, "name", "ColocatedSupplyStorageTechnology"),
+        _openapi_validate,
+    )
     _openapi_field_available =
         haskey(_openapi_object, "available") ?
         _decode(
             Union{Absent, Bool, Nothing},
             _openapi_object["available"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_power_systems_type = _decode(
+        String,
+        _required(
+            _openapi_object,
+            "power_systems_type",
+            "ColocatedSupplyStorageTechnology",
+        ),
+        _openapi_validate,
+    )
+    _openapi_field_region =
+        haskey(_openapi_object, "region") ?
+        _decode(
+            Union{Absent, Nothing, Vector{Int64}},
+            _openapi_object["region"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_financial_data = _decode(
+        TechnologyFinancialData,
+        _required(_openapi_object, "financial_data", "ColocatedSupplyStorageTechnology"),
+        _openapi_validate,
+    )
+    _openapi_field_supply_technology = _decode(
+        Int64,
+        _required(_openapi_object, "supply_technology", "ColocatedSupplyStorageTechnology"),
+        _openapi_validate,
+    )
+    _openapi_field_storage_technology = _decode(
+        Int64,
+        _required(
+            _openapi_object,
+            "storage_technology",
+            "ColocatedSupplyStorageTechnology",
+        ),
+        _openapi_validate,
+    )
+    _openapi_field_inverter_capacity_limits =
+        haskey(_openapi_object, "inverter_capacity_limits") ?
+        _decode(
+            Union{Absent, MinMax, Nothing},
+            _openapi_object["inverter_capacity_limits"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_capital_costs_inverter = _decode(
@@ -67,23 +119,15 @@ function _decode(
         ),
         _openapi_validate,
     )
-    _openapi_field_financial_data = _decode(
-        TechnologyFinancialData,
-        _required(_openapi_object, "financial_data", "ColocatedSupplyStorageTechnology"),
+    _openapi_field_operation_costs_inverter = _decode(
+        ColocatedSupplyStorageTechnologyOperationCostsInverter,
+        _required(
+            _openapi_object,
+            "operation_costs_inverter",
+            "ColocatedSupplyStorageTechnology",
+        ),
         _openapi_validate,
     )
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "ColocatedSupplyStorageTechnology"),
-        _openapi_validate,
-    )
-    _openapi_field_inverter_capacity_limits =
-        haskey(_openapi_object, "inverter_capacity_limits") ?
-        _decode(
-            Union{Absent, MinMax, Nothing},
-            _openapi_object["inverter_capacity_limits"],
-            _openapi_validate,
-        ) : ABSENT
     _openapi_field_inverter_efficiency = _decode(
         Float64,
         _required(
@@ -102,101 +146,71 @@ function _decode(
         ),
         _openapi_validate,
     )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "ColocatedSupplyStorageTechnology"),
-        _openapi_validate,
-    )
-    _openapi_field_operation_costs_inverter = _decode(
-        ColocatedSupplyStorageTechnologyOperationCostsInverter,
-        _required(
-            _openapi_object,
-            "operation_costs_inverter",
-            "ColocatedSupplyStorageTechnology",
-        ),
-        _openapi_validate,
-    )
-    _openapi_field_power_systems_type = _decode(
-        String,
-        _required(
-            _openapi_object,
-            "power_systems_type",
-            "ColocatedSupplyStorageTechnology",
-        ),
-        _openapi_validate,
-    )
-    _openapi_field_region =
-        haskey(_openapi_object, "region") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["region"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_storage_technology = _decode(
-        Int64,
-        _required(
-            _openapi_object,
-            "storage_technology",
-            "ColocatedSupplyStorageTechnology",
-        ),
-        _openapi_validate,
-    )
-    _openapi_field_supply_technology = _decode(
-        Int64,
-        _required(_openapi_object, "supply_technology", "ColocatedSupplyStorageTechnology"),
-        _openapi_validate,
-    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
-            "available",
-            "capital_costs_inverter",
-            "financial_data",
             "id",
-            "inverter_capacity_limits",
-            "inverter_efficiency",
-            "inverter_supply_ratio",
             "name",
-            "operation_costs_inverter",
+            "available",
             "power_systems_type",
             "region",
-            "storage_technology",
+            "financial_data",
             "supply_technology",
+            "storage_technology",
+            "inverter_capacity_limits",
+            "capital_costs_inverter",
+            "operation_costs_inverter",
+            "inverter_efficiency",
+            "inverter_supply_ratio",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return ColocatedSupplyStorageTechnology(;
-        available=_openapi_field_available,
-        capital_costs_inverter=_openapi_field_capital_costs_inverter,
-        financial_data=_openapi_field_financial_data,
         id=_openapi_field_id,
-        inverter_capacity_limits=_openapi_field_inverter_capacity_limits,
-        inverter_efficiency=_openapi_field_inverter_efficiency,
-        inverter_supply_ratio=_openapi_field_inverter_supply_ratio,
         name=_openapi_field_name,
-        operation_costs_inverter=_openapi_field_operation_costs_inverter,
+        available=_openapi_field_available,
         power_systems_type=_openapi_field_power_systems_type,
         region=_openapi_field_region,
-        storage_technology=_openapi_field_storage_technology,
+        financial_data=_openapi_field_financial_data,
         supply_technology=_openapi_field_supply_technology,
+        storage_technology=_openapi_field_storage_technology,
+        inverter_capacity_limits=_openapi_field_inverter_capacity_limits,
+        capital_costs_inverter=_openapi_field_capital_costs_inverter,
+        operation_costs_inverter=_openapi_field_operation_costs_inverter,
+        inverter_efficiency=_openapi_field_inverter_efficiency,
+        inverter_supply_ratio=_openapi_field_inverter_supply_ratio,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::ColocatedSupplyStorageTechnology)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.name isa Absent ||
+        (_openapi_output["name"] = _encode(_openapi_value.name))
     _openapi_value.available isa Absent ||
         (_openapi_output["available"] = _encode(_openapi_value.available))
+    _openapi_value.power_systems_type isa Absent ||
+        (_openapi_output["power_systems_type"] = _encode(_openapi_value.power_systems_type))
+    _openapi_value.region isa Absent ||
+        (_openapi_output["region"] = _encode(_openapi_value.region))
+    _openapi_value.financial_data isa Absent ||
+        (_openapi_output["financial_data"] = _encode(_openapi_value.financial_data))
+    _openapi_value.supply_technology isa Absent ||
+        (_openapi_output["supply_technology"] = _encode(_openapi_value.supply_technology))
+    _openapi_value.storage_technology isa Absent ||
+        (_openapi_output["storage_technology"] = _encode(_openapi_value.storage_technology))
+    _openapi_value.inverter_capacity_limits isa Absent || (
+        _openapi_output["inverter_capacity_limits"] =
+            _encode(_openapi_value.inverter_capacity_limits)
+    )
     _openapi_value.capital_costs_inverter isa Absent || (
         _openapi_output["capital_costs_inverter"] =
             _encode(_openapi_value.capital_costs_inverter)
     )
-    _openapi_value.financial_data isa Absent ||
-        (_openapi_output["financial_data"] = _encode(_openapi_value.financial_data))
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.inverter_capacity_limits isa Absent || (
-        _openapi_output["inverter_capacity_limits"] =
-            _encode(_openapi_value.inverter_capacity_limits)
+    _openapi_value.operation_costs_inverter isa Absent || (
+        _openapi_output["operation_costs_inverter"] =
+            _encode(_openapi_value.operation_costs_inverter)
     )
     _openapi_value.inverter_efficiency isa Absent || (
         _openapi_output["inverter_efficiency"] =
@@ -206,20 +220,6 @@ function _encode(_openapi_value::ColocatedSupplyStorageTechnology)
         _openapi_output["inverter_supply_ratio"] =
             _encode(_openapi_value.inverter_supply_ratio)
     )
-    _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
-    _openapi_value.operation_costs_inverter isa Absent || (
-        _openapi_output["operation_costs_inverter"] =
-            _encode(_openapi_value.operation_costs_inverter)
-    )
-    _openapi_value.power_systems_type isa Absent ||
-        (_openapi_output["power_systems_type"] = _encode(_openapi_value.power_systems_type))
-    _openapi_value.region isa Absent ||
-        (_openapi_output["region"] = _encode(_openapi_value.region))
-    _openapi_value.storage_technology isa Absent ||
-        (_openapi_output["storage_technology"] = _encode(_openapi_value.storage_technology))
-    _openapi_value.supply_technology isa Absent ||
-        (_openapi_output["supply_technology"] = _encode(_openapi_value.supply_technology))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -231,8 +231,8 @@ function _encode(_openapi_value::ColocatedSupplyStorageTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a1f5f591f1f8e26e922b.json",
-            pointer="/components/schemas/ColocatedSupplyStorageTechnology",
+            resource="https://openapi.invalid/schema/external-8b4207e8484211f67fb3.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding ColocatedSupplyStorageTechnology";
@@ -242,18 +242,31 @@ end
 
 function _form_fields(_openapi_value::ColocatedSupplyStorageTechnology)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
+    _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
     _openapi_value.available isa Absent ||
         push!(_openapi_output, "available" => _openapi_value.available)
+    _openapi_value.power_systems_type isa Absent ||
+        push!(_openapi_output, "power_systems_type" => _openapi_value.power_systems_type)
+    _openapi_value.region isa Absent ||
+        push!(_openapi_output, "region" => _openapi_value.region)
+    _openapi_value.financial_data isa Absent ||
+        push!(_openapi_output, "financial_data" => _openapi_value.financial_data)
+    _openapi_value.supply_technology isa Absent ||
+        push!(_openapi_output, "supply_technology" => _openapi_value.supply_technology)
+    _openapi_value.storage_technology isa Absent ||
+        push!(_openapi_output, "storage_technology" => _openapi_value.storage_technology)
+    _openapi_value.inverter_capacity_limits isa Absent || push!(
+        _openapi_output,
+        "inverter_capacity_limits" => _openapi_value.inverter_capacity_limits,
+    )
     _openapi_value.capital_costs_inverter isa Absent || push!(
         _openapi_output,
         "capital_costs_inverter" => _openapi_value.capital_costs_inverter,
     )
-    _openapi_value.financial_data isa Absent ||
-        push!(_openapi_output, "financial_data" => _openapi_value.financial_data)
-    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
-    _openapi_value.inverter_capacity_limits isa Absent || push!(
+    _openapi_value.operation_costs_inverter isa Absent || push!(
         _openapi_output,
-        "inverter_capacity_limits" => _openapi_value.inverter_capacity_limits,
+        "operation_costs_inverter" => _openapi_value.operation_costs_inverter,
     )
     _openapi_value.inverter_efficiency isa Absent ||
         push!(_openapi_output, "inverter_efficiency" => _openapi_value.inverter_efficiency)
@@ -261,19 +274,6 @@ function _form_fields(_openapi_value::ColocatedSupplyStorageTechnology)
         _openapi_output,
         "inverter_supply_ratio" => _openapi_value.inverter_supply_ratio,
     )
-    _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
-    _openapi_value.operation_costs_inverter isa Absent || push!(
-        _openapi_output,
-        "operation_costs_inverter" => _openapi_value.operation_costs_inverter,
-    )
-    _openapi_value.power_systems_type isa Absent ||
-        push!(_openapi_output, "power_systems_type" => _openapi_value.power_systems_type)
-    _openapi_value.region isa Absent ||
-        push!(_openapi_output, "region" => _openapi_value.region)
-    _openapi_value.storage_technology isa Absent ||
-        push!(_openapi_output, "storage_technology" => _openapi_value.storage_technology)
-    _openapi_value.supply_technology isa Absent ||
-        push!(_openapi_output, "supply_technology" => _openapi_value.supply_technology)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

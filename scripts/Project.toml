@@ -7,5 +7,8 @@ Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 [compat]
 JSON = "1"
 JuliaFormatter = "2"
-OpenAPI = "1.1"
+# 1.1.2 is the floor, not a preference: it resolves discriminator `mapping` values across
+# files, which is what lets the generator read SiennaSchemas' multi-file selectors instead
+# of a pre-bundled single document.
+OpenAPI = "1.1.2"
 julia = "^1.10"

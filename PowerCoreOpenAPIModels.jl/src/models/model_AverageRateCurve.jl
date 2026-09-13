@@ -15,8 +15,8 @@ function _decode(::Type{AverageRateCurve}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/AverageRateCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/AverageRateCurve",
         ),
         _openapi_raw,
         "decoding AverageRateCurve";
@@ -83,8 +83,8 @@ function _encode(_openapi_value::AverageRateCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/AverageRateCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/AverageRateCurve",
         ),
         _openapi_output,
         "encoding AverageRateCurve";

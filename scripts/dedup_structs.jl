@@ -1,8 +1,7 @@
 # Collapses the generator's per-reference-site copies of a shared schema onto the shared
 # type.
 #
-# SiennaSchemas' bundler now emits `{"$ref": "#/$defs/<Name>", …}` whenever a `$ref`'s
-# siblings are only annotations, so the bundle references shared definitions properly. The
+# The schemas reference shared definitions properly, by `$ref` to a named `$defs` entry. The
 # generator still materializes an anonymous copy for any `$ref` that carries siblings, and
 # 323 properties carry a `description` (the `Units:` channel SiennaSchemas' gate 2 enforces,
 # so they cannot simply be dropped). The result was 112 redundant types out of 344: 65 copies
@@ -14,8 +13,8 @@
 # This is the struct-level analogue of the cross-domain dedup `generate_native.jl` already
 # does, and it merges only on hard evidence:
 #
-#   1. The survivor's name must be published by a bundle as a named schema
-#      (`components.schemas` or hoisted `$defs`). A copy's name never is -- the generator
+#   1. The survivor's name must be one a domain selector declares as a named schema.
+#      A copy's name never is -- the generator
 #      derives it from the reference site (`<Owner><Property>`), which is exactly what makes
 #      the two tellable apart.
 #   2. The two must be structurally identical: same declared field names AND field types for
@@ -48,19 +47,14 @@ function struct_signature(text::AbstractString)
 end
 
 """
-Names any bundle publishes as a schema of its own: `components.schemas` keys plus the
-top-level `\$defs` the bundler hoists. These, and only these, are eligible to survive a merge.
+Names a selector declares as a schema of its own. These, and only these, are eligible to
+survive a merge -- a type the generator named after a reference site rather than a
+declared component is not a shared type, whatever it looks like.
 """
 function published_schema_names(schema_dir, domains)
     names = Set{String}()
     for domain in domains
-        path = joinpath(schema_dir, "dist", "openapi-$domain-bundled.json")
-        isfile(path) || continue
-        doc = JSON.parsefile(path; dicttype=Dict{String, Any})
-        for key in keys(get(get(doc, "components", Dict()), "schemas", Dict()))
-            push!(names, generated_type_name(key))
-        end
-        for key in keys(get(doc, "\$defs", Dict()))
+        for key in keys(selector_definitions(schema_dir, domain))
             push!(names, generated_type_name(key))
         end
     end

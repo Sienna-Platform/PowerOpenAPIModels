@@ -20,7 +20,7 @@ const REPO = dirname(@__DIR__)
 const SCHEMA_DIR = get(ENV, "SCHEMA_DIR", joinpath(dirname(REPO), "SiennaSchemas"))
 const RAW_DIR = joinpath(REPO, ".native_raw") # scratch: one unsplit file per domain
 
-include(joinpath(@__DIR__, "normalize_bundle.jl"))
+include(joinpath(@__DIR__, "selector.jl"))
 include(joinpath(@__DIR__, "emit_units.jl"))
 include(joinpath(@__DIR__, "emit_docs.jl"))
 include(joinpath(@__DIR__, "registered_names.jl"))
@@ -87,20 +87,12 @@ include(joinpath(@__DIR__, "const_defaults.jl"))
 include(joinpath(@__DIR__, "primitive_oneof_decode.jl"))
 
 """
-Run OpenAPI.client() on `domain`'s normalized bundle; return the raw generated module text.
+Run OpenAPI.client() on `domain`'s selector; return the raw generated module text.
 """
 function generate_raw(domain, modname)
-    bundle = joinpath(SCHEMA_DIR, "dist", "openapi-$domain-bundled.json")
-    normalized = normalize_bundle(bundle)
-    tmp = tempname() * ".json"
-    write(tmp, normalized)
     mkpath(RAW_DIR)
     outpath = joinpath(RAW_DIR, "$domain.jl")
-    try
-        OpenAPI.client(tmp; name=modname, path=outpath)
-    finally
-        rm(tmp; force=true)
-    end
+    OpenAPI.client(selector_path(SCHEMA_DIR, domain); name=modname, path=outpath)
     return read(outpath, String)
 end
 
@@ -210,7 +202,7 @@ const PUBLISHED_NAMES = published_schema_names(SCHEMA_DIR, [d for (d, _, _, _) i
 const DUPLICATE_RENAMES = build_rename_map(KEPT_CHUNKS, PUBLISHED_NAMES)
 
 # Source of truth for the const-default pass (Phase 4): generated struct name -> its const
-# fields, read from the same bundled specs.
+# fields, read from the same selectors.
 const CONST_FIELDS = load_const_fields(SCHEMA_DIR, [d for (d, _, _, _) in DOMAINS])
 
 if !isempty(DUPLICATE_RENAMES)

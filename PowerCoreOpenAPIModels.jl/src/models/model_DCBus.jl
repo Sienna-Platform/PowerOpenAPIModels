@@ -30,8 +30,8 @@ function _decode(::Type{DCBus}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/DCBus",
+            resource="https://openapi.invalid/schema/external-162e8875f725925fb1f7.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding DCBus";
@@ -137,8 +137,8 @@ function _encode(_openapi_value::DCBus)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/DCBus",
+            resource="https://openapi.invalid/schema/external-162e8875f725925fb1f7.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding DCBus";

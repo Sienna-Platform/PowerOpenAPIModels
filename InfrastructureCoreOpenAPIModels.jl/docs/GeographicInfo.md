@@ -5,5 +5,5 @@ Supplemental attribute carrying geographic information about a component as a Ge
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`geo_json`** | **`GeographicInfoGeoJson`** |  | [required]
 **`id`** | **`Int64`** |  | [required]
+**`geo_json`** | **`GeographicInfoGeoJson`** |  | [required]

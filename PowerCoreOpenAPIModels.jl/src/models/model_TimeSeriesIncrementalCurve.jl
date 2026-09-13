@@ -20,8 +20,8 @@ function _decode(::Type{TimeSeriesIncrementalCurve}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/TimeSeriesIncrementalCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/TimeSeriesIncrementalCurve",
         ),
         _openapi_raw,
         "decoding TimeSeriesIncrementalCurve";
@@ -96,8 +96,8 @@ function _encode(_openapi_value::TimeSeriesIncrementalCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/TimeSeriesIncrementalCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/TimeSeriesIncrementalCurve",
         ),
         _openapi_output,
         "encoding TimeSeriesIncrementalCurve";

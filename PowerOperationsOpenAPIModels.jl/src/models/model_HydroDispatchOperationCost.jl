@@ -17,8 +17,8 @@ function _decode(::Type{HydroDispatchOperationCost}, value, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/HydroDispatch/properties/operation_cost",
+            resource="https://openapi.invalid/schema/external-b2ccb618a91121803b01.json",
+            pointer="/properties/operation_cost",
         ),
         value,
         "decoding HydroDispatchOperationCost";
@@ -38,57 +38,29 @@ function _decode(::Type{HydroDispatchOperationCost}, value, _openapi_validate::B
             "HYDRO_GEN" => (
                 HydroGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/HydroGenerationCost",
-                ),
-            ),
-            "HydroGenerationCost" => (
-                HydroGenerationCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/HydroGenerationCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/HydroGenerationCost",
                 ),
             ),
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/ImportExportTimeSeriesCost",
-                ),
-            ),
-            "ImportExportTimeSeriesCost" => (
-                ImportExportTimeSeriesCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/ImportExportTimeSeriesCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidTimeSeriesCost",
-                ),
-            ),
-            "MarketBidCost" => (
-                MarketBidCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidCost",
-                ),
-            ),
-            "MarketBidTimeSeriesCost" => (
-                MarketBidTimeSeriesCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidTimeSeriesCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
         ),
@@ -114,8 +86,8 @@ function _encode(value::HydroDispatchOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/HydroDispatch/properties/operation_cost",
+            resource="https://openapi.invalid/schema/external-b2ccb618a91121803b01.json",
+            pointer="/properties/operation_cost",
         ),
         output,
         "encoding HydroDispatchOperationCost";

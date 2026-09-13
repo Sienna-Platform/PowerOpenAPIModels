@@ -3,15 +3,15 @@
 
 Supplemental attribute representing a substation that groups node buses and switching devices of a full-topology (node-breaker) network model. Attach the attribute to every member component. Geospatial data is not stored here; attach a GeographicInfo attribute to the member components instead.
 
-  - `grounding_resistance`: Substation grounding DC resistance. Units: ohm.
   - `name`: Name of the substation
   - `number`: Substation number in the source power flow data
+  - `grounding_resistance`: Substation grounding DC resistance. Units: ohm.
 """
 Base.@kwdef struct Substation <: APIModel
-    grounding_resistance::Float64
     id::Int64
     name::String
     number::Int64
+    grounding_resistance::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{Substation}, value) = _decode(Substation, value, true)
@@ -19,19 +19,14 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/Substation",
+            resource="https://openapi.invalid/schema/external-6dbc4a0f1d993f08de19.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding Substation";
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "Substation")
-    _openapi_field_grounding_resistance = _decode(
-        Float64,
-        _required(_openapi_object, "grounding_resistance", "Substation"),
-        _openapi_validate,
-    )
     _openapi_field_id =
         _decode(Int64, _required(_openapi_object, "id", "Substation"), _openapi_validate)
     _openapi_field_name =
@@ -41,31 +36,36 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
         _required(_openapi_object, "number", "Substation"),
         _openapi_validate,
     )
+    _openapi_field_grounding_resistance = _decode(
+        Float64,
+        _required(_openapi_object, "grounding_resistance", "Substation"),
+        _openapi_validate,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("grounding_resistance", "id", "name", "number") && continue
+        String(_openapi_key) in ("id", "name", "number", "grounding_resistance") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return Substation(;
-        grounding_resistance=_openapi_field_grounding_resistance,
         id=_openapi_field_id,
         name=_openapi_field_name,
         number=_openapi_field_number,
+        grounding_resistance=_openapi_field_grounding_resistance,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::Substation)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.grounding_resistance isa Absent || (
-        _openapi_output["grounding_resistance"] =
-            _encode(_openapi_value.grounding_resistance)
-    )
     _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
     _openapi_value.name isa Absent ||
         (_openapi_output["name"] = _encode(_openapi_value.name))
     _openapi_value.number isa Absent ||
         (_openapi_output["number"] = _encode(_openapi_value.number))
+    _openapi_value.grounding_resistance isa Absent || (
+        _openapi_output["grounding_resistance"] =
+            _encode(_openapi_value.grounding_resistance)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -77,8 +77,8 @@ function _encode(_openapi_value::Substation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/Substation",
+            resource="https://openapi.invalid/schema/external-6dbc4a0f1d993f08de19.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding Substation";
@@ -88,14 +88,14 @@ end
 
 function _form_fields(_openapi_value::Substation)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.grounding_resistance isa Absent || push!(
-        _openapi_output,
-        "grounding_resistance" => _openapi_value.grounding_resistance,
-    )
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
     _openapi_value.number isa Absent ||
         push!(_openapi_output, "number" => _openapi_value.number)
+    _openapi_value.grounding_resistance isa Absent || push!(
+        _openapi_output,
+        "grounding_resistance" => _openapi_value.grounding_resistance,
+    )
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

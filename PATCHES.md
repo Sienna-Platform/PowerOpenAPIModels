@@ -142,13 +142,12 @@ So the fix lives in `scripts/materialize_defaults.jl`, run by `make generate`
 immediately after `scripts/reorganize.jl` (same target, so `make generate`
 alone reproduces the fixed output — see `Makefile`):
 
-1. Reads `SiennaSchemas/dist/openapi-<domain>-bundled.json` — the same
-   pre-bundled, fully `$ref`-resolved specs `scripts/emit_units.jl` already
-   depends on for `x-unit` annotations. Unlike the raw per-fragment schema
-   files openapi-generator consumes, these keep the sibling `default` next to
-   a resolved `$ref`, in both the `components.schemas` and the legacy
-   Swagger2-style `definitions` bucket some shared schemas end up in. This
-   is the collection step, and it is read-only against SiennaSchemas.
+1. Read the schema bodies the domain selectors name — the same source
+   `scripts/emit_units.jl` reads for `x-unit` annotations. They keep the
+   sibling `default` next to a `$ref`, which the openapi-generator pipeline
+   lost. This is the collection step, and it is read-only against
+   SiennaSchemas. (Historical: this step read `dist/openapi-<domain>-bundled.json`,
+   built by a bundler SiennaSchemas has since removed.)
 2. For every `(type, property)` whose default is a JSON object or array,
    `include()`s every already-generated `model_*.jl` (all four domains, one
    throwaway namespace, no name collisions because `reorganize.jl` already

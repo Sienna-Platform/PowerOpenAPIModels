@@ -15,8 +15,8 @@ function _decode(::Type{ThermalPowerPlant}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/ThermalPowerPlant",
+            resource="https://openapi.invalid/schema/external-450bebd6c80afe65a722.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding ThermalPowerPlant";
@@ -61,8 +61,8 @@ function _encode(_openapi_value::ThermalPowerPlant)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/ThermalPowerPlant",
+            resource="https://openapi.invalid/schema/external-450bebd6c80afe65a722.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding ThermalPowerPlant";

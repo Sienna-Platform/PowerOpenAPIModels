@@ -13,8 +13,8 @@ function _decode(::Type{MinMax}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/MinMax",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/MinMax",
         ),
         _openapi_raw,
         "decoding MinMax";
@@ -62,8 +62,8 @@ function _encode(_openapi_value::MinMax)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/MinMax",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/MinMax",
         ),
         _openapi_output,
         "encoding MinMax";

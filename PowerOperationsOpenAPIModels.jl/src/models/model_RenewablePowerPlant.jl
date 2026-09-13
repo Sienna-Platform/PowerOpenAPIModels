@@ -15,8 +15,8 @@ function _decode(::Type{RenewablePowerPlant}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/RenewablePowerPlant",
+            resource="https://openapi.invalid/schema/external-ef9c04faf9bbdabaf50c.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding RenewablePowerPlant";
@@ -61,8 +61,8 @@ function _encode(_openapi_value::RenewablePowerPlant)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/RenewablePowerPlant",
+            resource="https://openapi.invalid/schema/external-ef9c04faf9bbdabaf50c.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding RenewablePowerPlant";

@@ -5,5 +5,5 @@ Supplemental attribute mapping a technology in the portfolio to the existing sys
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`existing_devices`** | **`Union{Absent,Nothing,Vector{String}}`** | List of individual existing devices to map to a specific technology in the portfolio. | [optional]
 **`id`** | **`Int64`** | ID for individual component. | [required]
+**`existing_devices`** | **`Union{Absent,Nothing,Vector{String}}`** | List of individual existing devices to map to a specific technology in the portfolio. | [optional]

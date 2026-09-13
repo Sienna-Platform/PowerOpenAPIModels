@@ -16,8 +16,8 @@ function _decode(::Type{HydroGenerationCost}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/HydroGenerationCost",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/HydroGenerationCost",
         ),
         _openapi_raw,
         "decoding HydroGenerationCost";
@@ -78,8 +78,8 @@ function _encode(_openapi_value::HydroGenerationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/HydroGenerationCost",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/HydroGenerationCost",
         ),
         _openapi_output,
         "encoding HydroGenerationCost";

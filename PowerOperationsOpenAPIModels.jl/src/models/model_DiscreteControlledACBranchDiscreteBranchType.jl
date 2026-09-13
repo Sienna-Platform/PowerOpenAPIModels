@@ -24,8 +24,8 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/DiscreteControlledACBranch/properties/discrete_branch_type",
+            resource="https://openapi.invalid/schema/external-3723e3b1b23ec1dc2bf5.json",
+            pointer="/properties/discrete_branch_type",
         ),
         value,
         "decoding DiscreteControlledACBranchDiscreteBranchType";
@@ -40,8 +40,8 @@ function _encode(value::DiscreteControlledACBranchDiscreteBranchType)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/DiscreteControlledACBranch/properties/discrete_branch_type",
+            resource="https://openapi.invalid/schema/external-3723e3b1b23ec1dc2bf5.json",
+            pointer="/properties/discrete_branch_type",
         ),
         output,
         "encoding DiscreteControlledACBranchDiscreteBranchType";

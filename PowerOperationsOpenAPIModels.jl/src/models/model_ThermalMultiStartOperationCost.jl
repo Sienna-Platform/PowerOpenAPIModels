@@ -17,8 +17,8 @@ function _decode(::Type{ThermalMultiStartOperationCost}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/ThermalMultiStart/properties/operation_cost",
+            resource="https://openapi.invalid/schema/external-b0f8123e2b4f7682d99a.json",
+            pointer="/properties/operation_cost",
         ),
         value,
         "decoding ThermalMultiStartOperationCost";
@@ -38,57 +38,29 @@ function _decode(::Type{ThermalMultiStartOperationCost}, value, _openapi_validat
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/ImportExportTimeSeriesCost",
-                ),
-            ),
-            "ImportExportTimeSeriesCost" => (
-                ImportExportTimeSeriesCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/ImportExportTimeSeriesCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidTimeSeriesCost",
-                ),
-            ),
-            "MarketBidCost" => (
-                MarketBidCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidCost",
-                ),
-            ),
-            "MarketBidTimeSeriesCost" => (
-                MarketBidTimeSeriesCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidTimeSeriesCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
             "THERMAL" => (
                 ThermalGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/ThermalGenerationCost",
-                ),
-            ),
-            "ThermalGenerationCost" => (
-                ThermalGenerationCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/ThermalGenerationCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/ThermalGenerationCost",
                 ),
             ),
         ),
@@ -114,8 +86,8 @@ function _encode(value::ThermalMultiStartOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/ThermalMultiStart/properties/operation_cost",
+            resource="https://openapi.invalid/schema/external-b0f8123e2b4f7682d99a.json",
+            pointer="/properties/operation_cost",
         ),
         output,
         "encoding ThermalMultiStartOperationCost";

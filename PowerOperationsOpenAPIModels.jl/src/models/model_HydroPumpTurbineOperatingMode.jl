@@ -18,8 +18,8 @@ function _decode(::Type{HydroPumpTurbineOperatingMode}, value, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/HydroPumpTurbine/properties/operating_mode",
+            resource="https://openapi.invalid/schema/external-aed0b624a035b722726f.json",
+            pointer="/properties/operating_mode",
         ),
         value,
         "decoding HydroPumpTurbineOperatingMode";
@@ -32,8 +32,8 @@ function _encode(value::HydroPumpTurbineOperatingMode)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/HydroPumpTurbine/properties/operating_mode",
+            resource="https://openapi.invalid/schema/external-aed0b624a035b722726f.json",
+            pointer="/properties/operating_mode",
         ),
         output,
         "encoding HydroPumpTurbineOperatingMode";

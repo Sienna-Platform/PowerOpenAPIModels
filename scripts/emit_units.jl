@@ -1,9 +1,9 @@
 #!/usr/bin/env julia
 # Emit unit annotations from SiennaSchemas into each generated package.
 #
-# openapi-generator drops x-unit / x-units / x-unit-base vendor extensions, so the
-# generated structs carry units only as prose in docstrings. This reads the bundled
-# specs plus Core/units.json and emits the annotations as methods, keeping units and
+# Neither codegen toolchain renders the x-unit / x-units / x-unit-base vendor extensions,
+# so the generated structs carry units only as prose in docstrings. This reads the domain
+# selectors plus Core/units.json and emits the annotations as methods, keeping units and
 # structs in lockstep because both come out of the same generation run.
 #
 # Non-core packages emit QUALIFIED definitions. An unqualified `has_declared_unit(...)`
@@ -45,15 +45,15 @@ _is_convertible(::Nothing) = false
 _is_convertible(factor::Real) = !iszero(factor)
 
 """
-Read Core/units.json into a `(quantity_type, unit) => factor` map plus a
-`unit => [quantity_type]` index used to resolve a property's quantity.
+Read Core/units.json into a `(quantity_kind, unit) => factor` map plus a
+`unit => [quantity_kind]` index used to resolve a property's quantity.
 """
 function load_unit_vocabulary(units_path)
     raw = JSON.parsefile(units_path)
     factors = Dict{Tuple{String, String}, Float64}()
     by_unit = Dict{String, Vector{String}}()
     for entry in raw["allowed_units"]
-        quantity = String(entry["quantity_type"])
+        quantity = String(entry["quantity_kind"])
         unit = String(entry["unit"])
         factor = entry["to_default"]
         push!(get!(by_unit, unit, String[]), quantity)
@@ -406,12 +406,7 @@ function emit_units_for(
     by_unit;
     accessor_module="InfrastructureCoreOpenAPIModels",
 )
-    bundle = joinpath(schema_dir, "dist", "openapi-$domain-bundled.json")
-    if !isfile(bundle)
-        @warn "No bundled spec for $domain at $bundle; skipping unit emission"
-        return false
-    end
-    spec = JSON.parsefile(bundle)
+    schemas = selector_definitions(schema_dir, domain)
     prefix = ""
     if domain != "infrastructure-core"
         prefix = "$accessor_module."
@@ -423,7 +418,7 @@ function emit_units_for(
             emit_vocabulary(io, factors)
             emit_fallbacks(io)
         end
-        for (type_name, schema) in pairs(spec["components"]["schemas"])
+        for (type_name, schema) in pairs(schemas)
             emit_type(io, prefix, by_unit, type_name, schema)
         end
     end

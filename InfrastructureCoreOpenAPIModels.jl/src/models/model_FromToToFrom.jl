@@ -13,8 +13,8 @@ function _decode(::Type{FromToToFrom}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/FromTo_ToFrom",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/FromTo_ToFrom",
         ),
         _openapi_raw,
         "decoding FromToToFrom";
@@ -64,8 +64,8 @@ function _encode(_openapi_value::FromToToFrom)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/FromTo_ToFrom",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/FromTo_ToFrom",
         ),
         _openapi_output,
         "encoding FromToToFrom";

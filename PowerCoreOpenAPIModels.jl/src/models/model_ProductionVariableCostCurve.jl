@@ -12,8 +12,8 @@ function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ProductionVariableCostCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ProductionVariableCostCurve",
         ),
         value,
         "decoding ProductionVariableCostCurve";
@@ -33,29 +33,15 @@ function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::
             "COST" => (
                 CostCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/CostCurve",
-                ),
-            ),
-            "CostCurve" => (
-                CostCurve,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/CostCurve",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/CostCurve",
                 ),
             ),
             "FUEL" => (
                 FuelCurve,
                 (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/FuelCurve",
-                ),
-            ),
-            "FuelCurve" => (
-                FuelCurve,
-                (
-                    resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-                    pointer="/components/schemas/FuelCurve",
+                    resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+                    pointer="/\$defs/FuelCurve",
                 ),
             ),
         ),
@@ -81,8 +67,8 @@ function _encode(value::ProductionVariableCostCurve)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-8b7a0b23509734856b11.json",
-            pointer="/components/schemas/ProductionVariableCostCurve",
+            resource="https://openapi.invalid/schema/external-e54f7e61a810bf45cca9.json",
+            pointer="/\$defs/ProductionVariableCostCurve",
         ),
         output,
         "encoding ProductionVariableCostCurve";

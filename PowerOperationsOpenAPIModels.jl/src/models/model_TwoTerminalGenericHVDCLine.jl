@@ -3,32 +3,32 @@
 
 A High Voltage DC line, which must be connected to an ACBus on each end. This model is appropriate for operational simulations with a linearized DC power flow approximation with losses proportional to the power flow. For modeling a DC network, see TModelHVDCLine.
 
+  - `id`: Unique integer identifier for this component.
+  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
+  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `active_power_flow`: Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `arc`: An Arc defining this line `from` a bus `to` another bus.
   - `active_power_limits_from`: Minimum and maximum active power flows to the FROM node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits_to`: Minimum and maximum active power flows to the TO node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `arc`: An Arc defining this line `from` a bus `to` another bus.
-  - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
-  - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
-  - `id`: Unique integer identifier for this component.
-  - `loss`: Loss model coefficients. It accepts a linear model with a constant loss and a proportional loss rate (MW of loss per MW of flow). It also accepts a Piecewise loss, with N segments to specify different proportional losses for different segments.
-  - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
-  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `reactive_power_limits_from`: Minimum and maximum reactive power limits to the FROM node. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits_to`: Minimum and maximum reactive power limits to the TO node. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+  - `loss`: Loss model coefficients. It accepts a linear model with a constant loss and a proportional loss rate (MW of loss per MW of flow). It also accepts a Piecewise loss, with N segments to specify different proportional losses for different segments.
+  - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
+  - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
 """
 Base.@kwdef struct TwoTerminalGenericHVDCLine <: APIModel
+    id::Int64
+    name::String
+    available::Bool
     active_power_flow::Float64
+    arc::Int64
     active_power_limits_from::MinMax
     active_power_limits_to::MinMax
-    arc::Int64
-    available::Bool
-    base_power::Float64
-    id::Int64
-    loss::Union{Absent, LossCurve, Nothing} = ABSENT
-    name::String
-    power_units::UnitSystem
     reactive_power_limits_from::MinMax
     reactive_power_limits_to::MinMax
+    loss::Union{Absent, LossCurve, Nothing} = ABSENT
+    base_power::Float64
+    power_units::UnitSystem
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{TwoTerminalGenericHVDCLine}, value) =
@@ -37,17 +37,37 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/TwoTerminalGenericHVDCLine",
+            resource="https://openapi.invalid/schema/external-fb8b47285ec172bc4c8a.json",
+            pointer="",
         ),
         _openapi_raw,
         "decoding TwoTerminalGenericHVDCLine";
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TwoTerminalGenericHVDCLine")
+    _openapi_field_id = _decode(
+        Int64,
+        _required(_openapi_object, "id", "TwoTerminalGenericHVDCLine"),
+        _openapi_validate,
+    )
+    _openapi_field_name = _decode(
+        String,
+        _required(_openapi_object, "name", "TwoTerminalGenericHVDCLine"),
+        _openapi_validate,
+    )
+    _openapi_field_available = _decode(
+        Bool,
+        _required(_openapi_object, "available", "TwoTerminalGenericHVDCLine"),
+        _openapi_validate,
+    )
     _openapi_field_active_power_flow = _decode(
         Float64,
         _required(_openapi_object, "active_power_flow", "TwoTerminalGenericHVDCLine"),
+        _openapi_validate,
+    )
+    _openapi_field_arc = _decode(
+        Int64,
+        _required(_openapi_object, "arc", "TwoTerminalGenericHVDCLine"),
         _openapi_validate,
     )
     _openapi_field_active_power_limits_from = _decode(
@@ -62,43 +82,6 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     _openapi_field_active_power_limits_to = _decode(
         MinMax,
         _required(_openapi_object, "active_power_limits_to", "TwoTerminalGenericHVDCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_arc = _decode(
-        Int64,
-        _required(_openapi_object, "arc", "TwoTerminalGenericHVDCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "TwoTerminalGenericHVDCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_base_power = _decode(
-        Float64,
-        _required(_openapi_object, "base_power", "TwoTerminalGenericHVDCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "TwoTerminalGenericHVDCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_loss =
-        haskey(_openapi_object, "loss") ?
-        _decode(
-            Union{Absent, LossCurve, Nothing},
-            _openapi_object["loss"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "TwoTerminalGenericHVDCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_power_units = _decode(
-        UnitSystem,
-        _required(_openapi_object, "power_units", "TwoTerminalGenericHVDCLine"),
         _openapi_validate,
     )
     _openapi_field_reactive_power_limits_from = _decode(
@@ -119,45 +102,68 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
         ),
         _openapi_validate,
     )
+    _openapi_field_loss =
+        haskey(_openapi_object, "loss") ?
+        _decode(
+            Union{Absent, LossCurve, Nothing},
+            _openapi_object["loss"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_base_power = _decode(
+        Float64,
+        _required(_openapi_object, "base_power", "TwoTerminalGenericHVDCLine"),
+        _openapi_validate,
+    )
+    _openapi_field_power_units = _decode(
+        UnitSystem,
+        _required(_openapi_object, "power_units", "TwoTerminalGenericHVDCLine"),
+        _openapi_validate,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
+            "id",
+            "name",
+            "available",
             "active_power_flow",
+            "arc",
             "active_power_limits_from",
             "active_power_limits_to",
-            "arc",
-            "available",
-            "base_power",
-            "id",
-            "loss",
-            "name",
-            "power_units",
             "reactive_power_limits_from",
             "reactive_power_limits_to",
+            "loss",
+            "base_power",
+            "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
     return TwoTerminalGenericHVDCLine(;
+        id=_openapi_field_id,
+        name=_openapi_field_name,
+        available=_openapi_field_available,
         active_power_flow=_openapi_field_active_power_flow,
+        arc=_openapi_field_arc,
         active_power_limits_from=_openapi_field_active_power_limits_from,
         active_power_limits_to=_openapi_field_active_power_limits_to,
-        arc=_openapi_field_arc,
-        available=_openapi_field_available,
-        base_power=_openapi_field_base_power,
-        id=_openapi_field_id,
-        loss=_openapi_field_loss,
-        name=_openapi_field_name,
-        power_units=_openapi_field_power_units,
         reactive_power_limits_from=_openapi_field_reactive_power_limits_from,
         reactive_power_limits_to=_openapi_field_reactive_power_limits_to,
+        loss=_openapi_field_loss,
+        base_power=_openapi_field_base_power,
+        power_units=_openapi_field_power_units,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode(_openapi_value::TwoTerminalGenericHVDCLine)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.name isa Absent ||
+        (_openapi_output["name"] = _encode(_openapi_value.name))
+    _openapi_value.available isa Absent ||
+        (_openapi_output["available"] = _encode(_openapi_value.available))
     _openapi_value.active_power_flow isa Absent ||
         (_openapi_output["active_power_flow"] = _encode(_openapi_value.active_power_flow))
+    _openapi_value.arc isa Absent || (_openapi_output["arc"] = _encode(_openapi_value.arc))
     _openapi_value.active_power_limits_from isa Absent || (
         _openapi_output["active_power_limits_from"] =
             _encode(_openapi_value.active_power_limits_from)
@@ -166,18 +172,6 @@ function _encode(_openapi_value::TwoTerminalGenericHVDCLine)
         _openapi_output["active_power_limits_to"] =
             _encode(_openapi_value.active_power_limits_to)
     )
-    _openapi_value.arc isa Absent || (_openapi_output["arc"] = _encode(_openapi_value.arc))
-    _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.loss isa Absent ||
-        (_openapi_output["loss"] = _encode(_openapi_value.loss))
-    _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
-    _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
     _openapi_value.reactive_power_limits_from isa Absent || (
         _openapi_output["reactive_power_limits_from"] =
             _encode(_openapi_value.reactive_power_limits_from)
@@ -186,6 +180,12 @@ function _encode(_openapi_value::TwoTerminalGenericHVDCLine)
         _openapi_output["reactive_power_limits_to"] =
             _encode(_openapi_value.reactive_power_limits_to)
     )
+    _openapi_value.loss isa Absent ||
+        (_openapi_output["loss"] = _encode(_openapi_value.loss))
+    _openapi_value.base_power isa Absent ||
+        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+    _openapi_value.power_units isa Absent ||
+        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -197,8 +197,8 @@ function _encode(_openapi_value::TwoTerminalGenericHVDCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/TwoTerminalGenericHVDCLine",
+            resource="https://openapi.invalid/schema/external-fb8b47285ec172bc4c8a.json",
+            pointer="",
         ),
         _openapi_output,
         "encoding TwoTerminalGenericHVDCLine";
@@ -208,8 +208,13 @@ end
 
 function _form_fields(_openapi_value::TwoTerminalGenericHVDCLine)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
+    _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
+    _openapi_value.available isa Absent ||
+        push!(_openapi_output, "available" => _openapi_value.available)
     _openapi_value.active_power_flow isa Absent ||
         push!(_openapi_output, "active_power_flow" => _openapi_value.active_power_flow)
+    _openapi_value.arc isa Absent || push!(_openapi_output, "arc" => _openapi_value.arc)
     _openapi_value.active_power_limits_from isa Absent || push!(
         _openapi_output,
         "active_power_limits_from" => _openapi_value.active_power_limits_from,
@@ -218,16 +223,6 @@ function _form_fields(_openapi_value::TwoTerminalGenericHVDCLine)
         _openapi_output,
         "active_power_limits_to" => _openapi_value.active_power_limits_to,
     )
-    _openapi_value.arc isa Absent || push!(_openapi_output, "arc" => _openapi_value.arc)
-    _openapi_value.available isa Absent ||
-        push!(_openapi_output, "available" => _openapi_value.available)
-    _openapi_value.base_power isa Absent ||
-        push!(_openapi_output, "base_power" => _openapi_value.base_power)
-    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
-    _openapi_value.loss isa Absent || push!(_openapi_output, "loss" => _openapi_value.loss)
-    _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
-    _openapi_value.power_units isa Absent ||
-        push!(_openapi_output, "power_units" => _openapi_value.power_units)
     _openapi_value.reactive_power_limits_from isa Absent || push!(
         _openapi_output,
         "reactive_power_limits_from" => _openapi_value.reactive_power_limits_from,
@@ -236,6 +231,11 @@ function _form_fields(_openapi_value::TwoTerminalGenericHVDCLine)
         _openapi_output,
         "reactive_power_limits_to" => _openapi_value.reactive_power_limits_to,
     )
+    _openapi_value.loss isa Absent || push!(_openapi_output, "loss" => _openapi_value.loss)
+    _openapi_value.base_power isa Absent ||
+        push!(_openapi_output, "base_power" => _openapi_value.base_power)
+    _openapi_value.power_units isa Absent ||
+        push!(_openapi_output, "power_units" => _openapi_value.power_units)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

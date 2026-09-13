@@ -13,8 +13,8 @@ function _decode(::Type{PiecewiseLinearData}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/PiecewiseLinearData",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/PiecewiseLinearData",
         ),
         _openapi_raw,
         "decoding PiecewiseLinearData";
@@ -60,8 +60,8 @@ function _encode(_openapi_value::PiecewiseLinearData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-3647af479ce96eb73174.json",
-            pointer="/components/schemas/PiecewiseLinearData",
+            resource="https://openapi.invalid/schema/external-68b6bf98f793042414e0.json",
+            pointer="/\$defs/PiecewiseLinearData",
         ),
         _openapi_output,
         "encoding PiecewiseLinearData";

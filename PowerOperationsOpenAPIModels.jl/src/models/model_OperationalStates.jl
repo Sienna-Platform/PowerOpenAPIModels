@@ -16,8 +16,8 @@ function _decode(::Type{OperationalStates}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/OperationalStates",
+            resource="https://openapi.invalid/schema/external-ddecbf0b8a8ce9be5178.json",
+            pointer="/\$defs/OperationalStates",
         ),
         value,
         "decoding OperationalStates";
@@ -30,8 +30,8 @@ function _encode(value::OperationalStates)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/OperationalStates",
+            resource="https://openapi.invalid/schema/external-ddecbf0b8a8ce9be5178.json",
+            pointer="/\$defs/OperationalStates",
         ),
         output,
         "encoding OperationalStates";

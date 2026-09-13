@@ -21,8 +21,8 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/InterruptibleStandardLoad/properties/operation_cost",
+            resource="https://openapi.invalid/schema/external-2ab3225bd27fa223ed94.json",
+            pointer="/properties/operation_cost",
         ),
         value,
         "decoding InterruptibleStandardLoadOperationCost";
@@ -42,57 +42,29 @@ function _decode(
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/ImportExportTimeSeriesCost",
-                ),
-            ),
-            "ImportExportTimeSeriesCost" => (
-                ImportExportTimeSeriesCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/ImportExportTimeSeriesCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "LOAD" => (
                 LoadCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/LoadCost",
-                ),
-            ),
-            "LoadCost" => (
-                LoadCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/LoadCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/LoadCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidTimeSeriesCost",
-                ),
-            ),
-            "MarketBidCost" => (
-                MarketBidCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidCost",
-                ),
-            ),
-            "MarketBidTimeSeriesCost" => (
-                MarketBidTimeSeriesCost,
-                (
-                    resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-                    pointer="/components/schemas/MarketBidTimeSeriesCost",
+                    resource="https://openapi.invalid/schema/external-3883dfdcf540e854004c.json",
+                    pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
         ),
@@ -120,8 +92,8 @@ function _encode(value::InterruptibleStandardLoadOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/root-a047aace9cc4451610fa.json",
-            pointer="/components/schemas/InterruptibleStandardLoad/properties/operation_cost",
+            resource="https://openapi.invalid/schema/external-2ab3225bd27fa223ed94.json",
+            pointer="/properties/operation_cost",
         ),
         output,
         "encoding InterruptibleStandardLoadOperationCost";
