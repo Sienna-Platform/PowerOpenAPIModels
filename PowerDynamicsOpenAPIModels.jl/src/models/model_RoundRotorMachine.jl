@@ -48,7 +48,7 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d77444fcb4f949506113.json",
+            resource="https://openapi.invalid/schema/external-7c84d2adb355e61940ad.json",
             pointer="",
         ),
         _openapi_raw,
@@ -236,7 +236,7 @@ function _encode(_openapi_value::RoundRotorMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d77444fcb4f949506113.json",
+            resource="https://openapi.invalid/schema/external-7c84d2adb355e61940ad.json",
             pointer="",
         ),
         _openapi_output,

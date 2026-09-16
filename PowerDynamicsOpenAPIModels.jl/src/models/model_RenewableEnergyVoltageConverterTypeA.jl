@@ -1,7 +1,7 @@
 """
-    RenewableEnergyConverterTypeA
+    RenewableEnergyVoltageConverterTypeA
 
-Parameters of a renewable energy generator/converter model, this model corresponds to REGCA1 in PSSE.
+Parameters of a renewable energy generator/converter model, this model corresponds to REGCA1 in PSSE, but to be interfaced using a Voltage Source instead of a Current Source
 
   - `t_g`: Converter time constant. Units: s.
   - `rrpwr`: Low Voltage Power Logic (LVPL) ramp rate limit.
@@ -9,18 +9,16 @@ Parameters of a renewable energy generator/converter model, this model correspon
   - `zerox`: LVPL characteristic voltage 1.
   - `lvpl1`: LVPL gain.
   - `vo_lim`: Voltage limit for high voltage reactive current management.
-  - `lv_pnts`: Voltage points for low voltage active current management (Lvpnt0, Lvpnt1).
+  - `lv_pnts`: Voltage points for low voltage active current management
   - `io_lim`: Current limit for high voltage reactive current management (specified as a negative value).
   - `t_fltr`: Voltage filter time constant for low voltage active current management. Units: s.
   - `k_hv`: Overvoltage compensation gain used in the high voltage reactive current management.
-  - `iqr_lims`: Limit on rate of change for reactive current (Iqr_min, Iqr_max).
+  - `iqr_lims`: Limit on rate of change for reactive current
   - `accel`: Acceleration factor.
   - `lvpl_sw`: Low voltage power logic (LVPL) switch. (0: LVPL not present, 1: LVPL present).
   - `q_ref`: Initial condition of reactive power from power flow.
-  - `r_source`: Output resistor used for the Thevenin Equivalent.
-  - `x_source`: Output reactance used for the Thevenin Equivalent.
 """
-Base.@kwdef struct RenewableEnergyConverterTypeA <: APIModel
+Base.@kwdef struct RenewableEnergyVoltageConverterTypeA <: APIModel
     t_g::Float64
     rrpwr::Float64
     brkpt::Float64
@@ -35,91 +33,89 @@ Base.@kwdef struct RenewableEnergyConverterTypeA <: APIModel
     accel::Float64
     lvpl_sw::Int64
     q_ref::Union{Absent, Float64, Nothing} = ABSENT
-    r_source::Union{Absent, Float64, Nothing} = ABSENT
-    x_source::Union{Absent, Float64, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
-_decode(::Type{RenewableEnergyConverterTypeA}, value) =
-    _decode(RenewableEnergyConverterTypeA, value, true)
+_decode(::Type{RenewableEnergyVoltageConverterTypeA}, value) =
+    _decode(RenewableEnergyVoltageConverterTypeA, value, true)
 function _decode(
-    ::Type{RenewableEnergyConverterTypeA},
+    ::Type{RenewableEnergyVoltageConverterTypeA},
     _openapi_raw,
     _openapi_validate::Bool,
 )
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b299e70cd5c919b64a95.json",
+            resource="https://openapi.invalid/schema/external-068e8343e833932973b5.json",
             pointer="",
         ),
         _openapi_raw,
-        "decoding RenewableEnergyConverterTypeA";
+        "decoding RenewableEnergyVoltageConverterTypeA";
         direction=:neutral,
     )
-    _openapi_object = _object(_openapi_raw, "RenewableEnergyConverterTypeA")
+    _openapi_object = _object(_openapi_raw, "RenewableEnergyVoltageConverterTypeA")
     _openapi_field_t_g = _decode(
         Float64,
-        _required(_openapi_object, "T_g", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "T_g", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_rrpwr = _decode(
         Float64,
-        _required(_openapi_object, "Rrpwr", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Rrpwr", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_brkpt = _decode(
         Float64,
-        _required(_openapi_object, "Brkpt", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Brkpt", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_zerox = _decode(
         Float64,
-        _required(_openapi_object, "Zerox", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Zerox", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_lvpl1 = _decode(
         Float64,
-        _required(_openapi_object, "Lvpl1", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Lvpl1", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_vo_lim = _decode(
         Float64,
-        _required(_openapi_object, "Vo_lim", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Vo_lim", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_lv_pnts = _decode(
         MinMax,
-        _required(_openapi_object, "Lv_pnts", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Lv_pnts", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_io_lim = _decode(
         Float64,
-        _required(_openapi_object, "Io_lim", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Io_lim", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_t_fltr = _decode(
         Float64,
-        _required(_openapi_object, "T_fltr", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "T_fltr", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_k_hv = _decode(
         Float64,
-        _required(_openapi_object, "K_hv", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "K_hv", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_iqr_lims = _decode(
         MinMax,
-        _required(_openapi_object, "Iqr_lims", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Iqr_lims", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_accel = _decode(
         Float64,
-        _required(_openapi_object, "Accel", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Accel", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_lvpl_sw = _decode(
         Int64,
-        _required(_openapi_object, "Lvpl_sw", "RenewableEnergyConverterTypeA"),
+        _required(_openapi_object, "Lvpl_sw", "RenewableEnergyVoltageConverterTypeA"),
         _openapi_validate,
     )
     _openapi_field_q_ref =
@@ -127,20 +123,6 @@ function _decode(
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["Q_ref"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_r_source =
-        haskey(_openapi_object, "R_source") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["R_source"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_x_source =
-        haskey(_openapi_object, "X_source") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["X_source"],
             _openapi_validate,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
@@ -160,13 +142,11 @@ function _decode(
             "Accel",
             "Lvpl_sw",
             "Q_ref",
-            "R_source",
-            "X_source",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
-    return RenewableEnergyConverterTypeA(;
+    return RenewableEnergyVoltageConverterTypeA(;
         t_g=_openapi_field_t_g,
         rrpwr=_openapi_field_rrpwr,
         brkpt=_openapi_field_brkpt,
@@ -181,12 +161,10 @@ function _decode(
         accel=_openapi_field_accel,
         lvpl_sw=_openapi_field_lvpl_sw,
         q_ref=_openapi_field_q_ref,
-        r_source=_openapi_field_r_source,
-        x_source=_openapi_field_x_source,
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::RenewableEnergyConverterTypeA)
+function _encode(_openapi_value::RenewableEnergyVoltageConverterTypeA)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.t_g isa Absent || (_openapi_output["T_g"] = _encode(_openapi_value.t_g))
     _openapi_value.rrpwr isa Absent ||
@@ -215,10 +193,6 @@ function _encode(_openapi_value::RenewableEnergyConverterTypeA)
         (_openapi_output["Lvpl_sw"] = _encode(_openapi_value.lvpl_sw))
     _openapi_value.q_ref isa Absent ||
         (_openapi_output["Q_ref"] = _encode(_openapi_value.q_ref))
-    _openapi_value.r_source isa Absent ||
-        (_openapi_output["R_source"] = _encode(_openapi_value.r_source))
-    _openapi_value.x_source isa Absent ||
-        (_openapi_output["X_source"] = _encode(_openapi_value.x_source))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -230,16 +204,16 @@ function _encode(_openapi_value::RenewableEnergyConverterTypeA)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b299e70cd5c919b64a95.json",
+            resource="https://openapi.invalid/schema/external-068e8343e833932973b5.json",
             pointer="",
         ),
         _openapi_output,
-        "encoding RenewableEnergyConverterTypeA";
+        "encoding RenewableEnergyVoltageConverterTypeA";
         direction=:neutral,
     )
 end
 
-function _form_fields(_openapi_value::RenewableEnergyConverterTypeA)
+function _form_fields(_openapi_value::RenewableEnergyVoltageConverterTypeA)
     _openapi_output = Pair{String, Any}[]
     _openapi_value.t_g isa Absent || push!(_openapi_output, "T_g" => _openapi_value.t_g)
     _openapi_value.rrpwr isa Absent ||
@@ -267,10 +241,6 @@ function _form_fields(_openapi_value::RenewableEnergyConverterTypeA)
         push!(_openapi_output, "Lvpl_sw" => _openapi_value.lvpl_sw)
     _openapi_value.q_ref isa Absent ||
         push!(_openapi_output, "Q_ref" => _openapi_value.q_ref)
-    _openapi_value.r_source isa Absent ||
-        push!(_openapi_output, "R_source" => _openapi_value.r_source)
-    _openapi_value.x_source isa Absent ||
-        push!(_openapi_output, "X_source" => _openapi_value.x_source)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end
