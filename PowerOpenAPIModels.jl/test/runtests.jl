@@ -190,6 +190,9 @@ _type_name(::Any) = ""
         mktempdir() do dir
             path = joinpath(dir, "system.json")
             PowerOpenAPIModels.write_document(doc, path)
+            # Trailing newline, as the Python and TypeScript writers emit: without it a
+            # document written here differs from the same document written there by one byte.
+            @test endswith(read(path, String), "\n")
             back = PowerOpenAPIModels.read_document(path)
 
             @test PowerOpenAPIModels.get_name(back) == "validate"
@@ -418,6 +421,7 @@ _type_name(::Any) = ""
         mktempdir() do dir
             path = joinpath(dir, "portfolio.json")
             PowerOpenAPIModels.write_document(doc, path)
+            @test endswith(read(path, String), "\n")
             back = PowerOpenAPIModels.read_portfolio_document(path)
 
             @test PowerOpenAPIModels.get_name(back) == "validate"
@@ -431,6 +435,59 @@ _type_name(::Any) = ""
             @test assoc.entity_id == member_id
             # Membership rebuilt on read, so the duplicate guard survives a round trip.
             @test (Int(requirement_id), Int(member_id)) in back.requirements_membership
+        end
+    end
+
+    @testset "PortfolioDocument emits no additional_properties passthrough" begin
+        # `document_tree` must route every array through `_bucket` (i.e. `_encode`), the same
+        # as SystemDocument's does. Handing the structs over raw serialized each one field by
+        # field, so every association row grew an empty `"additional_properties": {}` that the
+        # schema never names and the other two languages never write.
+        doc = PowerOpenAPIModels.PortfolioDocument("Zone"; name="passthrough")
+        requirement_id = PowerOpenAPIModels.next_id!(doc)
+        PowerOpenAPIModels.add_component!(
+            doc,
+            PowerInvestmentsOpenAPIModels.MaximumCapacityRequirements(;
+                id=requirement_id,
+                name="cap_req",
+                available=true,
+            ),
+        )
+        member_id = PowerOpenAPIModels.next_id!(doc)
+        PowerOpenAPIModels.add_component!(
+            doc,
+            PowerInvestmentsOpenAPIModels.MaximumCapacityRequirements(;
+                id=member_id,
+                name="member",
+                available=true,
+            ),
+        )
+        PowerOpenAPIModels.add_requirement_association!(
+            doc,
+            PowerInvestmentsOpenAPIModels.RequirementAssociation(;
+                requirement_id=requirement_id,
+                entity_id=member_id,
+            ),
+        )
+        attribute_id = PowerOpenAPIModels.next_id!(doc)
+        PowerOpenAPIModels.add_supplemental_attribute!(
+            doc,
+            PowerInvestmentsOpenAPIModels.TopologyMapping(;
+                id=attribute_id,
+                buses=["bus1"],
+            ),
+            requirement_id,
+        )
+
+        mktempdir() do dir
+            path = joinpath(dir, "portfolio.json")
+            PowerOpenAPIModels.write_document(doc, path)
+            text = read(path, String)
+            @test !occursin("additional_properties", text)
+            # Still a readable document, not merely a smaller one.
+            back = PowerOpenAPIModels.read_portfolio_document(path)
+            @test length(back.requirements_associations) == 1
+            @test length(back.supplemental_attribute_associations) == 1
         end
     end
 

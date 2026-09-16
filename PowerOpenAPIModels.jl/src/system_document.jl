@@ -419,6 +419,10 @@ function write_document(
         else
             JSON.print(io, tree)
         end
+        # Trailing newline: POSIX text-file convention, and it is what the Python and
+        # TypeScript writers emit — without it a document written here differs from the same
+        # document written there by exactly one byte.
+        print(io, "\n")
     end
     return nothing
 end
