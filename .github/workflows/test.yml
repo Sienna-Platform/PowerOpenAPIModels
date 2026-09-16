@@ -50,11 +50,33 @@ jobs:
       # validate.jl does its own Pkg.develop of the seven packages, so there is nothing
       # to instantiate first: test/Manifest.toml is git-ignored and a fresh checkout has
       # none, which is the point -- CI resolves against the Project.toml bounds rather
-      # than a manifest someone's laptop pinned.
-      - name: Validate the generated packages
+      # than a manifest someone's laptop pinned. It then runs each package's own
+      # `test/runtests.jl` through `Pkg.test`, the same entry point a user of the
+      # registered package gets.
+      - name: Run every package's test suite
         env:
           SCHEMA_DIR: ${{ github.workspace }}/SiennaSchemas
+          # Only the leg that uploads it: instrumenting the other one costs time and
+          # discards the cached pkgimages for nothing.
+          COVERAGE: ${{ matrix.julia-version == '1.13' && '1' || '' }}
         run: julia --project=test test/validate.jl
+
+      # Coverage lands as `<Package>.jl/src/**.jl.cov`, one directory per package, so every
+      # one has to be named: the action's default is a single `src`.
+      - uses: julia-actions/julia-processcoverage@v1
+        if: matrix.julia-version == '1.13'
+        with:
+          directories: InfrastructureCoreOpenAPIModels.jl/src,InfrastructureTimeSeriesOpenAPIModels.jl/src,PowerCoreOpenAPIModels.jl/src,PowerOperationsOpenAPIModels.jl/src,PowerInvestmentsOpenAPIModels.jl/src,PowerDynamicsOpenAPIModels.jl/src,PowerOpenAPIModels.jl/src
+
+      - uses: codecov/codecov-action@v7
+        if: matrix.julia-version == '1.13'
+        with:
+          files: ./lcov.info
+          disable_search: true
+          flags: unittests
+          slug: ${{ github.repository }}
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   precompile:
     name: precompile (julia ${{ matrix.julia-version }})

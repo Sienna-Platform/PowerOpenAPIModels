@@ -274,6 +274,9 @@ function set_ext!(doc::DocumentType, component_id::Integer, extras::AbstractDict
     return nothing
 end
 
+"""
+The extras recorded for `component_id`, or an empty dictionary if none were.
+"""
 function get_ext(doc::DocumentType, component_id::Integer)
     return get(doc.ext, Int(component_id), Dict{String, Any}())
 end
