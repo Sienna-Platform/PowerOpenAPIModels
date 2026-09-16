@@ -34,7 +34,7 @@ function _decode(::Type{SteamTurbineGov1}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c01783e7ab42c962f7f3.json",
+            resource="https://openapi.invalid/schema/external-3be9cbe7379779b1c120.json",
             pointer="",
         ),
         _openapi_raw,
@@ -163,7 +163,7 @@ function _encode(_openapi_value::SteamTurbineGov1)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c01783e7ab42c962f7f3.json",
+            resource="https://openapi.invalid/schema/external-3be9cbe7379779b1c120.json",
             pointer="",
         ),
         _openapi_output,
