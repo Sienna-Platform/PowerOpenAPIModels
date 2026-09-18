@@ -64,6 +64,19 @@ end
 #
 # Keyed on the base existing, not on the suffix: `SteamTurbineGov1` is a real
 # PowerSystems type name and must not be flagged.
+#
+# That keying is not sufficient, and DEGOV1 is the case that shows it. DEGOV and
+# DEGOV1 are BOTH real PowerSystems structs (src/models/generated/, 10 and 14
+# fields) and both are declared in the dynamics selector, so the heuristic flags a
+# pair it cannot tell from a generated copy -- `SteamTurbineGov1` survives only
+# because `SteamTurbineGov` happens not to exist.
+#
+# Exempted by name rather than fixed. The real fix is to stop inferring from the
+# name shape and check membership of the selector's published names, which
+# generate_native.jl already computes as PUBLISHED_NAMES; this keeps the check live
+# for every other type in the meantime. The exemption is inert until the dynamics
+# models are generated, so it is a no-op here and takes effect with them.
+const REAL_SUFFIXED_TYPES = Set(["DEGOV1"])
 _type_name(::Type{T}) where {T} = string(nameof(T))
 _type_name(::Any) = ""
 
@@ -90,7 +103,7 @@ _type_name(::Any) = ""
         base = replace(n, r"\d+$" => "")
         base != n && base in defined
     end
-    @test sort(collect(aliases)) == String[]
+    @test sort(collect(setdiff(aliases, REAL_SUFFIXED_TYPES))) == String[]
 end
 
 # A selector declares every schema its domain reaches, shared types a base package owns
