@@ -30,3 +30,4 @@ Name | Type | Description | Notes
 **`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`time_at_status`** | **`Union{Absent,Float64,Nothing}`** | Time the generator has been in its current status. Units: min. | [optional]
 **`dynamic_injector`** | **`Union{Absent,Union{Int64,Nothing}}`** | ID of the corresponding dynamic injection device, if any. | [optional]
+**`switching_times`** | **`Union{Absent,Nothing,UpDown}`** | Time it takes the unit to switch ONLINE (`up`) or OFFLINE (`down`) after a start or shut-down is initiated. Set to `null` if not modeled. Units: min. | [optional]
