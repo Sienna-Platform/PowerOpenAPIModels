@@ -27,3 +27,4 @@ Name | Type | Description | Notes
 **`fuel`** | **`Union{Absent,Nothing,ThermalFuels}`** | Prime mover fuel according to EIA 923. | [optional]
 **`time_at_status`** | **`Union{Absent,Float64,Nothing}`** | Time the generator has been in its current status. Units: min. | [optional]
 **`dynamic_injector`** | **`Union{Absent,Union{Int64,Nothing}}`** | ID of the corresponding dynamic injection device, if any. | [optional]
+**`switching_times`** | **`Union{Absent,Nothing,UpDown}`** | Time it takes the unit to switch ONLINE (`up`) or OFFLINE (`down`) after a start or shut-down is initiated. Set to `null` if not modeled. Units: min. | [optional]
