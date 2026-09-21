@@ -300,11 +300,16 @@ function document_tree(doc::PortfolioDocument)
     tree = Dict{String, Any}(
         "aggregation" => doc.aggregation,
         "components" => components,
-        "supplemental_attributes" => doc.supplemental_attributes,
+        # Every array goes through `_bucket`, exactly as `system_document.jl`'s SystemDocument tree
+        # does. Handing the structs over raw instead would serialize each one field by field,
+        # including the `additional_properties` passthrough that `_encode` exists to splat --
+        # so a read/write round trip grew an empty `"additional_properties": {}` on every
+        # association row.
+        "supplemental_attributes" => _bucket(doc.supplemental_attributes),
         "supplemental_attribute_associations" =>
-            doc.supplemental_attribute_associations,
-        "requirements_associations" => doc.requirements_associations,
-        "time_series_associations" => doc.time_series_associations,
+            _bucket(doc.supplemental_attribute_associations),
+        "requirements_associations" => _bucket(doc.requirements_associations),
+        "time_series_associations" => _bucket(doc.time_series_associations),
         # Keyed by component id, which is unique across every type.
         "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
         "base_system_file" => doc.base_system_file,
@@ -349,6 +354,10 @@ function write_document(
         else
             JSON.print(io, tree)
         end
+        # Trailing newline: POSIX text-file convention, and it is what the Python and
+        # TypeScript writers emit — without it a document written here differs from the same
+        # document written there by exactly one byte.
+        print(io, "\n")
     end
     return nothing
 end
