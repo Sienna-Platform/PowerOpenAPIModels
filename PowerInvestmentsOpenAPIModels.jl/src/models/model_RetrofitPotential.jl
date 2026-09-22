@@ -28,34 +28,31 @@ function _decode(::Type{RetrofitPotential}, _openapi_raw, _openapi_validate::Boo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RetrofitPotential")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "RetrofitPotential"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "RetrofitPotential"), false)
     _openapi_field_eligible_generators = _decode(
         Vector{String},
         _required(_openapi_object, "eligible_generators", "RetrofitPotential"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_retrofit_fraction =
         haskey(_openapi_object, "retrofit_fraction") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["retrofit_fraction"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_retrofit_cost = _decode(
         RetrofitPotentialRetrofitCost,
         _required(_openapi_object, "retrofit_cost", "RetrofitPotential"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("id", "eligible_generators", "retrofit_fraction", "retrofit_cost") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return RetrofitPotential(;
         id=_openapi_field_id,
@@ -65,36 +62,42 @@ function _decode(::Type{RetrofitPotential}, _openapi_raw, _openapi_validate::Boo
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::RetrofitPotential)
+function _encode_unvalidated(_openapi_value::RetrofitPotential)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.eligible_generators isa Absent || (
         _openapi_output["eligible_generators"] =
-            _encode(_openapi_value.eligible_generators)
+            _encode_unvalidated(_openapi_value.eligible_generators)
     )
-    _openapi_value.retrofit_fraction isa Absent ||
-        (_openapi_output["retrofit_fraction"] = _encode(_openapi_value.retrofit_fraction))
-    _openapi_value.retrofit_cost isa Absent ||
-        (_openapi_output["retrofit_cost"] = _encode(_openapi_value.retrofit_cost))
+    _openapi_value.retrofit_fraction isa Absent || (
+        _openapi_output["retrofit_fraction"] =
+            _encode_unvalidated(_openapi_value.retrofit_fraction)
+    )
+    _openapi_value.retrofit_cost isa Absent || (
+        _openapi_output["retrofit_cost"] =
+            _encode_unvalidated(_openapi_value.retrofit_cost)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-16cedac303a10bb9798b.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding RetrofitPotential";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::RetrofitPotential) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-16cedac303a10bb9798b.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding RetrofitPotential";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::RetrofitPotential)
     _openapi_output = Pair{String, Any}[]

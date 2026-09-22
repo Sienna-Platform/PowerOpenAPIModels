@@ -32,28 +32,28 @@ function _decode(::Type{CombinedCycleAssociation}, _openapi_raw, _openapi_valida
     _openapi_field_plant_id = _decode(
         Int64,
         _required(_openapi_object, "plant_id", "CombinedCycleAssociation"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_entity_id = _decode(
         Int64,
         _required(_openapi_object, "entity_id", "CombinedCycleAssociation"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_role = _decode(
         CombinedCycleAssociationRole,
         _required(_openapi_object, "role", "CombinedCycleAssociation"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_hrsg_index = _decode(
         Int64,
         _required(_openapi_object, "hrsg_index", "CombinedCycleAssociation"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("plant_id", "entity_id", "role", "hrsg_index") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return CombinedCycleAssociation(;
         plant_id=_openapi_field_plant_id,
@@ -63,35 +63,36 @@ function _decode(::Type{CombinedCycleAssociation}, _openapi_raw, _openapi_valida
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::CombinedCycleAssociation)
+function _encode_unvalidated(_openapi_value::CombinedCycleAssociation)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.plant_id isa Absent ||
-        (_openapi_output["plant_id"] = _encode(_openapi_value.plant_id))
+        (_openapi_output["plant_id"] = _encode_unvalidated(_openapi_value.plant_id))
     _openapi_value.entity_id isa Absent ||
-        (_openapi_output["entity_id"] = _encode(_openapi_value.entity_id))
+        (_openapi_output["entity_id"] = _encode_unvalidated(_openapi_value.entity_id))
     _openapi_value.role isa Absent ||
-        (_openapi_output["role"] = _encode(_openapi_value.role))
+        (_openapi_output["role"] = _encode_unvalidated(_openapi_value.role))
     _openapi_value.hrsg_index isa Absent ||
-        (_openapi_output["hrsg_index"] = _encode(_openapi_value.hrsg_index))
+        (_openapi_output["hrsg_index"] = _encode_unvalidated(_openapi_value.hrsg_index))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0e9fe76103d759f5a44d.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding CombinedCycleAssociation";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::CombinedCycleAssociation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0e9fe76103d759f5a44d.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding CombinedCycleAssociation";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::CombinedCycleAssociation)
     _openapi_output = Pair{String, Any}[]

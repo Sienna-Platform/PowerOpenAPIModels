@@ -25,19 +25,20 @@ function _decode(::Type{CombinedCycleAssociationRole}, value, _openapi_validate:
         "decoding CombinedCycleAssociationRole";
         direction=:neutral,
     )
-    return CombinedCycleAssociationRole(_decode(String, value, _openapi_validate))
+    return CombinedCycleAssociationRole(_decode(String, value, false))
 end
-function _encode(value::CombinedCycleAssociationRole)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0e9fe76103d759f5a44d.json",
-            pointer="/properties/role",
-        ),
-        output,
-        "encoding CombinedCycleAssociationRole";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::CombinedCycleAssociationRole)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::CombinedCycleAssociationRole) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0e9fe76103d759f5a44d.json",
+        pointer="/properties/role",
+    ),
+    _encode_unvalidated(value),
+    "encoding CombinedCycleAssociationRole";
+    direction=:neutral,
+)
 Base.string(value::CombinedCycleAssociationRole) = string(value.value)

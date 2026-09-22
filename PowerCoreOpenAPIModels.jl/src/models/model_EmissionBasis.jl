@@ -23,19 +23,20 @@ function _decode(::Type{EmissionBasis}, value, _openapi_validate::Bool)
         "decoding EmissionBasis";
         direction=:neutral,
     )
-    return EmissionBasis(_decode(String, value, _openapi_validate))
+    return EmissionBasis(_decode(String, value, false))
 end
-function _encode(value::EmissionBasis)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/EmissionBasis",
-        ),
-        output,
-        "encoding EmissionBasis";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::EmissionBasis)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::EmissionBasis) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/EmissionBasis",
+    ),
+    _encode_unvalidated(value),
+    "encoding EmissionBasis";
+    direction=:neutral,
+)
 Base.string(value::EmissionBasis) = string(value.value)

@@ -28,18 +28,18 @@ function _decode(::Type{RequirementAssociation}, _openapi_raw, _openapi_validate
     _openapi_field_requirement_id = _decode(
         Int64,
         _required(_openapi_object, "requirement_id", "RequirementAssociation"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_entity_id = _decode(
         Int64,
         _required(_openapi_object, "entity_id", "RequirementAssociation"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("requirement_id", "entity_id") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return RequirementAssociation(;
         requirement_id=_openapi_field_requirement_id,
@@ -47,31 +47,34 @@ function _decode(::Type{RequirementAssociation}, _openapi_raw, _openapi_validate
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::RequirementAssociation)
+function _encode_unvalidated(_openapi_value::RequirementAssociation)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.requirement_id isa Absent ||
-        (_openapi_output["requirement_id"] = _encode(_openapi_value.requirement_id))
+    _openapi_value.requirement_id isa Absent || (
+        _openapi_output["requirement_id"] =
+            _encode_unvalidated(_openapi_value.requirement_id)
+    )
     _openapi_value.entity_id isa Absent ||
-        (_openapi_output["entity_id"] = _encode(_openapi_value.entity_id))
+        (_openapi_output["entity_id"] = _encode_unvalidated(_openapi_value.entity_id))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-384d979124670841f547.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding RequirementAssociation";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::RequirementAssociation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-384d979124670841f547.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding RequirementAssociation";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::RequirementAssociation)
     _openapi_output = Pair{String, Any}[]

@@ -22,19 +22,20 @@ function _decode(::Type{CurveStyles}, value, _openapi_validate::Bool)
         "decoding CurveStyles";
         direction=:neutral,
     )
-    return CurveStyles(_decode(Int64, value, _openapi_validate))
+    return CurveStyles(_decode(Int64, value, false))
 end
-function _encode(value::CurveStyles)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/CurveStyles",
-        ),
-        output,
-        "encoding CurveStyles";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::CurveStyles)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::CurveStyles) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/CurveStyles",
+    ),
+    _encode_unvalidated(value),
+    "encoding CurveStyles";
+    direction=:neutral,
+)
 Base.string(value::CurveStyles) = string(value.value)

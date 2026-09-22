@@ -24,19 +24,20 @@ function _decode(::Type{ShuntAdmittanceUnitBasis}, value, _openapi_validate::Boo
         "decoding ShuntAdmittanceUnitBasis";
         direction=:neutral,
     )
-    return ShuntAdmittanceUnitBasis(_decode(String, value, _openapi_validate))
+    return ShuntAdmittanceUnitBasis(_decode(String, value, false))
 end
-function _encode(value::ShuntAdmittanceUnitBasis)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ShuntAdmittanceUnitBasis",
-        ),
-        output,
-        "encoding ShuntAdmittanceUnitBasis";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ShuntAdmittanceUnitBasis)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ShuntAdmittanceUnitBasis) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ShuntAdmittanceUnitBasis",
+    ),
+    _encode_unvalidated(value),
+    "encoding ShuntAdmittanceUnitBasis";
+    direction=:neutral,
+)
 Base.string(value::ShuntAdmittanceUnitBasis) = string(value.value)

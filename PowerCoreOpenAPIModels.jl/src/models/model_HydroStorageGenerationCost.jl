@@ -60,18 +60,19 @@ function _decode(::Type{HydroStorageGenerationCost}, value, _openapi_validate::B
                 "discriminator-selected schema did not validate for HydroStorageGenerationCost",
             ),
         )
-    return HydroStorageGenerationCost(_decode(selected[1], value, _openapi_validate))
+    return HydroStorageGenerationCost(_decode(selected[1], value, false))
 end
-function _encode(value::HydroStorageGenerationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/HydroStorageGenerationCost",
-        ),
-        output,
-        "encoding HydroStorageGenerationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::HydroStorageGenerationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::HydroStorageGenerationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/HydroStorageGenerationCost",
+    ),
+    _encode_unvalidated(value),
+    "encoding HydroStorageGenerationCost";
+    direction=:neutral,
+)

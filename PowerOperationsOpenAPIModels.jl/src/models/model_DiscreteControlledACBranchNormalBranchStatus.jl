@@ -31,21 +31,20 @@ function _decode(
         "decoding DiscreteControlledACBranchNormalBranchStatus";
         direction=:neutral,
     )
-    return DiscreteControlledACBranchNormalBranchStatus(
-        _decode(String, value, _openapi_validate),
-    )
+    return DiscreteControlledACBranchNormalBranchStatus(_decode(String, value, false))
 end
-function _encode(value::DiscreteControlledACBranchNormalBranchStatus)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-a19739e398fbec984537.json",
-            pointer="/properties/normal_branch_status",
-        ),
-        output,
-        "encoding DiscreteControlledACBranchNormalBranchStatus";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::DiscreteControlledACBranchNormalBranchStatus)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::DiscreteControlledACBranchNormalBranchStatus) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-a19739e398fbec984537.json",
+        pointer="/properties/normal_branch_status",
+    ),
+    _encode_unvalidated(value),
+    "encoding DiscreteControlledACBranchNormalBranchStatus";
+    direction=:neutral,
+)
 Base.string(value::DiscreteControlledACBranchNormalBranchStatus) = string(value.value)

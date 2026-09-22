@@ -26,26 +26,17 @@ function _decode(::Type{PlantAssociation}, _openapi_raw, _openapi_validate::Bool
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PlantAssociation")
-    _openapi_field_plant_id = _decode(
-        Int64,
-        _required(_openapi_object, "plant_id", "PlantAssociation"),
-        _openapi_validate,
-    )
-    _openapi_field_entity_id = _decode(
-        Int64,
-        _required(_openapi_object, "entity_id", "PlantAssociation"),
-        _openapi_validate,
-    )
-    _openapi_field_group_index = _decode(
-        Int64,
-        _required(_openapi_object, "group_index", "PlantAssociation"),
-        _openapi_validate,
-    )
+    _openapi_field_plant_id =
+        _decode(Int64, _required(_openapi_object, "plant_id", "PlantAssociation"), false)
+    _openapi_field_entity_id =
+        _decode(Int64, _required(_openapi_object, "entity_id", "PlantAssociation"), false)
+    _openapi_field_group_index =
+        _decode(Int64, _required(_openapi_object, "group_index", "PlantAssociation"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("plant_id", "entity_id", "group_index") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return PlantAssociation(;
         plant_id=_openapi_field_plant_id,
@@ -54,33 +45,34 @@ function _decode(::Type{PlantAssociation}, _openapi_raw, _openapi_validate::Bool
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::PlantAssociation)
+function _encode_unvalidated(_openapi_value::PlantAssociation)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.plant_id isa Absent ||
-        (_openapi_output["plant_id"] = _encode(_openapi_value.plant_id))
+        (_openapi_output["plant_id"] = _encode_unvalidated(_openapi_value.plant_id))
     _openapi_value.entity_id isa Absent ||
-        (_openapi_output["entity_id"] = _encode(_openapi_value.entity_id))
+        (_openapi_output["entity_id"] = _encode_unvalidated(_openapi_value.entity_id))
     _openapi_value.group_index isa Absent ||
-        (_openapi_output["group_index"] = _encode(_openapi_value.group_index))
+        (_openapi_output["group_index"] = _encode_unvalidated(_openapi_value.group_index))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-3a70b3e47968d9e4db5d.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding PlantAssociation";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::PlantAssociation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-3a70b3e47968d9e4db5d.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding PlantAssociation";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::PlantAssociation)
     _openapi_output = Pair{String, Any}[]

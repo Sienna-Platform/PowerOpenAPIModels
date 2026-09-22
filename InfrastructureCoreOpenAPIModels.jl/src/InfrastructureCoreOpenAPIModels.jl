@@ -281,6 +281,24 @@ The public alias for the runtime's `_encode`, for the same reason as `decode`.
 """
 encode(value) = _encode(value)
 
+"""
+    _encode_unvalidated(value)
+
+`_encode` without the schema check. A generated model's `_encode` builds its fields with this
+and checks the finished object once, since that object's schema covers every nested one.
+"""
+_encode_unvalidated(value) = _encode(value)
+_encode_unvalidated(value::AbstractVector{UInt8}) = _encode(value)
+_encode_unvalidated(value::AbstractVector) =
+    Any[_encode_unvalidated(item) for item in value]
+function _encode_unvalidated(value::AbstractDict)
+    output = JSON.Object{String, Any}()
+    for (key, item) in value
+        output[String(key)] = _encode_unvalidated(item)
+    end
+    return output
+end
+
 include("models/model_ComplexNumber.jl")
 include("models/model_DataSourceExtra.jl")
 include("models/model_FromTo.jl")

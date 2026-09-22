@@ -38,52 +38,37 @@ function _decode(::Type{PointToPointBid}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PointToPointBid")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "PointToPointBid"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "PointToPointBid"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "PointToPointBid"),
-        _openapi_validate,
-    )
-    _openapi_field_from_id = _decode(
-        Int64,
-        _required(_openapi_object, "from_id", "PointToPointBid"),
-        _openapi_validate,
-    )
-    _openapi_field_to_id = _decode(
-        Int64,
-        _required(_openapi_object, "to_id", "PointToPointBid"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "PointToPointBid"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "PointToPointBid"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "PointToPointBid"), false)
+    _openapi_field_from_id =
+        _decode(Int64, _required(_openapi_object, "from_id", "PointToPointBid"), false)
+    _openapi_field_to_id =
+        _decode(Int64, _required(_openapi_object, "to_id", "PointToPointBid"), false)
     _openapi_field_max_active_power = _decode(
         Float64,
         _required(_openapi_object, "max_active_power", "PointToPointBid"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_spread_bid = _decode(
         PointToPointBidSpreadBid,
         _required(_openapi_object, "spread_bid", "PointToPointBid"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_price_limits = _decode(
         MinMax,
         _required(_openapi_object, "price_limits", "PointToPointBid"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_linked_crr =
         haskey(_openapi_object, "linked_crr") ?
         _decode(
             Union{Absent, Union{Nothing, String}},
             _openapi_object["linked_crr"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -99,7 +84,7 @@ function _decode(::Type{PointToPointBid}, _openapi_raw, _openapi_validate::Bool)
             "linked_crr",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return PointToPointBid(;
         id=_openapi_field_id,
@@ -114,44 +99,48 @@ function _decode(::Type{PointToPointBid}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::PointToPointBid)
+function _encode_unvalidated(_openapi_value::PointToPointBid)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.from_id isa Absent ||
-        (_openapi_output["from_id"] = _encode(_openapi_value.from_id))
+        (_openapi_output["from_id"] = _encode_unvalidated(_openapi_value.from_id))
     _openapi_value.to_id isa Absent ||
-        (_openapi_output["to_id"] = _encode(_openapi_value.to_id))
-    _openapi_value.max_active_power isa Absent ||
-        (_openapi_output["max_active_power"] = _encode(_openapi_value.max_active_power))
+        (_openapi_output["to_id"] = _encode_unvalidated(_openapi_value.to_id))
+    _openapi_value.max_active_power isa Absent || (
+        _openapi_output["max_active_power"] =
+            _encode_unvalidated(_openapi_value.max_active_power)
+    )
     _openapi_value.spread_bid isa Absent ||
-        (_openapi_output["spread_bid"] = _encode(_openapi_value.spread_bid))
+        (_openapi_output["spread_bid"] = _encode_unvalidated(_openapi_value.spread_bid))
     _openapi_value.price_limits isa Absent ||
-        (_openapi_output["price_limits"] = _encode(_openapi_value.price_limits))
+        (_openapi_output["price_limits"] = _encode_unvalidated(_openapi_value.price_limits))
     _openapi_value.linked_crr isa Absent ||
-        (_openapi_output["linked_crr"] = _encode(_openapi_value.linked_crr))
+        (_openapi_output["linked_crr"] = _encode_unvalidated(_openapi_value.linked_crr))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding PointToPointBid";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::PointToPointBid) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding PointToPointBid";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::PointToPointBid)
     _openapi_output = Pair{String, Any}[]

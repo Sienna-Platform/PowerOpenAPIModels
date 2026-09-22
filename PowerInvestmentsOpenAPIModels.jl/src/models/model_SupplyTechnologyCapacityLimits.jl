@@ -20,7 +20,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
         direction=:neutral,
     )
     matches = Any[]
-    if !_openapi_validate || _schema_valid(
+    if _schema_valid(
         _SPEC,
         (
             resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
@@ -30,12 +30,12 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
         direction=:neutral,
     )
         try
-            push!(matches, _decode(MinMax, value, _openapi_validate))
+            push!(matches, _decode(MinMax, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
     end
-    if !_openapi_validate || _schema_valid(
+    if _schema_valid(
         _SPEC,
         (
             resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
@@ -45,7 +45,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
         direction=:neutral,
     )
         try
-            push!(matches, _decode(MinMaxByKey, value, _openapi_validate))
+            push!(matches, _decode(MinMaxByKey, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -57,16 +57,17 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     )
     return SupplyTechnologyCapacityLimits(first(matches))
 end
-function _encode(value::SupplyTechnologyCapacityLimits)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
-            pointer="/properties/capacity_limits",
-        ),
-        output,
-        "encoding SupplyTechnologyCapacityLimits";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::SupplyTechnologyCapacityLimits)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::SupplyTechnologyCapacityLimits) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
+        pointer="/properties/capacity_limits",
+    ),
+    _encode_unvalidated(value),
+    "encoding SupplyTechnologyCapacityLimits";
+    direction=:neutral,
+)

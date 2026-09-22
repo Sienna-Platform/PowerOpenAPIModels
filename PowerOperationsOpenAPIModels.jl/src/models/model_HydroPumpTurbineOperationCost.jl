@@ -79,18 +79,19 @@ function _decode(::Type{HydroPumpTurbineOperationCost}, value, _openapi_validate
                 "discriminator-selected schema did not validate for HydroPumpTurbineOperationCost",
             ),
         )
-    return HydroPumpTurbineOperationCost(_decode(selected[1], value, _openapi_validate))
+    return HydroPumpTurbineOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::HydroPumpTurbineOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-e18af837c2d0e608e9b3.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding HydroPumpTurbineOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::HydroPumpTurbineOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::HydroPumpTurbineOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-e18af837c2d0e608e9b3.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding HydroPumpTurbineOperationCost";
+    direction=:neutral,
+)

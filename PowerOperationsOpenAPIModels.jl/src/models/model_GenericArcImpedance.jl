@@ -44,68 +44,50 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "GenericArcImpedance")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "GenericArcImpedance"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "GenericArcImpedance"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "GenericArcImpedance"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "GenericArcImpedance"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "GenericArcImpedance"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "GenericArcImpedance"), false)
     _openapi_field_active_power_flow = _decode(
         Float64,
         _required(_openapi_object, "active_power_flow", "GenericArcImpedance"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_reactive_power_flow = _decode(
         Float64,
         _required(_openapi_object, "reactive_power_flow", "GenericArcImpedance"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_max_flow = _decode(
         Float64,
         _required(_openapi_object, "max_flow", "GenericArcImpedance"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_arc = _decode(
-        Int64,
-        _required(_openapi_object, "arc", "GenericArcImpedance"),
-        _openapi_validate,
-    )
+    _openapi_field_arc =
+        _decode(Int64, _required(_openapi_object, "arc", "GenericArcImpedance"), false)
     _openapi_field_base_power = _decode(
         Float64,
         _required(_openapi_object, "base_power", "GenericArcImpedance"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "GenericArcImpedance"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
             Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
-    _openapi_field_r = _decode(
-        Float64,
-        _required(_openapi_object, "r", "GenericArcImpedance"),
-        _openapi_validate,
-    )
-    _openapi_field_x = _decode(
-        Float64,
-        _required(_openapi_object, "x", "GenericArcImpedance"),
-        _openapi_validate,
-    )
+    _openapi_field_r =
+        _decode(Float64, _required(_openapi_object, "r", "GenericArcImpedance"), false)
+    _openapi_field_x =
+        _decode(Float64, _required(_openapi_object, "x", "GenericArcImpedance"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -123,7 +105,7 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
             "x",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return GenericArcImpedance(;
         id=_openapi_field_id,
@@ -141,49 +123,58 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::GenericArcImpedance)
+function _encode_unvalidated(_openapi_value::GenericArcImpedance)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.active_power_flow isa Absent ||
-        (_openapi_output["active_power_flow"] = _encode(_openapi_value.active_power_flow))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.active_power_flow isa Absent || (
+        _openapi_output["active_power_flow"] =
+            _encode_unvalidated(_openapi_value.active_power_flow)
+    )
     _openapi_value.reactive_power_flow isa Absent || (
         _openapi_output["reactive_power_flow"] =
-            _encode(_openapi_value.reactive_power_flow)
+            _encode_unvalidated(_openapi_value.reactive_power_flow)
     )
     _openapi_value.max_flow isa Absent ||
-        (_openapi_output["max_flow"] = _encode(_openapi_value.max_flow))
-    _openapi_value.arc isa Absent || (_openapi_output["arc"] = _encode(_openapi_value.arc))
+        (_openapi_output["max_flow"] = _encode_unvalidated(_openapi_value.max_flow))
+    _openapi_value.arc isa Absent ||
+        (_openapi_output["arc"] = _encode_unvalidated(_openapi_value.arc))
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
-    _openapi_value.parameter_units isa Absent ||
-        (_openapi_output["parameter_units"] = _encode(_openapi_value.parameter_units))
-    _openapi_value.r isa Absent || (_openapi_output["r"] = _encode(_openapi_value.r))
-    _openapi_value.x isa Absent || (_openapi_output["x"] = _encode(_openapi_value.x))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
+    _openapi_value.parameter_units isa Absent || (
+        _openapi_output["parameter_units"] =
+            _encode_unvalidated(_openapi_value.parameter_units)
+    )
+    _openapi_value.r isa Absent ||
+        (_openapi_output["r"] = _encode_unvalidated(_openapi_value.r))
+    _openapi_value.x isa Absent ||
+        (_openapi_output["x"] = _encode_unvalidated(_openapi_value.x))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-ba70bf8471cae8da9de1.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding GenericArcImpedance";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::GenericArcImpedance) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-ba70bf8471cae8da9de1.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding GenericArcImpedance";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::GenericArcImpedance)
     _openapi_output = Pair{String, Any}[]

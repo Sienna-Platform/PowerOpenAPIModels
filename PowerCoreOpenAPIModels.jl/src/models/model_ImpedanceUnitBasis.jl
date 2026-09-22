@@ -23,19 +23,20 @@ function _decode(::Type{ImpedanceUnitBasis}, value, _openapi_validate::Bool)
         "decoding ImpedanceUnitBasis";
         direction=:neutral,
     )
-    return ImpedanceUnitBasis(_decode(String, value, _openapi_validate))
+    return ImpedanceUnitBasis(_decode(String, value, false))
 end
-function _encode(value::ImpedanceUnitBasis)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ImpedanceUnitBasis",
-        ),
-        output,
-        "encoding ImpedanceUnitBasis";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ImpedanceUnitBasis)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ImpedanceUnitBasis) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ImpedanceUnitBasis",
+    ),
+    _encode_unvalidated(value),
+    "encoding ImpedanceUnitBasis";
+    direction=:neutral,
+)
 Base.string(value::ImpedanceUnitBasis) = string(value.value)

@@ -99,20 +99,19 @@ function _decode(
                 "discriminator-selected schema did not validate for NodalHVDCTransportTechnologyLineLoss",
             ),
         )
-    return NodalHVDCTransportTechnologyLineLoss(
-        _decode(selected[1], value, _openapi_validate),
-    )
+    return NodalHVDCTransportTechnologyLineLoss(_decode(selected[1], value, false))
 end
-function _encode(value::NodalHVDCTransportTechnologyLineLoss)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-d257bbdda9d1dc230759.json",
-            pointer="/properties/line_loss",
-        ),
-        output,
-        "encoding NodalHVDCTransportTechnologyLineLoss";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::NodalHVDCTransportTechnologyLineLoss)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::NodalHVDCTransportTechnologyLineLoss) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-d257bbdda9d1dc230759.json",
+        pointer="/properties/line_loss",
+    ),
+    _encode_unvalidated(value),
+    "encoding NodalHVDCTransportTechnologyLineLoss";
+    direction=:neutral,
+)

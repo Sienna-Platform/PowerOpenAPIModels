@@ -55,18 +55,19 @@ function _decode(::Type{AverageRateCurveFunctionData}, value, _openapi_validate:
                 "discriminator-selected schema did not validate for AverageRateCurveFunctionData",
             ),
         )
-    return AverageRateCurveFunctionData(_decode(selected[1], value, _openapi_validate))
+    return AverageRateCurveFunctionData(_decode(selected[1], value, false))
 end
-function _encode(value::AverageRateCurveFunctionData)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/AverageRateCurve/properties/function_data",
-        ),
-        output,
-        "encoding AverageRateCurveFunctionData";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::AverageRateCurveFunctionData)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::AverageRateCurveFunctionData) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/AverageRateCurve/properties/function_data",
+    ),
+    _encode_unvalidated(value),
+    "encoding AverageRateCurveFunctionData";
+    direction=:neutral,
+)

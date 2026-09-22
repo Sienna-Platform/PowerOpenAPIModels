@@ -23,19 +23,20 @@ function _decode(::Type{ReservoirLocation}, value, _openapi_validate::Bool)
         "decoding ReservoirLocation";
         direction=:neutral,
     )
-    return ReservoirLocation(_decode(String, value, _openapi_validate))
+    return ReservoirLocation(_decode(String, value, false))
 end
-function _encode(value::ReservoirLocation)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ReservoirLocation",
-        ),
-        output,
-        "encoding ReservoirLocation";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ReservoirLocation)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ReservoirLocation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ReservoirLocation",
+    ),
+    _encode_unvalidated(value),
+    "encoding ReservoirLocation";
+    direction=:neutral,
+)
 Base.string(value::ReservoirLocation) = string(value.value)

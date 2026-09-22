@@ -60,18 +60,19 @@ function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::
                 "discriminator-selected schema did not validate for ProductionVariableCostCurve",
             ),
         )
-    return ProductionVariableCostCurve(_decode(selected[1], value, _openapi_validate))
+    return ProductionVariableCostCurve(_decode(selected[1], value, false))
 end
-function _encode(value::ProductionVariableCostCurve)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ProductionVariableCostCurve",
-        ),
-        output,
-        "encoding ProductionVariableCostCurve";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ProductionVariableCostCurve)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ProductionVariableCostCurve) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ProductionVariableCostCurve",
+    ),
+    _encode_unvalidated(value),
+    "encoding ProductionVariableCostCurve";
+    direction=:neutral,
+)

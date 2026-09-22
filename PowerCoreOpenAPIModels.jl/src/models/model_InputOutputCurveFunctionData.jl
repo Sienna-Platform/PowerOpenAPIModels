@@ -62,18 +62,19 @@ function _decode(::Type{InputOutputCurveFunctionData}, value, _openapi_validate:
                 "discriminator-selected schema did not validate for InputOutputCurveFunctionData",
             ),
         )
-    return InputOutputCurveFunctionData(_decode(selected[1], value, _openapi_validate))
+    return InputOutputCurveFunctionData(_decode(selected[1], value, false))
 end
-function _encode(value::InputOutputCurveFunctionData)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/InputOutputCurve/properties/function_data",
-        ),
-        output,
-        "encoding InputOutputCurveFunctionData";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::InputOutputCurveFunctionData)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::InputOutputCurveFunctionData) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/InputOutputCurve/properties/function_data",
+    ),
+    _encode_unvalidated(value),
+    "encoding InputOutputCurveFunctionData";
+    direction=:neutral,
+)

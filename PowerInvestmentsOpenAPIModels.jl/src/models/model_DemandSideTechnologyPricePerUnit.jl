@@ -95,18 +95,19 @@ function _decode(::Type{DemandSideTechnologyPricePerUnit}, value, _openapi_valid
                 "discriminator-selected schema did not validate for DemandSideTechnologyPricePerUnit",
             ),
         )
-    return DemandSideTechnologyPricePerUnit(_decode(selected[1], value, _openapi_validate))
+    return DemandSideTechnologyPricePerUnit(_decode(selected[1], value, false))
 end
-function _encode(value::DemandSideTechnologyPricePerUnit)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
-            pointer="/properties/price_per_unit",
-        ),
-        output,
-        "encoding DemandSideTechnologyPricePerUnit";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::DemandSideTechnologyPricePerUnit)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::DemandSideTechnologyPricePerUnit) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
+        pointer="/properties/price_per_unit",
+    ),
+    _encode_unvalidated(value),
+    "encoding DemandSideTechnologyPricePerUnit";
+    direction=:neutral,
+)

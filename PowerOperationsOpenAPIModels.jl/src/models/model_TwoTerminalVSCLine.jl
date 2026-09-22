@@ -112,304 +112,267 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TwoTerminalVSCLine")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "TwoTerminalVSCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "TwoTerminalVSCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "TwoTerminalVSCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_arc = _decode(
-        Int64,
-        _required(_openapi_object, "arc", "TwoTerminalVSCLine"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "TwoTerminalVSCLine"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "TwoTerminalVSCLine"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "TwoTerminalVSCLine"), false)
+    _openapi_field_arc =
+        _decode(Int64, _required(_openapi_object, "arc", "TwoTerminalVSCLine"), false)
     _openapi_field_active_power_flow = _decode(
         Float64,
         _required(_openapi_object, "active_power_flow", "TwoTerminalVSCLine"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_rating = _decode(
-        Float64,
-        _required(_openapi_object, "rating", "TwoTerminalVSCLine"),
-        _openapi_validate,
-    )
+    _openapi_field_rating =
+        _decode(Float64, _required(_openapi_object, "rating", "TwoTerminalVSCLine"), false)
     _openapi_field_active_power_limits_from = _decode(
         MinMax,
         _required(_openapi_object, "active_power_limits_from", "TwoTerminalVSCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_active_power_limits_to = _decode(
         MinMax,
         _required(_openapi_object, "active_power_limits_to", "TwoTerminalVSCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
         _decode(
             Union{Absent, AdmittanceUnitBasis, Nothing},
             _openapi_object["admittance_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_g =
         haskey(_openapi_object, "g") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["g"], _openapi_validate) :
-        ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["g"], false) : ABSENT
     _openapi_field_dc_current =
         haskey(_openapi_object, "dc_current") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["dc_current"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["dc_current"], false) :
+        ABSENT
     _openapi_field_reactive_power_from =
         haskey(_openapi_object, "reactive_power_from") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["reactive_power_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dc_control_from =
         haskey(_openapi_object, "dc_control_from") ?
         _decode(
             Union{Absent, Nothing, VSCDCControlModes},
             _openapi_object["dc_control_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_ac_control_from =
         haskey(_openapi_object, "ac_control_from") ?
         _decode(
             Union{Absent, Nothing, VSCACControlModes},
             _openapi_object["ac_control_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_setpoint_voltage_units =
         haskey(_openapi_object, "setpoint_voltage_units") ?
         _decode(
             Union{Absent, Nothing, VoltageUnitBasis},
             _openapi_object["setpoint_voltage_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dc_setpoint_from =
         haskey(_openapi_object, "dc_setpoint_from") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["dc_setpoint_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_ac_setpoint_from =
         haskey(_openapi_object, "ac_setpoint_from") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["ac_setpoint_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rated_ac_voltage_from =
         haskey(_openapi_object, "rated_ac_voltage_from") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["rated_ac_voltage_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_converter_loss_from =
         haskey(_openapi_object, "converter_loss_from") ?
         _decode(
             Union{Absent, LossCurve, Nothing},
             _openapi_object["converter_loss_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_dc_current_from =
         haskey(_openapi_object, "max_dc_current_from") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_dc_current_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rating_from =
         haskey(_openapi_object, "rating_from") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rating_from"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_from"], false) :
+        ABSENT
     _openapi_field_reactive_power_limits_from =
         haskey(_openapi_object, "reactive_power_limits_from") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_power_factor_weighting_fraction_from =
         haskey(_openapi_object, "power_factor_weighting_fraction_from") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["power_factor_weighting_fraction_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_voltage_units =
         haskey(_openapi_object, "voltage_units") ?
         _decode(
             Union{Absent, Nothing, VoltageUnitBasis},
             _openapi_object["voltage_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_voltage_limits_from =
         haskey(_openapi_object, "voltage_limits_from") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["voltage_limits_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dc_voltage_droop_from =
         haskey(_openapi_object, "dc_voltage_droop_from") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["dc_voltage_droop_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_reactive_power_to =
         haskey(_openapi_object, "reactive_power_to") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["reactive_power_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dc_control_to =
         haskey(_openapi_object, "dc_control_to") ?
         _decode(
             Union{Absent, Nothing, VSCDCControlModes},
             _openapi_object["dc_control_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_ac_control_to =
         haskey(_openapi_object, "ac_control_to") ?
         _decode(
             Union{Absent, Nothing, VSCACControlModes},
             _openapi_object["ac_control_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dc_setpoint_to =
         haskey(_openapi_object, "dc_setpoint_to") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["dc_setpoint_to"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["dc_setpoint_to"], false) :
+        ABSENT
     _openapi_field_ac_setpoint_to =
         haskey(_openapi_object, "ac_setpoint_to") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["ac_setpoint_to"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["ac_setpoint_to"], false) :
+        ABSENT
     _openapi_field_rated_ac_voltage_to =
         haskey(_openapi_object, "rated_ac_voltage_to") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["rated_ac_voltage_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_converter_loss_to =
         haskey(_openapi_object, "converter_loss_to") ?
         _decode(
             Union{Absent, LossCurve, Nothing},
             _openapi_object["converter_loss_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_dc_current_to =
         haskey(_openapi_object, "max_dc_current_to") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_dc_current_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rating_to =
         haskey(_openapi_object, "rating_to") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rating_to"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_to"], false) :
+        ABSENT
     _openapi_field_reactive_power_limits_to =
         haskey(_openapi_object, "reactive_power_limits_to") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_power_factor_weighting_fraction_to =
         haskey(_openapi_object, "power_factor_weighting_fraction_to") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["power_factor_weighting_fraction_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_voltage_limits_to =
         haskey(_openapi_object, "voltage_limits_to") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["voltage_limits_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dc_voltage_droop_to =
         haskey(_openapi_object, "dc_voltage_droop_to") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["dc_voltage_droop_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rated_dc_voltage =
         haskey(_openapi_object, "rated_dc_voltage") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["rated_dc_voltage"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_remote_bus_control_from =
         haskey(_openapi_object, "remote_bus_control_from") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["remote_bus_control_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_remote_bus_control_to =
         haskey(_openapi_object, "remote_bus_control_to") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["remote_bus_control_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rmpct_from =
         haskey(_openapi_object, "rmpct_from") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rmpct_from"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rmpct_from"], false) :
+        ABSENT
     _openapi_field_rmpct_to =
         haskey(_openapi_object, "rmpct_to") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rmpct_to"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rmpct_to"], false) :
+        ABSENT
     _openapi_field_base_power = _decode(
         Float64,
         _required(_openapi_object, "base_power", "TwoTerminalVSCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "TwoTerminalVSCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -462,7 +425,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return TwoTerminalVSCLine(;
         id=_openapi_field_id,
@@ -514,150 +477,186 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::TwoTerminalVSCLine)
+function _encode_unvalidated(_openapi_value::TwoTerminalVSCLine)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.arc isa Absent || (_openapi_output["arc"] = _encode(_openapi_value.arc))
-    _openapi_value.active_power_flow isa Absent ||
-        (_openapi_output["active_power_flow"] = _encode(_openapi_value.active_power_flow))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.arc isa Absent ||
+        (_openapi_output["arc"] = _encode_unvalidated(_openapi_value.arc))
+    _openapi_value.active_power_flow isa Absent || (
+        _openapi_output["active_power_flow"] =
+            _encode_unvalidated(_openapi_value.active_power_flow)
+    )
     _openapi_value.rating isa Absent ||
-        (_openapi_output["rating"] = _encode(_openapi_value.rating))
+        (_openapi_output["rating"] = _encode_unvalidated(_openapi_value.rating))
     _openapi_value.active_power_limits_from isa Absent || (
         _openapi_output["active_power_limits_from"] =
-            _encode(_openapi_value.active_power_limits_from)
+            _encode_unvalidated(_openapi_value.active_power_limits_from)
     )
     _openapi_value.active_power_limits_to isa Absent || (
         _openapi_output["active_power_limits_to"] =
-            _encode(_openapi_value.active_power_limits_to)
+            _encode_unvalidated(_openapi_value.active_power_limits_to)
     )
-    _openapi_value.admittance_units isa Absent ||
-        (_openapi_output["admittance_units"] = _encode(_openapi_value.admittance_units))
-    _openapi_value.g isa Absent || (_openapi_output["g"] = _encode(_openapi_value.g))
+    _openapi_value.admittance_units isa Absent || (
+        _openapi_output["admittance_units"] =
+            _encode_unvalidated(_openapi_value.admittance_units)
+    )
+    _openapi_value.g isa Absent ||
+        (_openapi_output["g"] = _encode_unvalidated(_openapi_value.g))
     _openapi_value.dc_current isa Absent ||
-        (_openapi_output["dc_current"] = _encode(_openapi_value.dc_current))
+        (_openapi_output["dc_current"] = _encode_unvalidated(_openapi_value.dc_current))
     _openapi_value.reactive_power_from isa Absent || (
         _openapi_output["reactive_power_from"] =
-            _encode(_openapi_value.reactive_power_from)
+            _encode_unvalidated(_openapi_value.reactive_power_from)
     )
-    _openapi_value.dc_control_from isa Absent ||
-        (_openapi_output["dc_control_from"] = _encode(_openapi_value.dc_control_from))
-    _openapi_value.ac_control_from isa Absent ||
-        (_openapi_output["ac_control_from"] = _encode(_openapi_value.ac_control_from))
+    _openapi_value.dc_control_from isa Absent || (
+        _openapi_output["dc_control_from"] =
+            _encode_unvalidated(_openapi_value.dc_control_from)
+    )
+    _openapi_value.ac_control_from isa Absent || (
+        _openapi_output["ac_control_from"] =
+            _encode_unvalidated(_openapi_value.ac_control_from)
+    )
     _openapi_value.setpoint_voltage_units isa Absent || (
         _openapi_output["setpoint_voltage_units"] =
-            _encode(_openapi_value.setpoint_voltage_units)
+            _encode_unvalidated(_openapi_value.setpoint_voltage_units)
     )
-    _openapi_value.dc_setpoint_from isa Absent ||
-        (_openapi_output["dc_setpoint_from"] = _encode(_openapi_value.dc_setpoint_from))
-    _openapi_value.ac_setpoint_from isa Absent ||
-        (_openapi_output["ac_setpoint_from"] = _encode(_openapi_value.ac_setpoint_from))
+    _openapi_value.dc_setpoint_from isa Absent || (
+        _openapi_output["dc_setpoint_from"] =
+            _encode_unvalidated(_openapi_value.dc_setpoint_from)
+    )
+    _openapi_value.ac_setpoint_from isa Absent || (
+        _openapi_output["ac_setpoint_from"] =
+            _encode_unvalidated(_openapi_value.ac_setpoint_from)
+    )
     _openapi_value.rated_ac_voltage_from isa Absent || (
         _openapi_output["rated_ac_voltage_from"] =
-            _encode(_openapi_value.rated_ac_voltage_from)
+            _encode_unvalidated(_openapi_value.rated_ac_voltage_from)
     )
     _openapi_value.converter_loss_from isa Absent || (
         _openapi_output["converter_loss_from"] =
-            _encode(_openapi_value.converter_loss_from)
+            _encode_unvalidated(_openapi_value.converter_loss_from)
     )
     _openapi_value.max_dc_current_from isa Absent || (
         _openapi_output["max_dc_current_from"] =
-            _encode(_openapi_value.max_dc_current_from)
+            _encode_unvalidated(_openapi_value.max_dc_current_from)
     )
     _openapi_value.rating_from isa Absent ||
-        (_openapi_output["rating_from"] = _encode(_openapi_value.rating_from))
+        (_openapi_output["rating_from"] = _encode_unvalidated(_openapi_value.rating_from))
     _openapi_value.reactive_power_limits_from isa Absent || (
         _openapi_output["reactive_power_limits_from"] =
-            _encode(_openapi_value.reactive_power_limits_from)
+            _encode_unvalidated(_openapi_value.reactive_power_limits_from)
     )
     _openapi_value.power_factor_weighting_fraction_from isa Absent || (
         _openapi_output["power_factor_weighting_fraction_from"] =
-            _encode(_openapi_value.power_factor_weighting_fraction_from)
+            _encode_unvalidated(_openapi_value.power_factor_weighting_fraction_from)
     )
-    _openapi_value.voltage_units isa Absent ||
-        (_openapi_output["voltage_units"] = _encode(_openapi_value.voltage_units))
+    _openapi_value.voltage_units isa Absent || (
+        _openapi_output["voltage_units"] =
+            _encode_unvalidated(_openapi_value.voltage_units)
+    )
     _openapi_value.voltage_limits_from isa Absent || (
         _openapi_output["voltage_limits_from"] =
-            _encode(_openapi_value.voltage_limits_from)
+            _encode_unvalidated(_openapi_value.voltage_limits_from)
     )
     _openapi_value.dc_voltage_droop_from isa Absent || (
         _openapi_output["dc_voltage_droop_from"] =
-            _encode(_openapi_value.dc_voltage_droop_from)
+            _encode_unvalidated(_openapi_value.dc_voltage_droop_from)
     )
-    _openapi_value.reactive_power_to isa Absent ||
-        (_openapi_output["reactive_power_to"] = _encode(_openapi_value.reactive_power_to))
-    _openapi_value.dc_control_to isa Absent ||
-        (_openapi_output["dc_control_to"] = _encode(_openapi_value.dc_control_to))
-    _openapi_value.ac_control_to isa Absent ||
-        (_openapi_output["ac_control_to"] = _encode(_openapi_value.ac_control_to))
-    _openapi_value.dc_setpoint_to isa Absent ||
-        (_openapi_output["dc_setpoint_to"] = _encode(_openapi_value.dc_setpoint_to))
-    _openapi_value.ac_setpoint_to isa Absent ||
-        (_openapi_output["ac_setpoint_to"] = _encode(_openapi_value.ac_setpoint_to))
+    _openapi_value.reactive_power_to isa Absent || (
+        _openapi_output["reactive_power_to"] =
+            _encode_unvalidated(_openapi_value.reactive_power_to)
+    )
+    _openapi_value.dc_control_to isa Absent || (
+        _openapi_output["dc_control_to"] =
+            _encode_unvalidated(_openapi_value.dc_control_to)
+    )
+    _openapi_value.ac_control_to isa Absent || (
+        _openapi_output["ac_control_to"] =
+            _encode_unvalidated(_openapi_value.ac_control_to)
+    )
+    _openapi_value.dc_setpoint_to isa Absent || (
+        _openapi_output["dc_setpoint_to"] =
+            _encode_unvalidated(_openapi_value.dc_setpoint_to)
+    )
+    _openapi_value.ac_setpoint_to isa Absent || (
+        _openapi_output["ac_setpoint_to"] =
+            _encode_unvalidated(_openapi_value.ac_setpoint_to)
+    )
     _openapi_value.rated_ac_voltage_to isa Absent || (
         _openapi_output["rated_ac_voltage_to"] =
-            _encode(_openapi_value.rated_ac_voltage_to)
+            _encode_unvalidated(_openapi_value.rated_ac_voltage_to)
     )
-    _openapi_value.converter_loss_to isa Absent ||
-        (_openapi_output["converter_loss_to"] = _encode(_openapi_value.converter_loss_to))
-    _openapi_value.max_dc_current_to isa Absent ||
-        (_openapi_output["max_dc_current_to"] = _encode(_openapi_value.max_dc_current_to))
+    _openapi_value.converter_loss_to isa Absent || (
+        _openapi_output["converter_loss_to"] =
+            _encode_unvalidated(_openapi_value.converter_loss_to)
+    )
+    _openapi_value.max_dc_current_to isa Absent || (
+        _openapi_output["max_dc_current_to"] =
+            _encode_unvalidated(_openapi_value.max_dc_current_to)
+    )
     _openapi_value.rating_to isa Absent ||
-        (_openapi_output["rating_to"] = _encode(_openapi_value.rating_to))
+        (_openapi_output["rating_to"] = _encode_unvalidated(_openapi_value.rating_to))
     _openapi_value.reactive_power_limits_to isa Absent || (
         _openapi_output["reactive_power_limits_to"] =
-            _encode(_openapi_value.reactive_power_limits_to)
+            _encode_unvalidated(_openapi_value.reactive_power_limits_to)
     )
     _openapi_value.power_factor_weighting_fraction_to isa Absent || (
         _openapi_output["power_factor_weighting_fraction_to"] =
-            _encode(_openapi_value.power_factor_weighting_fraction_to)
+            _encode_unvalidated(_openapi_value.power_factor_weighting_fraction_to)
     )
-    _openapi_value.voltage_limits_to isa Absent ||
-        (_openapi_output["voltage_limits_to"] = _encode(_openapi_value.voltage_limits_to))
+    _openapi_value.voltage_limits_to isa Absent || (
+        _openapi_output["voltage_limits_to"] =
+            _encode_unvalidated(_openapi_value.voltage_limits_to)
+    )
     _openapi_value.dc_voltage_droop_to isa Absent || (
         _openapi_output["dc_voltage_droop_to"] =
-            _encode(_openapi_value.dc_voltage_droop_to)
+            _encode_unvalidated(_openapi_value.dc_voltage_droop_to)
     )
-    _openapi_value.rated_dc_voltage isa Absent ||
-        (_openapi_output["rated_dc_voltage"] = _encode(_openapi_value.rated_dc_voltage))
+    _openapi_value.rated_dc_voltage isa Absent || (
+        _openapi_output["rated_dc_voltage"] =
+            _encode_unvalidated(_openapi_value.rated_dc_voltage)
+    )
     _openapi_value.remote_bus_control_from isa Absent || (
         _openapi_output["remote_bus_control_from"] =
-            _encode(_openapi_value.remote_bus_control_from)
+            _encode_unvalidated(_openapi_value.remote_bus_control_from)
     )
     _openapi_value.remote_bus_control_to isa Absent || (
         _openapi_output["remote_bus_control_to"] =
-            _encode(_openapi_value.remote_bus_control_to)
+            _encode_unvalidated(_openapi_value.remote_bus_control_to)
     )
     _openapi_value.rmpct_from isa Absent ||
-        (_openapi_output["rmpct_from"] = _encode(_openapi_value.rmpct_from))
+        (_openapi_output["rmpct_from"] = _encode_unvalidated(_openapi_value.rmpct_from))
     _openapi_value.rmpct_to isa Absent ||
-        (_openapi_output["rmpct_to"] = _encode(_openapi_value.rmpct_to))
+        (_openapi_output["rmpct_to"] = _encode_unvalidated(_openapi_value.rmpct_to))
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-9ecd50b82d9d3ac2dccf.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding TwoTerminalVSCLine";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::TwoTerminalVSCLine) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-9ecd50b82d9d3ac2dccf.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding TwoTerminalVSCLine";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::TwoTerminalVSCLine)
     _openapi_output = Pair{String, Any}[]

@@ -33,33 +33,21 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "GroupReserve")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "GroupReserve"), _openapi_validate)
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "GroupReserve"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "GroupReserve"),
-        _openapi_validate,
-    )
-    _openapi_field_requirement = _decode(
-        Float64,
-        _required(_openapi_object, "requirement", "GroupReserve"),
-        _openapi_validate,
-    )
+        _decode(Int64, _required(_openapi_object, "id", "GroupReserve"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "GroupReserve"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "GroupReserve"), false)
+    _openapi_field_requirement =
+        _decode(Float64, _required(_openapi_object, "requirement", "GroupReserve"), false)
     _openapi_field_variable =
         haskey(_openapi_object, "variable") ?
-        _decode(
-            Union{Absent, CostCurve, Nothing},
-            _openapi_object["variable"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, CostCurve, Nothing}, _openapi_object["variable"], false) :
+        ABSENT
     _openapi_field_reserve_direction = _decode(
         ReserveDirection,
         _required(_openapi_object, "reserve_direction", "GroupReserve"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -67,7 +55,7 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
         ("id", "name", "available", "requirement", "variable", "reserve_direction") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return GroupReserve(;
         id=_openapi_field_id,
@@ -79,38 +67,42 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::GroupReserve)
+function _encode_unvalidated(_openapi_value::GroupReserve)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.requirement isa Absent ||
-        (_openapi_output["requirement"] = _encode(_openapi_value.requirement))
+        (_openapi_output["requirement"] = _encode_unvalidated(_openapi_value.requirement))
     _openapi_value.variable isa Absent ||
-        (_openapi_output["variable"] = _encode(_openapi_value.variable))
-    _openapi_value.reserve_direction isa Absent ||
-        (_openapi_output["reserve_direction"] = _encode(_openapi_value.reserve_direction))
+        (_openapi_output["variable"] = _encode_unvalidated(_openapi_value.variable))
+    _openapi_value.reserve_direction isa Absent || (
+        _openapi_output["reserve_direction"] =
+            _encode_unvalidated(_openapi_value.reserve_direction)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-bcfe96dbd48c95f26a63.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding GroupReserve";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::GroupReserve) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-bcfe96dbd48c95f26a63.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding GroupReserve";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::GroupReserve)
     _openapi_output = Pair{String, Any}[]

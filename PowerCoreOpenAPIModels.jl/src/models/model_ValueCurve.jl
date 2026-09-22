@@ -83,18 +83,19 @@ function _decode(::Type{ValueCurve}, value, _openapi_validate::Bool)
     !_openapi_validate ||
         _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
         throw(DecodeError("discriminator-selected schema did not validate for ValueCurve"))
-    return ValueCurve(_decode(selected[1], value, _openapi_validate))
+    return ValueCurve(_decode(selected[1], value, false))
 end
-function _encode(value::ValueCurve)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ValueCurve",
-        ),
-        output,
-        "encoding ValueCurve";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ValueCurve)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ValueCurve) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ValueCurve",
+    ),
+    _encode_unvalidated(value),
+    "encoding ValueCurve";
+    direction=:neutral,
+)

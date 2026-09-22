@@ -99,20 +99,19 @@ function _decode(
                 "discriminator-selected schema did not validate for DemandSideTechnologyCurtailmentCost",
             ),
         )
-    return DemandSideTechnologyCurtailmentCost(
-        _decode(selected[1], value, _openapi_validate),
-    )
+    return DemandSideTechnologyCurtailmentCost(_decode(selected[1], value, false))
 end
-function _encode(value::DemandSideTechnologyCurtailmentCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
-            pointer="/properties/curtailment_cost",
-        ),
-        output,
-        "encoding DemandSideTechnologyCurtailmentCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::DemandSideTechnologyCurtailmentCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::DemandSideTechnologyCurtailmentCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
+        pointer="/properties/curtailment_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding DemandSideTechnologyCurtailmentCost";
+    direction=:neutral,
+)

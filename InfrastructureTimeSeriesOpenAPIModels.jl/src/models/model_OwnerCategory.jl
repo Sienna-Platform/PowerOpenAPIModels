@@ -23,19 +23,20 @@ function _decode(::Type{OwnerCategory}, value, _openapi_validate::Bool)
         "decoding OwnerCategory";
         direction=:neutral,
     )
-    return OwnerCategory(_decode(String, value, _openapi_validate))
+    return OwnerCategory(_decode(String, value, false))
 end
-function _encode(value::OwnerCategory)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
-            pointer="/\$defs/OwnerCategory",
-        ),
-        output,
-        "encoding OwnerCategory";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::OwnerCategory)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::OwnerCategory) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-003bf0ce6510b65f9b25.json",
+        pointer="/\$defs/OwnerCategory",
+    ),
+    _encode_unvalidated(value),
+    "encoding OwnerCategory";
+    direction=:neutral,
+)
 Base.string(value::OwnerCategory) = string(value.value)

@@ -24,23 +24,17 @@ function _decode(::Type{TopologyMapping}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TopologyMapping")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "TopologyMapping"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "TopologyMapping"), false)
     _openapi_field_buses =
         haskey(_openapi_object, "buses") ?
-        _decode(
-            Union{Absent, Nothing, Vector{String}},
-            _openapi_object["buses"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, Vector{String}}, _openapi_object["buses"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "buses") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return TopologyMapping(;
         id=_openapi_field_id,
@@ -48,30 +42,32 @@ function _decode(::Type{TopologyMapping}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::TopologyMapping)
+function _encode_unvalidated(_openapi_value::TopologyMapping)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.buses isa Absent ||
-        (_openapi_output["buses"] = _encode(_openapi_value.buses))
+        (_openapi_output["buses"] = _encode_unvalidated(_openapi_value.buses))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-a2797460ea2400b91729.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding TopologyMapping";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::TopologyMapping) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-a2797460ea2400b91729.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding TopologyMapping";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::TopologyMapping)
     _openapi_output = Pair{String, Any}[]

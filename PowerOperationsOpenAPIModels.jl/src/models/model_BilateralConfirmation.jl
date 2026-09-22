@@ -28,19 +28,20 @@ function _decode(::Type{BilateralConfirmation}, value, _openapi_validate::Bool)
         "decoding BilateralConfirmation";
         direction=:neutral,
     )
-    return BilateralConfirmation(_decode(String, value, _openapi_validate))
+    return BilateralConfirmation(_decode(String, value, false))
 end
-function _encode(value::BilateralConfirmation)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
-            pointer="/\$defs/BilateralConfirmation",
-        ),
-        output,
-        "encoding BilateralConfirmation";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::BilateralConfirmation)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::BilateralConfirmation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        pointer="/\$defs/BilateralConfirmation",
+    ),
+    _encode_unvalidated(value),
+    "encoding BilateralConfirmation";
+    direction=:neutral,
+)
 Base.string(value::BilateralConfirmation) = string(value.value)

@@ -85,6 +85,7 @@ include(joinpath(@__DIR__, "dedup_structs.jl"))
 # Included after dedup_structs.jl: reuses its `generated_type_name`.
 include(joinpath(@__DIR__, "const_defaults.jl"))
 include(joinpath(@__DIR__, "primitive_oneof_decode.jl"))
+include(joinpath(@__DIR__, "validate_once.jl"))
 
 """
 Run OpenAPI.client() on `domain`'s selector; return the raw generated module text.
@@ -297,6 +298,7 @@ for (domain, pkgdir, modname, bases) in DOMAINS
         )
         domain_defaulted += n
         text = patch_primitive_oneof(text, c.name)
+        text = validate_once(text, c.name)
         write(path, rewrite_docstring(text))
         push!(written, path)
     end
@@ -307,12 +309,14 @@ for (domain, pkgdir, modname, bases) in DOMAINS
     for b in bases
         println(lines_out, "using $(MODULE_FOR_DOMAIN[b])")
     end
+    isempty(bases) || println(lines_out, ENCODE_UNVALIDATED_IMPORT)
     println(lines_out)
     # The model supertypes have to exist before the first `include` that uses one. In the
     # base package that means emitting them here; every other package inherits them through
     # the `using` above.
     if domain == "infrastructure-core"
         println(lines_out, SUPERTYPE_DEFINITIONS)
+        println(lines_out, ENCODE_UNVALIDATED_DEFINITIONS)
     end
     # Original (dependency) order, not alphabetical: a synthesized nested type like
     # `DataSourceExtra` is generated immediately before the struct that references it

@@ -57,19 +57,20 @@ function _decode(::Type{ThermalFuels}, value, _openapi_validate::Bool)
         "decoding ThermalFuels";
         direction=:neutral,
     )
-    return ThermalFuels(_decode(String, value, _openapi_validate))
+    return ThermalFuels(_decode(String, value, false))
 end
-function _encode(value::ThermalFuels)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ThermalFuels",
-        ),
-        output,
-        "encoding ThermalFuels";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ThermalFuels)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ThermalFuels) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ThermalFuels",
+    ),
+    _encode_unvalidated(value),
+    "encoding ThermalFuels";
+    direction=:neutral,
+)
 Base.string(value::ThermalFuels) = string(value.value)

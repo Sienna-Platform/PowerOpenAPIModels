@@ -40,44 +40,29 @@ function _decode(::Type{DCBus}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "DCBus")
     _openapi_field_area =
         haskey(_openapi_object, "area") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["area"], _openapi_validate) :
-        ABSENT
+        _decode(Union{Absent, Int64, Nothing}, _openapi_object["area"], false) : ABSENT
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "DCBus"), _openapi_validate)
+        _decode(Bool, _required(_openapi_object, "available", "DCBus"), false)
     _openapi_field_base_voltage =
         haskey(_openapi_object, "base_voltage") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["base_voltage"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "DCBus"), _openapi_validate)
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_voltage"], false) :
+        ABSENT
+    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "DCBus"), false)
     _openapi_field_load_zone =
         haskey(_openapi_object, "load_zone") ?
-        _decode(
-            Union{Absent, Int64, Nothing},
-            _openapi_object["load_zone"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Int64, Nothing}, _openapi_object["load_zone"], false) : ABSENT
     _openapi_field_magnitude =
         haskey(_openapi_object, "magnitude") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["magnitude"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["magnitude"], false) :
+        ABSENT
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "DCBus"), _openapi_validate)
+        _decode(String, _required(_openapi_object, "name", "DCBus"), false)
     _openapi_field_number =
-        _decode(Float64, _required(_openapi_object, "number", "DCBus"), _openapi_validate)
+        _decode(Float64, _required(_openapi_object, "number", "DCBus"), false)
     _openapi_field_voltage_limits =
         haskey(_openapi_object, "voltage_limits") ?
-        _decode(
-            Union{Absent, MinMax, Nothing},
-            _openapi_object["voltage_limits"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, MinMax, Nothing}, _openapi_object["voltage_limits"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -92,7 +77,7 @@ function _decode(::Type{DCBus}, _openapi_raw, _openapi_validate::Bool)
             "voltage_limits",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return DCBus(;
         area=_openapi_field_area,
@@ -107,44 +92,48 @@ function _decode(::Type{DCBus}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::DCBus)
+function _encode_unvalidated(_openapi_value::DCBus)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.area isa Absent ||
-        (_openapi_output["area"] = _encode(_openapi_value.area))
+        (_openapi_output["area"] = _encode_unvalidated(_openapi_value.area))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.base_voltage isa Absent ||
-        (_openapi_output["base_voltage"] = _encode(_openapi_value.base_voltage))
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+        (_openapi_output["base_voltage"] = _encode_unvalidated(_openapi_value.base_voltage))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.load_zone isa Absent ||
-        (_openapi_output["load_zone"] = _encode(_openapi_value.load_zone))
+        (_openapi_output["load_zone"] = _encode_unvalidated(_openapi_value.load_zone))
     _openapi_value.magnitude isa Absent ||
-        (_openapi_output["magnitude"] = _encode(_openapi_value.magnitude))
+        (_openapi_output["magnitude"] = _encode_unvalidated(_openapi_value.magnitude))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.number isa Absent ||
-        (_openapi_output["number"] = _encode(_openapi_value.number))
-    _openapi_value.voltage_limits isa Absent ||
-        (_openapi_output["voltage_limits"] = _encode(_openapi_value.voltage_limits))
+        (_openapi_output["number"] = _encode_unvalidated(_openapi_value.number))
+    _openapi_value.voltage_limits isa Absent || (
+        _openapi_output["voltage_limits"] =
+            _encode_unvalidated(_openapi_value.voltage_limits)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-1f6d700a02c20941d2e0.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding DCBus";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::DCBus) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-1f6d700a02c20941d2e0.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding DCBus";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::DCBus)
     _openapi_output = Pair{String, Any}[]

@@ -45,65 +45,59 @@ function _decode(::Type{MarketBidTimeSeriesCost}, _openapi_raw, _openapi_validat
     _openapi_field_cost_type = _decode(
         String,
         _required(_openapi_object, "cost_type", "MarketBidTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_minimum_energy_offer = _decode(
         TimeSeriesInputOutputCurve,
         _required(_openapi_object, "minimum_energy_offer", "MarketBidTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_start_up_association_id = _decode(
         Int64,
         _required(_openapi_object, "start_up_association_id", "MarketBidTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_shut_down = _decode(
         TimeSeriesInputOutputCurve,
         _required(_openapi_object, "shut_down", "MarketBidTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_incremental_offer_curves = _decode(
         CostCurve,
         _required(_openapi_object, "incremental_offer_curves", "MarketBidTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_decremental_offer_curves = _decode(
         CostCurve,
         _required(_openapi_object, "decremental_offer_curves", "MarketBidTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_ancillary_service_offers = _decode(
         Vector{Int64},
         _required(_openapi_object, "ancillary_service_offers", "MarketBidTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_incremental_slope =
         haskey(_openapi_object, "incremental_slope") ?
-        _decode(
-            Union{Absent, Bool, Nothing},
-            _openapi_object["incremental_slope"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Bool, Nothing}, _openapi_object["incremental_slope"], false) :
+        ABSENT
     _openapi_field_decremental_slope =
         haskey(_openapi_object, "decremental_slope") ?
-        _decode(
-            Union{Absent, Bool, Nothing},
-            _openapi_object["decremental_slope"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Bool, Nothing}, _openapi_object["decremental_slope"], false) :
+        ABSENT
     _openapi_field_curve_style =
         haskey(_openapi_object, "curve_style") ?
         _decode(
             Union{Absent, CurveStyles, Nothing},
             _openapi_object["curve_style"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_curve_multistep =
         haskey(_openapi_object, "curve_multistep") ?
         _decode(
             Union{Absent, CurveMultiStep, Nothing},
             _openapi_object["curve_multistep"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -121,7 +115,7 @@ function _decode(::Type{MarketBidTimeSeriesCost}, _openapi_raw, _openapi_validat
             "curve_multistep",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return MarketBidTimeSeriesCost(;
         cost_type=_openapi_field_cost_type,
@@ -138,59 +132,66 @@ function _decode(::Type{MarketBidTimeSeriesCost}, _openapi_raw, _openapi_validat
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::MarketBidTimeSeriesCost)
+function _encode_unvalidated(_openapi_value::MarketBidTimeSeriesCost)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.cost_type isa Absent ||
-        (_openapi_output["cost_type"] = _encode(_openapi_value.cost_type))
+        (_openapi_output["cost_type"] = _encode_unvalidated(_openapi_value.cost_type))
     _openapi_value.minimum_energy_offer isa Absent || (
         _openapi_output["minimum_energy_offer"] =
-            _encode(_openapi_value.minimum_energy_offer)
+            _encode_unvalidated(_openapi_value.minimum_energy_offer)
     )
     _openapi_value.start_up_association_id isa Absent || (
         _openapi_output["start_up_association_id"] =
-            _encode(_openapi_value.start_up_association_id)
+            _encode_unvalidated(_openapi_value.start_up_association_id)
     )
     _openapi_value.shut_down isa Absent ||
-        (_openapi_output["shut_down"] = _encode(_openapi_value.shut_down))
+        (_openapi_output["shut_down"] = _encode_unvalidated(_openapi_value.shut_down))
     _openapi_value.incremental_offer_curves isa Absent || (
         _openapi_output["incremental_offer_curves"] =
-            _encode(_openapi_value.incremental_offer_curves)
+            _encode_unvalidated(_openapi_value.incremental_offer_curves)
     )
     _openapi_value.decremental_offer_curves isa Absent || (
         _openapi_output["decremental_offer_curves"] =
-            _encode(_openapi_value.decremental_offer_curves)
+            _encode_unvalidated(_openapi_value.decremental_offer_curves)
     )
     _openapi_value.ancillary_service_offers isa Absent || (
         _openapi_output["ancillary_service_offers"] =
-            _encode(_openapi_value.ancillary_service_offers)
+            _encode_unvalidated(_openapi_value.ancillary_service_offers)
     )
-    _openapi_value.incremental_slope isa Absent ||
-        (_openapi_output["incremental_slope"] = _encode(_openapi_value.incremental_slope))
-    _openapi_value.decremental_slope isa Absent ||
-        (_openapi_output["decremental_slope"] = _encode(_openapi_value.decremental_slope))
+    _openapi_value.incremental_slope isa Absent || (
+        _openapi_output["incremental_slope"] =
+            _encode_unvalidated(_openapi_value.incremental_slope)
+    )
+    _openapi_value.decremental_slope isa Absent || (
+        _openapi_output["decremental_slope"] =
+            _encode_unvalidated(_openapi_value.decremental_slope)
+    )
     _openapi_value.curve_style isa Absent ||
-        (_openapi_output["curve_style"] = _encode(_openapi_value.curve_style))
-    _openapi_value.curve_multistep isa Absent ||
-        (_openapi_output["curve_multistep"] = _encode(_openapi_value.curve_multistep))
+        (_openapi_output["curve_style"] = _encode_unvalidated(_openapi_value.curve_style))
+    _openapi_value.curve_multistep isa Absent || (
+        _openapi_output["curve_multistep"] =
+            _encode_unvalidated(_openapi_value.curve_multistep)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/MarketBidTimeSeriesCost",
-        ),
-        _openapi_output,
-        "encoding MarketBidTimeSeriesCost";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::MarketBidTimeSeriesCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/MarketBidTimeSeriesCost",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding MarketBidTimeSeriesCost";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::MarketBidTimeSeriesCost)
     _openapi_output = Pair{String, Any}[]
