@@ -14,7 +14,7 @@ function _decode(::Type{FixedFrequency}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e421706efb72487c7531.json",
+            resource="https://openapi.invalid/schema/external-6f9b5c0d55fa44829a42.json",
             pointer="",
         ),
         _openapi_raw,
@@ -55,7 +55,7 @@ function _encode(_openapi_value::FixedFrequency)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e421706efb72487c7531.json",
+            resource="https://openapi.invalid/schema/external-6f9b5c0d55fa44829a42.json",
             pointer="",
         ),
         _openapi_output,

@@ -1,36 +1,36 @@
-Base.@kwdef struct VirtualInertia <: APIModel
-    ta::Float64
-    kd::Float64
-    komega::Float64
+Base.@kwdef struct ActivePowerPI <: APIModel
+    kp_p::Float64
+    ki_p::Float64
+    omegaz::Float64
     p_ref::Union{Absent, Float64, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
-_decode(::Type{VirtualInertia}, value) = _decode(VirtualInertia, value, true)
-function _decode(::Type{VirtualInertia}, _openapi_raw, _openapi_validate::Bool)
+_decode(::Type{ActivePowerPI}, value) = _decode(ActivePowerPI, value, true)
+function _decode(::Type{ActivePowerPI}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1c07cc56c57f877e86fc.json",
+            resource="https://openapi.invalid/schema/external-268f0027171c3b0d2ee3.json",
             pointer="",
         ),
         _openapi_raw,
-        "decoding VirtualInertia";
+        "decoding ActivePowerPI";
         direction=:neutral,
     )
-    _openapi_object = _object(_openapi_raw, "VirtualInertia")
-    _openapi_field_ta = _decode(
+    _openapi_object = _object(_openapi_raw, "ActivePowerPI")
+    _openapi_field_kp_p = _decode(
         Float64,
-        _required(_openapi_object, "Ta", "VirtualInertia"),
+        _required(_openapi_object, "Kp_p", "ActivePowerPI"),
         _openapi_validate,
     )
-    _openapi_field_kd = _decode(
+    _openapi_field_ki_p = _decode(
         Float64,
-        _required(_openapi_object, "kd", "VirtualInertia"),
+        _required(_openapi_object, "Ki_p", "ActivePowerPI"),
         _openapi_validate,
     )
-    _openapi_field_komega = _decode(
+    _openapi_field_omegaz = _decode(
         Float64,
-        _required(_openapi_object, "komega", "VirtualInertia"),
+        _required(_openapi_object, "omegaz", "ActivePowerPI"),
         _openapi_validate,
     )
     _openapi_field_p_ref =
@@ -42,24 +42,26 @@ function _decode(::Type{VirtualInertia}, _openapi_raw, _openapi_validate::Bool)
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("Ta", "kd", "komega", "P_ref") && continue
+        String(_openapi_key) in ("Kp_p", "Ki_p", "omegaz", "P_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
     end
-    return VirtualInertia(;
-        ta=_openapi_field_ta,
-        kd=_openapi_field_kd,
-        komega=_openapi_field_komega,
+    return ActivePowerPI(;
+        kp_p=_openapi_field_kp_p,
+        ki_p=_openapi_field_ki_p,
+        omegaz=_openapi_field_omegaz,
         p_ref=_openapi_field_p_ref,
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::VirtualInertia)
+function _encode(_openapi_value::ActivePowerPI)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.ta isa Absent || (_openapi_output["Ta"] = _encode(_openapi_value.ta))
-    _openapi_value.kd isa Absent || (_openapi_output["kd"] = _encode(_openapi_value.kd))
-    _openapi_value.komega isa Absent ||
-        (_openapi_output["komega"] = _encode(_openapi_value.komega))
+    _openapi_value.kp_p isa Absent ||
+        (_openapi_output["Kp_p"] = _encode(_openapi_value.kp_p))
+    _openapi_value.ki_p isa Absent ||
+        (_openapi_output["Ki_p"] = _encode(_openapi_value.ki_p))
+    _openapi_value.omegaz isa Absent ||
+        (_openapi_output["omegaz"] = _encode(_openapi_value.omegaz))
     _openapi_value.p_ref isa Absent ||
         (_openapi_output["P_ref"] = _encode(_openapi_value.p_ref))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
@@ -73,21 +75,21 @@ function _encode(_openapi_value::VirtualInertia)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1c07cc56c57f877e86fc.json",
+            resource="https://openapi.invalid/schema/external-268f0027171c3b0d2ee3.json",
             pointer="",
         ),
         _openapi_output,
-        "encoding VirtualInertia";
+        "encoding ActivePowerPI";
         direction=:neutral,
     )
 end
 
-function _form_fields(_openapi_value::VirtualInertia)
+function _form_fields(_openapi_value::ActivePowerPI)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.ta isa Absent || push!(_openapi_output, "Ta" => _openapi_value.ta)
-    _openapi_value.kd isa Absent || push!(_openapi_output, "kd" => _openapi_value.kd)
-    _openapi_value.komega isa Absent ||
-        push!(_openapi_output, "komega" => _openapi_value.komega)
+    _openapi_value.kp_p isa Absent || push!(_openapi_output, "Kp_p" => _openapi_value.kp_p)
+    _openapi_value.ki_p isa Absent || push!(_openapi_output, "Ki_p" => _openapi_value.ki_p)
+    _openapi_value.omegaz isa Absent ||
+        push!(_openapi_output, "omegaz" => _openapi_value.omegaz)
     _openapi_value.p_ref isa Absent ||
         push!(_openapi_output, "P_ref" => _openapi_value.p_ref)
     append!(_openapi_output, collect(_openapi_value.additional_properties))

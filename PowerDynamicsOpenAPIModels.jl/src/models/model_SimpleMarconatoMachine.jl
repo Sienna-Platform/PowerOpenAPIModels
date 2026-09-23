@@ -39,7 +39,7 @@ function _decode(::Type{SimpleMarconatoMachine}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-621ae34fb6917dcb5f9c.json",
+            resource="https://openapi.invalid/schema/external-fbd193e7333be11f10a3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -184,7 +184,7 @@ function _encode(_openapi_value::SimpleMarconatoMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-621ae34fb6917dcb5f9c.json",
+            resource="https://openapi.invalid/schema/external-fbd193e7333be11f10a3.json",
             pointer="",
         ),
         _openapi_output,

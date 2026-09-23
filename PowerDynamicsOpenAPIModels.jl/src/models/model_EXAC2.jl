@@ -54,7 +54,7 @@ function _decode(::Type{EXAC2}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6f027616005c0d1acbbc.json",
+            resource="https://openapi.invalid/schema/external-d4abf7880359b4fa07ae.json",
             pointer="",
         ),
         _openapi_raw,
@@ -207,7 +207,7 @@ function _encode(_openapi_value::EXAC2)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6f027616005c0d1acbbc.json",
+            resource="https://openapi.invalid/schema/external-d4abf7880359b4fa07ae.json",
             pointer="",
         ),
         _openapi_output,

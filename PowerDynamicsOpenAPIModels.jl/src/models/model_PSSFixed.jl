@@ -16,7 +16,7 @@ function _decode(::Type{PSSFixed}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-49f28a31e29a293e82f5.json",
+            resource="https://openapi.invalid/schema/external-080b49d68ee8a89bf170.json",
             pointer="",
         ),
         _openapi_raw,
@@ -56,7 +56,7 @@ function _encode(_openapi_value::PSSFixed)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-49f28a31e29a293e82f5.json",
+            resource="https://openapi.invalid/schema/external-080b49d68ee8a89bf170.json",
             pointer="",
         ),
         _openapi_output,

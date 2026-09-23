@@ -24,7 +24,7 @@ function _decode(::Type{TGTypeII}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e7bc469ac4a62b8c2f92.json",
+            resource="https://openapi.invalid/schema/external-45a127ed352d1409fccb.json",
             pointer="",
         ),
         _openapi_raw,
@@ -89,7 +89,7 @@ function _encode(_openapi_value::TGTypeII)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e7bc469ac4a62b8c2f92.json",
+            resource="https://openapi.invalid/schema/external-45a127ed352d1409fccb.json",
             pointer="",
         ),
         _openapi_output,

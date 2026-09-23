@@ -38,7 +38,7 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-29d492daf38787a2f8c4.json",
+            resource="https://openapi.invalid/schema/external-ff9dcb4590ca4b8c06d7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -182,7 +182,7 @@ function _encode(_openapi_value::HydroTurbineGov)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-29d492daf38787a2f8c4.json",
+            resource="https://openapi.invalid/schema/external-ff9dcb4590ca4b8c06d7.json",
             pointer="",
         ),
         _openapi_output,
