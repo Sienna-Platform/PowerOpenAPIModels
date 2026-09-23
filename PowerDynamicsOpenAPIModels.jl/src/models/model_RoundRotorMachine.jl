@@ -1,26 +1,21 @@
 """
     RoundRotorMachine
 
-Parameters of 4-states round-rotor synchronous machine with quadratic/exponential saturation: IEEE Std 1110 5.3.2 (Model 2.2). GENROU or GENROE model in PSSE and PSLF.
+Parameters of 4-states round-rotor synchronous machine with quadratic/exponential saturation: IEEE Std 1110 5.3.2 (Model 2.2). GENROU or GENROE model in PSSE and PSLF
 
-  - `id`: Unique integer identifier for this component.
-  - `r`: Armature resistance.
+  - `id`: Unique integer identifier for this component
+  - `r`: Armature resistance
   - `td0_p`: Time constant of transient d-axis voltage. Units: s.
   - `td0_pp`: Time constant of sub-transient d-axis voltage. Units: s.
   - `tq0_p`: Time constant of transient q-axis voltage. Units: s.
   - `tq0_pp`: Time constant of sub-transient q-axis voltage. Units: s.
-  - `xd`: Reactance after EMF in d-axis.
-  - `xq`: Reactance after EMF in q-axis.
-  - `xd_p`: Transient reactance after EMF in d-axis.
-  - `xq_p`: Transient reactance after EMF in q-axis.
-  - `xd_pp`: Sub-Transient reactance after EMF in d-axis. Note: Xd_pp = Xq_pp.
-  - `xl`: Stator leakage reactance.
-  - `se`: Saturation factor at 1 and 1.2 pu flux: S(1.0) = B(|psi_pp|-A)^2.
-  - `gamma_d1`: Do not modify
-  - `gamma_q1`: Do not modify
-  - `gamma_d2`: Do not modify
-  - `gamma_q2`: Do not modify
-  - `gamma_qd`: Do not modify
+  - `xd`: Reactance after EMF in d-axis
+  - `xq`: Reactance after EMF in q-axis
+  - `xd_p`: Transient reactance after EMF in d-axis
+  - `xq_p`: Transient reactance after EMF in q-axis
+  - `xd_pp`: Sub-Transient reactance after EMF in d-axis. Note: Xd_pp = Xq_pp
+  - `xl`: Stator leakage reactance
+  - `se`: Saturation factor at 1 and 1.2 pu flux: S(1.0) = B(|psi_pp|-A)^2
 """
 Base.@kwdef struct RoundRotorMachine <: APIModel
     id::Int64
@@ -36,11 +31,6 @@ Base.@kwdef struct RoundRotorMachine <: APIModel
     xd_pp::Float64
     xl::Float64
     se::Vector{Float64}
-    gamma_d1::Float64
-    gamma_q1::Float64
-    gamma_d2::Float64
-    gamma_q2::Float64
-    gamma_qd::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{RoundRotorMachine}, value) = _decode(RoundRotorMachine, value, true)
@@ -48,7 +38,7 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7c84d2adb355e61940ad.json",
+            resource="https://openapi.invalid/schema/external-e46f5526f697fc9626d2.json",
             pointer="",
         ),
         _openapi_raw,
@@ -121,31 +111,6 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
         _required(_openapi_object, "Se", "RoundRotorMachine"),
         _openapi_validate,
     )
-    _openapi_field_gamma_d1 = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_d1", "RoundRotorMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_gamma_q1 = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_q1", "RoundRotorMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_gamma_d2 = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_d2", "RoundRotorMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_gamma_q2 = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_q2", "RoundRotorMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_gamma_qd = _decode(
-        Float64,
-        _required(_openapi_object, "gamma_qd", "RoundRotorMachine"),
-        _openapi_validate,
-    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -162,11 +127,6 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
             "Xd_pp",
             "Xl",
             "Se",
-            "gamma_d1",
-            "gamma_q1",
-            "gamma_d2",
-            "gamma_q2",
-            "gamma_qd",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, _openapi_validate)
@@ -185,11 +145,6 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
         xd_pp=_openapi_field_xd_pp,
         xl=_openapi_field_xl,
         se=_openapi_field_se,
-        gamma_d1=_openapi_field_gamma_d1,
-        gamma_q1=_openapi_field_gamma_q1,
-        gamma_d2=_openapi_field_gamma_d2,
-        gamma_q2=_openapi_field_gamma_q2,
-        gamma_qd=_openapi_field_gamma_qd,
         additional_properties=_openapi_additional_properties,
     )
 end
@@ -215,16 +170,6 @@ function _encode(_openapi_value::RoundRotorMachine)
         (_openapi_output["Xd_pp"] = _encode(_openapi_value.xd_pp))
     _openapi_value.xl isa Absent || (_openapi_output["Xl"] = _encode(_openapi_value.xl))
     _openapi_value.se isa Absent || (_openapi_output["Se"] = _encode(_openapi_value.se))
-    _openapi_value.gamma_d1 isa Absent ||
-        (_openapi_output["gamma_d1"] = _encode(_openapi_value.gamma_d1))
-    _openapi_value.gamma_q1 isa Absent ||
-        (_openapi_output["gamma_q1"] = _encode(_openapi_value.gamma_q1))
-    _openapi_value.gamma_d2 isa Absent ||
-        (_openapi_output["gamma_d2"] = _encode(_openapi_value.gamma_d2))
-    _openapi_value.gamma_q2 isa Absent ||
-        (_openapi_output["gamma_q2"] = _encode(_openapi_value.gamma_q2))
-    _openapi_value.gamma_qd isa Absent ||
-        (_openapi_output["gamma_qd"] = _encode(_openapi_value.gamma_qd))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -236,7 +181,7 @@ function _encode(_openapi_value::RoundRotorMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7c84d2adb355e61940ad.json",
+            resource="https://openapi.invalid/schema/external-e46f5526f697fc9626d2.json",
             pointer="",
         ),
         _openapi_output,
@@ -265,16 +210,6 @@ function _form_fields(_openapi_value::RoundRotorMachine)
         push!(_openapi_output, "Xd_pp" => _openapi_value.xd_pp)
     _openapi_value.xl isa Absent || push!(_openapi_output, "Xl" => _openapi_value.xl)
     _openapi_value.se isa Absent || push!(_openapi_output, "Se" => _openapi_value.se)
-    _openapi_value.gamma_d1 isa Absent ||
-        push!(_openapi_output, "gamma_d1" => _openapi_value.gamma_d1)
-    _openapi_value.gamma_q1 isa Absent ||
-        push!(_openapi_output, "gamma_q1" => _openapi_value.gamma_q1)
-    _openapi_value.gamma_d2 isa Absent ||
-        push!(_openapi_output, "gamma_d2" => _openapi_value.gamma_d2)
-    _openapi_value.gamma_q2 isa Absent ||
-        push!(_openapi_output, "gamma_q2" => _openapi_value.gamma_q2)
-    _openapi_value.gamma_qd isa Absent ||
-        push!(_openapi_output, "gamma_qd" => _openapi_value.gamma_qd)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

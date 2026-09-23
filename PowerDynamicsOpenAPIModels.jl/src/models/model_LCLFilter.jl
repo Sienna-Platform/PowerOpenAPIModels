@@ -22,7 +22,7 @@ function _decode(::Type{LCLFilter}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0fa4e01aa3835b75a88c.json",
+            resource="https://openapi.invalid/schema/external-6db50b57961cd5255ee1.json",
             pointer="",
         ),
         _openapi_raw,
@@ -73,7 +73,7 @@ function _encode(_openapi_value::LCLFilter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0fa4e01aa3835b75a88c.json",
+            resource="https://openapi.invalid/schema/external-6db50b57961cd5255ee1.json",
             pointer="",
         ),
         _openapi_output,

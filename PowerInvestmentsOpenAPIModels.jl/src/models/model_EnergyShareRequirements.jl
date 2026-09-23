@@ -23,7 +23,7 @@ function _decode(::Type{EnergyShareRequirements}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-88b049e3a18a8fa3fd54.json",
+            resource="https://openapi.invalid/schema/external-6d58e76673c50883bd3a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -101,7 +101,7 @@ function _encode(_openapi_value::EnergyShareRequirements)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-88b049e3a18a8fa3fd54.json",
+            resource="https://openapi.invalid/schema/external-6d58e76673c50883bd3a.json",
             pointer="",
         ),
         _openapi_output,

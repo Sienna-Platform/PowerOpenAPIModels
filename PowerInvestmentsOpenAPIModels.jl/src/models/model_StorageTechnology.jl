@@ -60,7 +60,7 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8f108128966df617bd22.json",
+            resource="https://openapi.invalid/schema/external-218cbbe3f72d2ba463db.json",
             pointer="",
         ),
         _openapi_raw,
@@ -320,7 +320,7 @@ function _encode(_openapi_value::StorageTechnology)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8f108128966df617bd22.json",
+            resource="https://openapi.invalid/schema/external-218cbbe3f72d2ba463db.json",
             pointer="",
         ),
         _openapi_output,

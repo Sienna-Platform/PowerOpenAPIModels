@@ -36,7 +36,7 @@ function _decode(::Type{ZeroOrderBESS}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5aa6f599f5623e217983.json",
+            resource="https://openapi.invalid/schema/external-3a21f48d52b927180f79.json",
             pointer="",
         ),
         _openapi_raw,
@@ -175,7 +175,7 @@ function _encode(_openapi_value::ZeroOrderBESS)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5aa6f599f5623e217983.json",
+            resource="https://openapi.invalid/schema/external-3a21f48d52b927180f79.json",
             pointer="",
         ),
         _openapi_output,

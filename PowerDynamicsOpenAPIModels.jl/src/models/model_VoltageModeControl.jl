@@ -16,7 +16,7 @@ function _decode(::Type{VoltageModeControl}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f7a7da3f3e291c447c99.json",
+            resource="https://openapi.invalid/schema/external-4d609e37c07e8038e1c9.json",
             pointer="",
         ),
         _openapi_raw,
@@ -122,7 +122,7 @@ function _encode(_openapi_value::VoltageModeControl)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f7a7da3f3e291c447c99.json",
+            resource="https://openapi.invalid/schema/external-4d609e37c07e8038e1c9.json",
             pointer="",
         ),
         _openapi_output,

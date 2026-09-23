@@ -16,7 +16,7 @@ function _decode(::Type{RLFilter}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a7bfc7f8f867be61da07.json",
+            resource="https://openapi.invalid/schema/external-bb23878097772a3fcbf8.json",
             pointer="",
         ),
         _openapi_raw,
@@ -55,7 +55,7 @@ function _encode(_openapi_value::RLFilter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a7bfc7f8f867be61da07.json",
+            resource="https://openapi.invalid/schema/external-bb23878097772a3fcbf8.json",
             pointer="",
         ),
         _openapi_output,
