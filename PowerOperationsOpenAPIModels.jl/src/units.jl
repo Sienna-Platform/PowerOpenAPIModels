@@ -1136,6 +1136,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{ThermalStandard},
+    ::Val{:switching_times},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ThermalStandard},
+    ::Val{:switching_times},
+) = "min"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ThermalStandard},
+    ::Val{:switching_times},
+) = "OperationalDuration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ThermalStandard},
     ::Val{:active_power},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -5971,6 +5983,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     end
     error("ThermalMultiStart.rating: no unit declared for power_units=$(o.power_units)")
 end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ThermalMultiStart},
+    ::Val{:switching_times},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ThermalMultiStart},
+    ::Val{:switching_times},
+) = "min"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ThermalMultiStart},
+    ::Val{:switching_times},
+) = "OperationalDuration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{ThermalMultiStart},
     ::Val{:power_trajectory},
