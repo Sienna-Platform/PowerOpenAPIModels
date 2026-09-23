@@ -2,9 +2,6 @@
     XYCoords
 
 A single point, given as its `x` and `y` coordinates.
-
-  - `x`: Units: the wrapped function's input unit.
-  - `y`: Units: the wrapped function's output unit.
 """
 Base.@kwdef struct XYCoords <: APIModel
     x::Float64

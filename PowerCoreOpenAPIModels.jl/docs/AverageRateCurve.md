@@ -7,5 +7,5 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`curve_type`** | **`String`** |  | [required]
 **`function_data`** | **`AverageRateCurveFunctionData`** |  | [required]
-**`initial_input`** | **`Union{Absent,Float64,Nothing}`** | Units: the curve's y-axis unit. | [optional]
-**`input_at_zero`** | **`Union{Absent,Float64,Nothing}`** | Units: the curve's y-axis unit. | [optional]
+**`initial_input`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]
+**`input_at_zero`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

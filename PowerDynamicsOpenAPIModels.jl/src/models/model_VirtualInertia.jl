@@ -10,7 +10,7 @@ function _decode(::Type{VirtualInertia}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1c07cc56c57f877e86fc.json",
+            resource="https://openapi.invalid/schema/external-acb79927cc3e051bdb2c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -73,7 +73,7 @@ function _encode(_openapi_value::VirtualInertia)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1c07cc56c57f877e86fc.json",
+            resource="https://openapi.invalid/schema/external-acb79927cc3e051bdb2c.json",
             pointer="",
         ),
         _openapi_output,

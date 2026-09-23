@@ -19,7 +19,7 @@ function _decode(::Type{HybridOutputCurrentLimiter}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b1b39e929db9810faf15.json",
+            resource="https://openapi.invalid/schema/external-48ea05cebda95f469473.json",
             pointer="",
         ),
         _openapi_raw,
@@ -72,7 +72,7 @@ function _encode(_openapi_value::HybridOutputCurrentLimiter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b1b39e929db9810faf15.json",
+            resource="https://openapi.invalid/schema/external-48ea05cebda95f469473.json",
             pointer="",
         ),
         _openapi_output,

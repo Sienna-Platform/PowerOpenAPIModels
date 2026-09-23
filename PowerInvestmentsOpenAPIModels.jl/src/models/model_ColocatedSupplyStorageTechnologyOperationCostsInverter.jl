@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-be13a7593ef31e51a58b.json",
+            resource="https://openapi.invalid/schema/external-f93e37d5ed4806981666.json",
             pointer="/properties/operation_costs_inverter",
         ),
         value,
@@ -37,14 +37,14 @@ function _decode(
             "COST" => (
                 CostCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/CostCurve",
                 ),
             ),
             "FUEL" => (
                 FuelCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/FuelCurve",
                 ),
             ),
@@ -73,7 +73,7 @@ function _encode(value::ColocatedSupplyStorageTechnologyOperationCostsInverter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-be13a7593ef31e51a58b.json",
+            resource="https://openapi.invalid/schema/external-f93e37d5ed4806981666.json",
             pointer="/properties/operation_costs_inverter",
         ),
         output,

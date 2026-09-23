@@ -23,7 +23,7 @@ function _decode(::Type{MinimumCapacityRequirements}, _openapi_raw, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-76412a9bfd09d901dccb.json",
+            resource="https://openapi.invalid/schema/external-37b7a54aa7b397ca9e01.json",
             pointer="",
         ),
         _openapi_raw,
@@ -98,7 +98,7 @@ function _encode(_openapi_value::MinimumCapacityRequirements)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-76412a9bfd09d901dccb.json",
+            resource="https://openapi.invalid/schema/external-37b7a54aa7b397ca9e01.json",
             pointer="",
         ),
         _openapi_output,

@@ -12,7 +12,7 @@ function _decode(::Type{SupplyTechnologyOperationCosts}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7b4dcc53473d04c21ad5.json",
+            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
             pointer="/properties/operation_costs",
         ),
         value,
@@ -33,21 +33,21 @@ function _decode(::Type{SupplyTechnologyOperationCosts}, value, _openapi_validat
             "HYDRO_GEN" => (
                 HydroGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/HydroGenerationCost",
                 ),
             ),
             "RENEWABLE" => (
                 RenewableGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/RenewableGenerationCost",
                 ),
             ),
             "THERMAL" => (
                 ThermalGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
+                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
                     pointer="/\$defs/ThermalGenerationCost",
                 ),
             ),
@@ -74,7 +74,7 @@ function _encode(value::SupplyTechnologyOperationCosts)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7b4dcc53473d04c21ad5.json",
+            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
             pointer="/properties/operation_costs",
         ),
         output,

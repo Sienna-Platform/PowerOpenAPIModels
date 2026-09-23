@@ -17,7 +17,7 @@ function _decode(::Type{RequirementAssociation}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-57b2a725dfc0deb65804.json",
+            resource="https://openapi.invalid/schema/external-384d979124670841f547.json",
             pointer="",
         ),
         _openapi_raw,
@@ -64,7 +64,7 @@ function _encode(_openapi_value::RequirementAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-57b2a725dfc0deb65804.json",
+            resource="https://openapi.invalid/schema/external-384d979124670841f547.json",
             pointer="",
         ),
         _openapi_output,

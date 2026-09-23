@@ -25,7 +25,7 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a78285f8bbf36335c882.json",
+            resource="https://openapi.invalid/schema/external-9a45fd75a1e2b4d968de.json",
             pointer="",
         ),
         _openapi_raw,
@@ -115,7 +115,7 @@ function _encode(_openapi_value::TechnologyFinancialData)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a78285f8bbf36335c882.json",
+            resource="https://openapi.invalid/schema/external-9a45fd75a1e2b4d968de.json",
             pointer="",
         ),
         _openapi_output,

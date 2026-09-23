@@ -18,7 +18,7 @@ function _decode(::Type{ReducedOrderPLL}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1c7faf1e8be3e819b3c1.json",
+            resource="https://openapi.invalid/schema/external-15298f5ef681764278ee.json",
             pointer="",
         ),
         _openapi_raw,
@@ -73,7 +73,7 @@ function _encode(_openapi_value::ReducedOrderPLL)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1c7faf1e8be3e819b3c1.json",
+            resource="https://openapi.invalid/schema/external-15298f5ef681764278ee.json",
             pointer="",
         ),
         _openapi_output,

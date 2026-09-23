@@ -10,7 +10,7 @@ function _decode(::Type{ReactiveVirtualOscillator}, _openapi_raw, _openapi_valid
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5877dd058c6c0eff18ea.json",
+            resource="https://openapi.invalid/schema/external-ac3eb43cf8a375b2acdc.json",
             pointer="",
         ),
         _openapi_raw,
@@ -68,7 +68,7 @@ function _encode(_openapi_value::ReactiveVirtualOscillator)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5877dd058c6c0eff18ea.json",
+            resource="https://openapi.invalid/schema/external-ac3eb43cf8a375b2acdc.json",
             pointer="",
         ),
         _openapi_output,

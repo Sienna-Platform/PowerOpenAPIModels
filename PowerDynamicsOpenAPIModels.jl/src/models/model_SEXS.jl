@@ -1,15 +1,15 @@
 """
     SEXS
 
-Parameters of Simplified Excitation System Model - SEXS in PSSE
+Parameters of Simplified Excitation System Model - SEXS in PSSE.
 
-  - `id`: Unique integer identifier for this component
-  - `ta_tb`: Ratio of lead and lag time constants
+  - `id`: Unique integer identifier for this component.
+  - `ta_tb`: Ratio of lead and lag time constants.
   - `tb`: Lag time constant. Units: s.
-  - `k`: Gain
+  - `k`: Gain.
   - `te`: Field circuit time constant. Units: s.
-  - `v_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `v_ref`: Reference voltage set-point
+  - `v_lim`: Field voltage limits.
+  - `v_ref`: Reference Voltage Set-point.
 """
 Base.@kwdef struct SEXS <: APIModel
     id::Int64
@@ -26,7 +26,7 @@ function _decode(::Type{SEXS}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-fd06c8d9d852623c4efd.json",
+            resource="https://openapi.invalid/schema/external-642541c784bd834ca955.json",
             pointer="",
         ),
         _openapi_raw,
@@ -94,7 +94,7 @@ function _encode(_openapi_value::SEXS)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-fd06c8d9d852623c4efd.json",
+            resource="https://openapi.invalid/schema/external-642541c784bd834ca955.json",
             pointer="",
         ),
         _openapi_output,

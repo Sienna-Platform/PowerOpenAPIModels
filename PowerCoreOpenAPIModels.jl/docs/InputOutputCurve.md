@@ -7,4 +7,4 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`curve_type`** | **`String`** |  | [required]
 **`function_data`** | **`InputOutputCurveFunctionData`** |  | [required]
-**`input_at_zero`** | **`Union{Absent,Float64,Nothing}`** | Units: the curve's y-axis unit. | [optional]
+**`input_at_zero`** | **`Union{Absent,Float64,Nothing}`** |  | [optional]

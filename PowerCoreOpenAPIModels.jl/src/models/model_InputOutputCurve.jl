@@ -2,8 +2,6 @@
     InputOutputCurve
 
 A curve whose y values are the total input `f(x)` at production level `x` — currency per hour against MW in a cost curve, fuel per hour against MW in a fuel curve. The y axis is an absolute quantity, not a rate; use `IncrementalCurve` for marginal-rate data.
-
-  - `input_at_zero`: Units: the curve's y-axis unit.
 """
 Base.@kwdef struct InputOutputCurve <: APIModel
     curve_type::String = "INPUT_OUTPUT"
