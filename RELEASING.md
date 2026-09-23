@@ -6,8 +6,10 @@ why the tags are not just `v0.1.0`.
 
 ## Before you start
 
-- `main` is green: the **Test** workflow runs `test/validate.jl` and `test/precompile.jl` on
-  Julia 1.10 (the `[compat]` floor every package declares) and 1.13 (current).
+- `main` is green: the **Test** workflow runs every package's own test suite (through
+  `test/validate.jl`) and `test/precompile.jl` on Julia 1.10 (the `[compat]` floor every
+  package declares) and 1.13 (current), and uploads coverage. The **Documentation** workflow
+  builds the site and deploys it to GitHub Pages.
 - `.schema-version` names a SiennaSchemas **release tag**, not a commit. The generated code
   has to be reproducible from a released schema version, or a consumer cannot regenerate it.
   Confirm with a regeneration that changes nothing:
@@ -77,7 +79,8 @@ Two things to know about a **first** registration:
 - AutoMerge checks the things this repository already satisfies — a `[compat]` entry for
   every dependency including the standard library and `julia`, a UUID, a version, a license,
   and that the package loads. It does not run the test suite, which is why the Test workflow
-  above is the gate that matters.
+  above is the gate that matters. Each subdirectory also carries its own `README.md` and a
+  working `Pkg.test`, both of which registry reviewers ask for.
 
 ## Tags
 
