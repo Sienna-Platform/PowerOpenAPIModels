@@ -68,7 +68,7 @@ function _decode(::Type{ST8C}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-51e0c96f556b99589604.json",
+            resource="https://openapi.invalid/schema/external-b3ca3d49f942c30d9d3b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -270,7 +270,7 @@ function _encode(_openapi_value::ST8C)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-51e0c96f556b99589604.json",
+            resource="https://openapi.invalid/schema/external-b3ca3d49f942c30d9d3b.json",
             pointer="",
         ),
         _openapi_output,

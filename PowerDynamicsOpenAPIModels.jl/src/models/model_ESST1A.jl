@@ -50,7 +50,7 @@ function _decode(::Type{ESST1A}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2154968e71db63a39735.json",
+            resource="https://openapi.invalid/schema/external-affdbb875e1d74cb8a0c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -193,7 +193,7 @@ function _encode(_openapi_value::ESST1A)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2154968e71db63a39735.json",
+            resource="https://openapi.invalid/schema/external-affdbb875e1d74cb8a0c.json",
             pointer="",
         ),
         _openapi_output,

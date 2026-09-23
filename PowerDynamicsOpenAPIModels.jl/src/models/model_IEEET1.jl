@@ -38,7 +38,7 @@ function _decode(::Type{IEEET1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ce5f0fd59eb6c71008f4.json",
+            resource="https://openapi.invalid/schema/external-2da63d7b98c428733453.json",
             pointer="",
         ),
         _openapi_raw,
@@ -150,7 +150,7 @@ function _encode(_openapi_value::IEEET1)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ce5f0fd59eb6c71008f4.json",
+            resource="https://openapi.invalid/schema/external-2da63d7b98c428733453.json",
             pointer="",
         ),
         _openapi_output,

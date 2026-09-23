@@ -50,7 +50,7 @@ function _decode(::Type{FiveMassShaft}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-757779cf25c9ff9b11bc.json",
+            resource="https://openapi.invalid/schema/external-d30e01cebb9b9c6268bb.json",
             pointer="",
         ),
         _openapi_raw,
@@ -247,7 +247,7 @@ function _encode(_openapi_value::FiveMassShaft)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-757779cf25c9ff9b11bc.json",
+            resource="https://openapi.invalid/schema/external-d30e01cebb9b9c6268bb.json",
             pointer="",
         ),
         _openapi_output,

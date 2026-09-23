@@ -40,7 +40,7 @@ function _decode(::Type{EX4VSA}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c1a4150c6b16bb3b21c1.json",
+            resource="https://openapi.invalid/schema/external-f8162736933636ce62e0.json",
             pointer="",
         ),
         _openapi_raw,
@@ -152,7 +152,7 @@ function _encode(_openapi_value::EX4VSA)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c1a4150c6b16bb3b21c1.json",
+            resource="https://openapi.invalid/schema/external-f8162736933636ce62e0.json",
             pointer="",
         ),
         _openapi_output,

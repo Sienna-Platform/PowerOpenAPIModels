@@ -5,9 +5,9 @@ Parameters of 3-states salient-pole synchronous machine with quadratic/exponenti
 
   - `id`: Unique integer identifier for this component
   - `r`: Armature resistance
-  - `td0_p`: Time constant of transient d-axis voltage
-  - `td0_pp`: Time constant of sub-transient d-axis voltage
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage
+  - `td0_p`: Time constant of transient d-axis voltage Units: s.
+  - `td0_pp`: Time constant of sub-transient d-axis voltage Units: s.
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage Units: s.
   - `xd`: Reactance after EMF in d-axis
   - `xq`: Reactance after EMF in q-axis
   - `xd_p`: Transient reactance after EMF in d-axis
@@ -34,7 +34,7 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b0f8fec19db0e0ebea0e.json",
+            resource="https://openapi.invalid/schema/external-17e7baaf5939b2a309ff.json",
             pointer="",
         ),
         _openapi_raw,
@@ -149,7 +149,7 @@ function _encode(_openapi_value::SalientPoleMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b0f8fec19db0e0ebea0e.json",
+            resource="https://openapi.invalid/schema/external-17e7baaf5939b2a309ff.json",
             pointer="",
         ),
         _openapi_output,

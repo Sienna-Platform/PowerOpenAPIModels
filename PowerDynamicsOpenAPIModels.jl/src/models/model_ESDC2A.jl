@@ -42,7 +42,7 @@ function _decode(::Type{ESDC2A}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-be56f8fcfbf635d07cac.json",
+            resource="https://openapi.invalid/schema/external-dc7c79923f222bc62420.json",
             pointer="",
         ),
         _openapi_raw,
@@ -164,7 +164,7 @@ function _encode(_openapi_value::ESDC2A)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-be56f8fcfbf635d07cac.json",
+            resource="https://openapi.invalid/schema/external-dc7c79923f222bc62420.json",
             pointer="",
         ),
         _openapi_output,

@@ -44,7 +44,7 @@ function _decode(::Type{ESST4B}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7730653b0ee0d8c65cf7.json",
+            resource="https://openapi.invalid/schema/external-0e5a761f657281501d60.json",
             pointer="",
         ),
         _openapi_raw,
@@ -170,7 +170,7 @@ function _encode(_openapi_value::ESST4B)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7730653b0ee0d8c65cf7.json",
+            resource="https://openapi.invalid/schema/external-0e5a761f657281501d60.json",
             pointer="",
         ),
         _openapi_output,
