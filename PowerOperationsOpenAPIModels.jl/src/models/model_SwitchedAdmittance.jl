@@ -16,7 +16,7 @@ Most often used in power flow studies, iterating over the steps to see impacts o
   - `solved_admittance`: Solved-case switched shunt admittance (PSS/E BINIT); when present it is the shunt's effective admittance, used in place of `number_engaged` * `Y_increase`. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
   - `admittance_limits`: Shunt admittance limits for switched shunt model. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
   - `control_mode`: Switched-shunt control mode.
-  - `regulated_bus_number`: Bus number whose voltage/quantity this shunt regulates; 0 means local bus (PSS/E SWREM/NREG). Units: 1.
+  - `remote_regulated_bus_id`: ID of the bus this shunt regulates in every control mode (PSS/E SWREG): the bus whose voltage it holds in the voltage modes, or the bus of the device whose reactive power it tracks in the other modes, which downstream modeling interprets per mode. Null means the shunt's own bus; a value equal to that bus is invalid.
   - `dynamic_injector`: ID of the corresponding dynamic injection model for admittance, if any.
 """
 Base.@kwdef struct SwitchedAdmittance <: APIModel
@@ -31,7 +31,7 @@ Base.@kwdef struct SwitchedAdmittance <: APIModel
     solved_admittance::Union{Absent, Union{Float64, Nothing}} = ABSENT
     admittance_limits::Union{Absent, Nothing, MinMax} = ABSENT
     control_mode::Union{Absent, Nothing, SwitchedAdmittanceControlMode} = ABSENT
-    regulated_bus_number::Union{Absent, Int64, Nothing} = ABSENT
+    remote_regulated_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -40,7 +40,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6b6aa3676e1dbfd69854.json",
+            resource="https://openapi.invalid/schema/external-59d59ed2b96d8f82cf60.json",
             pointer="",
         ),
         _openapi_raw,
@@ -117,11 +117,11 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["control_mode"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_regulated_bus_number =
-        haskey(_openapi_object, "regulated_bus_number") ?
+    _openapi_field_remote_regulated_bus_id =
+        haskey(_openapi_object, "remote_regulated_bus_id") ?
         _decode(
-            Union{Absent, Int64, Nothing},
-            _openapi_object["regulated_bus_number"],
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus_id"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_dynamic_injector =
@@ -145,7 +145,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             "solved_admittance",
             "admittance_limits",
             "control_mode",
-            "regulated_bus_number",
+            "remote_regulated_bus_id",
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
@@ -163,7 +163,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
         solved_admittance=_openapi_field_solved_admittance,
         admittance_limits=_openapi_field_admittance_limits,
         control_mode=_openapi_field_control_mode,
-        regulated_bus_number=_openapi_field_regulated_bus_number,
+        remote_regulated_bus_id=_openapi_field_remote_regulated_bus_id,
         dynamic_injector=_openapi_field_dynamic_injector,
         additional_properties=_openapi_additional_properties,
     )
@@ -190,9 +190,9 @@ function _encode(_openapi_value::SwitchedAdmittance)
         (_openapi_output["admittance_limits"] = _encode(_openapi_value.admittance_limits))
     _openapi_value.control_mode isa Absent ||
         (_openapi_output["control_mode"] = _encode(_openapi_value.control_mode))
-    _openapi_value.regulated_bus_number isa Absent || (
-        _openapi_output["regulated_bus_number"] =
-            _encode(_openapi_value.regulated_bus_number)
+    _openapi_value.remote_regulated_bus_id isa Absent || (
+        _openapi_output["remote_regulated_bus_id"] =
+            _encode(_openapi_value.remote_regulated_bus_id)
     )
     _openapi_value.dynamic_injector isa Absent ||
         (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
@@ -207,7 +207,7 @@ function _encode(_openapi_value::SwitchedAdmittance)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6b6aa3676e1dbfd69854.json",
+            resource="https://openapi.invalid/schema/external-59d59ed2b96d8f82cf60.json",
             pointer="",
         ),
         _openapi_output,
@@ -237,9 +237,9 @@ function _form_fields(_openapi_value::SwitchedAdmittance)
         push!(_openapi_output, "admittance_limits" => _openapi_value.admittance_limits)
     _openapi_value.control_mode isa Absent ||
         push!(_openapi_output, "control_mode" => _openapi_value.control_mode)
-    _openapi_value.regulated_bus_number isa Absent || push!(
+    _openapi_value.remote_regulated_bus_id isa Absent || push!(
         _openapi_output,
-        "regulated_bus_number" => _openapi_value.regulated_bus_number,
+        "remote_regulated_bus_id" => _openapi_value.remote_regulated_bus_id,
     )
     _openapi_value.dynamic_injector isa Absent ||
         push!(_openapi_output, "dynamic_injector" => _openapi_value.dynamic_injector)

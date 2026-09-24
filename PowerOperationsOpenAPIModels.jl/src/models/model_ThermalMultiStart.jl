@@ -11,6 +11,9 @@ A thermal generator, such as a fossil fuel or nuclear generator, that can start-
   - `status`: Operating state of the unit at the start of a simulation.
   - `commitment_mode`: Commitment mode of the unit.
   - `bus`: ID of the bus that this component is connected to.
+  - `remote_regulated_bus_id`: ID of the bus whose voltage this unit regulates when that bus is not its own (PSS/E IREG). Null means the unit regulates the bus it is connected to; a value equal to that bus is invalid, so local regulation has exactly one representation. An available voltage droop controller the unit belongs to overrides this target.
+  - `voltage_setpoint_units`: Unit basis for voltage_setpoint. COMPONENT_BASE (per-unit on the base voltage of the bus the unit regulates) is PSS/E RAW native (VS).
+  - `voltage_setpoint`: Voltage magnitude the unit holds at the bus it regulates while its bus type marks it as voltage regulating (PSS/E VS). Ignored while the unit belongs to an available voltage droop controller. Units: per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
   - `active_power`: Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
@@ -36,6 +39,9 @@ Base.@kwdef struct ThermalMultiStart <: APIModel
     status::OperationalStates
     commitment_mode::Union{Absent, CommitmentModes, Nothing} = ABSENT
     bus::Int64
+    remote_regulated_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    voltage_setpoint_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
+    voltage_setpoint::Union{Absent, Float64, Nothing} = ABSENT
     active_power::Float64
     reactive_power::Float64
     rating::Float64
@@ -60,7 +66,7 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2a649abe3e7984a9c39a.json",
+            resource="https://openapi.invalid/schema/external-5e0ce46ec3375427a04a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -100,6 +106,27 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
         _required(_openapi_object, "bus", "ThermalMultiStart"),
         _openapi_validate,
     )
+    _openapi_field_remote_regulated_bus_id =
+        haskey(_openapi_object, "remote_regulated_bus_id") ?
+        _decode(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus_id"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_voltage_setpoint_units =
+        haskey(_openapi_object, "voltage_setpoint_units") ?
+        _decode(
+            Union{Absent, Nothing, VoltageUnitBasis},
+            _openapi_object["voltage_setpoint_units"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_voltage_setpoint =
+        haskey(_openapi_object, "voltage_setpoint") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["voltage_setpoint"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_active_power = _decode(
         Float64,
         _required(_openapi_object, "active_power", "ThermalMultiStart"),
@@ -208,6 +235,9 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
             "status",
             "commitment_mode",
             "bus",
+            "remote_regulated_bus_id",
+            "voltage_setpoint_units",
+            "voltage_setpoint",
             "active_power",
             "reactive_power",
             "rating",
@@ -236,6 +266,9 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
         status=_openapi_field_status,
         commitment_mode=_openapi_field_commitment_mode,
         bus=_openapi_field_bus,
+        remote_regulated_bus_id=_openapi_field_remote_regulated_bus_id,
+        voltage_setpoint_units=_openapi_field_voltage_setpoint_units,
+        voltage_setpoint=_openapi_field_voltage_setpoint,
         active_power=_openapi_field_active_power,
         reactive_power=_openapi_field_reactive_power,
         rating=_openapi_field_rating,
@@ -268,6 +301,16 @@ function _encode(_openapi_value::ThermalMultiStart)
     _openapi_value.commitment_mode isa Absent ||
         (_openapi_output["commitment_mode"] = _encode(_openapi_value.commitment_mode))
     _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+    _openapi_value.remote_regulated_bus_id isa Absent || (
+        _openapi_output["remote_regulated_bus_id"] =
+            _encode(_openapi_value.remote_regulated_bus_id)
+    )
+    _openapi_value.voltage_setpoint_units isa Absent || (
+        _openapi_output["voltage_setpoint_units"] =
+            _encode(_openapi_value.voltage_setpoint_units)
+    )
+    _openapi_value.voltage_setpoint isa Absent ||
+        (_openapi_output["voltage_setpoint"] = _encode(_openapi_value.voltage_setpoint))
     _openapi_value.active_power isa Absent ||
         (_openapi_output["active_power"] = _encode(_openapi_value.active_power))
     _openapi_value.reactive_power isa Absent ||
@@ -317,7 +360,7 @@ function _encode(_openapi_value::ThermalMultiStart)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2a649abe3e7984a9c39a.json",
+            resource="https://openapi.invalid/schema/external-5e0ce46ec3375427a04a.json",
             pointer="",
         ),
         _openapi_output,
@@ -337,6 +380,16 @@ function _form_fields(_openapi_value::ThermalMultiStart)
     _openapi_value.commitment_mode isa Absent ||
         push!(_openapi_output, "commitment_mode" => _openapi_value.commitment_mode)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.remote_regulated_bus_id isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus_id" => _openapi_value.remote_regulated_bus_id,
+    )
+    _openapi_value.voltage_setpoint_units isa Absent || push!(
+        _openapi_output,
+        "voltage_setpoint_units" => _openapi_value.voltage_setpoint_units,
+    )
+    _openapi_value.voltage_setpoint isa Absent ||
+        push!(_openapi_output, "voltage_setpoint" => _openapi_value.voltage_setpoint)
     _openapi_value.active_power isa Absent ||
         push!(_openapi_output, "active_power" => _openapi_value.active_power)
     _openapi_value.reactive_power isa Absent ||

@@ -40,7 +40,7 @@ function _decode(::Type{MotorLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6a7833cfb15fdfab56f5.json",
+            resource="https://openapi.invalid/schema/external-029c10e4acb30156e5de.json",
             pointer="",
         ),
         _openapi_raw,
@@ -186,7 +186,7 @@ function _encode(_openapi_value::MotorLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6a7833cfb15fdfab56f5.json",
+            resource="https://openapi.invalid/schema/external-029c10e4acb30156e5de.json",
             pointer="",
         ),
         _openapi_output,

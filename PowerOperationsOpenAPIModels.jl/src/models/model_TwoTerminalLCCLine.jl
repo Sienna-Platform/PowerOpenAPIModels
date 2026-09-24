@@ -39,6 +39,10 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
   - `inverter_tap_step`: Inverter transformer tap step value. Units: 1.
   - `inverter_extinction_angle`: Inverter extinction angle (gamma). Units: rad.
   - `inverter_capacitor_reactance`: Commutating inverter capacitor reactance magnitude per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+  - `rectifier_commutating_bus_id`: ID of the bus whose voltage angle the rectifier firing angle is measured against (PSS/E ICR). Null means the rectifier's own bus. Must be null for a capacitor-commutated line.
+  - `inverter_commutating_bus_id`: ID of the bus whose voltage angle the inverter extinction angle is measured against (PSS/E ICI). Null means the inverter's own bus. Must be null for a capacitor-commutated line.
+  - `rectifier_tap_transformer_id`: ID of the TwoWindingTransformer whose tap this line adjusts on the rectifier side (PSS/E IFR, ITR, IDR). Null means the line's own rectifier tap fields describe the tap. The referenced circuit's `control_objective` must be `CONTROL_OF_DC_LINE`. Must be null for a capacitor-commutated line.
+  - `inverter_tap_transformer_id`: ID of the TwoWindingTransformer whose tap this line adjusts on the inverter side (PSS/E IFI, ITI, IDI). Null means the line's own inverter tap fields describe the tap. The referenced circuit's `control_objective` must be `CONTROL_OF_DC_LINE`. Must be null for a capacitor-commutated line.
   - `active_power_limits_from`: Minimum and maximum active power flows to the FROM node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_limits_to`: Minimum and maximum active power flows to the TO node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power_limits_from`: Minimum and maximum reactive power limits to the FROM node. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
@@ -84,6 +88,10 @@ Base.@kwdef struct TwoTerminalLCCLine <: APIModel
     inverter_tap_step::Union{Absent, Float64, Nothing} = ABSENT
     inverter_extinction_angle::Union{Absent, Float64, Nothing} = ABSENT
     inverter_capacitor_reactance::Union{Absent, Float64, Nothing} = ABSENT
+    rectifier_commutating_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    inverter_commutating_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    rectifier_tap_transformer_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    inverter_tap_transformer_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
     active_power_limits_from::Union{Absent, Nothing, MinMax} = ABSENT
     active_power_limits_to::Union{Absent, Nothing, MinMax} = ABSENT
     reactive_power_limits_from::Union{Absent, Nothing, MinMax} = ABSENT
@@ -98,7 +106,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2c4a3f68248fa9a1c12b.json",
+            resource="https://openapi.invalid/schema/external-0f671032c9571b1d4175.json",
             pointer="",
         ),
         _openapi_raw,
@@ -326,6 +334,34 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["inverter_capacitor_reactance"],
             _openapi_validate,
         ) : ABSENT
+    _openapi_field_rectifier_commutating_bus_id =
+        haskey(_openapi_object, "rectifier_commutating_bus_id") ?
+        _decode(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["rectifier_commutating_bus_id"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_inverter_commutating_bus_id =
+        haskey(_openapi_object, "inverter_commutating_bus_id") ?
+        _decode(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["inverter_commutating_bus_id"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_rectifier_tap_transformer_id =
+        haskey(_openapi_object, "rectifier_tap_transformer_id") ?
+        _decode(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["rectifier_tap_transformer_id"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_inverter_tap_transformer_id =
+        haskey(_openapi_object, "inverter_tap_transformer_id") ?
+        _decode(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["inverter_tap_transformer_id"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_active_power_limits_from =
         haskey(_openapi_object, "active_power_limits_from") ?
         _decode(
@@ -410,6 +446,10 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
             "inverter_tap_step",
             "inverter_extinction_angle",
             "inverter_capacitor_reactance",
+            "rectifier_commutating_bus_id",
+            "inverter_commutating_bus_id",
+            "rectifier_tap_transformer_id",
+            "inverter_tap_transformer_id",
             "active_power_limits_from",
             "active_power_limits_to",
             "reactive_power_limits_from",
@@ -458,6 +498,10 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
         inverter_tap_step=_openapi_field_inverter_tap_step,
         inverter_extinction_angle=_openapi_field_inverter_extinction_angle,
         inverter_capacitor_reactance=_openapi_field_inverter_capacitor_reactance,
+        rectifier_commutating_bus_id=_openapi_field_rectifier_commutating_bus_id,
+        inverter_commutating_bus_id=_openapi_field_inverter_commutating_bus_id,
+        rectifier_tap_transformer_id=_openapi_field_rectifier_tap_transformer_id,
+        inverter_tap_transformer_id=_openapi_field_inverter_tap_transformer_id,
         active_power_limits_from=_openapi_field_active_power_limits_from,
         active_power_limits_to=_openapi_field_active_power_limits_to,
         reactive_power_limits_from=_openapi_field_reactive_power_limits_from,
@@ -575,6 +619,22 @@ function _encode(_openapi_value::TwoTerminalLCCLine)
         _openapi_output["inverter_capacitor_reactance"] =
             _encode(_openapi_value.inverter_capacitor_reactance)
     )
+    _openapi_value.rectifier_commutating_bus_id isa Absent || (
+        _openapi_output["rectifier_commutating_bus_id"] =
+            _encode(_openapi_value.rectifier_commutating_bus_id)
+    )
+    _openapi_value.inverter_commutating_bus_id isa Absent || (
+        _openapi_output["inverter_commutating_bus_id"] =
+            _encode(_openapi_value.inverter_commutating_bus_id)
+    )
+    _openapi_value.rectifier_tap_transformer_id isa Absent || (
+        _openapi_output["rectifier_tap_transformer_id"] =
+            _encode(_openapi_value.rectifier_tap_transformer_id)
+    )
+    _openapi_value.inverter_tap_transformer_id isa Absent || (
+        _openapi_output["inverter_tap_transformer_id"] =
+            _encode(_openapi_value.inverter_tap_transformer_id)
+    )
     _openapi_value.active_power_limits_from isa Absent || (
         _openapi_output["active_power_limits_from"] =
             _encode(_openapi_value.active_power_limits_from)
@@ -608,7 +668,7 @@ function _encode(_openapi_value::TwoTerminalLCCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2c4a3f68248fa9a1c12b.json",
+            resource="https://openapi.invalid/schema/external-0f671032c9571b1d4175.json",
             pointer="",
         ),
         _openapi_output,
@@ -719,6 +779,22 @@ function _form_fields(_openapi_value::TwoTerminalLCCLine)
     _openapi_value.inverter_capacitor_reactance isa Absent || push!(
         _openapi_output,
         "inverter_capacitor_reactance" => _openapi_value.inverter_capacitor_reactance,
+    )
+    _openapi_value.rectifier_commutating_bus_id isa Absent || push!(
+        _openapi_output,
+        "rectifier_commutating_bus_id" => _openapi_value.rectifier_commutating_bus_id,
+    )
+    _openapi_value.inverter_commutating_bus_id isa Absent || push!(
+        _openapi_output,
+        "inverter_commutating_bus_id" => _openapi_value.inverter_commutating_bus_id,
+    )
+    _openapi_value.rectifier_tap_transformer_id isa Absent || push!(
+        _openapi_output,
+        "rectifier_tap_transformer_id" => _openapi_value.rectifier_tap_transformer_id,
+    )
+    _openapi_value.inverter_tap_transformer_id isa Absent || push!(
+        _openapi_output,
+        "inverter_tap_transformer_id" => _openapi_value.inverter_tap_transformer_id,
     )
     _openapi_value.active_power_limits_from isa Absent || push!(
         _openapi_output,

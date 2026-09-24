@@ -12,10 +12,10 @@ Parameters of synchronous machine: Sauer Pai model
   - `xd_pp`: Sub-Transient reactance after EMF in d-axis
   - `xq_pp`: Sub-Transient reactance after EMF in q-axis
   - `xl`: Stator leakage reactance
-  - `td0_p`: Time constant of transient d-axis voltage
-  - `tq0_p`: Time constant of transient q-axis voltage
-  - `td0_pp`: Time constant of sub-transient d-axis voltage
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage
+  - `td0_p`: Time constant of transient d-axis voltage Units: s.
+  - `tq0_p`: Time constant of transient q-axis voltage Units: s.
+  - `td0_pp`: Time constant of sub-transient d-axis voltage Units: s.
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage Units: s.
 """
 Base.@kwdef struct SauerPaiMachine <: APIModel
     id::Int64
@@ -38,7 +38,7 @@ function _decode(::Type{SauerPaiMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-21ae2bfeae092c3c1951.json",
+            resource="https://openapi.invalid/schema/external-c167217013447205663a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -182,7 +182,7 @@ function _encode(_openapi_value::SauerPaiMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-21ae2bfeae092c3c1951.json",
+            resource="https://openapi.invalid/schema/external-c167217013447205663a.json",
             pointer="",
         ),
         _openapi_output,

@@ -19,7 +19,7 @@ function _decode(::Type{SalientPoleExponential}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-55a338c949dec8a37250.json",
+            resource="https://openapi.invalid/schema/external-5a5c5ccfbe2702c09c78.json",
             pointer="",
         ),
         _openapi_raw,
@@ -73,7 +73,7 @@ function _encode(_openapi_value::SalientPoleExponential)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-55a338c949dec8a37250.json",
+            resource="https://openapi.invalid/schema/external-5a5c5ccfbe2702c09c78.json",
             pointer="",
         ),
         _openapi_output,

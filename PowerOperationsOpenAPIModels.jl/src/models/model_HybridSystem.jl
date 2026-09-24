@@ -54,7 +54,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-59cded1ef42d3bc5ec71.json",
+            resource="https://openapi.invalid/schema/external-e355f179f3b76f5dafe7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -301,7 +301,7 @@ function _encode(_openapi_value::HybridSystem)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-59cded1ef42d3bc5ec71.json",
+            resource="https://openapi.invalid/schema/external-e355f179f3b76f5dafe7.json",
             pointer="",
         ),
         _openapi_output,

@@ -41,7 +41,7 @@ function _decode(::Type{InterruptiblePowerLoad}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cdf9c31b51b5a98eb845.json",
+            resource="https://openapi.invalid/schema/external-ef1a52f1065d04f580d6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -192,7 +192,7 @@ function _encode(_openapi_value::InterruptiblePowerLoad)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cdf9c31b51b5a98eb845.json",
+            resource="https://openapi.invalid/schema/external-ef1a52f1065d04f580d6.json",
             pointer="",
         ),
         _openapi_output,

@@ -17,7 +17,7 @@ function _decode(::Type{RenewableDispatchOperationCost}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d356429050d3024f8f77.json",
+            resource="https://openapi.invalid/schema/external-7877a9438b3c44c2466b.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -38,28 +38,28 @@ function _decode(::Type{RenewableDispatchOperationCost}, value, _openapi_validat
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
             "RENEWABLE" => (
                 RenewableGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/RenewableGenerationCost",
                 ),
             ),
@@ -86,7 +86,7 @@ function _encode(value::RenewableDispatchOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d356429050d3024f8f77.json",
+            resource="https://openapi.invalid/schema/external-7877a9438b3c44c2466b.json",
             pointer="/properties/operation_cost",
         ),
         output,

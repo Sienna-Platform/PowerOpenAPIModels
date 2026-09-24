@@ -40,7 +40,7 @@ function _decode(::Type{DEGOV1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1bbb2df592f0bd517ea2.json",
+            resource="https://openapi.invalid/schema/external-082288bf9477fcf3ac85.json",
             pointer="",
         ),
         _openapi_raw,
@@ -158,7 +158,7 @@ function _encode(_openapi_value::DEGOV1)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1bbb2df592f0bd517ea2.json",
+            resource="https://openapi.invalid/schema/external-082288bf9477fcf3ac85.json",
             pointer="",
         ),
         _openapi_output,

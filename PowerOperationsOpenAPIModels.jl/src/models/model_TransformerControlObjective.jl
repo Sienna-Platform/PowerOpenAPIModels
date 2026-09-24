@@ -30,7 +30,7 @@ function _decode(::Type{TransformerControlObjective}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+            resource="https://openapi.invalid/schema/external-423dce12cabfb2353873.json",
             pointer="/\$defs/TransformerControlObjective",
         ),
         value,
@@ -44,7 +44,7 @@ function _encode(value::TransformerControlObjective)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+            resource="https://openapi.invalid/schema/external-423dce12cabfb2353873.json",
             pointer="/\$defs/TransformerControlObjective",
         ),
         output,

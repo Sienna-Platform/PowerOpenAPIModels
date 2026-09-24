@@ -17,7 +17,7 @@ function _decode(::Type{ShiftablePowerLoadOperationCost}, value, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-31cc1406780185093c90.json",
+            resource="https://openapi.invalid/schema/external-5b6a18010adefaeb07f3.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -38,28 +38,28 @@ function _decode(::Type{ShiftablePowerLoadOperationCost}, value, _openapi_valida
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "LOAD" => (
                 LoadCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/LoadCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -86,7 +86,7 @@ function _encode(value::ShiftablePowerLoadOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-31cc1406780185093c90.json",
+            resource="https://openapi.invalid/schema/external-5b6a18010adefaeb07f3.json",
             pointer="/properties/operation_cost",
         ),
         output,

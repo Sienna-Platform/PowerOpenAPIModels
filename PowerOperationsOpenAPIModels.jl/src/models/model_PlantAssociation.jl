@@ -18,7 +18,7 @@ function _decode(::Type{PlantAssociation}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3a70b3e47968d9e4db5d.json",
+            resource="https://openapi.invalid/schema/external-3d1ad4535300228c5108.json",
             pointer="",
         ),
         _openapi_raw,
@@ -73,7 +73,7 @@ function _encode(_openapi_value::PlantAssociation)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3a70b3e47968d9e4db5d.json",
+            resource="https://openapi.invalid/schema/external-3d1ad4535300228c5108.json",
             pointer="",
         ),
         _openapi_output,

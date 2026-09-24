@@ -20,7 +20,7 @@ function _decode(::Type{BaseMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ccd31135a00698497b07.json",
+            resource="https://openapi.invalid/schema/external-9d7c1bb3fe56e7bfcc66.json",
             pointer="",
         ),
         _openapi_raw,
@@ -75,7 +75,7 @@ function _encode(_openapi_value::BaseMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ccd31135a00698497b07.json",
+            resource="https://openapi.invalid/schema/external-9d7c1bb3fe56e7bfcc66.json",
             pointer="",
         ),
         _openapi_output,

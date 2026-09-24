@@ -35,7 +35,7 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-813de87b6fb714b267ea.json",
+            resource="https://openapi.invalid/schema/external-bf6af3e70f4224d59935.json",
             pointer="",
         ),
         _openapi_raw,
@@ -185,7 +185,7 @@ function _encode(_openapi_value::DemandRequirement)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-813de87b6fb714b267ea.json",
+            resource="https://openapi.invalid/schema/external-bf6af3e70f4224d59935.json",
             pointer="",
         ),
         _openapi_output,

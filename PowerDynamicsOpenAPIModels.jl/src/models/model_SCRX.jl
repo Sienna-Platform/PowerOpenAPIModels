@@ -30,7 +30,7 @@ function _decode(::Type{SCRX}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1bad7ca2d4a9eb72b5f4.json",
+            resource="https://openapi.invalid/schema/external-4ae9c9987cab267a6001.json",
             pointer="",
         ),
         _openapi_raw,
@@ -108,7 +108,7 @@ function _encode(_openapi_value::SCRX)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1bad7ca2d4a9eb72b5f4.json",
+            resource="https://openapi.invalid/schema/external-4ae9c9987cab267a6001.json",
             pointer="",
         ),
         _openapi_output,

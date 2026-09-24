@@ -18,7 +18,7 @@ function _decode(::Type{FixedForcedOutage}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2d6559a1442b6b4be7e7.json",
+            resource="https://openapi.invalid/schema/external-db1ac74b90041f51add3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -87,7 +87,7 @@ function _encode(_openapi_value::FixedForcedOutage)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2d6559a1442b6b4be7e7.json",
+            resource="https://openapi.invalid/schema/external-db1ac74b90041f51add3.json",
             pointer="",
         ),
         _openapi_output,

@@ -43,10 +43,8 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
   - `voltage_limits_to`: Limits on the Voltage at the DC `to` Bus in kV. The DC base voltage is the `dc_setpoint` of the converter with `dc_voltage_control` enabled; exactly one converter must control the DC voltage. Units: kV. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
   - `dc_voltage_droop_to`: DC-voltage droop gain on the `to` converter, used when `dc_control_to` is `DC_VOLTAGE_DROOP`: `V_dc = dc_setpoint_to - dc_voltage_droop_to * P_c`. Units: pu.
   - `rated_dc_voltage`: Rated (base) DC voltage of the link in kV. Used as the DC voltage base for interpreting DC-voltage setpoints; 0.0 means unspecified (DC-voltage setpoints are taken as per-unit directly). Units: kV.
-  - `remote_bus_control_from`: Number of the AC bus whose voltage the `from` converter regulates when `ac_control_from` is `AC_VOLTAGE`; null regulates its own terminal bus.
-  - `remote_bus_control_to`: Number of the AC bus whose voltage the `to` converter regulates when `ac_control_to` is `AC_VOLTAGE`; null regulates its own terminal bus.
-  - `rmpct_from`: Percent of the total Mvar required to hold the voltage at the bus regulated by the `from` converter that is contributed by this converter. Units: 1.
-  - `rmpct_to`: Percent of the total Mvar required to hold the voltage at the bus regulated by the `to` converter that is contributed by this converter. Units: 1.
+  - `remote_regulated_bus_id_from`: ID of the AC bus whose voltage the `from` converter regulates when `ac_control_from` is `AC_VOLTAGE` and that bus is not its own terminal bus. Null means the `from` terminal bus; a value equal to that bus is invalid.
+  - `remote_regulated_bus_id_to`: ID of the AC bus whose voltage the `to` converter regulates when `ac_control_to` is `AC_VOLTAGE` and that bus is not its own terminal bus. Null means the `to` terminal bus; a value equal to that bus is invalid.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
 """
@@ -91,10 +89,8 @@ Base.@kwdef struct TwoTerminalVSCLine <: APIModel
     voltage_limits_to::Union{Absent, Nothing, MinMax} = ABSENT
     dc_voltage_droop_to::Union{Absent, Float64, Nothing} = ABSENT
     rated_dc_voltage::Union{Absent, Float64, Nothing} = ABSENT
-    remote_bus_control_from::Union{Absent, Union{Int64, Nothing}} = ABSENT
-    remote_bus_control_to::Union{Absent, Union{Int64, Nothing}} = ABSENT
-    rmpct_from::Union{Absent, Float64, Nothing} = ABSENT
-    rmpct_to::Union{Absent, Float64, Nothing} = ABSENT
+    remote_regulated_bus_id_from::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    remote_regulated_bus_id_to::Union{Absent, Union{Int64, Nothing}} = ABSENT
     base_power::Float64
     power_units::UnitSystem
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -104,7 +100,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9ecd50b82d9d3ac2dccf.json",
+            resource="https://openapi.invalid/schema/external-ca4d56ae5943bd9aaf09.json",
             pointer="",
         ),
         _openapi_raw,
@@ -373,32 +369,18 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["rated_dc_voltage"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_remote_bus_control_from =
-        haskey(_openapi_object, "remote_bus_control_from") ?
+    _openapi_field_remote_regulated_bus_id_from =
+        haskey(_openapi_object, "remote_regulated_bus_id_from") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
-            _openapi_object["remote_bus_control_from"],
+            _openapi_object["remote_regulated_bus_id_from"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_remote_bus_control_to =
-        haskey(_openapi_object, "remote_bus_control_to") ?
+    _openapi_field_remote_regulated_bus_id_to =
+        haskey(_openapi_object, "remote_regulated_bus_id_to") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
-            _openapi_object["remote_bus_control_to"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_rmpct_from =
-        haskey(_openapi_object, "rmpct_from") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rmpct_from"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_rmpct_to =
-        haskey(_openapi_object, "rmpct_to") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rmpct_to"],
+            _openapi_object["remote_regulated_bus_id_to"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_base_power = _decode(
@@ -454,10 +436,8 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             "voltage_limits_to",
             "dc_voltage_droop_to",
             "rated_dc_voltage",
-            "remote_bus_control_from",
-            "remote_bus_control_to",
-            "rmpct_from",
-            "rmpct_to",
+            "remote_regulated_bus_id_from",
+            "remote_regulated_bus_id_to",
             "base_power",
             "power_units",
         ) && continue
@@ -505,10 +485,8 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
         voltage_limits_to=_openapi_field_voltage_limits_to,
         dc_voltage_droop_to=_openapi_field_dc_voltage_droop_to,
         rated_dc_voltage=_openapi_field_rated_dc_voltage,
-        remote_bus_control_from=_openapi_field_remote_bus_control_from,
-        remote_bus_control_to=_openapi_field_remote_bus_control_to,
-        rmpct_from=_openapi_field_rmpct_from,
-        rmpct_to=_openapi_field_rmpct_to,
+        remote_regulated_bus_id_from=_openapi_field_remote_regulated_bus_id_from,
+        remote_regulated_bus_id_to=_openapi_field_remote_regulated_bus_id_to,
         base_power=_openapi_field_base_power,
         power_units=_openapi_field_power_units,
         additional_properties=_openapi_additional_properties,
@@ -623,18 +601,14 @@ function _encode(_openapi_value::TwoTerminalVSCLine)
     )
     _openapi_value.rated_dc_voltage isa Absent ||
         (_openapi_output["rated_dc_voltage"] = _encode(_openapi_value.rated_dc_voltage))
-    _openapi_value.remote_bus_control_from isa Absent || (
-        _openapi_output["remote_bus_control_from"] =
-            _encode(_openapi_value.remote_bus_control_from)
+    _openapi_value.remote_regulated_bus_id_from isa Absent || (
+        _openapi_output["remote_regulated_bus_id_from"] =
+            _encode(_openapi_value.remote_regulated_bus_id_from)
     )
-    _openapi_value.remote_bus_control_to isa Absent || (
-        _openapi_output["remote_bus_control_to"] =
-            _encode(_openapi_value.remote_bus_control_to)
+    _openapi_value.remote_regulated_bus_id_to isa Absent || (
+        _openapi_output["remote_regulated_bus_id_to"] =
+            _encode(_openapi_value.remote_regulated_bus_id_to)
     )
-    _openapi_value.rmpct_from isa Absent ||
-        (_openapi_output["rmpct_from"] = _encode(_openapi_value.rmpct_from))
-    _openapi_value.rmpct_to isa Absent ||
-        (_openapi_output["rmpct_to"] = _encode(_openapi_value.rmpct_to))
     _openapi_value.base_power isa Absent ||
         (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
@@ -650,7 +624,7 @@ function _encode(_openapi_value::TwoTerminalVSCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9ecd50b82d9d3ac2dccf.json",
+            resource="https://openapi.invalid/schema/external-ca4d56ae5943bd9aaf09.json",
             pointer="",
         ),
         _openapi_output,
@@ -757,18 +731,14 @@ function _form_fields(_openapi_value::TwoTerminalVSCLine)
         push!(_openapi_output, "dc_voltage_droop_to" => _openapi_value.dc_voltage_droop_to)
     _openapi_value.rated_dc_voltage isa Absent ||
         push!(_openapi_output, "rated_dc_voltage" => _openapi_value.rated_dc_voltage)
-    _openapi_value.remote_bus_control_from isa Absent || push!(
+    _openapi_value.remote_regulated_bus_id_from isa Absent || push!(
         _openapi_output,
-        "remote_bus_control_from" => _openapi_value.remote_bus_control_from,
+        "remote_regulated_bus_id_from" => _openapi_value.remote_regulated_bus_id_from,
     )
-    _openapi_value.remote_bus_control_to isa Absent || push!(
+    _openapi_value.remote_regulated_bus_id_to isa Absent || push!(
         _openapi_output,
-        "remote_bus_control_to" => _openapi_value.remote_bus_control_to,
+        "remote_regulated_bus_id_to" => _openapi_value.remote_regulated_bus_id_to,
     )
-    _openapi_value.rmpct_from isa Absent ||
-        push!(_openapi_output, "rmpct_from" => _openapi_value.rmpct_from)
-    _openapi_value.rmpct_to isa Absent ||
-        push!(_openapi_output, "rmpct_to" => _openapi_value.rmpct_to)
     _openapi_value.base_power isa Absent ||
         push!(_openapi_output, "base_power" => _openapi_value.base_power)
     _openapi_value.power_units isa Absent ||

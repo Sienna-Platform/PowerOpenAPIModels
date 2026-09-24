@@ -11,10 +11,10 @@ Parameters of 6-states synchronous machine: Anderson-Fouad model
   - `xq_p`: Transient reactance after EMF in q-axis
   - `xd_pp`: Sub-Transient reactance after EMF in d-axis
   - `xq_pp`: Sub-Transient reactance after EMF in q-axis
-  - `td0_p`: Time constant of transient d-axis voltage
-  - `tq0_p`: Time constant of transient q-axis voltage
-  - `td0_pp`: Time constant of sub-transient d-axis voltage
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage
+  - `td0_p`: Time constant of transient d-axis voltage Units: s.
+  - `tq0_p`: Time constant of transient q-axis voltage Units: s.
+  - `td0_pp`: Time constant of sub-transient d-axis voltage Units: s.
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage Units: s.
 """
 Base.@kwdef struct AndersonFouadMachine <: APIModel
     id::Int64
@@ -36,7 +36,7 @@ function _decode(::Type{AndersonFouadMachine}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1105be5e5310188a3c64.json",
+            resource="https://openapi.invalid/schema/external-fee85ca51830bf9331a3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -172,7 +172,7 @@ function _encode(_openapi_value::AndersonFouadMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1105be5e5310188a3c64.json",
+            resource="https://openapi.invalid/schema/external-fee85ca51830bf9331a3.json",
             pointer="",
         ),
         _openapi_output,

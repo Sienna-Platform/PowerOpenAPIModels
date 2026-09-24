@@ -9,6 +9,9 @@ This is suitable for modeling storage charging and discharging with average effi
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `bus`: ID of the bus that this component is connected to.
+  - `remote_regulated_bus_id`: ID of the bus whose voltage this unit regulates when that bus is not its own (PSS/E IREG). Null means the unit regulates the bus it is connected to; a value equal to that bus is invalid, so local regulation has exactly one representation. An available voltage droop controller the unit belongs to overrides this target.
+  - `voltage_setpoint_units`: Unit basis for voltage_setpoint. COMPONENT_BASE (per-unit on the base voltage of the bus the unit regulates) is PSS/E RAW native (VS).
+  - `voltage_setpoint`: Voltage magnitude the unit holds at the bus it regulates while its bus type marks it as voltage regulating (PSS/E VS). Ignored while the unit belongs to an available voltage droop controller. Units: per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
   - `prime_mover_type`: Prime mover technology according to EIA 923.
   - `storage_technology_type`: Storage Technology Complementary to EIA 923.
   - `storage_capacity`: Maximum storage capacity (can be in units of, e.g., MWh for batteries or liters for hydrogen). Divided by base_power this gives an approximate duration, assuming unity power factor: in hours under MWH, in minutes under MWMIN. Units: per energy_units — MWH: MWh, MWMIN: MWmin .
@@ -38,6 +41,9 @@ Base.@kwdef struct EnergyReservoirStorage <: APIModel
     name::String
     available::Bool
     bus::Int64
+    remote_regulated_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    voltage_setpoint_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
+    voltage_setpoint::Union{Absent, Float64, Nothing} = ABSENT
     prime_mover_type::PrimeMovers
     storage_technology_type::StorageTech
     storage_capacity::Float64
@@ -69,7 +75,7 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9cd7e2910b9e74b7feb4.json",
+            resource="https://openapi.invalid/schema/external-836ec63a15a2bfc3fc01.json",
             pointer="",
         ),
         _openapi_raw,
@@ -97,6 +103,27 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
         _required(_openapi_object, "bus", "EnergyReservoirStorage"),
         _openapi_validate,
     )
+    _openapi_field_remote_regulated_bus_id =
+        haskey(_openapi_object, "remote_regulated_bus_id") ?
+        _decode(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus_id"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_voltage_setpoint_units =
+        haskey(_openapi_object, "voltage_setpoint_units") ?
+        _decode(
+            Union{Absent, Nothing, VoltageUnitBasis},
+            _openapi_object["voltage_setpoint_units"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_voltage_setpoint =
+        haskey(_openapi_object, "voltage_setpoint") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["voltage_setpoint"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_prime_mover_type = _decode(
         PrimeMovers,
         _required(_openapi_object, "prime_mover_type", "EnergyReservoirStorage"),
@@ -241,6 +268,9 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
             "name",
             "available",
             "bus",
+            "remote_regulated_bus_id",
+            "voltage_setpoint_units",
+            "voltage_setpoint",
             "prime_mover_type",
             "storage_technology_type",
             "storage_capacity",
@@ -273,6 +303,9 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
         name=_openapi_field_name,
         available=_openapi_field_available,
         bus=_openapi_field_bus,
+        remote_regulated_bus_id=_openapi_field_remote_regulated_bus_id,
+        voltage_setpoint_units=_openapi_field_voltage_setpoint_units,
+        voltage_setpoint=_openapi_field_voltage_setpoint,
         prime_mover_type=_openapi_field_prime_mover_type,
         storage_technology_type=_openapi_field_storage_technology_type,
         storage_capacity=_openapi_field_storage_capacity,
@@ -307,6 +340,16 @@ function _encode(_openapi_value::EnergyReservoirStorage)
     _openapi_value.available isa Absent ||
         (_openapi_output["available"] = _encode(_openapi_value.available))
     _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+    _openapi_value.remote_regulated_bus_id isa Absent || (
+        _openapi_output["remote_regulated_bus_id"] =
+            _encode(_openapi_value.remote_regulated_bus_id)
+    )
+    _openapi_value.voltage_setpoint_units isa Absent || (
+        _openapi_output["voltage_setpoint_units"] =
+            _encode(_openapi_value.voltage_setpoint_units)
+    )
+    _openapi_value.voltage_setpoint isa Absent ||
+        (_openapi_output["voltage_setpoint"] = _encode(_openapi_value.voltage_setpoint))
     _openapi_value.prime_mover_type isa Absent ||
         (_openapi_output["prime_mover_type"] = _encode(_openapi_value.prime_mover_type))
     _openapi_value.storage_technology_type isa Absent || (
@@ -376,7 +419,7 @@ function _encode(_openapi_value::EnergyReservoirStorage)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9cd7e2910b9e74b7feb4.json",
+            resource="https://openapi.invalid/schema/external-836ec63a15a2bfc3fc01.json",
             pointer="",
         ),
         _openapi_output,
@@ -392,6 +435,16 @@ function _form_fields(_openapi_value::EnergyReservoirStorage)
     _openapi_value.available isa Absent ||
         push!(_openapi_output, "available" => _openapi_value.available)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.remote_regulated_bus_id isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus_id" => _openapi_value.remote_regulated_bus_id,
+    )
+    _openapi_value.voltage_setpoint_units isa Absent || push!(
+        _openapi_output,
+        "voltage_setpoint_units" => _openapi_value.voltage_setpoint_units,
+    )
+    _openapi_value.voltage_setpoint isa Absent ||
+        push!(_openapi_output, "voltage_setpoint" => _openapi_value.voltage_setpoint)
     _openapi_value.prime_mover_type isa Absent ||
         push!(_openapi_output, "prime_mover_type" => _openapi_value.prime_mover_type)
     _openapi_value.storage_technology_type isa Absent || push!(

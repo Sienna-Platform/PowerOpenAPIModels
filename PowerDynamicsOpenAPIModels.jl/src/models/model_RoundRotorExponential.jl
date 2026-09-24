@@ -18,7 +18,7 @@ function _decode(::Type{RoundRotorExponential}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-65e9abaf253eb67c20c0.json",
+            resource="https://openapi.invalid/schema/external-d23fecd3b78433c43f33.json",
             pointer="",
         ),
         _openapi_raw,
@@ -72,7 +72,7 @@ function _encode(_openapi_value::RoundRotorExponential)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-65e9abaf253eb67c20c0.json",
+            resource="https://openapi.invalid/schema/external-d23fecd3b78433c43f33.json",
             pointer="",
         ),
         _openapi_output,

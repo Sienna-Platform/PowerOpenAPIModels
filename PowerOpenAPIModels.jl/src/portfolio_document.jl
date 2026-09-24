@@ -27,7 +27,8 @@
 #           linking each policy requirement to a member subject to it, with its own
 #           `requirements_membership` dedup cache
 #   drops   `frequency`, `plant_associations`, `combined_cycle_associations`,
-#           `service_associations`, `trading_hub_associations` (and their membership caches)
+#           `service_associations`, `trading_hub_associations`,
+#           `voltage_control_associations` (and their membership caches)
 #
 # There is no document-level unit system or base power: a portfolio records every value in
 # natural units. This file NEVER touches time series values, and it does not read or write the

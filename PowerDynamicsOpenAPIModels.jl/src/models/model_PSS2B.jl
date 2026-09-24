@@ -66,7 +66,7 @@ function _decode(::Type{PSS2B}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-60c042a3d7f901de4fc9.json",
+            resource="https://openapi.invalid/schema/external-66e52e272f52b2c3a631.json",
             pointer="",
         ),
         _openapi_raw,
@@ -267,7 +267,7 @@ function _encode(_openapi_value::PSS2B)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-60c042a3d7f901de4fc9.json",
+            resource="https://openapi.invalid/schema/external-66e52e272f52b2c3a631.json",
             pointer="",
         ),
         _openapi_output,

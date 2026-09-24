@@ -11,10 +11,10 @@ Parameters of 4-states simplified Anderson-Fouad (SimpleAFMachine) model. The de
   - `xq_p`: Transient reactance after EMF in q-axis
   - `xd_pp`: Sub-Transient reactance after EMF in d-axis
   - `xq_pp`: Sub-Transient reactance after EMF in q-axis
-  - `td0_p`: Time constant of transient d-axis voltage
-  - `tq0_p`: Time constant of transient q-axis voltage
-  - `td0_pp`: Time constant of sub-transient d-axis voltage
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage
+  - `td0_p`: Time constant of transient d-axis voltage Units: s.
+  - `tq0_p`: Time constant of transient q-axis voltage Units: s.
+  - `td0_pp`: Time constant of sub-transient d-axis voltage Units: s.
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage Units: s.
 """
 Base.@kwdef struct SimpleAFMachine <: APIModel
     id::Int64
@@ -36,7 +36,7 @@ function _decode(::Type{SimpleAFMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6d3d81e3f91ba5117a0d.json",
+            resource="https://openapi.invalid/schema/external-ea041cf5fcdc80bae889.json",
             pointer="",
         ),
         _openapi_raw,
@@ -172,7 +172,7 @@ function _encode(_openapi_value::SimpleAFMachine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6d3d81e3f91ba5117a0d.json",
+            resource="https://openapi.invalid/schema/external-ea041cf5fcdc80bae889.json",
             pointer="",
         ),
         _openapi_output,

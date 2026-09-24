@@ -12,7 +12,7 @@ function _decode(::Type{VirtualParticipantOperationCost}, value, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-93547ad8c2b21cc361f5.json",
+            resource="https://openapi.invalid/schema/external-88f2c2b20473ea1e4f0f.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -33,14 +33,14 @@ function _decode(::Type{VirtualParticipantOperationCost}, value, _openapi_valida
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -67,7 +67,7 @@ function _encode(value::VirtualParticipantOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-93547ad8c2b21cc361f5.json",
+            resource="https://openapi.invalid/schema/external-88f2c2b20473ea1e4f0f.json",
             pointer="/properties/operation_cost",
         ),
         output,

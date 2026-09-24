@@ -32,7 +32,7 @@ function _decode(::Type{GasTG}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e5d1c485b48e5f7ce2f9.json",
+            resource="https://openapi.invalid/schema/external-5e7047fb40d4ead187f3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -115,7 +115,7 @@ function _encode(_openapi_value::GasTG)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e5d1c485b48e5f7ce2f9.json",
+            resource="https://openapi.invalid/schema/external-5e7047fb40d4ead187f3.json",
             pointer="",
         ),
         _openapi_output,

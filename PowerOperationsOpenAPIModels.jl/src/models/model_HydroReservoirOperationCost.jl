@@ -7,7 +7,7 @@ function _decode(::Type{HydroReservoirOperationCost}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
+            resource="https://openapi.invalid/schema/external-843a0598dbe5b90359b0.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -28,21 +28,21 @@ function _decode(::Type{HydroReservoirOperationCost}, value, _openapi_validate::
             "HYDRO_RES" => (
                 HydroReservoirCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/HydroReservoirCost",
                 ),
             ),
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-304f3f166e66c59799cf.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -69,7 +69,7 @@ function _encode(value::HydroReservoirOperationCost)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
+            resource="https://openapi.invalid/schema/external-843a0598dbe5b90359b0.json",
             pointer="/properties/operation_cost",
         ),
         output,

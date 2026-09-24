@@ -15,7 +15,7 @@ function _decode(::Type{HydroPowerPlant}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cd4ecaff8670b84c460a.json",
+            resource="https://openapi.invalid/schema/external-c6674402a78cc2331e8c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -61,7 +61,7 @@ function _encode(_openapi_value::HydroPowerPlant)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cd4ecaff8670b84c460a.json",
+            resource="https://openapi.invalid/schema/external-c6674402a78cc2331e8c.json",
             pointer="",
         ),
         _openapi_output,

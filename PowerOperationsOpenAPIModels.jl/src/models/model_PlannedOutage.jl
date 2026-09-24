@@ -18,7 +18,7 @@ function _decode(::Type{PlannedOutage}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-af4ec69e217525e993ee.json",
+            resource="https://openapi.invalid/schema/external-d4bb1c7156c17f690476.json",
             pointer="",
         ),
         _openapi_raw,
@@ -84,7 +84,7 @@ function _encode(_openapi_value::PlannedOutage)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-af4ec69e217525e993ee.json",
+            resource="https://openapi.invalid/schema/external-d4bb1c7156c17f690476.json",
             pointer="",
         ),
         _openapi_output,

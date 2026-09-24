@@ -20,7 +20,7 @@ function _decode(::Type{TGSimple}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-83ec2cee6ffa698b7f90.json",
+            resource="https://openapi.invalid/schema/external-0b6bf984324c22c1ca98.json",
             pointer="",
         ),
         _openapi_raw,
@@ -73,7 +73,7 @@ function _encode(_openapi_value::TGSimple)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-83ec2cee6ffa698b7f90.json",
+            resource="https://openapi.invalid/schema/external-0b6bf984324c22c1ca98.json",
             pointer="",
         ),
         _openapi_output,

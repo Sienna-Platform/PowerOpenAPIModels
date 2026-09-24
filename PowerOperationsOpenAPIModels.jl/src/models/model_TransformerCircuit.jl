@@ -14,7 +14,9 @@ A `TwoWindingTransformer` has one circuit; a `ThreeWindingTransformer` has three
   - `r`: Circuit resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `x`: Circuit reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `control_objective`: Tap-changer / phase-shifter control objective (PSS/E COD). `UNDEFINED` means this circuit has no control block.
-  - `regulated_bus_number`: Controlled bus number (PSS/E CONT; sign = regulation side).
+  - `regulated_bus_id`: ID of the bus whose voltage this circuit's tap changer regulates (PSS/E CONT). Set exactly when `control_objective` is `VOLTAGE` or `VOLTAGE_DISABLED`, null otherwise.
+  - `regulated_bus_side`: Side of the controlling winding on which the regulated bus lies, replacing the sign of PSS/E CONT. Set only when the regulated bus is not one of the transformer's own terminal buses; when it is, the side follows from the connections and this must be null.
+  - `load_drop_compensation`: Load drop compensation impedance for voltage control (PSS/E CR + jCX): the regulated voltage is compensated by this impedance times the circuit current. Zero means no compensation. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `control_limits`: Control band (PSS/E RMA/RMI), per `control_objective`. Units: per control_objective — UNDEFINED: 1, VOLTAGE_DISABLED: 1, REACTIVE_POWER_FLOW_DISABLED: 1, ACTIVE_POWER_FLOW_DISABLED: rad, CONTROL_OF_DC_LINE_DISABLED: 1, ASYMMETRIC_ACTIVE_POWER_FLOW_DISABLED: rad, FIXED: 1, VOLTAGE: 1, REACTIVE_POWER_FLOW: 1, ACTIVE_POWER_FLOW: rad, CONTROL_OF_DC_LINE: 1, ASYMMETRIC_ACTIVE_POWER_FLOW: rad .
   - `controlled_quantity_limits`: Controlled-quantity band (PSS/E VMA/VMI), per `control_objective`. Units: per control_objective — UNDEFINED: pu, VOLTAGE_DISABLED: pu, REACTIVE_POWER_FLOW_DISABLED: MVAr, ACTIVE_POWER_FLOW_DISABLED: MW, CONTROL_OF_DC_LINE_DISABLED: MW, ASYMMETRIC_ACTIVE_POWER_FLOW_DISABLED: MW, FIXED: pu, VOLTAGE: pu, REACTIVE_POWER_FLOW: MVAr, ACTIVE_POWER_FLOW: MW, CONTROL_OF_DC_LINE: MW, ASYMMETRIC_ACTIVE_POWER_FLOW: MW .
   - `number_of_tap_positions`: Number of tap positions (PSS/E NTP).
@@ -38,7 +40,9 @@ Base.@kwdef struct TransformerCircuit <: APIModel
     r::Union{Absent, Float64, Nothing} = ABSENT
     x::Union{Absent, Float64, Nothing} = ABSENT
     control_objective::Union{Absent, Nothing, TransformerControlObjective} = ABSENT
-    regulated_bus_number::Union{Absent, Int64, Nothing} = ABSENT
+    regulated_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    regulated_bus_side::Union{Absent, Union{Nothing, TransformerRegulatedBusSide}} = ABSENT
+    load_drop_compensation::Union{Absent, Nothing, ComplexNumber} = ABSENT
     control_limits::Union{Absent, Nothing, MinMax} = ABSENT
     controlled_quantity_limits::Union{Absent, Nothing, MinMax} = ABSENT
     number_of_tap_positions::Union{Absent, Int64, Nothing} = ABSENT
@@ -58,7 +62,7 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ef22c9427a47f63bd233.json",
+            resource="https://openapi.invalid/schema/external-b436948c70678a6d69d5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -117,11 +121,25 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["control_objective"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_regulated_bus_number =
-        haskey(_openapi_object, "regulated_bus_number") ?
+    _openapi_field_regulated_bus_id =
+        haskey(_openapi_object, "regulated_bus_id") ?
         _decode(
-            Union{Absent, Int64, Nothing},
-            _openapi_object["regulated_bus_number"],
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["regulated_bus_id"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_regulated_bus_side =
+        haskey(_openapi_object, "regulated_bus_side") ?
+        _decode(
+            Union{Absent, Union{Nothing, TransformerRegulatedBusSide}},
+            _openapi_object["regulated_bus_side"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_load_drop_compensation =
+        haskey(_openapi_object, "load_drop_compensation") ?
+        _decode(
+            Union{Absent, Nothing, ComplexNumber},
+            _openapi_object["load_drop_compensation"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_control_limits =
@@ -218,7 +236,9 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
             "r",
             "x",
             "control_objective",
-            "regulated_bus_number",
+            "regulated_bus_id",
+            "regulated_bus_side",
+            "load_drop_compensation",
             "control_limits",
             "controlled_quantity_limits",
             "number_of_tap_positions",
@@ -245,7 +265,9 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
         r=_openapi_field_r,
         x=_openapi_field_x,
         control_objective=_openapi_field_control_objective,
-        regulated_bus_number=_openapi_field_regulated_bus_number,
+        regulated_bus_id=_openapi_field_regulated_bus_id,
+        regulated_bus_side=_openapi_field_regulated_bus_side,
+        load_drop_compensation=_openapi_field_load_drop_compensation,
         control_limits=_openapi_field_control_limits,
         controlled_quantity_limits=_openapi_field_controlled_quantity_limits,
         number_of_tap_positions=_openapi_field_number_of_tap_positions,
@@ -276,9 +298,13 @@ function _encode(_openapi_value::TransformerCircuit)
     _openapi_value.x isa Absent || (_openapi_output["x"] = _encode(_openapi_value.x))
     _openapi_value.control_objective isa Absent ||
         (_openapi_output["control_objective"] = _encode(_openapi_value.control_objective))
-    _openapi_value.regulated_bus_number isa Absent || (
-        _openapi_output["regulated_bus_number"] =
-            _encode(_openapi_value.regulated_bus_number)
+    _openapi_value.regulated_bus_id isa Absent ||
+        (_openapi_output["regulated_bus_id"] = _encode(_openapi_value.regulated_bus_id))
+    _openapi_value.regulated_bus_side isa Absent ||
+        (_openapi_output["regulated_bus_side"] = _encode(_openapi_value.regulated_bus_side))
+    _openapi_value.load_drop_compensation isa Absent || (
+        _openapi_output["load_drop_compensation"] =
+            _encode(_openapi_value.load_drop_compensation)
     )
     _openapi_value.control_limits isa Absent ||
         (_openapi_output["control_limits"] = _encode(_openapi_value.control_limits))
@@ -325,7 +351,7 @@ function _encode(_openapi_value::TransformerCircuit)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ef22c9427a47f63bd233.json",
+            resource="https://openapi.invalid/schema/external-b436948c70678a6d69d5.json",
             pointer="",
         ),
         _openapi_output,
@@ -349,9 +375,13 @@ function _form_fields(_openapi_value::TransformerCircuit)
     _openapi_value.x isa Absent || push!(_openapi_output, "x" => _openapi_value.x)
     _openapi_value.control_objective isa Absent ||
         push!(_openapi_output, "control_objective" => _openapi_value.control_objective)
-    _openapi_value.regulated_bus_number isa Absent || push!(
+    _openapi_value.regulated_bus_id isa Absent ||
+        push!(_openapi_output, "regulated_bus_id" => _openapi_value.regulated_bus_id)
+    _openapi_value.regulated_bus_side isa Absent ||
+        push!(_openapi_output, "regulated_bus_side" => _openapi_value.regulated_bus_side)
+    _openapi_value.load_drop_compensation isa Absent || push!(
         _openapi_output,
-        "regulated_bus_number" => _openapi_value.regulated_bus_number,
+        "load_drop_compensation" => _openapi_value.load_drop_compensation,
     )
     _openapi_value.control_limits isa Absent ||
         push!(_openapi_output, "control_limits" => _openapi_value.control_limits)

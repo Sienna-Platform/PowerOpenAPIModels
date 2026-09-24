@@ -66,15 +66,16 @@ document omits them; the schema marks all four optional, and a consumer with its
 (PowerSystems' `System` frequency, for instance) should apply it rather than have this
 container invent one.
 
-`plant_associations`, `combined_cycle_associations`, `service_associations`, and
-`trading_hub_associations` are untyped `Vector{Any}`, like `components`:
-`PlantAssociation`, `CombinedCycleAssociation`, `ServiceAssociation`, and
-`TradingHubAssociation` are Operations-layer generated types, and this Core package cannot
-depend on Operations. `Any` rather than a common generated-model supertype: the native
+`plant_associations`, `combined_cycle_associations`, `service_associations`,
+`trading_hub_associations`, and `voltage_control_associations` are untyped `Vector{Any}`,
+like `components`: `PlantAssociation`, `CombinedCycleAssociation`, `ServiceAssociation`,
+`TradingHubAssociation`, and `VoltageControlAssociation` are Operations-layer generated
+types, and this Core package cannot depend on Operations. `Any` rather than a common generated-model supertype: the native
 (post-1.0) generator gives every schema the same plain `struct` shape, with nothing like the
 old `OpenAPI.APIModel` to bound these against. Callers construct the concrete row and hand it
 to [`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref),
-[`add_service_association!`](@ref), or [`add_trading_hub_association!`](@ref);
+[`add_service_association!`](@ref), [`add_trading_hub_association!`](@ref), or
+[`add_voltage_control_association!`](@ref);
 deserialization resolves the concrete type through the same
 [`model_type`](@ref InfrastructureCoreOpenAPIModels.model_type) registry
 `components` uses.
@@ -90,6 +91,7 @@ struct SystemDocument
     combined_cycle_associations::Vector{Any}
     service_associations::Vector{Any}
     trading_hub_associations::Vector{Any}
+    voltage_control_associations::Vector{Any}
     time_series_associations::Vector{TimeSeriesAssociation}
     ext::Dict{Int, Dict{String, Any}}
     time_series_storage_file::Union{Nothing, String}
@@ -97,6 +99,7 @@ struct SystemDocument
     component_types_by_id::Dict{Int, String}
     service_membership::Set{Tuple{Int, Int}}
     trading_hub_membership::Set{Tuple{Int, Int}}
+    voltage_control_membership::Set{Tuple{Int, Int, String}}
 end
 
 """
@@ -119,6 +122,7 @@ function SystemDocument(;
         Vector{Any}(),
         Vector{Any}(),
         Vector{Any}(),
+        Vector{Any}(),
         Vector{TimeSeriesAssociation}(),
         Dict{Int, Dict{String, Any}}(),
         _optional_string(time_series_storage_file),
@@ -126,6 +130,7 @@ function SystemDocument(;
         Dict{Int, String}(),
         Set{Tuple{Int, Int}}(),
         Set{Tuple{Int, Int}}(),
+        Set{Tuple{Int, Int, String}}(),
     )
 end
 
@@ -213,6 +218,46 @@ function add_trading_hub_association!(doc::SystemDocument, assoc::T) where {T}
     end
     push!(doc.trading_hub_associations, assoc)
     push!(doc.trading_hub_membership, key)
+    return nothing
+end
+
+"""
+The membership key of a `VoltageControlAssociation` row: `(control_id, entity_id, terminal)`,
+with an absent or null terminal spelled `""`, so a two-terminal member's two converters are
+two rows while a single-bus member can appear once.
+"""
+function _voltage_control_key(assoc)
+    terminal = assoc.terminal
+    label = if terminal isa InfrastructureCoreOpenAPIModels.Absent || isnothing(terminal)
+        ""
+    else
+        String(terminal.value)
+    end
+    return (Int(assoc.control_id), Int(assoc.entity_id), label)
+end
+
+"""
+Record that `assoc` (a caller-constructed `VoltageControlAssociation`) makes one device, or
+one converter of a two-terminal device, a member of a voltage control group with its relative
+reactive power weight.
+
+Generic over `T`, for the same reason as [`add_plant_association!`](@ref).
+
+Duplicate `(control_id, entity_id, terminal)` rows are rejected rather than collapsed, the same
+guard [`add_service_association!`](@ref) applies to service membership.
+"""
+function add_voltage_control_association!(doc::SystemDocument, assoc::T) where {T}
+    key = _voltage_control_key(assoc)
+    if key in doc.voltage_control_membership
+        throw(
+            InfrastructureCoreOpenAPIModels.DocumentFormatError(
+                "duplicate voltage control membership: control_id=$(key[1]) " *
+                "entity_id=$(key[2]) terminal=$(repr(key[3]))",
+            ),
+        )
+    end
+    push!(doc.voltage_control_associations, assoc)
+    push!(doc.voltage_control_membership, key)
     return nothing
 end
 
@@ -315,6 +360,23 @@ function validate_document(doc::SystemDocument)
         )
     end
 
+    # control_id names a VoltageDroopControl or ReactivePowerSharing supplemental attribute;
+    # entity_id names the member device.
+    for assoc in doc.voltage_control_associations
+        _check_ref(
+            attribute_ids,
+            assoc.control_id,
+            "VoltageControlAssociation",
+            "entity_id=$(assoc.entity_id)",
+        )
+        _check_ref(
+            component_ids,
+            assoc.entity_id,
+            "VoltageControlAssociation",
+            "control_id=$(assoc.control_id)",
+        )
+    end
+
     # trading_hub_id names a TradingHub component; entity_id may be a bus or a market
     # transaction, both of which are components too.
     for assoc in doc.trading_hub_associations
@@ -378,6 +440,7 @@ function document_tree(doc::SystemDocument)
         "combined_cycle_associations" => _bucket(doc.combined_cycle_associations),
         "service_associations" => _bucket(doc.service_associations),
         "trading_hub_associations" => _bucket(doc.trading_hub_associations),
+        "voltage_control_associations" => _bucket(doc.voltage_control_associations),
         "time_series_associations" => _bucket(doc.time_series_associations),
         # Keyed by component id, which is unique across every type.
         "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
@@ -513,6 +576,18 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
     # `trading_hub_membership` needs its one rebuild pass here.
     for assoc in doc.trading_hub_associations
         push!(doc.trading_hub_membership, (Int(assoc.trading_hub_id), Int(assoc.entity_id)))
+    end
+    # Optional for the same reason as `trading_hub_associations`: added after the format
+    # existed, so documents written before it omit the key.
+    append!(
+        doc.voltage_control_associations,
+        _rows(
+            InfrastructureCoreOpenAPIModels.model_type("VoltageControlAssociation"),
+            get(raw, "voltage_control_associations", ()),
+        ),
+    )
+    for assoc in doc.voltage_control_associations
+        push!(doc.voltage_control_membership, _voltage_control_key(assoc))
     end
     append!(
         doc.time_series_associations,

@@ -23,8 +23,7 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
   - `dc_setpoint`: DC-voltage target (when `dc_control` regulates DC voltage) or active-power order (otherwise). Units: per dc_control — DC_POWER: MW, DC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
   - `ac_setpoint`: AC-voltage magnitude target (when `ac_control` regulates AC voltage) or power factor setpoint (otherwise). Units: per ac_control — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
   - `dc_voltage_droop`: DC-voltage droop gain relating DC voltage to converter active power as `V_dc = dc_setpoint - dc_voltage_droop * P_c`. A value of 0.0 disables droop. Units: pu.
-  - `remote_bus_control`: Number of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE`; null regulates its own terminal bus.
-  - `rmpct`: Percent of the total Mvar required to hold the voltage at the bus regulated by this converter that is contributed by this converter. Units: 1.
+  - `remote_regulated_bus_id`: ID of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE` and that bus is not its own terminal bus. Null means the converter's own AC bus; a value equal to that bus is invalid.
   - `power_factor_weighting_fraction`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
   - `voltage_limits`: Limits on the voltage at the DC bus in per unit. Units: pu.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
@@ -50,8 +49,7 @@ Base.@kwdef struct InterconnectingConverter <: APIModel
     dc_setpoint::Union{Absent, Float64, Nothing} = ABSENT
     ac_setpoint::Union{Absent, Float64, Nothing} = ABSENT
     dc_voltage_droop::Union{Absent, Float64, Nothing} = ABSENT
-    remote_bus_control::Union{Absent, Union{Int64, Nothing}} = ABSENT
-    rmpct::Union{Absent, Float64, Nothing} = ABSENT
+    remote_regulated_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
     power_factor_weighting_fraction::Union{Absent, Float64, Nothing} = ABSENT
     voltage_limits::Union{Absent, MinMax, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
@@ -63,7 +61,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c628e65955936fa423df.json",
+            resource="https://openapi.invalid/schema/external-35c196beb9c12a9d3311.json",
             pointer="",
         ),
         _openapi_raw,
@@ -191,18 +189,11 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["dc_voltage_droop"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_remote_bus_control =
-        haskey(_openapi_object, "remote_bus_control") ?
+    _openapi_field_remote_regulated_bus_id =
+        haskey(_openapi_object, "remote_regulated_bus_id") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
-            _openapi_object["remote_bus_control"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_rmpct =
-        haskey(_openapi_object, "rmpct") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rmpct"],
+            _openapi_object["remote_regulated_bus_id"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_power_factor_weighting_fraction =
@@ -249,8 +240,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             "dc_setpoint",
             "ac_setpoint",
             "dc_voltage_droop",
-            "remote_bus_control",
-            "rmpct",
+            "remote_regulated_bus_id",
             "power_factor_weighting_fraction",
             "voltage_limits",
             "dynamic_injector",
@@ -279,8 +269,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
         dc_setpoint=_openapi_field_dc_setpoint,
         ac_setpoint=_openapi_field_ac_setpoint,
         dc_voltage_droop=_openapi_field_dc_voltage_droop,
-        remote_bus_control=_openapi_field_remote_bus_control,
-        rmpct=_openapi_field_rmpct,
+        remote_regulated_bus_id=_openapi_field_remote_regulated_bus_id,
         power_factor_weighting_fraction=_openapi_field_power_factor_weighting_fraction,
         voltage_limits=_openapi_field_voltage_limits,
         dynamic_injector=_openapi_field_dynamic_injector,
@@ -333,10 +322,10 @@ function _encode(_openapi_value::InterconnectingConverter)
         (_openapi_output["ac_setpoint"] = _encode(_openapi_value.ac_setpoint))
     _openapi_value.dc_voltage_droop isa Absent ||
         (_openapi_output["dc_voltage_droop"] = _encode(_openapi_value.dc_voltage_droop))
-    _openapi_value.remote_bus_control isa Absent ||
-        (_openapi_output["remote_bus_control"] = _encode(_openapi_value.remote_bus_control))
-    _openapi_value.rmpct isa Absent ||
-        (_openapi_output["rmpct"] = _encode(_openapi_value.rmpct))
+    _openapi_value.remote_regulated_bus_id isa Absent || (
+        _openapi_output["remote_regulated_bus_id"] =
+            _encode(_openapi_value.remote_regulated_bus_id)
+    )
     _openapi_value.power_factor_weighting_fraction isa Absent || (
         _openapi_output["power_factor_weighting_fraction"] =
             _encode(_openapi_value.power_factor_weighting_fraction)
@@ -356,7 +345,7 @@ function _encode(_openapi_value::InterconnectingConverter)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c628e65955936fa423df.json",
+            resource="https://openapi.invalid/schema/external-35c196beb9c12a9d3311.json",
             pointer="",
         ),
         _openapi_output,
@@ -408,10 +397,10 @@ function _form_fields(_openapi_value::InterconnectingConverter)
         push!(_openapi_output, "ac_setpoint" => _openapi_value.ac_setpoint)
     _openapi_value.dc_voltage_droop isa Absent ||
         push!(_openapi_output, "dc_voltage_droop" => _openapi_value.dc_voltage_droop)
-    _openapi_value.remote_bus_control isa Absent ||
-        push!(_openapi_output, "remote_bus_control" => _openapi_value.remote_bus_control)
-    _openapi_value.rmpct isa Absent ||
-        push!(_openapi_output, "rmpct" => _openapi_value.rmpct)
+    _openapi_value.remote_regulated_bus_id isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus_id" => _openapi_value.remote_regulated_bus_id,
+    )
     _openapi_value.power_factor_weighting_fraction isa Absent || push!(
         _openapi_output,
         "power_factor_weighting_fraction" =>

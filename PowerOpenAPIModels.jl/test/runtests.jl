@@ -76,9 +76,13 @@ _type_name(::Any) = ""
                 end
             end
         end
+        # Digit-suffixed names that are their own schemas, not per-site copies of the
+        # unsuffixed one: DEGOV1 is the Woodward diesel governor with a different block
+        # diagram from DEGOV, and both are selected by name in openapi-dynamics.json.
+        distinct_models = Set(["DEGOV1"])
         aliases = filter(defined) do n
             base = replace(n, r"\d+$" => "")
-            base != n && base in defined
+            base != n && base in defined && !(n in distinct_models)
         end
         @test sort(collect(aliases)) == String[]
     end
@@ -141,9 +145,9 @@ _type_name(::Any) = ""
             # the schema through it rather than making this harness carry its own dependency.
             schema = InfrastructureCoreOpenAPIModels.JSON.parsefile(schema_path)
             schema_fields = Set(keys(schema["properties"]))
-            # `counter`, `component_types_by_id`, `service_membership`, and
-            # `trading_hub_membership` are build-time scaffolding that is deliberately not
-            # serialized.
+            # `counter`, `component_types_by_id`, `service_membership`,
+            # `trading_hub_membership`, and `voltage_control_membership` are build-time
+            # scaffolding that is deliberately not serialized.
             struct_fields = setdiff(
                 Set(string.(fieldnames(PowerOpenAPIModels.SystemDocument))),
                 Set([
@@ -151,6 +155,7 @@ _type_name(::Any) = ""
                     "component_types_by_id",
                     "service_membership",
                     "trading_hub_membership",
+                    "voltage_control_membership",
                 ]),
             )
 
@@ -276,6 +281,120 @@ _type_name(::Any) = ""
         delete!(raw, "ext")
         back = PowerOpenAPIModels.document_from_json(raw)
         @test isempty(PowerOpenAPIModels.get_ext(back, bus_id))
+    end
+
+    @testset "SystemDocument carries voltage control associations" begin
+        doc = PowerOpenAPIModels.SystemDocument()
+        bus_id = PowerOpenAPIModels.next_id!(doc)
+        PowerOpenAPIModels.add_component!(
+            doc,
+            PowerCoreOpenAPIModels.ACBus(;
+                id=bus_id,
+                name="b1",
+                number=1,
+                bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
+                available=true,
+            ),
+        )
+        gen_id = PowerOpenAPIModels.next_id!(doc)
+        PowerOpenAPIModels.add_component!(
+            doc,
+            PowerOperationsOpenAPIModels.SynchronousCondenser(;
+                id=gen_id,
+                name="sc1",
+                available=true,
+                bus=bus_id,
+                reactive_power=0.0,
+                rating=10.0,
+                base_power=10.0,
+                power_units=InfrastructureCoreOpenAPIModels.UnitSystem("NATURAL_UNITS"),
+            ),
+        )
+        group_id = PowerOpenAPIModels.next_id!(doc)
+        PowerOpenAPIModels.add_supplemental_attribute!(
+            doc,
+            PowerOperationsOpenAPIModels.ReactivePowerSharing(; id=group_id, name="share"),
+            gen_id,
+        )
+        PowerOpenAPIModels.add_voltage_control_association!(
+            doc,
+            PowerOperationsOpenAPIModels.VoltageControlAssociation(;
+                control_id=group_id,
+                entity_id=gen_id,
+                weight=0.4,
+            ),
+        )
+        # One row per (control, member, terminal): the same member twice is malformed.
+        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.add_voltage_control_association!(
+            doc,
+            PowerOperationsOpenAPIModels.VoltageControlAssociation(;
+                control_id=group_id,
+                entity_id=gen_id,
+            ),
+        )
+        # A second terminal of a two-terminal member is a different row.
+        PowerOpenAPIModels.add_voltage_control_association!(
+            doc,
+            PowerOperationsOpenAPIModels.VoltageControlAssociation(;
+                control_id=group_id,
+                entity_id=gen_id,
+                terminal=PowerOperationsOpenAPIModels.VoltageControlTerminal("TO"),
+            ),
+        )
+        @test length(doc.voltage_control_associations) == 2
+
+        mktempdir() do dir
+            path = joinpath(dir, "system.json")
+            PowerOpenAPIModels.write_document(doc, path)
+            back = PowerOpenAPIModels.read_document(path)
+            @test length(back.voltage_control_associations) == 2
+            # Untyped `Vector{Any}` like the other Operations-layer association arrays;
+            # each row still resolves to the concrete generated type.
+            first_row = back.voltage_control_associations[1]
+            @test first_row isa PowerOperationsOpenAPIModels.VoltageControlAssociation
+            @test first_row.control_id == group_id
+            @test first_row.entity_id == gen_id
+            @test first_row.weight == 0.4
+            @test (Int(group_id), Int(gen_id), "") in back.voltage_control_membership
+            @test (Int(group_id), Int(gen_id), "TO") in back.voltage_control_membership
+        end
+
+        # A row naming an unknown control or member is malformed input.
+        bad = PowerOpenAPIModels.SystemDocument()
+        PowerOpenAPIModels.add_voltage_control_association!(
+            bad,
+            PowerOperationsOpenAPIModels.VoltageControlAssociation(;
+                control_id=99,
+                entity_id=98,
+            ),
+        )
+        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.validate_document(
+            bad,
+        )
+    end
+
+    @testset "SystemDocument reads a document written before voltage control" begin
+        doc = PowerOpenAPIModels.SystemDocument()
+        bus_id = PowerOpenAPIModels.next_id!(doc)
+        PowerOpenAPIModels.add_component!(
+            doc,
+            PowerCoreOpenAPIModels.ACBus(;
+                id=bus_id,
+                name="b1",
+                number=1,
+                bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
+                available=true,
+            ),
+        )
+        raw = InfrastructureCoreOpenAPIModels.JSON.parse(
+            InfrastructureCoreOpenAPIModels.JSON.json(
+                PowerOpenAPIModels.document_tree(doc),
+            ),
+        )
+        delete!(raw, "voltage_control_associations")
+        back = PowerOpenAPIModels.document_from_json(raw)
+        @test isempty(back.voltage_control_associations)
+        @test isempty(back.voltage_control_membership)
     end
 
     @testset "SystemDocument reads a document written before trading hubs" begin
@@ -472,9 +591,19 @@ _type_name(::Any) = ""
         attribute_id = PowerOpenAPIModels.next_id!(doc)
         PowerOpenAPIModels.add_supplemental_attribute!(
             doc,
-            PowerInvestmentsOpenAPIModels.TopologyMapping(;
+            PowerInvestmentsOpenAPIModels.RetirementPotential(;
                 id=attribute_id,
-                buses=["bus1"],
+                eligible_generators=["gen1"],
+                retirement_cost=PowerInvestmentsOpenAPIModels.RetirementPotentialRetirementCost(
+                    PowerCoreOpenAPIModels.InputOutputCurve(;
+                        function_data=PowerCoreOpenAPIModels.InputOutputCurveFunctionData(
+                            InfrastructureCoreOpenAPIModels.LinearFunctionData(;
+                                constant_term=0.0,
+                                proportional_term=1.0,
+                            ),
+                        ),
+                    ),
+                ),
             ),
             requirement_id,
         )

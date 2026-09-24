@@ -11,12 +11,12 @@ Most often used in AC power flow studies as a control of voltage and, active and
   - `bus`: Sending end bus number.
   - `control_mode`: Control mode. Used to describe the behavior of the control device.
   - `voltage_setpoint_units`: Unit basis for voltage_setpoint. COMPONENT_BASE (pu on the bus base voltage) is PSS/E RAW native (VSET).
-  - `voltage_setpoint`: Voltage setpoint at the sending end bus in kV, it has to be a `PV` bus. Units: kV. Units: per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `voltage_setpoint`: Voltage setpoint at the regulated bus: the remote regulated bus when one is set, otherwise the sending end bus (PSS/E VSET). Units: per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
   - `max_shunt_current`: Maximum shunt current at the sending end bus; entered at unity voltage. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `reactive_power_required`: Total reactive power required to hold voltage at sending bus, as a fraction in the range 0-1. Units: 1.
+  - `reactive_power_required`: Delivered reactive power after a solve, written by the power flow (an output, not parsed from input). Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `max_reactive_power`: Independent maximum reactive power ceiling; the device reactive limit is min(the current/susceptance law on max_shunt_current, this value). Non-binding at the 9999.0 default. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `shunt_control_type`: Device class selecting the reactive-limit law (SVC vs STATCOM).
-  - `regulated_bus_number`: Bus whose voltage this device regulates; 0 means local (sending) bus (PSS/E FCREG). Units: 1.
+  - `remote_regulated_bus_id`: ID of the bus whose voltage this device regulates when that bus is not its sending end bus (PSS/E FCREG). Null means the sending end bus; a value equal to that bus is invalid.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `dynamic_injector`: ID of the corresponding dynamic injection model for FACTS control device, if any.
@@ -30,10 +30,10 @@ Base.@kwdef struct FACTSControlDevice <: APIModel
     voltage_setpoint_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
     voltage_setpoint::Float64
     max_shunt_current::Float64
-    reactive_power_required::Float64
+    reactive_power_required::Union{Absent, Float64, Nothing} = ABSENT
     max_reactive_power::Union{Absent, Float64, Nothing} = ABSENT
     shunt_control_type::Union{Absent, FACTSControlDeviceShuntControlType, Nothing} = ABSENT
-    regulated_bus_number::Union{Absent, Int64, Nothing} = ABSENT
+    remote_regulated_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
     base_power::Float64
     power_units::UnitSystem
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
@@ -44,7 +44,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-865b3a15cab0f0d4981c.json",
+            resource="https://openapi.invalid/schema/external-bd4e67108a34056c9714.json",
             pointer="",
         ),
         _openapi_raw,
@@ -96,11 +96,13 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
         _required(_openapi_object, "max_shunt_current", "FACTSControlDevice"),
         _openapi_validate,
     )
-    _openapi_field_reactive_power_required = _decode(
-        Float64,
-        _required(_openapi_object, "reactive_power_required", "FACTSControlDevice"),
-        _openapi_validate,
-    )
+    _openapi_field_reactive_power_required =
+        haskey(_openapi_object, "reactive_power_required") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["reactive_power_required"],
+            _openapi_validate,
+        ) : ABSENT
     _openapi_field_max_reactive_power =
         haskey(_openapi_object, "max_reactive_power") ?
         _decode(
@@ -115,11 +117,11 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["shunt_control_type"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_regulated_bus_number =
-        haskey(_openapi_object, "regulated_bus_number") ?
+    _openapi_field_remote_regulated_bus_id =
+        haskey(_openapi_object, "remote_regulated_bus_id") ?
         _decode(
-            Union{Absent, Int64, Nothing},
-            _openapi_object["regulated_bus_number"],
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus_id"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_base_power = _decode(
@@ -153,7 +155,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
             "reactive_power_required",
             "max_reactive_power",
             "shunt_control_type",
-            "regulated_bus_number",
+            "remote_regulated_bus_id",
             "base_power",
             "power_units",
             "dynamic_injector",
@@ -173,7 +175,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
         reactive_power_required=_openapi_field_reactive_power_required,
         max_reactive_power=_openapi_field_max_reactive_power,
         shunt_control_type=_openapi_field_shunt_control_type,
-        regulated_bus_number=_openapi_field_regulated_bus_number,
+        remote_regulated_bus_id=_openapi_field_remote_regulated_bus_id,
         base_power=_openapi_field_base_power,
         power_units=_openapi_field_power_units,
         dynamic_injector=_openapi_field_dynamic_injector,
@@ -206,9 +208,9 @@ function _encode(_openapi_value::FACTSControlDevice)
         (_openapi_output["max_reactive_power"] = _encode(_openapi_value.max_reactive_power))
     _openapi_value.shunt_control_type isa Absent ||
         (_openapi_output["shunt_control_type"] = _encode(_openapi_value.shunt_control_type))
-    _openapi_value.regulated_bus_number isa Absent || (
-        _openapi_output["regulated_bus_number"] =
-            _encode(_openapi_value.regulated_bus_number)
+    _openapi_value.remote_regulated_bus_id isa Absent || (
+        _openapi_output["remote_regulated_bus_id"] =
+            _encode(_openapi_value.remote_regulated_bus_id)
     )
     _openapi_value.base_power isa Absent ||
         (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
@@ -227,7 +229,7 @@ function _encode(_openapi_value::FACTSControlDevice)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-865b3a15cab0f0d4981c.json",
+            resource="https://openapi.invalid/schema/external-bd4e67108a34056c9714.json",
             pointer="",
         ),
         _openapi_output,
@@ -261,9 +263,9 @@ function _form_fields(_openapi_value::FACTSControlDevice)
         push!(_openapi_output, "max_reactive_power" => _openapi_value.max_reactive_power)
     _openapi_value.shunt_control_type isa Absent ||
         push!(_openapi_output, "shunt_control_type" => _openapi_value.shunt_control_type)
-    _openapi_value.regulated_bus_number isa Absent || push!(
+    _openapi_value.remote_regulated_bus_id isa Absent || push!(
         _openapi_output,
-        "regulated_bus_number" => _openapi_value.regulated_bus_number,
+        "remote_regulated_bus_id" => _openapi_value.remote_regulated_bus_id,
     )
     _openapi_value.base_power isa Absent ||
         push!(_openapi_output, "base_power" => _openapi_value.base_power)
