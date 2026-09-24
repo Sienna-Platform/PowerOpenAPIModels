@@ -15,7 +15,7 @@ A `TwoWindingTransformer` has one circuit; a `ThreeWindingTransformer` has three
   - `x`: Circuit reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `control_objective`: Tap-changer / phase-shifter control objective (PSS/E COD). `UNDEFINED` means this circuit has no control block.
   - `regulated_bus_id`: ID of the bus whose voltage this circuit's tap changer regulates (PSS/E CONT). Set exactly when `control_objective` is `VOLTAGE` or `VOLTAGE_DISABLED`, null otherwise.
-  - `regulated_bus_side`: Side of the controlling winding on which the regulated bus lies, replacing the sign of PSS/E CONT. Set only when the regulated bus is not one of the transformer's own terminal buses; when it is, the side follows from the connections and this must be null.
+  - `regulated_bus_side`: Side of the controlling winding on which the regulated bus lies, replacing the sign of PSS/E CONT. Set only when the regulated bus is not one of the transformer's own terminal buses; when it is, the side follows from the connections and this must be UNDEFINED.
   - `load_drop_compensation_r`: Resistive part of the load drop compensation impedance for voltage control (PSS/E CR): the regulated voltage is compensated by `load_drop_compensation_r + j load_drop_compensation_x` times the circuit current. Zero means no compensation. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `load_drop_compensation_x`: Reactive part of the load drop compensation impedance for voltage control (PSS/E CX). Zero means no compensation. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `control_limits`: Control band (PSS/E RMA/RMI), per `control_objective`. Units: per control_objective — UNDEFINED: 1, VOLTAGE_DISABLED: 1, REACTIVE_POWER_FLOW_DISABLED: 1, ACTIVE_POWER_FLOW_DISABLED: rad, CONTROL_OF_DC_LINE_DISABLED: 1, ASYMMETRIC_ACTIVE_POWER_FLOW_DISABLED: rad, FIXED: 1, VOLTAGE: 1, REACTIVE_POWER_FLOW: 1, ACTIVE_POWER_FLOW: rad, CONTROL_OF_DC_LINE: 1, ASYMMETRIC_ACTIVE_POWER_FLOW: rad .
@@ -42,7 +42,7 @@ Base.@kwdef struct TransformerCircuit <: APIModel
     x::Union{Absent, Float64, Nothing} = ABSENT
     control_objective::Union{Absent, Nothing, TransformerControlObjective} = ABSENT
     regulated_bus_id::Union{Absent, Union{Int64, Nothing}} = ABSENT
-    regulated_bus_side::Union{Absent, Union{Nothing, TransformerRegulatedBusSide}} = ABSENT
+    regulated_bus_side::Union{Absent, Nothing, TransformerRegulatedBusSide} = ABSENT
     load_drop_compensation_r::Union{Absent, Float64, Nothing} = ABSENT
     load_drop_compensation_x::Union{Absent, Float64, Nothing} = ABSENT
     control_limits::Union{Absent, Nothing, MinMax} = ABSENT
@@ -133,7 +133,7 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
     _openapi_field_regulated_bus_side =
         haskey(_openapi_object, "regulated_bus_side") ?
         _decode(
-            Union{Absent, Union{Nothing, TransformerRegulatedBusSide}},
+            Union{Absent, Nothing, TransformerRegulatedBusSide},
             _openapi_object["regulated_bus_side"],
             _openapi_validate,
         ) : ABSENT

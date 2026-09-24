@@ -6,13 +6,13 @@ Links a voltage control group (a VoltageDroopControl or a ReactivePowerSharing a
   - `control_id`: ID of the VoltageDroopControl or ReactivePowerSharing attribute the member belongs to.
   - `entity_id`: ID of the member device.
   - `weight`: Positive relative weight of this member. Its share of the reactive power required at the regulated bus is weight divided by the sum of the weights of the members in service. Units: 1.
-  - `terminal`: Converter of a two-terminal member this row refers to; required for a TwoTerminalVSCLine member and null for every other member.
+  - `terminal`: Converter of a two-terminal member this row refers to; required for a TwoTerminalVSCLine member and UNDEFINED for every other member.
 """
 Base.@kwdef struct VoltageControlAssociation <: APIModel
     control_id::Int64
     entity_id::Int64
     weight::Union{Absent, Float64, Nothing} = ABSENT
-    terminal::Union{Absent, Union{Nothing, VoltageControlTerminal}} = ABSENT
+    terminal::Union{Absent, Nothing, VoltageControlTerminal} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{VoltageControlAssociation}, value) =
@@ -49,7 +49,7 @@ function _decode(::Type{VoltageControlAssociation}, _openapi_raw, _openapi_valid
     _openapi_field_terminal =
         haskey(_openapi_object, "terminal") ?
         _decode(
-            Union{Absent, Union{Nothing, VoltageControlTerminal}},
+            Union{Absent, Nothing, VoltageControlTerminal},
             _openapi_object["terminal"],
             _openapi_validate,
         ) : ABSENT

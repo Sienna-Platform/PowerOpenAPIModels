@@ -8,4 +8,4 @@ Name | Type | Description | Notes
 **`control_id`** | **`Int64`** | ID of the VoltageDroopControl or ReactivePowerSharing attribute the member belongs to. | [required]
 **`entity_id`** | **`Int64`** | ID of the member device. | [required]
 **`weight`** | **`Union{Absent,Float64,Nothing}`** | Positive relative weight of this member. Its share of the reactive power required at the regulated bus is weight divided by the sum of the weights of the members in service. Units: 1. | [optional]
-**`terminal`** | **`Union{Absent,Union{Nothing,VoltageControlTerminal}}`** | Converter of a two-terminal member this row refers to; required for a TwoTerminalVSCLine member and null for every other member. | [optional]
+**`terminal`** | **`Union{Absent,Nothing,VoltageControlTerminal}`** | Converter of a two-terminal member this row refers to; required for a TwoTerminalVSCLine member and UNDEFINED for every other member. | [optional]
