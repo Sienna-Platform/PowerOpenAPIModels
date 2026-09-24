@@ -1067,7 +1067,7 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(o::FixedAdmittance, :
         return "ReactivePower"
     end
     if string(o.admittance_units) == "NATURAL_UNITS"
-        return "Susceptance"
+        return "Admittance"
     end
     error("FixedAdmittance.y: no unit declared for admittance_units=$(o.admittance_units)")
 end
@@ -4741,13 +4741,13 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:magnetizing_shunt},
 )
     if string(o.admittance_units) == "COMPONENT_BASE"
-        return "Susceptance"
+        return "Admittance"
     end
     if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ReactivePower"
     end
     if string(o.admittance_units) == "NATURAL_UNITS"
-        return "Susceptance"
+        return "Admittance"
     end
     error(
         "TwoWindingTransformer.magnetizing_shunt: no unit declared for admittance_units=$(o.admittance_units)",
@@ -6191,13 +6191,13 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:magnetizing_shunt},
 )
     if string(o.admittance_units) == "COMPONENT_BASE"
-        return "Susceptance"
+        return "Admittance"
     end
     if string(o.admittance_units) == "COMPONENT_MVAR"
         return "ReactivePower"
     end
     if string(o.admittance_units) == "NATURAL_UNITS"
-        return "Susceptance"
+        return "Admittance"
     end
     error(
         "ThreeWindingTransformer.magnetizing_shunt: no unit declared for admittance_units=$(o.admittance_units)",
@@ -8684,7 +8684,7 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
         return "ReactivePower"
     end
     if string(o.admittance_units) == "NATURAL_UNITS"
-        return "Susceptance"
+        return "Admittance"
     end
     error(
         "SwitchedAdmittance.y_increase: no unit declared for admittance_units=$(o.admittance_units)",

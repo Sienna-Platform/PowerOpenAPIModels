@@ -6,6 +6,7 @@ const UNIT_VOCABULARY = Dict{Tuple{String, String}, Float64}(
     ("ActivePower", "TW") => 1.0e6,
     ("ActivePower", "kW") => 0.001,
     ("ActivePowerChangeRate", "MW/min") => 1.0,
+    ("Admittance", "S") => 1.0,
     ("Angle", "deg") => 0.017453292519943295,
     ("Angle", "rad") => 1.0,
     ("ApparentPower", "MVA") => 1.0,
