@@ -3134,6 +3134,38 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TransformerCircuit},
+    ::Val{:load_drop_compensation_r},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TransformerCircuit,
+    ::Val{:load_drop_compensation_r},
+)
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "ohm"
+    end
+    error(
+        "TransformerCircuit.load_drop_compensation_r: no unit declared for parameter_units=$(o.parameter_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TransformerCircuit,
+    ::Val{:load_drop_compensation_r},
+)
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Resistance"
+    end
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Resistance"
+    end
+    error(
+        "TransformerCircuit.load_drop_compensation_r: no unit declared for parameter_units=$(o.parameter_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TransformerCircuit},
     ::Val{:reactive_power_flow},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -3176,6 +3208,38 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TransformerCircuit},
     ::Val{:base_voltage_primary},
 ) = "Voltage"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:load_drop_compensation_x},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TransformerCircuit,
+    ::Val{:load_drop_compensation_x},
+)
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "ohm"
+    end
+    error(
+        "TransformerCircuit.load_drop_compensation_x: no unit declared for parameter_units=$(o.parameter_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TransformerCircuit,
+    ::Val{:load_drop_compensation_x},
+)
+    if string(o.parameter_units) == "COMPONENT_BASE"
+        return "Reactance"
+    end
+    if string(o.parameter_units) == "NATURAL_UNITS"
+        return "Reactance"
+    end
+    error(
+        "TransformerCircuit.load_drop_compensation_x: no unit declared for parameter_units=$(o.parameter_units)",
+    )
+end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TransformerCircuit},
     ::Val{:control_limits},
@@ -3324,38 +3388,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TransformerCircuit},
     ::Val{:base_voltage_secondary},
 ) = "Voltage"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TransformerCircuit},
-    ::Val{:load_drop_compensation},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TransformerCircuit,
-    ::Val{:load_drop_compensation},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error(
-        "TransformerCircuit.load_drop_compensation: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TransformerCircuit,
-    ::Val{:load_drop_compensation},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Impedance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Impedance"
-    end
-    error(
-        "TransformerCircuit.load_drop_compensation: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{TransformerCircuit}, ::Val{:tap}) =
     true
 InfrastructureCoreOpenAPIModels.declared_unit(::Type{TransformerCircuit}, ::Val{:tap}) = "1"
@@ -5812,7 +5844,7 @@ InfrastructureCoreOpenAPIModels.declared_unit(
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{HybridSystem},
     ::Val{:interconnection_impedance},
-) = "Reactance"
+) = "Impedance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{HybridSystem},
     ::Val{:reactive_power_limits},
