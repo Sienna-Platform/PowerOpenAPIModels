@@ -1,12 +1,13 @@
 # ImpedanceCorrectionData
 
-Supplemental attribute carrying one row of an impedance correction table, linked to a transformer. The correction curve defines intervals over tap ratio or angle shift, and the accompanying fields name which winding the row applies to and whether the controlled quantity is an off-nominal turns ratio or a phase angle shift.
+Supplemental attribute carrying one row of an impedance correction table, linked to a transformer. Exactly one correction curve is present, selected by `transformer_control_mode`: `tap_ratio_correction_curve` spans off-nominal turns ratio and `phase_angle_correction_curve` spans phase-shift angle. `transformer_winding` names the winding the row applies to.
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`id`** | **`Int64`** |  | [required]
 **`table_number`** | **`Int64`** |  | [required]
-**`impedance_correction_curve`** | **`PiecewiseLinearData`** | Data for a piecewise linear function defined by (x, y) points and interpolated linearly between consecutive ones. The y values are absolute values at each x, not per-segment slopes; use `PiecewiseStepData` when the data gives per-segment rates. Points run in ascending x order, and two of them define one segment. | [required]
+**`tap_ratio_correction_curve`** | **`Union{Absent,PiecewiseLinearData,Nothing}`** | Impedance correction factor as a function of off-nominal tap ratio (x axis in tap ratio, y axis a multiplier on the winding impedance). Present only when `transformer_control_mode` is `TAP_RATIO`. Units: 1. | [optional]
+**`phase_angle_correction_curve`** | **`Union{Absent,PiecewiseLinearData,Nothing}`** | Impedance correction factor as a function of phase-shift angle (x axis in radians, y axis a multiplier on the winding impedance). Present only when `transformer_control_mode` is `PHASE_SHIFT_ANGLE`. Units: rad. | [optional]
 **`transformer_winding`** | **`ImpedanceCorrectionDataTransformerWinding`** |  | [required]
 **`transformer_control_mode`** | **`ImpedanceCorrectionDataTransformerControlMode`** |  | [required]

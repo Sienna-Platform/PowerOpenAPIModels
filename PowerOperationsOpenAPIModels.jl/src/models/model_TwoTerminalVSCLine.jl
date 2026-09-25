@@ -15,33 +15,37 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
   - `g`: Series conductance of the DC line. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MW, COMPONENT_BASE: pu .
   - `dc_current`: DC current on the converter flowing in the DC line, from `from` bus to `to` bus. Units: A.
   - `reactive_power_from`: Initial condition of reactive power flowing into the from-bus. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `dc_control_from`: DC-side control mode of the `from` converter.
-  - `ac_control_from`: AC-side control mode of the `from` converter.
-  - `setpoint_voltage_units`: Unit basis for the DC_VOLTAGE/DC_VOLTAGE_DROOP/AC_VOLTAGE branches of dc_setpoint_from/to and ac_setpoint_from/to. Independent of voltage_units, which covers voltage_limits_from/to only.
-  - `dc_setpoint_from`: Converter DC setpoint in the `from` bus converter. When `dc_control_from` regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the `from` bus; if negative, the converter is withdrawing power from the AC network at the `from` bus. Units: per dc_control_from — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `ac_setpoint_from`: Converter AC setpoint in the `from` bus converter. When `ac_control_from` regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_from — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `rated_ac_voltage_from`: Rated (base) AC voltage at the `from` converter's AC terminal in kV. Used as the AC voltage base for interpreting ac_setpoint_from when ac_control_from is AC_VOLTAGE; 0.0 means unspecified (the setpoint is taken as per-unit directly). Units: kV.
+  - `dc_control_from`: DC-side control mode of the `from` converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
+  - `ac_control_from`: AC-side control mode of the `from` converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
+  - `setpoint_voltage_units`: Unit basis for dc_voltage_setpoint_from/to and ac_voltage_setpoint_from/to. Independent of voltage_units, which covers voltage_limits_from/to only.
+  - `dc_power_setpoint_from`: Active-power order of the `from` bus converter, used when `dc_control_from` is `DC_POWER`; `null` otherwise. Positive means the converter supplies power to the AC network; negative means it withdraws power from it. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `dc_voltage_setpoint_from`: DC-side voltage target of the `from` bus converter, used when `dc_control_from` is `DC_VOLTAGE` or `DC_VOLTAGE_DROOP`; `null` otherwise. Units: per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `power_factor_setpoint_from`: Power-factor setpoint of the `from` bus converter, used when `ac_control_from` is `AC_REACTIVE_POWER`; `null` otherwise. Units: 1.
+  - `ac_voltage_setpoint_from`: AC-side voltage magnitude target of the `from` bus converter, used when `ac_control_from` is `AC_VOLTAGE`; `null` otherwise. Units: per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `rated_ac_voltage_from`: Rated (base) AC voltage at the `from` converter's AC terminal in kV. Used as the AC voltage base for interpreting ac_voltage_setpoint_from when ac_control_from is AC_VOLTAGE; 0.0 means unspecified (the setpoint is taken as per-unit directly). Units: kV.
   - `converter_loss_from`: Loss model coefficients in the `from` bus converter. It accepts a linear model or quadratic. Same converter data is used in both ends.
   - `max_dc_current_from`: Maximum stable dc current limits. Units: A.
   - `rating_from`: Converter rating in the `from` bus. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power_limits_from`: Limits on the Reactive Power at the `from` side. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `power_factor_weighting_fraction_from`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
-  - `voltage_units`: Unit basis for the DC bus voltage limits (voltage_limits_from/to only). Independent of setpoint_voltage_units, which covers dc_setpoint_from/to and ac_setpoint_from/to.
-  - `voltage_limits_from`: Limits on the Voltage at the DC `from` Bus in kV. The DC base voltage is the `dc_setpoint` of the converter with `dc_voltage_control` enabled; exactly one converter must control the DC voltage. Units: kV. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
-  - `dc_voltage_droop_from`: DC-voltage droop gain on the `from` converter, used when `dc_control_from` is `DC_VOLTAGE_DROOP`: `V_dc = dc_setpoint_from - dc_voltage_droop_from * P_c`. Units: pu.
+  - `voltage_units`: Unit basis for the DC bus voltage limits (voltage_limits_from/to only). Independent of setpoint_voltage_units, which covers dc_voltage_setpoint_from/to and ac_voltage_setpoint_from/to.
+  - `voltage_limits_from`: Limits on the Voltage at the DC `from` Bus in kV. The DC base voltage is the `dc_voltage_setpoint` of the converter whose `dc_control` regulates DC voltage; exactly one converter must control the DC voltage. Units: kV. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `dc_voltage_droop_from`: DC-voltage droop gain on the `from` converter, used when `dc_control_from` is `DC_VOLTAGE_DROOP`: `V_dc = dc_voltage_setpoint_from - dc_voltage_droop_from * P_c`. Units: pu.
   - `reactive_power_to`: Initial condition of reactive power flowing into the to-bus. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `dc_control_to`: DC-side control mode of the `to` converter.
-  - `ac_control_to`: AC-side control mode of the `to` converter.
-  - `dc_setpoint_to`: Converter DC setpoint in the `to` bus converter. When `dc_control_to` regulates DC voltage this number is the DC voltage on the DC side of the converter; when it controls DC power this value is the power demand in MW, if positive the converter is supplying power to the AC network at the `to` bus; if negative, the converter is withdrawing power from the AC network at the `to` bus. Units: per dc_control_to — DC_POWER: MW, DC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `ac_setpoint_to`: Converter AC setpoint in the `to` bus converter. When `ac_control_to` regulates AC voltage this number is the AC voltage on the AC side of the converter; when it controls reactive power this value is the power factor setpoint. Units: per ac_control_to — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `rated_ac_voltage_to`: Rated (base) AC voltage at the `to` converter's AC terminal in kV. Used as the AC voltage base for interpreting ac_setpoint_to when ac_control_to is AC_VOLTAGE; 0.0 means unspecified (the setpoint is taken as per-unit directly). Units: kV.
+  - `dc_control_to`: DC-side control mode of the `to` converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
+  - `ac_control_to`: AC-side control mode of the `to` converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
+  - `dc_power_setpoint_to`: Active-power order of the `to` bus converter, used when `dc_control_to` is `DC_POWER`; `null` otherwise. Positive means the converter supplies power to the AC network; negative means it withdraws power from it. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `dc_voltage_setpoint_to`: DC-side voltage target of the `to` bus converter, used when `dc_control_to` is `DC_VOLTAGE` or `DC_VOLTAGE_DROOP`; `null` otherwise. Units: per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `power_factor_setpoint_to`: Power-factor setpoint of the `to` bus converter, used when `ac_control_to` is `AC_REACTIVE_POWER`; `null` otherwise. Units: 1.
+  - `ac_voltage_setpoint_to`: AC-side voltage magnitude target of the `to` bus converter, used when `ac_control_to` is `AC_VOLTAGE`; `null` otherwise. Units: per setpoint_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `rated_ac_voltage_to`: Rated (base) AC voltage at the `to` converter's AC terminal in kV. Used as the AC voltage base for interpreting ac_voltage_setpoint_to when ac_control_to is AC_VOLTAGE; 0.0 means unspecified (the setpoint is taken as per-unit directly). Units: kV.
   - `converter_loss_to`: Loss model coefficients in the `to` bus converter. It accepts a linear model or quadratic. Same converter data is used in both ends.
   - `max_dc_current_to`: Maximum stable dc current limits. Units: A.
   - `rating_to`: Converter rating in the `to` bus. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power_limits_to`: Limits on the Reactive Power at the `to` side. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `power_factor_weighting_fraction_to`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
-  - `voltage_limits_to`: Limits on the Voltage at the DC `to` Bus in kV. The DC base voltage is the `dc_setpoint` of the converter with `dc_voltage_control` enabled; exactly one converter must control the DC voltage. Units: kV. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
-  - `dc_voltage_droop_to`: DC-voltage droop gain on the `to` converter, used when `dc_control_to` is `DC_VOLTAGE_DROOP`: `V_dc = dc_setpoint_to - dc_voltage_droop_to * P_c`. Units: pu.
+  - `voltage_limits_to`: Limits on the Voltage at the DC `to` Bus in kV. The DC base voltage is the `dc_voltage_setpoint` of the converter whose `dc_control` regulates DC voltage; exactly one converter must control the DC voltage. Units: kV. Units: per voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `dc_voltage_droop_to`: DC-voltage droop gain on the `to` converter, used when `dc_control_to` is `DC_VOLTAGE_DROOP`: `V_dc = dc_voltage_setpoint_to - dc_voltage_droop_to * P_c`. Units: pu.
   - `rated_dc_voltage`: Rated (base) DC voltage of the link in kV. Used as the DC voltage base for interpreting DC-voltage setpoints; 0.0 means unspecified (DC-voltage setpoints are taken as per-unit directly). Units: kV.
   - `remote_bus_control_from`: Number of the AC bus whose voltage the `from` converter regulates when `ac_control_from` is `AC_VOLTAGE`; null regulates its own terminal bus.
   - `remote_bus_control_to`: Number of the AC bus whose voltage the `to` converter regulates when `ac_control_to` is `AC_VOLTAGE`; null regulates its own terminal bus.
@@ -66,8 +70,10 @@ Base.@kwdef struct TwoTerminalVSCLine <: APIModel
     dc_control_from::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
     ac_control_from::Union{Absent, Nothing, VSCACControlModes} = ABSENT
     setpoint_voltage_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
-    dc_setpoint_from::Union{Absent, Float64, Nothing} = ABSENT
-    ac_setpoint_from::Union{Absent, Float64, Nothing} = ABSENT
+    dc_power_setpoint_from::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    dc_voltage_setpoint_from::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    power_factor_setpoint_from::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    ac_voltage_setpoint_from::Union{Absent, Union{Float64, Nothing}} = ABSENT
     rated_ac_voltage_from::Union{Absent, Float64, Nothing} = ABSENT
     converter_loss_from::Union{Absent, LossCurve, Nothing} = ABSENT
     max_dc_current_from::Union{Absent, Float64, Nothing} = ABSENT
@@ -80,8 +86,10 @@ Base.@kwdef struct TwoTerminalVSCLine <: APIModel
     reactive_power_to::Union{Absent, Float64, Nothing} = ABSENT
     dc_control_to::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
     ac_control_to::Union{Absent, Nothing, VSCACControlModes} = ABSENT
-    dc_setpoint_to::Union{Absent, Float64, Nothing} = ABSENT
-    ac_setpoint_to::Union{Absent, Float64, Nothing} = ABSENT
+    dc_power_setpoint_to::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    dc_voltage_setpoint_to::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    power_factor_setpoint_to::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    ac_voltage_setpoint_to::Union{Absent, Union{Float64, Nothing}} = ABSENT
     rated_ac_voltage_to::Union{Absent, Float64, Nothing} = ABSENT
     converter_loss_to::Union{Absent, LossCurve, Nothing} = ABSENT
     max_dc_current_to::Union{Absent, Float64, Nothing} = ABSENT
@@ -104,7 +112,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9ecd50b82d9d3ac2dccf.json",
+            resource="https://openapi.invalid/schema/external-46dc59506067794fa8c8.json",
             pointer="",
         ),
         _openapi_raw,
@@ -198,18 +206,32 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["setpoint_voltage_units"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_dc_setpoint_from =
-        haskey(_openapi_object, "dc_setpoint_from") ?
+    _openapi_field_dc_power_setpoint_from =
+        haskey(_openapi_object, "dc_power_setpoint_from") ?
         _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["dc_setpoint_from"],
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["dc_power_setpoint_from"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_ac_setpoint_from =
-        haskey(_openapi_object, "ac_setpoint_from") ?
+    _openapi_field_dc_voltage_setpoint_from =
+        haskey(_openapi_object, "dc_voltage_setpoint_from") ?
         _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["ac_setpoint_from"],
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["dc_voltage_setpoint_from"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_power_factor_setpoint_from =
+        haskey(_openapi_object, "power_factor_setpoint_from") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["power_factor_setpoint_from"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_ac_voltage_setpoint_from =
+        haskey(_openapi_object, "ac_voltage_setpoint_from") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["ac_voltage_setpoint_from"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_rated_ac_voltage_from =
@@ -296,18 +318,32 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["ac_control_to"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_dc_setpoint_to =
-        haskey(_openapi_object, "dc_setpoint_to") ?
+    _openapi_field_dc_power_setpoint_to =
+        haskey(_openapi_object, "dc_power_setpoint_to") ?
         _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["dc_setpoint_to"],
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["dc_power_setpoint_to"],
             _openapi_validate,
         ) : ABSENT
-    _openapi_field_ac_setpoint_to =
-        haskey(_openapi_object, "ac_setpoint_to") ?
+    _openapi_field_dc_voltage_setpoint_to =
+        haskey(_openapi_object, "dc_voltage_setpoint_to") ?
         _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["ac_setpoint_to"],
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["dc_voltage_setpoint_to"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_power_factor_setpoint_to =
+        haskey(_openapi_object, "power_factor_setpoint_to") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["power_factor_setpoint_to"],
+            _openapi_validate,
+        ) : ABSENT
+    _openapi_field_ac_voltage_setpoint_to =
+        haskey(_openapi_object, "ac_voltage_setpoint_to") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["ac_voltage_setpoint_to"],
             _openapi_validate,
         ) : ABSENT
     _openapi_field_rated_ac_voltage_to =
@@ -429,8 +465,10 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             "dc_control_from",
             "ac_control_from",
             "setpoint_voltage_units",
-            "dc_setpoint_from",
-            "ac_setpoint_from",
+            "dc_power_setpoint_from",
+            "dc_voltage_setpoint_from",
+            "power_factor_setpoint_from",
+            "ac_voltage_setpoint_from",
             "rated_ac_voltage_from",
             "converter_loss_from",
             "max_dc_current_from",
@@ -443,8 +481,10 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             "reactive_power_to",
             "dc_control_to",
             "ac_control_to",
-            "dc_setpoint_to",
-            "ac_setpoint_to",
+            "dc_power_setpoint_to",
+            "dc_voltage_setpoint_to",
+            "power_factor_setpoint_to",
+            "ac_voltage_setpoint_to",
             "rated_ac_voltage_to",
             "converter_loss_to",
             "max_dc_current_to",
@@ -480,8 +520,10 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
         dc_control_from=_openapi_field_dc_control_from,
         ac_control_from=_openapi_field_ac_control_from,
         setpoint_voltage_units=_openapi_field_setpoint_voltage_units,
-        dc_setpoint_from=_openapi_field_dc_setpoint_from,
-        ac_setpoint_from=_openapi_field_ac_setpoint_from,
+        dc_power_setpoint_from=_openapi_field_dc_power_setpoint_from,
+        dc_voltage_setpoint_from=_openapi_field_dc_voltage_setpoint_from,
+        power_factor_setpoint_from=_openapi_field_power_factor_setpoint_from,
+        ac_voltage_setpoint_from=_openapi_field_ac_voltage_setpoint_from,
         rated_ac_voltage_from=_openapi_field_rated_ac_voltage_from,
         converter_loss_from=_openapi_field_converter_loss_from,
         max_dc_current_from=_openapi_field_max_dc_current_from,
@@ -494,8 +536,10 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
         reactive_power_to=_openapi_field_reactive_power_to,
         dc_control_to=_openapi_field_dc_control_to,
         ac_control_to=_openapi_field_ac_control_to,
-        dc_setpoint_to=_openapi_field_dc_setpoint_to,
-        ac_setpoint_to=_openapi_field_ac_setpoint_to,
+        dc_power_setpoint_to=_openapi_field_dc_power_setpoint_to,
+        dc_voltage_setpoint_to=_openapi_field_dc_voltage_setpoint_to,
+        power_factor_setpoint_to=_openapi_field_power_factor_setpoint_to,
+        ac_voltage_setpoint_to=_openapi_field_ac_voltage_setpoint_to,
         rated_ac_voltage_to=_openapi_field_rated_ac_voltage_to,
         converter_loss_to=_openapi_field_converter_loss_to,
         max_dc_current_to=_openapi_field_max_dc_current_to,
@@ -551,10 +595,22 @@ function _encode(_openapi_value::TwoTerminalVSCLine)
         _openapi_output["setpoint_voltage_units"] =
             _encode(_openapi_value.setpoint_voltage_units)
     )
-    _openapi_value.dc_setpoint_from isa Absent ||
-        (_openapi_output["dc_setpoint_from"] = _encode(_openapi_value.dc_setpoint_from))
-    _openapi_value.ac_setpoint_from isa Absent ||
-        (_openapi_output["ac_setpoint_from"] = _encode(_openapi_value.ac_setpoint_from))
+    _openapi_value.dc_power_setpoint_from isa Absent || (
+        _openapi_output["dc_power_setpoint_from"] =
+            _encode(_openapi_value.dc_power_setpoint_from)
+    )
+    _openapi_value.dc_voltage_setpoint_from isa Absent || (
+        _openapi_output["dc_voltage_setpoint_from"] =
+            _encode(_openapi_value.dc_voltage_setpoint_from)
+    )
+    _openapi_value.power_factor_setpoint_from isa Absent || (
+        _openapi_output["power_factor_setpoint_from"] =
+            _encode(_openapi_value.power_factor_setpoint_from)
+    )
+    _openapi_value.ac_voltage_setpoint_from isa Absent || (
+        _openapi_output["ac_voltage_setpoint_from"] =
+            _encode(_openapi_value.ac_voltage_setpoint_from)
+    )
     _openapi_value.rated_ac_voltage_from isa Absent || (
         _openapi_output["rated_ac_voltage_from"] =
             _encode(_openapi_value.rated_ac_voltage_from)
@@ -593,10 +649,22 @@ function _encode(_openapi_value::TwoTerminalVSCLine)
         (_openapi_output["dc_control_to"] = _encode(_openapi_value.dc_control_to))
     _openapi_value.ac_control_to isa Absent ||
         (_openapi_output["ac_control_to"] = _encode(_openapi_value.ac_control_to))
-    _openapi_value.dc_setpoint_to isa Absent ||
-        (_openapi_output["dc_setpoint_to"] = _encode(_openapi_value.dc_setpoint_to))
-    _openapi_value.ac_setpoint_to isa Absent ||
-        (_openapi_output["ac_setpoint_to"] = _encode(_openapi_value.ac_setpoint_to))
+    _openapi_value.dc_power_setpoint_to isa Absent || (
+        _openapi_output["dc_power_setpoint_to"] =
+            _encode(_openapi_value.dc_power_setpoint_to)
+    )
+    _openapi_value.dc_voltage_setpoint_to isa Absent || (
+        _openapi_output["dc_voltage_setpoint_to"] =
+            _encode(_openapi_value.dc_voltage_setpoint_to)
+    )
+    _openapi_value.power_factor_setpoint_to isa Absent || (
+        _openapi_output["power_factor_setpoint_to"] =
+            _encode(_openapi_value.power_factor_setpoint_to)
+    )
+    _openapi_value.ac_voltage_setpoint_to isa Absent || (
+        _openapi_output["ac_voltage_setpoint_to"] =
+            _encode(_openapi_value.ac_voltage_setpoint_to)
+    )
     _openapi_value.rated_ac_voltage_to isa Absent || (
         _openapi_output["rated_ac_voltage_to"] =
             _encode(_openapi_value.rated_ac_voltage_to)
@@ -650,7 +718,7 @@ function _encode(_openapi_value::TwoTerminalVSCLine)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9ecd50b82d9d3ac2dccf.json",
+            resource="https://openapi.invalid/schema/external-46dc59506067794fa8c8.json",
             pointer="",
         ),
         _openapi_output,
@@ -693,10 +761,22 @@ function _form_fields(_openapi_value::TwoTerminalVSCLine)
         _openapi_output,
         "setpoint_voltage_units" => _openapi_value.setpoint_voltage_units,
     )
-    _openapi_value.dc_setpoint_from isa Absent ||
-        push!(_openapi_output, "dc_setpoint_from" => _openapi_value.dc_setpoint_from)
-    _openapi_value.ac_setpoint_from isa Absent ||
-        push!(_openapi_output, "ac_setpoint_from" => _openapi_value.ac_setpoint_from)
+    _openapi_value.dc_power_setpoint_from isa Absent || push!(
+        _openapi_output,
+        "dc_power_setpoint_from" => _openapi_value.dc_power_setpoint_from,
+    )
+    _openapi_value.dc_voltage_setpoint_from isa Absent || push!(
+        _openapi_output,
+        "dc_voltage_setpoint_from" => _openapi_value.dc_voltage_setpoint_from,
+    )
+    _openapi_value.power_factor_setpoint_from isa Absent || push!(
+        _openapi_output,
+        "power_factor_setpoint_from" => _openapi_value.power_factor_setpoint_from,
+    )
+    _openapi_value.ac_voltage_setpoint_from isa Absent || push!(
+        _openapi_output,
+        "ac_voltage_setpoint_from" => _openapi_value.ac_voltage_setpoint_from,
+    )
     _openapi_value.rated_ac_voltage_from isa Absent || push!(
         _openapi_output,
         "rated_ac_voltage_from" => _openapi_value.rated_ac_voltage_from,
@@ -730,10 +810,22 @@ function _form_fields(_openapi_value::TwoTerminalVSCLine)
         push!(_openapi_output, "dc_control_to" => _openapi_value.dc_control_to)
     _openapi_value.ac_control_to isa Absent ||
         push!(_openapi_output, "ac_control_to" => _openapi_value.ac_control_to)
-    _openapi_value.dc_setpoint_to isa Absent ||
-        push!(_openapi_output, "dc_setpoint_to" => _openapi_value.dc_setpoint_to)
-    _openapi_value.ac_setpoint_to isa Absent ||
-        push!(_openapi_output, "ac_setpoint_to" => _openapi_value.ac_setpoint_to)
+    _openapi_value.dc_power_setpoint_to isa Absent || push!(
+        _openapi_output,
+        "dc_power_setpoint_to" => _openapi_value.dc_power_setpoint_to,
+    )
+    _openapi_value.dc_voltage_setpoint_to isa Absent || push!(
+        _openapi_output,
+        "dc_voltage_setpoint_to" => _openapi_value.dc_voltage_setpoint_to,
+    )
+    _openapi_value.power_factor_setpoint_to isa Absent || push!(
+        _openapi_output,
+        "power_factor_setpoint_to" => _openapi_value.power_factor_setpoint_to,
+    )
+    _openapi_value.ac_voltage_setpoint_to isa Absent || push!(
+        _openapi_output,
+        "ac_voltage_setpoint_to" => _openapi_value.ac_voltage_setpoint_to,
+    )
     _openapi_value.rated_ac_voltage_to isa Absent ||
         push!(_openapi_output, "rated_ac_voltage_to" => _openapi_value.rated_ac_voltage_to)
     _openapi_value.converter_loss_to isa Absent ||

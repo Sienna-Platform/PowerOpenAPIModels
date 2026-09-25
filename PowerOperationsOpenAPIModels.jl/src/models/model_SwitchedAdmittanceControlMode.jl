@@ -1,7 +1,7 @@
 """
     SwitchedAdmittanceControlMode
 
-Control mode of a switched shunt admittance. `UNDEFINED` leaves the mode unspecified; `FIXED` holds the admittance at a constant value; `CONTINUOUS_VOLTAGE` adjusts it continuously to control voltage. The `DISCRETE_*` modes switch blocks in discrete steps to control voltage, a plant's reactive power, a voltage-source-converter terminal's reactive power, or a remote bus's admittance, respectively.
+Control mode of a switched shunt admittance (PSS/E MODSW). `UNDEFINED` leaves the mode unspecified; `FIXED` holds the admittance constant. `DISCRETE_VOLTAGE` and `CONTINUOUS_VOLTAGE` regulate voltage in steps or continuously and use `voltage_limits`. `DISCRETE_REACTIVE_PLANT`, `DISCRETE_REACTIVE_VSC`, `DISCRETE_ADMITTANCE_REMOTE` and `DISCRETE_REACTIVE_FACTS` regulate a plant's, a voltage-source-converter terminal's, a remote bus's, or a FACTS device's reactive quantity in steps and use `reactive_power_range_limits`.
 """
 struct SwitchedAdmittanceControlMode <: EnumAPIModel
     value::String
@@ -14,6 +14,7 @@ struct SwitchedAdmittanceControlMode <: EnumAPIModel
             "DISCRETE_REACTIVE_PLANT",
             "DISCRETE_REACTIVE_VSC",
             "DISCRETE_ADMITTANCE_REMOTE",
+            "DISCRETE_REACTIVE_FACTS",
         ) || throw(
             ArgumentError("invalid SwitchedAdmittanceControlMode value $(repr(value))"),
         )
@@ -26,7 +27,7 @@ function _decode(::Type{SwitchedAdmittanceControlMode}, value, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+            resource="https://openapi.invalid/schema/external-452260947985e8a3e864.json",
             pointer="/\$defs/SwitchedAdmittanceControlMode",
         ),
         value,
@@ -40,7 +41,7 @@ function _encode(value::SwitchedAdmittanceControlMode)
     return _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+            resource="https://openapi.invalid/schema/external-452260947985e8a3e864.json",
             pointer="/\$defs/SwitchedAdmittanceControlMode",
         ),
         output,
