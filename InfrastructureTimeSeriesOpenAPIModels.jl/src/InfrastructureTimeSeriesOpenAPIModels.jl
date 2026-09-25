@@ -299,6 +299,7 @@ authorization!(token::Union{Nothing, AbstractString}) =
     Runtime.authorization!(DEFAULT_CLIENT, token)
 
 using InfrastructureCoreOpenAPIModels
+import InfrastructureCoreOpenAPIModels: _encode_unvalidated
 
 include("models/model_OwnerCategory.jl")
 include("models/model_TimeSeriesFeatureValue.jl")

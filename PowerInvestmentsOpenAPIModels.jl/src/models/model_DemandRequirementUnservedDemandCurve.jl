@@ -99,20 +99,19 @@ function _decode(
                 "discriminator-selected schema did not validate for DemandRequirementUnservedDemandCurve",
             ),
         )
-    return DemandRequirementUnservedDemandCurve(
-        _decode(selected[1], value, _openapi_validate),
-    )
+    return DemandRequirementUnservedDemandCurve(_decode(selected[1], value, false))
 end
-function _encode(value::DemandRequirementUnservedDemandCurve)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-813de87b6fb714b267ea.json",
-            pointer="/properties/unserved_demand_curve",
-        ),
-        output,
-        "encoding DemandRequirementUnservedDemandCurve";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::DemandRequirementUnservedDemandCurve)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::DemandRequirementUnservedDemandCurve) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-813de87b6fb714b267ea.json",
+        pointer="/properties/unserved_demand_curve",
+    ),
+    _encode_unvalidated(value),
+    "encoding DemandRequirementUnservedDemandCurve";
+    direction=:neutral,
+)

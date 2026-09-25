@@ -46,60 +46,41 @@ function _decode(::Type{PowerLoad}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PowerLoad")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "PowerLoad"), _openapi_validate)
+    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "PowerLoad"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "PowerLoad"), _openapi_validate)
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "PowerLoad"),
-        _openapi_validate,
-    )
+        _decode(String, _required(_openapi_object, "name", "PowerLoad"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "PowerLoad"), false)
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "PowerLoad"), _openapi_validate)
-    _openapi_field_active_power = _decode(
-        Float64,
-        _required(_openapi_object, "active_power", "PowerLoad"),
-        _openapi_validate,
-    )
-    _openapi_field_reactive_power = _decode(
-        Float64,
-        _required(_openapi_object, "reactive_power", "PowerLoad"),
-        _openapi_validate,
-    )
-    _openapi_field_base_power = _decode(
-        Float64,
-        _required(_openapi_object, "base_power", "PowerLoad"),
-        _openapi_validate,
-    )
-    _openapi_field_power_units = _decode(
-        UnitSystem,
-        _required(_openapi_object, "power_units", "PowerLoad"),
-        _openapi_validate,
-    )
-    _openapi_field_max_active_power = _decode(
-        Float64,
-        _required(_openapi_object, "max_active_power", "PowerLoad"),
-        _openapi_validate,
-    )
+        _decode(Int64, _required(_openapi_object, "bus", "PowerLoad"), false)
+    _openapi_field_active_power =
+        _decode(Float64, _required(_openapi_object, "active_power", "PowerLoad"), false)
+    _openapi_field_reactive_power =
+        _decode(Float64, _required(_openapi_object, "reactive_power", "PowerLoad"), false)
+    _openapi_field_base_power =
+        _decode(Float64, _required(_openapi_object, "base_power", "PowerLoad"), false)
+    _openapi_field_power_units =
+        _decode(UnitSystem, _required(_openapi_object, "power_units", "PowerLoad"), false)
+    _openapi_field_max_active_power =
+        _decode(Float64, _required(_openapi_object, "max_active_power", "PowerLoad"), false)
     _openapi_field_max_reactive_power = _decode(
         Float64,
         _required(_openapi_object, "max_reactive_power", "PowerLoad"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_conformity =
         haskey(_openapi_object, "conformity") ?
         _decode(
             Union{Absent, LoadConformity, Nothing},
             _openapi_object["conformity"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -118,7 +99,7 @@ function _decode(::Type{PowerLoad}, _openapi_raw, _openapi_validate::Bool)
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return PowerLoad(;
         id=_openapi_field_id,
@@ -136,49 +117,60 @@ function _decode(::Type{PowerLoad}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::PowerLoad)
+function _encode_unvalidated(_openapi_value::PowerLoad)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.bus isa Absent ||
+        (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
     _openapi_value.active_power isa Absent ||
-        (_openapi_output["active_power"] = _encode(_openapi_value.active_power))
-    _openapi_value.reactive_power isa Absent ||
-        (_openapi_output["reactive_power"] = _encode(_openapi_value.reactive_power))
+        (_openapi_output["active_power"] = _encode_unvalidated(_openapi_value.active_power))
+    _openapi_value.reactive_power isa Absent || (
+        _openapi_output["reactive_power"] =
+            _encode_unvalidated(_openapi_value.reactive_power)
+    )
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
-    _openapi_value.max_active_power isa Absent ||
-        (_openapi_output["max_active_power"] = _encode(_openapi_value.max_active_power))
-    _openapi_value.max_reactive_power isa Absent ||
-        (_openapi_output["max_reactive_power"] = _encode(_openapi_value.max_reactive_power))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
+    _openapi_value.max_active_power isa Absent || (
+        _openapi_output["max_active_power"] =
+            _encode_unvalidated(_openapi_value.max_active_power)
+    )
+    _openapi_value.max_reactive_power isa Absent || (
+        _openapi_output["max_reactive_power"] =
+            _encode_unvalidated(_openapi_value.max_reactive_power)
+    )
     _openapi_value.conformity isa Absent ||
-        (_openapi_output["conformity"] = _encode(_openapi_value.conformity))
-    _openapi_value.dynamic_injector isa Absent ||
-        (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
+        (_openapi_output["conformity"] = _encode_unvalidated(_openapi_value.conformity))
+    _openapi_value.dynamic_injector isa Absent || (
+        _openapi_output["dynamic_injector"] =
+            _encode_unvalidated(_openapi_value.dynamic_injector)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-d56bc53bc1ef00946177.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding PowerLoad";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::PowerLoad) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-d56bc53bc1ef00946177.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding PowerLoad";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::PowerLoad)
     _openapi_output = Pair{String, Any}[]

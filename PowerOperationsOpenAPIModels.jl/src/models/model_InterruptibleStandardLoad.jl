@@ -67,138 +67,135 @@ function _decode(::Type{InterruptibleStandardLoad}, _openapi_raw, _openapi_valid
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "InterruptibleStandardLoad")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "InterruptibleStandardLoad"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "InterruptibleStandardLoad"), false)
     _openapi_field_name = _decode(
         String,
         _required(_openapi_object, "name", "InterruptibleStandardLoad"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_available = _decode(
         Bool,
         _required(_openapi_object, "available", "InterruptibleStandardLoad"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_bus = _decode(
         Int64,
         _required(_openapi_object, "bus", "InterruptibleStandardLoad"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_base_power = _decode(
         Float64,
         _required(_openapi_object, "base_power", "InterruptibleStandardLoad"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "InterruptibleStandardLoad"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_operation_cost = _decode(
         InterruptibleStandardLoadOperationCost,
         _required(_openapi_object, "operation_cost", "InterruptibleStandardLoad"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_conformity =
         haskey(_openapi_object, "conformity") ?
         _decode(
             Union{Absent, LoadConformity, Nothing},
             _openapi_object["conformity"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_constant_active_power =
         haskey(_openapi_object, "constant_active_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["constant_active_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_constant_reactive_power =
         haskey(_openapi_object, "constant_reactive_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["constant_reactive_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_impedance_active_power =
         haskey(_openapi_object, "impedance_active_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["impedance_active_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_impedance_reactive_power =
         haskey(_openapi_object, "impedance_reactive_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["impedance_reactive_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_current_active_power =
         haskey(_openapi_object, "current_active_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["current_active_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_current_reactive_power =
         haskey(_openapi_object, "current_reactive_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["current_reactive_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_constant_active_power =
         haskey(_openapi_object, "max_constant_active_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_constant_active_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_constant_reactive_power =
         haskey(_openapi_object, "max_constant_reactive_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_constant_reactive_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_impedance_active_power =
         haskey(_openapi_object, "max_impedance_active_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_impedance_active_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_impedance_reactive_power =
         haskey(_openapi_object, "max_impedance_reactive_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_impedance_reactive_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_current_active_power =
         haskey(_openapi_object, "max_current_active_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_current_active_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_current_reactive_power =
         haskey(_openapi_object, "max_current_reactive_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_current_reactive_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -226,7 +223,7 @@ function _decode(::Type{InterruptibleStandardLoad}, _openapi_raw, _openapi_valid
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return InterruptibleStandardLoad(;
         id=_openapi_field_id,
@@ -253,91 +250,98 @@ function _decode(::Type{InterruptibleStandardLoad}, _openapi_raw, _openapi_valid
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::InterruptibleStandardLoad)
+function _encode_unvalidated(_openapi_value::InterruptibleStandardLoad)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.bus isa Absent ||
+        (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
-    _openapi_value.operation_cost isa Absent ||
-        (_openapi_output["operation_cost"] = _encode(_openapi_value.operation_cost))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
+    _openapi_value.operation_cost isa Absent || (
+        _openapi_output["operation_cost"] =
+            _encode_unvalidated(_openapi_value.operation_cost)
+    )
     _openapi_value.conformity isa Absent ||
-        (_openapi_output["conformity"] = _encode(_openapi_value.conformity))
+        (_openapi_output["conformity"] = _encode_unvalidated(_openapi_value.conformity))
     _openapi_value.constant_active_power isa Absent || (
         _openapi_output["constant_active_power"] =
-            _encode(_openapi_value.constant_active_power)
+            _encode_unvalidated(_openapi_value.constant_active_power)
     )
     _openapi_value.constant_reactive_power isa Absent || (
         _openapi_output["constant_reactive_power"] =
-            _encode(_openapi_value.constant_reactive_power)
+            _encode_unvalidated(_openapi_value.constant_reactive_power)
     )
     _openapi_value.impedance_active_power isa Absent || (
         _openapi_output["impedance_active_power"] =
-            _encode(_openapi_value.impedance_active_power)
+            _encode_unvalidated(_openapi_value.impedance_active_power)
     )
     _openapi_value.impedance_reactive_power isa Absent || (
         _openapi_output["impedance_reactive_power"] =
-            _encode(_openapi_value.impedance_reactive_power)
+            _encode_unvalidated(_openapi_value.impedance_reactive_power)
     )
     _openapi_value.current_active_power isa Absent || (
         _openapi_output["current_active_power"] =
-            _encode(_openapi_value.current_active_power)
+            _encode_unvalidated(_openapi_value.current_active_power)
     )
     _openapi_value.current_reactive_power isa Absent || (
         _openapi_output["current_reactive_power"] =
-            _encode(_openapi_value.current_reactive_power)
+            _encode_unvalidated(_openapi_value.current_reactive_power)
     )
     _openapi_value.max_constant_active_power isa Absent || (
         _openapi_output["max_constant_active_power"] =
-            _encode(_openapi_value.max_constant_active_power)
+            _encode_unvalidated(_openapi_value.max_constant_active_power)
     )
     _openapi_value.max_constant_reactive_power isa Absent || (
         _openapi_output["max_constant_reactive_power"] =
-            _encode(_openapi_value.max_constant_reactive_power)
+            _encode_unvalidated(_openapi_value.max_constant_reactive_power)
     )
     _openapi_value.max_impedance_active_power isa Absent || (
         _openapi_output["max_impedance_active_power"] =
-            _encode(_openapi_value.max_impedance_active_power)
+            _encode_unvalidated(_openapi_value.max_impedance_active_power)
     )
     _openapi_value.max_impedance_reactive_power isa Absent || (
         _openapi_output["max_impedance_reactive_power"] =
-            _encode(_openapi_value.max_impedance_reactive_power)
+            _encode_unvalidated(_openapi_value.max_impedance_reactive_power)
     )
     _openapi_value.max_current_active_power isa Absent || (
         _openapi_output["max_current_active_power"] =
-            _encode(_openapi_value.max_current_active_power)
+            _encode_unvalidated(_openapi_value.max_current_active_power)
     )
     _openapi_value.max_current_reactive_power isa Absent || (
         _openapi_output["max_current_reactive_power"] =
-            _encode(_openapi_value.max_current_reactive_power)
+            _encode_unvalidated(_openapi_value.max_current_reactive_power)
     )
-    _openapi_value.dynamic_injector isa Absent ||
-        (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
+    _openapi_value.dynamic_injector isa Absent || (
+        _openapi_output["dynamic_injector"] =
+            _encode_unvalidated(_openapi_value.dynamic_injector)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-317b259df5575f72623a.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding InterruptibleStandardLoad";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::InterruptibleStandardLoad) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-317b259df5575f72623a.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding InterruptibleStandardLoad";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::InterruptibleStandardLoad)
     _openapi_output = Pair{String, Any}[]

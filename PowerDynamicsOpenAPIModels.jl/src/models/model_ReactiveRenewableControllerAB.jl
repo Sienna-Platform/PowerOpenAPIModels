@@ -82,142 +82,134 @@ function _decode(
     _openapi_field_bus_control = _decode(
         Int64,
         _required(_openapi_object, "bus_control", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_from_branch_control = _decode(
         Int64,
         _required(_openapi_object, "from_branch_control", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_to_branch_control = _decode(
         Int64,
         _required(_openapi_object, "to_branch_control", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_branch_id_control = _decode(
         String,
         _required(_openapi_object, "branch_id_control", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_vc_flag = _decode(
         Bool,
         _required(_openapi_object, "VC_Flag", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_ref_flag = _decode(
         Bool,
         _required(_openapi_object, "Ref_Flag", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_pf_flag = _decode(
         Bool,
         _required(_openapi_object, "PF_Flag", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_v_flag = _decode(
         Bool,
         _required(_openapi_object, "V_Flag", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_t_fltr = _decode(
         Float64,
         _required(_openapi_object, "T_fltr", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_k_p = _decode(
         Float64,
         _required(_openapi_object, "K_p", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_k_i = _decode(
         Float64,
         _required(_openapi_object, "K_i", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_t_ft = _decode(
         Float64,
         _required(_openapi_object, "T_ft", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_t_fv = _decode(
         Float64,
         _required(_openapi_object, "T_fv", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_v_frz = _decode(
         Float64,
         _required(_openapi_object, "V_frz", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_r_c = _decode(
         Float64,
         _required(_openapi_object, "R_c", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_x_c = _decode(
         Float64,
         _required(_openapi_object, "X_c", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_k_c = _decode(
         Float64,
         _required(_openapi_object, "K_c", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_e_lim = _decode(
         MinMax,
         _required(_openapi_object, "e_lim", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_dbd_pnts = _decode(
         DbdPnts,
         _required(_openapi_object, "dbd_pnts", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_q_lim = _decode(
         MinMax,
         _required(_openapi_object, "Q_lim", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_t_p = _decode(
         Float64,
         _required(_openapi_object, "T_p", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_q_lim_inner = _decode(
         MinMax,
         _required(_openapi_object, "Q_lim_inner", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_v_lim = _decode(
         MinMax,
         _required(_openapi_object, "V_lim", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_k_qp = _decode(
         Float64,
         _required(_openapi_object, "K_qp", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_k_qi = _decode(
         Float64,
         _required(_openapi_object, "K_qi", "ReactiveRenewableControllerAB"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_q_ref =
         haskey(_openapi_object, "Q_ref") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["Q_ref"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["Q_ref"], false) : ABSENT
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["V_ref"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -250,7 +242,7 @@ function _decode(
             "V_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return ReactiveRenewableControllerAB(;
         bus_control=_openapi_field_bus_control,
@@ -283,77 +275,88 @@ function _decode(
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::ReactiveRenewableControllerAB)
+function _encode_unvalidated(_openapi_value::ReactiveRenewableControllerAB)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.bus_control isa Absent ||
-        (_openapi_output["bus_control"] = _encode(_openapi_value.bus_control))
+        (_openapi_output["bus_control"] = _encode_unvalidated(_openapi_value.bus_control))
     _openapi_value.from_branch_control isa Absent || (
         _openapi_output["from_branch_control"] =
-            _encode(_openapi_value.from_branch_control)
+            _encode_unvalidated(_openapi_value.from_branch_control)
     )
-    _openapi_value.to_branch_control isa Absent ||
-        (_openapi_output["to_branch_control"] = _encode(_openapi_value.to_branch_control))
-    _openapi_value.branch_id_control isa Absent ||
-        (_openapi_output["branch_id_control"] = _encode(_openapi_value.branch_id_control))
+    _openapi_value.to_branch_control isa Absent || (
+        _openapi_output["to_branch_control"] =
+            _encode_unvalidated(_openapi_value.to_branch_control)
+    )
+    _openapi_value.branch_id_control isa Absent || (
+        _openapi_output["branch_id_control"] =
+            _encode_unvalidated(_openapi_value.branch_id_control)
+    )
     _openapi_value.vc_flag isa Absent ||
-        (_openapi_output["VC_Flag"] = _encode(_openapi_value.vc_flag))
+        (_openapi_output["VC_Flag"] = _encode_unvalidated(_openapi_value.vc_flag))
     _openapi_value.ref_flag isa Absent ||
-        (_openapi_output["Ref_Flag"] = _encode(_openapi_value.ref_flag))
+        (_openapi_output["Ref_Flag"] = _encode_unvalidated(_openapi_value.ref_flag))
     _openapi_value.pf_flag isa Absent ||
-        (_openapi_output["PF_Flag"] = _encode(_openapi_value.pf_flag))
+        (_openapi_output["PF_Flag"] = _encode_unvalidated(_openapi_value.pf_flag))
     _openapi_value.v_flag isa Absent ||
-        (_openapi_output["V_Flag"] = _encode(_openapi_value.v_flag))
+        (_openapi_output["V_Flag"] = _encode_unvalidated(_openapi_value.v_flag))
     _openapi_value.t_fltr isa Absent ||
-        (_openapi_output["T_fltr"] = _encode(_openapi_value.t_fltr))
-    _openapi_value.k_p isa Absent || (_openapi_output["K_p"] = _encode(_openapi_value.k_p))
-    _openapi_value.k_i isa Absent || (_openapi_output["K_i"] = _encode(_openapi_value.k_i))
+        (_openapi_output["T_fltr"] = _encode_unvalidated(_openapi_value.t_fltr))
+    _openapi_value.k_p isa Absent ||
+        (_openapi_output["K_p"] = _encode_unvalidated(_openapi_value.k_p))
+    _openapi_value.k_i isa Absent ||
+        (_openapi_output["K_i"] = _encode_unvalidated(_openapi_value.k_i))
     _openapi_value.t_ft isa Absent ||
-        (_openapi_output["T_ft"] = _encode(_openapi_value.t_ft))
+        (_openapi_output["T_ft"] = _encode_unvalidated(_openapi_value.t_ft))
     _openapi_value.t_fv isa Absent ||
-        (_openapi_output["T_fv"] = _encode(_openapi_value.t_fv))
+        (_openapi_output["T_fv"] = _encode_unvalidated(_openapi_value.t_fv))
     _openapi_value.v_frz isa Absent ||
-        (_openapi_output["V_frz"] = _encode(_openapi_value.v_frz))
-    _openapi_value.r_c isa Absent || (_openapi_output["R_c"] = _encode(_openapi_value.r_c))
-    _openapi_value.x_c isa Absent || (_openapi_output["X_c"] = _encode(_openapi_value.x_c))
-    _openapi_value.k_c isa Absent || (_openapi_output["K_c"] = _encode(_openapi_value.k_c))
+        (_openapi_output["V_frz"] = _encode_unvalidated(_openapi_value.v_frz))
+    _openapi_value.r_c isa Absent ||
+        (_openapi_output["R_c"] = _encode_unvalidated(_openapi_value.r_c))
+    _openapi_value.x_c isa Absent ||
+        (_openapi_output["X_c"] = _encode_unvalidated(_openapi_value.x_c))
+    _openapi_value.k_c isa Absent ||
+        (_openapi_output["K_c"] = _encode_unvalidated(_openapi_value.k_c))
     _openapi_value.e_lim isa Absent ||
-        (_openapi_output["e_lim"] = _encode(_openapi_value.e_lim))
+        (_openapi_output["e_lim"] = _encode_unvalidated(_openapi_value.e_lim))
     _openapi_value.dbd_pnts isa Absent ||
-        (_openapi_output["dbd_pnts"] = _encode(_openapi_value.dbd_pnts))
+        (_openapi_output["dbd_pnts"] = _encode_unvalidated(_openapi_value.dbd_pnts))
     _openapi_value.q_lim isa Absent ||
-        (_openapi_output["Q_lim"] = _encode(_openapi_value.q_lim))
-    _openapi_value.t_p isa Absent || (_openapi_output["T_p"] = _encode(_openapi_value.t_p))
+        (_openapi_output["Q_lim"] = _encode_unvalidated(_openapi_value.q_lim))
+    _openapi_value.t_p isa Absent ||
+        (_openapi_output["T_p"] = _encode_unvalidated(_openapi_value.t_p))
     _openapi_value.q_lim_inner isa Absent ||
-        (_openapi_output["Q_lim_inner"] = _encode(_openapi_value.q_lim_inner))
+        (_openapi_output["Q_lim_inner"] = _encode_unvalidated(_openapi_value.q_lim_inner))
     _openapi_value.v_lim isa Absent ||
-        (_openapi_output["V_lim"] = _encode(_openapi_value.v_lim))
+        (_openapi_output["V_lim"] = _encode_unvalidated(_openapi_value.v_lim))
     _openapi_value.k_qp isa Absent ||
-        (_openapi_output["K_qp"] = _encode(_openapi_value.k_qp))
+        (_openapi_output["K_qp"] = _encode_unvalidated(_openapi_value.k_qp))
     _openapi_value.k_qi isa Absent ||
-        (_openapi_output["K_qi"] = _encode(_openapi_value.k_qi))
+        (_openapi_output["K_qi"] = _encode_unvalidated(_openapi_value.k_qi))
     _openapi_value.q_ref isa Absent ||
-        (_openapi_output["Q_ref"] = _encode(_openapi_value.q_ref))
+        (_openapi_output["Q_ref"] = _encode_unvalidated(_openapi_value.q_ref))
     _openapi_value.v_ref isa Absent ||
-        (_openapi_output["V_ref"] = _encode(_openapi_value.v_ref))
+        (_openapi_output["V_ref"] = _encode_unvalidated(_openapi_value.v_ref))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-d224b59497559836ed16.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding ReactiveRenewableControllerAB";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::ReactiveRenewableControllerAB) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-d224b59497559836ed16.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding ReactiveRenewableControllerAB";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::ReactiveRenewableControllerAB)
     _openapi_output = Pair{String, Any}[]

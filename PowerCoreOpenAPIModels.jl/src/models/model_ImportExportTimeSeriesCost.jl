@@ -34,17 +34,17 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
     _openapi_field_cost_type = _decode(
         String,
         _required(_openapi_object, "cost_type", "ImportExportTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_import_offer_curves = _decode(
         CostCurve,
         _required(_openapi_object, "import_offer_curves", "ImportExportTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_export_offer_curves = _decode(
         CostCurve,
         _required(_openapi_object, "export_offer_curves", "ImportExportTimeSeriesCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_energy_import_weekly_limit = _decode(
         Float64,
@@ -53,7 +53,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
             "energy_import_weekly_limit",
             "ImportExportTimeSeriesCost",
         ),
-        _openapi_validate,
+        false,
     )
     _openapi_field_energy_export_weekly_limit = _decode(
         Float64,
@@ -62,7 +62,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
             "energy_export_weekly_limit",
             "ImportExportTimeSeriesCost",
         ),
-        _openapi_validate,
+        false,
     )
     _openapi_field_ancillary_service_offers = _decode(
         Vector{Int64},
@@ -71,7 +71,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
             "ancillary_service_offers",
             "ImportExportTimeSeriesCost",
         ),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -84,7 +84,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
             "ancillary_service_offers",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return ImportExportTimeSeriesCost(;
         cost_type=_openapi_field_cost_type,
@@ -96,29 +96,29 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::ImportExportTimeSeriesCost)
+function _encode_unvalidated(_openapi_value::ImportExportTimeSeriesCost)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.cost_type isa Absent ||
-        (_openapi_output["cost_type"] = _encode(_openapi_value.cost_type))
+        (_openapi_output["cost_type"] = _encode_unvalidated(_openapi_value.cost_type))
     _openapi_value.import_offer_curves isa Absent || (
         _openapi_output["import_offer_curves"] =
-            _encode(_openapi_value.import_offer_curves)
+            _encode_unvalidated(_openapi_value.import_offer_curves)
     )
     _openapi_value.export_offer_curves isa Absent || (
         _openapi_output["export_offer_curves"] =
-            _encode(_openapi_value.export_offer_curves)
+            _encode_unvalidated(_openapi_value.export_offer_curves)
     )
     _openapi_value.energy_import_weekly_limit isa Absent || (
         _openapi_output["energy_import_weekly_limit"] =
-            _encode(_openapi_value.energy_import_weekly_limit)
+            _encode_unvalidated(_openapi_value.energy_import_weekly_limit)
     )
     _openapi_value.energy_export_weekly_limit isa Absent || (
         _openapi_output["energy_export_weekly_limit"] =
-            _encode(_openapi_value.energy_export_weekly_limit)
+            _encode_unvalidated(_openapi_value.energy_export_weekly_limit)
     )
     _openapi_value.ancillary_service_offers isa Absent || (
         _openapi_output["ancillary_service_offers"] =
-            _encode(_openapi_value.ancillary_service_offers)
+            _encode_unvalidated(_openapi_value.ancillary_service_offers)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -126,19 +126,20 @@ function _encode(_openapi_value::ImportExportTimeSeriesCost)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ImportExportTimeSeriesCost",
-        ),
-        _openapi_output,
-        "encoding ImportExportTimeSeriesCost";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::ImportExportTimeSeriesCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ImportExportTimeSeriesCost",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding ImportExportTimeSeriesCost";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::ImportExportTimeSeriesCost)
     _openapi_output = Pair{String, Any}[]

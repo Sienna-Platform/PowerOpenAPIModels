@@ -23,23 +23,15 @@ function _decode(::Type{MinMax}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "MinMax")
     _openapi_field_max =
         haskey(_openapi_object, "max") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["max"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["max"], false) : ABSENT
     _openapi_field_min =
         haskey(_openapi_object, "min") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["min"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["min"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("max", "min") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return MinMax(;
         max=_openapi_field_max,
@@ -47,29 +39,32 @@ function _decode(::Type{MinMax}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::MinMax)
+function _encode_unvalidated(_openapi_value::MinMax)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.max isa Absent || (_openapi_output["max"] = _encode(_openapi_value.max))
-    _openapi_value.min isa Absent || (_openapi_output["min"] = _encode(_openapi_value.min))
+    _openapi_value.max isa Absent ||
+        (_openapi_output["max"] = _encode_unvalidated(_openapi_value.max))
+    _openapi_value.min isa Absent ||
+        (_openapi_output["min"] = _encode_unvalidated(_openapi_value.min))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
-            pointer="/\$defs/MinMax",
-        ),
-        _openapi_output,
-        "encoding MinMax";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::MinMax) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+        pointer="/\$defs/MinMax",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding MinMax";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::MinMax)
     _openapi_output = Pair{String, Any}[]

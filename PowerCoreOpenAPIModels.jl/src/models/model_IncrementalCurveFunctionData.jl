@@ -55,18 +55,19 @@ function _decode(::Type{IncrementalCurveFunctionData}, value, _openapi_validate:
                 "discriminator-selected schema did not validate for IncrementalCurveFunctionData",
             ),
         )
-    return IncrementalCurveFunctionData(_decode(selected[1], value, _openapi_validate))
+    return IncrementalCurveFunctionData(_decode(selected[1], value, false))
 end
-function _encode(value::IncrementalCurveFunctionData)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/IncrementalCurve/properties/function_data",
-        ),
-        output,
-        "encoding IncrementalCurveFunctionData";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::IncrementalCurveFunctionData)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::IncrementalCurveFunctionData) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/IncrementalCurve/properties/function_data",
+    ),
+    _encode_unvalidated(value),
+    "encoding IncrementalCurveFunctionData";
+    direction=:neutral,
+)

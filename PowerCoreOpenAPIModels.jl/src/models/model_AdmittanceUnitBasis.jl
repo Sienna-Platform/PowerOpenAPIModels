@@ -23,19 +23,20 @@ function _decode(::Type{AdmittanceUnitBasis}, value, _openapi_validate::Bool)
         "decoding AdmittanceUnitBasis";
         direction=:neutral,
     )
-    return AdmittanceUnitBasis(_decode(String, value, _openapi_validate))
+    return AdmittanceUnitBasis(_decode(String, value, false))
 end
-function _encode(value::AdmittanceUnitBasis)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/AdmittanceUnitBasis",
-        ),
-        output,
-        "encoding AdmittanceUnitBasis";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::AdmittanceUnitBasis)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::AdmittanceUnitBasis) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/AdmittanceUnitBasis",
+    ),
+    _encode_unvalidated(value),
+    "encoding AdmittanceUnitBasis";
+    direction=:neutral,
+)
 Base.string(value::AdmittanceUnitBasis) = string(value.value)

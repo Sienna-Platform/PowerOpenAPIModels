@@ -26,21 +26,20 @@ function _decode(
         "decoding ImpedanceCorrectionDataTransformerControlMode";
         direction=:neutral,
     )
-    return ImpedanceCorrectionDataTransformerControlMode(
-        _decode(String, value, _openapi_validate),
-    )
+    return ImpedanceCorrectionDataTransformerControlMode(_decode(String, value, false))
 end
-function _encode(value::ImpedanceCorrectionDataTransformerControlMode)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
-            pointer="/properties/transformer_control_mode",
-        ),
-        output,
-        "encoding ImpedanceCorrectionDataTransformerControlMode";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ImpedanceCorrectionDataTransformerControlMode)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ImpedanceCorrectionDataTransformerControlMode) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
+        pointer="/properties/transformer_control_mode",
+    ),
+    _encode_unvalidated(value),
+    "encoding ImpedanceCorrectionDataTransformerControlMode";
+    direction=:neutral,
+)
 Base.string(value::ImpedanceCorrectionDataTransformerControlMode) = string(value.value)

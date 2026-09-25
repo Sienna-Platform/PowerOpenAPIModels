@@ -60,78 +60,78 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
     _openapi_field_id = _decode(
         Int64,
         _required(_openapi_object, "id", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_name = _decode(
         String,
         _required(_openapi_object, "name", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_available = _decode(
         Bool,
         _required(_openapi_object, "available", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_active_power_flow = _decode(
         Float64,
         _required(_openapi_object, "active_power_flow", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_reactive_power_flow = _decode(
         Float64,
         _required(_openapi_object, "reactive_power_flow", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_arc = _decode(
         Int64,
         _required(_openapi_object, "arc", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_base_power = _decode(
         Float64,
         _required(_openapi_object, "base_power", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_r = _decode(
         Float64,
         _required(_openapi_object, "r", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_x = _decode(
         Float64,
         _required(_openapi_object, "x", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_rating = _decode(
         Float64,
         _required(_openapi_object, "rating", "DiscreteControlledACBranch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_discrete_branch_type =
         haskey(_openapi_object, "discrete_branch_type") ?
         _decode(
             Union{Absent, DiscreteControlledACBranchDiscreteBranchType, Nothing},
             _openapi_object["discrete_branch_type"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_branch_status =
         haskey(_openapi_object, "branch_status") ?
         _decode(
             Union{Absent, DiscreteControlledACBranchBranchStatus, Nothing},
             _openapi_object["branch_status"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_normal_branch_status =
         haskey(_openapi_object, "normal_branch_status") ?
         _decode(
             Union{Absent, DiscreteControlledACBranchNormalBranchStatus, Nothing},
             _openapi_object["normal_branch_status"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -152,7 +152,7 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
             "normal_branch_status",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return DiscreteControlledACBranch(;
         id=_openapi_field_id,
@@ -172,37 +172,45 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::DiscreteControlledACBranch)
+function _encode_unvalidated(_openapi_value::DiscreteControlledACBranch)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.active_power_flow isa Absent ||
-        (_openapi_output["active_power_flow"] = _encode(_openapi_value.active_power_flow))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.active_power_flow isa Absent || (
+        _openapi_output["active_power_flow"] =
+            _encode_unvalidated(_openapi_value.active_power_flow)
+    )
     _openapi_value.reactive_power_flow isa Absent || (
         _openapi_output["reactive_power_flow"] =
-            _encode(_openapi_value.reactive_power_flow)
+            _encode_unvalidated(_openapi_value.reactive_power_flow)
     )
-    _openapi_value.arc isa Absent || (_openapi_output["arc"] = _encode(_openapi_value.arc))
+    _openapi_value.arc isa Absent ||
+        (_openapi_output["arc"] = _encode_unvalidated(_openapi_value.arc))
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
-    _openapi_value.r isa Absent || (_openapi_output["r"] = _encode(_openapi_value.r))
-    _openapi_value.x isa Absent || (_openapi_output["x"] = _encode(_openapi_value.x))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
+    _openapi_value.r isa Absent ||
+        (_openapi_output["r"] = _encode_unvalidated(_openapi_value.r))
+    _openapi_value.x isa Absent ||
+        (_openapi_output["x"] = _encode_unvalidated(_openapi_value.x))
     _openapi_value.rating isa Absent ||
-        (_openapi_output["rating"] = _encode(_openapi_value.rating))
+        (_openapi_output["rating"] = _encode_unvalidated(_openapi_value.rating))
     _openapi_value.discrete_branch_type isa Absent || (
         _openapi_output["discrete_branch_type"] =
-            _encode(_openapi_value.discrete_branch_type)
+            _encode_unvalidated(_openapi_value.discrete_branch_type)
     )
-    _openapi_value.branch_status isa Absent ||
-        (_openapi_output["branch_status"] = _encode(_openapi_value.branch_status))
+    _openapi_value.branch_status isa Absent || (
+        _openapi_output["branch_status"] =
+            _encode_unvalidated(_openapi_value.branch_status)
+    )
     _openapi_value.normal_branch_status isa Absent || (
         _openapi_output["normal_branch_status"] =
-            _encode(_openapi_value.normal_branch_status)
+            _encode_unvalidated(_openapi_value.normal_branch_status)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -210,19 +218,20 @@ function _encode(_openapi_value::DiscreteControlledACBranch)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-a19739e398fbec984537.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding DiscreteControlledACBranch";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::DiscreteControlledACBranch) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-a19739e398fbec984537.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding DiscreteControlledACBranch";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::DiscreteControlledACBranch)
     _openapi_output = Pair{String, Any}[]

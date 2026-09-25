@@ -28,28 +28,19 @@ function _decode(::Type{StartUpStages}, _openapi_raw, _openapi_validate::Bool)
         _decode(
             Union{Absent, Nothing, String},
             _openapi_object["startup_stages_type"],
-            _openapi_validate,
+            false,
         ) : ABSENT
-    _openapi_field_cold = _decode(
-        Float64,
-        _required(_openapi_object, "cold", "StartUpStages"),
-        _openapi_validate,
-    )
-    _openapi_field_hot = _decode(
-        Float64,
-        _required(_openapi_object, "hot", "StartUpStages"),
-        _openapi_validate,
-    )
-    _openapi_field_warm = _decode(
-        Float64,
-        _required(_openapi_object, "warm", "StartUpStages"),
-        _openapi_validate,
-    )
+    _openapi_field_cold =
+        _decode(Float64, _required(_openapi_object, "cold", "StartUpStages"), false)
+    _openapi_field_hot =
+        _decode(Float64, _required(_openapi_object, "hot", "StartUpStages"), false)
+    _openapi_field_warm =
+        _decode(Float64, _required(_openapi_object, "warm", "StartUpStages"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("startup_stages_type", "cold", "hot", "warm") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return StartUpStages(;
         startup_stages_type=_openapi_field_startup_stages_type,
@@ -59,36 +50,38 @@ function _decode(::Type{StartUpStages}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::StartUpStages)
+function _encode_unvalidated(_openapi_value::StartUpStages)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.startup_stages_type isa Absent || (
         _openapi_output["startup_stages_type"] =
-            _encode(_openapi_value.startup_stages_type)
+            _encode_unvalidated(_openapi_value.startup_stages_type)
     )
     _openapi_value.cold isa Absent ||
-        (_openapi_output["cold"] = _encode(_openapi_value.cold))
-    _openapi_value.hot isa Absent || (_openapi_output["hot"] = _encode(_openapi_value.hot))
+        (_openapi_output["cold"] = _encode_unvalidated(_openapi_value.cold))
+    _openapi_value.hot isa Absent ||
+        (_openapi_output["hot"] = _encode_unvalidated(_openapi_value.hot))
     _openapi_value.warm isa Absent ||
-        (_openapi_output["warm"] = _encode(_openapi_value.warm))
+        (_openapi_output["warm"] = _encode_unvalidated(_openapi_value.warm))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/StartUpStages",
-        ),
-        _openapi_output,
-        "encoding StartUpStages";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::StartUpStages) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/StartUpStages",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding StartUpStages";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::StartUpStages)
     _openapi_output = Pair{String, Any}[]

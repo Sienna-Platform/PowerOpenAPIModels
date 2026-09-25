@@ -101,18 +101,19 @@ function _decode(::Type{FunctionData}, value, _openapi_validate::Bool)
         throw(
             DecodeError("discriminator-selected schema did not validate for FunctionData"),
         )
-    return FunctionData(_decode(selected[1], value, _openapi_validate))
+    return FunctionData(_decode(selected[1], value, false))
 end
-function _encode(value::FunctionData)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
-            pointer="/\$defs/FunctionData",
-        ),
-        output,
-        "encoding FunctionData";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::FunctionData)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::FunctionData) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+        pointer="/\$defs/FunctionData",
+    ),
+    _encode_unvalidated(value),
+    "encoding FunctionData";
+    direction=:neutral,
+)

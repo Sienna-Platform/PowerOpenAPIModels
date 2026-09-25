@@ -68,141 +68,92 @@ function _decode(::Type{Probabilistic}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "Probabilistic")
-    _openapi_field_association_id = _decode(
-        Int64,
-        _required(_openapi_object, "association_id", "Probabilistic"),
-        _openapi_validate,
-    )
-    _openapi_field_owner_id = _decode(
-        Int64,
-        _required(_openapi_object, "owner_id", "Probabilistic"),
-        _openapi_validate,
-    )
-    _openapi_field_owner_type = _decode(
-        String,
-        _required(_openapi_object, "owner_type", "Probabilistic"),
-        _openapi_validate,
-    )
+    _openapi_field_association_id =
+        _decode(Int64, _required(_openapi_object, "association_id", "Probabilistic"), false)
+    _openapi_field_owner_id =
+        _decode(Int64, _required(_openapi_object, "owner_id", "Probabilistic"), false)
+    _openapi_field_owner_type =
+        _decode(String, _required(_openapi_object, "owner_type", "Probabilistic"), false)
     _openapi_field_owner_category = _decode(
         OwnerCategory,
         _required(_openapi_object, "owner_category", "Probabilistic"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_time_series_type = _decode(
         String,
         _required(_openapi_object, "time_series_type", "Probabilistic"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "Probabilistic"),
-        _openapi_validate,
-    )
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "Probabilistic"), false)
     _openapi_field_features = _decode(
         TimeSeriesFeatures,
         _required(_openapi_object, "features", "Probabilistic"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_uri = _decode(
-        String,
-        _required(_openapi_object, "uri", "Probabilistic"),
-        _openapi_validate,
-    )
+    _openapi_field_uri =
+        _decode(String, _required(_openapi_object, "uri", "Probabilistic"), false)
     _openapi_field_data_hash =
         haskey(_openapi_object, "data_hash") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["data_hash"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_element_type = _decode(
-        String,
-        _required(_openapi_object, "element_type", "Probabilistic"),
-        _openapi_validate,
-    )
+        _decode(Union{Absent, Nothing, String}, _openapi_object["data_hash"], false) :
+        ABSENT
+    _openapi_field_element_type =
+        _decode(String, _required(_openapi_object, "element_type", "Probabilistic"), false)
     _openapi_field_element_shape = _decode(
         Vector{Int64},
         _required(_openapi_object, "element_shape", "Probabilistic"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_array_shape =
         haskey(_openapi_object, "array_shape") ?
         _decode(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["array_shape"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_units =
         haskey(_openapi_object, "units") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["units"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["units"], false) : ABSENT
     _openapi_field_quantity_kind =
         haskey(_openapi_object, "quantity_kind") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["quantity_kind"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["quantity_kind"], false) :
+        ABSENT
     _openapi_field_unit_system =
         haskey(_openapi_object, "unit_system") ?
-        _decode(
-            Union{Absent, Nothing, UnitSystem},
-            _openapi_object["unit_system"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, UnitSystem}, _openapi_object["unit_system"], false) :
+        ABSENT
     _openapi_field_time_reference =
         haskey(_openapi_object, "time_reference") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["time_reference"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["time_reference"], false) :
+        ABSENT
     _openapi_field_component_field =
         haskey(_openapi_object, "component_field") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["component_field"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["component_field"], false) :
+        ABSENT
     _openapi_field_application_data =
         haskey(_openapi_object, "application_data") ?
         _decode(
             Union{Absent, Nothing, String},
             _openapi_object["application_data"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_initial_timestamp = _decode(
         Dates.DateTime,
         _required(_openapi_object, "initial_timestamp", "Probabilistic"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_resolution = _decode(
-        String,
-        _required(_openapi_object, "resolution", "Probabilistic"),
-        _openapi_validate,
-    )
-    _openapi_field_horizon = _decode(
-        String,
-        _required(_openapi_object, "horizon", "Probabilistic"),
-        _openapi_validate,
-    )
-    _openapi_field_interval = _decode(
-        String,
-        _required(_openapi_object, "interval", "Probabilistic"),
-        _openapi_validate,
-    )
-    _openapi_field_count = _decode(
-        Int64,
-        _required(_openapi_object, "count", "Probabilistic"),
-        _openapi_validate,
-    )
+    _openapi_field_resolution =
+        _decode(String, _required(_openapi_object, "resolution", "Probabilistic"), false)
+    _openapi_field_horizon =
+        _decode(String, _required(_openapi_object, "horizon", "Probabilistic"), false)
+    _openapi_field_interval =
+        _decode(String, _required(_openapi_object, "interval", "Probabilistic"), false)
+    _openapi_field_count =
+        _decode(Int64, _required(_openapi_object, "count", "Probabilistic"), false)
     _openapi_field_percentiles = _decode(
         Vector{Float64},
         _required(_openapi_object, "percentiles", "Probabilistic"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -233,7 +184,7 @@ function _decode(::Type{Probabilistic}, _openapi_raw, _openapi_validate::Bool)
             "percentiles",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return Probabilistic(;
         association_id=_openapi_field_association_id,
@@ -263,74 +214,94 @@ function _decode(::Type{Probabilistic}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::Probabilistic)
+function _encode_unvalidated(_openapi_value::Probabilistic)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.association_id isa Absent ||
-        (_openapi_output["association_id"] = _encode(_openapi_value.association_id))
+    _openapi_value.association_id isa Absent || (
+        _openapi_output["association_id"] =
+            _encode_unvalidated(_openapi_value.association_id)
+    )
     _openapi_value.owner_id isa Absent ||
-        (_openapi_output["owner_id"] = _encode(_openapi_value.owner_id))
+        (_openapi_output["owner_id"] = _encode_unvalidated(_openapi_value.owner_id))
     _openapi_value.owner_type isa Absent ||
-        (_openapi_output["owner_type"] = _encode(_openapi_value.owner_type))
-    _openapi_value.owner_category isa Absent ||
-        (_openapi_output["owner_category"] = _encode(_openapi_value.owner_category))
-    _openapi_value.time_series_type isa Absent ||
-        (_openapi_output["time_series_type"] = _encode(_openapi_value.time_series_type))
+        (_openapi_output["owner_type"] = _encode_unvalidated(_openapi_value.owner_type))
+    _openapi_value.owner_category isa Absent || (
+        _openapi_output["owner_category"] =
+            _encode_unvalidated(_openapi_value.owner_category)
+    )
+    _openapi_value.time_series_type isa Absent || (
+        _openapi_output["time_series_type"] =
+            _encode_unvalidated(_openapi_value.time_series_type)
+    )
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.features isa Absent ||
-        (_openapi_output["features"] = _encode(_openapi_value.features))
-    _openapi_value.uri isa Absent || (_openapi_output["uri"] = _encode(_openapi_value.uri))
+        (_openapi_output["features"] = _encode_unvalidated(_openapi_value.features))
+    _openapi_value.uri isa Absent ||
+        (_openapi_output["uri"] = _encode_unvalidated(_openapi_value.uri))
     _openapi_value.data_hash isa Absent ||
-        (_openapi_output["data_hash"] = _encode(_openapi_value.data_hash))
+        (_openapi_output["data_hash"] = _encode_unvalidated(_openapi_value.data_hash))
     _openapi_value.element_type isa Absent ||
-        (_openapi_output["element_type"] = _encode(_openapi_value.element_type))
-    _openapi_value.element_shape isa Absent ||
-        (_openapi_output["element_shape"] = _encode(_openapi_value.element_shape))
+        (_openapi_output["element_type"] = _encode_unvalidated(_openapi_value.element_type))
+    _openapi_value.element_shape isa Absent || (
+        _openapi_output["element_shape"] =
+            _encode_unvalidated(_openapi_value.element_shape)
+    )
     _openapi_value.array_shape isa Absent ||
-        (_openapi_output["array_shape"] = _encode(_openapi_value.array_shape))
+        (_openapi_output["array_shape"] = _encode_unvalidated(_openapi_value.array_shape))
     _openapi_value.units isa Absent ||
-        (_openapi_output["units"] = _encode(_openapi_value.units))
-    _openapi_value.quantity_kind isa Absent ||
-        (_openapi_output["quantity_kind"] = _encode(_openapi_value.quantity_kind))
+        (_openapi_output["units"] = _encode_unvalidated(_openapi_value.units))
+    _openapi_value.quantity_kind isa Absent || (
+        _openapi_output["quantity_kind"] =
+            _encode_unvalidated(_openapi_value.quantity_kind)
+    )
     _openapi_value.unit_system isa Absent ||
-        (_openapi_output["unit_system"] = _encode(_openapi_value.unit_system))
-    _openapi_value.time_reference isa Absent ||
-        (_openapi_output["time_reference"] = _encode(_openapi_value.time_reference))
-    _openapi_value.component_field isa Absent ||
-        (_openapi_output["component_field"] = _encode(_openapi_value.component_field))
-    _openapi_value.application_data isa Absent ||
-        (_openapi_output["application_data"] = _encode(_openapi_value.application_data))
-    _openapi_value.initial_timestamp isa Absent ||
-        (_openapi_output["initial_timestamp"] = _encode(_openapi_value.initial_timestamp))
+        (_openapi_output["unit_system"] = _encode_unvalidated(_openapi_value.unit_system))
+    _openapi_value.time_reference isa Absent || (
+        _openapi_output["time_reference"] =
+            _encode_unvalidated(_openapi_value.time_reference)
+    )
+    _openapi_value.component_field isa Absent || (
+        _openapi_output["component_field"] =
+            _encode_unvalidated(_openapi_value.component_field)
+    )
+    _openapi_value.application_data isa Absent || (
+        _openapi_output["application_data"] =
+            _encode_unvalidated(_openapi_value.application_data)
+    )
+    _openapi_value.initial_timestamp isa Absent || (
+        _openapi_output["initial_timestamp"] =
+            _encode_unvalidated(_openapi_value.initial_timestamp)
+    )
     _openapi_value.resolution isa Absent ||
-        (_openapi_output["resolution"] = _encode(_openapi_value.resolution))
+        (_openapi_output["resolution"] = _encode_unvalidated(_openapi_value.resolution))
     _openapi_value.horizon isa Absent ||
-        (_openapi_output["horizon"] = _encode(_openapi_value.horizon))
+        (_openapi_output["horizon"] = _encode_unvalidated(_openapi_value.horizon))
     _openapi_value.interval isa Absent ||
-        (_openapi_output["interval"] = _encode(_openapi_value.interval))
+        (_openapi_output["interval"] = _encode_unvalidated(_openapi_value.interval))
     _openapi_value.count isa Absent ||
-        (_openapi_output["count"] = _encode(_openapi_value.count))
+        (_openapi_output["count"] = _encode_unvalidated(_openapi_value.count))
     _openapi_value.percentiles isa Absent ||
-        (_openapi_output["percentiles"] = _encode(_openapi_value.percentiles))
+        (_openapi_output["percentiles"] = _encode_unvalidated(_openapi_value.percentiles))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-e5b804af91a246181db8.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding Probabilistic";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::Probabilistic) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-e5b804af91a246181db8.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding Probabilistic";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::Probabilistic)
     _openapi_output = Pair{String, Any}[]

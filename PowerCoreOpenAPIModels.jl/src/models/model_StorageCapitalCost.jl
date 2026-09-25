@@ -30,22 +30,22 @@ function _decode(::Type{StorageCapitalCost}, _openapi_raw, _openapi_validate::Bo
     _openapi_field_charge_capital_cost = _decode(
         ValueCurve,
         _required(_openapi_object, "charge_capital_cost", "StorageCapitalCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_discharge_capital_cost = _decode(
         ValueCurve,
         _required(_openapi_object, "discharge_capital_cost", "StorageCapitalCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_energy_capital_cost = _decode(
         ValueCurve,
         _required(_openapi_object, "energy_capital_cost", "StorageCapitalCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_interconnection_cost = _decode(
         Float64,
         _required(_openapi_object, "interconnection_cost", "StorageCapitalCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -56,7 +56,7 @@ function _decode(::Type{StorageCapitalCost}, _openapi_raw, _openapi_validate::Bo
             "interconnection_cost",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return StorageCapitalCost(;
         charge_capital_cost=_openapi_field_charge_capital_cost,
@@ -66,23 +66,23 @@ function _decode(::Type{StorageCapitalCost}, _openapi_raw, _openapi_validate::Bo
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::StorageCapitalCost)
+function _encode_unvalidated(_openapi_value::StorageCapitalCost)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.charge_capital_cost isa Absent || (
         _openapi_output["charge_capital_cost"] =
-            _encode(_openapi_value.charge_capital_cost)
+            _encode_unvalidated(_openapi_value.charge_capital_cost)
     )
     _openapi_value.discharge_capital_cost isa Absent || (
         _openapi_output["discharge_capital_cost"] =
-            _encode(_openapi_value.discharge_capital_cost)
+            _encode_unvalidated(_openapi_value.discharge_capital_cost)
     )
     _openapi_value.energy_capital_cost isa Absent || (
         _openapi_output["energy_capital_cost"] =
-            _encode(_openapi_value.energy_capital_cost)
+            _encode_unvalidated(_openapi_value.energy_capital_cost)
     )
     _openapi_value.interconnection_cost isa Absent || (
         _openapi_output["interconnection_cost"] =
-            _encode(_openapi_value.interconnection_cost)
+            _encode_unvalidated(_openapi_value.interconnection_cost)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -90,19 +90,20 @@ function _encode(_openapi_value::StorageCapitalCost)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/StorageCapitalCost",
-        ),
-        _openapi_output,
-        "encoding StorageCapitalCost";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::StorageCapitalCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/StorageCapitalCost",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding StorageCapitalCost";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::StorageCapitalCost)
     _openapi_output = Pair{String, Any}[]

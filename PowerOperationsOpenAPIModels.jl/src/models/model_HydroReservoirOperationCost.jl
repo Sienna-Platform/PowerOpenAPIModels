@@ -62,18 +62,19 @@ function _decode(::Type{HydroReservoirOperationCost}, value, _openapi_validate::
                 "discriminator-selected schema did not validate for HydroReservoirOperationCost",
             ),
         )
-    return HydroReservoirOperationCost(_decode(selected[1], value, _openapi_validate))
+    return HydroReservoirOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::HydroReservoirOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding HydroReservoirOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::HydroReservoirOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::HydroReservoirOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding HydroReservoirOperationCost";
+    direction=:neutral,
+)

@@ -34,31 +34,23 @@ function _decode(::Type{SEXS}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SEXS")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "SEXS"), _openapi_validate)
+    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "SEXS"), false)
     _openapi_field_ta_tb =
-        _decode(Float64, _required(_openapi_object, "Ta_Tb", "SEXS"), _openapi_validate)
-    _openapi_field_tb =
-        _decode(Float64, _required(_openapi_object, "Tb", "SEXS"), _openapi_validate)
-    _openapi_field_k =
-        _decode(Float64, _required(_openapi_object, "K", "SEXS"), _openapi_validate)
-    _openapi_field_te =
-        _decode(Float64, _required(_openapi_object, "Te", "SEXS"), _openapi_validate)
+        _decode(Float64, _required(_openapi_object, "Ta_Tb", "SEXS"), false)
+    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "SEXS"), false)
+    _openapi_field_k = _decode(Float64, _required(_openapi_object, "K", "SEXS"), false)
+    _openapi_field_te = _decode(Float64, _required(_openapi_object, "Te", "SEXS"), false)
     _openapi_field_v_lim =
-        _decode(MinMax, _required(_openapi_object, "V_lim", "SEXS"), _openapi_validate)
+        _decode(MinMax, _required(_openapi_object, "V_lim", "SEXS"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["V_ref"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "Ta_Tb", "Tb", "K", "Te", "V_lim", "V_ref") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return SEXS(;
         id=_openapi_field_id,
@@ -71,37 +63,42 @@ function _decode(::Type{SEXS}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::SEXS)
+function _encode_unvalidated(_openapi_value::SEXS)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.ta_tb isa Absent ||
-        (_openapi_output["Ta_Tb"] = _encode(_openapi_value.ta_tb))
-    _openapi_value.tb isa Absent || (_openapi_output["Tb"] = _encode(_openapi_value.tb))
-    _openapi_value.k isa Absent || (_openapi_output["K"] = _encode(_openapi_value.k))
-    _openapi_value.te isa Absent || (_openapi_output["Te"] = _encode(_openapi_value.te))
+        (_openapi_output["Ta_Tb"] = _encode_unvalidated(_openapi_value.ta_tb))
+    _openapi_value.tb isa Absent ||
+        (_openapi_output["Tb"] = _encode_unvalidated(_openapi_value.tb))
+    _openapi_value.k isa Absent ||
+        (_openapi_output["K"] = _encode_unvalidated(_openapi_value.k))
+    _openapi_value.te isa Absent ||
+        (_openapi_output["Te"] = _encode_unvalidated(_openapi_value.te))
     _openapi_value.v_lim isa Absent ||
-        (_openapi_output["V_lim"] = _encode(_openapi_value.v_lim))
+        (_openapi_output["V_lim"] = _encode_unvalidated(_openapi_value.v_lim))
     _openapi_value.v_ref isa Absent ||
-        (_openapi_output["V_ref"] = _encode(_openapi_value.v_ref))
+        (_openapi_output["V_ref"] = _encode_unvalidated(_openapi_value.v_ref))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-631c88a44458c811e366.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding SEXS";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::SEXS) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-631c88a44458c811e366.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding SEXS";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::SEXS)
     _openapi_output = Pair{String, Any}[]

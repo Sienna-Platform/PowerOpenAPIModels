@@ -59,94 +59,63 @@ function _decode(::Type{MonitoredLine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "MonitoredLine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "MonitoredLine"), _openapi_validate)
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "MonitoredLine"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "MonitoredLine"),
-        _openapi_validate,
-    )
+        _decode(Int64, _required(_openapi_object, "id", "MonitoredLine"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "MonitoredLine"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "MonitoredLine"), false)
     _openapi_field_active_power_flow = _decode(
         Float64,
         _required(_openapi_object, "active_power_flow", "MonitoredLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_reactive_power_flow = _decode(
         Float64,
         _required(_openapi_object, "reactive_power_flow", "MonitoredLine"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_arc = _decode(
-        Int64,
-        _required(_openapi_object, "arc", "MonitoredLine"),
-        _openapi_validate,
-    )
-    _openapi_field_r = _decode(
-        Float64,
-        _required(_openapi_object, "r", "MonitoredLine"),
-        _openapi_validate,
-    )
-    _openapi_field_x = _decode(
-        Float64,
-        _required(_openapi_object, "x", "MonitoredLine"),
-        _openapi_validate,
-    )
-    _openapi_field_base_power = _decode(
-        Float64,
-        _required(_openapi_object, "base_power", "MonitoredLine"),
-        _openapi_validate,
-    )
+    _openapi_field_arc =
+        _decode(Int64, _required(_openapi_object, "arc", "MonitoredLine"), false)
+    _openapi_field_r =
+        _decode(Float64, _required(_openapi_object, "r", "MonitoredLine"), false)
+    _openapi_field_x =
+        _decode(Float64, _required(_openapi_object, "x", "MonitoredLine"), false)
+    _openapi_field_base_power =
+        _decode(Float64, _required(_openapi_object, "base_power", "MonitoredLine"), false)
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "MonitoredLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
             Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_b =
-        _decode(FromTo, _required(_openapi_object, "b", "MonitoredLine"), _openapi_validate)
+        _decode(FromTo, _required(_openapi_object, "b", "MonitoredLine"), false)
     _openapi_field_flow_limits = _decode(
         FromToToFrom,
         _required(_openapi_object, "flow_limits", "MonitoredLine"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_rating = _decode(
-        Float64,
-        _required(_openapi_object, "rating", "MonitoredLine"),
-        _openapi_validate,
-    )
+    _openapi_field_rating =
+        _decode(Float64, _required(_openapi_object, "rating", "MonitoredLine"), false)
     _openapi_field_rating_b =
         haskey(_openapi_object, "rating_b") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rating_b"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
+        ABSENT
     _openapi_field_rating_c =
         haskey(_openapi_object, "rating_c") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["rating_c"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_angle_limits = _decode(
-        MinMax,
-        _required(_openapi_object, "angle_limits", "MonitoredLine"),
-        _openapi_validate,
-    )
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
+        ABSENT
+    _openapi_field_angle_limits =
+        _decode(MinMax, _required(_openapi_object, "angle_limits", "MonitoredLine"), false)
     _openapi_field_g =
         haskey(_openapi_object, "g") ?
-        _decode(Union{Absent, FromTo, Nothing}, _openapi_object["g"], _openapi_validate) :
-        ABSENT
+        _decode(Union{Absent, FromTo, Nothing}, _openapi_object["g"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -170,7 +139,7 @@ function _decode(::Type{MonitoredLine}, _openapi_raw, _openapi_validate::Bool)
             "g",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return MonitoredLine(;
         id=_openapi_field_id,
@@ -194,59 +163,70 @@ function _decode(::Type{MonitoredLine}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::MonitoredLine)
+function _encode_unvalidated(_openapi_value::MonitoredLine)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.active_power_flow isa Absent ||
-        (_openapi_output["active_power_flow"] = _encode(_openapi_value.active_power_flow))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.active_power_flow isa Absent || (
+        _openapi_output["active_power_flow"] =
+            _encode_unvalidated(_openapi_value.active_power_flow)
+    )
     _openapi_value.reactive_power_flow isa Absent || (
         _openapi_output["reactive_power_flow"] =
-            _encode(_openapi_value.reactive_power_flow)
+            _encode_unvalidated(_openapi_value.reactive_power_flow)
     )
-    _openapi_value.arc isa Absent || (_openapi_output["arc"] = _encode(_openapi_value.arc))
-    _openapi_value.r isa Absent || (_openapi_output["r"] = _encode(_openapi_value.r))
-    _openapi_value.x isa Absent || (_openapi_output["x"] = _encode(_openapi_value.x))
+    _openapi_value.arc isa Absent ||
+        (_openapi_output["arc"] = _encode_unvalidated(_openapi_value.arc))
+    _openapi_value.r isa Absent ||
+        (_openapi_output["r"] = _encode_unvalidated(_openapi_value.r))
+    _openapi_value.x isa Absent ||
+        (_openapi_output["x"] = _encode_unvalidated(_openapi_value.x))
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
-    _openapi_value.parameter_units isa Absent ||
-        (_openapi_output["parameter_units"] = _encode(_openapi_value.parameter_units))
-    _openapi_value.b isa Absent || (_openapi_output["b"] = _encode(_openapi_value.b))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
+    _openapi_value.parameter_units isa Absent || (
+        _openapi_output["parameter_units"] =
+            _encode_unvalidated(_openapi_value.parameter_units)
+    )
+    _openapi_value.b isa Absent ||
+        (_openapi_output["b"] = _encode_unvalidated(_openapi_value.b))
     _openapi_value.flow_limits isa Absent ||
-        (_openapi_output["flow_limits"] = _encode(_openapi_value.flow_limits))
+        (_openapi_output["flow_limits"] = _encode_unvalidated(_openapi_value.flow_limits))
     _openapi_value.rating isa Absent ||
-        (_openapi_output["rating"] = _encode(_openapi_value.rating))
+        (_openapi_output["rating"] = _encode_unvalidated(_openapi_value.rating))
     _openapi_value.rating_b isa Absent ||
-        (_openapi_output["rating_b"] = _encode(_openapi_value.rating_b))
+        (_openapi_output["rating_b"] = _encode_unvalidated(_openapi_value.rating_b))
     _openapi_value.rating_c isa Absent ||
-        (_openapi_output["rating_c"] = _encode(_openapi_value.rating_c))
+        (_openapi_output["rating_c"] = _encode_unvalidated(_openapi_value.rating_c))
     _openapi_value.angle_limits isa Absent ||
-        (_openapi_output["angle_limits"] = _encode(_openapi_value.angle_limits))
-    _openapi_value.g isa Absent || (_openapi_output["g"] = _encode(_openapi_value.g))
+        (_openapi_output["angle_limits"] = _encode_unvalidated(_openapi_value.angle_limits))
+    _openapi_value.g isa Absent ||
+        (_openapi_output["g"] = _encode_unvalidated(_openapi_value.g))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-de54efce0252c5b98748.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding MonitoredLine";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::MonitoredLine) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-de54efce0252c5b98748.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding MonitoredLine";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::MonitoredLine)
     _openapi_output = Pair{String, Any}[]

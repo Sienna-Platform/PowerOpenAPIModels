@@ -34,19 +34,20 @@ function _decode(::Type{HydroTurbineTurbineType}, value, _openapi_validate::Bool
         "decoding HydroTurbineTurbineType";
         direction=:neutral,
     )
-    return HydroTurbineTurbineType(_decode(String, value, _openapi_validate))
+    return HydroTurbineTurbineType(_decode(String, value, false))
 end
-function _encode(value::HydroTurbineTurbineType)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-19c873cb98e3de7cff11.json",
-            pointer="/properties/turbine_type",
-        ),
-        output,
-        "encoding HydroTurbineTurbineType";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::HydroTurbineTurbineType)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::HydroTurbineTurbineType) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-19c873cb98e3de7cff11.json",
+        pointer="/properties/turbine_type",
+    ),
+    _encode_unvalidated(value),
+    "encoding HydroTurbineTurbineType";
+    direction=:neutral,
+)
 Base.string(value::HydroTurbineTurbineType) = string(value.value)

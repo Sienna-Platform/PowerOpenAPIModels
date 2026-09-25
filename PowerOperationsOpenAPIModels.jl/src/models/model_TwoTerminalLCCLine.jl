@@ -106,89 +106,74 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TwoTerminalLCCLine")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "TwoTerminalLCCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "TwoTerminalLCCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "TwoTerminalLCCLine"),
-        _openapi_validate,
-    )
-    _openapi_field_arc = _decode(
-        Int64,
-        _required(_openapi_object, "arc", "TwoTerminalLCCLine"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "TwoTerminalLCCLine"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "TwoTerminalLCCLine"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "TwoTerminalLCCLine"), false)
+    _openapi_field_arc =
+        _decode(Int64, _required(_openapi_object, "arc", "TwoTerminalLCCLine"), false)
     _openapi_field_active_power_flow = _decode(
         Float64,
         _required(_openapi_object, "active_power_flow", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
             Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
-    _openapi_field_r = _decode(
-        Float64,
-        _required(_openapi_object, "r", "TwoTerminalLCCLine"),
-        _openapi_validate,
-    )
+    _openapi_field_r =
+        _decode(Float64, _required(_openapi_object, "r", "TwoTerminalLCCLine"), false)
     _openapi_field_transfer_setpoint = _decode(
         Float64,
         _required(_openapi_object, "transfer_setpoint", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_dc_voltage_units =
         haskey(_openapi_object, "dc_voltage_units") ?
         _decode(
             Union{Absent, Nothing, VoltageUnitBasis},
             _openapi_object["dc_voltage_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_scheduled_dc_voltage = _decode(
         Float64,
         _required(_openapi_object, "scheduled_dc_voltage", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_rectifier_bridges = _decode(
         Int64,
         _required(_openapi_object, "rectifier_bridges", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_rectifier_delay_angle_limits = _decode(
         MinMax,
         _required(_openapi_object, "rectifier_delay_angle_limits", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_rectifier_rc = _decode(
         Float64,
         _required(_openapi_object, "rectifier_rc", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_rectifier_xc = _decode(
         Float64,
         _required(_openapi_object, "rectifier_xc", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_rectifier_base_voltage = _decode(
         Float64,
         _required(_openapi_object, "rectifier_base_voltage", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_inverter_bridges = _decode(
         Int64,
         _required(_openapi_object, "inverter_bridges", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_inverter_extinction_angle_limits = _decode(
         MinMax,
@@ -197,179 +182,171 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
             "inverter_extinction_angle_limits",
             "TwoTerminalLCCLine",
         ),
-        _openapi_validate,
+        false,
     )
     _openapi_field_inverter_rc = _decode(
         Float64,
         _required(_openapi_object, "inverter_rc", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_inverter_xc = _decode(
         Float64,
         _required(_openapi_object, "inverter_xc", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_inverter_base_voltage = _decode(
         Float64,
         _required(_openapi_object, "inverter_base_voltage", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_mode =
         haskey(_openapi_object, "power_mode") ?
-        _decode(
-            Union{Absent, Bool, Nothing},
-            _openapi_object["power_mode"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Bool, Nothing}, _openapi_object["power_mode"], false) : ABSENT
     _openapi_field_switch_mode_voltage =
         haskey(_openapi_object, "switch_mode_voltage") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["switch_mode_voltage"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_compounding_resistance =
         haskey(_openapi_object, "compounding_resistance") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["compounding_resistance"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_min_compounding_voltage =
         haskey(_openapi_object, "min_compounding_voltage") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["min_compounding_voltage"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rectifier_transformer_ratio =
         haskey(_openapi_object, "rectifier_transformer_ratio") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_transformer_ratio"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rectifier_tap_setting =
         haskey(_openapi_object, "rectifier_tap_setting") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_tap_setting"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rectifier_tap_limits =
         haskey(_openapi_object, "rectifier_tap_limits") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["rectifier_tap_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rectifier_tap_step =
         haskey(_openapi_object, "rectifier_tap_step") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_tap_step"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rectifier_delay_angle =
         haskey(_openapi_object, "rectifier_delay_angle") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_delay_angle"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_rectifier_capacitor_reactance =
         haskey(_openapi_object, "rectifier_capacitor_reactance") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_capacitor_reactance"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_inverter_transformer_ratio =
         haskey(_openapi_object, "inverter_transformer_ratio") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_transformer_ratio"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_inverter_tap_setting =
         haskey(_openapi_object, "inverter_tap_setting") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_tap_setting"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_inverter_tap_limits =
         haskey(_openapi_object, "inverter_tap_limits") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["inverter_tap_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_inverter_tap_step =
         haskey(_openapi_object, "inverter_tap_step") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_tap_step"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_inverter_extinction_angle =
         haskey(_openapi_object, "inverter_extinction_angle") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_extinction_angle"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_inverter_capacitor_reactance =
         haskey(_openapi_object, "inverter_capacitor_reactance") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_capacitor_reactance"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_active_power_limits_from =
         haskey(_openapi_object, "active_power_limits_from") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["active_power_limits_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_active_power_limits_to =
         haskey(_openapi_object, "active_power_limits_to") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["active_power_limits_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_reactive_power_limits_from =
         haskey(_openapi_object, "reactive_power_limits_from") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits_from"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_reactive_power_limits_to =
         haskey(_openapi_object, "reactive_power_limits_to") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits_to"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_loss =
         haskey(_openapi_object, "loss") ?
-        _decode(
-            Union{Absent, LossCurve, Nothing},
-            _openapi_object["loss"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, LossCurve, Nothing}, _openapi_object["loss"], false) : ABSENT
     _openapi_field_base_power = _decode(
         Float64,
         _required(_openapi_object, "base_power", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "TwoTerminalLCCLine"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -419,7 +396,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
             "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return TwoTerminalLCCLine(;
         id=_openapi_field_id,
@@ -468,154 +445,174 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::TwoTerminalLCCLine)
+function _encode_unvalidated(_openapi_value::TwoTerminalLCCLine)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.arc isa Absent || (_openapi_output["arc"] = _encode(_openapi_value.arc))
-    _openapi_value.active_power_flow isa Absent ||
-        (_openapi_output["active_power_flow"] = _encode(_openapi_value.active_power_flow))
-    _openapi_value.parameter_units isa Absent ||
-        (_openapi_output["parameter_units"] = _encode(_openapi_value.parameter_units))
-    _openapi_value.r isa Absent || (_openapi_output["r"] = _encode(_openapi_value.r))
-    _openapi_value.transfer_setpoint isa Absent ||
-        (_openapi_output["transfer_setpoint"] = _encode(_openapi_value.transfer_setpoint))
-    _openapi_value.dc_voltage_units isa Absent ||
-        (_openapi_output["dc_voltage_units"] = _encode(_openapi_value.dc_voltage_units))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.arc isa Absent ||
+        (_openapi_output["arc"] = _encode_unvalidated(_openapi_value.arc))
+    _openapi_value.active_power_flow isa Absent || (
+        _openapi_output["active_power_flow"] =
+            _encode_unvalidated(_openapi_value.active_power_flow)
+    )
+    _openapi_value.parameter_units isa Absent || (
+        _openapi_output["parameter_units"] =
+            _encode_unvalidated(_openapi_value.parameter_units)
+    )
+    _openapi_value.r isa Absent ||
+        (_openapi_output["r"] = _encode_unvalidated(_openapi_value.r))
+    _openapi_value.transfer_setpoint isa Absent || (
+        _openapi_output["transfer_setpoint"] =
+            _encode_unvalidated(_openapi_value.transfer_setpoint)
+    )
+    _openapi_value.dc_voltage_units isa Absent || (
+        _openapi_output["dc_voltage_units"] =
+            _encode_unvalidated(_openapi_value.dc_voltage_units)
+    )
     _openapi_value.scheduled_dc_voltage isa Absent || (
         _openapi_output["scheduled_dc_voltage"] =
-            _encode(_openapi_value.scheduled_dc_voltage)
+            _encode_unvalidated(_openapi_value.scheduled_dc_voltage)
     )
-    _openapi_value.rectifier_bridges isa Absent ||
-        (_openapi_output["rectifier_bridges"] = _encode(_openapi_value.rectifier_bridges))
+    _openapi_value.rectifier_bridges isa Absent || (
+        _openapi_output["rectifier_bridges"] =
+            _encode_unvalidated(_openapi_value.rectifier_bridges)
+    )
     _openapi_value.rectifier_delay_angle_limits isa Absent || (
         _openapi_output["rectifier_delay_angle_limits"] =
-            _encode(_openapi_value.rectifier_delay_angle_limits)
+            _encode_unvalidated(_openapi_value.rectifier_delay_angle_limits)
     )
     _openapi_value.rectifier_rc isa Absent ||
-        (_openapi_output["rectifier_rc"] = _encode(_openapi_value.rectifier_rc))
+        (_openapi_output["rectifier_rc"] = _encode_unvalidated(_openapi_value.rectifier_rc))
     _openapi_value.rectifier_xc isa Absent ||
-        (_openapi_output["rectifier_xc"] = _encode(_openapi_value.rectifier_xc))
+        (_openapi_output["rectifier_xc"] = _encode_unvalidated(_openapi_value.rectifier_xc))
     _openapi_value.rectifier_base_voltage isa Absent || (
         _openapi_output["rectifier_base_voltage"] =
-            _encode(_openapi_value.rectifier_base_voltage)
+            _encode_unvalidated(_openapi_value.rectifier_base_voltage)
     )
-    _openapi_value.inverter_bridges isa Absent ||
-        (_openapi_output["inverter_bridges"] = _encode(_openapi_value.inverter_bridges))
+    _openapi_value.inverter_bridges isa Absent || (
+        _openapi_output["inverter_bridges"] =
+            _encode_unvalidated(_openapi_value.inverter_bridges)
+    )
     _openapi_value.inverter_extinction_angle_limits isa Absent || (
         _openapi_output["inverter_extinction_angle_limits"] =
-            _encode(_openapi_value.inverter_extinction_angle_limits)
+            _encode_unvalidated(_openapi_value.inverter_extinction_angle_limits)
     )
     _openapi_value.inverter_rc isa Absent ||
-        (_openapi_output["inverter_rc"] = _encode(_openapi_value.inverter_rc))
+        (_openapi_output["inverter_rc"] = _encode_unvalidated(_openapi_value.inverter_rc))
     _openapi_value.inverter_xc isa Absent ||
-        (_openapi_output["inverter_xc"] = _encode(_openapi_value.inverter_xc))
+        (_openapi_output["inverter_xc"] = _encode_unvalidated(_openapi_value.inverter_xc))
     _openapi_value.inverter_base_voltage isa Absent || (
         _openapi_output["inverter_base_voltage"] =
-            _encode(_openapi_value.inverter_base_voltage)
+            _encode_unvalidated(_openapi_value.inverter_base_voltage)
     )
     _openapi_value.power_mode isa Absent ||
-        (_openapi_output["power_mode"] = _encode(_openapi_value.power_mode))
+        (_openapi_output["power_mode"] = _encode_unvalidated(_openapi_value.power_mode))
     _openapi_value.switch_mode_voltage isa Absent || (
         _openapi_output["switch_mode_voltage"] =
-            _encode(_openapi_value.switch_mode_voltage)
+            _encode_unvalidated(_openapi_value.switch_mode_voltage)
     )
     _openapi_value.compounding_resistance isa Absent || (
         _openapi_output["compounding_resistance"] =
-            _encode(_openapi_value.compounding_resistance)
+            _encode_unvalidated(_openapi_value.compounding_resistance)
     )
     _openapi_value.min_compounding_voltage isa Absent || (
         _openapi_output["min_compounding_voltage"] =
-            _encode(_openapi_value.min_compounding_voltage)
+            _encode_unvalidated(_openapi_value.min_compounding_voltage)
     )
     _openapi_value.rectifier_transformer_ratio isa Absent || (
         _openapi_output["rectifier_transformer_ratio"] =
-            _encode(_openapi_value.rectifier_transformer_ratio)
+            _encode_unvalidated(_openapi_value.rectifier_transformer_ratio)
     )
     _openapi_value.rectifier_tap_setting isa Absent || (
         _openapi_output["rectifier_tap_setting"] =
-            _encode(_openapi_value.rectifier_tap_setting)
+            _encode_unvalidated(_openapi_value.rectifier_tap_setting)
     )
     _openapi_value.rectifier_tap_limits isa Absent || (
         _openapi_output["rectifier_tap_limits"] =
-            _encode(_openapi_value.rectifier_tap_limits)
+            _encode_unvalidated(_openapi_value.rectifier_tap_limits)
     )
-    _openapi_value.rectifier_tap_step isa Absent ||
-        (_openapi_output["rectifier_tap_step"] = _encode(_openapi_value.rectifier_tap_step))
+    _openapi_value.rectifier_tap_step isa Absent || (
+        _openapi_output["rectifier_tap_step"] =
+            _encode_unvalidated(_openapi_value.rectifier_tap_step)
+    )
     _openapi_value.rectifier_delay_angle isa Absent || (
         _openapi_output["rectifier_delay_angle"] =
-            _encode(_openapi_value.rectifier_delay_angle)
+            _encode_unvalidated(_openapi_value.rectifier_delay_angle)
     )
     _openapi_value.rectifier_capacitor_reactance isa Absent || (
         _openapi_output["rectifier_capacitor_reactance"] =
-            _encode(_openapi_value.rectifier_capacitor_reactance)
+            _encode_unvalidated(_openapi_value.rectifier_capacitor_reactance)
     )
     _openapi_value.inverter_transformer_ratio isa Absent || (
         _openapi_output["inverter_transformer_ratio"] =
-            _encode(_openapi_value.inverter_transformer_ratio)
+            _encode_unvalidated(_openapi_value.inverter_transformer_ratio)
     )
     _openapi_value.inverter_tap_setting isa Absent || (
         _openapi_output["inverter_tap_setting"] =
-            _encode(_openapi_value.inverter_tap_setting)
+            _encode_unvalidated(_openapi_value.inverter_tap_setting)
     )
     _openapi_value.inverter_tap_limits isa Absent || (
         _openapi_output["inverter_tap_limits"] =
-            _encode(_openapi_value.inverter_tap_limits)
+            _encode_unvalidated(_openapi_value.inverter_tap_limits)
     )
-    _openapi_value.inverter_tap_step isa Absent ||
-        (_openapi_output["inverter_tap_step"] = _encode(_openapi_value.inverter_tap_step))
+    _openapi_value.inverter_tap_step isa Absent || (
+        _openapi_output["inverter_tap_step"] =
+            _encode_unvalidated(_openapi_value.inverter_tap_step)
+    )
     _openapi_value.inverter_extinction_angle isa Absent || (
         _openapi_output["inverter_extinction_angle"] =
-            _encode(_openapi_value.inverter_extinction_angle)
+            _encode_unvalidated(_openapi_value.inverter_extinction_angle)
     )
     _openapi_value.inverter_capacitor_reactance isa Absent || (
         _openapi_output["inverter_capacitor_reactance"] =
-            _encode(_openapi_value.inverter_capacitor_reactance)
+            _encode_unvalidated(_openapi_value.inverter_capacitor_reactance)
     )
     _openapi_value.active_power_limits_from isa Absent || (
         _openapi_output["active_power_limits_from"] =
-            _encode(_openapi_value.active_power_limits_from)
+            _encode_unvalidated(_openapi_value.active_power_limits_from)
     )
     _openapi_value.active_power_limits_to isa Absent || (
         _openapi_output["active_power_limits_to"] =
-            _encode(_openapi_value.active_power_limits_to)
+            _encode_unvalidated(_openapi_value.active_power_limits_to)
     )
     _openapi_value.reactive_power_limits_from isa Absent || (
         _openapi_output["reactive_power_limits_from"] =
-            _encode(_openapi_value.reactive_power_limits_from)
+            _encode_unvalidated(_openapi_value.reactive_power_limits_from)
     )
     _openapi_value.reactive_power_limits_to isa Absent || (
         _openapi_output["reactive_power_limits_to"] =
-            _encode(_openapi_value.reactive_power_limits_to)
+            _encode_unvalidated(_openapi_value.reactive_power_limits_to)
     )
     _openapi_value.loss isa Absent ||
-        (_openapi_output["loss"] = _encode(_openapi_value.loss))
+        (_openapi_output["loss"] = _encode_unvalidated(_openapi_value.loss))
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-2c4a3f68248fa9a1c12b.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding TwoTerminalLCCLine";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::TwoTerminalLCCLine) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-2c4a3f68248fa9a1c12b.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding TwoTerminalLCCLine";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::TwoTerminalLCCLine)
     _openapi_output = Pair{String, Any}[]

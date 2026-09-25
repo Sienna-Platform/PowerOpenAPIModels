@@ -25,19 +25,20 @@ function _decode(::Type{HydroPumpTurbineOperatingMode}, value, _openapi_validate
         "decoding HydroPumpTurbineOperatingMode";
         direction=:neutral,
     )
-    return HydroPumpTurbineOperatingMode(_decode(String, value, _openapi_validate))
+    return HydroPumpTurbineOperatingMode(_decode(String, value, false))
 end
-function _encode(value::HydroPumpTurbineOperatingMode)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-e18af837c2d0e608e9b3.json",
-            pointer="/properties/operating_mode",
-        ),
-        output,
-        "encoding HydroPumpTurbineOperatingMode";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::HydroPumpTurbineOperatingMode)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::HydroPumpTurbineOperatingMode) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-e18af837c2d0e608e9b3.json",
+        pointer="/properties/operating_mode",
+    ),
+    _encode_unvalidated(value),
+    "encoding HydroPumpTurbineOperatingMode";
+    direction=:neutral,
+)
 Base.string(value::HydroPumpTurbineOperatingMode) = string(value.value)

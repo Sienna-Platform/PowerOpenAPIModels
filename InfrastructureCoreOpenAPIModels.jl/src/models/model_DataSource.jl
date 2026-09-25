@@ -42,70 +42,49 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "DataSource")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "DataSource"), _openapi_validate)
+        _decode(Int64, _required(_openapi_object, "id", "DataSource"), false)
     _openapi_field_organization =
         haskey(_openapi_object, "organization") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["organization"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["organization"], false) :
+        ABSENT
     _openapi_field_retrieved_at = _decode(
         Dates.DateTime,
         _required(_openapi_object, "retrieved_at", "DataSource"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_dataset =
         haskey(_openapi_object, "dataset") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["dataset"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["dataset"], false) : ABSENT
     _openapi_field_url =
         haskey(_openapi_object, "url") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["url"], _openapi_validate) :
-        ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["url"], false) : ABSENT
     _openapi_field_version =
         haskey(_openapi_object, "version") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["version"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["version"], false) : ABSENT
     _openapi_field_published_at =
         haskey(_openapi_object, "published_at") ?
         _decode(
             Union{Absent, Union{Dates.DateTime, Nothing}},
             _openapi_object["published_at"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_confidence =
         haskey(_openapi_object, "confidence") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["confidence"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["confidence"], false) :
+        ABSENT
     _openapi_field_recorded_by =
         haskey(_openapi_object, "recorded_by") ?
         _decode(
             Union{Absent, Union{Nothing, String}},
             _openapi_object["recorded_by"],
-            _openapi_validate,
+            false,
         ) : ABSENT
-    _openapi_field_fields = _decode(
-        Vector{String},
-        _required(_openapi_object, "fields", "DataSource"),
-        _openapi_validate,
-    )
+    _openapi_field_fields =
+        _decode(Vector{String}, _required(_openapi_object, "fields", "DataSource"), false)
     _openapi_field_extra =
         haskey(_openapi_object, "extra") ?
-        _decode(
-            Union{Absent, DataSourceExtra, Nothing},
-            _openapi_object["extra"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, DataSourceExtra, Nothing}, _openapi_object["extra"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -122,7 +101,7 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
             "extra",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return DataSource(;
         id=_openapi_field_id,
@@ -139,47 +118,50 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::DataSource)
+function _encode_unvalidated(_openapi_value::DataSource)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.organization isa Absent ||
-        (_openapi_output["organization"] = _encode(_openapi_value.organization))
+        (_openapi_output["organization"] = _encode_unvalidated(_openapi_value.organization))
     _openapi_value.retrieved_at isa Absent ||
-        (_openapi_output["retrieved_at"] = _encode(_openapi_value.retrieved_at))
+        (_openapi_output["retrieved_at"] = _encode_unvalidated(_openapi_value.retrieved_at))
     _openapi_value.dataset isa Absent ||
-        (_openapi_output["dataset"] = _encode(_openapi_value.dataset))
-    _openapi_value.url isa Absent || (_openapi_output["url"] = _encode(_openapi_value.url))
+        (_openapi_output["dataset"] = _encode_unvalidated(_openapi_value.dataset))
+    _openapi_value.url isa Absent ||
+        (_openapi_output["url"] = _encode_unvalidated(_openapi_value.url))
     _openapi_value.version isa Absent ||
-        (_openapi_output["version"] = _encode(_openapi_value.version))
+        (_openapi_output["version"] = _encode_unvalidated(_openapi_value.version))
     _openapi_value.published_at isa Absent ||
-        (_openapi_output["published_at"] = _encode(_openapi_value.published_at))
+        (_openapi_output["published_at"] = _encode_unvalidated(_openapi_value.published_at))
     _openapi_value.confidence isa Absent ||
-        (_openapi_output["confidence"] = _encode(_openapi_value.confidence))
+        (_openapi_output["confidence"] = _encode_unvalidated(_openapi_value.confidence))
     _openapi_value.recorded_by isa Absent ||
-        (_openapi_output["recorded_by"] = _encode(_openapi_value.recorded_by))
+        (_openapi_output["recorded_by"] = _encode_unvalidated(_openapi_value.recorded_by))
     _openapi_value.fields isa Absent ||
-        (_openapi_output["fields"] = _encode(_openapi_value.fields))
+        (_openapi_output["fields"] = _encode_unvalidated(_openapi_value.fields))
     _openapi_value.extra isa Absent ||
-        (_openapi_output["extra"] = _encode(_openapi_value.extra))
+        (_openapi_output["extra"] = _encode_unvalidated(_openapi_value.extra))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-84b51e521c3e86885d35.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding DataSource";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::DataSource) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-84b51e521c3e86885d35.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding DataSource";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::DataSource)
     _openapi_output = Pair{String, Any}[]

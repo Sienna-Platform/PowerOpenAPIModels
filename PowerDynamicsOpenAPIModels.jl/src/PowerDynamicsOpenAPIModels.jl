@@ -1133,6 +1133,7 @@ authorization!(token::Union{Nothing, AbstractString}) =
 
 using InfrastructureCoreOpenAPIModels
 using PowerCoreOpenAPIModels
+import InfrastructureCoreOpenAPIModels: _encode_unvalidated
 
 include("models/model_AVRFixed.jl")
 include("models/model_AVRSimple.jl")

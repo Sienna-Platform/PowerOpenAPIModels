@@ -63,125 +63,110 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "HybridSystem")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "HybridSystem"), _openapi_validate)
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "HybridSystem"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "HybridSystem"),
-        _openapi_validate,
-    )
+        _decode(Int64, _required(_openapi_object, "id", "HybridSystem"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "HybridSystem"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "HybridSystem"), false)
     _openapi_field_status = _decode(
         OperationalStates,
         _required(_openapi_object, "status", "HybridSystem"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "HybridSystem"), _openapi_validate)
-    _openapi_field_active_power = _decode(
-        Float64,
-        _required(_openapi_object, "active_power", "HybridSystem"),
-        _openapi_validate,
-    )
+        _decode(Int64, _required(_openapi_object, "bus", "HybridSystem"), false)
+    _openapi_field_active_power =
+        _decode(Float64, _required(_openapi_object, "active_power", "HybridSystem"), false)
     _openapi_field_reactive_power = _decode(
         Float64,
         _required(_openapi_object, "reactive_power", "HybridSystem"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_base_power = _decode(
-        Float64,
-        _required(_openapi_object, "base_power", "HybridSystem"),
-        _openapi_validate,
-    )
+    _openapi_field_base_power =
+        _decode(Float64, _required(_openapi_object, "base_power", "HybridSystem"), false)
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "HybridSystem"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_operation_cost = _decode(
         MarketBidCost,
         _required(_openapi_object, "operation_cost", "HybridSystem"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_thermal_unit =
         haskey(_openapi_object, "thermal_unit") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["thermal_unit"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_electric_load =
         haskey(_openapi_object, "electric_load") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["electric_load"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_storage =
         haskey(_openapi_object, "storage") ?
-        _decode(
-            Union{Absent, Union{Int64, Nothing}},
-            _openapi_object["storage"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Union{Int64, Nothing}}, _openapi_object["storage"], false) :
+        ABSENT
     _openapi_field_renewable_unit =
         haskey(_openapi_object, "renewable_unit") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["renewable_unit"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_interconnection_impedance =
         haskey(_openapi_object, "interconnection_impedance") ?
         _decode(
             Union{Absent, ComplexNumber, Nothing},
             _openapi_object["interconnection_impedance"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_interconnection_rating =
         haskey(_openapi_object, "interconnection_rating") ?
         _decode(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["interconnection_rating"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_input_active_power_limits =
         haskey(_openapi_object, "input_active_power_limits") ?
         _decode(
             Union{Absent, MinMax, Nothing},
             _openapi_object["input_active_power_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_output_active_power_limits =
         haskey(_openapi_object, "output_active_power_limits") ?
         _decode(
             Union{Absent, MinMax, Nothing},
             _openapi_object["output_active_power_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_reactive_power_limits =
         haskey(_openapi_object, "reactive_power_limits") ?
         _decode(
             Union{Absent, MinMax, Nothing},
             _openapi_object["reactive_power_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_interconnection_efficiency =
         haskey(_openapi_object, "interconnection_efficiency") ?
         _decode(
             Union{Absent, InOut, Nothing},
             _openapi_object["interconnection_efficiency"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -209,7 +194,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return HybridSystem(;
         id=_openapi_field_id,
@@ -236,79 +221,92 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::HybridSystem)
+function _encode_unvalidated(_openapi_value::HybridSystem)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.status isa Absent ||
-        (_openapi_output["status"] = _encode(_openapi_value.status))
-    _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+        (_openapi_output["status"] = _encode_unvalidated(_openapi_value.status))
+    _openapi_value.bus isa Absent ||
+        (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
     _openapi_value.active_power isa Absent ||
-        (_openapi_output["active_power"] = _encode(_openapi_value.active_power))
-    _openapi_value.reactive_power isa Absent ||
-        (_openapi_output["reactive_power"] = _encode(_openapi_value.reactive_power))
+        (_openapi_output["active_power"] = _encode_unvalidated(_openapi_value.active_power))
+    _openapi_value.reactive_power isa Absent || (
+        _openapi_output["reactive_power"] =
+            _encode_unvalidated(_openapi_value.reactive_power)
+    )
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
-    _openapi_value.operation_cost isa Absent ||
-        (_openapi_output["operation_cost"] = _encode(_openapi_value.operation_cost))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
+    _openapi_value.operation_cost isa Absent || (
+        _openapi_output["operation_cost"] =
+            _encode_unvalidated(_openapi_value.operation_cost)
+    )
     _openapi_value.thermal_unit isa Absent ||
-        (_openapi_output["thermal_unit"] = _encode(_openapi_value.thermal_unit))
-    _openapi_value.electric_load isa Absent ||
-        (_openapi_output["electric_load"] = _encode(_openapi_value.electric_load))
+        (_openapi_output["thermal_unit"] = _encode_unvalidated(_openapi_value.thermal_unit))
+    _openapi_value.electric_load isa Absent || (
+        _openapi_output["electric_load"] =
+            _encode_unvalidated(_openapi_value.electric_load)
+    )
     _openapi_value.storage isa Absent ||
-        (_openapi_output["storage"] = _encode(_openapi_value.storage))
-    _openapi_value.renewable_unit isa Absent ||
-        (_openapi_output["renewable_unit"] = _encode(_openapi_value.renewable_unit))
+        (_openapi_output["storage"] = _encode_unvalidated(_openapi_value.storage))
+    _openapi_value.renewable_unit isa Absent || (
+        _openapi_output["renewable_unit"] =
+            _encode_unvalidated(_openapi_value.renewable_unit)
+    )
     _openapi_value.interconnection_impedance isa Absent || (
         _openapi_output["interconnection_impedance"] =
-            _encode(_openapi_value.interconnection_impedance)
+            _encode_unvalidated(_openapi_value.interconnection_impedance)
     )
     _openapi_value.interconnection_rating isa Absent || (
         _openapi_output["interconnection_rating"] =
-            _encode(_openapi_value.interconnection_rating)
+            _encode_unvalidated(_openapi_value.interconnection_rating)
     )
     _openapi_value.input_active_power_limits isa Absent || (
         _openapi_output["input_active_power_limits"] =
-            _encode(_openapi_value.input_active_power_limits)
+            _encode_unvalidated(_openapi_value.input_active_power_limits)
     )
     _openapi_value.output_active_power_limits isa Absent || (
         _openapi_output["output_active_power_limits"] =
-            _encode(_openapi_value.output_active_power_limits)
+            _encode_unvalidated(_openapi_value.output_active_power_limits)
     )
     _openapi_value.reactive_power_limits isa Absent || (
         _openapi_output["reactive_power_limits"] =
-            _encode(_openapi_value.reactive_power_limits)
+            _encode_unvalidated(_openapi_value.reactive_power_limits)
     )
     _openapi_value.interconnection_efficiency isa Absent || (
         _openapi_output["interconnection_efficiency"] =
-            _encode(_openapi_value.interconnection_efficiency)
+            _encode_unvalidated(_openapi_value.interconnection_efficiency)
     )
-    _openapi_value.dynamic_injector isa Absent ||
-        (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
+    _openapi_value.dynamic_injector isa Absent || (
+        _openapi_output["dynamic_injector"] =
+            _encode_unvalidated(_openapi_value.dynamic_injector)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-59cded1ef42d3bc5ec71.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding HybridSystem";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::HybridSystem) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-59cded1ef42d3bc5ec71.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding HybridSystem";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::HybridSystem)
     _openapi_output = Pair{String, Any}[]

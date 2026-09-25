@@ -95,18 +95,19 @@ function _decode(::Type{RetrofitPotentialRetrofitCost}, value, _openapi_validate
                 "discriminator-selected schema did not validate for RetrofitPotentialRetrofitCost",
             ),
         )
-    return RetrofitPotentialRetrofitCost(_decode(selected[1], value, _openapi_validate))
+    return RetrofitPotentialRetrofitCost(_decode(selected[1], value, false))
 end
-function _encode(value::RetrofitPotentialRetrofitCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-16cedac303a10bb9798b.json",
-            pointer="/properties/retrofit_cost",
-        ),
-        output,
-        "encoding RetrofitPotentialRetrofitCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::RetrofitPotentialRetrofitCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::RetrofitPotentialRetrofitCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-16cedac303a10bb9798b.json",
+        pointer="/properties/retrofit_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding RetrofitPotentialRetrofitCost";
+    direction=:neutral,
+)

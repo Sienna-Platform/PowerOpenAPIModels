@@ -36,19 +36,20 @@ function _decode(::Type{PollutantType}, value, _openapi_validate::Bool)
         "decoding PollutantType";
         direction=:neutral,
     )
-    return PollutantType(_decode(String, value, _openapi_validate))
+    return PollutantType(_decode(String, value, false))
 end
-function _encode(value::PollutantType)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/PollutantType",
-        ),
-        output,
-        "encoding PollutantType";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::PollutantType)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::PollutantType) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/PollutantType",
+    ),
+    _encode_unvalidated(value),
+    "encoding PollutantType";
+    direction=:neutral,
+)
 Base.string(value::PollutantType) = string(value.value)

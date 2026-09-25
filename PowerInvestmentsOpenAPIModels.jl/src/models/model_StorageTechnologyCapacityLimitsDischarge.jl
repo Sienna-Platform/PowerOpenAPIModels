@@ -24,7 +24,7 @@ function _decode(
         direction=:neutral,
     )
     matches = Any[]
-    if !_openapi_validate || _schema_valid(
+    if _schema_valid(
         _SPEC,
         (
             resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
@@ -34,12 +34,12 @@ function _decode(
         direction=:neutral,
     )
         try
-            push!(matches, _decode(MinMax, value, _openapi_validate))
+            push!(matches, _decode(MinMax, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
     end
-    if !_openapi_validate || _schema_valid(
+    if _schema_valid(
         _SPEC,
         (
             resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
@@ -49,7 +49,7 @@ function _decode(
         direction=:neutral,
     )
         try
-            push!(matches, _decode(MinMaxByKey, value, _openapi_validate))
+            push!(matches, _decode(MinMaxByKey, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -61,16 +61,17 @@ function _decode(
     )
     return StorageTechnologyCapacityLimitsDischarge(first(matches))
 end
-function _encode(value::StorageTechnologyCapacityLimitsDischarge)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-8f108128966df617bd22.json",
-            pointer="/properties/capacity_limits_discharge",
-        ),
-        output,
-        "encoding StorageTechnologyCapacityLimitsDischarge";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::StorageTechnologyCapacityLimitsDischarge)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::StorageTechnologyCapacityLimitsDischarge) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-8f108128966df617bd22.json",
+        pointer="/properties/capacity_limits_discharge",
+    ),
+    _encode_unvalidated(value),
+    "encoding StorageTechnologyCapacityLimitsDischarge";
+    direction=:neutral,
+)

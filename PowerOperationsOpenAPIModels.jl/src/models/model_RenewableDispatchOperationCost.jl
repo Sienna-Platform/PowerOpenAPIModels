@@ -79,18 +79,19 @@ function _decode(::Type{RenewableDispatchOperationCost}, value, _openapi_validat
                 "discriminator-selected schema did not validate for RenewableDispatchOperationCost",
             ),
         )
-    return RenewableDispatchOperationCost(_decode(selected[1], value, _openapi_validate))
+    return RenewableDispatchOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::RenewableDispatchOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-d356429050d3024f8f77.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding RenewableDispatchOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::RenewableDispatchOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::RenewableDispatchOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-d356429050d3024f8f77.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding RenewableDispatchOperationCost";
+    direction=:neutral,
+)

@@ -23,19 +23,20 @@ function _decode(::Type{OperationalStates}, value, _openapi_validate::Bool)
         "decoding OperationalStates";
         direction=:neutral,
     )
-    return OperationalStates(_decode(String, value, _openapi_validate))
+    return OperationalStates(_decode(String, value, false))
 end
-function _encode(value::OperationalStates)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
-            pointer="/\$defs/OperationalStates",
-        ),
-        output,
-        "encoding OperationalStates";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::OperationalStates)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::OperationalStates) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        pointer="/\$defs/OperationalStates",
+    ),
+    _encode_unvalidated(value),
+    "encoding OperationalStates";
+    direction=:neutral,
+)
 Base.string(value::OperationalStates) = string(value.value)

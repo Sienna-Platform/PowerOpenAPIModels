@@ -21,21 +21,18 @@ function _decode(::Type{GeographicInfo}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "GeographicInfo")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "GeographicInfo"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "GeographicInfo"), false)
     _openapi_field_geo_json = _decode(
         GeographicInfoGeoJson,
         _required(_openapi_object, "geo_json", "GeographicInfo"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "geo_json") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return GeographicInfo(;
         id=_openapi_field_id,
@@ -43,30 +40,32 @@ function _decode(::Type{GeographicInfo}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::GeographicInfo)
+function _encode_unvalidated(_openapi_value::GeographicInfo)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.geo_json isa Absent ||
-        (_openapi_output["geo_json"] = _encode(_openapi_value.geo_json))
+        (_openapi_output["geo_json"] = _encode_unvalidated(_openapi_value.geo_json))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-2aabf02bccc955bf88de.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding GeographicInfo";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::GeographicInfo) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-2aabf02bccc955bf88de.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding GeographicInfo";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::GeographicInfo)
     _openapi_output = Pair{String, Any}[]

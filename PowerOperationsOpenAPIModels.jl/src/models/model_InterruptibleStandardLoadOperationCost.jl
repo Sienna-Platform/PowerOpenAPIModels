@@ -83,20 +83,19 @@ function _decode(
                 "discriminator-selected schema did not validate for InterruptibleStandardLoadOperationCost",
             ),
         )
-    return InterruptibleStandardLoadOperationCost(
-        _decode(selected[1], value, _openapi_validate),
-    )
+    return InterruptibleStandardLoadOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::InterruptibleStandardLoadOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-317b259df5575f72623a.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding InterruptibleStandardLoadOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::InterruptibleStandardLoadOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::InterruptibleStandardLoadOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-317b259df5575f72623a.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding InterruptibleStandardLoadOperationCost";
+    direction=:neutral,
+)

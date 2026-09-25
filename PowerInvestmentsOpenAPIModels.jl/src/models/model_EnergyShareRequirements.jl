@@ -31,34 +31,28 @@ function _decode(::Type{EnergyShareRequirements}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "EnergyShareRequirements")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "EnergyShareRequirements"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "EnergyShareRequirements"), false)
     _openapi_field_name = _decode(
         String,
         _required(_openapi_object, "name", "EnergyShareRequirements"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_available = _decode(
         Bool,
         _required(_openapi_object, "available", "EnergyShareRequirements"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_target_year =
         haskey(_openapi_object, "target_year") ?
-        _decode(
-            Union{Absent, Int64, Nothing},
-            _openapi_object["target_year"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Int64, Nothing}, _openapi_object["target_year"], false) :
+        ABSENT
     _openapi_field_generation_fraction_requirement =
         haskey(_openapi_object, "generation_fraction_requirement") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["generation_fraction_requirement"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -66,7 +60,7 @@ function _decode(::Type{EnergyShareRequirements}, _openapi_raw, _openapi_validat
         ("id", "name", "available", "target_year", "generation_fraction_requirement") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return EnergyShareRequirements(;
         id=_openapi_field_id,
@@ -77,18 +71,19 @@ function _decode(::Type{EnergyShareRequirements}, _openapi_raw, _openapi_validat
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::EnergyShareRequirements)
+function _encode_unvalidated(_openapi_value::EnergyShareRequirements)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.target_year isa Absent ||
-        (_openapi_output["target_year"] = _encode(_openapi_value.target_year))
+        (_openapi_output["target_year"] = _encode_unvalidated(_openapi_value.target_year))
     _openapi_value.generation_fraction_requirement isa Absent || (
         _openapi_output["generation_fraction_requirement"] =
-            _encode(_openapi_value.generation_fraction_requirement)
+            _encode_unvalidated(_openapi_value.generation_fraction_requirement)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -96,19 +91,20 @@ function _encode(_openapi_value::EnergyShareRequirements)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-88b049e3a18a8fa3fd54.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding EnergyShareRequirements";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::EnergyShareRequirements) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-88b049e3a18a8fa3fd54.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding EnergyShareRequirements";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::EnergyShareRequirements)
     _openapi_output = Pair{String, Any}[]

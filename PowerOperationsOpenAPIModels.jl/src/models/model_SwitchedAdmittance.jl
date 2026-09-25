@@ -48,88 +48,76 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SwitchedAdmittance")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "SwitchedAdmittance"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "SwitchedAdmittance"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "SwitchedAdmittance"),
-        _openapi_validate,
-    )
-    _openapi_field_bus = _decode(
-        Int64,
-        _required(_openapi_object, "bus", "SwitchedAdmittance"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "SwitchedAdmittance"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "SwitchedAdmittance"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "SwitchedAdmittance"), false)
+    _openapi_field_bus =
+        _decode(Int64, _required(_openapi_object, "bus", "SwitchedAdmittance"), false)
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
         _decode(
             Union{Absent, Nothing, ShuntAdmittanceUnitBasis},
             _openapi_object["admittance_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_number_engaged =
         haskey(_openapi_object, "number_engaged") ?
         _decode(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["number_engaged"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_number_of_steps =
         haskey(_openapi_object, "number_of_steps") ?
         _decode(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["number_of_steps"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_y_increase =
         haskey(_openapi_object, "Y_increase") ?
         _decode(
             Union{Absent, Nothing, Vector{ComplexNumber}},
             _openapi_object["Y_increase"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_solved_admittance =
         haskey(_openapi_object, "solved_admittance") ?
         _decode(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["solved_admittance"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_admittance_limits =
         haskey(_openapi_object, "admittance_limits") ?
         _decode(
             Union{Absent, Nothing, MinMax},
             _openapi_object["admittance_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_control_mode =
         haskey(_openapi_object, "control_mode") ?
         _decode(
             Union{Absent, Nothing, SwitchedAdmittanceControlMode},
             _openapi_object["control_mode"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_regulated_bus_number =
         haskey(_openapi_object, "regulated_bus_number") ?
         _decode(
             Union{Absent, Int64, Nothing},
             _openapi_object["regulated_bus_number"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -149,7 +137,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return SwitchedAdmittance(;
         id=_openapi_field_id,
@@ -168,53 +156,68 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::SwitchedAdmittance)
+function _encode_unvalidated(_openapi_value::SwitchedAdmittance)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
-    _openapi_value.admittance_units isa Absent ||
-        (_openapi_output["admittance_units"] = _encode(_openapi_value.admittance_units))
-    _openapi_value.number_engaged isa Absent ||
-        (_openapi_output["number_engaged"] = _encode(_openapi_value.number_engaged))
-    _openapi_value.number_of_steps isa Absent ||
-        (_openapi_output["number_of_steps"] = _encode(_openapi_value.number_of_steps))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.bus isa Absent ||
+        (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
+    _openapi_value.admittance_units isa Absent || (
+        _openapi_output["admittance_units"] =
+            _encode_unvalidated(_openapi_value.admittance_units)
+    )
+    _openapi_value.number_engaged isa Absent || (
+        _openapi_output["number_engaged"] =
+            _encode_unvalidated(_openapi_value.number_engaged)
+    )
+    _openapi_value.number_of_steps isa Absent || (
+        _openapi_output["number_of_steps"] =
+            _encode_unvalidated(_openapi_value.number_of_steps)
+    )
     _openapi_value.y_increase isa Absent ||
-        (_openapi_output["Y_increase"] = _encode(_openapi_value.y_increase))
-    _openapi_value.solved_admittance isa Absent ||
-        (_openapi_output["solved_admittance"] = _encode(_openapi_value.solved_admittance))
-    _openapi_value.admittance_limits isa Absent ||
-        (_openapi_output["admittance_limits"] = _encode(_openapi_value.admittance_limits))
+        (_openapi_output["Y_increase"] = _encode_unvalidated(_openapi_value.y_increase))
+    _openapi_value.solved_admittance isa Absent || (
+        _openapi_output["solved_admittance"] =
+            _encode_unvalidated(_openapi_value.solved_admittance)
+    )
+    _openapi_value.admittance_limits isa Absent || (
+        _openapi_output["admittance_limits"] =
+            _encode_unvalidated(_openapi_value.admittance_limits)
+    )
     _openapi_value.control_mode isa Absent ||
-        (_openapi_output["control_mode"] = _encode(_openapi_value.control_mode))
+        (_openapi_output["control_mode"] = _encode_unvalidated(_openapi_value.control_mode))
     _openapi_value.regulated_bus_number isa Absent || (
         _openapi_output["regulated_bus_number"] =
-            _encode(_openapi_value.regulated_bus_number)
+            _encode_unvalidated(_openapi_value.regulated_bus_number)
     )
-    _openapi_value.dynamic_injector isa Absent ||
-        (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
+    _openapi_value.dynamic_injector isa Absent || (
+        _openapi_output["dynamic_injector"] =
+            _encode_unvalidated(_openapi_value.dynamic_injector)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-6b6aa3676e1dbfd69854.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding SwitchedAdmittance";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::SwitchedAdmittance) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-6b6aa3676e1dbfd69854.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding SwitchedAdmittance";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::SwitchedAdmittance)
     _openapi_output = Pair{String, Any}[]

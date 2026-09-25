@@ -54,8 +54,12 @@ The native (post-1.0) generator has no `JSON.lower` hook the way the old 0.2.x r
 (where `JSON.lower(::OpenAPI.APIModel)` let `JSON.print` walk a raw model instance directly,
 skipping unset fields on its own); each generated module instead installs a method on the
 shared `OpenAPI.Runtime._encode` generic function, so encoding is explicit here.
+
+Skips the schema check `_encode` runs. A row here was built from typed structs, so what the
+check adds is range and pattern constraints, and reading checks every row against the full
+schema anyway.
 """
-_encode_row(model) = OpenAPI.Runtime._encode(model)
+_encode_row(model) = InfrastructureCoreOpenAPIModels._encode_unvalidated(model)
 
 """
 Function barrier: one specialization per concrete component vector, each row encoded to a
