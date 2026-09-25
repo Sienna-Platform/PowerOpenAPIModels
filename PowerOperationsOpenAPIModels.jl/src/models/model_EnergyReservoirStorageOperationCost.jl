@@ -21,7 +21,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9cd7e2910b9e74b7feb4.json",
+            resource="https://openapi.invalid/schema/external-712a19ab60adec14ae67.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -42,28 +42,28 @@ function _decode(
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
             "STORAGE" => (
                 StorageCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/StorageCost",
                 ),
             ),
@@ -92,7 +92,7 @@ end
 _encode(value::EnergyReservoirStorageOperationCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-9cd7e2910b9e74b7feb4.json",
+        resource="https://openapi.invalid/schema/external-712a19ab60adec14ae67.json",
         pointer="/properties/operation_cost",
     ),
     _encode_unvalidated(value),

@@ -70,7 +70,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e18af837c2d0e608e9b3.json",
+            resource="https://openapi.invalid/schema/external-9864a6c26182563a22ef.json",
             pointer="",
         ),
         _openapi_raw,
@@ -397,7 +397,7 @@ end
 _encode(_openapi_value::HydroPumpTurbine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-e18af837c2d0e608e9b3.json",
+        resource="https://openapi.invalid/schema/external-9864a6c26182563a22ef.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

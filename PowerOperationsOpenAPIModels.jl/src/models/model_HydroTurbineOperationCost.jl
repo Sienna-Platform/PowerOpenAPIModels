@@ -17,7 +17,7 @@ function _decode(::Type{HydroTurbineOperationCost}, value, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-19c873cb98e3de7cff11.json",
+            resource="https://openapi.invalid/schema/external-32e1adc93a48203425b0.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -38,28 +38,28 @@ function _decode(::Type{HydroTurbineOperationCost}, value, _openapi_validate::Bo
             "HYDRO_GEN" => (
                 HydroGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/HydroGenerationCost",
                 ),
             ),
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -88,7 +88,7 @@ end
 _encode(value::HydroTurbineOperationCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-19c873cb98e3de7cff11.json",
+        resource="https://openapi.invalid/schema/external-32e1adc93a48203425b0.json",
         pointer="/properties/operation_cost",
     ),
     _encode_unvalidated(value),

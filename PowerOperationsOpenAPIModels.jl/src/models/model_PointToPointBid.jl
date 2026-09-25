@@ -30,7 +30,7 @@ function _decode(::Type{PointToPointBid}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
+            resource="https://openapi.invalid/schema/external-34db6823156783dac6a8.json",
             pointer="",
         ),
         _openapi_raw,
@@ -134,7 +134,7 @@ end
 _encode(_openapi_value::PointToPointBid) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
+        resource="https://openapi.invalid/schema/external-34db6823156783dac6a8.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

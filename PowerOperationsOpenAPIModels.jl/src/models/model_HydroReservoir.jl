@@ -38,7 +38,7 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
+            resource="https://openapi.invalid/schema/external-af97cc7bb8185ba70477.json",
             pointer="",
         ),
         _openapi_raw,
@@ -242,7 +242,7 @@ end
 _encode(_openapi_value::HydroReservoir) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
+        resource="https://openapi.invalid/schema/external-af97cc7bb8185ba70477.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

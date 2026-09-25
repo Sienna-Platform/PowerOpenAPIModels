@@ -21,7 +21,7 @@ function _decode(::Type{CombinedCycleAssociation}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0e9fe76103d759f5a44d.json",
+            resource="https://openapi.invalid/schema/external-4d9260d9ca0249e48beb.json",
             pointer="",
         ),
         _openapi_raw,
@@ -86,7 +86,7 @@ end
 _encode(_openapi_value::CombinedCycleAssociation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-0e9fe76103d759f5a44d.json",
+        resource="https://openapi.invalid/schema/external-4d9260d9ca0249e48beb.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
