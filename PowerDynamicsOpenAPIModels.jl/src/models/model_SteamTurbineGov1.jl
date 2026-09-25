@@ -1,19 +1,19 @@
 """
     SteamTurbineGov1
 
-Steam Turbine-Governor. This model considers both TGOV1 or TGOV1DU in PSS/E.
+Steam Turbine-Governor. This model considers both TGOV1 or TGOV1DU in PSS/E
 
-  - `id`: Unique integer identifier for this component.
-  - `r`: Droop parameter.
-  - `t1`: Governor time constant. Units: s.
-  - `valve_position_limits`: Valve position limits.
-  - `t2`: Lead Lag Lead Time constant. Units: s.
-  - `t3`: Lead Lag Lag Time constant. Units: s.
-  - `d_t`: Turbine Damping.
-  - `db_h`: Deadband for overspeed.
-  - `db_l`: Deadband for underspeed.
-  - `t_rate`: Turbine Rate. If zero, generator base is used. Units: MW.
-  - `p_ref`: Reference Power Set-point.
+  - `id`: Unique integer identifier for this component
+  - `r`: Droop parameter
+  - `t1`: Governor time constant. Units: s
+  - `valve_position_limits`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `t2`: Lead-lag lead time constant. Units: s
+  - `t3`: Lead-lag lag time constant. Units: s
+  - `d_t`: Turbine damping
+  - `db_h`: Deadband for overspeed
+  - `db_l`: Deadband for underspeed
+  - `t_rate`: Turbine Rate. If zero, generator base is used. Units: MW
+  - `p_ref`: Reference power set-point
 """
 Base.@kwdef struct SteamTurbineGov1 <: APIModel
     id::Int64
@@ -34,7 +34,7 @@ function _decode(::Type{SteamTurbineGov1}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c01783e7ab42c962f7f3.json",
+            resource="https://openapi.invalid/schema/external-be9d9c9bea8cb70b4fe5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -140,7 +140,7 @@ end
 _encode(_openapi_value::SteamTurbineGov1) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c01783e7ab42c962f7f3.json",
+        resource="https://openapi.invalid/schema/external-be9d9c9bea8cb70b4fe5.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
