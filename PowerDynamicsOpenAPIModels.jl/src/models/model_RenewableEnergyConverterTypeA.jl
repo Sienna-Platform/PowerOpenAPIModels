@@ -15,7 +15,7 @@ Parameters of a renewable energy generator/converter model, this model correspon
   - `k_hv`: Overvoltage compensation gain used in the high voltage reactive current management.
   - `iqr_lims`: Limit on rate of change for reactive current (Iqr_min, Iqr_max).
   - `accel`: Acceleration factor.
-  - `lvpl_sw`: Low voltage power logic (LVPL) switch. (`false`: LVPL not present, `true`: LVPL present).
+  - `lvpl_sw`: Low voltage power logic (LVPL) switch. (0: LVPL not present, 1: LVPL present).
   - `q_ref`: Initial condition of reactive power from power flow.
   - `r_source`: Output resistor used for the Thevenin Equivalent.
   - `x_source`: Output reactance used for the Thevenin Equivalent.
@@ -33,7 +33,7 @@ Base.@kwdef struct RenewableEnergyConverterTypeA <: APIModel
     k_hv::Float64
     iqr_lims::MinMax
     accel::Float64
-    lvpl_sw::Bool
+    lvpl_sw::Int64
     q_ref::Union{Absent, Float64, Nothing} = ABSENT
     r_source::Union{Absent, Float64, Nothing} = ABSENT
     x_source::Union{Absent, Float64, Nothing} = ABSENT
@@ -49,7 +49,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c7fc69a9ba8ea17bfa16.json",
+            resource="https://openapi.invalid/schema/external-fb5552dec12e7d05ccf4.json",
             pointer="",
         ),
         _openapi_raw,
@@ -118,7 +118,7 @@ function _decode(
         false,
     )
     _openapi_field_lvpl_sw = _decode(
-        Bool,
+        Int64,
         _required(_openapi_object, "Lvpl_sw", "RenewableEnergyConverterTypeA"),
         false,
     )
@@ -223,7 +223,7 @@ end
 _encode(_openapi_value::RenewableEnergyConverterTypeA) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c7fc69a9ba8ea17bfa16.json",
+        resource="https://openapi.invalid/schema/external-fb5552dec12e7d05ccf4.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

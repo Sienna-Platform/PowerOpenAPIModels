@@ -16,7 +16,7 @@ function _decode(::Type{ExistingDevices}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1e9119149e5ac7bc4555.json",
+            resource="https://openapi.invalid/schema/external-fbf1d0be8da79fbcb5be.json",
             pointer="",
         ),
         _openapi_raw,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::ExistingDevices) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1e9119149e5ac7bc4555.json",
+        resource="https://openapi.invalid/schema/external-fbf1d0be8da79fbcb5be.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

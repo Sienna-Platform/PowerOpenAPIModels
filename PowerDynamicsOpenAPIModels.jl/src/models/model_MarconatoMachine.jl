@@ -38,7 +38,7 @@ function _decode(::Type{MarconatoMachine}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8fef62ffc85d76d9a363.json",
+            resource="https://openapi.invalid/schema/external-80b6b46c0cdbaa2985b3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -46,71 +46,32 @@ function _decode(::Type{MarconatoMachine}, _openapi_raw, _openapi_validate::Bool
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "MarconatoMachine")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_r = _decode(
-        Float64,
-        _required(_openapi_object, "R", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xd = _decode(
-        Float64,
-        _required(_openapi_object, "Xd", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xq = _decode(
-        Float64,
-        _required(_openapi_object, "Xq", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xd_p = _decode(
-        Float64,
-        _required(_openapi_object, "Xd_p", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xq_p = _decode(
-        Float64,
-        _required(_openapi_object, "Xq_p", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xd_pp = _decode(
-        Float64,
-        _required(_openapi_object, "Xd_pp", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xq_pp = _decode(
-        Float64,
-        _required(_openapi_object, "Xq_pp", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_td0_p = _decode(
-        Float64,
-        _required(_openapi_object, "Td0_p", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_tq0_p = _decode(
-        Float64,
-        _required(_openapi_object, "Tq0_p", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_td0_pp = _decode(
-        Float64,
-        _required(_openapi_object, "Td0_pp", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_tq0_pp = _decode(
-        Float64,
-        _required(_openapi_object, "Tq0_pp", "MarconatoMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_t_aa = _decode(
-        Float64,
-        _required(_openapi_object, "T_AA", "MarconatoMachine"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "MarconatoMachine"), false)
+    _openapi_field_r =
+        _decode(Float64, _required(_openapi_object, "R", "MarconatoMachine"), false)
+    _openapi_field_xd =
+        _decode(Float64, _required(_openapi_object, "Xd", "MarconatoMachine"), false)
+    _openapi_field_xq =
+        _decode(Float64, _required(_openapi_object, "Xq", "MarconatoMachine"), false)
+    _openapi_field_xd_p =
+        _decode(Float64, _required(_openapi_object, "Xd_p", "MarconatoMachine"), false)
+    _openapi_field_xq_p =
+        _decode(Float64, _required(_openapi_object, "Xq_p", "MarconatoMachine"), false)
+    _openapi_field_xd_pp =
+        _decode(Float64, _required(_openapi_object, "Xd_pp", "MarconatoMachine"), false)
+    _openapi_field_xq_pp =
+        _decode(Float64, _required(_openapi_object, "Xq_pp", "MarconatoMachine"), false)
+    _openapi_field_td0_p =
+        _decode(Float64, _required(_openapi_object, "Td0_p", "MarconatoMachine"), false)
+    _openapi_field_tq0_p =
+        _decode(Float64, _required(_openapi_object, "Tq0_p", "MarconatoMachine"), false)
+    _openapi_field_td0_pp =
+        _decode(Float64, _required(_openapi_object, "Td0_pp", "MarconatoMachine"), false)
+    _openapi_field_tq0_pp =
+        _decode(Float64, _required(_openapi_object, "Tq0_pp", "MarconatoMachine"), false)
+    _openapi_field_t_aa =
+        _decode(Float64, _required(_openapi_object, "T_AA", "MarconatoMachine"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -129,7 +90,7 @@ function _decode(::Type{MarconatoMachine}, _openapi_raw, _openapi_validate::Bool
             "T_AA",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return MarconatoMachine(;
         id=_openapi_field_id,
@@ -148,49 +109,54 @@ function _decode(::Type{MarconatoMachine}, _openapi_raw, _openapi_validate::Bool
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::MarconatoMachine)
+function _encode_unvalidated(_openapi_value::MarconatoMachine)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.r isa Absent || (_openapi_output["R"] = _encode(_openapi_value.r))
-    _openapi_value.xd isa Absent || (_openapi_output["Xd"] = _encode(_openapi_value.xd))
-    _openapi_value.xq isa Absent || (_openapi_output["Xq"] = _encode(_openapi_value.xq))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.r isa Absent ||
+        (_openapi_output["R"] = _encode_unvalidated(_openapi_value.r))
+    _openapi_value.xd isa Absent ||
+        (_openapi_output["Xd"] = _encode_unvalidated(_openapi_value.xd))
+    _openapi_value.xq isa Absent ||
+        (_openapi_output["Xq"] = _encode_unvalidated(_openapi_value.xq))
     _openapi_value.xd_p isa Absent ||
-        (_openapi_output["Xd_p"] = _encode(_openapi_value.xd_p))
+        (_openapi_output["Xd_p"] = _encode_unvalidated(_openapi_value.xd_p))
     _openapi_value.xq_p isa Absent ||
-        (_openapi_output["Xq_p"] = _encode(_openapi_value.xq_p))
+        (_openapi_output["Xq_p"] = _encode_unvalidated(_openapi_value.xq_p))
     _openapi_value.xd_pp isa Absent ||
-        (_openapi_output["Xd_pp"] = _encode(_openapi_value.xd_pp))
+        (_openapi_output["Xd_pp"] = _encode_unvalidated(_openapi_value.xd_pp))
     _openapi_value.xq_pp isa Absent ||
-        (_openapi_output["Xq_pp"] = _encode(_openapi_value.xq_pp))
+        (_openapi_output["Xq_pp"] = _encode_unvalidated(_openapi_value.xq_pp))
     _openapi_value.td0_p isa Absent ||
-        (_openapi_output["Td0_p"] = _encode(_openapi_value.td0_p))
+        (_openapi_output["Td0_p"] = _encode_unvalidated(_openapi_value.td0_p))
     _openapi_value.tq0_p isa Absent ||
-        (_openapi_output["Tq0_p"] = _encode(_openapi_value.tq0_p))
+        (_openapi_output["Tq0_p"] = _encode_unvalidated(_openapi_value.tq0_p))
     _openapi_value.td0_pp isa Absent ||
-        (_openapi_output["Td0_pp"] = _encode(_openapi_value.td0_pp))
+        (_openapi_output["Td0_pp"] = _encode_unvalidated(_openapi_value.td0_pp))
     _openapi_value.tq0_pp isa Absent ||
-        (_openapi_output["Tq0_pp"] = _encode(_openapi_value.tq0_pp))
+        (_openapi_output["Tq0_pp"] = _encode_unvalidated(_openapi_value.tq0_pp))
     _openapi_value.t_aa isa Absent ||
-        (_openapi_output["T_AA"] = _encode(_openapi_value.t_aa))
+        (_openapi_output["T_AA"] = _encode_unvalidated(_openapi_value.t_aa))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-8fef62ffc85d76d9a363.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding MarconatoMachine";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::MarconatoMachine) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-80b6b46c0cdbaa2985b3.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding MarconatoMachine";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::MarconatoMachine)
     _openapi_output = Pair{String, Any}[]

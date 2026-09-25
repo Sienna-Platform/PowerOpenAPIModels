@@ -39,7 +39,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d257bbdda9d1dc230759.json",
+            resource="https://openapi.invalid/schema/external-f3c819038fd9494a9174.json",
             pointer="",
         ),
         _openapi_raw,
@@ -182,7 +182,7 @@ end
 _encode(_openapi_value::NodalHVDCTransportTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-d257bbdda9d1dc230759.json",
+        resource="https://openapi.invalid/schema/external-f3c819038fd9494a9174.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

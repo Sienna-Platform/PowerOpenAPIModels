@@ -78,7 +78,7 @@ function _decode(::Type{PSS2C}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-45ff7ffb09792bbb76c5.json",
+            resource="https://openapi.invalid/schema/external-d38bfe7cc3680a341793.json",
             pointer="",
         ),
         _openapi_raw,
@@ -86,100 +86,59 @@ function _decode(::Type{PSS2C}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PSS2C")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "PSS2C"), _openapi_validate)
-    _openapi_field_input_code_1 = _decode(
-        Int64,
-        _required(_openapi_object, "input_code_1", "PSS2C"),
-        _openapi_validate,
-    )
-    _openapi_field_remote_bus_control_1 = _decode(
-        Int64,
-        _required(_openapi_object, "remote_bus_control_1", "PSS2C"),
-        _openapi_validate,
-    )
-    _openapi_field_input_code_2 = _decode(
-        Int64,
-        _required(_openapi_object, "input_code_2", "PSS2C"),
-        _openapi_validate,
-    )
-    _openapi_field_remote_bus_control_2 = _decode(
-        Int64,
-        _required(_openapi_object, "remote_bus_control_2", "PSS2C"),
-        _openapi_validate,
-    )
+    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "PSS2C"), false)
+    _openapi_field_input_code_1 =
+        _decode(Int64, _required(_openapi_object, "input_code_1", "PSS2C"), false)
+    _openapi_field_remote_bus_control_1 =
+        _decode(Int64, _required(_openapi_object, "remote_bus_control_1", "PSS2C"), false)
+    _openapi_field_input_code_2 =
+        _decode(Int64, _required(_openapi_object, "input_code_2", "PSS2C"), false)
+    _openapi_field_remote_bus_control_2 =
+        _decode(Int64, _required(_openapi_object, "remote_bus_control_2", "PSS2C"), false)
     _openapi_field_m_rtf =
-        _decode(Int64, _required(_openapi_object, "M_rtf", "PSS2C"), _openapi_validate)
+        _decode(Int64, _required(_openapi_object, "M_rtf", "PSS2C"), false)
     _openapi_field_n_rtf =
-        _decode(Int64, _required(_openapi_object, "N_rtf", "PSS2C"), _openapi_validate)
-    _openapi_field_tw1 =
-        _decode(Float64, _required(_openapi_object, "Tw1", "PSS2C"), _openapi_validate)
-    _openapi_field_tw2 =
-        _decode(Float64, _required(_openapi_object, "Tw2", "PSS2C"), _openapi_validate)
-    _openapi_field_t6 =
-        _decode(Float64, _required(_openapi_object, "T6", "PSS2C"), _openapi_validate)
-    _openapi_field_tw3 =
-        _decode(Float64, _required(_openapi_object, "Tw3", "PSS2C"), _openapi_validate)
-    _openapi_field_tw4 =
-        _decode(Float64, _required(_openapi_object, "Tw4", "PSS2C"), _openapi_validate)
-    _openapi_field_t7 =
-        _decode(Float64, _required(_openapi_object, "T7", "PSS2C"), _openapi_validate)
-    _openapi_field_ks2 =
-        _decode(Float64, _required(_openapi_object, "Ks2", "PSS2C"), _openapi_validate)
-    _openapi_field_ks3 =
-        _decode(Float64, _required(_openapi_object, "Ks3", "PSS2C"), _openapi_validate)
-    _openapi_field_t8 =
-        _decode(Float64, _required(_openapi_object, "T8", "PSS2C"), _openapi_validate)
-    _openapi_field_t9 =
-        _decode(Float64, _required(_openapi_object, "T9", "PSS2C"), _openapi_validate)
-    _openapi_field_ks1 =
-        _decode(Float64, _required(_openapi_object, "Ks1", "PSS2C"), _openapi_validate)
-    _openapi_field_t1 =
-        _decode(Float64, _required(_openapi_object, "T1", "PSS2C"), _openapi_validate)
-    _openapi_field_t2 =
-        _decode(Float64, _required(_openapi_object, "T2", "PSS2C"), _openapi_validate)
-    _openapi_field_t3 =
-        _decode(Float64, _required(_openapi_object, "T3", "PSS2C"), _openapi_validate)
-    _openapi_field_t4 =
-        _decode(Float64, _required(_openapi_object, "T4", "PSS2C"), _openapi_validate)
-    _openapi_field_t10 =
-        _decode(Float64, _required(_openapi_object, "T10", "PSS2C"), _openapi_validate)
-    _openapi_field_t11 =
-        _decode(Float64, _required(_openapi_object, "T11", "PSS2C"), _openapi_validate)
-    _openapi_field_vs1_lim = _decode(
-        Vector{Float64},
-        _required(_openapi_object, "Vs1_lim", "PSS2C"),
-        _openapi_validate,
-    )
-    _openapi_field_vs2_lim = _decode(
-        Vector{Float64},
-        _required(_openapi_object, "Vs2_lim", "PSS2C"),
-        _openapi_validate,
-    )
-    _openapi_field_vst_lim = _decode(
-        Vector{Float64},
-        _required(_openapi_object, "Vst_lim", "PSS2C"),
-        _openapi_validate,
-    )
-    _openapi_field_t12 =
-        _decode(Float64, _required(_openapi_object, "T12", "PSS2C"), _openapi_validate)
-    _openapi_field_t13 =
-        _decode(Float64, _required(_openapi_object, "T13", "PSS2C"), _openapi_validate)
+        _decode(Int64, _required(_openapi_object, "N_rtf", "PSS2C"), false)
+    _openapi_field_tw1 = _decode(Float64, _required(_openapi_object, "Tw1", "PSS2C"), false)
+    _openapi_field_tw2 = _decode(Float64, _required(_openapi_object, "Tw2", "PSS2C"), false)
+    _openapi_field_t6 = _decode(Float64, _required(_openapi_object, "T6", "PSS2C"), false)
+    _openapi_field_tw3 = _decode(Float64, _required(_openapi_object, "Tw3", "PSS2C"), false)
+    _openapi_field_tw4 = _decode(Float64, _required(_openapi_object, "Tw4", "PSS2C"), false)
+    _openapi_field_t7 = _decode(Float64, _required(_openapi_object, "T7", "PSS2C"), false)
+    _openapi_field_ks2 = _decode(Float64, _required(_openapi_object, "Ks2", "PSS2C"), false)
+    _openapi_field_ks3 = _decode(Float64, _required(_openapi_object, "Ks3", "PSS2C"), false)
+    _openapi_field_t8 = _decode(Float64, _required(_openapi_object, "T8", "PSS2C"), false)
+    _openapi_field_t9 = _decode(Float64, _required(_openapi_object, "T9", "PSS2C"), false)
+    _openapi_field_ks1 = _decode(Float64, _required(_openapi_object, "Ks1", "PSS2C"), false)
+    _openapi_field_t1 = _decode(Float64, _required(_openapi_object, "T1", "PSS2C"), false)
+    _openapi_field_t2 = _decode(Float64, _required(_openapi_object, "T2", "PSS2C"), false)
+    _openapi_field_t3 = _decode(Float64, _required(_openapi_object, "T3", "PSS2C"), false)
+    _openapi_field_t4 = _decode(Float64, _required(_openapi_object, "T4", "PSS2C"), false)
+    _openapi_field_t10 = _decode(Float64, _required(_openapi_object, "T10", "PSS2C"), false)
+    _openapi_field_t11 = _decode(Float64, _required(_openapi_object, "T11", "PSS2C"), false)
+    _openapi_field_vs1_lim =
+        _decode(Vector{Float64}, _required(_openapi_object, "Vs1_lim", "PSS2C"), false)
+    _openapi_field_vs2_lim =
+        _decode(Vector{Float64}, _required(_openapi_object, "Vs2_lim", "PSS2C"), false)
+    _openapi_field_vst_lim =
+        _decode(Vector{Float64}, _required(_openapi_object, "Vst_lim", "PSS2C"), false)
+    _openapi_field_t12 = _decode(Float64, _required(_openapi_object, "T12", "PSS2C"), false)
+    _openapi_field_t13 = _decode(Float64, _required(_openapi_object, "T13", "PSS2C"), false)
     _openapi_field_pss_hysteresis_param = _decode(
         Vector{Float64},
         _required(_openapi_object, "PSS_Hysteresis_param", "PSS2C"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_xcomp =
-        _decode(Float64, _required(_openapi_object, "Xcomp", "PSS2C"), _openapi_validate)
+        _decode(Float64, _required(_openapi_object, "Xcomp", "PSS2C"), false)
     _openapi_field_tcomp =
-        _decode(Float64, _required(_openapi_object, "Tcomp", "PSS2C"), _openapi_validate)
+        _decode(Float64, _required(_openapi_object, "Tcomp", "PSS2C"), false)
     _openapi_field_hysteresis_binary_logic =
         haskey(_openapi_object, "hysteresis_binary_logic") ?
         _decode(
             Union{Absent, Int64, Nothing},
             _openapi_object["hysteresis_binary_logic"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -219,7 +178,7 @@ function _decode(::Type{PSS2C}, _openapi_raw, _openapi_validate::Bool)
             "hysteresis_binary_logic",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return PSS2C(;
         id=_openapi_field_id,
@@ -258,61 +217,81 @@ function _decode(::Type{PSS2C}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::PSS2C)
+function _encode_unvalidated(_openapi_value::PSS2C)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.input_code_1 isa Absent ||
-        (_openapi_output["input_code_1"] = _encode(_openapi_value.input_code_1))
+        (_openapi_output["input_code_1"] = _encode_unvalidated(_openapi_value.input_code_1))
     _openapi_value.remote_bus_control_1 isa Absent || (
         _openapi_output["remote_bus_control_1"] =
-            _encode(_openapi_value.remote_bus_control_1)
+            _encode_unvalidated(_openapi_value.remote_bus_control_1)
     )
     _openapi_value.input_code_2 isa Absent ||
-        (_openapi_output["input_code_2"] = _encode(_openapi_value.input_code_2))
+        (_openapi_output["input_code_2"] = _encode_unvalidated(_openapi_value.input_code_2))
     _openapi_value.remote_bus_control_2 isa Absent || (
         _openapi_output["remote_bus_control_2"] =
-            _encode(_openapi_value.remote_bus_control_2)
+            _encode_unvalidated(_openapi_value.remote_bus_control_2)
     )
     _openapi_value.m_rtf isa Absent ||
-        (_openapi_output["M_rtf"] = _encode(_openapi_value.m_rtf))
+        (_openapi_output["M_rtf"] = _encode_unvalidated(_openapi_value.m_rtf))
     _openapi_value.n_rtf isa Absent ||
-        (_openapi_output["N_rtf"] = _encode(_openapi_value.n_rtf))
-    _openapi_value.tw1 isa Absent || (_openapi_output["Tw1"] = _encode(_openapi_value.tw1))
-    _openapi_value.tw2 isa Absent || (_openapi_output["Tw2"] = _encode(_openapi_value.tw2))
-    _openapi_value.t6 isa Absent || (_openapi_output["T6"] = _encode(_openapi_value.t6))
-    _openapi_value.tw3 isa Absent || (_openapi_output["Tw3"] = _encode(_openapi_value.tw3))
-    _openapi_value.tw4 isa Absent || (_openapi_output["Tw4"] = _encode(_openapi_value.tw4))
-    _openapi_value.t7 isa Absent || (_openapi_output["T7"] = _encode(_openapi_value.t7))
-    _openapi_value.ks2 isa Absent || (_openapi_output["Ks2"] = _encode(_openapi_value.ks2))
-    _openapi_value.ks3 isa Absent || (_openapi_output["Ks3"] = _encode(_openapi_value.ks3))
-    _openapi_value.t8 isa Absent || (_openapi_output["T8"] = _encode(_openapi_value.t8))
-    _openapi_value.t9 isa Absent || (_openapi_output["T9"] = _encode(_openapi_value.t9))
-    _openapi_value.ks1 isa Absent || (_openapi_output["Ks1"] = _encode(_openapi_value.ks1))
-    _openapi_value.t1 isa Absent || (_openapi_output["T1"] = _encode(_openapi_value.t1))
-    _openapi_value.t2 isa Absent || (_openapi_output["T2"] = _encode(_openapi_value.t2))
-    _openapi_value.t3 isa Absent || (_openapi_output["T3"] = _encode(_openapi_value.t3))
-    _openapi_value.t4 isa Absent || (_openapi_output["T4"] = _encode(_openapi_value.t4))
-    _openapi_value.t10 isa Absent || (_openapi_output["T10"] = _encode(_openapi_value.t10))
-    _openapi_value.t11 isa Absent || (_openapi_output["T11"] = _encode(_openapi_value.t11))
+        (_openapi_output["N_rtf"] = _encode_unvalidated(_openapi_value.n_rtf))
+    _openapi_value.tw1 isa Absent ||
+        (_openapi_output["Tw1"] = _encode_unvalidated(_openapi_value.tw1))
+    _openapi_value.tw2 isa Absent ||
+        (_openapi_output["Tw2"] = _encode_unvalidated(_openapi_value.tw2))
+    _openapi_value.t6 isa Absent ||
+        (_openapi_output["T6"] = _encode_unvalidated(_openapi_value.t6))
+    _openapi_value.tw3 isa Absent ||
+        (_openapi_output["Tw3"] = _encode_unvalidated(_openapi_value.tw3))
+    _openapi_value.tw4 isa Absent ||
+        (_openapi_output["Tw4"] = _encode_unvalidated(_openapi_value.tw4))
+    _openapi_value.t7 isa Absent ||
+        (_openapi_output["T7"] = _encode_unvalidated(_openapi_value.t7))
+    _openapi_value.ks2 isa Absent ||
+        (_openapi_output["Ks2"] = _encode_unvalidated(_openapi_value.ks2))
+    _openapi_value.ks3 isa Absent ||
+        (_openapi_output["Ks3"] = _encode_unvalidated(_openapi_value.ks3))
+    _openapi_value.t8 isa Absent ||
+        (_openapi_output["T8"] = _encode_unvalidated(_openapi_value.t8))
+    _openapi_value.t9 isa Absent ||
+        (_openapi_output["T9"] = _encode_unvalidated(_openapi_value.t9))
+    _openapi_value.ks1 isa Absent ||
+        (_openapi_output["Ks1"] = _encode_unvalidated(_openapi_value.ks1))
+    _openapi_value.t1 isa Absent ||
+        (_openapi_output["T1"] = _encode_unvalidated(_openapi_value.t1))
+    _openapi_value.t2 isa Absent ||
+        (_openapi_output["T2"] = _encode_unvalidated(_openapi_value.t2))
+    _openapi_value.t3 isa Absent ||
+        (_openapi_output["T3"] = _encode_unvalidated(_openapi_value.t3))
+    _openapi_value.t4 isa Absent ||
+        (_openapi_output["T4"] = _encode_unvalidated(_openapi_value.t4))
+    _openapi_value.t10 isa Absent ||
+        (_openapi_output["T10"] = _encode_unvalidated(_openapi_value.t10))
+    _openapi_value.t11 isa Absent ||
+        (_openapi_output["T11"] = _encode_unvalidated(_openapi_value.t11))
     _openapi_value.vs1_lim isa Absent ||
-        (_openapi_output["Vs1_lim"] = _encode(_openapi_value.vs1_lim))
+        (_openapi_output["Vs1_lim"] = _encode_unvalidated(_openapi_value.vs1_lim))
     _openapi_value.vs2_lim isa Absent ||
-        (_openapi_output["Vs2_lim"] = _encode(_openapi_value.vs2_lim))
+        (_openapi_output["Vs2_lim"] = _encode_unvalidated(_openapi_value.vs2_lim))
     _openapi_value.vst_lim isa Absent ||
-        (_openapi_output["Vst_lim"] = _encode(_openapi_value.vst_lim))
-    _openapi_value.t12 isa Absent || (_openapi_output["T12"] = _encode(_openapi_value.t12))
-    _openapi_value.t13 isa Absent || (_openapi_output["T13"] = _encode(_openapi_value.t13))
+        (_openapi_output["Vst_lim"] = _encode_unvalidated(_openapi_value.vst_lim))
+    _openapi_value.t12 isa Absent ||
+        (_openapi_output["T12"] = _encode_unvalidated(_openapi_value.t12))
+    _openapi_value.t13 isa Absent ||
+        (_openapi_output["T13"] = _encode_unvalidated(_openapi_value.t13))
     _openapi_value.pss_hysteresis_param isa Absent || (
         _openapi_output["PSS_Hysteresis_param"] =
-            _encode(_openapi_value.pss_hysteresis_param)
+            _encode_unvalidated(_openapi_value.pss_hysteresis_param)
     )
     _openapi_value.xcomp isa Absent ||
-        (_openapi_output["Xcomp"] = _encode(_openapi_value.xcomp))
+        (_openapi_output["Xcomp"] = _encode_unvalidated(_openapi_value.xcomp))
     _openapi_value.tcomp isa Absent ||
-        (_openapi_output["Tcomp"] = _encode(_openapi_value.tcomp))
+        (_openapi_output["Tcomp"] = _encode_unvalidated(_openapi_value.tcomp))
     _openapi_value.hysteresis_binary_logic isa Absent || (
         _openapi_output["hysteresis_binary_logic"] =
-            _encode(_openapi_value.hysteresis_binary_logic)
+            _encode_unvalidated(_openapi_value.hysteresis_binary_logic)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -320,19 +299,20 @@ function _encode(_openapi_value::PSS2C)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-45ff7ffb09792bbb76c5.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding PSS2C";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::PSS2C) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-d38bfe7cc3680a341793.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding PSS2C";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::PSS2C)
     _openapi_output = Pair{String, Any}[]

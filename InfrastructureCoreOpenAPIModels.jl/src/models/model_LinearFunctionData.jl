@@ -2,6 +2,9 @@
     LinearFunctionData
 
 Data for a linear function `f(x) = proportional_term * x + constant_term`.
+
+  - `constant_term`: Units: the wrapped function's output unit.
+  - `proportional_term`: Units: the wrapped function's output unit per unit of its input.
 """
 Base.@kwdef struct LinearFunctionData <: APIModel
     constant_term::Float64

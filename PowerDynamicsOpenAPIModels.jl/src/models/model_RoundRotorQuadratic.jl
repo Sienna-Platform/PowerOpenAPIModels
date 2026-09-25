@@ -18,7 +18,7 @@ function _decode(::Type{RoundRotorQuadratic}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6c0c27fda6d0617cf80b.json",
+            resource="https://openapi.invalid/schema/external-ba92a39864890d55ae99.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,26 +26,23 @@ function _decode(::Type{RoundRotorQuadratic}, _openapi_raw, _openapi_validate::B
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RoundRotorQuadratic")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "RoundRotorQuadratic"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "RoundRotorQuadratic"), false)
     _openapi_field_base_machine = _decode(
         Int64,
         _required(_openapi_object, "base_machine", "RoundRotorQuadratic"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_saturation_coeffs = _decode(
         Vector{Float64},
         _required(_openapi_object, "saturation_coeffs", "RoundRotorQuadratic"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "base_machine", "saturation_coeffs") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return RoundRotorQuadratic(;
         id=_openapi_field_id,
@@ -54,32 +51,36 @@ function _decode(::Type{RoundRotorQuadratic}, _openapi_raw, _openapi_validate::B
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::RoundRotorQuadratic)
+function _encode_unvalidated(_openapi_value::RoundRotorQuadratic)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.base_machine isa Absent ||
-        (_openapi_output["base_machine"] = _encode(_openapi_value.base_machine))
-    _openapi_value.saturation_coeffs isa Absent ||
-        (_openapi_output["saturation_coeffs"] = _encode(_openapi_value.saturation_coeffs))
+        (_openapi_output["base_machine"] = _encode_unvalidated(_openapi_value.base_machine))
+    _openapi_value.saturation_coeffs isa Absent || (
+        _openapi_output["saturation_coeffs"] =
+            _encode_unvalidated(_openapi_value.saturation_coeffs)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-6c0c27fda6d0617cf80b.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding RoundRotorQuadratic";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::RoundRotorQuadratic) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-ba92a39864890d55ae99.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding RoundRotorQuadratic";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::RoundRotorQuadratic)
     _openapi_output = Pair{String, Any}[]
