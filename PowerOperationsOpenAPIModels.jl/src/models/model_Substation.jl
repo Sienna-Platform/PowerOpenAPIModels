@@ -19,7 +19,7 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a8963ccd71c6015a0b28.json",
+            resource="https://openapi.invalid/schema/external-56ad02646ddb44da31ab.json",
             pointer="",
         ),
         _openapi_raw,
@@ -77,7 +77,7 @@ end
 _encode(_openapi_value::Substation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a8963ccd71c6015a0b28.json",
+        resource="https://openapi.invalid/schema/external-56ad02646ddb44da31ab.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

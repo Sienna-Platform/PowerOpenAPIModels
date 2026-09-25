@@ -56,8 +56,10 @@ _type_name(::Any) = ""
     # exists means a reference site failed to resolve, and the fix belongs in the bundle.
     #
     # Keyed on the base existing, not on the suffix: `SteamTurbineGov1` is a real
-    # PowerSystems type name and must not be flagged.
+    # PowerSystems type name and must not be flagged. `DEGOV1` is one too, and its base
+    # `DEGOV` is a distinct real governor, so that pair is allowed by name.
     @testset "No unmapped inline schema aliases" begin
+        real_suffixed_names = Set(["DEGOV1"])
         pkgs = [
             InfrastructureCoreOpenAPIModels,
             InfrastructureTimeSeriesOpenAPIModels,
@@ -77,6 +79,7 @@ _type_name(::Any) = ""
             end
         end
         aliases = filter(defined) do n
+            n in real_suffixed_names && return false
             base = replace(n, r"\d+$" => "")
             base != n && base in defined
         end
@@ -472,9 +475,9 @@ _type_name(::Any) = ""
         attribute_id = PowerOpenAPIModels.next_id!(doc)
         PowerOpenAPIModels.add_supplemental_attribute!(
             doc,
-            PowerInvestmentsOpenAPIModels.TopologyMapping(;
+            PowerInvestmentsOpenAPIModels.ExistingDevices(;
                 id=attribute_id,
-                buses=["bus1"],
+                existing_devices=["gen1"],
             ),
             requirement_id,
         )

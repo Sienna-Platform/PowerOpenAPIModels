@@ -24,6 +24,5 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(StorageTechnology)
     InfrastructureCoreOpenAPIModels.register_model_type!(SupplyTechnology)
     InfrastructureCoreOpenAPIModels.register_model_type!(TechnologyFinancialData)
-    InfrastructureCoreOpenAPIModels.register_model_type!(TopologyMapping)
     return nothing
 end

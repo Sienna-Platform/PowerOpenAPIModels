@@ -20,7 +20,7 @@ function _decode(::Type{BaseMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ccd31135a00698497b07.json",
+            resource="https://openapi.invalid/schema/external-9d7c1bb3fe56e7bfcc66.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,24 +29,18 @@ function _decode(::Type{BaseMachine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "BaseMachine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "BaseMachine"), _openapi_validate)
+        _decode(Int64, _required(_openapi_object, "id", "BaseMachine"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "BaseMachine"), _openapi_validate)
-    _openapi_field_xd_p = _decode(
-        Float64,
-        _required(_openapi_object, "Xd_p", "BaseMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_eq_p = _decode(
-        Float64,
-        _required(_openapi_object, "eq_p", "BaseMachine"),
-        _openapi_validate,
-    )
+        _decode(Float64, _required(_openapi_object, "R", "BaseMachine"), false)
+    _openapi_field_xd_p =
+        _decode(Float64, _required(_openapi_object, "Xd_p", "BaseMachine"), false)
+    _openapi_field_eq_p =
+        _decode(Float64, _required(_openapi_object, "eq_p", "BaseMachine"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "R", "Xd_p", "eq_p") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return BaseMachine(;
         id=_openapi_field_id,
@@ -56,33 +50,36 @@ function _decode(::Type{BaseMachine}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::BaseMachine)
+function _encode_unvalidated(_openapi_value::BaseMachine)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.r isa Absent || (_openapi_output["R"] = _encode(_openapi_value.r))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.r isa Absent ||
+        (_openapi_output["R"] = _encode_unvalidated(_openapi_value.r))
     _openapi_value.xd_p isa Absent ||
-        (_openapi_output["Xd_p"] = _encode(_openapi_value.xd_p))
+        (_openapi_output["Xd_p"] = _encode_unvalidated(_openapi_value.xd_p))
     _openapi_value.eq_p isa Absent ||
-        (_openapi_output["eq_p"] = _encode(_openapi_value.eq_p))
+        (_openapi_output["eq_p"] = _encode_unvalidated(_openapi_value.eq_p))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-ccd31135a00698497b07.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding BaseMachine";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::BaseMachine) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-9d7c1bb3fe56e7bfcc66.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding BaseMachine";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::BaseMachine)
     _openapi_output = Pair{String, Any}[]

@@ -19,7 +19,7 @@ function _decode(::Type{RetirementPotentialRetirementCost}, value, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c906cda7191beeec94f7.json",
+            resource="https://openapi.invalid/schema/external-43c16ab3a65ba5ff9fd3.json",
             pointer="/properties/retirement_cost",
         ),
         value,
@@ -40,42 +40,42 @@ function _decode(::Type{RetirementPotentialRetirementCost}, value, _openapi_vali
             "AVERAGE_RATE" => (
                 AverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
+                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
                     pointer="/\$defs/AverageRateCurve",
                 ),
             ),
             "INCREMENTAL" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
+                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
                     pointer="/\$defs/IncrementalCurve",
                 ),
             ),
             "INPUT_OUTPUT" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
+                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
                     pointer="/\$defs/InputOutputCurve",
                 ),
             ),
             "TIME_SERIES_AVERAGE_RATE" => (
                 TimeSeriesAverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
+                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
                     pointer="/\$defs/TimeSeriesAverageRateCurve",
                 ),
             ),
             "TIME_SERIES_INCREMENTAL" => (
                 TimeSeriesIncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
+                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
                     pointer="/\$defs/TimeSeriesIncrementalCurve",
                 ),
             ),
             "TIME_SERIES_INPUT_OUTPUT" => (
                 TimeSeriesInputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
+                    resource="https://openapi.invalid/schema/external-207c3896c96d98ecaf37.json",
                     pointer="/\$defs/TimeSeriesInputOutputCurve",
                 ),
             ),
@@ -104,7 +104,7 @@ end
 _encode(value::RetirementPotentialRetirementCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c906cda7191beeec94f7.json",
+        resource="https://openapi.invalid/schema/external-43c16ab3a65ba5ff9fd3.json",
         pointer="/properties/retirement_cost",
     ),
     _encode_unvalidated(value),

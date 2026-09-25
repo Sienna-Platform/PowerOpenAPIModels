@@ -44,7 +44,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-865b3a15cab0f0d4981c.json",
+            resource="https://openapi.invalid/schema/external-db8a9cbd8df90ecfc7c1.json",
             pointer="",
         ),
         _openapi_raw,
@@ -229,7 +229,7 @@ end
 _encode(_openapi_value::FACTSControlDevice) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-865b3a15cab0f0d4981c.json",
+        resource="https://openapi.invalid/schema/external-db8a9cbd8df90ecfc7c1.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

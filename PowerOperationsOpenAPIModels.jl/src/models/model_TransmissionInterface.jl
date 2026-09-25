@@ -29,7 +29,7 @@ function _decode(::Type{TransmissionInterface}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-202c1e202c65ead3b6a4.json",
+            resource="https://openapi.invalid/schema/external-b9275b9f7d62731a8b45.json",
             pointer="",
         ),
         _openapi_raw,
@@ -139,7 +139,7 @@ end
 _encode(_openapi_value::TransmissionInterface) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-202c1e202c65ead3b6a4.json",
+        resource="https://openapi.invalid/schema/external-b9275b9f7d62731a8b45.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

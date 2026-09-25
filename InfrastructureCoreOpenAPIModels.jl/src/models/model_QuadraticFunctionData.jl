@@ -2,6 +2,10 @@
     QuadraticFunctionData
 
 Data for a quadratic function `f(x) = quadratic_term * x^2 + proportional_term * x + constant_term`. A non-negative `quadratic_term` makes the function convex.
+
+  - `constant_term`: Units: the wrapped function's output unit.
+  - `proportional_term`: Units: the wrapped function's output unit per unit of its input.
+  - `quadratic_term`: Units: the wrapped function's output unit per unit of its input squared.
 """
 Base.@kwdef struct QuadraticFunctionData <: APIModel
     constant_term::Float64

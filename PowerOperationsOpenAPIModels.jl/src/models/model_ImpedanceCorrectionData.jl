@@ -1,14 +1,16 @@
 """
     ImpedanceCorrectionData
 
-Supplemental attribute carrying one row of an impedance correction table, linked to a transformer. The correction curve defines intervals over tap ratio or angle shift, and the accompanying fields name which winding the row applies to and whether the controlled quantity is an off-nominal turns ratio or a phase angle shift.
+Supplemental attribute carrying one row of an impedance correction table, linked to a transformer. Exactly one correction curve is present, selected by `transformer_control_mode`: `tap_ratio_correction_curve` spans off-nominal turns ratio and `phase_angle_correction_curve` spans phase-shift angle. `transformer_winding` names the winding the row applies to.
 
-  - `impedance_correction_curve`: Data for a piecewise linear function defined by (x, y) points and interpolated linearly between consecutive ones. The y values are absolute values at each x, not per-segment slopes; use `PiecewiseStepData` when the data gives per-segment rates. Points run in ascending x order, and two of them define one segment.
+  - `tap_ratio_correction_curve`: Impedance correction factor as a function of off-nominal tap ratio (x axis in tap ratio, y axis a multiplier on the winding impedance). Present only when `transformer_control_mode` is `TAP_RATIO`. Units: 1.
+  - `phase_angle_correction_curve`: Impedance correction factor as a function of phase-shift angle (x axis in radians, y axis a multiplier on the winding impedance). Present only when `transformer_control_mode` is `PHASE_SHIFT_ANGLE`. Units: rad.
 """
 Base.@kwdef struct ImpedanceCorrectionData <: APIModel
     id::Int64
     table_number::Int64
-    impedance_correction_curve::PiecewiseLinearData
+    tap_ratio_correction_curve::Union{Absent, PiecewiseLinearData, Nothing} = ABSENT
+    phase_angle_correction_curve::Union{Absent, PiecewiseLinearData, Nothing} = ABSENT
     transformer_winding::ImpedanceCorrectionDataTransformerWinding
     transformer_control_mode::ImpedanceCorrectionDataTransformerControlMode
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -19,7 +21,7 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
+            resource="https://openapi.invalid/schema/external-e26ecdf21236a2bd007d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -34,11 +36,20 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
         _required(_openapi_object, "table_number", "ImpedanceCorrectionData"),
         false,
     )
-    _openapi_field_impedance_correction_curve = _decode(
-        PiecewiseLinearData,
-        _required(_openapi_object, "impedance_correction_curve", "ImpedanceCorrectionData"),
-        false,
-    )
+    _openapi_field_tap_ratio_correction_curve =
+        haskey(_openapi_object, "tap_ratio_correction_curve") ?
+        _decode(
+            Union{Absent, PiecewiseLinearData, Nothing},
+            _openapi_object["tap_ratio_correction_curve"],
+            false,
+        ) : ABSENT
+    _openapi_field_phase_angle_correction_curve =
+        haskey(_openapi_object, "phase_angle_correction_curve") ?
+        _decode(
+            Union{Absent, PiecewiseLinearData, Nothing},
+            _openapi_object["phase_angle_correction_curve"],
+            false,
+        ) : ABSENT
     _openapi_field_transformer_winding = _decode(
         ImpedanceCorrectionDataTransformerWinding,
         _required(_openapi_object, "transformer_winding", "ImpedanceCorrectionData"),
@@ -54,7 +65,8 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
         String(_openapi_key) in (
             "id",
             "table_number",
-            "impedance_correction_curve",
+            "tap_ratio_correction_curve",
+            "phase_angle_correction_curve",
             "transformer_winding",
             "transformer_control_mode",
         ) && continue
@@ -64,7 +76,8 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
     return ImpedanceCorrectionData(;
         id=_openapi_field_id,
         table_number=_openapi_field_table_number,
-        impedance_correction_curve=_openapi_field_impedance_correction_curve,
+        tap_ratio_correction_curve=_openapi_field_tap_ratio_correction_curve,
+        phase_angle_correction_curve=_openapi_field_phase_angle_correction_curve,
         transformer_winding=_openapi_field_transformer_winding,
         transformer_control_mode=_openapi_field_transformer_control_mode,
         additional_properties=_openapi_additional_properties,
@@ -76,9 +89,13 @@ function _encode_unvalidated(_openapi_value::ImpedanceCorrectionData)
         (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.table_number isa Absent ||
         (_openapi_output["table_number"] = _encode_unvalidated(_openapi_value.table_number))
-    _openapi_value.impedance_correction_curve isa Absent || (
-        _openapi_output["impedance_correction_curve"] =
-            _encode_unvalidated(_openapi_value.impedance_correction_curve)
+    _openapi_value.tap_ratio_correction_curve isa Absent || (
+        _openapi_output["tap_ratio_correction_curve"] =
+            _encode_unvalidated(_openapi_value.tap_ratio_correction_curve)
+    )
+    _openapi_value.phase_angle_correction_curve isa Absent || (
+        _openapi_output["phase_angle_correction_curve"] =
+            _encode_unvalidated(_openapi_value.phase_angle_correction_curve)
     )
     _openapi_value.transformer_winding isa Absent || (
         _openapi_output["transformer_winding"] =
@@ -101,7 +118,7 @@ end
 _encode(_openapi_value::ImpedanceCorrectionData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
+        resource="https://openapi.invalid/schema/external-e26ecdf21236a2bd007d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -114,9 +131,13 @@ function _form_fields(_openapi_value::ImpedanceCorrectionData)
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.table_number isa Absent ||
         push!(_openapi_output, "table_number" => _openapi_value.table_number)
-    _openapi_value.impedance_correction_curve isa Absent || push!(
+    _openapi_value.tap_ratio_correction_curve isa Absent || push!(
         _openapi_output,
-        "impedance_correction_curve" => _openapi_value.impedance_correction_curve,
+        "tap_ratio_correction_curve" => _openapi_value.tap_ratio_correction_curve,
+    )
+    _openapi_value.phase_angle_correction_curve isa Absent || push!(
+        _openapi_output,
+        "phase_angle_correction_curve" => _openapi_value.phase_angle_correction_curve,
     )
     _openapi_value.transformer_winding isa Absent ||
         push!(_openapi_output, "transformer_winding" => _openapi_value.transformer_winding)
