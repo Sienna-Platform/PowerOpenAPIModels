@@ -1,6 +1,6 @@
 #!/usr/bin/env julia
-# Serde against real PowerFlowFileParser-emitted documents, vendored from SiennaSchemas as
-# byte-identical copies (verified by sha256 at vendor time). Both fixtures are the same
+# Serde against real PowerFlowFileParser-emitted documents: byte-identical copies of what its
+# scripts/inspect_14bus_json.jl writes. Both fixtures are the same
 # 14-bus operations-only case in the two document unit conventions; each has 119 components
 # across 15 type buckets (observed on read, asserted below).
 
