@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **`k_hv`** | **`Float64`** | Overvoltage compensation gain used in the high voltage reactive current management. | [required]
 **`iqr_lims`** | **`MinMax`** | Limit on rate of change for reactive current (Iqr_min, Iqr_max). | [required]
 **`accel`** | **`Float64`** | Acceleration factor. | [required]
-**`lvpl_sw`** | **`Bool`** | Low voltage power logic (LVPL) switch. (`false`: LVPL not present, `true`: LVPL present). | [required]
+**`lvpl_sw`** | **`Int64`** | Low voltage power logic (LVPL) switch. (0: LVPL not present, 1: LVPL present). | [required]
 **`q_ref`** | **`Union{Absent,Float64,Nothing}`** | Initial condition of reactive power from power flow. | [optional]
 **`r_source`** | **`Union{Absent,Float64,Nothing}`** | Output resistor used for the Thevenin Equivalent. | [optional]
 **`x_source`** | **`Union{Absent,Float64,Nothing}`** | Output reactance used for the Thevenin Equivalent. | [optional]

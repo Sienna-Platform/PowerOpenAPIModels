@@ -5,10 +5,10 @@ Parameters of 4-states round-rotor synchronous machine with quadratic/exponentia
 
   - `id`: Unique integer identifier for this component
   - `r`: Armature resistance
-  - `td0_p`: Time constant of transient d-axis voltage. Units: s
-  - `td0_pp`: Time constant of sub-transient d-axis voltage. Units: s
-  - `tq0_p`: Time constant of transient q-axis voltage. Units: s
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage. Units: s
+  - `td0_p`: Time constant of transient d-axis voltage. Units: s.
+  - `td0_pp`: Time constant of sub-transient d-axis voltage. Units: s.
+  - `tq0_p`: Time constant of transient q-axis voltage. Units: s.
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage. Units: s.
   - `xd`: Reactance after EMF in d-axis
   - `xq`: Reactance after EMF in q-axis
   - `xd_p`: Transient reactance after EMF in d-axis
@@ -38,7 +38,7 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5c5d7e9fc74565092a76.json",
+            resource="https://openapi.invalid/schema/external-e46f5526f697fc9626d2.json",
             pointer="",
         ),
         _openapi_raw,
@@ -153,7 +153,7 @@ end
 _encode(_openapi_value::RoundRotorMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-5c5d7e9fc74565092a76.json",
+        resource="https://openapi.invalid/schema/external-e46f5526f697fc9626d2.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

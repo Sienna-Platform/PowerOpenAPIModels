@@ -32,7 +32,7 @@ function _decode(::Type{OfflineReserve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ee5b2b9f145a23783bbb.json",
+            resource="https://openapi.invalid/schema/external-4698e04ac932e8c717dd.json",
             pointer="",
         ),
         _openapi_raw,
@@ -155,7 +155,7 @@ end
 _encode(_openapi_value::OfflineReserve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ee5b2b9f145a23783bbb.json",
+        resource="https://openapi.invalid/schema/external-4698e04ac932e8c717dd.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

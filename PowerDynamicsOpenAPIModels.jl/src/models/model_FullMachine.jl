@@ -38,7 +38,7 @@ function _decode(::Type{FullMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-47c227221f4deed0dba4.json",
+            resource="https://openapi.invalid/schema/external-8eab7e17bf27e8b27fc4.json",
             pointer="",
         ),
         _openapi_raw,
@@ -47,64 +47,31 @@ function _decode(::Type{FullMachine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "FullMachine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "FullMachine"), _openapi_validate)
+        _decode(Int64, _required(_openapi_object, "id", "FullMachine"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "FullMachine"), _openapi_validate)
-    _openapi_field_r_f = _decode(
-        Float64,
-        _required(_openapi_object, "R_f", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_r_1d = _decode(
-        Float64,
-        _required(_openapi_object, "R_1d", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_r_1q = _decode(
-        Float64,
-        _required(_openapi_object, "R_1q", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_l_d = _decode(
-        Float64,
-        _required(_openapi_object, "L_d", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_l_q = _decode(
-        Float64,
-        _required(_openapi_object, "L_q", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_l_ad = _decode(
-        Float64,
-        _required(_openapi_object, "L_ad", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_l_aq = _decode(
-        Float64,
-        _required(_openapi_object, "L_aq", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_l_f1d = _decode(
-        Float64,
-        _required(_openapi_object, "L_f1d", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_l_ff = _decode(
-        Float64,
-        _required(_openapi_object, "L_ff", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_l_1d = _decode(
-        Float64,
-        _required(_openapi_object, "L_1d", "FullMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_l_1q = _decode(
-        Float64,
-        _required(_openapi_object, "L_1q", "FullMachine"),
-        _openapi_validate,
-    )
+        _decode(Float64, _required(_openapi_object, "R", "FullMachine"), false)
+    _openapi_field_r_f =
+        _decode(Float64, _required(_openapi_object, "R_f", "FullMachine"), false)
+    _openapi_field_r_1d =
+        _decode(Float64, _required(_openapi_object, "R_1d", "FullMachine"), false)
+    _openapi_field_r_1q =
+        _decode(Float64, _required(_openapi_object, "R_1q", "FullMachine"), false)
+    _openapi_field_l_d =
+        _decode(Float64, _required(_openapi_object, "L_d", "FullMachine"), false)
+    _openapi_field_l_q =
+        _decode(Float64, _required(_openapi_object, "L_q", "FullMachine"), false)
+    _openapi_field_l_ad =
+        _decode(Float64, _required(_openapi_object, "L_ad", "FullMachine"), false)
+    _openapi_field_l_aq =
+        _decode(Float64, _required(_openapi_object, "L_aq", "FullMachine"), false)
+    _openapi_field_l_f1d =
+        _decode(Float64, _required(_openapi_object, "L_f1d", "FullMachine"), false)
+    _openapi_field_l_ff =
+        _decode(Float64, _required(_openapi_object, "L_ff", "FullMachine"), false)
+    _openapi_field_l_1d =
+        _decode(Float64, _required(_openapi_object, "L_1d", "FullMachine"), false)
+    _openapi_field_l_1q =
+        _decode(Float64, _required(_openapi_object, "L_1q", "FullMachine"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -123,7 +90,7 @@ function _decode(::Type{FullMachine}, _openapi_raw, _openapi_validate::Bool)
             "L_1q",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return FullMachine(;
         id=_openapi_field_id,
@@ -142,48 +109,54 @@ function _decode(::Type{FullMachine}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::FullMachine)
+function _encode_unvalidated(_openapi_value::FullMachine)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.r isa Absent || (_openapi_output["R"] = _encode(_openapi_value.r))
-    _openapi_value.r_f isa Absent || (_openapi_output["R_f"] = _encode(_openapi_value.r_f))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.r isa Absent ||
+        (_openapi_output["R"] = _encode_unvalidated(_openapi_value.r))
+    _openapi_value.r_f isa Absent ||
+        (_openapi_output["R_f"] = _encode_unvalidated(_openapi_value.r_f))
     _openapi_value.r_1d isa Absent ||
-        (_openapi_output["R_1d"] = _encode(_openapi_value.r_1d))
+        (_openapi_output["R_1d"] = _encode_unvalidated(_openapi_value.r_1d))
     _openapi_value.r_1q isa Absent ||
-        (_openapi_output["R_1q"] = _encode(_openapi_value.r_1q))
-    _openapi_value.l_d isa Absent || (_openapi_output["L_d"] = _encode(_openapi_value.l_d))
-    _openapi_value.l_q isa Absent || (_openapi_output["L_q"] = _encode(_openapi_value.l_q))
+        (_openapi_output["R_1q"] = _encode_unvalidated(_openapi_value.r_1q))
+    _openapi_value.l_d isa Absent ||
+        (_openapi_output["L_d"] = _encode_unvalidated(_openapi_value.l_d))
+    _openapi_value.l_q isa Absent ||
+        (_openapi_output["L_q"] = _encode_unvalidated(_openapi_value.l_q))
     _openapi_value.l_ad isa Absent ||
-        (_openapi_output["L_ad"] = _encode(_openapi_value.l_ad))
+        (_openapi_output["L_ad"] = _encode_unvalidated(_openapi_value.l_ad))
     _openapi_value.l_aq isa Absent ||
-        (_openapi_output["L_aq"] = _encode(_openapi_value.l_aq))
+        (_openapi_output["L_aq"] = _encode_unvalidated(_openapi_value.l_aq))
     _openapi_value.l_f1d isa Absent ||
-        (_openapi_output["L_f1d"] = _encode(_openapi_value.l_f1d))
+        (_openapi_output["L_f1d"] = _encode_unvalidated(_openapi_value.l_f1d))
     _openapi_value.l_ff isa Absent ||
-        (_openapi_output["L_ff"] = _encode(_openapi_value.l_ff))
+        (_openapi_output["L_ff"] = _encode_unvalidated(_openapi_value.l_ff))
     _openapi_value.l_1d isa Absent ||
-        (_openapi_output["L_1d"] = _encode(_openapi_value.l_1d))
+        (_openapi_output["L_1d"] = _encode_unvalidated(_openapi_value.l_1d))
     _openapi_value.l_1q isa Absent ||
-        (_openapi_output["L_1q"] = _encode(_openapi_value.l_1q))
+        (_openapi_output["L_1q"] = _encode_unvalidated(_openapi_value.l_1q))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-47c227221f4deed0dba4.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding FullMachine";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::FullMachine) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-8eab7e17bf27e8b27fc4.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding FullMachine";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::FullMachine)
     _openapi_output = Pair{String, Any}[]

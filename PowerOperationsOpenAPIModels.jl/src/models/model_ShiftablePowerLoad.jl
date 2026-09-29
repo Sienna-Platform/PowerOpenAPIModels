@@ -42,7 +42,7 @@ function _decode(::Type{ShiftablePowerLoad}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-31cc1406780185093c90.json",
+            resource="https://openapi.invalid/schema/external-bd6c298a3c4199cefc3f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -206,7 +206,7 @@ end
 _encode(_openapi_value::ShiftablePowerLoad) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-31cc1406780185093c90.json",
+        resource="https://openapi.invalid/schema/external-bd6c298a3c4199cefc3f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

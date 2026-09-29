@@ -1,6 +1,30 @@
 # Generated from SiennaSchemas x-unit annotations. Do not edit.
 
 InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_g},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_g},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_g},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_fltr},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_fltr},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_fltr},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{RenewableEnergyConverterTypeA},
     ::Val{:t_g},
 ) = true
@@ -334,18 +358,4 @@ InfrastructureCoreOpenAPIModels.declared_unit(
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{ActiveRenewableControllerAB},
     ::Val{:t_p},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{RECurrentControlB}, ::Val{:t_iq}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{RECurrentControlB}, ::Val{:t_iq}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RECurrentControlB},
-    ::Val{:t_iq},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{RECurrentControlB}, ::Val{:t_rv}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{RECurrentControlB}, ::Val{:t_rv}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RECurrentControlB},
-    ::Val{:t_rv},
 ) = "Duration"

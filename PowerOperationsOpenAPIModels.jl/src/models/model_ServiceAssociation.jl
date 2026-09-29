@@ -16,7 +16,7 @@ function _decode(::Type{ServiceAssociation}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9b46aa28f860bb594c34.json",
+            resource="https://openapi.invalid/schema/external-3d897744f83d06a6d662.json",
             pointer="",
         ),
         _openapi_raw,
@@ -62,7 +62,7 @@ end
 _encode(_openapi_value::ServiceAssociation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-9b46aa28f860bb594c34.json",
+        resource="https://openapi.invalid/schema/external-3d897744f83d06a6d662.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

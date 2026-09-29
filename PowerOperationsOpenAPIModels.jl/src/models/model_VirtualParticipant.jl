@@ -26,7 +26,7 @@ function _decode(::Type{VirtualParticipant}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-93547ad8c2b21cc361f5.json",
+            resource="https://openapi.invalid/schema/external-e5d540b899316b336d44.json",
             pointer="",
         ),
         _openapi_raw,
@@ -120,7 +120,7 @@ end
 _encode(_openapi_value::VirtualParticipant) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-93547ad8c2b21cc361f5.json",
+        resource="https://openapi.invalid/schema/external-e5d540b899316b336d44.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

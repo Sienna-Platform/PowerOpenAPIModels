@@ -22,7 +22,7 @@ function _decode(::Type{CapacityReserveMargin}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-df0a29ae02a67207b1db.json",
+            resource="https://openapi.invalid/schema/external-e6670b9ab6ba5645b58f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -93,7 +93,7 @@ end
 _encode(_openapi_value::CapacityReserveMargin) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-df0a29ae02a67207b1db.json",
+        resource="https://openapi.invalid/schema/external-e6670b9ab6ba5645b58f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

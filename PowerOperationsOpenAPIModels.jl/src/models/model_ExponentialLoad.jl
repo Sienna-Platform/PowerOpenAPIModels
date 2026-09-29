@@ -42,7 +42,7 @@ function _decode(::Type{ExponentialLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b53f0920b2c2907c9b21.json",
+            resource="https://openapi.invalid/schema/external-617d0f8a316a35ff8e26.json",
             pointer="",
         ),
         _openapi_raw,
@@ -193,7 +193,7 @@ end
 _encode(_openapi_value::ExponentialLoad) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b53f0920b2c2907c9b21.json",
+        resource="https://openapi.invalid/schema/external-617d0f8a316a35ff8e26.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

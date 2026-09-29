@@ -17,12 +17,14 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
   - `dc_current`: DC current on the converter. Units: A.
   - `max_dc_current`: Maximum stable dc current limits. Units: A.
   - `loss_function`: Linear or quadratic loss function with respect to the converter current.
-  - `dc_control`: DC-side control mode of the converter.
-  - `ac_control`: AC-side control mode of the converter.
-  - `voltage_setpoint_units`: Unit basis for the DC/AC voltage setpoints.
-  - `dc_setpoint`: DC-voltage target (when `dc_control` regulates DC voltage) or active-power order (otherwise). Units: per dc_control — DC_POWER: MW, DC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu), DC_VOLTAGE_DROOP: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `ac_setpoint`: AC-voltage magnitude target (when `ac_control` regulates AC voltage) or power factor setpoint (otherwise). Units: per ac_control — AC_REACTIVE_POWER: 1, AC_VOLTAGE: (per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu) .
-  - `dc_voltage_droop`: DC-voltage droop gain relating DC voltage to converter active power as `V_dc = dc_setpoint - dc_voltage_droop * P_c`. A value of 0.0 disables droop. Units: pu.
+  - `dc_control`: DC-side control mode of the converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
+  - `ac_control`: AC-side control mode of the converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
+  - `voltage_setpoint_units`: Unit basis for dc_voltage_setpoint and ac_voltage_setpoint.
+  - `dc_power_setpoint`: Active-power order of the converter, used when `dc_control` is `DC_POWER`; `null` otherwise. Positive means the converter supplies power to the AC network; negative means it withdraws power from it. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `dc_voltage_setpoint`: DC-side voltage target of the converter, used when `dc_control` is `DC_VOLTAGE` or `DC_VOLTAGE_DROOP`; `null` otherwise. Units: per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `power_factor_setpoint`: Power-factor setpoint of the converter, used when `ac_control` is `AC_REACTIVE_POWER`; `null` otherwise. Units: 1.
+  - `ac_voltage_setpoint`: AC-side voltage magnitude target of the converter, used when `ac_control` is `AC_VOLTAGE`; `null` otherwise. Units: per voltage_setpoint_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `dc_voltage_droop`: DC-voltage droop gain relating DC voltage to converter active power as `V_dc = dc_voltage_setpoint - dc_voltage_droop * P_c`. A value of 0.0 disables droop. Units: pu.
   - `remote_bus_control`: Number of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE`; null regulates its own terminal bus.
   - `rmpct`: Percent of the total Mvar required to hold the voltage at the bus regulated by this converter that is contributed by this converter. Units: 1.
   - `power_factor_weighting_fraction`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
@@ -47,8 +49,10 @@ Base.@kwdef struct InterconnectingConverter <: APIModel
     dc_control::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
     ac_control::Union{Absent, Nothing, VSCACControlModes} = ABSENT
     voltage_setpoint_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
-    dc_setpoint::Union{Absent, Float64, Nothing} = ABSENT
-    ac_setpoint::Union{Absent, Float64, Nothing} = ABSENT
+    dc_power_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    dc_voltage_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    power_factor_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    ac_voltage_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
     dc_voltage_droop::Union{Absent, Float64, Nothing} = ABSENT
     remote_bus_control::Union{Absent, Union{Int64, Nothing}} = ABSENT
     rmpct::Union{Absent, Float64, Nothing} = ABSENT
@@ -63,7 +67,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c628e65955936fa423df.json",
+            resource="https://openapi.invalid/schema/external-658b03a4d08a736290e4.json",
             pointer="",
         ),
         _openapi_raw,
@@ -158,14 +162,34 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["voltage_setpoint_units"],
             false,
         ) : ABSENT
-    _openapi_field_dc_setpoint =
-        haskey(_openapi_object, "dc_setpoint") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["dc_setpoint"], false) :
-        ABSENT
-    _openapi_field_ac_setpoint =
-        haskey(_openapi_object, "ac_setpoint") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["ac_setpoint"], false) :
-        ABSENT
+    _openapi_field_dc_power_setpoint =
+        haskey(_openapi_object, "dc_power_setpoint") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["dc_power_setpoint"],
+            false,
+        ) : ABSENT
+    _openapi_field_dc_voltage_setpoint =
+        haskey(_openapi_object, "dc_voltage_setpoint") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["dc_voltage_setpoint"],
+            false,
+        ) : ABSENT
+    _openapi_field_power_factor_setpoint =
+        haskey(_openapi_object, "power_factor_setpoint") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["power_factor_setpoint"],
+            false,
+        ) : ABSENT
+    _openapi_field_ac_voltage_setpoint =
+        haskey(_openapi_object, "ac_voltage_setpoint") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["ac_voltage_setpoint"],
+            false,
+        ) : ABSENT
     _openapi_field_dc_voltage_droop =
         haskey(_openapi_object, "dc_voltage_droop") ?
         _decode(
@@ -221,8 +245,10 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             "dc_control",
             "ac_control",
             "voltage_setpoint_units",
-            "dc_setpoint",
-            "ac_setpoint",
+            "dc_power_setpoint",
+            "dc_voltage_setpoint",
+            "power_factor_setpoint",
+            "ac_voltage_setpoint",
             "dc_voltage_droop",
             "remote_bus_control",
             "rmpct",
@@ -251,8 +277,10 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
         dc_control=_openapi_field_dc_control,
         ac_control=_openapi_field_ac_control,
         voltage_setpoint_units=_openapi_field_voltage_setpoint_units,
-        dc_setpoint=_openapi_field_dc_setpoint,
-        ac_setpoint=_openapi_field_ac_setpoint,
+        dc_power_setpoint=_openapi_field_dc_power_setpoint,
+        dc_voltage_setpoint=_openapi_field_dc_voltage_setpoint,
+        power_factor_setpoint=_openapi_field_power_factor_setpoint,
+        ac_voltage_setpoint=_openapi_field_ac_voltage_setpoint,
         dc_voltage_droop=_openapi_field_dc_voltage_droop,
         remote_bus_control=_openapi_field_remote_bus_control,
         rmpct=_openapi_field_rmpct,
@@ -308,10 +336,22 @@ function _encode_unvalidated(_openapi_value::InterconnectingConverter)
         _openapi_output["voltage_setpoint_units"] =
             _encode_unvalidated(_openapi_value.voltage_setpoint_units)
     )
-    _openapi_value.dc_setpoint isa Absent ||
-        (_openapi_output["dc_setpoint"] = _encode_unvalidated(_openapi_value.dc_setpoint))
-    _openapi_value.ac_setpoint isa Absent ||
-        (_openapi_output["ac_setpoint"] = _encode_unvalidated(_openapi_value.ac_setpoint))
+    _openapi_value.dc_power_setpoint isa Absent || (
+        _openapi_output["dc_power_setpoint"] =
+            _encode_unvalidated(_openapi_value.dc_power_setpoint)
+    )
+    _openapi_value.dc_voltage_setpoint isa Absent || (
+        _openapi_output["dc_voltage_setpoint"] =
+            _encode_unvalidated(_openapi_value.dc_voltage_setpoint)
+    )
+    _openapi_value.power_factor_setpoint isa Absent || (
+        _openapi_output["power_factor_setpoint"] =
+            _encode_unvalidated(_openapi_value.power_factor_setpoint)
+    )
+    _openapi_value.ac_voltage_setpoint isa Absent || (
+        _openapi_output["ac_voltage_setpoint"] =
+            _encode_unvalidated(_openapi_value.ac_voltage_setpoint)
+    )
     _openapi_value.dc_voltage_droop isa Absent || (
         _openapi_output["dc_voltage_droop"] =
             _encode_unvalidated(_openapi_value.dc_voltage_droop)
@@ -347,7 +387,7 @@ end
 _encode(_openapi_value::InterconnectingConverter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c628e65955936fa423df.json",
+        resource="https://openapi.invalid/schema/external-658b03a4d08a736290e4.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -392,10 +432,16 @@ function _form_fields(_openapi_value::InterconnectingConverter)
         _openapi_output,
         "voltage_setpoint_units" => _openapi_value.voltage_setpoint_units,
     )
-    _openapi_value.dc_setpoint isa Absent ||
-        push!(_openapi_output, "dc_setpoint" => _openapi_value.dc_setpoint)
-    _openapi_value.ac_setpoint isa Absent ||
-        push!(_openapi_output, "ac_setpoint" => _openapi_value.ac_setpoint)
+    _openapi_value.dc_power_setpoint isa Absent ||
+        push!(_openapi_output, "dc_power_setpoint" => _openapi_value.dc_power_setpoint)
+    _openapi_value.dc_voltage_setpoint isa Absent ||
+        push!(_openapi_output, "dc_voltage_setpoint" => _openapi_value.dc_voltage_setpoint)
+    _openapi_value.power_factor_setpoint isa Absent || push!(
+        _openapi_output,
+        "power_factor_setpoint" => _openapi_value.power_factor_setpoint,
+    )
+    _openapi_value.ac_voltage_setpoint isa Absent ||
+        push!(_openapi_output, "ac_voltage_setpoint" => _openapi_value.ac_voltage_setpoint)
     _openapi_value.dc_voltage_droop isa Absent ||
         push!(_openapi_output, "dc_voltage_droop" => _openapi_value.dc_voltage_droop)
     _openapi_value.remote_bus_control isa Absent ||

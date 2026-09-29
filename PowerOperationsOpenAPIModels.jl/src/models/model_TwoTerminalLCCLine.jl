@@ -10,7 +10,8 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
   - `active_power_flow`: Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `parameter_units`: Unit basis for this line's impedance fields (r, rectifier/inverter rc/xc, capacitor reactances, compounding_resistance).
   - `r`: Series resistance of the DC line. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
-  - `transfer_setpoint`: Desired set-point of power. If `power_mode = true` this value is in MW units, and if `power_mode = false` is in Amperes units. This parameter must not be specified in per-unit. A positive value represents the desired consumed power at the rectifier bus, while a negative value represents the desired power at the inverter bus (i.e. the absolute value of `transfer_setpoint` is the generated power at the inverter bus). Units: per power_mode — true: MW, false: A .
+  - `power_transfer_setpoint`: Scheduled power transfer, used when `control_mode` is `POWER`; `null` otherwise. Must not be specified in per-unit. A positive value is the power consumed at the rectifier bus; a negative value is the power delivered at the inverter bus (its absolute value is the generated power at the inverter bus). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `current_transfer_setpoint`: Scheduled current transfer, used when `control_mode` is `CURRENT`; `null` otherwise. Units: A.
   - `dc_voltage_units`: Unit basis for the DC voltage fields (scheduled_dc_voltage, switch_mode_voltage, min_compounding_voltage).
   - `scheduled_dc_voltage`: Scheduled compounded DC voltage. By default this parameter is the scheduled DC voltage in the inverter bus. This parameter must not be specified in per-unit. Units: kV. Units: per dc_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
   - `rectifier_bridges`: Number of bridges in series in the rectifier side.
@@ -23,8 +24,8 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
   - `inverter_rc`: Inverter commutating transformer resistance per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `inverter_xc`: Inverter commutating transformer reactance per bridge. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `inverter_base_voltage`: Inverter primary base AC voltage, entered in kV. Units: kV.
-  - `power_mode`: Boolean flag to identify if the LCC line is in power mode or current mode. If `power_mode = true`, setpoint values must be specified in MW, and if `power_mode = false` setpoint values must be specified in Amperes.
-  - `switch_mode_voltage`: Mode switch DC voltage. This parameter must not be added in per-unit. If LCC line is in power mode control, and DC voltage falls below this value, the line switch to current mode control. Units: kV. Units: per dc_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
+  - `control_mode`: Control mode of the line (PSS/E MDC). `BLOCKED` holds no schedule, `POWER` holds `power_transfer_setpoint`, `CURRENT` holds `current_transfer_setpoint`.
+  - `switch_mode_voltage`: Mode switch DC voltage. This parameter must not be added in per-unit. If `control_mode` is `POWER` and the DC voltage falls below this value, the line switches to current control. Units: kV. Units: per dc_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
   - `compounding_resistance`: Compounding Resistance. This parameter is for control of the DC voltage in the rectifier or inverter end. For inverter DC voltage control, the parameter is set to zero; for rectifier DC voltage control, the parameter is set to the DC line resistance; otherwise, set to a fraction of the DC line resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `min_compounding_voltage`: Minimum compounded voltage. This parameter must not be added in per-unit. Only used in constant gamma operation (gamma_min = gamma_max), and the AC transformer is used to control the DC voltage. Units: kV. Units: per dc_voltage_units — NATURAL_UNITS: kV, COMPONENT_BASE: pu .
   - `rectifier_transformer_ratio`: Rectifier transformer ratio between the primary and secondary side AC voltages. Units: 1.
@@ -55,7 +56,8 @@ Base.@kwdef struct TwoTerminalLCCLine <: APIModel
     active_power_flow::Float64
     parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
     r::Float64
-    transfer_setpoint::Float64
+    power_transfer_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    current_transfer_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
     dc_voltage_units::Union{Absent, Nothing, VoltageUnitBasis} = ABSENT
     scheduled_dc_voltage::Float64
     rectifier_bridges::Int64
@@ -68,7 +70,7 @@ Base.@kwdef struct TwoTerminalLCCLine <: APIModel
     inverter_rc::Float64
     inverter_xc::Float64
     inverter_base_voltage::Float64
-    power_mode::Union{Absent, Bool, Nothing} = ABSENT
+    control_mode::Union{Absent, LCCControlMode, Nothing} = ABSENT
     switch_mode_voltage::Union{Absent, Float64, Nothing} = ABSENT
     compounding_resistance::Union{Absent, Float64, Nothing} = ABSENT
     min_compounding_voltage::Union{Absent, Float64, Nothing} = ABSENT
@@ -98,7 +100,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2c4a3f68248fa9a1c12b.json",
+            resource="https://openapi.invalid/schema/external-f428b2f7f86c8a4ad72d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -128,11 +130,20 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
         ) : ABSENT
     _openapi_field_r =
         _decode(Float64, _required(_openapi_object, "r", "TwoTerminalLCCLine"), false)
-    _openapi_field_transfer_setpoint = _decode(
-        Float64,
-        _required(_openapi_object, "transfer_setpoint", "TwoTerminalLCCLine"),
-        false,
-    )
+    _openapi_field_power_transfer_setpoint =
+        haskey(_openapi_object, "power_transfer_setpoint") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["power_transfer_setpoint"],
+            false,
+        ) : ABSENT
+    _openapi_field_current_transfer_setpoint =
+        haskey(_openapi_object, "current_transfer_setpoint") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["current_transfer_setpoint"],
+            false,
+        ) : ABSENT
     _openapi_field_dc_voltage_units =
         haskey(_openapi_object, "dc_voltage_units") ?
         _decode(
@@ -199,9 +210,13 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
         _required(_openapi_object, "inverter_base_voltage", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_power_mode =
-        haskey(_openapi_object, "power_mode") ?
-        _decode(Union{Absent, Bool, Nothing}, _openapi_object["power_mode"], false) : ABSENT
+    _openapi_field_control_mode =
+        haskey(_openapi_object, "control_mode") ?
+        _decode(
+            Union{Absent, LCCControlMode, Nothing},
+            _openapi_object["control_mode"],
+            false,
+        ) : ABSENT
     _openapi_field_switch_mode_voltage =
         haskey(_openapi_object, "switch_mode_voltage") ?
         _decode(
@@ -358,7 +373,8 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
             "active_power_flow",
             "parameter_units",
             "r",
-            "transfer_setpoint",
+            "power_transfer_setpoint",
+            "current_transfer_setpoint",
             "dc_voltage_units",
             "scheduled_dc_voltage",
             "rectifier_bridges",
@@ -371,7 +387,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
             "inverter_rc",
             "inverter_xc",
             "inverter_base_voltage",
-            "power_mode",
+            "control_mode",
             "switch_mode_voltage",
             "compounding_resistance",
             "min_compounding_voltage",
@@ -406,7 +422,8 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
         active_power_flow=_openapi_field_active_power_flow,
         parameter_units=_openapi_field_parameter_units,
         r=_openapi_field_r,
-        transfer_setpoint=_openapi_field_transfer_setpoint,
+        power_transfer_setpoint=_openapi_field_power_transfer_setpoint,
+        current_transfer_setpoint=_openapi_field_current_transfer_setpoint,
         dc_voltage_units=_openapi_field_dc_voltage_units,
         scheduled_dc_voltage=_openapi_field_scheduled_dc_voltage,
         rectifier_bridges=_openapi_field_rectifier_bridges,
@@ -419,7 +436,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
         inverter_rc=_openapi_field_inverter_rc,
         inverter_xc=_openapi_field_inverter_xc,
         inverter_base_voltage=_openapi_field_inverter_base_voltage,
-        power_mode=_openapi_field_power_mode,
+        control_mode=_openapi_field_control_mode,
         switch_mode_voltage=_openapi_field_switch_mode_voltage,
         compounding_resistance=_openapi_field_compounding_resistance,
         min_compounding_voltage=_openapi_field_min_compounding_voltage,
@@ -465,9 +482,13 @@ function _encode_unvalidated(_openapi_value::TwoTerminalLCCLine)
     )
     _openapi_value.r isa Absent ||
         (_openapi_output["r"] = _encode_unvalidated(_openapi_value.r))
-    _openapi_value.transfer_setpoint isa Absent || (
-        _openapi_output["transfer_setpoint"] =
-            _encode_unvalidated(_openapi_value.transfer_setpoint)
+    _openapi_value.power_transfer_setpoint isa Absent || (
+        _openapi_output["power_transfer_setpoint"] =
+            _encode_unvalidated(_openapi_value.power_transfer_setpoint)
+    )
+    _openapi_value.current_transfer_setpoint isa Absent || (
+        _openapi_output["current_transfer_setpoint"] =
+            _encode_unvalidated(_openapi_value.current_transfer_setpoint)
     )
     _openapi_value.dc_voltage_units isa Absent || (
         _openapi_output["dc_voltage_units"] =
@@ -509,8 +530,8 @@ function _encode_unvalidated(_openapi_value::TwoTerminalLCCLine)
         _openapi_output["inverter_base_voltage"] =
             _encode_unvalidated(_openapi_value.inverter_base_voltage)
     )
-    _openapi_value.power_mode isa Absent ||
-        (_openapi_output["power_mode"] = _encode_unvalidated(_openapi_value.power_mode))
+    _openapi_value.control_mode isa Absent ||
+        (_openapi_output["control_mode"] = _encode_unvalidated(_openapi_value.control_mode))
     _openapi_value.switch_mode_voltage isa Absent || (
         _openapi_output["switch_mode_voltage"] =
             _encode_unvalidated(_openapi_value.switch_mode_voltage)
@@ -606,7 +627,7 @@ end
 _encode(_openapi_value::TwoTerminalLCCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-2c4a3f68248fa9a1c12b.json",
+        resource="https://openapi.invalid/schema/external-f428b2f7f86c8a4ad72d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -626,8 +647,14 @@ function _form_fields(_openapi_value::TwoTerminalLCCLine)
     _openapi_value.parameter_units isa Absent ||
         push!(_openapi_output, "parameter_units" => _openapi_value.parameter_units)
     _openapi_value.r isa Absent || push!(_openapi_output, "r" => _openapi_value.r)
-    _openapi_value.transfer_setpoint isa Absent ||
-        push!(_openapi_output, "transfer_setpoint" => _openapi_value.transfer_setpoint)
+    _openapi_value.power_transfer_setpoint isa Absent || push!(
+        _openapi_output,
+        "power_transfer_setpoint" => _openapi_value.power_transfer_setpoint,
+    )
+    _openapi_value.current_transfer_setpoint isa Absent || push!(
+        _openapi_output,
+        "current_transfer_setpoint" => _openapi_value.current_transfer_setpoint,
+    )
     _openapi_value.dc_voltage_units isa Absent ||
         push!(_openapi_output, "dc_voltage_units" => _openapi_value.dc_voltage_units)
     _openapi_value.scheduled_dc_voltage isa Absent || push!(
@@ -663,8 +690,8 @@ function _form_fields(_openapi_value::TwoTerminalLCCLine)
         _openapi_output,
         "inverter_base_voltage" => _openapi_value.inverter_base_voltage,
     )
-    _openapi_value.power_mode isa Absent ||
-        push!(_openapi_output, "power_mode" => _openapi_value.power_mode)
+    _openapi_value.control_mode isa Absent ||
+        push!(_openapi_output, "control_mode" => _openapi_value.control_mode)
     _openapi_value.switch_mode_voltage isa Absent ||
         push!(_openapi_output, "switch_mode_voltage" => _openapi_value.switch_mode_voltage)
     _openapi_value.compounding_resistance isa Absent || push!(

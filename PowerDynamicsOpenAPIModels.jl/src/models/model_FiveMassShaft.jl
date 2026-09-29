@@ -50,7 +50,7 @@ function _decode(::Type{FiveMassShaft}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-757779cf25c9ff9b11bc.json",
+            resource="https://openapi.invalid/schema/external-d30e01cebb9b9c6268bb.json",
             pointer="",
         ),
         _openapi_raw,
@@ -59,97 +59,43 @@ function _decode(::Type{FiveMassShaft}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "FiveMassShaft")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "FiveMassShaft"), _openapi_validate)
-    _openapi_field_h = _decode(
-        Float64,
-        _required(_openapi_object, "H", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_h_hp = _decode(
-        Float64,
-        _required(_openapi_object, "H_hp", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_h_ip = _decode(
-        Float64,
-        _required(_openapi_object, "H_ip", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_h_lp = _decode(
-        Float64,
-        _required(_openapi_object, "H_lp", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_h_ex = _decode(
-        Float64,
-        _required(_openapi_object, "H_ex", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d = _decode(
-        Float64,
-        _required(_openapi_object, "D", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d_hp = _decode(
-        Float64,
-        _required(_openapi_object, "D_hp", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d_ip = _decode(
-        Float64,
-        _required(_openapi_object, "D_ip", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d_lp = _decode(
-        Float64,
-        _required(_openapi_object, "D_lp", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d_ex = _decode(
-        Float64,
-        _required(_openapi_object, "D_ex", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d_12 = _decode(
-        Float64,
-        _required(_openapi_object, "D_12", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d_23 = _decode(
-        Float64,
-        _required(_openapi_object, "D_23", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d_34 = _decode(
-        Float64,
-        _required(_openapi_object, "D_34", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_d_45 = _decode(
-        Float64,
-        _required(_openapi_object, "D_45", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_k_hp = _decode(
-        Float64,
-        _required(_openapi_object, "K_hp", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_k_ip = _decode(
-        Float64,
-        _required(_openapi_object, "K_ip", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_k_lp = _decode(
-        Float64,
-        _required(_openapi_object, "K_lp", "FiveMassShaft"),
-        _openapi_validate,
-    )
-    _openapi_field_k_ex = _decode(
-        Float64,
-        _required(_openapi_object, "K_ex", "FiveMassShaft"),
-        _openapi_validate,
-    )
+        _decode(Int64, _required(_openapi_object, "id", "FiveMassShaft"), false)
+    _openapi_field_h =
+        _decode(Float64, _required(_openapi_object, "H", "FiveMassShaft"), false)
+    _openapi_field_h_hp =
+        _decode(Float64, _required(_openapi_object, "H_hp", "FiveMassShaft"), false)
+    _openapi_field_h_ip =
+        _decode(Float64, _required(_openapi_object, "H_ip", "FiveMassShaft"), false)
+    _openapi_field_h_lp =
+        _decode(Float64, _required(_openapi_object, "H_lp", "FiveMassShaft"), false)
+    _openapi_field_h_ex =
+        _decode(Float64, _required(_openapi_object, "H_ex", "FiveMassShaft"), false)
+    _openapi_field_d =
+        _decode(Float64, _required(_openapi_object, "D", "FiveMassShaft"), false)
+    _openapi_field_d_hp =
+        _decode(Float64, _required(_openapi_object, "D_hp", "FiveMassShaft"), false)
+    _openapi_field_d_ip =
+        _decode(Float64, _required(_openapi_object, "D_ip", "FiveMassShaft"), false)
+    _openapi_field_d_lp =
+        _decode(Float64, _required(_openapi_object, "D_lp", "FiveMassShaft"), false)
+    _openapi_field_d_ex =
+        _decode(Float64, _required(_openapi_object, "D_ex", "FiveMassShaft"), false)
+    _openapi_field_d_12 =
+        _decode(Float64, _required(_openapi_object, "D_12", "FiveMassShaft"), false)
+    _openapi_field_d_23 =
+        _decode(Float64, _required(_openapi_object, "D_23", "FiveMassShaft"), false)
+    _openapi_field_d_34 =
+        _decode(Float64, _required(_openapi_object, "D_34", "FiveMassShaft"), false)
+    _openapi_field_d_45 =
+        _decode(Float64, _required(_openapi_object, "D_45", "FiveMassShaft"), false)
+    _openapi_field_k_hp =
+        _decode(Float64, _required(_openapi_object, "K_hp", "FiveMassShaft"), false)
+    _openapi_field_k_ip =
+        _decode(Float64, _required(_openapi_object, "K_ip", "FiveMassShaft"), false)
+    _openapi_field_k_lp =
+        _decode(Float64, _required(_openapi_object, "K_lp", "FiveMassShaft"), false)
+    _openapi_field_k_ex =
+        _decode(Float64, _required(_openapi_object, "K_ex", "FiveMassShaft"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -174,7 +120,7 @@ function _decode(::Type{FiveMassShaft}, _openapi_raw, _openapi_validate::Bool)
             "K_ex",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return FiveMassShaft(;
         id=_openapi_field_id,
@@ -199,62 +145,66 @@ function _decode(::Type{FiveMassShaft}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::FiveMassShaft)
+function _encode_unvalidated(_openapi_value::FiveMassShaft)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.h isa Absent || (_openapi_output["H"] = _encode(_openapi_value.h))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.h isa Absent ||
+        (_openapi_output["H"] = _encode_unvalidated(_openapi_value.h))
     _openapi_value.h_hp isa Absent ||
-        (_openapi_output["H_hp"] = _encode(_openapi_value.h_hp))
+        (_openapi_output["H_hp"] = _encode_unvalidated(_openapi_value.h_hp))
     _openapi_value.h_ip isa Absent ||
-        (_openapi_output["H_ip"] = _encode(_openapi_value.h_ip))
+        (_openapi_output["H_ip"] = _encode_unvalidated(_openapi_value.h_ip))
     _openapi_value.h_lp isa Absent ||
-        (_openapi_output["H_lp"] = _encode(_openapi_value.h_lp))
+        (_openapi_output["H_lp"] = _encode_unvalidated(_openapi_value.h_lp))
     _openapi_value.h_ex isa Absent ||
-        (_openapi_output["H_ex"] = _encode(_openapi_value.h_ex))
-    _openapi_value.d isa Absent || (_openapi_output["D"] = _encode(_openapi_value.d))
+        (_openapi_output["H_ex"] = _encode_unvalidated(_openapi_value.h_ex))
+    _openapi_value.d isa Absent ||
+        (_openapi_output["D"] = _encode_unvalidated(_openapi_value.d))
     _openapi_value.d_hp isa Absent ||
-        (_openapi_output["D_hp"] = _encode(_openapi_value.d_hp))
+        (_openapi_output["D_hp"] = _encode_unvalidated(_openapi_value.d_hp))
     _openapi_value.d_ip isa Absent ||
-        (_openapi_output["D_ip"] = _encode(_openapi_value.d_ip))
+        (_openapi_output["D_ip"] = _encode_unvalidated(_openapi_value.d_ip))
     _openapi_value.d_lp isa Absent ||
-        (_openapi_output["D_lp"] = _encode(_openapi_value.d_lp))
+        (_openapi_output["D_lp"] = _encode_unvalidated(_openapi_value.d_lp))
     _openapi_value.d_ex isa Absent ||
-        (_openapi_output["D_ex"] = _encode(_openapi_value.d_ex))
+        (_openapi_output["D_ex"] = _encode_unvalidated(_openapi_value.d_ex))
     _openapi_value.d_12 isa Absent ||
-        (_openapi_output["D_12"] = _encode(_openapi_value.d_12))
+        (_openapi_output["D_12"] = _encode_unvalidated(_openapi_value.d_12))
     _openapi_value.d_23 isa Absent ||
-        (_openapi_output["D_23"] = _encode(_openapi_value.d_23))
+        (_openapi_output["D_23"] = _encode_unvalidated(_openapi_value.d_23))
     _openapi_value.d_34 isa Absent ||
-        (_openapi_output["D_34"] = _encode(_openapi_value.d_34))
+        (_openapi_output["D_34"] = _encode_unvalidated(_openapi_value.d_34))
     _openapi_value.d_45 isa Absent ||
-        (_openapi_output["D_45"] = _encode(_openapi_value.d_45))
+        (_openapi_output["D_45"] = _encode_unvalidated(_openapi_value.d_45))
     _openapi_value.k_hp isa Absent ||
-        (_openapi_output["K_hp"] = _encode(_openapi_value.k_hp))
+        (_openapi_output["K_hp"] = _encode_unvalidated(_openapi_value.k_hp))
     _openapi_value.k_ip isa Absent ||
-        (_openapi_output["K_ip"] = _encode(_openapi_value.k_ip))
+        (_openapi_output["K_ip"] = _encode_unvalidated(_openapi_value.k_ip))
     _openapi_value.k_lp isa Absent ||
-        (_openapi_output["K_lp"] = _encode(_openapi_value.k_lp))
+        (_openapi_output["K_lp"] = _encode_unvalidated(_openapi_value.k_lp))
     _openapi_value.k_ex isa Absent ||
-        (_openapi_output["K_ex"] = _encode(_openapi_value.k_ex))
+        (_openapi_output["K_ex"] = _encode_unvalidated(_openapi_value.k_ex))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-757779cf25c9ff9b11bc.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding FiveMassShaft";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::FiveMassShaft) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-d30e01cebb9b9c6268bb.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding FiveMassShaft";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::FiveMassShaft)
     _openapi_output = Pair{String, Any}[]

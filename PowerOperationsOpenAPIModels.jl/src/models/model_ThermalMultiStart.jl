@@ -28,6 +28,7 @@ A thermal generator, such as a fossil fuel or nuclear generator, that can start-
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `time_at_status`: Time the generator has been in its current status. Units: min.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
+  - `switching_times`: Time it takes the unit to switch ONLINE (`up`) or OFFLINE (`down`) after a start or shut-down is initiated. Set to `null` if not modeled. Units: min.
 """
 Base.@kwdef struct ThermalMultiStart <: APIModel
     id::Int64
@@ -53,6 +54,7 @@ Base.@kwdef struct ThermalMultiStart <: APIModel
     power_units::UnitSystem
     time_at_status::Union{Absent, Float64, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    switching_times::Union{Absent, Nothing, UpDown} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{ThermalMultiStart}, value) = _decode(ThermalMultiStart, value, true)
@@ -60,7 +62,7 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2a649abe3e7984a9c39a.json",
+            resource="https://openapi.invalid/schema/external-3ed9661afe8954dff6b8.json",
             pointer="",
         ),
         _openapi_raw,
@@ -175,6 +177,10 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
             _openapi_object["dynamic_injector"],
             false,
         ) : ABSENT
+    _openapi_field_switching_times =
+        haskey(_openapi_object, "switching_times") ?
+        _decode(Union{Absent, Nothing, UpDown}, _openapi_object["switching_times"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -201,6 +207,7 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
             "power_units",
             "time_at_status",
             "dynamic_injector",
+            "switching_times",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, false)
@@ -229,6 +236,7 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
         power_units=_openapi_field_power_units,
         time_at_status=_openapi_field_time_at_status,
         dynamic_injector=_openapi_field_dynamic_injector,
+        switching_times=_openapi_field_switching_times,
         additional_properties=_openapi_additional_properties,
     )
 end
@@ -300,6 +308,10 @@ function _encode_unvalidated(_openapi_value::ThermalMultiStart)
         _openapi_output["dynamic_injector"] =
             _encode_unvalidated(_openapi_value.dynamic_injector)
     )
+    _openapi_value.switching_times isa Absent || (
+        _openapi_output["switching_times"] =
+            _encode_unvalidated(_openapi_value.switching_times)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -313,7 +325,7 @@ end
 _encode(_openapi_value::ThermalMultiStart) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-2a649abe3e7984a9c39a.json",
+        resource="https://openapi.invalid/schema/external-3ed9661afe8954dff6b8.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -367,6 +379,8 @@ function _form_fields(_openapi_value::ThermalMultiStart)
         push!(_openapi_output, "time_at_status" => _openapi_value.time_at_status)
     _openapi_value.dynamic_injector isa Absent ||
         push!(_openapi_output, "dynamic_injector" => _openapi_value.dynamic_injector)
+    _openapi_value.switching_times isa Absent ||
+        push!(_openapi_output, "switching_times" => _openapi_value.switching_times)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

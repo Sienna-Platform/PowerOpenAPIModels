@@ -36,7 +36,7 @@ function _decode(::Type{EXST1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ab7587784c2ed699ce4e.json",
+            resource="https://openapi.invalid/schema/external-fee48a498cfe9f585401.json",
             pointer="",
         ),
         _openapi_raw,
@@ -44,35 +44,22 @@ function _decode(::Type{EXST1}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "EXST1")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "EXST1"), _openapi_validate)
-    _openapi_field_tr =
-        _decode(Float64, _required(_openapi_object, "Tr", "EXST1"), _openapi_validate)
+    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "EXST1"), false)
+    _openapi_field_tr = _decode(Float64, _required(_openapi_object, "Tr", "EXST1"), false)
     _openapi_field_vi_lim =
-        _decode(MinMax, _required(_openapi_object, "Vi_lim", "EXST1"), _openapi_validate)
-    _openapi_field_tc =
-        _decode(Float64, _required(_openapi_object, "Tc", "EXST1"), _openapi_validate)
-    _openapi_field_tb =
-        _decode(Float64, _required(_openapi_object, "Tb", "EXST1"), _openapi_validate)
-    _openapi_field_ka =
-        _decode(Float64, _required(_openapi_object, "Ka", "EXST1"), _openapi_validate)
-    _openapi_field_ta =
-        _decode(Float64, _required(_openapi_object, "Ta", "EXST1"), _openapi_validate)
+        _decode(MinMax, _required(_openapi_object, "Vi_lim", "EXST1"), false)
+    _openapi_field_tc = _decode(Float64, _required(_openapi_object, "Tc", "EXST1"), false)
+    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "EXST1"), false)
+    _openapi_field_ka = _decode(Float64, _required(_openapi_object, "Ka", "EXST1"), false)
+    _openapi_field_ta = _decode(Float64, _required(_openapi_object, "Ta", "EXST1"), false)
     _openapi_field_vr_lim =
-        _decode(MinMax, _required(_openapi_object, "Vr_lim", "EXST1"), _openapi_validate)
-    _openapi_field_kc =
-        _decode(Float64, _required(_openapi_object, "Kc", "EXST1"), _openapi_validate)
-    _openapi_field_kf =
-        _decode(Float64, _required(_openapi_object, "Kf", "EXST1"), _openapi_validate)
-    _openapi_field_tf =
-        _decode(Float64, _required(_openapi_object, "Tf", "EXST1"), _openapi_validate)
+        _decode(MinMax, _required(_openapi_object, "Vr_lim", "EXST1"), false)
+    _openapi_field_kc = _decode(Float64, _required(_openapi_object, "Kc", "EXST1"), false)
+    _openapi_field_kf = _decode(Float64, _required(_openapi_object, "Kf", "EXST1"), false)
+    _openapi_field_tf = _decode(Float64, _required(_openapi_object, "Tf", "EXST1"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["V_ref"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -90,7 +77,7 @@ function _decode(::Type{EXST1}, _openapi_raw, _openapi_validate::Bool)
             "V_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return EXST1(;
         id=_openapi_field_id,
@@ -108,42 +95,52 @@ function _decode(::Type{EXST1}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::EXST1)
+function _encode_unvalidated(_openapi_value::EXST1)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.tr isa Absent || (_openapi_output["Tr"] = _encode(_openapi_value.tr))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.tr isa Absent ||
+        (_openapi_output["Tr"] = _encode_unvalidated(_openapi_value.tr))
     _openapi_value.vi_lim isa Absent ||
-        (_openapi_output["Vi_lim"] = _encode(_openapi_value.vi_lim))
-    _openapi_value.tc isa Absent || (_openapi_output["Tc"] = _encode(_openapi_value.tc))
-    _openapi_value.tb isa Absent || (_openapi_output["Tb"] = _encode(_openapi_value.tb))
-    _openapi_value.ka isa Absent || (_openapi_output["Ka"] = _encode(_openapi_value.ka))
-    _openapi_value.ta isa Absent || (_openapi_output["Ta"] = _encode(_openapi_value.ta))
+        (_openapi_output["Vi_lim"] = _encode_unvalidated(_openapi_value.vi_lim))
+    _openapi_value.tc isa Absent ||
+        (_openapi_output["Tc"] = _encode_unvalidated(_openapi_value.tc))
+    _openapi_value.tb isa Absent ||
+        (_openapi_output["Tb"] = _encode_unvalidated(_openapi_value.tb))
+    _openapi_value.ka isa Absent ||
+        (_openapi_output["Ka"] = _encode_unvalidated(_openapi_value.ka))
+    _openapi_value.ta isa Absent ||
+        (_openapi_output["Ta"] = _encode_unvalidated(_openapi_value.ta))
     _openapi_value.vr_lim isa Absent ||
-        (_openapi_output["Vr_lim"] = _encode(_openapi_value.vr_lim))
-    _openapi_value.kc isa Absent || (_openapi_output["Kc"] = _encode(_openapi_value.kc))
-    _openapi_value.kf isa Absent || (_openapi_output["Kf"] = _encode(_openapi_value.kf))
-    _openapi_value.tf isa Absent || (_openapi_output["Tf"] = _encode(_openapi_value.tf))
+        (_openapi_output["Vr_lim"] = _encode_unvalidated(_openapi_value.vr_lim))
+    _openapi_value.kc isa Absent ||
+        (_openapi_output["Kc"] = _encode_unvalidated(_openapi_value.kc))
+    _openapi_value.kf isa Absent ||
+        (_openapi_output["Kf"] = _encode_unvalidated(_openapi_value.kf))
+    _openapi_value.tf isa Absent ||
+        (_openapi_output["Tf"] = _encode_unvalidated(_openapi_value.tf))
     _openapi_value.v_ref isa Absent ||
-        (_openapi_output["V_ref"] = _encode(_openapi_value.v_ref))
+        (_openapi_output["V_ref"] = _encode_unvalidated(_openapi_value.v_ref))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-ab7587784c2ed699ce4e.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding EXST1";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::EXST1) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-fee48a498cfe9f585401.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding EXST1";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::EXST1)
     _openapi_output = Pair{String, Any}[]

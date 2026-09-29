@@ -49,7 +49,7 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a19739e398fbec984537.json",
+            resource="https://openapi.invalid/schema/external-e76197353600b4cc4561.json",
             pointer="",
         ),
         _openapi_raw,
@@ -225,7 +225,7 @@ end
 _encode(_openapi_value::DiscreteControlledACBranch) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a19739e398fbec984537.json",
+        resource="https://openapi.invalid/schema/external-e76197353600b4cc4561.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

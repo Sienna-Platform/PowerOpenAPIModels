@@ -14,8 +14,9 @@ Most often used in power flow studies, iterating over the steps to see impacts o
   - `number_of_steps`: Vector with number of steps for each adjustable shunt block. For example, `number_of_steps[2]` are the number of available steps for admittance increment at block 2.
   - `y_increase`: Vector with admittance increment step for each adjustable shunt block. For example, `Y_increase[2]` is the complex admittance increment for each step at block 2. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
   - `solved_admittance`: Solved-case switched shunt admittance (PSS/E BINIT); when present it is the shunt's effective admittance, used in place of `number_engaged` * `Y_increase`. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
-  - `admittance_limits`: Shunt admittance limits for switched shunt model. Units: per admittance_units — NATURAL_UNITS: S, COMPONENT_MVAR: MVAr .
-  - `control_mode`: Switched-shunt control mode.
+  - `voltage_limits`: Regulated-voltage band (PSS/E VSWLO/VSWHI) at the regulated bus, per unit of its base voltage. `null` unless `control_mode` selects it. Units: pu.
+  - `reactive_power_range_limits`: Regulated reactive-power band (PSS/E VSWLO/VSWHI) as a fraction of the regulated device's reactive power range, the plant, converter or FACTS shunt at the regulated bus; 0.2 to 0.8 means 20 to 80 percent of that device's Qmin-to-Qmax span. `null` unless `control_mode` selects it. Units: 1.
+  - `control_mode`: Switched-shunt control mode (PSS/E MODSW). Voltage modes use `voltage_limits`, reactive modes use `reactive_power_range_limits`; `UNDEFINED` and `FIXED` use neither.
   - `regulated_bus_number`: Bus number whose voltage/quantity this shunt regulates; 0 means local bus (PSS/E SWREM/NREG). Units: 1.
   - `dynamic_injector`: ID of the corresponding dynamic injection model for admittance, if any.
 """
@@ -29,7 +30,8 @@ Base.@kwdef struct SwitchedAdmittance <: APIModel
     number_of_steps::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     y_increase::Union{Absent, Nothing, Vector{ComplexNumber}} = ABSENT
     solved_admittance::Union{Absent, Union{Float64, Nothing}} = ABSENT
-    admittance_limits::Union{Absent, Nothing, MinMax} = ABSENT
+    voltage_limits::Union{Absent, Nothing, MinMax} = ABSENT
+    reactive_power_range_limits::Union{Absent, Nothing, MinMax} = ABSENT
     control_mode::Union{Absent, Nothing, SwitchedAdmittanceControlMode} = ABSENT
     regulated_bus_number::Union{Absent, Int64, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
@@ -40,7 +42,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6b6aa3676e1dbfd69854.json",
+            resource="https://openapi.invalid/schema/external-816d2962465333ec74c6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -91,11 +93,15 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["solved_admittance"],
             false,
         ) : ABSENT
-    _openapi_field_admittance_limits =
-        haskey(_openapi_object, "admittance_limits") ?
+    _openapi_field_voltage_limits =
+        haskey(_openapi_object, "voltage_limits") ?
+        _decode(Union{Absent, Nothing, MinMax}, _openapi_object["voltage_limits"], false) :
+        ABSENT
+    _openapi_field_reactive_power_range_limits =
+        haskey(_openapi_object, "reactive_power_range_limits") ?
         _decode(
             Union{Absent, Nothing, MinMax},
-            _openapi_object["admittance_limits"],
+            _openapi_object["reactive_power_range_limits"],
             false,
         ) : ABSENT
     _openapi_field_control_mode =
@@ -131,7 +137,8 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             "number_of_steps",
             "Y_increase",
             "solved_admittance",
-            "admittance_limits",
+            "voltage_limits",
+            "reactive_power_range_limits",
             "control_mode",
             "regulated_bus_number",
             "dynamic_injector",
@@ -149,7 +156,8 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
         number_of_steps=_openapi_field_number_of_steps,
         y_increase=_openapi_field_y_increase,
         solved_admittance=_openapi_field_solved_admittance,
-        admittance_limits=_openapi_field_admittance_limits,
+        voltage_limits=_openapi_field_voltage_limits,
+        reactive_power_range_limits=_openapi_field_reactive_power_range_limits,
         control_mode=_openapi_field_control_mode,
         regulated_bus_number=_openapi_field_regulated_bus_number,
         dynamic_injector=_openapi_field_dynamic_injector,
@@ -184,9 +192,13 @@ function _encode_unvalidated(_openapi_value::SwitchedAdmittance)
         _openapi_output["solved_admittance"] =
             _encode_unvalidated(_openapi_value.solved_admittance)
     )
-    _openapi_value.admittance_limits isa Absent || (
-        _openapi_output["admittance_limits"] =
-            _encode_unvalidated(_openapi_value.admittance_limits)
+    _openapi_value.voltage_limits isa Absent || (
+        _openapi_output["voltage_limits"] =
+            _encode_unvalidated(_openapi_value.voltage_limits)
+    )
+    _openapi_value.reactive_power_range_limits isa Absent || (
+        _openapi_output["reactive_power_range_limits"] =
+            _encode_unvalidated(_openapi_value.reactive_power_range_limits)
     )
     _openapi_value.control_mode isa Absent ||
         (_openapi_output["control_mode"] = _encode_unvalidated(_openapi_value.control_mode))
@@ -211,7 +223,7 @@ end
 _encode(_openapi_value::SwitchedAdmittance) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6b6aa3676e1dbfd69854.json",
+        resource="https://openapi.invalid/schema/external-816d2962465333ec74c6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -236,8 +248,12 @@ function _form_fields(_openapi_value::SwitchedAdmittance)
         push!(_openapi_output, "Y_increase" => _openapi_value.y_increase)
     _openapi_value.solved_admittance isa Absent ||
         push!(_openapi_output, "solved_admittance" => _openapi_value.solved_admittance)
-    _openapi_value.admittance_limits isa Absent ||
-        push!(_openapi_output, "admittance_limits" => _openapi_value.admittance_limits)
+    _openapi_value.voltage_limits isa Absent ||
+        push!(_openapi_output, "voltage_limits" => _openapi_value.voltage_limits)
+    _openapi_value.reactive_power_range_limits isa Absent || push!(
+        _openapi_output,
+        "reactive_power_range_limits" => _openapi_value.reactive_power_range_limits,
+    )
     _openapi_value.control_mode isa Absent ||
         push!(_openapi_output, "control_mode" => _openapi_value.control_mode)
     _openapi_value.regulated_bus_number isa Absent || push!(

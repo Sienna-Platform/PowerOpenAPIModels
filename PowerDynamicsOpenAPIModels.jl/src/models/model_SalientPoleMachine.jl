@@ -5,9 +5,9 @@ Parameters of 3-states salient-pole synchronous machine with quadratic/exponenti
 
   - `id`: Unique integer identifier for this component
   - `r`: Armature resistance
-  - `td0_p`: Time constant of transient d-axis voltage
-  - `td0_pp`: Time constant of sub-transient d-axis voltage
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage
+  - `td0_p`: Time constant of transient d-axis voltage Units: s.
+  - `td0_pp`: Time constant of sub-transient d-axis voltage Units: s.
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage Units: s.
   - `xd`: Reactance after EMF in d-axis
   - `xq`: Reactance after EMF in q-axis
   - `xd_p`: Transient reactance after EMF in d-axis
@@ -34,7 +34,7 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b0f8fec19db0e0ebea0e.json",
+            resource="https://openapi.invalid/schema/external-17e7baaf5939b2a309ff.json",
             pointer="",
         ),
         _openapi_raw,
@@ -42,60 +42,30 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SalientPoleMachine")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_r = _decode(
-        Float64,
-        _required(_openapi_object, "R", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_td0_p = _decode(
-        Float64,
-        _required(_openapi_object, "Td0_p", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_td0_pp = _decode(
-        Float64,
-        _required(_openapi_object, "Td0_pp", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_tq0_pp = _decode(
-        Float64,
-        _required(_openapi_object, "Tq0_pp", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xd = _decode(
-        Float64,
-        _required(_openapi_object, "Xd", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xq = _decode(
-        Float64,
-        _required(_openapi_object, "Xq", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xd_p = _decode(
-        Float64,
-        _required(_openapi_object, "Xd_p", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xd_pp = _decode(
-        Float64,
-        _required(_openapi_object, "Xd_pp", "SalientPoleMachine"),
-        _openapi_validate,
-    )
-    _openapi_field_xl = _decode(
-        Float64,
-        _required(_openapi_object, "Xl", "SalientPoleMachine"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "SalientPoleMachine"), false)
+    _openapi_field_r =
+        _decode(Float64, _required(_openapi_object, "R", "SalientPoleMachine"), false)
+    _openapi_field_td0_p =
+        _decode(Float64, _required(_openapi_object, "Td0_p", "SalientPoleMachine"), false)
+    _openapi_field_td0_pp =
+        _decode(Float64, _required(_openapi_object, "Td0_pp", "SalientPoleMachine"), false)
+    _openapi_field_tq0_pp =
+        _decode(Float64, _required(_openapi_object, "Tq0_pp", "SalientPoleMachine"), false)
+    _openapi_field_xd =
+        _decode(Float64, _required(_openapi_object, "Xd", "SalientPoleMachine"), false)
+    _openapi_field_xq =
+        _decode(Float64, _required(_openapi_object, "Xq", "SalientPoleMachine"), false)
+    _openapi_field_xd_p =
+        _decode(Float64, _required(_openapi_object, "Xd_p", "SalientPoleMachine"), false)
+    _openapi_field_xd_pp =
+        _decode(Float64, _required(_openapi_object, "Xd_pp", "SalientPoleMachine"), false)
+    _openapi_field_xl =
+        _decode(Float64, _required(_openapi_object, "Xl", "SalientPoleMachine"), false)
     _openapi_field_se = _decode(
         Vector{Float64},
         _required(_openapi_object, "Se", "SalientPoleMachine"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -103,7 +73,7 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
         ("id", "R", "Td0_p", "Td0_pp", "Tq0_pp", "Xd", "Xq", "Xd_p", "Xd_pp", "Xl", "Se") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return SalientPoleMachine(;
         id=_openapi_field_id,
@@ -120,43 +90,50 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::SalientPoleMachine)
+function _encode_unvalidated(_openapi_value::SalientPoleMachine)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.r isa Absent || (_openapi_output["R"] = _encode(_openapi_value.r))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.r isa Absent ||
+        (_openapi_output["R"] = _encode_unvalidated(_openapi_value.r))
     _openapi_value.td0_p isa Absent ||
-        (_openapi_output["Td0_p"] = _encode(_openapi_value.td0_p))
+        (_openapi_output["Td0_p"] = _encode_unvalidated(_openapi_value.td0_p))
     _openapi_value.td0_pp isa Absent ||
-        (_openapi_output["Td0_pp"] = _encode(_openapi_value.td0_pp))
+        (_openapi_output["Td0_pp"] = _encode_unvalidated(_openapi_value.td0_pp))
     _openapi_value.tq0_pp isa Absent ||
-        (_openapi_output["Tq0_pp"] = _encode(_openapi_value.tq0_pp))
-    _openapi_value.xd isa Absent || (_openapi_output["Xd"] = _encode(_openapi_value.xd))
-    _openapi_value.xq isa Absent || (_openapi_output["Xq"] = _encode(_openapi_value.xq))
+        (_openapi_output["Tq0_pp"] = _encode_unvalidated(_openapi_value.tq0_pp))
+    _openapi_value.xd isa Absent ||
+        (_openapi_output["Xd"] = _encode_unvalidated(_openapi_value.xd))
+    _openapi_value.xq isa Absent ||
+        (_openapi_output["Xq"] = _encode_unvalidated(_openapi_value.xq))
     _openapi_value.xd_p isa Absent ||
-        (_openapi_output["Xd_p"] = _encode(_openapi_value.xd_p))
+        (_openapi_output["Xd_p"] = _encode_unvalidated(_openapi_value.xd_p))
     _openapi_value.xd_pp isa Absent ||
-        (_openapi_output["Xd_pp"] = _encode(_openapi_value.xd_pp))
-    _openapi_value.xl isa Absent || (_openapi_output["Xl"] = _encode(_openapi_value.xl))
-    _openapi_value.se isa Absent || (_openapi_output["Se"] = _encode(_openapi_value.se))
+        (_openapi_output["Xd_pp"] = _encode_unvalidated(_openapi_value.xd_pp))
+    _openapi_value.xl isa Absent ||
+        (_openapi_output["Xl"] = _encode_unvalidated(_openapi_value.xl))
+    _openapi_value.se isa Absent ||
+        (_openapi_output["Se"] = _encode_unvalidated(_openapi_value.se))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-b0f8fec19db0e0ebea0e.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding SalientPoleMachine";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::SalientPoleMachine) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-17e7baaf5939b2a309ff.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding SalientPoleMachine";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::SalientPoleMachine)
     _openapi_output = Pair{String, Any}[]

@@ -38,7 +38,7 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-29d492daf38787a2f8c4.json",
+            resource="https://openapi.invalid/schema/external-ff9dcb4590ca4b8c06d7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -46,73 +46,36 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "HydroTurbineGov")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_r = _decode(
-        Float64,
-        _required(_openapi_object, "R", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_r_2 = _decode(
-        Float64,
-        _required(_openapi_object, "r", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_tr = _decode(
-        Float64,
-        _required(_openapi_object, "Tr", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_tf = _decode(
-        Float64,
-        _required(_openapi_object, "Tf", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_tg = _decode(
-        Float64,
-        _required(_openapi_object, "Tg", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_velm = _decode(
-        Float64,
-        _required(_openapi_object, "VELM", "HydroTurbineGov"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "HydroTurbineGov"), false)
+    _openapi_field_r =
+        _decode(Float64, _required(_openapi_object, "R", "HydroTurbineGov"), false)
+    _openapi_field_r_2 =
+        _decode(Float64, _required(_openapi_object, "r", "HydroTurbineGov"), false)
+    _openapi_field_tr =
+        _decode(Float64, _required(_openapi_object, "Tr", "HydroTurbineGov"), false)
+    _openapi_field_tf =
+        _decode(Float64, _required(_openapi_object, "Tf", "HydroTurbineGov"), false)
+    _openapi_field_tg =
+        _decode(Float64, _required(_openapi_object, "Tg", "HydroTurbineGov"), false)
+    _openapi_field_velm =
+        _decode(Float64, _required(_openapi_object, "VELM", "HydroTurbineGov"), false)
     _openapi_field_gate_position_limits = _decode(
         MinMax,
         _required(_openapi_object, "gate_position_limits", "HydroTurbineGov"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_tw = _decode(
-        Float64,
-        _required(_openapi_object, "Tw", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_at = _decode(
-        Float64,
-        _required(_openapi_object, "At", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_d_t = _decode(
-        Float64,
-        _required(_openapi_object, "D_T", "HydroTurbineGov"),
-        _openapi_validate,
-    )
-    _openapi_field_q_nl = _decode(
-        Float64,
-        _required(_openapi_object, "q_nl", "HydroTurbineGov"),
-        _openapi_validate,
-    )
+    _openapi_field_tw =
+        _decode(Float64, _required(_openapi_object, "Tw", "HydroTurbineGov"), false)
+    _openapi_field_at =
+        _decode(Float64, _required(_openapi_object, "At", "HydroTurbineGov"), false)
+    _openapi_field_d_t =
+        _decode(Float64, _required(_openapi_object, "D_T", "HydroTurbineGov"), false)
+    _openapi_field_q_nl =
+        _decode(Float64, _required(_openapi_object, "q_nl", "HydroTurbineGov"), false)
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["P_ref"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -131,7 +94,7 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
             "P_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return HydroTurbineGov(;
         id=_openapi_field_id,
@@ -150,46 +113,56 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::HydroTurbineGov)
+function _encode_unvalidated(_openapi_value::HydroTurbineGov)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.r isa Absent || (_openapi_output["R"] = _encode(_openapi_value.r))
-    _openapi_value.r_2 isa Absent || (_openapi_output["r"] = _encode(_openapi_value.r_2))
-    _openapi_value.tr isa Absent || (_openapi_output["Tr"] = _encode(_openapi_value.tr))
-    _openapi_value.tf isa Absent || (_openapi_output["Tf"] = _encode(_openapi_value.tf))
-    _openapi_value.tg isa Absent || (_openapi_output["Tg"] = _encode(_openapi_value.tg))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.r isa Absent ||
+        (_openapi_output["R"] = _encode_unvalidated(_openapi_value.r))
+    _openapi_value.r_2 isa Absent ||
+        (_openapi_output["r"] = _encode_unvalidated(_openapi_value.r_2))
+    _openapi_value.tr isa Absent ||
+        (_openapi_output["Tr"] = _encode_unvalidated(_openapi_value.tr))
+    _openapi_value.tf isa Absent ||
+        (_openapi_output["Tf"] = _encode_unvalidated(_openapi_value.tf))
+    _openapi_value.tg isa Absent ||
+        (_openapi_output["Tg"] = _encode_unvalidated(_openapi_value.tg))
     _openapi_value.velm isa Absent ||
-        (_openapi_output["VELM"] = _encode(_openapi_value.velm))
+        (_openapi_output["VELM"] = _encode_unvalidated(_openapi_value.velm))
     _openapi_value.gate_position_limits isa Absent || (
         _openapi_output["gate_position_limits"] =
-            _encode(_openapi_value.gate_position_limits)
+            _encode_unvalidated(_openapi_value.gate_position_limits)
     )
-    _openapi_value.tw isa Absent || (_openapi_output["Tw"] = _encode(_openapi_value.tw))
-    _openapi_value.at isa Absent || (_openapi_output["At"] = _encode(_openapi_value.at))
-    _openapi_value.d_t isa Absent || (_openapi_output["D_T"] = _encode(_openapi_value.d_t))
+    _openapi_value.tw isa Absent ||
+        (_openapi_output["Tw"] = _encode_unvalidated(_openapi_value.tw))
+    _openapi_value.at isa Absent ||
+        (_openapi_output["At"] = _encode_unvalidated(_openapi_value.at))
+    _openapi_value.d_t isa Absent ||
+        (_openapi_output["D_T"] = _encode_unvalidated(_openapi_value.d_t))
     _openapi_value.q_nl isa Absent ||
-        (_openapi_output["q_nl"] = _encode(_openapi_value.q_nl))
+        (_openapi_output["q_nl"] = _encode_unvalidated(_openapi_value.q_nl))
     _openapi_value.p_ref isa Absent ||
-        (_openapi_output["P_ref"] = _encode(_openapi_value.p_ref))
+        (_openapi_output["P_ref"] = _encode_unvalidated(_openapi_value.p_ref))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-29d492daf38787a2f8c4.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding HydroTurbineGov";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::HydroTurbineGov) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-ff9dcb4590ca4b8c06d7.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding HydroTurbineGov";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::HydroTurbineGov)
     _openapi_output = Pair{String, Any}[]

@@ -7,7 +7,7 @@ function _decode(::Type{HydroReservoirOperationCost}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
+            resource="https://openapi.invalid/schema/external-af97cc7bb8185ba70477.json",
             pointer="/properties/operation_cost",
         ),
         value,
@@ -28,21 +28,21 @@ function _decode(::Type{HydroReservoirOperationCost}, value, _openapi_validate::
             "HYDRO_RES" => (
                 HydroReservoirCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/HydroReservoirCost",
                 ),
             ),
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -71,7 +71,7 @@ end
 _encode(value::HydroReservoirOperationCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
+        resource="https://openapi.invalid/schema/external-af97cc7bb8185ba70477.json",
         pointer="/properties/operation_cost",
     ),
     _encode_unvalidated(value),

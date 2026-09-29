@@ -37,7 +37,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-4c5708037f3c86ddf356.json",
+            resource="https://openapi.invalid/schema/external-0d894942138ce6bb57cd.json",
             pointer="",
         ),
         _openapi_raw,
@@ -199,7 +199,7 @@ end
 _encode(_openapi_value::TwoTerminalGenericHVDCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-4c5708037f3c86ddf356.json",
+        resource="https://openapi.invalid/schema/external-0d894942138ce6bb57cd.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

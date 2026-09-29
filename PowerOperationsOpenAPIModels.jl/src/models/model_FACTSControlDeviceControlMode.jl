@@ -18,7 +18,7 @@ function _decode(::Type{FACTSControlDeviceControlMode}, value, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+            resource="https://openapi.invalid/schema/external-452260947985e8a3e864.json",
             pointer="/\$defs/FACTSControlDeviceControlMode",
         ),
         value,
@@ -34,7 +34,7 @@ end
 _encode(value::FACTSControlDeviceControlMode) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        resource="https://openapi.invalid/schema/external-452260947985e8a3e864.json",
         pointer="/\$defs/FACTSControlDeviceControlMode",
     ),
     _encode_unvalidated(value),

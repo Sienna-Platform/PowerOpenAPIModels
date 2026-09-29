@@ -18,7 +18,7 @@ function _decode(::Type{AVRSimple}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ee4eb3773ab940b1b177.json",
+            resource="https://openapi.invalid/schema/external-0929680ae8c51743ac48.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,22 +26,17 @@ function _decode(::Type{AVRSimple}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "AVRSimple")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "AVRSimple"), _openapi_validate)
+    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "AVRSimple"), false)
     _openapi_field_kv =
-        _decode(Float64, _required(_openapi_object, "Kv", "AVRSimple"), _openapi_validate)
+        _decode(Float64, _required(_openapi_object, "Kv", "AVRSimple"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["V_ref"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "Kv", "V_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return AVRSimple(;
         id=_openapi_field_id,
@@ -50,31 +45,34 @@ function _decode(::Type{AVRSimple}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::AVRSimple)
+function _encode_unvalidated(_openapi_value::AVRSimple)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
-    _openapi_value.kv isa Absent || (_openapi_output["Kv"] = _encode(_openapi_value.kv))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.kv isa Absent ||
+        (_openapi_output["Kv"] = _encode_unvalidated(_openapi_value.kv))
     _openapi_value.v_ref isa Absent ||
-        (_openapi_output["V_ref"] = _encode(_openapi_value.v_ref))
+        (_openapi_output["V_ref"] = _encode_unvalidated(_openapi_value.v_ref))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-ee4eb3773ab940b1b177.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding AVRSimple";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::AVRSimple) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0929680ae8c51743ac48.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding AVRSimple";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::AVRSimple)
     _openapi_output = Pair{String, Any}[]

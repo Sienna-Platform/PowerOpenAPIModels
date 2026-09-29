@@ -18,7 +18,7 @@ function _decode(::Type{SalientPoleQuadratic}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f4bd58d0aa1f05d4ad2e.json",
+            resource="https://openapi.invalid/schema/external-772352b930e3e579d420.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,26 +26,23 @@ function _decode(::Type{SalientPoleQuadratic}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SalientPoleQuadratic")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "SalientPoleQuadratic"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "SalientPoleQuadratic"), false)
     _openapi_field_base_machine = _decode(
         Int64,
         _required(_openapi_object, "base_machine", "SalientPoleQuadratic"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_saturation_coeffs = _decode(
         Vector{Float64},
         _required(_openapi_object, "saturation_coeffs", "SalientPoleQuadratic"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "base_machine", "saturation_coeffs") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return SalientPoleQuadratic(;
         id=_openapi_field_id,
@@ -54,32 +51,36 @@ function _decode(::Type{SalientPoleQuadratic}, _openapi_raw, _openapi_validate::
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::SalientPoleQuadratic)
+function _encode_unvalidated(_openapi_value::SalientPoleQuadratic)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.base_machine isa Absent ||
-        (_openapi_output["base_machine"] = _encode(_openapi_value.base_machine))
-    _openapi_value.saturation_coeffs isa Absent ||
-        (_openapi_output["saturation_coeffs"] = _encode(_openapi_value.saturation_coeffs))
+        (_openapi_output["base_machine"] = _encode_unvalidated(_openapi_value.base_machine))
+    _openapi_value.saturation_coeffs isa Absent || (
+        _openapi_output["saturation_coeffs"] =
+            _encode_unvalidated(_openapi_value.saturation_coeffs)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-f4bd58d0aa1f05d4ad2e.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding SalientPoleQuadratic";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::SalientPoleQuadratic) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-772352b930e3e579d420.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding SalientPoleQuadratic";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::SalientPoleQuadratic)
     _openapi_output = Pair{String, Any}[]

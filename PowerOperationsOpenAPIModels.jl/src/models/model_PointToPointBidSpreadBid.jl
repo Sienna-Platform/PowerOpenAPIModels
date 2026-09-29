@@ -12,7 +12,7 @@ function _decode(::Type{PointToPointBidSpreadBid}, value, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
+            resource="https://openapi.invalid/schema/external-34db6823156783dac6a8.json",
             pointer="/properties/spread_bid",
         ),
         value,
@@ -33,14 +33,14 @@ function _decode(::Type{PointToPointBidSpreadBid}, value, _openapi_validate::Boo
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-3986f25ac97b4ae1d3d9.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
@@ -69,7 +69,7 @@ end
 _encode(value::PointToPointBidSpreadBid) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
+        resource="https://openapi.invalid/schema/external-34db6823156783dac6a8.json",
         pointer="/properties/spread_bid",
     ),
     _encode_unvalidated(value),

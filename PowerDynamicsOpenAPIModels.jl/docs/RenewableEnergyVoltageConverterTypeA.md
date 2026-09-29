@@ -1,0 +1,21 @@
+# RenewableEnergyVoltageConverterTypeA
+
+Parameters of a renewable energy generator/converter model, this model corresponds to REGCA1 in PSSE, but to be interfaced using a Voltage Source instead of a Current Source
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**`t_g`** | **`Float64`** | Converter time constant. Units: s. | [required]
+**`rrpwr`** | **`Float64`** | Low Voltage Power Logic (LVPL) ramp rate limit. | [required]
+**`brkpt`** | **`Float64`** | LVPL characteristic voltage 2. | [required]
+**`zerox`** | **`Float64`** | LVPL characteristic voltage 1. | [required]
+**`lvpl1`** | **`Float64`** | LVPL gain. | [required]
+**`vo_lim`** | **`Float64`** | Voltage limit for high voltage reactive current management. | [required]
+**`lv_pnts`** | **`MinMax`** | Voltage points for low voltage active current management | [required]
+**`io_lim`** | **`Float64`** | Current limit for high voltage reactive current management (specified as a negative value). | [required]
+**`t_fltr`** | **`Float64`** | Voltage filter time constant for low voltage active current management. Units: s. | [required]
+**`k_hv`** | **`Float64`** | Overvoltage compensation gain used in the high voltage reactive current management. | [required]
+**`iqr_lims`** | **`MinMax`** | Limit on rate of change for reactive current | [required]
+**`accel`** | **`Float64`** | Acceleration factor. | [required]
+**`lvpl_sw`** | **`Int64`** | Low voltage power logic (LVPL) switch. (0: LVPL not present, 1: LVPL present). | [required]
+**`q_ref`** | **`Union{Absent,Float64,Nothing}`** | Initial condition of reactive power from power flow. | [optional]

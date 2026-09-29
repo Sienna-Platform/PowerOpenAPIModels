@@ -1,20 +1,9 @@
 """
     RECurrentControlB
 
-Parameters of the Inner Control part of the REECB model in PSS/E.
-
-  - `q_flag`: Q Flag used for I_qinj.
-  - `pq_flag`: PQ Flag used for the Current Limit Logic.
-  - `vdip_lim`: Limits for Voltage Dip Logic `(Vdip, Vup)`.
-  - `t_rv`: Voltage Filter Time Constant. Units: s.
-  - `dbd_pnts`: Voltage error deadband thresholds `(dbd1, dbd2)`.
-  - `k_qv`: Reactive current injection gain during over and undervoltage conditions.
-  - `iqinj_lim`: Limits for Iqinj `(I_qh1, I_ql1)`.
-  - `v_ref0`: User defined reference. If 0, `PowerSimulationsDynamics.jl` initializes to initial terminal voltage.
-  - `k_vp`: Voltage regulator proportional gain (used when QFlag = 1).
-  - `k_vi`: Voltage regulator integral gain (used when QFlag = 1).
-  - `t_iq`: Time constant for low-pass filter for state q_V when QFlag = 0. Units: s.
-  - `i_max`: Maximum limit on total converter current.
+  - `vdip_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `dbd_pnts`: A pair of deadband thresholds `(dbd1, dbd2)` on a voltage or reactive-power error signal, inside which the controller does not act.
+  - `iqinj_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
 """
 Base.@kwdef struct RECurrentControlB <: APIModel
     q_flag::Bool
@@ -36,7 +25,7 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d10d861e7f77f1249b60.json",
+            resource="https://openapi.invalid/schema/external-bdd345e8da7563e8db7b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -142,7 +131,7 @@ end
 _encode(_openapi_value::RECurrentControlB) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-d10d861e7f77f1249b60.json",
+        resource="https://openapi.invalid/schema/external-bdd345e8da7563e8db7b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -39,7 +39,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7925bb07f7542f1344a3.json",
+            resource="https://openapi.invalid/schema/external-c685831299fa5de06f1f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -179,7 +179,7 @@ end
 _encode(_openapi_value::AggregateTransportTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7925bb07f7542f1344a3.json",
+        resource="https://openapi.invalid/schema/external-c685831299fa5de06f1f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
