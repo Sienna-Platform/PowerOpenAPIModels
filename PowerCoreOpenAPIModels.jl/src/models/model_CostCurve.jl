@@ -1,14 +1,12 @@
 """
     CostCurve
 
-Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term. Units: x-axis per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu ; y-axis USD/h .
+Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `vom_cost` adding a proportional variable operation and maintenance term. A cost curve is always in natural units: its x axis is power in MW, never per-unit. Units: x-axis MW ; y-axis USD/h .
 
-  - `power_units`: Unit basis a stored value is expressed in. COMPONENT_BASE: per-unit against a base the component records itself. NATURAL_UNITS: the quantity's own physical unit. No system-wide option: a value per-unitized against a shared base records that base on the component and rides as COMPONENT_BASE. Used in three scopes, each read against its own record rather than a document-wide table: a component's own `power_units` (against that component's `base_power`), a cost payload's own `power_units` (e.g. `CostCurve`, against the owning component's `base_power`), and a time series association's own `unit_system` (governing only that one series).
   - `value_curve`: A cost or fuel curve: function data plus a declaration of how to read its y axis. `INPUT_OUTPUT` reads y as the total `f(x)`, `INCREMENTAL` as the marginal rate `f'(x)`, and `AVERAGE_RATE` as the average `f(x)/x`; the three can express the same underlying function and are inter-convertible given `initial_input`. The `TIME_SERIES_*` variants are the time-varying equivalents. Which form to use follows the data source: bid stacks are incremental, total cost tables input-output, efficiency tables average rate.
   - `vom_cost`: A curve whose y values are the total input `f(x)` at production level `x` — currency per hour against MW in a cost curve, fuel per hour against MW in a fuel curve. The y axis is an absolute quantity, not a rate; use `IncrementalCurve` for marginal-rate data.
 """
 Base.@kwdef struct CostCurve <: APIModel
-    power_units::UnitSystem
     value_curve::ValueCurve
     variable_cost_type::String = "COST"
     vom_cost::InputOutputCurve
@@ -27,8 +25,6 @@ function _decode(::Type{CostCurve}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CostCurve")
-    _openapi_field_power_units =
-        _decode(UnitSystem, _required(_openapi_object, "power_units", "CostCurve"), false)
     _openapi_field_value_curve =
         _decode(ValueCurve, _required(_openapi_object, "value_curve", "CostCurve"), false)
     _openapi_field_variable_cost_type = _decode(
@@ -43,13 +39,12 @@ function _decode(::Type{CostCurve}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in
-        ("power_units", "value_curve", "variable_cost_type", "vom_cost") && continue
+        String(_openapi_key) in ("value_curve", "variable_cost_type", "vom_cost") &&
+            continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, false)
     end
     return CostCurve(;
-        power_units=_openapi_field_power_units,
         value_curve=_openapi_field_value_curve,
         variable_cost_type=_openapi_field_variable_cost_type,
         vom_cost=_openapi_field_vom_cost,
@@ -58,8 +53,6 @@ function _decode(::Type{CostCurve}, _openapi_raw, _openapi_validate::Bool)
 end
 function _encode_unvalidated(_openapi_value::CostCurve)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
     _openapi_value.value_curve isa Absent ||
         (_openapi_output["value_curve"] = _encode_unvalidated(_openapi_value.value_curve))
     _openapi_value.variable_cost_type isa Absent || (
@@ -91,8 +84,6 @@ _encode(_openapi_value::CostCurve) = _validate_schema(
 
 function _form_fields(_openapi_value::CostCurve)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.power_units isa Absent ||
-        push!(_openapi_output, "power_units" => _openapi_value.power_units)
     _openapi_value.value_curve isa Absent ||
         push!(_openapi_output, "value_curve" => _openapi_value.value_curve)
     _openapi_value.variable_cost_type isa Absent ||
