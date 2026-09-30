@@ -28,21 +28,20 @@ function _decode(
         "decoding ImpedanceCorrectionDataTransformerWinding";
         direction=:neutral,
     )
-    return ImpedanceCorrectionDataTransformerWinding(
-        _decode(String, value, _openapi_validate),
-    )
+    return ImpedanceCorrectionDataTransformerWinding(_decode(String, value, false))
 end
-function _encode(value::ImpedanceCorrectionDataTransformerWinding)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
-            pointer="/properties/transformer_winding",
-        ),
-        output,
-        "encoding ImpedanceCorrectionDataTransformerWinding";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ImpedanceCorrectionDataTransformerWinding)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ImpedanceCorrectionDataTransformerWinding) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
+        pointer="/properties/transformer_winding",
+    ),
+    _encode_unvalidated(value),
+    "encoding ImpedanceCorrectionDataTransformerWinding";
+    direction=:neutral,
+)
 Base.string(value::ImpedanceCorrectionDataTransformerWinding) = string(value.value)

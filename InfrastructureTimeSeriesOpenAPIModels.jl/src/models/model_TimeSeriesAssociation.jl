@@ -90,18 +90,19 @@ function _decode(::Type{TimeSeriesAssociation}, value, _openapi_validate::Bool)
                 "discriminator-selected schema did not validate for TimeSeriesAssociation",
             ),
         )
-    return TimeSeriesAssociation(_decode(selected[1], value, _openapi_validate))
+    return TimeSeriesAssociation(_decode(selected[1], value, false))
 end
-function _encode(value::TimeSeriesAssociation)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-53d485931dd71addb76b.json",
-            pointer="",
-        ),
-        output,
-        "encoding TimeSeriesAssociation";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::TimeSeriesAssociation)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::TimeSeriesAssociation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-53d485931dd71addb76b.json",
+        pointer="",
+    ),
+    _encode_unvalidated(value),
+    "encoding TimeSeriesAssociation";
+    direction=:neutral,
+)

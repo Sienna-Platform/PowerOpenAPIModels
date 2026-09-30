@@ -23,19 +23,20 @@ function _decode(::Type{BilateralProduct}, value, _openapi_validate::Bool)
         "decoding BilateralProduct";
         direction=:neutral,
     )
-    return BilateralProduct(_decode(String, value, _openapi_validate))
+    return BilateralProduct(_decode(String, value, false))
 end
-function _encode(value::BilateralProduct)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
-            pointer="/\$defs/BilateralProduct",
-        ),
-        output,
-        "encoding BilateralProduct";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::BilateralProduct)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::BilateralProduct) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        pointer="/\$defs/BilateralProduct",
+    ),
+    _encode_unvalidated(value),
+    "encoding BilateralProduct";
+    direction=:neutral,
+)
 Base.string(value::BilateralProduct) = string(value.value)

@@ -40,67 +40,46 @@ function _decode(::Type{OfflineReserve}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "OfflineReserve")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "OfflineReserve"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "OfflineReserve"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "OfflineReserve"),
-        _openapi_validate,
-    )
-    _openapi_field_time_frame = _decode(
-        Float64,
-        _required(_openapi_object, "time_frame", "OfflineReserve"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "OfflineReserve"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "OfflineReserve"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "OfflineReserve"), false)
+    _openapi_field_time_frame =
+        _decode(Float64, _required(_openapi_object, "time_frame", "OfflineReserve"), false)
     _openapi_field_requirement =
         haskey(_openapi_object, "requirement") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["requirement"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["requirement"], false) :
+        ABSENT
     _openapi_field_variable =
         haskey(_openapi_object, "variable") ?
-        _decode(
-            Union{Absent, CostCurve, Nothing},
-            _openapi_object["variable"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, CostCurve, Nothing}, _openapi_object["variable"], false) :
+        ABSENT
     _openapi_field_sustained_time =
         haskey(_openapi_object, "sustained_time") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["sustained_time"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["sustained_time"], false) :
+        ABSENT
     _openapi_field_max_output_fraction =
         haskey(_openapi_object, "max_output_fraction") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_output_fraction"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_max_participation_factor =
         haskey(_openapi_object, "max_participation_factor") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_participation_factor"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_deployed_fraction =
         haskey(_openapi_object, "deployed_fraction") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["deployed_fraction"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -117,7 +96,7 @@ function _decode(::Type{OfflineReserve}, _openapi_raw, _openapi_validate::Bool)
             "deployed_fraction",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return OfflineReserve(;
         id=_openapi_field_id,
@@ -133,50 +112,56 @@ function _decode(::Type{OfflineReserve}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::OfflineReserve)
+function _encode_unvalidated(_openapi_value::OfflineReserve)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.time_frame isa Absent ||
-        (_openapi_output["time_frame"] = _encode(_openapi_value.time_frame))
+        (_openapi_output["time_frame"] = _encode_unvalidated(_openapi_value.time_frame))
     _openapi_value.requirement isa Absent ||
-        (_openapi_output["requirement"] = _encode(_openapi_value.requirement))
+        (_openapi_output["requirement"] = _encode_unvalidated(_openapi_value.requirement))
     _openapi_value.variable isa Absent ||
-        (_openapi_output["variable"] = _encode(_openapi_value.variable))
-    _openapi_value.sustained_time isa Absent ||
-        (_openapi_output["sustained_time"] = _encode(_openapi_value.sustained_time))
+        (_openapi_output["variable"] = _encode_unvalidated(_openapi_value.variable))
+    _openapi_value.sustained_time isa Absent || (
+        _openapi_output["sustained_time"] =
+            _encode_unvalidated(_openapi_value.sustained_time)
+    )
     _openapi_value.max_output_fraction isa Absent || (
         _openapi_output["max_output_fraction"] =
-            _encode(_openapi_value.max_output_fraction)
+            _encode_unvalidated(_openapi_value.max_output_fraction)
     )
     _openapi_value.max_participation_factor isa Absent || (
         _openapi_output["max_participation_factor"] =
-            _encode(_openapi_value.max_participation_factor)
+            _encode_unvalidated(_openapi_value.max_participation_factor)
     )
-    _openapi_value.deployed_fraction isa Absent ||
-        (_openapi_output["deployed_fraction"] = _encode(_openapi_value.deployed_fraction))
+    _openapi_value.deployed_fraction isa Absent || (
+        _openapi_output["deployed_fraction"] =
+            _encode_unvalidated(_openapi_value.deployed_fraction)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-ee5b2b9f145a23783bbb.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding OfflineReserve";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::OfflineReserve) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-ee5b2b9f145a23783bbb.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding OfflineReserve";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::OfflineReserve)
     _openapi_output = Pair{String, Any}[]

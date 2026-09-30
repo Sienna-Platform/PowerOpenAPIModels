@@ -27,30 +27,27 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ImpedanceCorrectionData")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "ImpedanceCorrectionData"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "ImpedanceCorrectionData"), false)
     _openapi_field_table_number = _decode(
         Int64,
         _required(_openapi_object, "table_number", "ImpedanceCorrectionData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_impedance_correction_curve = _decode(
         PiecewiseLinearData,
         _required(_openapi_object, "impedance_correction_curve", "ImpedanceCorrectionData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_transformer_winding = _decode(
         ImpedanceCorrectionDataTransformerWinding,
         _required(_openapi_object, "transformer_winding", "ImpedanceCorrectionData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_transformer_control_mode = _decode(
         ImpedanceCorrectionDataTransformerControlMode,
         _required(_openapi_object, "transformer_control_mode", "ImpedanceCorrectionData"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -62,7 +59,7 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
             "transformer_control_mode",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return ImpedanceCorrectionData(;
         id=_openapi_field_id,
@@ -73,22 +70,23 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::ImpedanceCorrectionData)
+function _encode_unvalidated(_openapi_value::ImpedanceCorrectionData)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.table_number isa Absent ||
-        (_openapi_output["table_number"] = _encode(_openapi_value.table_number))
+        (_openapi_output["table_number"] = _encode_unvalidated(_openapi_value.table_number))
     _openapi_value.impedance_correction_curve isa Absent || (
         _openapi_output["impedance_correction_curve"] =
-            _encode(_openapi_value.impedance_correction_curve)
+            _encode_unvalidated(_openapi_value.impedance_correction_curve)
     )
     _openapi_value.transformer_winding isa Absent || (
         _openapi_output["transformer_winding"] =
-            _encode(_openapi_value.transformer_winding)
+            _encode_unvalidated(_openapi_value.transformer_winding)
     )
     _openapi_value.transformer_control_mode isa Absent || (
         _openapi_output["transformer_control_mode"] =
-            _encode(_openapi_value.transformer_control_mode)
+            _encode_unvalidated(_openapi_value.transformer_control_mode)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -96,19 +94,20 @@ function _encode(_openapi_value::ImpedanceCorrectionData)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding ImpedanceCorrectionData";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::ImpedanceCorrectionData) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-6b773fd2b09ee939b42d.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding ImpedanceCorrectionData";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::ImpedanceCorrectionData)
     _openapi_output = Pair{String, Any}[]

@@ -28,24 +28,21 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "Substation")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "Substation"), _openapi_validate)
+        _decode(Int64, _required(_openapi_object, "id", "Substation"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "Substation"), _openapi_validate)
-    _openapi_field_number = _decode(
-        Int64,
-        _required(_openapi_object, "number", "Substation"),
-        _openapi_validate,
-    )
+        _decode(String, _required(_openapi_object, "name", "Substation"), false)
+    _openapi_field_number =
+        _decode(Int64, _required(_openapi_object, "number", "Substation"), false)
     _openapi_field_grounding_resistance = _decode(
         Float64,
         _required(_openapi_object, "grounding_resistance", "Substation"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "name", "number", "grounding_resistance") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return Substation(;
         id=_openapi_field_id,
@@ -55,16 +52,17 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::Substation)
+function _encode_unvalidated(_openapi_value::Substation)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.number isa Absent ||
-        (_openapi_output["number"] = _encode(_openapi_value.number))
+        (_openapi_output["number"] = _encode_unvalidated(_openapi_value.number))
     _openapi_value.grounding_resistance isa Absent || (
         _openapi_output["grounding_resistance"] =
-            _encode(_openapi_value.grounding_resistance)
+            _encode_unvalidated(_openapi_value.grounding_resistance)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -72,19 +70,20 @@ function _encode(_openapi_value::Substation)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-a8963ccd71c6015a0b28.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding Substation";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::Substation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-a8963ccd71c6015a0b28.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding Substation";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::Substation)
     _openapi_output = Pair{String, Any}[]

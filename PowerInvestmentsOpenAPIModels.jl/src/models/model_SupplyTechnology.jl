@@ -60,137 +60,111 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SupplyTechnology")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "SupplyTechnology"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "SupplyTechnology"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "SupplyTechnology"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "SupplyTechnology"), false)
     _openapi_field_available =
         haskey(_openapi_object, "available") ?
-        _decode(
-            Union{Absent, Bool, Nothing},
-            _openapi_object["available"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) : ABSENT
     _openapi_field_power_systems_type = _decode(
         String,
         _required(_openapi_object, "power_systems_type", "SupplyTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_region =
         haskey(_openapi_object, "region") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["region"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, Vector{Int64}}, _openapi_object["region"], false) :
+        ABSENT
     _openapi_field_prime_mover_type =
         haskey(_openapi_object, "prime_mover_type") ?
         _decode(
             Union{Absent, Nothing, PrimeMovers},
             _openapi_object["prime_mover_type"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_fuel =
         haskey(_openapi_object, "fuel") ?
         _decode(
             Union{Absent, Nothing, Vector{ThermalFuels}},
             _openapi_object["fuel"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_cofire_start_limits =
         haskey(_openapi_object, "cofire_start_limits") ?
         _decode(
             Union{Absent, Nothing, MinMaxByKey},
             _openapi_object["cofire_start_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_cofire_level_limits =
         haskey(_openapi_object, "cofire_level_limits") ?
         _decode(
             Union{Absent, Nothing, MinMaxByKey},
             _openapi_object["cofire_level_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_capital_costs =
         haskey(_openapi_object, "capital_costs") ?
         _decode(
             Union{Absent, CapitalCost, Nothing},
             _openapi_object["capital_costs"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_operation_costs =
         haskey(_openapi_object, "operation_costs") ?
         _decode(
             Union{Absent, Nothing, SupplyTechnologyOperationCosts},
             _openapi_object["operation_costs"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_unit_size =
         haskey(_openapi_object, "unit_size") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["unit_size"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["unit_size"], false) :
+        ABSENT
     _openapi_field_capacity_limits =
         haskey(_openapi_object, "capacity_limits") ?
         _decode(
             Union{Absent, Nothing, SupplyTechnologyCapacityLimits},
             _openapi_object["capacity_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_outage_factor =
         haskey(_openapi_object, "outage_factor") ?
         _decode(
             Union{Absent, Nothing, OutageFactors},
             _openapi_object["outage_factor"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_min_generation_fraction =
         haskey(_openapi_object, "min_generation_fraction") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["min_generation_fraction"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_ramp_limits =
         haskey(_openapi_object, "ramp_limits") ?
-        _decode(
-            Union{Absent, Nothing, UpDown},
-            _openapi_object["ramp_limits"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, UpDown}, _openapi_object["ramp_limits"], false) :
+        ABSENT
     _openapi_field_time_limits =
         haskey(_openapi_object, "time_limits") ?
-        _decode(
-            Union{Absent, Nothing, UpDown},
-            _openapi_object["time_limits"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, UpDown}, _openapi_object["time_limits"], false) :
+        ABSENT
     _openapi_field_start_fuel_mmbtu_per_mw =
         haskey(_openapi_object, "start_fuel_mmbtu_per_mw") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["start_fuel_mmbtu_per_mw"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_lifetime =
         haskey(_openapi_object, "lifetime") ?
-        _decode(
-            Union{Absent, Int64, Nothing},
-            _openapi_object["lifetime"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Int64, Nothing}, _openapi_object["lifetime"], false) : ABSENT
     _openapi_field_financial_data = _decode(
         TechnologyFinancialData,
         _required(_openapi_object, "financial_data", "SupplyTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -217,7 +191,7 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
             "financial_data",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return SupplyTechnology(;
         id=_openapi_field_id,
@@ -243,74 +217,90 @@ function _decode(::Type{SupplyTechnology}, _openapi_raw, _openapi_validate::Bool
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::SupplyTechnology)
+function _encode_unvalidated(_openapi_value::SupplyTechnology)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.power_systems_type isa Absent ||
-        (_openapi_output["power_systems_type"] = _encode(_openapi_value.power_systems_type))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.power_systems_type isa Absent || (
+        _openapi_output["power_systems_type"] =
+            _encode_unvalidated(_openapi_value.power_systems_type)
+    )
     _openapi_value.region isa Absent ||
-        (_openapi_output["region"] = _encode(_openapi_value.region))
-    _openapi_value.prime_mover_type isa Absent ||
-        (_openapi_output["prime_mover_type"] = _encode(_openapi_value.prime_mover_type))
+        (_openapi_output["region"] = _encode_unvalidated(_openapi_value.region))
+    _openapi_value.prime_mover_type isa Absent || (
+        _openapi_output["prime_mover_type"] =
+            _encode_unvalidated(_openapi_value.prime_mover_type)
+    )
     _openapi_value.fuel isa Absent ||
-        (_openapi_output["fuel"] = _encode(_openapi_value.fuel))
+        (_openapi_output["fuel"] = _encode_unvalidated(_openapi_value.fuel))
     _openapi_value.cofire_start_limits isa Absent || (
         _openapi_output["cofire_start_limits"] =
-            _encode(_openapi_value.cofire_start_limits)
+            _encode_unvalidated(_openapi_value.cofire_start_limits)
     )
     _openapi_value.cofire_level_limits isa Absent || (
         _openapi_output["cofire_level_limits"] =
-            _encode(_openapi_value.cofire_level_limits)
+            _encode_unvalidated(_openapi_value.cofire_level_limits)
     )
-    _openapi_value.capital_costs isa Absent ||
-        (_openapi_output["capital_costs"] = _encode(_openapi_value.capital_costs))
-    _openapi_value.operation_costs isa Absent ||
-        (_openapi_output["operation_costs"] = _encode(_openapi_value.operation_costs))
+    _openapi_value.capital_costs isa Absent || (
+        _openapi_output["capital_costs"] =
+            _encode_unvalidated(_openapi_value.capital_costs)
+    )
+    _openapi_value.operation_costs isa Absent || (
+        _openapi_output["operation_costs"] =
+            _encode_unvalidated(_openapi_value.operation_costs)
+    )
     _openapi_value.unit_size isa Absent ||
-        (_openapi_output["unit_size"] = _encode(_openapi_value.unit_size))
-    _openapi_value.capacity_limits isa Absent ||
-        (_openapi_output["capacity_limits"] = _encode(_openapi_value.capacity_limits))
-    _openapi_value.outage_factor isa Absent ||
-        (_openapi_output["outage_factor"] = _encode(_openapi_value.outage_factor))
+        (_openapi_output["unit_size"] = _encode_unvalidated(_openapi_value.unit_size))
+    _openapi_value.capacity_limits isa Absent || (
+        _openapi_output["capacity_limits"] =
+            _encode_unvalidated(_openapi_value.capacity_limits)
+    )
+    _openapi_value.outage_factor isa Absent || (
+        _openapi_output["outage_factor"] =
+            _encode_unvalidated(_openapi_value.outage_factor)
+    )
     _openapi_value.min_generation_fraction isa Absent || (
         _openapi_output["min_generation_fraction"] =
-            _encode(_openapi_value.min_generation_fraction)
+            _encode_unvalidated(_openapi_value.min_generation_fraction)
     )
     _openapi_value.ramp_limits isa Absent ||
-        (_openapi_output["ramp_limits"] = _encode(_openapi_value.ramp_limits))
+        (_openapi_output["ramp_limits"] = _encode_unvalidated(_openapi_value.ramp_limits))
     _openapi_value.time_limits isa Absent ||
-        (_openapi_output["time_limits"] = _encode(_openapi_value.time_limits))
+        (_openapi_output["time_limits"] = _encode_unvalidated(_openapi_value.time_limits))
     _openapi_value.start_fuel_mmbtu_per_mw isa Absent || (
         _openapi_output["start_fuel_mmbtu_per_mw"] =
-            _encode(_openapi_value.start_fuel_mmbtu_per_mw)
+            _encode_unvalidated(_openapi_value.start_fuel_mmbtu_per_mw)
     )
     _openapi_value.lifetime isa Absent ||
-        (_openapi_output["lifetime"] = _encode(_openapi_value.lifetime))
-    _openapi_value.financial_data isa Absent ||
-        (_openapi_output["financial_data"] = _encode(_openapi_value.financial_data))
+        (_openapi_output["lifetime"] = _encode_unvalidated(_openapi_value.lifetime))
+    _openapi_value.financial_data isa Absent || (
+        _openapi_output["financial_data"] =
+            _encode_unvalidated(_openapi_value.financial_data)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding SupplyTechnology";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::SupplyTechnology) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding SupplyTechnology";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::SupplyTechnology)
     _openapi_output = Pair{String, Any}[]

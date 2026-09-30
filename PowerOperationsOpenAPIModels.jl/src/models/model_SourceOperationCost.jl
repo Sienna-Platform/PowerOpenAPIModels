@@ -60,18 +60,19 @@ function _decode(::Type{SourceOperationCost}, value, _openapi_validate::Bool)
                 "discriminator-selected schema did not validate for SourceOperationCost",
             ),
         )
-    return SourceOperationCost(_decode(selected[1], value, _openapi_validate))
+    return SourceOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::SourceOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-589c935ffa1ef1530dc8.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding SourceOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::SourceOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::SourceOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-589c935ffa1ef1530dc8.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding SourceOperationCost";
+    direction=:neutral,
+)

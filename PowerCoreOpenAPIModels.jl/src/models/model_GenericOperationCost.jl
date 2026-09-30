@@ -60,18 +60,19 @@ function _decode(::Type{GenericOperationCost}, value, _openapi_validate::Bool)
                 "discriminator-selected schema did not validate for GenericOperationCost",
             ),
         )
-    return GenericOperationCost(_decode(selected[1], value, _openapi_validate))
+    return GenericOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::GenericOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/GenericOperationCost",
-        ),
-        output,
-        "encoding GenericOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::GenericOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::GenericOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/GenericOperationCost",
+    ),
+    _encode_unvalidated(value),
+    "encoding GenericOperationCost";
+    direction=:neutral,
+)

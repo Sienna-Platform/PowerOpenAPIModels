@@ -79,18 +79,19 @@ function _decode(::Type{ShiftablePowerLoadOperationCost}, value, _openapi_valida
                 "discriminator-selected schema did not validate for ShiftablePowerLoadOperationCost",
             ),
         )
-    return ShiftablePowerLoadOperationCost(_decode(selected[1], value, _openapi_validate))
+    return ShiftablePowerLoadOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::ShiftablePowerLoadOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-31cc1406780185093c90.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding ShiftablePowerLoadOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ShiftablePowerLoadOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ShiftablePowerLoadOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-31cc1406780185093c90.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding ShiftablePowerLoadOperationCost";
+    direction=:neutral,
+)

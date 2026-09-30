@@ -29,36 +29,29 @@ function _decode(::Type{RenewableGenerationCost}, _openapi_raw, _openapi_validat
     _openapi_object = _object(_openapi_raw, "RenewableGenerationCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["cost_type"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
+        ABSENT
     _openapi_field_curtailment_cost =
         haskey(_openapi_object, "curtailment_cost") ?
         _decode(
             Union{Absent, CostCurve, Nothing},
             _openapi_object["curtailment_cost"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_variable_operation_cost = _decode(
         CostCurve,
         _required(_openapi_object, "variable_operation_cost", "RenewableGenerationCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_fixed =
         haskey(_openapi_object, "fixed") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["fixed"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["fixed"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("cost_type", "curtailment_cost", "variable_operation_cost", "fixed") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return RenewableGenerationCost(;
         cost_type=_openapi_field_cost_type,
@@ -68,37 +61,40 @@ function _decode(::Type{RenewableGenerationCost}, _openapi_raw, _openapi_validat
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::RenewableGenerationCost)
+function _encode_unvalidated(_openapi_value::RenewableGenerationCost)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.cost_type isa Absent ||
-        (_openapi_output["cost_type"] = _encode(_openapi_value.cost_type))
-    _openapi_value.curtailment_cost isa Absent ||
-        (_openapi_output["curtailment_cost"] = _encode(_openapi_value.curtailment_cost))
+        (_openapi_output["cost_type"] = _encode_unvalidated(_openapi_value.cost_type))
+    _openapi_value.curtailment_cost isa Absent || (
+        _openapi_output["curtailment_cost"] =
+            _encode_unvalidated(_openapi_value.curtailment_cost)
+    )
     _openapi_value.variable_operation_cost isa Absent || (
         _openapi_output["variable_operation_cost"] =
-            _encode(_openapi_value.variable_operation_cost)
+            _encode_unvalidated(_openapi_value.variable_operation_cost)
     )
     _openapi_value.fixed isa Absent ||
-        (_openapi_output["fixed"] = _encode(_openapi_value.fixed))
+        (_openapi_output["fixed"] = _encode_unvalidated(_openapi_value.fixed))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/RenewableGenerationCost",
-        ),
-        _openapi_output,
-        "encoding RenewableGenerationCost";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::RenewableGenerationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/RenewableGenerationCost",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding RenewableGenerationCost";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::RenewableGenerationCost)
     _openapi_output = Pair{String, Any}[]

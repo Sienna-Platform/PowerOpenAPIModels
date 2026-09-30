@@ -27,19 +27,20 @@ function _decode(::Type{FACTSControlDeviceShuntControlType}, value, _openapi_val
         "decoding FACTSControlDeviceShuntControlType";
         direction=:neutral,
     )
-    return FACTSControlDeviceShuntControlType(_decode(String, value, _openapi_validate))
+    return FACTSControlDeviceShuntControlType(_decode(String, value, false))
 end
-function _encode(value::FACTSControlDeviceShuntControlType)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-865b3a15cab0f0d4981c.json",
-            pointer="/properties/shunt_control_type",
-        ),
-        output,
-        "encoding FACTSControlDeviceShuntControlType";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::FACTSControlDeviceShuntControlType)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::FACTSControlDeviceShuntControlType) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-865b3a15cab0f0d4981c.json",
+        pointer="/properties/shunt_control_type",
+    ),
+    _encode_unvalidated(value),
+    "encoding FACTSControlDeviceShuntControlType";
+    direction=:neutral,
+)
 Base.string(value::FACTSControlDeviceShuntControlType) = string(value.value)

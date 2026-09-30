@@ -36,32 +36,32 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
     _openapi_field_capital_recovery_period = _decode(
         Int64,
         _required(_openapi_object, "capital_recovery_period", "TechnologyFinancialData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_technology_base_year = _decode(
         Int64,
         _required(_openapi_object, "technology_base_year", "TechnologyFinancialData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_debt_fraction = _decode(
         Float64,
         _required(_openapi_object, "debt_fraction", "TechnologyFinancialData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_debt_rate = _decode(
         Float64,
         _required(_openapi_object, "debt_rate", "TechnologyFinancialData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_return_on_equity = _decode(
         Float64,
         _required(_openapi_object, "return_on_equity", "TechnologyFinancialData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_tax_rate = _decode(
         Float64,
         _required(_openapi_object, "tax_rate", "TechnologyFinancialData"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -74,7 +74,7 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
             "tax_rate",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return TechnologyFinancialData(;
         capital_recovery_period=_openapi_field_capital_recovery_period,
@@ -86,43 +86,48 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::TechnologyFinancialData)
+function _encode_unvalidated(_openapi_value::TechnologyFinancialData)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.capital_recovery_period isa Absent || (
         _openapi_output["capital_recovery_period"] =
-            _encode(_openapi_value.capital_recovery_period)
+            _encode_unvalidated(_openapi_value.capital_recovery_period)
     )
     _openapi_value.technology_base_year isa Absent || (
         _openapi_output["technology_base_year"] =
-            _encode(_openapi_value.technology_base_year)
+            _encode_unvalidated(_openapi_value.technology_base_year)
     )
-    _openapi_value.debt_fraction isa Absent ||
-        (_openapi_output["debt_fraction"] = _encode(_openapi_value.debt_fraction))
+    _openapi_value.debt_fraction isa Absent || (
+        _openapi_output["debt_fraction"] =
+            _encode_unvalidated(_openapi_value.debt_fraction)
+    )
     _openapi_value.debt_rate isa Absent ||
-        (_openapi_output["debt_rate"] = _encode(_openapi_value.debt_rate))
-    _openapi_value.return_on_equity isa Absent ||
-        (_openapi_output["return_on_equity"] = _encode(_openapi_value.return_on_equity))
+        (_openapi_output["debt_rate"] = _encode_unvalidated(_openapi_value.debt_rate))
+    _openapi_value.return_on_equity isa Absent || (
+        _openapi_output["return_on_equity"] =
+            _encode_unvalidated(_openapi_value.return_on_equity)
+    )
     _openapi_value.tax_rate isa Absent ||
-        (_openapi_output["tax_rate"] = _encode(_openapi_value.tax_rate))
+        (_openapi_output["tax_rate"] = _encode_unvalidated(_openapi_value.tax_rate))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-9a45fd75a1e2b4d968de.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding TechnologyFinancialData";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::TechnologyFinancialData) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-9a45fd75a1e2b4d968de.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding TechnologyFinancialData";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::TechnologyFinancialData)
     _openapi_output = Pair{String, Any}[]

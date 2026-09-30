@@ -52,18 +52,19 @@ function _decode(::Type{LossValueCurve}, value, _openapi_validate::Bool)
                 "discriminator-selected schema did not validate for LossValueCurve",
             ),
         )
-    return LossValueCurve(_decode(selected[1], value, _openapi_validate))
+    return LossValueCurve(_decode(selected[1], value, false))
 end
-function _encode(value::LossValueCurve)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/LossValueCurve",
-        ),
-        output,
-        "encoding LossValueCurve";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::LossValueCurve)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::LossValueCurve) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/LossValueCurve",
+    ),
+    _encode_unvalidated(value),
+    "encoding LossValueCurve";
+    direction=:neutral,
+)

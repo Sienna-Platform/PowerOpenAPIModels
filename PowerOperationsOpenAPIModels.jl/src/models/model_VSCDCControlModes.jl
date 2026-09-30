@@ -23,19 +23,20 @@ function _decode(::Type{VSCDCControlModes}, value, _openapi_validate::Bool)
         "decoding VSCDCControlModes";
         direction=:neutral,
     )
-    return VSCDCControlModes(_decode(String, value, _openapi_validate))
+    return VSCDCControlModes(_decode(String, value, false))
 end
-function _encode(value::VSCDCControlModes)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
-            pointer="/\$defs/VSCDCControlModes",
-        ),
-        output,
-        "encoding VSCDCControlModes";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::VSCDCControlModes)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::VSCDCControlModes) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        pointer="/\$defs/VSCDCControlModes",
+    ),
+    _encode_unvalidated(value),
+    "encoding VSCDCControlModes";
+    direction=:neutral,
+)
 Base.string(value::VSCDCControlModes) = string(value.value)

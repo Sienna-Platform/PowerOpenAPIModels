@@ -11,7 +11,7 @@ CODEGEN_IMAGE ?= ghcr.io/sienna-platform/power-codegen:latest
 # generated before it, because dedup reads the bases' kept-name sets.
 DOMAINS := infrastructure-core timeseries core operations investments dynamics
 
-.PHONY: generate generate-docker clean validate precompile schema-version
+.PHONY: generate generate-docker clean validate test precompile docs schema-version
 
 # OpenAPI.jl 1.0's native pure-Julia generator (OpenAPI.client) replaces the Java
 # openapi-generator + Docker pipeline: no JVM, no jar download, generate-docker below is now
@@ -60,10 +60,17 @@ schema-version:
 clean:
 	rm -rf .native_raw/
 
-validate:
+# Runs every package's own `test/runtests.jl` through `Pkg.test`, in dependency order.
+# `test` is the same thing under the name people reach for first.
+validate test:
 	julia --project=test test/validate.jl
 
 # Each package precompiles on its own -- the check registration makes load-bearing, and the
 # one `using` and `Pkg.precompile` both pass on. See test/precompile.jl.
 precompile:
 	julia test/precompile.jl
+
+# The documentation site for all seven packages. Output lands in docs/build.
+docs:
+	julia --project=docs -e 'using Pkg; Pkg.instantiate()'
+	julia --project=docs docs/make.jl

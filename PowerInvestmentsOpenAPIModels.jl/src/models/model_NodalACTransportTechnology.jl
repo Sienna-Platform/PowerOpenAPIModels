@@ -50,79 +50,63 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
     _openapi_field_id = _decode(
         Int64,
         _required(_openapi_object, "id", "NodalACTransportTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_name = _decode(
         String,
         _required(_openapi_object, "name", "NodalACTransportTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_available = _decode(
         Bool,
         _required(_openapi_object, "available", "NodalACTransportTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_systems_type = _decode(
         String,
         _required(_openapi_object, "power_systems_type", "NodalACTransportTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_start_node = _decode(
         Int64,
         _required(_openapi_object, "start_node", "NodalACTransportTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_end_node = _decode(
         Int64,
         _required(_openapi_object, "end_node", "NodalACTransportTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_capacity_limits =
         haskey(_openapi_object, "capacity_limits") ?
-        _decode(
-            Union{Absent, MinMax, Nothing},
-            _openapi_object["capacity_limits"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, MinMax, Nothing}, _openapi_object["capacity_limits"], false) :
+        ABSENT
     _openapi_field_capital_costs =
         haskey(_openapi_object, "capital_costs") ?
         _decode(
             Union{Absent, CapitalCost, Nothing},
             _openapi_object["capital_costs"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_resistance =
         haskey(_openapi_object, "resistance") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["resistance"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["resistance"], false) :
+        ABSENT
     _openapi_field_voltage =
         haskey(_openapi_object, "voltage") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["voltage"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["voltage"], false) : ABSENT
     _openapi_field_unit_size =
         haskey(_openapi_object, "unit_size") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["unit_size"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["unit_size"], false) :
+        ABSENT
     _openapi_field_reactance =
         haskey(_openapi_object, "reactance") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["reactance"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["reactance"], false) :
+        ABSENT
     _openapi_field_financial_data = _decode(
         TechnologyFinancialData,
         _required(_openapi_object, "financial_data", "NodalACTransportTechnology"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -142,7 +126,7 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
             "financial_data",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return NodalACTransportTechnology(;
         id=_openapi_field_id,
@@ -161,52 +145,62 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::NodalACTransportTechnology)
+function _encode_unvalidated(_openapi_value::NodalACTransportTechnology)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.power_systems_type isa Absent ||
-        (_openapi_output["power_systems_type"] = _encode(_openapi_value.power_systems_type))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.power_systems_type isa Absent || (
+        _openapi_output["power_systems_type"] =
+            _encode_unvalidated(_openapi_value.power_systems_type)
+    )
     _openapi_value.start_node isa Absent ||
-        (_openapi_output["start_node"] = _encode(_openapi_value.start_node))
+        (_openapi_output["start_node"] = _encode_unvalidated(_openapi_value.start_node))
     _openapi_value.end_node isa Absent ||
-        (_openapi_output["end_node"] = _encode(_openapi_value.end_node))
-    _openapi_value.capacity_limits isa Absent ||
-        (_openapi_output["capacity_limits"] = _encode(_openapi_value.capacity_limits))
-    _openapi_value.capital_costs isa Absent ||
-        (_openapi_output["capital_costs"] = _encode(_openapi_value.capital_costs))
+        (_openapi_output["end_node"] = _encode_unvalidated(_openapi_value.end_node))
+    _openapi_value.capacity_limits isa Absent || (
+        _openapi_output["capacity_limits"] =
+            _encode_unvalidated(_openapi_value.capacity_limits)
+    )
+    _openapi_value.capital_costs isa Absent || (
+        _openapi_output["capital_costs"] =
+            _encode_unvalidated(_openapi_value.capital_costs)
+    )
     _openapi_value.resistance isa Absent ||
-        (_openapi_output["resistance"] = _encode(_openapi_value.resistance))
+        (_openapi_output["resistance"] = _encode_unvalidated(_openapi_value.resistance))
     _openapi_value.voltage isa Absent ||
-        (_openapi_output["voltage"] = _encode(_openapi_value.voltage))
+        (_openapi_output["voltage"] = _encode_unvalidated(_openapi_value.voltage))
     _openapi_value.unit_size isa Absent ||
-        (_openapi_output["unit_size"] = _encode(_openapi_value.unit_size))
+        (_openapi_output["unit_size"] = _encode_unvalidated(_openapi_value.unit_size))
     _openapi_value.reactance isa Absent ||
-        (_openapi_output["reactance"] = _encode(_openapi_value.reactance))
-    _openapi_value.financial_data isa Absent ||
-        (_openapi_output["financial_data"] = _encode(_openapi_value.financial_data))
+        (_openapi_output["reactance"] = _encode_unvalidated(_openapi_value.reactance))
+    _openapi_value.financial_data isa Absent || (
+        _openapi_output["financial_data"] =
+            _encode_unvalidated(_openapi_value.financial_data)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-f28c3ef13319f51cdc41.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding NodalACTransportTechnology";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::NodalACTransportTechnology) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-f28c3ef13319f51cdc41.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding NodalACTransportTechnology";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::NodalACTransportTechnology)
     _openapi_output = Pair{String, Any}[]

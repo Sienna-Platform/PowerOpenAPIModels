@@ -27,32 +27,26 @@ function _decode(::Type{CostCurve}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CostCurve")
-    _openapi_field_power_units = _decode(
-        UnitSystem,
-        _required(_openapi_object, "power_units", "CostCurve"),
-        _openapi_validate,
-    )
-    _openapi_field_value_curve = _decode(
-        ValueCurve,
-        _required(_openapi_object, "value_curve", "CostCurve"),
-        _openapi_validate,
-    )
+    _openapi_field_power_units =
+        _decode(UnitSystem, _required(_openapi_object, "power_units", "CostCurve"), false)
+    _openapi_field_value_curve =
+        _decode(ValueCurve, _required(_openapi_object, "value_curve", "CostCurve"), false)
     _openapi_field_variable_cost_type = _decode(
         String,
         _required(_openapi_object, "variable_cost_type", "CostCurve"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_vom_cost = _decode(
         InputOutputCurve,
         _required(_openapi_object, "vom_cost", "CostCurve"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("power_units", "value_curve", "variable_cost_type", "vom_cost") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return CostCurve(;
         power_units=_openapi_field_power_units,
@@ -62,35 +56,38 @@ function _decode(::Type{CostCurve}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::CostCurve)
+function _encode_unvalidated(_openapi_value::CostCurve)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
     _openapi_value.value_curve isa Absent ||
-        (_openapi_output["value_curve"] = _encode(_openapi_value.value_curve))
-    _openapi_value.variable_cost_type isa Absent ||
-        (_openapi_output["variable_cost_type"] = _encode(_openapi_value.variable_cost_type))
+        (_openapi_output["value_curve"] = _encode_unvalidated(_openapi_value.value_curve))
+    _openapi_value.variable_cost_type isa Absent || (
+        _openapi_output["variable_cost_type"] =
+            _encode_unvalidated(_openapi_value.variable_cost_type)
+    )
     _openapi_value.vom_cost isa Absent ||
-        (_openapi_output["vom_cost"] = _encode(_openapi_value.vom_cost))
+        (_openapi_output["vom_cost"] = _encode_unvalidated(_openapi_value.vom_cost))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/CostCurve",
-        ),
-        _openapi_output,
-        "encoding CostCurve";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::CostCurve) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/CostCurve",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding CostCurve";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::CostCurve)
     _openapi_output = Pair{String, Any}[]

@@ -79,18 +79,19 @@ function _decode(::Type{ThermalMultiStartOperationCost}, value, _openapi_validat
                 "discriminator-selected schema did not validate for ThermalMultiStartOperationCost",
             ),
         )
-    return ThermalMultiStartOperationCost(_decode(selected[1], value, _openapi_validate))
+    return ThermalMultiStartOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::ThermalMultiStartOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-2a649abe3e7984a9c39a.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding ThermalMultiStartOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ThermalMultiStartOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ThermalMultiStartOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-2a649abe3e7984a9c39a.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding ThermalMultiStartOperationCost";
+    direction=:neutral,
+)

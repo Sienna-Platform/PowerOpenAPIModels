@@ -46,104 +46,83 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "HydroReservoir")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "HydroReservoir"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "HydroReservoir"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "HydroReservoir"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "HydroReservoir"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "HydroReservoir"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "HydroReservoir"), false)
     _openapi_field_storage_level_limits = _decode(
         MinMax,
         _required(_openapi_object, "storage_level_limits", "HydroReservoir"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_initial_level = _decode(
         Float64,
         _required(_openapi_object, "initial_level", "HydroReservoir"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_spillage_limits =
         haskey(_openapi_object, "spillage_limits") ?
-        _decode(
-            Union{Absent, MinMax, Nothing},
-            _openapi_object["spillage_limits"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_inflow = _decode(
-        Float64,
-        _required(_openapi_object, "inflow", "HydroReservoir"),
-        _openapi_validate,
-    )
-    _openapi_field_outflow = _decode(
-        Float64,
-        _required(_openapi_object, "outflow", "HydroReservoir"),
-        _openapi_validate,
-    )
+        _decode(Union{Absent, MinMax, Nothing}, _openapi_object["spillage_limits"], false) :
+        ABSENT
+    _openapi_field_inflow =
+        _decode(Float64, _required(_openapi_object, "inflow", "HydroReservoir"), false)
+    _openapi_field_outflow =
+        _decode(Float64, _required(_openapi_object, "outflow", "HydroReservoir"), false)
     _openapi_field_level_targets =
         haskey(_openapi_object, "level_targets") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["level_targets"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["level_targets"], false) :
+        ABSENT
     _openapi_field_intake_elevation = _decode(
         Float64,
         _required(_openapi_object, "intake_elevation", "HydroReservoir"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_head_to_volume_factor = _decode(
         FunctionData,
         _required(_openapi_object, "head_to_volume_factor", "HydroReservoir"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_upstream_turbines =
         haskey(_openapi_object, "upstream_turbines") ?
         _decode(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["upstream_turbines"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_downstream_turbines =
         haskey(_openapi_object, "downstream_turbines") ?
         _decode(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["downstream_turbines"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_upstream_reservoirs =
         haskey(_openapi_object, "upstream_reservoirs") ?
         _decode(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["upstream_reservoirs"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_operation_cost = _decode(
         HydroReservoirOperationCost,
         _required(_openapi_object, "operation_cost", "HydroReservoir"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_evaporative_loss =
         haskey(_openapi_object, "evaporative_loss") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["evaporative_loss"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_level_data_type =
         haskey(_openapi_object, "level_data_type") ?
         _decode(
             Union{Absent, HydroReservoirLevelDataType, Nothing},
             _openapi_object["level_data_type"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -167,7 +146,7 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
             "level_data_type",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return HydroReservoir(;
         id=_openapi_field_id,
@@ -190,68 +169,86 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::HydroReservoir)
+function _encode_unvalidated(_openapi_value::HydroReservoir)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.storage_level_limits isa Absent || (
         _openapi_output["storage_level_limits"] =
-            _encode(_openapi_value.storage_level_limits)
+            _encode_unvalidated(_openapi_value.storage_level_limits)
     )
-    _openapi_value.initial_level isa Absent ||
-        (_openapi_output["initial_level"] = _encode(_openapi_value.initial_level))
-    _openapi_value.spillage_limits isa Absent ||
-        (_openapi_output["spillage_limits"] = _encode(_openapi_value.spillage_limits))
+    _openapi_value.initial_level isa Absent || (
+        _openapi_output["initial_level"] =
+            _encode_unvalidated(_openapi_value.initial_level)
+    )
+    _openapi_value.spillage_limits isa Absent || (
+        _openapi_output["spillage_limits"] =
+            _encode_unvalidated(_openapi_value.spillage_limits)
+    )
     _openapi_value.inflow isa Absent ||
-        (_openapi_output["inflow"] = _encode(_openapi_value.inflow))
+        (_openapi_output["inflow"] = _encode_unvalidated(_openapi_value.inflow))
     _openapi_value.outflow isa Absent ||
-        (_openapi_output["outflow"] = _encode(_openapi_value.outflow))
-    _openapi_value.level_targets isa Absent ||
-        (_openapi_output["level_targets"] = _encode(_openapi_value.level_targets))
-    _openapi_value.intake_elevation isa Absent ||
-        (_openapi_output["intake_elevation"] = _encode(_openapi_value.intake_elevation))
+        (_openapi_output["outflow"] = _encode_unvalidated(_openapi_value.outflow))
+    _openapi_value.level_targets isa Absent || (
+        _openapi_output["level_targets"] =
+            _encode_unvalidated(_openapi_value.level_targets)
+    )
+    _openapi_value.intake_elevation isa Absent || (
+        _openapi_output["intake_elevation"] =
+            _encode_unvalidated(_openapi_value.intake_elevation)
+    )
     _openapi_value.head_to_volume_factor isa Absent || (
         _openapi_output["head_to_volume_factor"] =
-            _encode(_openapi_value.head_to_volume_factor)
+            _encode_unvalidated(_openapi_value.head_to_volume_factor)
     )
-    _openapi_value.upstream_turbines isa Absent ||
-        (_openapi_output["upstream_turbines"] = _encode(_openapi_value.upstream_turbines))
+    _openapi_value.upstream_turbines isa Absent || (
+        _openapi_output["upstream_turbines"] =
+            _encode_unvalidated(_openapi_value.upstream_turbines)
+    )
     _openapi_value.downstream_turbines isa Absent || (
         _openapi_output["downstream_turbines"] =
-            _encode(_openapi_value.downstream_turbines)
+            _encode_unvalidated(_openapi_value.downstream_turbines)
     )
     _openapi_value.upstream_reservoirs isa Absent || (
         _openapi_output["upstream_reservoirs"] =
-            _encode(_openapi_value.upstream_reservoirs)
+            _encode_unvalidated(_openapi_value.upstream_reservoirs)
     )
-    _openapi_value.operation_cost isa Absent ||
-        (_openapi_output["operation_cost"] = _encode(_openapi_value.operation_cost))
-    _openapi_value.evaporative_loss isa Absent ||
-        (_openapi_output["evaporative_loss"] = _encode(_openapi_value.evaporative_loss))
-    _openapi_value.level_data_type isa Absent ||
-        (_openapi_output["level_data_type"] = _encode(_openapi_value.level_data_type))
+    _openapi_value.operation_cost isa Absent || (
+        _openapi_output["operation_cost"] =
+            _encode_unvalidated(_openapi_value.operation_cost)
+    )
+    _openapi_value.evaporative_loss isa Absent || (
+        _openapi_output["evaporative_loss"] =
+            _encode_unvalidated(_openapi_value.evaporative_loss)
+    )
+    _openapi_value.level_data_type isa Absent || (
+        _openapi_output["level_data_type"] =
+            _encode_unvalidated(_openapi_value.level_data_type)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding HydroReservoir";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::HydroReservoir) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-556e67feefe29a604672.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding HydroReservoir";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::HydroReservoir)
     _openapi_output = Pair{String, Any}[]

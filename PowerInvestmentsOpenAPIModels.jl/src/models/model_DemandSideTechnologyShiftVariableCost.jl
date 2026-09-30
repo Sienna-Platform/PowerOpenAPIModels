@@ -99,20 +99,19 @@ function _decode(
                 "discriminator-selected schema did not validate for DemandSideTechnologyShiftVariableCost",
             ),
         )
-    return DemandSideTechnologyShiftVariableCost(
-        _decode(selected[1], value, _openapi_validate),
-    )
+    return DemandSideTechnologyShiftVariableCost(_decode(selected[1], value, false))
 end
-function _encode(value::DemandSideTechnologyShiftVariableCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
-            pointer="/properties/shift_variable_cost",
-        ),
-        output,
-        "encoding DemandSideTechnologyShiftVariableCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::DemandSideTechnologyShiftVariableCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::DemandSideTechnologyShiftVariableCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
+        pointer="/properties/shift_variable_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding DemandSideTechnologyShiftVariableCost";
+    direction=:neutral,
+)

@@ -23,19 +23,20 @@ function _decode(::Type{ACBusType}, value, _openapi_validate::Bool)
         "decoding ACBusType";
         direction=:neutral,
     )
-    return ACBusType(_decode(String, value, _openapi_validate))
+    return ACBusType(_decode(String, value, false))
 end
-function _encode(value::ACBusType)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ACBusType",
-        ),
-        output,
-        "encoding ACBusType";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ACBusType)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ACBusType) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ACBusType",
+    ),
+    _encode_unvalidated(value),
+    "encoding ACBusType";
+    direction=:neutral,
+)
 Base.string(value::ACBusType) = string(value.value)

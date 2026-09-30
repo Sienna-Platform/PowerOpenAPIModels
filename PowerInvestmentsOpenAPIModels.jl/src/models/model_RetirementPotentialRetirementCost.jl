@@ -95,18 +95,19 @@ function _decode(::Type{RetirementPotentialRetirementCost}, value, _openapi_vali
                 "discriminator-selected schema did not validate for RetirementPotentialRetirementCost",
             ),
         )
-    return RetirementPotentialRetirementCost(_decode(selected[1], value, _openapi_validate))
+    return RetirementPotentialRetirementCost(_decode(selected[1], value, false))
 end
-function _encode(value::RetirementPotentialRetirementCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-c906cda7191beeec94f7.json",
-            pointer="/properties/retirement_cost",
-        ),
-        output,
-        "encoding RetirementPotentialRetirementCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::RetirementPotentialRetirementCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::RetirementPotentialRetirementCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-c906cda7191beeec94f7.json",
+        pointer="/properties/retirement_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding RetirementPotentialRetirementCost";
+    direction=:neutral,
+)

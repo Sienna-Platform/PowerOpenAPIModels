@@ -23,19 +23,20 @@ function _decode(::Type{UnitSystem}, value, _openapi_validate::Bool)
         "decoding UnitSystem";
         direction=:neutral,
     )
-    return UnitSystem(_decode(String, value, _openapi_validate))
+    return UnitSystem(_decode(String, value, false))
 end
-function _encode(value::UnitSystem)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
-            pointer="/\$defs/UnitSystem",
-        ),
-        output,
-        "encoding UnitSystem";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::UnitSystem)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::UnitSystem) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+        pointer="/\$defs/UnitSystem",
+    ),
+    _encode_unvalidated(value),
+    "encoding UnitSystem";
+    direction=:neutral,
+)
 Base.string(value::UnitSystem) = string(value.value)

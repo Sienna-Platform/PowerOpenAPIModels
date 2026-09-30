@@ -31,19 +31,20 @@ function _decode(
         "decoding ThreeWindingTransformerShuntLocation";
         direction=:neutral,
     )
-    return ThreeWindingTransformerShuntLocation(_decode(String, value, _openapi_validate))
+    return ThreeWindingTransformerShuntLocation(_decode(String, value, false))
 end
-function _encode(value::ThreeWindingTransformerShuntLocation)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
-            pointer="/\$defs/ThreeWindingTransformerShuntLocation",
-        ),
-        output,
-        "encoding ThreeWindingTransformerShuntLocation";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ThreeWindingTransformerShuntLocation)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ThreeWindingTransformerShuntLocation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        pointer="/\$defs/ThreeWindingTransformerShuntLocation",
+    ),
+    _encode_unvalidated(value),
+    "encoding ThreeWindingTransformerShuntLocation";
+    direction=:neutral,
+)
 Base.string(value::ThreeWindingTransformerShuntLocation) = string(value.value)

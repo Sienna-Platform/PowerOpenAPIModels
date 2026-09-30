@@ -34,41 +34,30 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "Area")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "Area"), _openapi_validate)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "Area"), _openapi_validate)
+    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "Area"), false)
+    _openapi_field_name = _decode(String, _required(_openapi_object, "name", "Area"), false)
     _openapi_field_peak_active_power =
         haskey(_openapi_object, "peak_active_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["peak_active_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_peak_reactive_power =
         haskey(_openapi_object, "peak_reactive_power") ?
         _decode(
             Union{Absent, Float64, Nothing},
             _openapi_object["peak_reactive_power"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_load_response =
         haskey(_openapi_object, "load_response") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["load_response"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_base_power = _decode(
-        Float64,
-        _required(_openapi_object, "base_power", "Area"),
-        _openapi_validate,
-    )
-    _openapi_field_power_units = _decode(
-        UnitSystem,
-        _required(_openapi_object, "power_units", "Area"),
-        _openapi_validate,
-    )
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["load_response"], false) :
+        ABSENT
+    _openapi_field_base_power =
+        _decode(Float64, _required(_openapi_object, "base_power", "Area"), false)
+    _openapi_field_power_units =
+        _decode(UnitSystem, _required(_openapi_object, "power_units", "Area"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -81,7 +70,7 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
             "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return Area(;
         id=_openapi_field_id,
@@ -94,42 +83,48 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::Area)
+function _encode_unvalidated(_openapi_value::Area)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
-    _openapi_value.peak_active_power isa Absent ||
-        (_openapi_output["peak_active_power"] = _encode(_openapi_value.peak_active_power))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
+    _openapi_value.peak_active_power isa Absent || (
+        _openapi_output["peak_active_power"] =
+            _encode_unvalidated(_openapi_value.peak_active_power)
+    )
     _openapi_value.peak_reactive_power isa Absent || (
         _openapi_output["peak_reactive_power"] =
-            _encode(_openapi_value.peak_reactive_power)
+            _encode_unvalidated(_openapi_value.peak_reactive_power)
     )
-    _openapi_value.load_response isa Absent ||
-        (_openapi_output["load_response"] = _encode(_openapi_value.load_response))
+    _openapi_value.load_response isa Absent || (
+        _openapi_output["load_response"] =
+            _encode_unvalidated(_openapi_value.load_response)
+    )
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-144b0877020365be5164.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding Area";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::Area) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-144b0877020365be5164.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding Area";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::Area)
     _openapi_output = Pair{String, Any}[]

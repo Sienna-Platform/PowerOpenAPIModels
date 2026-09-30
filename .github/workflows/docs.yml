@@ -1,0 +1,41 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main]
+    tags: ["*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      # Deploying to gh-pages with GITHUB_TOKEN needs write access to the repository;
+      # DOCUMENTER_KEY is used instead when the secret is set.
+      contents: write
+      pull-requests: read
+      statuses: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1"
+
+      - uses: julia-actions/cache@v2
+
+      # docs/Project.toml resolves the seven packages from this checkout through its
+      # [sources] block, so the site always documents the code it was built from.
+      - name: Install documentation dependencies
+        run: julia --project=docs -e 'using Pkg; Pkg.instantiate()'
+
+      - name: Build and deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCUMENTER_KEY: ${{ secrets.DOCUMENTER_KEY }}
+        run: julia --project=docs --color=yes docs/make.jl

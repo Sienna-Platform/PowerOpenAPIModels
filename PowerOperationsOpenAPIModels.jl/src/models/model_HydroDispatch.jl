@@ -59,103 +59,76 @@ function _decode(::Type{HydroDispatch}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "HydroDispatch")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "HydroDispatch"), _openapi_validate)
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "HydroDispatch"),
-        _openapi_validate,
-    )
-    _openapi_field_available = _decode(
-        Bool,
-        _required(_openapi_object, "available", "HydroDispatch"),
-        _openapi_validate,
-    )
-    _openapi_field_bus = _decode(
-        Int64,
-        _required(_openapi_object, "bus", "HydroDispatch"),
-        _openapi_validate,
-    )
-    _openapi_field_active_power = _decode(
-        Float64,
-        _required(_openapi_object, "active_power", "HydroDispatch"),
-        _openapi_validate,
-    )
+        _decode(Int64, _required(_openapi_object, "id", "HydroDispatch"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "HydroDispatch"), false)
+    _openapi_field_available =
+        _decode(Bool, _required(_openapi_object, "available", "HydroDispatch"), false)
+    _openapi_field_bus =
+        _decode(Int64, _required(_openapi_object, "bus", "HydroDispatch"), false)
+    _openapi_field_active_power =
+        _decode(Float64, _required(_openapi_object, "active_power", "HydroDispatch"), false)
     _openapi_field_reactive_power = _decode(
         Float64,
         _required(_openapi_object, "reactive_power", "HydroDispatch"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_rating = _decode(
-        Float64,
-        _required(_openapi_object, "rating", "HydroDispatch"),
-        _openapi_validate,
-    )
+    _openapi_field_rating =
+        _decode(Float64, _required(_openapi_object, "rating", "HydroDispatch"), false)
     _openapi_field_prime_mover_type = _decode(
         PrimeMovers,
         _required(_openapi_object, "prime_mover_type", "HydroDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_active_power_limits = _decode(
         MinMax,
         _required(_openapi_object, "active_power_limits", "HydroDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_reactive_power_limits =
         haskey(_openapi_object, "reactive_power_limits") ?
         _decode(
             Union{Absent, MinMax, Nothing},
             _openapi_object["reactive_power_limits"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_ramp_limits =
         haskey(_openapi_object, "ramp_limits") ?
-        _decode(
-            Union{Absent, UpDown, Nothing},
-            _openapi_object["ramp_limits"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, UpDown, Nothing}, _openapi_object["ramp_limits"], false) :
+        ABSENT
     _openapi_field_time_limits =
         haskey(_openapi_object, "time_limits") ?
-        _decode(
-            Union{Absent, UpDown, Nothing},
-            _openapi_object["time_limits"],
-            _openapi_validate,
-        ) : ABSENT
-    _openapi_field_base_power = _decode(
-        Float64,
-        _required(_openapi_object, "base_power", "HydroDispatch"),
-        _openapi_validate,
-    )
+        _decode(Union{Absent, UpDown, Nothing}, _openapi_object["time_limits"], false) :
+        ABSENT
+    _openapi_field_base_power =
+        _decode(Float64, _required(_openapi_object, "base_power", "HydroDispatch"), false)
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "HydroDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_status =
         haskey(_openapi_object, "status") ?
         _decode(
             Union{Absent, Nothing, OperationalStates},
             _openapi_object["status"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_time_at_status =
         haskey(_openapi_object, "time_at_status") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["time_at_status"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["time_at_status"], false) :
+        ABSENT
     _openapi_field_operation_cost = _decode(
         HydroDispatchOperationCost,
         _required(_openapi_object, "operation_cost", "HydroDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -180,7 +153,7 @@ function _decode(::Type{HydroDispatch}, _openapi_raw, _openapi_validate::Bool)
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return HydroDispatch(;
         id=_openapi_field_id,
@@ -204,65 +177,78 @@ function _decode(::Type{HydroDispatch}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::HydroDispatch)
+function _encode_unvalidated(_openapi_value::HydroDispatch)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.bus isa Absent ||
+        (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
     _openapi_value.active_power isa Absent ||
-        (_openapi_output["active_power"] = _encode(_openapi_value.active_power))
-    _openapi_value.reactive_power isa Absent ||
-        (_openapi_output["reactive_power"] = _encode(_openapi_value.reactive_power))
+        (_openapi_output["active_power"] = _encode_unvalidated(_openapi_value.active_power))
+    _openapi_value.reactive_power isa Absent || (
+        _openapi_output["reactive_power"] =
+            _encode_unvalidated(_openapi_value.reactive_power)
+    )
     _openapi_value.rating isa Absent ||
-        (_openapi_output["rating"] = _encode(_openapi_value.rating))
-    _openapi_value.prime_mover_type isa Absent ||
-        (_openapi_output["prime_mover_type"] = _encode(_openapi_value.prime_mover_type))
+        (_openapi_output["rating"] = _encode_unvalidated(_openapi_value.rating))
+    _openapi_value.prime_mover_type isa Absent || (
+        _openapi_output["prime_mover_type"] =
+            _encode_unvalidated(_openapi_value.prime_mover_type)
+    )
     _openapi_value.active_power_limits isa Absent || (
         _openapi_output["active_power_limits"] =
-            _encode(_openapi_value.active_power_limits)
+            _encode_unvalidated(_openapi_value.active_power_limits)
     )
     _openapi_value.reactive_power_limits isa Absent || (
         _openapi_output["reactive_power_limits"] =
-            _encode(_openapi_value.reactive_power_limits)
+            _encode_unvalidated(_openapi_value.reactive_power_limits)
     )
     _openapi_value.ramp_limits isa Absent ||
-        (_openapi_output["ramp_limits"] = _encode(_openapi_value.ramp_limits))
+        (_openapi_output["ramp_limits"] = _encode_unvalidated(_openapi_value.ramp_limits))
     _openapi_value.time_limits isa Absent ||
-        (_openapi_output["time_limits"] = _encode(_openapi_value.time_limits))
+        (_openapi_output["time_limits"] = _encode_unvalidated(_openapi_value.time_limits))
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
     _openapi_value.status isa Absent ||
-        (_openapi_output["status"] = _encode(_openapi_value.status))
-    _openapi_value.time_at_status isa Absent ||
-        (_openapi_output["time_at_status"] = _encode(_openapi_value.time_at_status))
-    _openapi_value.operation_cost isa Absent ||
-        (_openapi_output["operation_cost"] = _encode(_openapi_value.operation_cost))
-    _openapi_value.dynamic_injector isa Absent ||
-        (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
+        (_openapi_output["status"] = _encode_unvalidated(_openapi_value.status))
+    _openapi_value.time_at_status isa Absent || (
+        _openapi_output["time_at_status"] =
+            _encode_unvalidated(_openapi_value.time_at_status)
+    )
+    _openapi_value.operation_cost isa Absent || (
+        _openapi_output["operation_cost"] =
+            _encode_unvalidated(_openapi_value.operation_cost)
+    )
+    _openapi_value.dynamic_injector isa Absent || (
+        _openapi_output["dynamic_injector"] =
+            _encode_unvalidated(_openapi_value.dynamic_injector)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-a5150d536943e6a6d583.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding HydroDispatch";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::HydroDispatch) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-a5150d536943e6a6d583.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding HydroDispatch";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::HydroDispatch)
     _openapi_output = Pair{String, Any}[]

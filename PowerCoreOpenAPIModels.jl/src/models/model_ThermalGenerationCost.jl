@@ -31,30 +31,27 @@ function _decode(::Type{ThermalGenerationCost}, _openapi_raw, _openapi_validate:
     _openapi_object = _object(_openapi_raw, "ThermalGenerationCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["cost_type"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
+        ABSENT
     _openapi_field_fixed = _decode(
         Float64,
         _required(_openapi_object, "fixed", "ThermalGenerationCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_shut_down = _decode(
         Float64,
         _required(_openapi_object, "shut_down", "ThermalGenerationCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_start_up = _decode(
         ThermalGenerationCostStartUp,
         _required(_openapi_object, "start_up", "ThermalGenerationCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_variable_operation_cost = _decode(
         ProductionVariableCostCurve,
         _required(_openapi_object, "variable_operation_cost", "ThermalGenerationCost"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -62,7 +59,7 @@ function _decode(::Type{ThermalGenerationCost}, _openapi_raw, _openapi_validate:
         ("cost_type", "fixed", "shut_down", "start_up", "variable_operation_cost") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return ThermalGenerationCost(;
         cost_type=_openapi_field_cost_type,
@@ -73,19 +70,19 @@ function _decode(::Type{ThermalGenerationCost}, _openapi_raw, _openapi_validate:
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::ThermalGenerationCost)
+function _encode_unvalidated(_openapi_value::ThermalGenerationCost)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.cost_type isa Absent ||
-        (_openapi_output["cost_type"] = _encode(_openapi_value.cost_type))
+        (_openapi_output["cost_type"] = _encode_unvalidated(_openapi_value.cost_type))
     _openapi_value.fixed isa Absent ||
-        (_openapi_output["fixed"] = _encode(_openapi_value.fixed))
+        (_openapi_output["fixed"] = _encode_unvalidated(_openapi_value.fixed))
     _openapi_value.shut_down isa Absent ||
-        (_openapi_output["shut_down"] = _encode(_openapi_value.shut_down))
+        (_openapi_output["shut_down"] = _encode_unvalidated(_openapi_value.shut_down))
     _openapi_value.start_up isa Absent ||
-        (_openapi_output["start_up"] = _encode(_openapi_value.start_up))
+        (_openapi_output["start_up"] = _encode_unvalidated(_openapi_value.start_up))
     _openapi_value.variable_operation_cost isa Absent || (
         _openapi_output["variable_operation_cost"] =
-            _encode(_openapi_value.variable_operation_cost)
+            _encode_unvalidated(_openapi_value.variable_operation_cost)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -93,19 +90,20 @@ function _encode(_openapi_value::ThermalGenerationCost)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ThermalGenerationCost",
-        ),
-        _openapi_output,
-        "encoding ThermalGenerationCost";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::ThermalGenerationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ThermalGenerationCost",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding ThermalGenerationCost";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::ThermalGenerationCost)
     _openapi_output = Pair{String, Any}[]

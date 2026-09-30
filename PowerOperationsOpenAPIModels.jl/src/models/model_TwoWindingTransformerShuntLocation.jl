@@ -27,19 +27,20 @@ function _decode(::Type{TwoWindingTransformerShuntLocation}, value, _openapi_val
         "decoding TwoWindingTransformerShuntLocation";
         direction=:neutral,
     )
-    return TwoWindingTransformerShuntLocation(_decode(String, value, _openapi_validate))
+    return TwoWindingTransformerShuntLocation(_decode(String, value, false))
 end
-function _encode(value::TwoWindingTransformerShuntLocation)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
-            pointer="/\$defs/TwoWindingTransformerShuntLocation",
-        ),
-        output,
-        "encoding TwoWindingTransformerShuntLocation";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::TwoWindingTransformerShuntLocation)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::TwoWindingTransformerShuntLocation) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        pointer="/\$defs/TwoWindingTransformerShuntLocation",
+    ),
+    _encode_unvalidated(value),
+    "encoding TwoWindingTransformerShuntLocation";
+    direction=:neutral,
+)
 Base.string(value::TwoWindingTransformerShuntLocation) = string(value.value)

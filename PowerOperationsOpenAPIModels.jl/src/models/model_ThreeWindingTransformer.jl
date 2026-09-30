@@ -59,126 +59,90 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ThreeWindingTransformer")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "ThreeWindingTransformer"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "ThreeWindingTransformer"), false)
     _openapi_field_name = _decode(
         String,
         _required(_openapi_object, "name", "ThreeWindingTransformer"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_primary_circuit = _decode(
         Int64,
         _required(_openapi_object, "primary_circuit", "ThreeWindingTransformer"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_secondary_circuit = _decode(
         Int64,
         _required(_openapi_object, "secondary_circuit", "ThreeWindingTransformer"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_tertiary_circuit = _decode(
         Int64,
         _required(_openapi_object, "tertiary_circuit", "ThreeWindingTransformer"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_star_bus = _decode(
         Int64,
         _required(_openapi_object, "star_bus", "ThreeWindingTransformer"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
         _decode(
             Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_r_12 =
         haskey(_openapi_object, "r_12") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["r_12"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["r_12"], false) : ABSENT
     _openapi_field_x_12 =
         haskey(_openapi_object, "x_12") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["x_12"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["x_12"], false) : ABSENT
     _openapi_field_r_23 =
         haskey(_openapi_object, "r_23") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["r_23"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["r_23"], false) : ABSENT
     _openapi_field_x_23 =
         haskey(_openapi_object, "x_23") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["x_23"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["x_23"], false) : ABSENT
     _openapi_field_r_31 =
         haskey(_openapi_object, "r_31") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["r_31"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["r_31"], false) : ABSENT
     _openapi_field_x_31 =
         haskey(_openapi_object, "x_31") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["x_31"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["x_31"], false) : ABSENT
     _openapi_field_base_power_12 =
         haskey(_openapi_object, "base_power_12") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["base_power_12"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_power_12"], false) :
+        ABSENT
     _openapi_field_base_power_23 =
         haskey(_openapi_object, "base_power_23") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["base_power_23"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_power_23"], false) :
+        ABSENT
     _openapi_field_base_power_31 =
         haskey(_openapi_object, "base_power_31") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["base_power_31"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_power_31"], false) :
+        ABSENT
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
         _decode(
             Union{Absent, AdmittanceUnitBasis, Nothing},
             _openapi_object["admittance_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_magnetizing_shunt =
         haskey(_openapi_object, "magnetizing_shunt") ?
         _decode(
             Union{Absent, Nothing, ComplexNumber},
             _openapi_object["magnetizing_shunt"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_shunt_location =
         haskey(_openapi_object, "shunt_location") ?
         _decode(
             Union{Absent, Nothing, ThreeWindingTransformerShuntLocation},
             _openapi_object["shunt_location"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -204,7 +168,7 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
             "shunt_location",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return ThreeWindingTransformer(;
         id=_openapi_field_id,
@@ -229,64 +193,86 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::ThreeWindingTransformer)
+function _encode_unvalidated(_openapi_value::ThreeWindingTransformer)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
-    _openapi_value.primary_circuit isa Absent ||
-        (_openapi_output["primary_circuit"] = _encode(_openapi_value.primary_circuit))
-    _openapi_value.secondary_circuit isa Absent ||
-        (_openapi_output["secondary_circuit"] = _encode(_openapi_value.secondary_circuit))
-    _openapi_value.tertiary_circuit isa Absent ||
-        (_openapi_output["tertiary_circuit"] = _encode(_openapi_value.tertiary_circuit))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
+    _openapi_value.primary_circuit isa Absent || (
+        _openapi_output["primary_circuit"] =
+            _encode_unvalidated(_openapi_value.primary_circuit)
+    )
+    _openapi_value.secondary_circuit isa Absent || (
+        _openapi_output["secondary_circuit"] =
+            _encode_unvalidated(_openapi_value.secondary_circuit)
+    )
+    _openapi_value.tertiary_circuit isa Absent || (
+        _openapi_output["tertiary_circuit"] =
+            _encode_unvalidated(_openapi_value.tertiary_circuit)
+    )
     _openapi_value.star_bus isa Absent ||
-        (_openapi_output["star_bus"] = _encode(_openapi_value.star_bus))
-    _openapi_value.parameter_units isa Absent ||
-        (_openapi_output["parameter_units"] = _encode(_openapi_value.parameter_units))
+        (_openapi_output["star_bus"] = _encode_unvalidated(_openapi_value.star_bus))
+    _openapi_value.parameter_units isa Absent || (
+        _openapi_output["parameter_units"] =
+            _encode_unvalidated(_openapi_value.parameter_units)
+    )
     _openapi_value.r_12 isa Absent ||
-        (_openapi_output["r_12"] = _encode(_openapi_value.r_12))
+        (_openapi_output["r_12"] = _encode_unvalidated(_openapi_value.r_12))
     _openapi_value.x_12 isa Absent ||
-        (_openapi_output["x_12"] = _encode(_openapi_value.x_12))
+        (_openapi_output["x_12"] = _encode_unvalidated(_openapi_value.x_12))
     _openapi_value.r_23 isa Absent ||
-        (_openapi_output["r_23"] = _encode(_openapi_value.r_23))
+        (_openapi_output["r_23"] = _encode_unvalidated(_openapi_value.r_23))
     _openapi_value.x_23 isa Absent ||
-        (_openapi_output["x_23"] = _encode(_openapi_value.x_23))
+        (_openapi_output["x_23"] = _encode_unvalidated(_openapi_value.x_23))
     _openapi_value.r_31 isa Absent ||
-        (_openapi_output["r_31"] = _encode(_openapi_value.r_31))
+        (_openapi_output["r_31"] = _encode_unvalidated(_openapi_value.r_31))
     _openapi_value.x_31 isa Absent ||
-        (_openapi_output["x_31"] = _encode(_openapi_value.x_31))
-    _openapi_value.base_power_12 isa Absent ||
-        (_openapi_output["base_power_12"] = _encode(_openapi_value.base_power_12))
-    _openapi_value.base_power_23 isa Absent ||
-        (_openapi_output["base_power_23"] = _encode(_openapi_value.base_power_23))
-    _openapi_value.base_power_31 isa Absent ||
-        (_openapi_output["base_power_31"] = _encode(_openapi_value.base_power_31))
-    _openapi_value.admittance_units isa Absent ||
-        (_openapi_output["admittance_units"] = _encode(_openapi_value.admittance_units))
-    _openapi_value.magnetizing_shunt isa Absent ||
-        (_openapi_output["magnetizing_shunt"] = _encode(_openapi_value.magnetizing_shunt))
-    _openapi_value.shunt_location isa Absent ||
-        (_openapi_output["shunt_location"] = _encode(_openapi_value.shunt_location))
+        (_openapi_output["x_31"] = _encode_unvalidated(_openapi_value.x_31))
+    _openapi_value.base_power_12 isa Absent || (
+        _openapi_output["base_power_12"] =
+            _encode_unvalidated(_openapi_value.base_power_12)
+    )
+    _openapi_value.base_power_23 isa Absent || (
+        _openapi_output["base_power_23"] =
+            _encode_unvalidated(_openapi_value.base_power_23)
+    )
+    _openapi_value.base_power_31 isa Absent || (
+        _openapi_output["base_power_31"] =
+            _encode_unvalidated(_openapi_value.base_power_31)
+    )
+    _openapi_value.admittance_units isa Absent || (
+        _openapi_output["admittance_units"] =
+            _encode_unvalidated(_openapi_value.admittance_units)
+    )
+    _openapi_value.magnetizing_shunt isa Absent || (
+        _openapi_output["magnetizing_shunt"] =
+            _encode_unvalidated(_openapi_value.magnetizing_shunt)
+    )
+    _openapi_value.shunt_location isa Absent || (
+        _openapi_output["shunt_location"] =
+            _encode_unvalidated(_openapi_value.shunt_location)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-590b35ad44fcac75c3aa.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding ThreeWindingTransformer";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::ThreeWindingTransformer) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-590b35ad44fcac75c3aa.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding ThreeWindingTransformer";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::ThreeWindingTransformer)
     _openapi_output = Pair{String, Any}[]

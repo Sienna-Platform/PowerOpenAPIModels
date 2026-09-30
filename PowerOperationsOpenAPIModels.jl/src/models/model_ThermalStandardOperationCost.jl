@@ -79,18 +79,19 @@ function _decode(::Type{ThermalStandardOperationCost}, value, _openapi_validate:
                 "discriminator-selected schema did not validate for ThermalStandardOperationCost",
             ),
         )
-    return ThermalStandardOperationCost(_decode(selected[1], value, _openapi_validate))
+    return ThermalStandardOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::ThermalStandardOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-06e8554569aace394570.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding ThermalStandardOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ThermalStandardOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ThermalStandardOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-06e8554569aace394570.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding ThermalStandardOperationCost";
+    direction=:neutral,
+)

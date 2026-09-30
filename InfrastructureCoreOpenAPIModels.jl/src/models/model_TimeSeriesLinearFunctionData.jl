@@ -31,18 +31,18 @@ function _decode(
     _openapi_field_function_type = _decode(
         String,
         _required(_openapi_object, "function_type", "TimeSeriesLinearFunctionData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_association_id = _decode(
         Int64,
         _required(_openapi_object, "association_id", "TimeSeriesLinearFunctionData"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("function_type", "association_id") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return TimeSeriesLinearFunctionData(;
         function_type=_openapi_field_function_type,
@@ -50,31 +50,36 @@ function _decode(
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::TimeSeriesLinearFunctionData)
+function _encode_unvalidated(_openapi_value::TimeSeriesLinearFunctionData)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.function_type isa Absent ||
-        (_openapi_output["function_type"] = _encode(_openapi_value.function_type))
-    _openapi_value.association_id isa Absent ||
-        (_openapi_output["association_id"] = _encode(_openapi_value.association_id))
+    _openapi_value.function_type isa Absent || (
+        _openapi_output["function_type"] =
+            _encode_unvalidated(_openapi_value.function_type)
+    )
+    _openapi_value.association_id isa Absent || (
+        _openapi_output["association_id"] =
+            _encode_unvalidated(_openapi_value.association_id)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
-            pointer="/\$defs/TimeSeriesLinearFunctionData",
-        ),
-        _openapi_output,
-        "encoding TimeSeriesLinearFunctionData";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::TimeSeriesLinearFunctionData) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+        pointer="/\$defs/TimeSeriesLinearFunctionData",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding TimeSeriesLinearFunctionData";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::TimeSeriesLinearFunctionData)
     _openapi_output = Pair{String, Any}[]

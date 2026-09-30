@@ -34,41 +34,35 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TwoWindingTransformer")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "TwoWindingTransformer"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "TwoWindingTransformer"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "TwoWindingTransformer"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "TwoWindingTransformer"), false)
     _openapi_field_circuit = _decode(
         Int64,
         _required(_openapi_object, "circuit", "TwoWindingTransformer"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
         _decode(
             Union{Absent, AdmittanceUnitBasis, Nothing},
             _openapi_object["admittance_units"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_magnetizing_shunt =
         haskey(_openapi_object, "magnetizing_shunt") ?
         _decode(
             Union{Absent, Nothing, ComplexNumber},
             _openapi_object["magnetizing_shunt"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_shunt_location =
         haskey(_openapi_object, "shunt_location") ?
         _decode(
             Union{Absent, Nothing, TwoWindingTransformerShuntLocation},
             _openapi_object["shunt_location"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -81,7 +75,7 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
             "shunt_location",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return TwoWindingTransformer(;
         id=_openapi_field_id,
@@ -93,38 +87,46 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::TwoWindingTransformer)
+function _encode_unvalidated(_openapi_value::TwoWindingTransformer)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.circuit isa Absent ||
-        (_openapi_output["circuit"] = _encode(_openapi_value.circuit))
-    _openapi_value.admittance_units isa Absent ||
-        (_openapi_output["admittance_units"] = _encode(_openapi_value.admittance_units))
-    _openapi_value.magnetizing_shunt isa Absent ||
-        (_openapi_output["magnetizing_shunt"] = _encode(_openapi_value.magnetizing_shunt))
-    _openapi_value.shunt_location isa Absent ||
-        (_openapi_output["shunt_location"] = _encode(_openapi_value.shunt_location))
+        (_openapi_output["circuit"] = _encode_unvalidated(_openapi_value.circuit))
+    _openapi_value.admittance_units isa Absent || (
+        _openapi_output["admittance_units"] =
+            _encode_unvalidated(_openapi_value.admittance_units)
+    )
+    _openapi_value.magnetizing_shunt isa Absent || (
+        _openapi_output["magnetizing_shunt"] =
+            _encode_unvalidated(_openapi_value.magnetizing_shunt)
+    )
+    _openapi_value.shunt_location isa Absent || (
+        _openapi_output["shunt_location"] =
+            _encode_unvalidated(_openapi_value.shunt_location)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-5d1267d0b41e1f61f10d.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding TwoWindingTransformer";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::TwoWindingTransformer) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-5d1267d0b41e1f61f10d.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding TwoWindingTransformer";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::TwoWindingTransformer)
     _openapi_output = Pair{String, Any}[]

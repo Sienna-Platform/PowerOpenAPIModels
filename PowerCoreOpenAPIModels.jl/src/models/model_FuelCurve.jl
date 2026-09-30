@@ -38,41 +38,35 @@ function _decode(::Type{FuelCurve}, _openapi_raw, _openapi_validate::Bool)
         _decode(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["fuel_cost"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_field_fuel_cost_time_series =
         haskey(_openapi_object, "fuel_cost_time_series") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["fuel_cost_time_series"],
-            _openapi_validate,
+            false,
         ) : ABSENT
-    _openapi_field_power_units = _decode(
-        UnitSystem,
-        _required(_openapi_object, "power_units", "FuelCurve"),
-        _openapi_validate,
-    )
+    _openapi_field_power_units =
+        _decode(UnitSystem, _required(_openapi_object, "power_units", "FuelCurve"), false)
     _openapi_field_startup_fuel_offtake =
         haskey(_openapi_object, "startup_fuel_offtake") ?
         _decode(
             Union{Absent, InputOutputCurve, Nothing},
             _openapi_object["startup_fuel_offtake"],
-            _openapi_validate,
+            false,
         ) : ABSENT
-    _openapi_field_value_curve = _decode(
-        ValueCurve,
-        _required(_openapi_object, "value_curve", "FuelCurve"),
-        _openapi_validate,
-    )
+    _openapi_field_value_curve =
+        _decode(ValueCurve, _required(_openapi_object, "value_curve", "FuelCurve"), false)
     _openapi_field_variable_cost_type = _decode(
         String,
         _required(_openapi_object, "variable_cost_type", "FuelCurve"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_vom_cost = _decode(
         InputOutputCurve,
         _required(_openapi_object, "vom_cost", "FuelCurve"),
-        _openapi_validate,
+        false,
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -86,7 +80,7 @@ function _decode(::Type{FuelCurve}, _openapi_raw, _openapi_validate::Bool)
             "vom_cost",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return FuelCurve(;
         fuel_cost=_openapi_field_fuel_cost,
@@ -99,45 +93,48 @@ function _decode(::Type{FuelCurve}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::FuelCurve)
+function _encode_unvalidated(_openapi_value::FuelCurve)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.fuel_cost isa Absent ||
-        (_openapi_output["fuel_cost"] = _encode(_openapi_value.fuel_cost))
+        (_openapi_output["fuel_cost"] = _encode_unvalidated(_openapi_value.fuel_cost))
     _openapi_value.fuel_cost_time_series isa Absent || (
         _openapi_output["fuel_cost_time_series"] =
-            _encode(_openapi_value.fuel_cost_time_series)
+            _encode_unvalidated(_openapi_value.fuel_cost_time_series)
     )
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
     _openapi_value.startup_fuel_offtake isa Absent || (
         _openapi_output["startup_fuel_offtake"] =
-            _encode(_openapi_value.startup_fuel_offtake)
+            _encode_unvalidated(_openapi_value.startup_fuel_offtake)
     )
     _openapi_value.value_curve isa Absent ||
-        (_openapi_output["value_curve"] = _encode(_openapi_value.value_curve))
-    _openapi_value.variable_cost_type isa Absent ||
-        (_openapi_output["variable_cost_type"] = _encode(_openapi_value.variable_cost_type))
+        (_openapi_output["value_curve"] = _encode_unvalidated(_openapi_value.value_curve))
+    _openapi_value.variable_cost_type isa Absent || (
+        _openapi_output["variable_cost_type"] =
+            _encode_unvalidated(_openapi_value.variable_cost_type)
+    )
     _openapi_value.vom_cost isa Absent ||
-        (_openapi_output["vom_cost"] = _encode(_openapi_value.vom_cost))
+        (_openapi_output["vom_cost"] = _encode_unvalidated(_openapi_value.vom_cost))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/FuelCurve",
-        ),
-        _openapi_output,
-        "encoding FuelCurve";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::FuelCurve) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/FuelCurve",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding FuelCurve";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::FuelCurve)
     _openapi_output = Pair{String, Any}[]

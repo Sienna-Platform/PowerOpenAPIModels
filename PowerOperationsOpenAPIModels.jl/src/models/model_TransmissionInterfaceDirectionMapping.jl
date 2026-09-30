@@ -28,13 +28,13 @@ function _decode(
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in () && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Int64, _openapi_item, _openapi_validate)
+            _decode(Int64, _openapi_item, false)
     end
     return TransmissionInterfaceDirectionMapping(;
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::TransmissionInterfaceDirectionMapping)
+function _encode_unvalidated(_openapi_value::TransmissionInterfaceDirectionMapping)
     _openapi_output = JSON.Object{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -42,19 +42,20 @@ function _encode(_openapi_value::TransmissionInterfaceDirectionMapping)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-202c1e202c65ead3b6a4.json",
-            pointer="/properties/direction_mapping",
-        ),
-        _openapi_output,
-        "encoding TransmissionInterfaceDirectionMapping";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::TransmissionInterfaceDirectionMapping) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-202c1e202c65ead3b6a4.json",
+        pointer="/properties/direction_mapping",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding TransmissionInterfaceDirectionMapping";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::TransmissionInterfaceDirectionMapping)
     _openapi_output = Pair{String, Any}[]

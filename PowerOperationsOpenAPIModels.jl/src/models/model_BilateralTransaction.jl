@@ -42,64 +42,52 @@ function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "BilateralTransaction")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "BilateralTransaction"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "BilateralTransaction"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "BilateralTransaction"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "BilateralTransaction"), false)
     _openapi_field_seller_id = _decode(
         String,
         _required(_openapi_object, "seller_id", "BilateralTransaction"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_buyer_id = _decode(
         String,
         _required(_openapi_object, "buyer_id", "BilateralTransaction"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_from_id = _decode(
-        Int64,
-        _required(_openapi_object, "from_id", "BilateralTransaction"),
-        _openapi_validate,
-    )
+    _openapi_field_from_id =
+        _decode(Int64, _required(_openapi_object, "from_id", "BilateralTransaction"), false)
     _openapi_field_to_id =
         haskey(_openapi_object, "to_id") ?
-        _decode(
-            Union{Absent, Union{Int64, Nothing}},
-            _openapi_object["to_id"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Union{Int64, Nothing}}, _openapi_object["to_id"], false) :
+        ABSENT
     _openapi_field_product = _decode(
         BilateralProduct,
         _required(_openapi_object, "product", "BilateralTransaction"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_market = _decode(
         MarketStage,
         _required(_openapi_object, "market", "BilateralTransaction"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_confirmation = _decode(
         BilateralConfirmation,
         _required(_openapi_object, "confirmation", "BilateralTransaction"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_max_active_power = _decode(
         Float64,
         _required(_openapi_object, "max_active_power", "BilateralTransaction"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_active_power_association_id =
         haskey(_openapi_object, "active_power_association_id") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["active_power_association_id"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -117,7 +105,7 @@ function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::
             "active_power_association_id",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return BilateralTransaction(;
         id=_openapi_field_id,
@@ -134,30 +122,33 @@ function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::BilateralTransaction)
+function _encode_unvalidated(_openapi_value::BilateralTransaction)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.seller_id isa Absent ||
-        (_openapi_output["seller_id"] = _encode(_openapi_value.seller_id))
+        (_openapi_output["seller_id"] = _encode_unvalidated(_openapi_value.seller_id))
     _openapi_value.buyer_id isa Absent ||
-        (_openapi_output["buyer_id"] = _encode(_openapi_value.buyer_id))
+        (_openapi_output["buyer_id"] = _encode_unvalidated(_openapi_value.buyer_id))
     _openapi_value.from_id isa Absent ||
-        (_openapi_output["from_id"] = _encode(_openapi_value.from_id))
+        (_openapi_output["from_id"] = _encode_unvalidated(_openapi_value.from_id))
     _openapi_value.to_id isa Absent ||
-        (_openapi_output["to_id"] = _encode(_openapi_value.to_id))
+        (_openapi_output["to_id"] = _encode_unvalidated(_openapi_value.to_id))
     _openapi_value.product isa Absent ||
-        (_openapi_output["product"] = _encode(_openapi_value.product))
+        (_openapi_output["product"] = _encode_unvalidated(_openapi_value.product))
     _openapi_value.market isa Absent ||
-        (_openapi_output["market"] = _encode(_openapi_value.market))
+        (_openapi_output["market"] = _encode_unvalidated(_openapi_value.market))
     _openapi_value.confirmation isa Absent ||
-        (_openapi_output["confirmation"] = _encode(_openapi_value.confirmation))
-    _openapi_value.max_active_power isa Absent ||
-        (_openapi_output["max_active_power"] = _encode(_openapi_value.max_active_power))
+        (_openapi_output["confirmation"] = _encode_unvalidated(_openapi_value.confirmation))
+    _openapi_value.max_active_power isa Absent || (
+        _openapi_output["max_active_power"] =
+            _encode_unvalidated(_openapi_value.max_active_power)
+    )
     _openapi_value.active_power_association_id isa Absent || (
         _openapi_output["active_power_association_id"] =
-            _encode(_openapi_value.active_power_association_id)
+            _encode_unvalidated(_openapi_value.active_power_association_id)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -165,19 +156,20 @@ function _encode(_openapi_value::BilateralTransaction)
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-605214735ccfd84328e6.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding BilateralTransaction";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::BilateralTransaction) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-605214735ccfd84328e6.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding BilateralTransaction";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::BilateralTransaction)
     _openapi_output = Pair{String, Any}[]

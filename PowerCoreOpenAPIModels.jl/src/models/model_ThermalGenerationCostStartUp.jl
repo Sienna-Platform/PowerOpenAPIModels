@@ -20,7 +20,7 @@ function _decode(::Type{ThermalGenerationCostStartUp}, value, _openapi_validate:
         direction=:neutral,
     )
     value isa AbstractDict ||
-        return ThermalGenerationCostStartUp(_decode(Float64, value, _openapi_validate))
+        return ThermalGenerationCostStartUp(_decode(Float64, value, false))
     object = _object(value, "ThermalGenerationCostStartUp")
     tag = get(object, "startup_stages_type", ABSENT)
     tag isa Absent ||
@@ -55,18 +55,19 @@ function _decode(::Type{ThermalGenerationCostStartUp}, value, _openapi_validate:
                 "discriminator-selected schema did not validate for ThermalGenerationCostStartUp",
             ),
         )
-    return ThermalGenerationCostStartUp(_decode(selected[1], value, _openapi_validate))
+    return ThermalGenerationCostStartUp(_decode(selected[1], value, false))
 end
-function _encode(value::ThermalGenerationCostStartUp)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ThermalGenerationCost/properties/start_up",
-        ),
-        output,
-        "encoding ThermalGenerationCostStartUp";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::ThermalGenerationCostStartUp)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::ThermalGenerationCostStartUp) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/ThermalGenerationCost/properties/start_up",
+    ),
+    _encode_unvalidated(value),
+    "encoding ThermalGenerationCostStartUp";
+    direction=:neutral,
+)

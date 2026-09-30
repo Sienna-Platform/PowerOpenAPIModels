@@ -48,67 +48,58 @@ function _decode(::Type{RenewableNonDispatch}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RenewableNonDispatch")
-    _openapi_field_id = _decode(
-        Int64,
-        _required(_openapi_object, "id", "RenewableNonDispatch"),
-        _openapi_validate,
-    )
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "RenewableNonDispatch"),
-        _openapi_validate,
-    )
+    _openapi_field_id =
+        _decode(Int64, _required(_openapi_object, "id", "RenewableNonDispatch"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "RenewableNonDispatch"), false)
     _openapi_field_available = _decode(
         Bool,
         _required(_openapi_object, "available", "RenewableNonDispatch"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_bus = _decode(
-        Int64,
-        _required(_openapi_object, "bus", "RenewableNonDispatch"),
-        _openapi_validate,
-    )
+    _openapi_field_bus =
+        _decode(Int64, _required(_openapi_object, "bus", "RenewableNonDispatch"), false)
     _openapi_field_active_power = _decode(
         Float64,
         _required(_openapi_object, "active_power", "RenewableNonDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_reactive_power = _decode(
         Float64,
         _required(_openapi_object, "reactive_power", "RenewableNonDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_rating = _decode(
         Float64,
         _required(_openapi_object, "rating", "RenewableNonDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_prime_mover_type = _decode(
         PrimeMovers,
         _required(_openapi_object, "prime_mover_type", "RenewableNonDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_factor = _decode(
         Float64,
         _required(_openapi_object, "power_factor", "RenewableNonDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_base_power = _decode(
         Float64,
         _required(_openapi_object, "base_power", "RenewableNonDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_power_units = _decode(
         UnitSystem,
         _required(_openapi_object, "power_units", "RenewableNonDispatch"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
         _decode(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
-            _openapi_validate,
+            false,
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
@@ -127,7 +118,7 @@ function _decode(::Type{RenewableNonDispatch}, _openapi_raw, _openapi_validate::
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return RenewableNonDispatch(;
         id=_openapi_field_id,
@@ -145,49 +136,58 @@ function _decode(::Type{RenewableNonDispatch}, _openapi_raw, _openapi_validate::
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::RenewableNonDispatch)
+function _encode_unvalidated(_openapi_value::RenewableNonDispatch)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
-    _openapi_value.bus isa Absent || (_openapi_output["bus"] = _encode(_openapi_value.bus))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
+    _openapi_value.bus isa Absent ||
+        (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
     _openapi_value.active_power isa Absent ||
-        (_openapi_output["active_power"] = _encode(_openapi_value.active_power))
-    _openapi_value.reactive_power isa Absent ||
-        (_openapi_output["reactive_power"] = _encode(_openapi_value.reactive_power))
+        (_openapi_output["active_power"] = _encode_unvalidated(_openapi_value.active_power))
+    _openapi_value.reactive_power isa Absent || (
+        _openapi_output["reactive_power"] =
+            _encode_unvalidated(_openapi_value.reactive_power)
+    )
     _openapi_value.rating isa Absent ||
-        (_openapi_output["rating"] = _encode(_openapi_value.rating))
-    _openapi_value.prime_mover_type isa Absent ||
-        (_openapi_output["prime_mover_type"] = _encode(_openapi_value.prime_mover_type))
+        (_openapi_output["rating"] = _encode_unvalidated(_openapi_value.rating))
+    _openapi_value.prime_mover_type isa Absent || (
+        _openapi_output["prime_mover_type"] =
+            _encode_unvalidated(_openapi_value.prime_mover_type)
+    )
     _openapi_value.power_factor isa Absent ||
-        (_openapi_output["power_factor"] = _encode(_openapi_value.power_factor))
+        (_openapi_output["power_factor"] = _encode_unvalidated(_openapi_value.power_factor))
     _openapi_value.base_power isa Absent ||
-        (_openapi_output["base_power"] = _encode(_openapi_value.base_power))
+        (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
-        (_openapi_output["power_units"] = _encode(_openapi_value.power_units))
-    _openapi_value.dynamic_injector isa Absent ||
-        (_openapi_output["dynamic_injector"] = _encode(_openapi_value.dynamic_injector))
+        (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
+    _openapi_value.dynamic_injector isa Absent || (
+        _openapi_output["dynamic_injector"] =
+            _encode_unvalidated(_openapi_value.dynamic_injector)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-caad2ad9dbd776022f4f.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding RenewableNonDispatch";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::RenewableNonDispatch) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-caad2ad9dbd776022f4f.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding RenewableNonDispatch";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::RenewableNonDispatch)
     _openapi_output = Pair{String, Any}[]

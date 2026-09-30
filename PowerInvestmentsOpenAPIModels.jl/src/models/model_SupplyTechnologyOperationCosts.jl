@@ -67,18 +67,19 @@ function _decode(::Type{SupplyTechnologyOperationCosts}, value, _openapi_validat
                 "discriminator-selected schema did not validate for SupplyTechnologyOperationCosts",
             ),
         )
-    return SupplyTechnologyOperationCosts(_decode(selected[1], value, _openapi_validate))
+    return SupplyTechnologyOperationCosts(_decode(selected[1], value, false))
 end
-function _encode(value::SupplyTechnologyOperationCosts)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
-            pointer="/properties/operation_costs",
-        ),
-        output,
-        "encoding SupplyTechnologyOperationCosts";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::SupplyTechnologyOperationCosts)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::SupplyTechnologyOperationCosts) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
+        pointer="/properties/operation_costs",
+    ),
+    _encode_unvalidated(value),
+    "encoding SupplyTechnologyOperationCosts";
+    direction=:neutral,
+)

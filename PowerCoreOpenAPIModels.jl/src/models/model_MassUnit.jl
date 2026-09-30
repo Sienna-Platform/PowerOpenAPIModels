@@ -23,19 +23,20 @@ function _decode(::Type{MassUnit}, value, _openapi_validate::Bool)
         "decoding MassUnit";
         direction=:neutral,
     )
-    return MassUnit(_decode(String, value, _openapi_validate))
+    return MassUnit(_decode(String, value, false))
 end
-function _encode(value::MassUnit)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/MassUnit",
-        ),
-        output,
-        "encoding MassUnit";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::MassUnit)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::MassUnit) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/MassUnit",
+    ),
+    _encode_unvalidated(value),
+    "encoding MassUnit";
+    direction=:neutral,
+)
 Base.string(value::MassUnit) = string(value.value)

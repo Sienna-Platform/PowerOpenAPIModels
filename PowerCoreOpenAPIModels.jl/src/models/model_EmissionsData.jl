@@ -40,60 +40,40 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "EmissionsData")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "EmissionsData"), _openapi_validate)
-    _openapi_field_name = _decode(
-        String,
-        _required(_openapi_object, "name", "EmissionsData"),
-        _openapi_validate,
-    )
+        _decode(Int64, _required(_openapi_object, "id", "EmissionsData"), false)
+    _openapi_field_name =
+        _decode(String, _required(_openapi_object, "name", "EmissionsData"), false)
     _openapi_field_pollutant = _decode(
         PollutantType,
         _required(_openapi_object, "pollutant", "EmissionsData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_emission_rate = _decode(
         ValueCurve,
         _required(_openapi_object, "emission_rate", "EmissionsData"),
-        _openapi_validate,
+        false,
     )
-    _openapi_field_basis = _decode(
-        EmissionBasis,
-        _required(_openapi_object, "basis", "EmissionsData"),
-        _openapi_validate,
-    )
+    _openapi_field_basis =
+        _decode(EmissionBasis, _required(_openapi_object, "basis", "EmissionsData"), false)
     _openapi_field_start_up_adder =
         haskey(_openapi_object, "start_up_adder") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["start_up_adder"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["start_up_adder"], false) :
+        ABSENT
     _openapi_field_mass_unit =
         haskey(_openapi_object, "mass_unit") ?
-        _decode(
-            Union{Absent, MassUnit, Nothing},
-            _openapi_object["mass_unit"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, MassUnit, Nothing}, _openapi_object["mass_unit"], false) :
+        ABSENT
     _openapi_field_energy_unit = _decode(
         EnergyUnit,
         _required(_openapi_object, "energy_unit", "EmissionsData"),
-        _openapi_validate,
+        false,
     )
     _openapi_field_gwp =
         haskey(_openapi_object, "gwp") ?
-        _decode(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["gwp"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["gwp"], false) : ABSENT
     _openapi_field_available =
         haskey(_openapi_object, "available") ?
-        _decode(
-            Union{Absent, Bool, Nothing},
-            _openapi_object["available"],
-            _openapi_validate,
-        ) : ABSENT
+        _decode(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -109,7 +89,7 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
             "available",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, _openapi_validate)
+            _decode(Any, _openapi_item, false)
     end
     return EmissionsData(;
         id=_openapi_field_id,
@@ -125,45 +105,52 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode(_openapi_value::EmissionsData)
+function _encode_unvalidated(_openapi_value::EmissionsData)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.id isa Absent || (_openapi_output["id"] = _encode(_openapi_value.id))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.name isa Absent ||
-        (_openapi_output["name"] = _encode(_openapi_value.name))
+        (_openapi_output["name"] = _encode_unvalidated(_openapi_value.name))
     _openapi_value.pollutant isa Absent ||
-        (_openapi_output["pollutant"] = _encode(_openapi_value.pollutant))
-    _openapi_value.emission_rate isa Absent ||
-        (_openapi_output["emission_rate"] = _encode(_openapi_value.emission_rate))
+        (_openapi_output["pollutant"] = _encode_unvalidated(_openapi_value.pollutant))
+    _openapi_value.emission_rate isa Absent || (
+        _openapi_output["emission_rate"] =
+            _encode_unvalidated(_openapi_value.emission_rate)
+    )
     _openapi_value.basis isa Absent ||
-        (_openapi_output["basis"] = _encode(_openapi_value.basis))
-    _openapi_value.start_up_adder isa Absent ||
-        (_openapi_output["start_up_adder"] = _encode(_openapi_value.start_up_adder))
+        (_openapi_output["basis"] = _encode_unvalidated(_openapi_value.basis))
+    _openapi_value.start_up_adder isa Absent || (
+        _openapi_output["start_up_adder"] =
+            _encode_unvalidated(_openapi_value.start_up_adder)
+    )
     _openapi_value.mass_unit isa Absent ||
-        (_openapi_output["mass_unit"] = _encode(_openapi_value.mass_unit))
+        (_openapi_output["mass_unit"] = _encode_unvalidated(_openapi_value.mass_unit))
     _openapi_value.energy_unit isa Absent ||
-        (_openapi_output["energy_unit"] = _encode(_openapi_value.energy_unit))
-    _openapi_value.gwp isa Absent || (_openapi_output["gwp"] = _encode(_openapi_value.gwp))
+        (_openapi_output["energy_unit"] = _encode_unvalidated(_openapi_value.energy_unit))
+    _openapi_value.gwp isa Absent ||
+        (_openapi_output["gwp"] = _encode_unvalidated(_openapi_value.gwp))
     _openapi_value.available isa Absent ||
-        (_openapi_output["available"] = _encode(_openapi_value.available))
+        (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
                 "additional property conflicts with declared field: " * _openapi_key,
             ),
         )
-        _openapi_output[_openapi_key] = _encode(_openapi_item)
+        _openapi_output[_openapi_key] = _encode_unvalidated(_openapi_item)
     end
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-9c33aa51cc237ea2af5e.json",
-            pointer="",
-        ),
-        _openapi_output,
-        "encoding EmissionsData";
-        direction=:neutral,
-    )
+    return _openapi_output
 end
+_encode(_openapi_value::EmissionsData) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-9c33aa51cc237ea2af5e.json",
+        pointer="",
+    ),
+    _encode_unvalidated(_openapi_value),
+    "encoding EmissionsData";
+    direction=:neutral,
+)
 
 function _form_fields(_openapi_value::EmissionsData)
     _openapi_output = Pair{String, Any}[]

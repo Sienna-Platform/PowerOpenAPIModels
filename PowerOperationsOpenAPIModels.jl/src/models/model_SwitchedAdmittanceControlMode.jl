@@ -33,19 +33,20 @@ function _decode(::Type{SwitchedAdmittanceControlMode}, value, _openapi_validate
         "decoding SwitchedAdmittanceControlMode";
         direction=:neutral,
     )
-    return SwitchedAdmittanceControlMode(_decode(String, value, _openapi_validate))
+    return SwitchedAdmittanceControlMode(_decode(String, value, false))
 end
-function _encode(value::SwitchedAdmittanceControlMode)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
-            pointer="/\$defs/SwitchedAdmittanceControlMode",
-        ),
-        output,
-        "encoding SwitchedAdmittanceControlMode";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::SwitchedAdmittanceControlMode)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::SwitchedAdmittanceControlMode) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        pointer="/\$defs/SwitchedAdmittanceControlMode",
+    ),
+    _encode_unvalidated(value),
+    "encoding SwitchedAdmittanceControlMode";
+    direction=:neutral,
+)
 Base.string(value::SwitchedAdmittanceControlMode) = string(value.value)

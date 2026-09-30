@@ -60,18 +60,19 @@ function _decode(::Type{VirtualParticipantOperationCost}, value, _openapi_valida
                 "discriminator-selected schema did not validate for VirtualParticipantOperationCost",
             ),
         )
-    return VirtualParticipantOperationCost(_decode(selected[1], value, _openapi_validate))
+    return VirtualParticipantOperationCost(_decode(selected[1], value, false))
 end
-function _encode(value::VirtualParticipantOperationCost)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-93547ad8c2b21cc361f5.json",
-            pointer="/properties/operation_cost",
-        ),
-        output,
-        "encoding VirtualParticipantOperationCost";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::VirtualParticipantOperationCost)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::VirtualParticipantOperationCost) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-93547ad8c2b21cc361f5.json",
+        pointer="/properties/operation_cost",
+    ),
+    _encode_unvalidated(value),
+    "encoding VirtualParticipantOperationCost";
+    direction=:neutral,
+)

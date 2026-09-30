@@ -23,19 +23,20 @@ function _decode(::Type{EnergyUnitBasis}, value, _openapi_validate::Bool)
         "decoding EnergyUnitBasis";
         direction=:neutral,
     )
-    return EnergyUnitBasis(_decode(String, value, _openapi_validate))
+    return EnergyUnitBasis(_decode(String, value, false))
 end
-function _encode(value::EnergyUnitBasis)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/EnergyUnitBasis",
-        ),
-        output,
-        "encoding EnergyUnitBasis";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::EnergyUnitBasis)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::EnergyUnitBasis) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        pointer="/\$defs/EnergyUnitBasis",
+    ),
+    _encode_unvalidated(value),
+    "encoding EnergyUnitBasis";
+    direction=:neutral,
+)
 Base.string(value::EnergyUnitBasis) = string(value.value)

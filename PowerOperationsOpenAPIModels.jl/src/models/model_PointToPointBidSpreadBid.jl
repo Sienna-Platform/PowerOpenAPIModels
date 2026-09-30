@@ -60,18 +60,19 @@ function _decode(::Type{PointToPointBidSpreadBid}, value, _openapi_validate::Boo
                 "discriminator-selected schema did not validate for PointToPointBidSpreadBid",
             ),
         )
-    return PointToPointBidSpreadBid(_decode(selected[1], value, _openapi_validate))
+    return PointToPointBidSpreadBid(_decode(selected[1], value, false))
 end
-function _encode(value::PointToPointBidSpreadBid)
-    output = _encode(value.value)
-    return _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
-            pointer="/properties/spread_bid",
-        ),
-        output,
-        "encoding PointToPointBidSpreadBid";
-        direction=:neutral,
-    )
+function _encode_unvalidated(value::PointToPointBidSpreadBid)
+    output = _encode_unvalidated(value.value)
+    return output
 end
+_encode(value::PointToPointBidSpreadBid) = _validate_schema(
+    _SPEC,
+    (
+        resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
+        pointer="/properties/spread_bid",
+    ),
+    _encode_unvalidated(value),
+    "encoding PointToPointBidSpreadBid";
+    direction=:neutral,
+)
