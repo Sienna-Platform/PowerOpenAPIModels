@@ -13,6 +13,43 @@ using Dates
 using TOML
 using Test
 
+# SiennaSchemas tests/fixtures/single_time_series.json
+time_series_row() = Dict{String, Any}(
+    "association_id" => 1,
+    "owner_id" => 42,
+    "owner_type" => "ThermalStandard",
+    "owner_category" => "Component",
+    "time_series_type" => "SingleTimeSeries",
+    "name" => "max_active_power",
+    "features" => Dict{String, Any}("model_year" => 2030),
+    "uri" => "infrastore://systems/base.h5",
+    "element_type" => "f64",
+    "element_shape" => Any[],
+    "array_shape" => Any[8760],
+    "units" => "MW",
+    "quantity_kind" => "ActivePower",
+    "unit_system" => "NATURAL_UNITS",
+    "time_reference" => "America/Denver",
+    "component_field" => "max_active_power",
+    "initial_timestamp" => "2030-01-01T00:00:00Z",
+    "resolution" => "PT1H",
+    "length" => 8760,
+)
+
+"""A document holding the decoded (schema-checked) `rows` as its association table."""
+function time_series_document(rows)
+    doc = PowerOpenAPIModels.SystemDocument()
+    for row in rows
+        push!(
+            doc.time_series_associations,
+            InfrastructureCoreOpenAPIModels.decode(
+                InfrastructureTimeSeriesOpenAPIModels.TimeSeriesAssociation, row,
+            ),
+        )
+    end
+    return doc
+end
+
 # Set SCHEMA_DIR to point the drift checks at a SiennaSchemas checkout; without one they
 # warn and skip, so `Pkg.test` works from a plain registry install.
 const SCHEMA_DIR =
@@ -29,6 +66,22 @@ _type_name(::Type{T}) where {T} = string(nameof(T))
 _type_name(::Any) = ""
 
 @testset "PowerOpenAPIModels" begin
+    @testset "time_series_association_json is the table in wire form" begin
+        second = merge(
+            time_series_row(),
+            Dict{String, Any}("association_id" => 2, "name" => "other"),
+        )
+        doc = time_series_document([time_series_row(), second])
+        json = PowerOpenAPIModels.time_series_association_json(doc)
+        # The encoder writes initial_timestamp with milliseconds.
+        wire(row) = merge(row, Dict{String, Any}("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
+        JSON = InfrastructureCoreOpenAPIModels.JSON
+        @test JSON.parse(json) == JSON.parse(JSON.json([wire(time_series_row()), wire(second)]))
+        @test PowerOpenAPIModels.time_series_association_json(
+            PowerOpenAPIModels.SystemDocument(),
+        ) == "[]"
+    end
+
     @testset "No duplicate type definitions" begin
         pkgs = [
             InfrastructureCoreOpenAPIModels,
