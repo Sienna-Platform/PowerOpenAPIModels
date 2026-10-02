@@ -353,6 +353,66 @@ _type_name(::Any) = ""
         )
     end
 
+    @testset "SystemDocument reads without the row schema check when asked" begin
+        doc = PowerOpenAPIModels.SystemDocument()
+        bus_id = PowerOpenAPIModels.next_id!(doc)
+        PowerOpenAPIModels.add_component!(
+            doc,
+            PowerCoreOpenAPIModels.ACBus(;
+                id=bus_id,
+                name="b1",
+                number=1,
+                bustype=PowerCoreOpenAPIModels.ACBusType("REF"),
+                available=true,
+            ),
+        )
+        raw = InfrastructureCoreOpenAPIModels.JSON.parse(
+            InfrastructureCoreOpenAPIModels.JSON.json(
+                PowerOpenAPIModels.document_tree(doc),
+            ),
+        )
+        # The schema types `available` as a boolean; the decoder alone converts 1 to true.
+        only(raw["components"]["ACBus"])["available"] = 1
+        @test_throws InfrastructureCoreOpenAPIModels.SchemaValidationError PowerOpenAPIModels.document_from_json(
+            raw,
+        )
+        back = PowerOpenAPIModels.document_from_json(raw; validate=false)
+        @test only(back.components["ACBus"]).available === true
+
+        # Structural checks stay: required fields and resolvable references.
+        unnamed = deepcopy(raw)
+        delete!(only(unnamed["components"]["ACBus"]), "name")
+        @test_throws InfrastructureCoreOpenAPIModels.DecodeError PowerOpenAPIModels.document_from_json(
+            unnamed;
+            validate=false,
+        )
+        dangling = deepcopy(raw)
+        push!(
+            dangling["supplemental_attribute_associations"],
+            Dict(
+                "component_id" => bus_id,
+                "component_type" => "ACBus",
+                "attribute_id" => 9999,
+                "attribute_type" => "OnlineReserve",
+            ),
+        )
+        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.document_from_json(
+            dangling;
+            validate=false,
+        )
+
+        # read_document passes the keyword through.
+        mktempdir() do dir
+            path = joinpath(dir, "system.json")
+            open(io -> InfrastructureCoreOpenAPIModels.JSON.print(io, raw), path, "w")
+            @test_throws InfrastructureCoreOpenAPIModels.SchemaValidationError PowerOpenAPIModels.read_document(
+                path,
+            )
+            back = PowerOpenAPIModels.read_document(path; validate=false)
+            @test only(back.components["ACBus"]).available === true
+        end
+    end
+
     # `PortfolioDocument` is hand-written for the same reason as `SystemDocument` (typed
     # heterogeneous `components` buckets openapi-generator cannot express), so it can drift from
     # its schema the same way and is asserted the same way.

@@ -434,8 +434,16 @@ Build a [`SystemDocument`](@ref) from already-parsed JSON.
 
 Every `components` key must name a registered model type — an unknown type name errors
 rather than being skipped, since dropping the rows would lose data silently.
+
+`validate=false` skips each row's schema check, for a document the caller trusts, such as one
+this stack wrote. Required fields, enum values, discriminators and [`validate_document`](@ref)'s
+reference checks still run.
 """
-function document_from_json(raw::AbstractDict; source::AbstractString="document")
+function document_from_json(
+    raw::AbstractDict;
+    source::AbstractString="document",
+    validate::Bool=true,
+)
     doc = SystemDocument(;
         name=_optional(raw, "name"),
         description=_optional(raw, "description"),
@@ -445,7 +453,7 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
 
     for (type_name, rows) in _require(raw, "components", source)
         doc.components[String(type_name)] =
-            _rows(InfrastructureCoreOpenAPIModels.model_type(type_name), rows)
+            _rows(InfrastructureCoreOpenAPIModels.model_type(type_name), rows, validate)
     end
     # Bulk-loaded above rather than through `add_component!`, so `component_types_by_id`
     # needs its one rebuild pass here.
@@ -460,7 +468,10 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
     # row: RTS carries 623 of each.
     attribute_types = _attribute_type_by_id(raw, source)
     for row in _require(raw, "supplemental_attributes", source)
-        push!(doc.supplemental_attributes, _typed_attribute(row, attribute_types, source))
+        push!(
+            doc.supplemental_attributes,
+            _typed_attribute(row, attribute_types, source, validate),
+        )
     end
 
     append!(
@@ -468,6 +479,7 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
         _rows(
             SupplementalAttributeAssociation,
             _require(raw, "supplemental_attribute_associations", source),
+            validate,
         ),
     )
     # PlantAssociation/CombinedCycleAssociation/ServiceAssociation are Operations-layer
@@ -478,6 +490,7 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
         _rows(
             InfrastructureCoreOpenAPIModels.model_type("PlantAssociation"),
             _require(raw, "plant_associations", source),
+            validate,
         ),
     )
     append!(
@@ -485,6 +498,7 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
         _rows(
             InfrastructureCoreOpenAPIModels.model_type("CombinedCycleAssociation"),
             _require(raw, "combined_cycle_associations", source),
+            validate,
         ),
     )
     append!(
@@ -492,6 +506,7 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
         _rows(
             InfrastructureCoreOpenAPIModels.model_type("ServiceAssociation"),
             _require(raw, "service_associations", source),
+            validate,
         ),
     )
     # Bulk-loaded above rather than through `add_service_association!`, so
@@ -507,6 +522,7 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
         _rows(
             InfrastructureCoreOpenAPIModels.model_type("TradingHubAssociation"),
             get(raw, "trading_hub_associations", ()),
+            validate,
         ),
     )
     # Bulk-loaded above rather than through `add_trading_hub_association!`, so
@@ -516,7 +532,11 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
     end
     append!(
         doc.time_series_associations,
-        _rows(TimeSeriesAssociation, _require(raw, "time_series_associations", source)),
+        _rows(
+            TimeSeriesAssociation,
+            _require(raw, "time_series_associations", source),
+            validate,
+        ),
     )
 
     # `ext` is optional in the schema (an absent `ext` means the producer mapped every
@@ -535,13 +555,15 @@ Read a [`SystemDocument`](@ref) from a JSON file.
 
 Only the JSON file is read. Any HDF5 sidecar named by `time_series_storage_file` is left
 alone for the consumer to resolve relative to `path`.
+
+`validate` is passed to [`document_from_json`](@ref).
 """
-function read_document(path::AbstractString)
+function read_document(path::AbstractString; validate::Bool=true)
     if !isfile(path)
         throw(
             InfrastructureCoreOpenAPIModels.DocumentFormatError("no such document: $path"),
         )
     end
     raw = JSON.parsefile(path; dicttype=Dict{String, Any})
-    return document_from_json(raw; source=path)
+    return document_from_json(raw; source=path, validate=validate)
 end

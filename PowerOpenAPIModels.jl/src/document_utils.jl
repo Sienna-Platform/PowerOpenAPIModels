@@ -68,13 +68,14 @@ plain JSON-safe object.
 _bucket(components::Vector) = [_encode_row(c) for c in components]
 
 """
-Deserialize one row into `T`.
+Deserialize one row into `T`. `validate=false` skips the row's schema check; the decoder still
+enforces required fields, enum values and discriminators.
 """
-_row(::Type{T}, raw::AbstractDict) where {T} =
-    OpenAPI.Runtime._decode(T, Dict{String, Any}(raw))
+_row(::Type{T}, raw::AbstractDict, validate::Bool=true) where {T} =
+    OpenAPI.Runtime._decode(T, Dict{String, Any}(raw), validate)
 
-function _rows(::Type{T}, raws) where {T}
-    return T[_row(T, raw) for raw in raws]
+function _rows(::Type{T}, raws, validate::Bool=true) where {T}
+    return T[_row(T, raw, validate) for raw in raws]
 end
 
 _put_optional!(::AbstractDict, ::AbstractString, ::Nothing) = nothing
@@ -144,6 +145,7 @@ function _typed_attribute(
     row::AbstractDict,
     attribute_types::Dict{Int, String},
     source::AbstractString,
+    validate::Bool=true,
 )
     id = Int(_require(row, "id", "$source supplemental attribute"))
     if !haskey(attribute_types, id)
@@ -154,7 +156,11 @@ function _typed_attribute(
             ),
         )
     end
-    return _row(InfrastructureCoreOpenAPIModels.model_type(attribute_types[id]), row)
+    return _row(
+        InfrastructureCoreOpenAPIModels.model_type(attribute_types[id]),
+        row,
+        validate,
+    )
 end
 
 # ── shared document operations (dispatch on DocumentType) ────────────────────────────
