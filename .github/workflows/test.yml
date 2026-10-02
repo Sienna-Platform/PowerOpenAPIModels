@@ -59,6 +59,8 @@ jobs:
           # Only the leg that uploads it: instrumenting the other one costs time and
           # discards the cached pkgimages for nothing.
           COVERAGE: ${{ matrix.julia-version == '1.13' && '1' || '' }}
+          # Exercise the threaded row decode on every run.
+          JULIA_NUM_THREADS: "4"
         run: julia --project=test test/validate.jl
 
       # Coverage lands as `<Package>.jl/src/**.jl.cov`, one directory per package, so every

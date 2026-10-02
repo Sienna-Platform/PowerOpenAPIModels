@@ -73,8 +73,27 @@ Deserialize one row into `T`.
 _row(::Type{T}, raw::AbstractDict) where {T} =
     OpenAPI.Runtime._decode(T, Dict{String, Any}(raw))
 
+"""
+Deserialize every row into `T`, across threads. Raises the error of the lowest-index bad
+row, so a failure reads the same on every run and thread count.
+"""
 function _rows(::Type{T}, raws) where {T}
-    return T[_row(T, raw) for raw in raws]
+    out = Vector{T}(undef, length(raws))
+    isempty(raws) && return out
+    # The first row runs alone: OpenAPI.jl builds a spec's schema graph lazily, and its
+    # cache check is not safe against concurrent first use.
+    out[1] = _row(T, first(raws))
+    errors = Vector{Any}(nothing, length(raws))
+    Threads.@threads for i in 2:length(raws)
+        try
+            out[i] = _row(T, raws[i])
+        catch err
+            errors[i] = err
+        end
+    end
+    bad = findfirst(!isnothing, errors)
+    isnothing(bad) || throw(errors[bad])
+    return out
 end
 
 _put_optional!(::AbstractDict, ::AbstractString, ::Nothing) = nothing

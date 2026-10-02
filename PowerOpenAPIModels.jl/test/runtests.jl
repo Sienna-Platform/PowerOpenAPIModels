@@ -523,5 +523,33 @@ _type_name(::Any) = ""
         end
     end
 
+    @testset "_rows keeps row order and reports the first bad row" begin
+        fixture = joinpath(@__DIR__, "fixtures", "case14_operations.COMPONENT_BASE.json")
+        template = first(
+            InfrastructureCoreOpenAPIModels.JSON.parsefile(
+                fixture; dicttype=Dict{String, Any},
+            )["components"]["ACBus"],
+        )
+        bus(i) = merge(template, Dict{String, Any}("id" => i, "name" => "b$i", "number" => i))
+        raws = [bus(i) for i in 1:2_000]
+        decoded = PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, raws)
+        @test [b.number for b in decoded] == 1:2_000
+        @test isempty(PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, ()))
+
+        # Two different schema violations, so the message names which row was reported.
+        raws[300]["available"] = 1
+        raws[1_700]["number"] = "x"
+        for _ in 1:20
+            err = try
+                PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, raws)
+                nothing
+            catch e
+                e
+            end
+            @test err isa PowerOpenAPIModels.OpenAPI.Runtime.SchemaValidationError
+            @test occursin("available", sprint(showerror, err))
+        end
+    end
+
     include("serde_fixture.jl")
 end
