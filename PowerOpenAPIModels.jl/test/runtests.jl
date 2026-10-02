@@ -604,5 +604,35 @@ _type_name(::Any) = ""
         end
     end
 
+    @testset "validate_time_series_catalog checks the catalog against the document" begin
+        JSON = InfrastructureCoreOpenAPIModels.JSON
+        DocumentFormatError = InfrastructureCoreOpenAPIModels.DocumentFormatError
+        SchemaValidationError = PowerOpenAPIModels.OpenAPI.Runtime.SchemaValidationError
+        doc = time_series_document([time_series_row()])
+        check(rows) = PowerOpenAPIModels.validate_time_series_catalog(doc, JSON.json(rows))
+        edited(changes...) = merge(time_series_row(), Dict{String, Any}(changes...))
+        other = edited("association_id" => 2, "name" => "not_in_the_document")
+
+        @test isnothing(check([time_series_row()]))
+        @test isnothing(check([time_series_row(), other]))
+        # A store may assign its own locator and hash.
+        @test isnothing(check([edited("uri" => "elsewhere", "data_hash" => "abc123")]))
+
+        @test_throws r"no matching row" check([other])
+        @test_throws r"association_id" check([edited("association_id" => 7)])
+        @test_throws r"drifted from the time series catalog on: length" check([edited("length" => 1)])
+        # Features are part of the identity, so a changed value is a missing row, not drift.
+        @test_throws r"no matching row" check([
+            edited("features" => Dict{String, Any}("model_year" => 2040)),
+        ])
+        @test_throws DocumentFormatError check([edited("length" => 1)])
+
+        # Every catalog row gets the schema check, matched or not.
+        reserved = Dict{String, Any}("resolution" => "PT1H")
+        @test_throws SchemaValidationError check([time_series_row(), merge(other, Dict{String, Any}("features" => reserved))])
+        @test_throws SchemaValidationError check([edited("uri" => 5)])
+        @test_throws SchemaValidationError check([edited("data_hash" => nothing)])
+    end
+
     include("serde_fixture.jl")
 end
