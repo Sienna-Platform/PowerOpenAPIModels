@@ -8,6 +8,13 @@ using OpenAPI, JSON
 @reexport using PowerInvestmentsOpenAPIModels
 @reexport using PowerDynamicsOpenAPIModels
 
+# The schema release this package was built from, copied from the repo-root `.schema-version`
+# by `make schema-version` (the root file is outside the registered subpackage).
+const SCHEMA_VERSION_FILE = joinpath(dirname(@__DIR__), "schema-version")
+include_dependency(SCHEMA_VERSION_FILE)
+const READER_VERSION = String(chopprefix(strip(read(SCHEMA_VERSION_FILE, String)), "v"))
+const BUNDLES_DIR = joinpath(dirname(@__DIR__), "bundles")
+
 # SystemDocument and PortfolioDocument both need every domain in scope at once (components
 # across Operations, Investments, Dynamics, plus TimeSeries associations), which is why they
 # live here rather than in dependency-free InfrastructureCore. Each file defines its own struct

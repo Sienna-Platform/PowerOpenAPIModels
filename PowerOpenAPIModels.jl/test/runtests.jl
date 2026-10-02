@@ -10,6 +10,7 @@ using PowerOperationsOpenAPIModels
 using PowerInvestmentsOpenAPIModels
 using PowerDynamicsOpenAPIModels
 using Dates
+using JSONSchema
 using TOML
 using Test
 
@@ -148,17 +149,22 @@ _type_name(::Any) = ""
             # the schema through it rather than making this harness carry its own dependency.
             schema = InfrastructureCoreOpenAPIModels.JSON.parsefile(schema_path)
             schema_fields = Set(keys(schema["properties"]))
-            # `counter`, `component_types_by_id`, `service_membership`, and
-            # `trading_hub_membership` are build-time scaffolding that is deliberately not
-            # serialized.
-            struct_fields = setdiff(
-                Set(string.(fieldnames(PowerOpenAPIModels.SystemDocument))),
-                Set([
-                    "counter",
-                    "component_types_by_id",
-                    "service_membership",
-                    "trading_hub_membership",
-                ]),
+            # `counter`, `component_types_by_id`, `service_membership`,
+            # `trading_hub_membership`, and `source_schema_version` are build-time
+            # scaffolding that is deliberately not serialized; `schema_version` is stamped
+            # by the writer from the package's own version, so it has no field.
+            struct_fields = union(
+                setdiff(
+                    Set(string.(fieldnames(PowerOpenAPIModels.SystemDocument))),
+                    Set([
+                        "counter",
+                        "component_types_by_id",
+                        "service_membership",
+                        "trading_hub_membership",
+                        "source_schema_version",
+                    ]),
+                ),
+                Set(["schema_version"]),
             )
 
             @test isempty(setdiff(schema_fields, struct_fields))
@@ -363,11 +369,20 @@ _type_name(::Any) = ""
         else
             schema = InfrastructureCoreOpenAPIModels.JSON.parsefile(schema_path)
             schema_fields = Set(keys(schema["properties"]))
-            # `counter`, `component_types_by_id`, and `requirements_membership` are build-time
-            # scaffolding that is deliberately not serialized.
-            struct_fields = setdiff(
-                Set(string.(fieldnames(PowerOpenAPIModels.PortfolioDocument))),
-                Set(["counter", "component_types_by_id", "requirements_membership"]),
+            # `counter`, `component_types_by_id`, `requirements_membership`, and
+            # `source_schema_version` are build-time scaffolding that is deliberately not
+            # serialized; `schema_version` is stamped by the writer.
+            struct_fields = union(
+                setdiff(
+                    Set(string.(fieldnames(PowerOpenAPIModels.PortfolioDocument))),
+                    Set([
+                        "counter",
+                        "component_types_by_id",
+                        "requirements_membership",
+                        "source_schema_version",
+                    ]),
+                ),
+                Set(["schema_version"]),
             )
 
             @test isempty(setdiff(schema_fields, struct_fields))
@@ -524,4 +539,5 @@ _type_name(::Any) = ""
     end
 
     include("serde_fixture.jl")
+    include("schema_version.jl")
 end

@@ -77,9 +77,19 @@ function _rows(::Type{T}, raws) where {T}
     return T[_row(T, raw) for raw in raws]
 end
 
+_encode_optional(::Nothing) = nothing
+_encode_optional(model) = _encode_row(model)
+
 _put_optional!(::AbstractDict, ::AbstractString, ::Nothing) = nothing
 function _put_optional!(tree::AbstractDict, key::AbstractString, value)
     tree[key] = value
+    return nothing
+end
+
+function _put_nonempty!(tree::AbstractDict, key::AbstractString, value)
+    if !isempty(value)
+        tree[key] = value
+    end
     return nothing
 end
 
@@ -334,4 +344,308 @@ function _highest_id(doc::DocumentType)
         highest = max(highest, _model_id(attribute))
     end
     return highest
+end
+
+# ── schema version ──────────────────────────────────────────────────────────────────
+
+"""
+Raised when a document's `schema_version` makes it unreadable by this package.
+
+`outcome` is one of `:missing`, `:malformed`, `:incompatible`, `:newer`; `reader` is this
+package's schema version and `document` the document's (JSON-encoded when malformed, empty
+when missing). `message` is the canonical text from the schema repository's versioning doc.
+"""
+struct SchemaVersionError <: Exception
+    outcome::Symbol
+    reader::String
+    document::String
+    message::String
+end
+
+function Base.showerror(io::IO, e::SchemaVersionError)
+    return print(io, "SchemaVersionError: ", e.message)
+end
+
+const _VERSION_PATTERN =
+    r"\A(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?\z"
+
+_is_version(::Any) = false
+_is_version(s::AbstractString) = occursin(_VERSION_PATTERN, s)
+
+# (major, minor, patch, prerelease), prerelease empty when absent. `s` must be valid. BigInt:
+# a valid version may have components past Int64.
+function _parse_version(s::AbstractString)
+    m = match(_VERSION_PATTERN, s)
+    pre = something(m.captures[4], "-")
+    return (
+        parse(BigInt, m.captures[1]),
+        parse(BigInt, m.captures[2]),
+        parse(BigInt, m.captures[3]),
+        String(pre[2:end]),
+    )
+end
+
+# The compatibility line: MAJOR from 1.0, 0.MINOR for 0.x.
+function _line_name(version::Tuple)
+    if iszero(version[1])
+        return "0.$(version[2])"
+    end
+    return string(version[1])
+end
+
+function _classify_versions(reader::Tuple, document::Tuple)
+    if (!isempty(reader[4]) || !isempty(document[4])) && reader != document
+        return :incompatible
+    end
+    if _line_name(reader) != _line_name(document)
+        return :incompatible
+    end
+    if document[1:3] > reader[1:3]
+        return :newer
+    end
+    if document[1:3] < reader[1:3]
+        return :upgradable
+    end
+    return :current
+end
+
+function _check_schema_version(reader::AbstractString, raw::AbstractDict)
+    if !haskey(raw, "schema_version")
+        return :missing
+    end
+    document = raw["schema_version"]
+    if !_is_version(document)
+        return :malformed
+    end
+    return _classify_versions(_parse_version(reader), _parse_version(document))
+end
+
+"""
+Classify `raw`'s `schema_version` against this package's: `:missing`, `:malformed`,
+`:incompatible`, `:newer`, `:upgradable`, or `:current`.
+
+Pure, and meant for the raw parsed JSON before any decode. Only `:upgradable` and `:current`
+are readable.
+"""
+check_schema_version(raw::AbstractDict) = _check_schema_version(READER_VERSION, raw)
+check_schema_version(raw) = _require_object(raw, "check_schema_version")
+
+function _version_message(::Val{:missing}, reader, document)
+    return "document has no schema_version: it predates versioning; re-export it with a " *
+           "current producer (psy5 bundles: PowerSystemsUpdater)"
+end
+
+function _version_message(::Val{:malformed}, reader, document)
+    return "document schema_version $document is not a valid version"
+end
+
+function _version_message(::Val{:newer}, reader, document)
+    return "document written by schema $document; this reader understands up to $reader; " *
+           "update the model package to one built from >= $document"
+end
+
+function _version_message(::Val{:incompatible}, reader, document)
+    r = _parse_version(reader)
+    d = _parse_version(document)
+    if !isempty(r[4]) || !isempty(d[4])
+        return "document written by schema $document cannot be read by schema $reader: " *
+               "dev builds read only their own output"
+    end
+    return "document written by schema $document (line $(_line_name(d))) cannot be read " *
+           "by schema $reader (line $(_line_name(r))): documents do not cross " *
+           "compatibility lines; migrating between lines is a separate upgrade tool's " *
+           "job (psy5 bundles: PowerSystemsUpdater)"
+end
+
+function _document_label(raw::AbstractDict)
+    if !haskey(raw, "schema_version")
+        return ""
+    end
+    document = raw["schema_version"]
+    if _is_version(document)
+        return String(document)
+    end
+    return JSON.json(document)
+end
+
+"""
+The shared read-path gate: run on the raw parsed JSON before any decode. Returns the
+document's schema version, or throws [`SchemaVersionError`](@ref).
+"""
+function _checked_schema_version(raw::AbstractDict, reader::AbstractString)
+    outcome = _check_schema_version(reader, raw)
+    if outcome in (:upgradable, :current)
+        return String(raw["schema_version"])
+    end
+    document = _document_label(raw)
+    throw(
+        SchemaVersionError(
+            outcome,
+            String(reader),
+            document,
+            _version_message(Val(outcome), reader, document),
+        ),
+    )
+end
+
+# Canonical key order shared with the other bindings: `schema_version` first, the rest sorted.
+function _canonical_tree(tree::AbstractDict{String, Any})
+    ordered = JSON.Object{String, Any}()
+    ordered["schema_version"] = tree["schema_version"]
+    for key in sort!(collect(keys(tree)))
+        if key != "schema_version"
+            ordered[key] = tree[key]
+        end
+    end
+    return ordered
+end
+
+_require_object(raw::AbstractDict, path::AbstractString) = raw
+function _require_object(raw, path::AbstractString)
+    throw(
+        InfrastructureCoreOpenAPIModels.DocumentFormatError(
+            "$path: document root must be a JSON object, got $(typeof(raw))",
+        ),
+    )
+end
+
+function _parse_document_file(path::AbstractString)
+    return _require_object(JSON.parsefile(path; dicttype=Dict{String, Any}), path)
+end
+
+"""
+The schema version `doc` was read at, or this package's own for a document built here.
+"""
+get_source_schema_version(doc::DocumentType) = doc.source_schema_version[]
+
+# ── writing ──────────────────────────────────────────────────────────────────────
+
+_target_version(::Val{:current}, doc::DocumentType, reader::AbstractString) = reader
+function _target_version(::Val{:source}, doc::DocumentType, reader::AbstractString)
+    return get_source_schema_version(doc)
+end
+function _target_version(::Val{S}, doc::DocumentType, reader::AbstractString) where {S}
+    throw(ArgumentError("schema_version must be :current or :source, got :$S"))
+end
+
+_validate_target(::Val{:current}, doc, tree, reader, bundles_dir) = nothing
+function _validate_target(::Val{:source}, doc, tree, reader, bundles_dir)
+    source_version = get_source_schema_version(doc)
+    if source_version == reader
+        return nothing
+    end
+    _require_validator()
+    bundle_path = joinpath(bundles_dir, source_version, _bundle_name(doc) * ".json")
+    if !isfile(bundle_path)
+        throw(
+            InfrastructureCoreOpenAPIModels.DocumentFormatError(
+                "cannot write at source schema $source_version: no strict bundle at " *
+                "$bundle_path; write with schema_version = :current to stamp $reader instead",
+            ),
+        )
+    end
+    problems =
+        _bundle_problems(tree, JSON.parsefile(bundle_path; dicttype=Dict{String, Any}))
+    if !isempty(problems)
+        throw(
+            InfrastructureCoreOpenAPIModels.DocumentFormatError(
+                "document cannot be written at source schema $source_version; " *
+                "$(length(problems)) path(s) are not valid under it:\n  " *
+                join(problems, "\n  ") *
+                "\nwrite with schema_version = :current to stamp $reader instead",
+            ),
+        )
+    end
+    return nothing
+end
+
+# Implemented by the PowerOpenAPIModelsJSONSchemaExt extension: one "path: reason" string per
+# offending JSON path. This fallback is what runs when JSONSchema.jl is not loaded.
+function _bundle_problems(tree, bundle)
+    throw(_validator_error())
+end
+
+# Set by the extension's `__init__`.
+const _VALIDATOR_LOADED = Ref(false)
+
+function _validator_error()
+    return InfrastructureCoreOpenAPIModels.DocumentFormatError(
+        "writing at a source schema older than this package's needs a validator: " *
+        "install JSONSchema.jl and load it (`using JSONSchema`), or write with " *
+        "schema_version = :current",
+    )
+end
+
+function _require_validator()
+    if !_VALIDATOR_LOADED[]
+        throw(_validator_error())
+    end
+    return nothing
+end
+
+function _write_document(
+    doc::DocumentType,
+    path::AbstractString,
+    pretty::Bool,
+    force::Bool,
+    target::Val,
+    reader::AbstractString,
+    bundles_dir::AbstractString,
+)
+    validate_document(doc)
+    if isfile(path) && !force
+        throw(
+            InfrastructureCoreOpenAPIModels.DocumentFormatError(
+                "$path already exists; pass force = true to overwrite",
+            ),
+        )
+    end
+    tree = document_tree(doc; schema_version=_target_version(target, doc, reader))
+    _validate_target(target, doc, tree, reader, bundles_dir)
+    open(path, "w") do io
+        if pretty
+            JSON.print(io, tree, 2)
+        else
+            JSON.print(io, tree)
+        end
+        # Trailing newline: POSIX text-file convention, and it is what the Python and
+        # TypeScript writers emit — without it a document written here differs from the same
+        # document written there by exactly one byte.
+        print(io, "\n")
+    end
+    return nothing
+end
+
+"""
+Write `doc` to `path` as JSON.
+
+`schema_version = :current` (default) stamps this package's schema version. `:source` stamps
+the version the document was read at ([`get_source_schema_version`](@ref)): identical to
+`:current` when they match, otherwise the encoded document is validated against that
+version's strict bundle and the write fails listing every offending path, never dropping
+anything. That validation needs JSONSchema.jl loaded.
+
+`path` names the JSON file only. The sidecar files named by `time_series_storage_file` (and
+`base_system_file`, for a portfolio) are not written here — this package handles neither base
+systems nor time series values — so the caller writes them and sets those basenames, which
+keeps the file layout the caller's choice.
+
+Validates first: a document that fails [`validate_document`](@ref) must not reach disk.
+"""
+function write_document(
+    doc::DocumentType,
+    path::AbstractString;
+    pretty::Bool=false,
+    force::Bool=false,
+    schema_version::Symbol=:current,
+)
+    return _write_document(
+        doc,
+        path,
+        pretty,
+        force,
+        Val(schema_version),
+        READER_VERSION,
+        BUNDLES_DIR,
+    )
 end
