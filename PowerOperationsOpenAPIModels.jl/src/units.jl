@@ -932,6 +932,18 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{GroupReserve},
     ::Val{:requirement},
 ) = "ActivePower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{GroupReserve},
+    ::Val{:max_requirement},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{GroupReserve},
+    ::Val{:max_requirement},
+) = "MW"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{GroupReserve},
+    ::Val{:max_requirement},
+) = "ActivePower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{FixedAdmittance}, ::Val{:y}) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(o::FixedAdmittance, ::Val{:y})
     if string(o.admittance_units) == "COMPONENT_MVAR"

@@ -1,12 +1,14 @@
 """
     GroupReserve
 
-A reserve product met by a group of individual reserves. The group requirement is additional to each member's own requirement, and a device contributing to a member reserve also counts toward the group. Membership is carried by `ServiceAssociation` rows, not by a field here.
+A reserve product, or a limit, over a group of individual reserves: a device contributing to a member reserve also counts toward the group. A demand curve on `variable` prices the group, `max_requirement` caps the members' total, and `participation_bounds` bounds each member's share. Membership is carried by `ServiceAssociation` rows, not by a field here.
 
   - `id`: Unique integer identifier for this component.
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `requirement`: The value of required reserves. Units: MW.
+  - `max_requirement`: The most the group's members may be awarded in total, scaled per step by a `max_requirement` time series when one is attached. Omit when the group has no cap. Units: MW.
+  - `participation_bounds`: Per-member bounds on the members' awards, one `[member, min, max]` triple per bounded member. `member` is the component id of a member reserve (also a member through a `ServiceAssociation` row), written as a whole number, `min` a fraction of the group's requirement (0 for no floor) and `max` a fraction of its `max_requirement` (1 for no cap beyond the group's); fractions are finite and >= 0. A dimensionless `participation_bound_min` or `participation_bound_max` time series on the group with the feature `member` set to that id scales the fraction per step. Omit when the group has none.
   - `variable`: Operating reserve demand curve for the group, either static or time-series-backed. A group carrying a curve is elastic: its requirement is priced by the curve rather than enforced. Time series values are carried via `time_series_associations` in the sidecar, never inline. Omit when the group has no demand curve.
   - `reserve_direction`: Whether the reserve is an upward, downward, or symmetric reserve product.
 """
@@ -15,6 +17,8 @@ Base.@kwdef struct GroupReserve <: APIModel
     name::String
     available::Bool
     requirement::Float64
+    max_requirement::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    participation_bounds::Union{Absent, Nothing, Vector{Vector{Float64}}} = ABSENT
     variable::Union{Absent, CostCurve, Nothing} = ABSENT
     reserve_direction::ReserveDirection
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -40,6 +44,20 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
         _decode(Bool, _required(_openapi_object, "available", "GroupReserve"), false)
     _openapi_field_requirement =
         _decode(Float64, _required(_openapi_object, "requirement", "GroupReserve"), false)
+    _openapi_field_max_requirement =
+        haskey(_openapi_object, "max_requirement") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["max_requirement"],
+            false,
+        ) : ABSENT
+    _openapi_field_participation_bounds =
+        haskey(_openapi_object, "participation_bounds") ?
+        _decode(
+            Union{Absent, Nothing, Vector{Vector{Float64}}},
+            _openapi_object["participation_bounds"],
+            false,
+        ) : ABSENT
     _openapi_field_variable =
         haskey(_openapi_object, "variable") ?
         _decode(Union{Absent, CostCurve, Nothing}, _openapi_object["variable"], false) :
@@ -51,9 +69,16 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in
-        ("id", "name", "available", "requirement", "variable", "reserve_direction") &&
-            continue
+        String(_openapi_key) in (
+            "id",
+            "name",
+            "available",
+            "requirement",
+            "max_requirement",
+            "participation_bounds",
+            "variable",
+            "reserve_direction",
+        ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, false)
     end
@@ -62,6 +87,8 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
         name=_openapi_field_name,
         available=_openapi_field_available,
         requirement=_openapi_field_requirement,
+        max_requirement=_openapi_field_max_requirement,
+        participation_bounds=_openapi_field_participation_bounds,
         variable=_openapi_field_variable,
         reserve_direction=_openapi_field_reserve_direction,
         additional_properties=_openapi_additional_properties,
@@ -77,6 +104,14 @@ function _encode_unvalidated(_openapi_value::GroupReserve)
         (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.requirement isa Absent ||
         (_openapi_output["requirement"] = _encode_unvalidated(_openapi_value.requirement))
+    _openapi_value.max_requirement isa Absent || (
+        _openapi_output["max_requirement"] =
+            _encode_unvalidated(_openapi_value.max_requirement)
+    )
+    _openapi_value.participation_bounds isa Absent || (
+        _openapi_output["participation_bounds"] =
+            _encode_unvalidated(_openapi_value.participation_bounds)
+    )
     _openapi_value.variable isa Absent ||
         (_openapi_output["variable"] = _encode_unvalidated(_openapi_value.variable))
     _openapi_value.reserve_direction isa Absent || (
@@ -112,6 +147,12 @@ function _form_fields(_openapi_value::GroupReserve)
         push!(_openapi_output, "available" => _openapi_value.available)
     _openapi_value.requirement isa Absent ||
         push!(_openapi_output, "requirement" => _openapi_value.requirement)
+    _openapi_value.max_requirement isa Absent ||
+        push!(_openapi_output, "max_requirement" => _openapi_value.max_requirement)
+    _openapi_value.participation_bounds isa Absent || push!(
+        _openapi_output,
+        "participation_bounds" => _openapi_value.participation_bounds,
+    )
     _openapi_value.variable isa Absent ||
         push!(_openapi_output, "variable" => _openapi_value.variable)
     _openapi_value.reserve_direction isa Absent ||

@@ -46,6 +46,44 @@ end
         @test_throws SchemaValidationError decode(Line, raw)
     end
 
+    @testset "a GroupReserve carries a cap and participation bounds" begin
+        group = GroupReserve(;
+            id=7,
+            name="R_UP",
+            available=true,
+            requirement=2129.0,
+            max_requirement=2129.0,
+            participation_bounds=[[4.0, 1.0, 1.0], [5.0, 0.0, 0.2]],
+            reserve_direction=ReserveDirection("UP"),
+        )
+        text = JSON.json(encode(group))
+        @test occursin("\"participation_bounds\":[[4.0,1.0,1.0],[5.0,0.0,0.2]]", text)
+        back = decode(GroupReserve, JSON.parse(text))
+        @test back.max_requirement == 2129.0
+        @test back.participation_bounds == [[4.0, 1.0, 1.0], [5.0, 0.0, 0.2]]
+        @test JSON.json(encode(back)) == text
+
+        plain = GroupReserve(;
+            id=7,
+            name="R_UP",
+            available=true,
+            requirement=2129.0,
+            reserve_direction=ReserveDirection("UP"),
+        )
+        @test !occursin("max_requirement", JSON.json(encode(plain)))
+        @test !occursin("participation_bounds", JSON.json(encode(plain)))
+
+        # The schema fixes the length; whether the id is whole is left to the consumer.
+        for bad in (Any[4, 1.0], Any[4, 1.0, 1.0, 2.0])
+            raw = JSON.parse(text)
+            raw["participation_bounds"][1] = bad
+            @test_throws SchemaValidationError decode(GroupReserve, raw)
+        end
+        raw = JSON.parse(text)
+        raw["participation_bounds"][1] = Any[4.5, 1.0, 1.0]
+        @test decode(GroupReserve, raw).participation_bounds[1] == [4.5, 1.0, 1.0]
+    end
+
     @testset "a fixed x-unit resolves from the type alone" begin
         @test has_declared_unit(Line, Val(:base_power))
         @test declared_unit(Line, Val(:base_power)) == "MVA"
