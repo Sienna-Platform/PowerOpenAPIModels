@@ -632,6 +632,30 @@ _type_name(::Any) = ""
         @test_throws SchemaValidationError check([time_series_row(), merge(other, Dict{String, Any}("features" => reserved))])
         @test_throws SchemaValidationError check([edited("uri" => 5)])
         @test_throws SchemaValidationError check([edited("data_hash" => nothing)])
+
+        # A type without `resolution` or `interval` matches itself.
+        nonsequential = Dict{String, Any}(
+            "association_id" => 3,
+            "owner_id" => 42,
+            "owner_type" => "ThermalStandard",
+            "owner_category" => "Component",
+            "time_series_type" => "NonSequentialTimeSeries",
+            "name" => "scenarios",
+            "features" => Dict{String, Any}(),
+            "uri" => "infrastore://systems/base.h5",
+            "element_type" => "f64",
+            "element_shape" => Any[],
+            "length" => 4,
+        )
+        nonsequential_doc = time_series_document([nonsequential])
+        @test isnothing(
+            PowerOpenAPIModels.validate_time_series_catalog(
+                nonsequential_doc, JSON.json([nonsequential]),
+            ),
+        )
+
+        # The owner category is part of the identity.
+        @test_throws r"no matching row" check([edited("owner_category" => "SupplementalAttribute")])
     end
 
     include("serde_fixture.jl")

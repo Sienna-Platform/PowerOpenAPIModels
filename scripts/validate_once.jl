@@ -17,7 +17,7 @@
 #   - encode: each model gets `_encode_unvalidated`, which builds the JSON object with
 #     nested `_encode_unvalidated` calls; `_encode` is that plus one check of the result.
 #
-# Two things keep this sound:
+# Three things keep this sound:
 #   - discriminated `oneOf` wrappers skip their "selected variant validates" check when
 #     nested. Every variant schema pins its discriminator with `const`, so a value that
 #     passed the enclosing check cannot carry a tag naming a different variant.

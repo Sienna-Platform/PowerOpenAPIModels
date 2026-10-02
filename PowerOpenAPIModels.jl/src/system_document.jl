@@ -395,6 +395,8 @@ end
 The document's `time_series_associations` rows as one JSON array, the form a time series
 store imports. Encoded like [`write_document`](@ref), without a second schema check:
 reading a document checks every row against the full schema.
+Rows are not schema-checked here: a document built in memory reaches the store as built,
+while one read with `read_document` had every row checked.
 """
 time_series_association_json(doc::SystemDocument) =
     JSON.json(_bucket(doc.time_series_associations))

@@ -84,8 +84,10 @@ back = P.read_document("system.json")   # validates: ids unique, references reso
 ```
 
 `read_document` runs `validate_document`, so an unresolved reference or a duplicate id raises
-`DocumentFormatError` rather than being read and silently dropped. `read_document` decodes rows on every available thread; start Julia with `--threads=auto` to read large documents faster. `PortfolioDocument` is the
-investment-side counterpart, read back with `read_portfolio_document`.
+`DocumentFormatError` rather than being read and silently dropped.
+`read_document` decodes rows on every available thread; start Julia with `--threads=auto` to read
+large documents faster. `PortfolioDocument` is the investment-side counterpart, read back with
+`read_portfolio_document`.
 
 The full walkthrough — supplemental attributes, time series associations, `ext`, and the
 accessor list — is in
