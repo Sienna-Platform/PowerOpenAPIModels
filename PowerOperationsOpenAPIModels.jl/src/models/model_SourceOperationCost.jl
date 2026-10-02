@@ -8,16 +8,6 @@ struct SourceOperationCost <: OneOfAPIModel
 end
 _decode(::Type{SourceOperationCost}, value) = _decode(SourceOperationCost, value, true)
 function _decode(::Type{SourceOperationCost}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-589c935ffa1ef1530dc8.json",
-            pointer="/properties/operation_cost",
-        ),
-        value,
-        "decoding SourceOperationCost";
-        direction=:neutral,
-    )
     object = _object(value, "SourceOperationCost")
     tag = get(object, "cost_type", ABSENT)
     tag isa Absent ||
@@ -53,26 +43,17 @@ function _decode(::Type{SourceOperationCost}, value, _openapi_validate::Bool)
     selected === nothing && throw(
         DecodeError("unknown discriminator value $(repr(tag)) for SourceOperationCost"),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for SourceOperationCost",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding SourceOperationCost";
+        direction=:neutral,
+    )
     return SourceOperationCost(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::SourceOperationCost)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::SourceOperationCost) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-589c935ffa1ef1530dc8.json",
-        pointer="/properties/operation_cost",
-    ),
-    _encode_unvalidated(value),
-    "encoding SourceOperationCost";
-    direction=:neutral,
-)
+_encode(value::SourceOperationCost) = _encode(value.value)

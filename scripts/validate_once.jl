@@ -24,6 +24,8 @@
 #   - undiscriminated `oneOf` wrappers select their variant by schema check, so that check
 #     is made unconditional; with the old `!_openapi_validate ||` guard, a nested wrapper
 #     would fall back to structural decoding, which cannot tell `MinMax` from `MinMaxByKey`.
+#   - an all-object tagged `oneOf` checks a value against its tag-selected variant only, on
+#     decode and encode; SiennaSchemas' `check_refs.py` makes that the `oneOf` check.
 
 """
 Shared definitions, injected into InfrastructureCoreOpenAPIModels.
@@ -52,6 +54,35 @@ Import line for every package built on InfrastructureCoreOpenAPIModels.
 """
 const ENCODE_UNVALIDATED_IMPORT = "import InfrastructureCoreOpenAPIModels: _encode_unvalidated"
 
+const _TAGGED_WRAPPER_CHECK =
+    r"(function _decode\(::Type\{(\w+)\}, value, _openapi_validate::Bool\)\n)    _openapi_validate && _validate_schema\(_SPEC, .*?, value, \"decoding \2\"; direction = :\w+\)\n"
+const _TAGGED_VARIANT_CHECK =
+    r"    !_openapi_validate \|\| _schema_valid\(_SPEC, selected\[2\], value; direction = (:\w+)\) \|\| throw\(DecodeError\(\"discriminator-selected schema did not validate for (\w+)\"\)\)"
+
+"""
+Whether `text` holds an all-object tagged oneOf: its variant is chosen by tag, with no
+primitive branch decoded by shape.
+"""
+_is_object_tagged(text::AbstractString) =
+    occursin("discriminator-selected schema did not validate", text) &&
+    !occursin("value isa AbstractDict ||", text)
+
+"""
+Check an all-object tagged oneOf's decode against its selected variant only. SiennaSchemas'
+`check_refs.py` guarantees each variant pins the tag with `const`, which makes that check the
+oneOf check.
+"""
+function select_variant_once(text::AbstractString, name::AbstractString)
+    count(_TAGGED_WRAPPER_CHECK, text) == 1 && count(_TAGGED_VARIANT_CHECK, text) == 1 ||
+        error("select_variant_once: $name has a tagged decode this does not recognize")
+    text = replace(text, _TAGGED_WRAPPER_CHECK => s"\1")
+    return replace(
+        text,
+        _TAGGED_VARIANT_CHECK =>
+            s"    _openapi_validate && _validate_schema(_SPEC, selected[2], value, \"decoding \2\"; direction = \1)",
+    )
+end
+
 const _ENCODE_BLOCK =
     r"function _encode\((\w+)::(\w+)\)\n(.*?)    return _validate_schema\(_SPEC, (.*?), (\w+), (\"encoding \w+\"); direction = (:\w+)\)\nend\n"s
 
@@ -61,6 +92,8 @@ file. Errors when the chunk has an `_encode` this does not recognize, so a gener
 fails here rather than leaving a model validating at every level again.
 """
 function validate_once(text::AbstractString, name::AbstractString)
+    object_tagged = _is_object_tagged(text)
+    object_tagged && (text = select_variant_once(text, name))
     text = replace(
         text,
         ", _openapi_validate)" => ", false)",
@@ -74,11 +107,15 @@ function validate_once(text::AbstractString, name::AbstractString)
             m = match(_ENCODE_BLOCK, block)
             arg, type, body, schema, output, context, direction = m.captures
             patched += 1
+            checked = if object_tagged && type == name
+                "_encode($arg::$type) = _encode($arg.value)\n"
+            else
+                "_encode($arg::$type) = _validate_schema(_SPEC, $schema, " *
+                "_encode_unvalidated($arg), $context; direction = $direction)\n"
+            end
             return "function _encode_unvalidated($arg::$type)\n" *
                    replace(body, "_encode(" => "_encode_unvalidated(") *
-                   "    return $output\nend\n" *
-                   "_encode($arg::$type) = _validate_schema(_SPEC, $schema, " *
-                   "_encode_unvalidated($arg), $context; direction = $direction)\n"
+                   "    return $output\nend\n" * checked
         end,
     )
     patched == expected ||

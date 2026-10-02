@@ -70,6 +70,60 @@ end
         @test back.value.name == "max_active_power"
     end
 
+    @testset "a tagged time series row is checked against its selected variant" begin
+        # SiennaSchemas tests/fixtures/single_time_series.json
+        row() = Dict{String, Any}(
+            "association_id" => 1,
+            "owner_id" => 42,
+            "owner_type" => "ThermalStandard",
+            "owner_category" => "Component",
+            "time_series_type" => "SingleTimeSeries",
+            "name" => "max_active_power",
+            "features" => Dict{String, Any}("model_year" => 2030),
+            "uri" => "infrastore://systems/base.h5",
+            "element_type" => "f64",
+            "element_shape" => Any[],
+            "array_shape" => Any[8760],
+            "units" => "MW",
+            "quantity_kind" => "ActivePower",
+            "unit_system" => "NATURAL_UNITS",
+            "time_reference" => "America/Denver",
+            "component_field" => "max_active_power",
+            "initial_timestamp" => "2030-01-01T00:00:00Z",
+            "resolution" => "PT1H",
+            "length" => 8760,
+        )
+        message(f) = try
+            f()
+            ""
+        catch e
+            e isa SchemaValidationError || rethrow()
+            sprint(showerror, e)
+        end
+
+        good = decode(TimeSeriesAssociation, row())
+        @test good.value isa SingleTimeSeries
+        # The encoder writes timestamps with milliseconds.
+        encoded = merge(row(), Dict("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
+        @test JSON.parse(JSON.json(encode(good))) == JSON.parse(JSON.json(encoded))
+
+        # The schema reserves `resolution` as a feature name; the structural decode accepts it.
+        reserved = row()
+        reserved["features"] = Dict{String, Any}("resolution" => "PT1H")
+        decode_message = message(() -> decode(TimeSeriesAssociation, reserved))
+        @test occursin("decoding TimeSeriesAssociation", decode_message)
+        @test occursin("features", decode_message)
+        unchecked = decode(TimeSeriesAssociation, reserved, false)
+        @test occursin("features", message(() -> encode(unchecked)))
+
+        unknown = row()
+        unknown["time_series_type"] = "NoSuchSeries"
+        @test_throws OpenAPI.Runtime.DecodeError decode(TimeSeriesAssociation, unknown)
+        untagged = row()
+        delete!(untagged, "time_series_type")
+        @test_throws OpenAPI.Runtime.DecodeError decode(TimeSeriesAssociation, untagged)
+    end
+
     @testset "the six association types are registered" begin
         for name in (
             "SingleTimeSeries",

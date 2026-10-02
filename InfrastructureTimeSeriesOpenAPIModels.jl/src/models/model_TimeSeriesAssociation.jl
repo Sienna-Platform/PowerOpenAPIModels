@@ -17,16 +17,6 @@ struct TimeSeriesAssociation <: OneOfAPIModel
 end
 _decode(::Type{TimeSeriesAssociation}, value) = _decode(TimeSeriesAssociation, value, true)
 function _decode(::Type{TimeSeriesAssociation}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-53d485931dd71addb76b.json",
-            pointer="",
-        ),
-        value,
-        "decoding TimeSeriesAssociation";
-        direction=:neutral,
-    )
     object = _object(value, "TimeSeriesAssociation")
     tag = get(object, "time_series_type", ABSENT)
     tag isa Absent ||
@@ -83,26 +73,17 @@ function _decode(::Type{TimeSeriesAssociation}, value, _openapi_validate::Bool)
     selected === nothing && throw(
         DecodeError("unknown discriminator value $(repr(tag)) for TimeSeriesAssociation"),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for TimeSeriesAssociation",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding TimeSeriesAssociation";
+        direction=:neutral,
+    )
     return TimeSeriesAssociation(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::TimeSeriesAssociation)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::TimeSeriesAssociation) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-53d485931dd71addb76b.json",
-        pointer="",
-    ),
-    _encode_unvalidated(value),
-    "encoding TimeSeriesAssociation";
-    direction=:neutral,
-)
+_encode(value::TimeSeriesAssociation) = _encode(value.value)
