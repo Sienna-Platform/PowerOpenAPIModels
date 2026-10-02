@@ -14,10 +14,17 @@ PowerInvestmentsOpenAPIModels = "33cb4396-f4d9-4f59-8585-787ebb56cb1b"
 PowerOperationsOpenAPIModels = "a372b6d7-45a2-44c2-8199-6a724b72e8ff"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 
+[weakdeps]
+JSONSchema = "7d188eb4-7ad8-530c-ae41-71a32a6d4692"
+
+[extensions]
+PowerOpenAPIModelsJSONSchemaExt = "JSONSchema"
+
 [compat]
 InfrastructureCoreOpenAPIModels = "0.1"
 InfrastructureTimeSeriesOpenAPIModels = "0.1"
 JSON = "1"
+JSONSchema = "1"
 OpenAPI = "1.1"
 PowerCoreOpenAPIModels = "0.1"
 PowerDynamicsOpenAPIModels = "0.1"
@@ -28,8 +35,9 @@ julia = "1.10"
 
 [extras]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+JSONSchema = "7d188eb4-7ad8-530c-ae41-71a32a6d4692"
 TOML = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Dates", "TOML", "Test"]
+test = ["Dates", "JSONSchema", "TOML", "Test"]

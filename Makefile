@@ -11,7 +11,9 @@ CODEGEN_IMAGE ?= ghcr.io/sienna-platform/power-codegen:latest
 # generated before it, because dedup reads the bases' kept-name sets.
 DOMAINS := infrastructure-core timeseries core operations investments dynamics
 
-.PHONY: generate generate-docker clean validate test precompile docs schema-version
+.PHONY: generate generate-docker clean validate test precompile docs schema-version package-assets
+
+PKG := PowerOpenAPIModels.jl
 
 # OpenAPI.jl 1.0's native pure-Julia generator (OpenAPI.client) replaces the Java
 # openapi-generator + Docker pipeline: no JVM, no jar download, generate-docker below is now
@@ -49,12 +51,38 @@ generate-docker:
 # than name a revision it does not actually match.
 #
 # Stamped on the host, not inside the codegen container, which has no git.
+#
+# The umbrella package reads its reader version from $(PKG)/schema-version, a copy of the
+# root file: the root is outside the registered subpackage, so the copy is what ships.
+#
+# The vendored fixtures carry a literal schema_version; it is re-stamped to the same version so
+# they stay readable once the reader moves to a new line.
 schema-version:
 	@if git -C $(SCHEMA_DIR) rev-parse --git-dir >/dev/null 2>&1; then \
 	  git -C $(SCHEMA_DIR) describe --always --dirty --tags > .schema-version; \
 	  echo "stamped .schema-version: $$(cat .schema-version)"; \
 	else \
 	  echo "SKIP .schema-version: $(SCHEMA_DIR) is not a git checkout"; \
+	fi
+	cp .schema-version $(PKG)/schema-version
+	python3 scripts/stamp_fixtures.py
+
+# Strict validation bundles (shipped with the umbrella package for `source`-version writes)
+# and the shared reader-rule vectors (vendored for its tests). SCHEMA_DIR is either an
+# unpacked release tarball (bundles/ and versioning/ at its root, what CI uses) or a
+# SiennaSchemas checkout, from which the bundles of the current compatibility line are built.
+package-assets:
+	rm -rf $(PKG)/bundles
+	@if [ -d $(SCHEMA_DIR)/bundles ]; then \
+	  cp -R $(SCHEMA_DIR)/bundles $(PKG)/bundles; \
+	else \
+	  python3 $(SCHEMA_DIR)/scripts/build_bundles.py --line --out $(PKG)/bundles; \
+	fi
+	mkdir -p $(PKG)/test/fixtures/versioning
+	@if [ -f $(SCHEMA_DIR)/versioning/cases.json ]; then \
+	  cp $(SCHEMA_DIR)/versioning/cases.json $(PKG)/test/fixtures/versioning/cases.json; \
+	else \
+	  cp $(SCHEMA_DIR)/tests/fixtures/versioning/cases.json $(PKG)/test/fixtures/versioning/cases.json; \
 	fi
 
 clean:

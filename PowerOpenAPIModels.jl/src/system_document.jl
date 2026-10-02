@@ -51,8 +51,10 @@ own component blob alone, via that blob's own basis-selector property (`power_un
 `components` values are concrete `Vector{T}`, so per-type iteration stays inferable behind a
 function barrier even though the field itself is untyped.
 
-`counter`, `component_types_by_id`, and `service_membership` are build-time scaffolding and
-are not serialized: everything they hold is recoverable from the emitted rows. `counter`'s ids
+`counter`, `component_types_by_id`, `service_membership`, `trading_hub_membership`, and
+`source_schema_version` (the schema version the document was read at, or this package's own for
+a new one; see [`get_source_schema_version`](@ref)) are build-time scaffolding and are not
+serialized: everything they hold is recoverable from the emitted rows. `counter`'s ids
 come from one counter shared by every type, matching SiennaGridDB's `entities` table where an
 id identifies a component without also needing its type — which is why a bus number cannot
 double as an id. `component_types_by_id` and `service_membership` exist purely so
@@ -97,6 +99,7 @@ struct SystemDocument
     component_types_by_id::Dict{Int, String}
     service_membership::Set{Tuple{Int, Int}}
     trading_hub_membership::Set{Tuple{Int, Int}}
+    source_schema_version::Base.RefValue{String}
 end
 
 """
@@ -126,6 +129,7 @@ function SystemDocument(;
         Dict{Int, String}(),
         Set{Tuple{Int, Int}}(),
         Set{Tuple{Int, Int}}(),
+        Ref(READER_VERSION),
     )
 end
 
@@ -363,79 +367,57 @@ The document as a tree of plain JSON-safe values, ready for a single JSON encodi
 Every model row is pre-encoded via [`_encode_row`](@ref) rather than embedded raw: encoding a
 row on its own with `OpenAPI.Runtime._encode` already returns a plain object, not a `String`,
 so this still builds the whole tree before printing once rather than encoding twice.
+
+Canonical: `schema_version` comes first, then the remaining keys sorted. An optional property
+that is absent, null, or equal to its schema default (`trading_hub_associations` defaults to
+`[]`) is omitted; `ext` is always written.
 """
-function document_tree(doc::SystemDocument)
+function document_tree(doc::SystemDocument; schema_version::AbstractString=READER_VERSION)
     components = Dict{String, Any}()
     for type_name in component_type_names(doc)
         components[type_name] = _bucket(doc.components[type_name])
     end
-    tree = Dict{String, Any}(
-        "components" => components,
-        "supplemental_attributes" => _bucket(doc.supplemental_attributes),
-        "supplemental_attribute_associations" =>
-            _bucket(doc.supplemental_attribute_associations),
-        "plant_associations" => _bucket(doc.plant_associations),
-        "combined_cycle_associations" => _bucket(doc.combined_cycle_associations),
-        "service_associations" => _bucket(doc.service_associations),
-        "trading_hub_associations" => _bucket(doc.trading_hub_associations),
-        "time_series_associations" => _bucket(doc.time_series_associations),
-        # Keyed by component id, which is unique across every type.
-        "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
-        "time_series_storage_file" => doc.time_series_storage_file,
-    )
+    tree = Dict{String, Any}()
+    tree["schema_version"] = String(schema_version)
     _put_optional!(tree, "name", doc.name)
     _put_optional!(tree, "description", doc.description)
     _put_optional!(tree, "frequency", doc.frequency)
-    return tree
+    tree["components"] = components
+    tree["supplemental_attributes"] = _bucket(doc.supplemental_attributes)
+    tree["supplemental_attribute_associations"] =
+        _bucket(doc.supplemental_attribute_associations)
+    tree["plant_associations"] = _bucket(doc.plant_associations)
+    tree["combined_cycle_associations"] = _bucket(doc.combined_cycle_associations)
+    tree["service_associations"] = _bucket(doc.service_associations)
+    _put_nonempty!(tree, "trading_hub_associations", _bucket(doc.trading_hub_associations))
+    tree["time_series_associations"] = _bucket(doc.time_series_associations)
+    # Keyed by component id, which is unique across every type.
+    tree["ext"] = Dict(string(id) => extras for (id, extras) in doc.ext)
+    tree["time_series_storage_file"] = doc.time_series_storage_file
+    return _canonical_tree(tree)
 end
 
-"""
-Write `doc` to `path` as JSON.
-
-`path` names the JSON file only. The HDF5 sidecar named by `time_series_storage_file` is not
-written here — this package does not handle time series values — so the caller writes it and
-sets that basename, which keeps the file layout the caller's choice.
-
-Validates first: a document that fails [`validate_document`](@ref) must not reach disk.
-"""
-function write_document(
-    doc::SystemDocument,
-    path::AbstractString;
-    pretty::Bool=false,
-    force::Bool=false,
-)
-    validate_document(doc)
-    if isfile(path) && !force
-        throw(
-            InfrastructureCoreOpenAPIModels.DocumentFormatError(
-                "$path already exists; pass force = true to overwrite",
-            ),
-        )
-    end
-    tree = document_tree(doc)
-    open(path, "w") do io
-        if pretty
-            JSON.print(io, tree, 2)
-        else
-            JSON.print(io, tree)
-        end
-        # Trailing newline: POSIX text-file convention, and it is what the Python and
-        # TypeScript writers emit — without it a document written here differs from the same
-        # document written there by exactly one byte.
-        print(io, "\n")
-    end
-    return nothing
-end
+_bundle_name(::SystemDocument) = "SystemDocument"
 
 # ── reading ──────────────────────────────────────────────────────────────────────
 
 """
 Build a [`SystemDocument`](@ref) from already-parsed JSON.
 
-Every `components` key must name a registered model type — an unknown type name errors
-rather than being skipped, since dropping the rows would lose data silently.
+The schema version is checked first ([`check_schema_version`](@ref)); every `components` key
+must name a registered model type — an unknown type name errors rather than being skipped,
+since dropping the rows would lose data silently.
 """
 function document_from_json(raw::AbstractDict; source::AbstractString="document")
+    return _document_from_json(raw, source, READER_VERSION)
+end
+
+function _document_from_json(
+    raw::AbstractDict,
+    source::AbstractString,
+    reader::AbstractString,
+)
+    doc_version = _checked_schema_version(raw, reader)
     doc = SystemDocument(;
         name=_optional(raw, "name"),
         description=_optional(raw, "description"),
@@ -527,6 +509,7 @@ function document_from_json(raw::AbstractDict; source::AbstractString="document"
 
     reserve_ids!(doc, _highest_id(doc))
     validate_document(doc)
+    doc.source_schema_version[] = doc_version
     return doc
 end
 
@@ -542,6 +525,16 @@ function read_document(path::AbstractString)
             InfrastructureCoreOpenAPIModels.DocumentFormatError("no such document: $path"),
         )
     end
-    raw = JSON.parsefile(path; dicttype=Dict{String, Any})
+    raw = _parse_document_file(path)
     return document_from_json(raw; source=path)
+end
+
+"""
+Read the SystemDocument at `src` and write it to `dst` stamped with this package's schema
+version. Fails unless `src` is current or upgradable.
+"""
+function upgrade_document(src::AbstractString, dst::AbstractString; force::Bool=false)
+    doc = read_document(src)
+    write_document(doc, dst; force=force)
+    return nothing
 end

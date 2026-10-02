@@ -239,6 +239,17 @@ reading a document reserves every id it already contains. `read_document` runs
 `validate_document`: a duplicate id or an association pointing at a component that is not
 there raises [`DocumentFormatError`](@ref InfrastructureCoreOpenAPIModels.DocumentFormatError) instead of being read and quietly dropped.
 
+Every document is stamped with a `schema_version`, checked before anything is decoded: a
+document that is missing it, malformed, from another compatibility line, or newer than the
+package raises [`SchemaVersionError`](@ref PowerOpenAPIModels.SchemaVersionError).
+[`check_schema_version`](@ref PowerOpenAPIModels.check_schema_version) classifies raw JSON
+without throwing. `write_document` stamps the package's version by default
+(`schema_version = :current`); `schema_version = :source` stamps the version the document was
+read at ([`get_source_schema_version`](@ref PowerOpenAPIModels.get_source_schema_version)),
+validated against that version's strict bundle and needing JSONSchema.jl loaded.
+[`upgrade_document`](@ref PowerOpenAPIModels.upgrade_document) rewrites an older document on
+the same line with the current stamp.
+
 `PortfolioDocument` is the investment-side counterpart with the same shape, read back with
 `read_portfolio_document`.
 
@@ -255,7 +266,8 @@ Reference: [`SystemDocument`](@ref PowerOpenAPIModels.SystemDocument),
 [`validate_document`](@ref PowerOpenAPIModels.validate_document),
 [`write_document`](@ref PowerOpenAPIModels.write_document),
 [`read_document`](@ref PowerOpenAPIModels.read_document),
-[`read_portfolio_document`](@ref PowerOpenAPIModels.read_portfolio_document).
+[`read_portfolio_document`](@ref PowerOpenAPIModels.read_portfolio_document),
+[`upgrade_portfolio_document`](@ref PowerOpenAPIModels.upgrade_portfolio_document).
 
 ## Choosing a package
 
