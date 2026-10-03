@@ -1,0 +1,41 @@
+name: Release on Merge
+
+# Merging a version bump is the release. This registers, wave by wave, every
+# package whose version on main is not yet in General; TagBot then tags each one
+# from its merged registry PR. Keyed on the version, not on .schema-version, so
+# a hand-bumped generator fix releases the same way, and a Project.toml edit
+# that leaves the version alone finds everything registered and does nothing.
+# A wave that is not in General within an hour fails the job with the registry
+# PR links; fix the cause and re-run, and it resumes at that wave.
+
+on:
+  push:
+    branches: [main]
+    paths: ["*OpenAPIModels.jl/Project.toml"]
+  workflow_dispatch:
+
+permissions:
+  # Commit comments. Registrator accepts github-actions[bot] by name, so
+  # GITHUB_TOKEN is the right identity here, unlike the App token elsewhere.
+  contents: write
+
+concurrency:
+  group: release-on-merge
+  cancel-in-progress: false
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    # Four waves at up to an hour each.
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Register in General, wave by wave
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 .github/scripts/register.py

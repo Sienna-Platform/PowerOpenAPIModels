@@ -4,6 +4,32 @@ Seven packages live in this repository and each is registered in the General reg
 own, from its own subdirectory. That shapes everything below: the order they go out in, and
 why the tags are not just `v0.1.0`.
 
+## Merging is the release
+
+Releases are automated; the one human step is merging a version bump to `main`.
+
+- **After a schema release**, SiennaSchemas' release dispatches `update-schema.yml` here. It
+  regenerates the packages, bumps all seven versions, and opens a PR. The bump mirrors the
+  schema's bump *level*, not its number (schema minor → package minor, schema patch → package
+  patch). Every intra-package `[compat]` entry is raised to the new version too
+  (`.github/scripts/bump_version.py`). Review the PR and merge it.
+- **For a release without a schema change** (a generator fix), bump the patch version in all
+  seven `Project.toml` files, and the intra-package `[compat]` entries with it, in an ordinary PR.
+- **On merge**, `release-on-merge.yml` registers every package whose version is not yet in
+  General, in the waves below, and waits for each wave to merge before starting the next
+  (`.github/scripts/register.py`; `--dry-run` shows what it would do). TagBot then tags each
+  package as before.
+- **If a wave does not reach General within an hour**, the job fails and prints the registry PR
+  links. Fix the cause, then re-run the job. Packages already registered are skipped, so it
+  resumes at the unfinished wave. A package's *first* registration waits three days in General,
+  so its wave always fails the first run. Re-run once the registry PR has merged.
+
+The PR is opened with the `RELEASE_BOT_APP_ID` / `RELEASE_BOT_PRIVATE_KEY` GitHub App secrets,
+because a PR opened with `GITHUB_TOKEN` triggers no workflows, so Test would never run on it.
+Registration comments are the opposite case: they must go out as `github-actions[bot]`
+(`GITHUB_TOKEN`), the one bot login Registrator accepts. The sections below describe what the automation does, and are the
+manual fallback.
+
 ## Before you start
 
 - `main` is green: the **Test** workflow runs every package's own test suite (through
