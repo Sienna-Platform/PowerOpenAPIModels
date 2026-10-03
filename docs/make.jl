@@ -65,5 +65,5 @@ deploydocs(;
     devbranch="main",
     devurl="dev",
     push_preview=true,
-    tag_prefix="PowerOpenAPIModels.jl-",
+    tag_prefix="PowerOpenAPIModels-",
 )
