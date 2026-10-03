@@ -4,16 +4,6 @@ end
 _decode(::Type{InputOutputCurveFunctionData}, value) =
     _decode(InputOutputCurveFunctionData, value, true)
 function _decode(::Type{InputOutputCurveFunctionData}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/InputOutputCurve/properties/function_data",
-        ),
-        value,
-        "decoding InputOutputCurveFunctionData";
-        direction=:neutral,
-    )
     object = _object(value, "InputOutputCurveFunctionData")
     tag = get(object, "function_type", ABSENT)
     tag isa Absent ||
@@ -55,26 +45,17 @@ function _decode(::Type{InputOutputCurveFunctionData}, value, _openapi_validate:
             "unknown discriminator value $(repr(tag)) for InputOutputCurveFunctionData",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for InputOutputCurveFunctionData",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding InputOutputCurveFunctionData";
+        direction=:neutral,
+    )
     return InputOutputCurveFunctionData(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::InputOutputCurveFunctionData)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::InputOutputCurveFunctionData) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-        pointer="/\$defs/InputOutputCurve/properties/function_data",
-    ),
-    _encode_unvalidated(value),
-    "encoding InputOutputCurveFunctionData";
-    direction=:neutral,
-)
+_encode(value::InputOutputCurveFunctionData) = _encode(value.value)

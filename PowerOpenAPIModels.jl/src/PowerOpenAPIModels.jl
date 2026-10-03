@@ -16,5 +16,6 @@ using OpenAPI, JSON
 include("system_document.jl")
 include("portfolio_document.jl")
 include("document_utils.jl")
+include("time_series_catalog.jl")
 
 end

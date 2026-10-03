@@ -53,6 +53,23 @@ const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
         @test back.value.function_data.value.proportional_term == 25.0
     end
 
+    @testset "a tagged wrapper with a primitive branch keeps both checks" begin
+        @test decode(ThermalGenerationCostStartUp, 0.0).value === 0.0
+        stages = Dict{String, Any}(
+            "startup_stages_type" => "STAGES", "cold" => 3.0, "hot" => 1.0, "warm" => 2.0,
+        )
+        @test decode(ThermalGenerationCostStartUp, stages).value isa StartUpStages
+        bad = merge(stages, Dict{String, Any}("cold" => "expensive"))
+        err = try
+            decode(ThermalGenerationCostStartUp, bad)
+            nothing
+        catch e
+            e
+        end
+        @test err isa SchemaValidationError
+        @test occursin("decoding ThermalGenerationCostStartUp", sprint(showerror, err))
+    end
+
     @testset "a fixed x-unit resolves from the type alone" begin
         @test has_declared_unit(ACBus, Val(:angle))
         @test declared_unit(ACBus, Val(:angle)) == "rad"

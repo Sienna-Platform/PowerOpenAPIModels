@@ -9,16 +9,6 @@ end
 _decode(::Type{SupplyTechnologyOperationCosts}, value) =
     _decode(SupplyTechnologyOperationCosts, value, true)
 function _decode(::Type{SupplyTechnologyOperationCosts}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
-            pointer="/properties/operation_costs",
-        ),
-        value,
-        "decoding SupplyTechnologyOperationCosts";
-        direction=:neutral,
-    )
     object = _object(value, "SupplyTechnologyOperationCosts")
     tag = get(object, "cost_type", ABSENT)
     tag isa Absent ||
@@ -60,26 +50,17 @@ function _decode(::Type{SupplyTechnologyOperationCosts}, value, _openapi_validat
             "unknown discriminator value $(repr(tag)) for SupplyTechnologyOperationCosts",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for SupplyTechnologyOperationCosts",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding SupplyTechnologyOperationCosts";
+        direction=:neutral,
+    )
     return SupplyTechnologyOperationCosts(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::SupplyTechnologyOperationCosts)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::SupplyTechnologyOperationCosts) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-5ad640cfbd2532df977a.json",
-        pointer="/properties/operation_costs",
-    ),
-    _encode_unvalidated(value),
-    "encoding SupplyTechnologyOperationCosts";
-    direction=:neutral,
-)
+_encode(value::SupplyTechnologyOperationCosts) = _encode(value.value)

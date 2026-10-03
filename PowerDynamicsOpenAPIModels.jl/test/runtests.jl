@@ -45,11 +45,6 @@ const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
             xd_pp=0.25,
             xl=0.2,
             se=[0.0, 0.0],
-            gamma_d1=0.1,
-            gamma_q1=0.1,
-            gamma_d2=0.1,
-            gamma_q2=0.1,
-            gamma_qd=0.1,
         )
         back = decode(RoundRotorMachine, JSON.parse(JSON.json(encode(machine))))
         @test back.se == [0.0, 0.0]

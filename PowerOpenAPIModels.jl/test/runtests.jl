@@ -13,6 +13,43 @@ using Dates
 using TOML
 using Test
 
+# SiennaSchemas tests/fixtures/single_time_series.json
+time_series_row() = Dict{String, Any}(
+    "association_id" => 1,
+    "owner_id" => 42,
+    "owner_type" => "ThermalStandard",
+    "owner_category" => "Component",
+    "time_series_type" => "SingleTimeSeries",
+    "name" => "max_active_power",
+    "features" => Dict{String, Any}("model_year" => 2030),
+    "uri" => "infrastore://systems/base.h5",
+    "element_type" => "f64",
+    "element_shape" => Any[],
+    "array_shape" => Any[8760],
+    "units" => "MW",
+    "quantity_kind" => "ActivePower",
+    "unit_system" => "NATURAL_UNITS",
+    "time_reference" => "America/Denver",
+    "component_field" => "max_active_power",
+    "initial_timestamp" => "2030-01-01T00:00:00Z",
+    "resolution" => "PT1H",
+    "length" => 8760,
+)
+
+"""A document holding the decoded (schema-checked) `rows` as its association table."""
+function time_series_document(rows)
+    doc = PowerOpenAPIModels.SystemDocument()
+    for row in rows
+        push!(
+            doc.time_series_associations,
+            InfrastructureCoreOpenAPIModels.decode(
+                InfrastructureTimeSeriesOpenAPIModels.TimeSeriesAssociation, row,
+            ),
+        )
+    end
+    return doc
+end
+
 # Set SCHEMA_DIR to point the drift checks at a SiennaSchemas checkout; without one they
 # warn and skip, so `Pkg.test` works from a plain registry install.
 const SCHEMA_DIR =
@@ -29,6 +66,22 @@ _type_name(::Type{T}) where {T} = string(nameof(T))
 _type_name(::Any) = ""
 
 @testset "PowerOpenAPIModels" begin
+    @testset "time_series_association_json is the table in wire form" begin
+        second = merge(
+            time_series_row(),
+            Dict{String, Any}("association_id" => 2, "name" => "other"),
+        )
+        doc = time_series_document([time_series_row(), second])
+        json = PowerOpenAPIModels.time_series_association_json(doc)
+        # The encoder writes initial_timestamp with milliseconds.
+        wire(row) = merge(row, Dict{String, Any}("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
+        JSON = InfrastructureCoreOpenAPIModels.JSON
+        @test JSON.parse(json) == JSON.parse(JSON.json([wire(time_series_row()), wire(second)]))
+        @test PowerOpenAPIModels.time_series_association_json(
+            PowerOpenAPIModels.SystemDocument(),
+        ) == "[]"
+    end
+
     @testset "No duplicate type definitions" begin
         pkgs = [
             InfrastructureCoreOpenAPIModels,
@@ -521,6 +574,88 @@ _type_name(::Any) = ""
             @test isstructtype(T)
             @test string(nameof(T)) == name
         end
+    end
+
+    @testset "_rows keeps row order and reports the first bad row" begin
+        fixture = joinpath(@__DIR__, "fixtures", "case14_operations.COMPONENT_BASE.json")
+        template = first(
+            InfrastructureCoreOpenAPIModels.JSON.parsefile(
+                fixture; dicttype=Dict{String, Any},
+            )["components"]["ACBus"],
+        )
+        bus(i) = merge(template, Dict{String, Any}("id" => i, "name" => "b$i", "number" => i))
+        raws = [bus(i) for i in 1:2_000]
+        decoded = PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, raws)
+        @test [b.number for b in decoded] == 1:2_000
+        @test isempty(PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, ()))
+
+        # Two different schema violations, so the message names which row was reported.
+        raws[300]["available"] = 1
+        raws[1_700]["number"] = "x"
+        for _ in 1:20
+            err = try
+                PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, raws)
+                nothing
+            catch e
+                e
+            end
+            @test err isa PowerOpenAPIModels.OpenAPI.Runtime.SchemaValidationError
+            @test occursin("available", sprint(showerror, err))
+        end
+    end
+
+    @testset "validate_time_series_catalog checks the catalog against the document" begin
+        JSON = InfrastructureCoreOpenAPIModels.JSON
+        DocumentFormatError = InfrastructureCoreOpenAPIModels.DocumentFormatError
+        SchemaValidationError = PowerOpenAPIModels.OpenAPI.Runtime.SchemaValidationError
+        doc = time_series_document([time_series_row()])
+        check(rows) = PowerOpenAPIModels.validate_time_series_catalog(doc, JSON.json(rows))
+        edited(changes...) = merge(time_series_row(), Dict{String, Any}(changes...))
+        other = edited("association_id" => 2, "name" => "not_in_the_document")
+
+        @test isnothing(check([time_series_row()]))
+        @test isnothing(check([time_series_row(), other]))
+        # A store may assign its own locator and hash.
+        @test isnothing(check([edited("uri" => "elsewhere", "data_hash" => "abc123")]))
+
+        @test_throws r"no matching row" check([other])
+        @test_throws r"association_id" check([edited("association_id" => 7)])
+        @test_throws r"drifted from the time series catalog on: length" check([edited("length" => 1)])
+        # Features are part of the identity, so a changed value is a missing row, not drift.
+        @test_throws r"no matching row" check([
+            edited("features" => Dict{String, Any}("model_year" => 2040)),
+        ])
+        @test_throws DocumentFormatError check([edited("length" => 1)])
+
+        # Every catalog row gets the schema check, matched or not.
+        reserved = Dict{String, Any}("resolution" => "PT1H")
+        @test_throws SchemaValidationError check([time_series_row(), merge(other, Dict{String, Any}("features" => reserved))])
+        @test_throws SchemaValidationError check([edited("uri" => 5)])
+        @test_throws SchemaValidationError check([edited("data_hash" => nothing)])
+
+        # A type without `resolution` or `interval` matches itself.
+        nonsequential = Dict{String, Any}(
+            "association_id" => 3,
+            "owner_id" => 42,
+            "owner_type" => "ThermalStandard",
+            "owner_category" => "Component",
+            "time_series_type" => "NonSequentialTimeSeries",
+            "name" => "scenarios",
+            "features" => Dict{String, Any}(),
+            "uri" => "infrastore://systems/base.h5",
+            "element_type" => "f64",
+            "element_shape" => Any[],
+            "length" => 4,
+        )
+        nonsequential_doc = time_series_document([nonsequential])
+        @test isnothing(
+            PowerOpenAPIModels.validate_time_series_catalog(
+                nonsequential_doc, JSON.json([nonsequential]),
+            ),
+        )
+
+        # The owner category is part of the identity.
+        @test_throws r"no matching row" check([edited("owner_category" => "SupplementalAttribute")])
     end
 
     include("serde_fixture.jl")
