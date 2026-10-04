@@ -1,7 +1,7 @@
-module PowerOpenAPIModelsJSONSchemaExt
+module InfrastructureCoreOpenAPIModelsJSONSchemaExt
 
 using JSONSchema
-using PowerOpenAPIModels
+using InfrastructureCoreOpenAPIModels
 
 # JSONSchema.jl stops at the first failure per validation, so a document that fails as a whole
 # is walked: each object's `required`/`additionalProperties` are checked here directly, while
@@ -187,7 +187,10 @@ function _walk_resolved!(w::Walker, problems, sub, value::AbstractVector, path)
     return nothing
 end
 
-function PowerOpenAPIModels._bundle_problems(tree::AbstractDict, bundle::AbstractDict)
+function InfrastructureCoreOpenAPIModels._bundle_problems(
+    tree::AbstractDict,
+    bundle::AbstractDict,
+)
     problems = String[]
     if _is_valid(JSONSchema.validate(JSONSchema.Schema(bundle), tree))
         return problems
@@ -198,7 +201,7 @@ function PowerOpenAPIModels._bundle_problems(tree::AbstractDict, bundle::Abstrac
 end
 
 function __init__()
-    PowerOpenAPIModels._VALIDATOR_LOADED[] = true
+    InfrastructureCoreOpenAPIModels._VALIDATOR_LOADED[] = true
     return nothing
 end
 

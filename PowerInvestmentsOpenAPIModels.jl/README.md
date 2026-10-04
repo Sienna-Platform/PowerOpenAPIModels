@@ -58,9 +58,8 @@ decode(RequirementAssociation, JSON.parse(JSON.json(encode(assoc))))
 ```
 
 Assembling those rows into a validated portfolio — ids unique, every reference resolvable — is
-`PortfolioDocument` in the umbrella
-[`PowerOpenAPIModels`](https://github.com/Sienna-Platform/PowerOpenAPIModels/tree/main/PowerOpenAPIModels.jl)
-package.
+`PortfolioDocument`, defined here and reached qualified (`PowerInvestmentsOpenAPIModels.PortfolioDocument`,
+`read_portfolio_document`, `write_document`).
 
 ## Generated code
 

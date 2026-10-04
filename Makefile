@@ -13,7 +13,10 @@ DOMAINS := infrastructure-core timeseries core operations investments dynamics
 
 .PHONY: generate generate-docker clean validate test precompile docs schema-version package-assets
 
-PKG := PowerOpenAPIModels.jl
+# DOC_PKG ships the document reader's schema version and strict bundles; TEST_PKG holds the
+# cross-package document tests and their vendored fixtures.
+DOC_PKG := InfrastructureCoreOpenAPIModels.jl
+TEST_PKG := PowerOpenAPIModels.jl
 
 # OpenAPI.jl 1.0's native pure-Julia generator (OpenAPI.client) replaces the Java
 # openapi-generator + Docker pipeline: no JVM, no jar download, generate-docker below is now
@@ -52,7 +55,7 @@ generate-docker:
 #
 # Stamped on the host, not inside the codegen container, which has no git.
 #
-# The umbrella package reads its reader version from $(PKG)/schema-version, a copy of the
+# The document reader reads its version from $(DOC_PKG)/schema-version, a copy of the
 # root file: the root is outside the registered subpackage, so the copy is what ships.
 #
 # The vendored fixtures carry a literal schema_version; it is re-stamped to the same version so
@@ -64,25 +67,25 @@ schema-version:
 	else \
 	  echo "SKIP .schema-version: $(SCHEMA_DIR) is not a git checkout"; \
 	fi
-	cp .schema-version $(PKG)/schema-version
+	cp .schema-version $(DOC_PKG)/schema-version
 	python3 scripts/stamp_fixtures.py
 
-# Strict validation bundles (shipped with the umbrella package for `source`-version writes)
-# and the shared reader-rule vectors (vendored for its tests). SCHEMA_DIR is either an
+# Strict validation bundles (shipped with $(DOC_PKG) for `source`-version writes) and the
+# shared reader-rule vectors (vendored for $(TEST_PKG)'s tests). SCHEMA_DIR is either an
 # unpacked release tarball (bundles/ and versioning/ at its root, what CI uses) or a
 # SiennaSchemas checkout, from which the bundles of the current compatibility line are built.
 package-assets:
-	rm -rf $(PKG)/bundles
+	rm -rf $(DOC_PKG)/bundles
 	@if [ -d $(SCHEMA_DIR)/bundles ]; then \
-	  cp -R $(SCHEMA_DIR)/bundles $(PKG)/bundles; \
+	  cp -R $(SCHEMA_DIR)/bundles $(DOC_PKG)/bundles; \
 	else \
-	  python3 $(SCHEMA_DIR)/scripts/build_bundles.py --line --out $(PKG)/bundles; \
+	  python3 $(SCHEMA_DIR)/scripts/build_bundles.py --line --out $(DOC_PKG)/bundles; \
 	fi
-	mkdir -p $(PKG)/test/fixtures/versioning
+	mkdir -p $(TEST_PKG)/test/fixtures/versioning
 	@if [ -f $(SCHEMA_DIR)/versioning/cases.json ]; then \
-	  cp $(SCHEMA_DIR)/versioning/cases.json $(PKG)/test/fixtures/versioning/cases.json; \
+	  cp $(SCHEMA_DIR)/versioning/cases.json $(TEST_PKG)/test/fixtures/versioning/cases.json; \
 	else \
-	  cp $(SCHEMA_DIR)/tests/fixtures/versioning/cases.json $(PKG)/test/fixtures/versioning/cases.json; \
+	  cp $(SCHEMA_DIR)/tests/fixtures/versioning/cases.json $(TEST_PKG)/test/fixtures/versioning/cases.json; \
 	fi
 
 clean:

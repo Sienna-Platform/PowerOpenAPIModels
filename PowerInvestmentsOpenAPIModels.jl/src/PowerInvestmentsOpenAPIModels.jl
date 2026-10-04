@@ -688,6 +688,7 @@ include("models/model_StorageTechnology.jl")
 include("models/model_SupplyTechnology.jl")
 
 include("units.jl")
+include("document.jl")
 include("register.jl")
 
 export AggregateTransportTechnology

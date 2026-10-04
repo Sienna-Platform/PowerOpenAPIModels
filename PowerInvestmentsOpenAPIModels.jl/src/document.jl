@@ -1,24 +1,22 @@
 # Hand-written (NOT generated): the PortfolioDocument container and its type-specific JSON I/O.
 #
-# The sibling of `document.jl`'s SystemDocument, for investment portfolios. Like that file,
-# `PortfolioDocument.components` is a map from type name to an array of heterogeneous component
-# objects (the portfolio's regional aggregations, policy requirements, and candidate
-# technologies), which the generated client cannot express as typed buckets — so this container
-# needs every domain in scope at once, which is exactly what this umbrella package provides.
-# `financial_data` is a concrete `PortfolioFinancialData` from the Investments domain, and
-# `time_series_associations`/`supplemental_attribute_associations` reference TimeSeries- and
-# Core-layer types, all reachable here.
+# The sibling of PowerCoreOpenAPIModels' SystemDocument, for investment portfolios. Like that
+# container, `PortfolioDocument.components` is a map from type name to an array of
+# heterogeneous component objects (the portfolio's regional aggregations, policy requirements,
+# and candidate technologies), resolved by name through the InfrastructureCore model-type
+# registry. `financial_data` and `requirements_associations` are concrete types from this
+# package; `time_series_associations` is the one concretely typed foreign table, hence the
+# InfrastructureTimeSeries dependency.
 #
 # `SiennaSchemas/Investments/PortfolioDocument.json` stays authoritative for the shape (and for
-# every non-Julia binding); `test/validate.jl` checks this struct against it.
+# every non-Julia binding); the umbrella PowerOpenAPIModels test suite checks this struct
+# against it.
 #
-# Plumbing shared with SystemDocument — the type-agnostic helpers (`_optional`, `_require`,
-# `_row`, `_model_id`, `_check_ref`, ...) and the operations whose bodies touch only the fields
-# both containers share (`get_components`, `add_component!`, `next_id!`, `write_document`, ...) —
-# lives in document_utils.jl, dispatched on `DocumentType`. Only PortfolioDocument-specific code
-# is here: the struct, its constructor, the portfolio-only accessors, and the
-# `validate_document`/`document_tree`/`portfolio_document_from_json`/`read_portfolio_document`
-# operations whose field sets differ from a system's.
+# Plumbing shared with SystemDocument — the type-agnostic helpers, the operations on fields both
+# containers share (`get_components`, `add_component!`, `next_id!`, `write_document`, ...), and
+# schema versioning — lives in InfrastructureCoreOpenAPIModels' `document.jl`, dispatched on
+# `AbstractDocument`, and is imported below so callers reach it through this module too. Only
+# PortfolioDocument-specific code is here.
 #
 # Differences from SystemDocument, per the schema:
 #   adds    `data_source`, `aggregation` (required), `financial_data`, `investment_schedule`,
@@ -37,7 +35,49 @@
 # the two differ only in return type and Julia cannot dispatch on that.
 #
 # Nothing here is exported: accessors are reached qualified
-# (`PowerOpenAPIModels.get_components(doc, "SupplyTechnology")`).
+# (`PowerInvestmentsOpenAPIModels.get_components(doc, "SupplyTechnology")`).
+
+import InfrastructureCoreOpenAPIModels:
+    AbstractDocument,
+    validate_document,
+    document_tree,
+    _bundle_name,
+    add_component!,
+    add_supplemental_attribute!,
+    add_time_series_association!,
+    check_schema_version,
+    component_type_names,
+    get_components,
+    get_description,
+    get_ext,
+    get_name,
+    get_source_schema_version,
+    get_supplemental_attributes,
+    get_time_series_storage_file,
+    next_id!,
+    reserve_ids!,
+    set_ext!,
+    write_document,
+    READER_VERSION,
+    _attribute_ids,
+    _attribute_type_by_id,
+    _bucket,
+    _canonical_tree,
+    _check_ref,
+    _checked_schema_version,
+    _component_ids,
+    _highest_id,
+    _model_id,
+    _optional,
+    _optional_string,
+    _parse_document_file,
+    _put_optional!,
+    _require,
+    _row,
+    _rows,
+    _typed_attribute,
+    _encode_optional
+using InfrastructureTimeSeriesOpenAPIModels: TimeSeriesAssociation
 
 # ── the container ────────────────────────────────────────────────────────────────
 
@@ -65,9 +105,8 @@ duplicate `(requirement_id, entity_id)` pair in O(1) instead of rescanning
 `requirements_associations` — each add path is the sole writer of its cache, and
 [`portfolio_document_from_json`](@ref) rebuilds both once after a bulk load.
 
-`requirements_associations` is a concrete `Vector{RequirementAssociation}`, an Investments-layer
-type this umbrella can name directly (unlike `SystemDocument`'s Operations-layer association
-tables): each row's `requirement_id` names the policy requirement and its `entity_id` names a
+`requirements_associations` is a concrete `Vector{RequirementAssociation}`, a type this package
+defines (unlike `SystemDocument`'s Operations-layer association tables): each row's `requirement_id` names the policy requirement and its `entity_id` names a
 member the requirement applies to. Callers construct the row and hand it to
 [`add_requirement_association!`](@ref).
 
@@ -83,7 +122,7 @@ they are always emitted (as JSON `null` when absent); the rest are omitted entir
 produced by solving the portfolio — absent from an inputs-only portfolio and carried opaquely,
 its internal shape not constrained here.
 """
-struct PortfolioDocument
+struct PortfolioDocument <: AbstractDocument
     name::Union{Nothing, String}
     description::Union{Nothing, String}
     data_source::Union{Nothing, String}
@@ -144,14 +183,11 @@ end
 _optional_schedule(::Nothing) = nothing
 _optional_schedule(value::AbstractDict) = Dict{String, Any}(value)
 
-get_name(doc::PortfolioDocument) = doc.name
-get_description(doc::PortfolioDocument) = doc.description
 get_data_source(doc::PortfolioDocument) = doc.data_source
 get_aggregation(doc::PortfolioDocument) = doc.aggregation
 get_financial_data(doc::PortfolioDocument) = doc.financial_data
 get_investment_schedule(doc::PortfolioDocument) = doc.investment_schedule
 get_base_system_file(doc::PortfolioDocument) = doc.base_system_file
-get_time_series_storage_file(doc::PortfolioDocument) = doc.time_series_storage_file
 
 # ── builder (PortfolioDocument-specific association writers) ─────────────────────────
 
