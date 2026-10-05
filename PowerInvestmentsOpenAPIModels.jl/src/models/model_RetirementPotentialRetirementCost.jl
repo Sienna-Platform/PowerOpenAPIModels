@@ -16,16 +16,6 @@ end
 _decode(::Type{RetirementPotentialRetirementCost}, value) =
     _decode(RetirementPotentialRetirementCost, value, true)
 function _decode(::Type{RetirementPotentialRetirementCost}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-c906cda7191beeec94f7.json",
-            pointer="/properties/retirement_cost",
-        ),
-        value,
-        "decoding RetirementPotentialRetirementCost";
-        direction=:neutral,
-    )
     object = _object(value, "RetirementPotentialRetirementCost")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
@@ -88,26 +78,17 @@ function _decode(::Type{RetirementPotentialRetirementCost}, value, _openapi_vali
             "unknown discriminator value $(repr(tag)) for RetirementPotentialRetirementCost",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for RetirementPotentialRetirementCost",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding RetirementPotentialRetirementCost";
+        direction=:neutral,
+    )
     return RetirementPotentialRetirementCost(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::RetirementPotentialRetirementCost)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::RetirementPotentialRetirementCost) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-c906cda7191beeec94f7.json",
-        pointer="/properties/retirement_cost",
-    ),
-    _encode_unvalidated(value),
-    "encoding RetirementPotentialRetirementCost";
-    direction=:neutral,
-)
+_encode(value::RetirementPotentialRetirementCost) = _encode(value.value)

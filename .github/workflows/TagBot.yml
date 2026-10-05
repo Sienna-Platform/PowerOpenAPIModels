@@ -48,8 +48,11 @@ jobs:
       # One job per package, because seven packages share this repository and a tag has to
       # say which one it belongs to. Without `subdir` TagBot would tag the repository once
       # per registered version and the seven would collide on `v0.1.0`.
+      # A tag pushed with GITHUB_TOKEN starts no workflows; the deploy key lets the tag
+      # trigger the Documentation workflow, which publishes the release docs.
       - uses: JuliaRegistries/TagBot@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          ssh: ${{ secrets.DOCUMENTER_KEY }}
           subdir: ${{ matrix.subdir }}
           lookback: ${{ github.event.inputs.lookback || 3 }}

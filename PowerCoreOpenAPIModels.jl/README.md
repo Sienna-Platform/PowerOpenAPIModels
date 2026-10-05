@@ -100,7 +100,9 @@ back = P.read_document("system.json")   # validates: ids unique, references reso
 ```
 
 `read_document` runs `validate_document`, so an unresolved reference or a duplicate id raises
-`DocumentFormatError` rather than being read and silently dropped. Component and association
+`DocumentFormatError` rather than being read and silently dropped.
+`read_document` decodes rows on every available thread; start Julia with `--threads=auto` to read
+large documents faster. Component and association
 types are resolved by name through the InfrastructureCore registry, so load the domain
 packages that define a document's types (`PowerOperationsOpenAPIModels` for any operations
 system) before reading it. `PortfolioDocument`, in

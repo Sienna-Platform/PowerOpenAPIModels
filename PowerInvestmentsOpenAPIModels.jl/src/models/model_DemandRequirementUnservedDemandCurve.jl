@@ -20,16 +20,6 @@ function _decode(
     value,
     _openapi_validate::Bool,
 )
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-813de87b6fb714b267ea.json",
-            pointer="/properties/unserved_demand_curve",
-        ),
-        value,
-        "decoding DemandRequirementUnservedDemandCurve";
-        direction=:neutral,
-    )
     object = _object(value, "DemandRequirementUnservedDemandCurve")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
@@ -92,26 +82,17 @@ function _decode(
             "unknown discriminator value $(repr(tag)) for DemandRequirementUnservedDemandCurve",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for DemandRequirementUnservedDemandCurve",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding DemandRequirementUnservedDemandCurve";
+        direction=:neutral,
+    )
     return DemandRequirementUnservedDemandCurve(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::DemandRequirementUnservedDemandCurve)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::DemandRequirementUnservedDemandCurve) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-813de87b6fb714b267ea.json",
-        pointer="/properties/unserved_demand_curve",
-    ),
-    _encode_unvalidated(value),
-    "encoding DemandRequirementUnservedDemandCurve";
-    direction=:neutral,
-)
+_encode(value::DemandRequirementUnservedDemandCurve) = _encode(value.value)

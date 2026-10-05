@@ -28,7 +28,13 @@ const PACKAGES = [
 const REPO = dirname(@__DIR__)
 
 Pkg.activate(@__DIR__)
-# The seven are already declared in test/Project.toml, so develop updates only the manifest
-# and `git status` stays clean between runs.
-Pkg.develop([PackageSpec(; path=joinpath(REPO, "$p.jl")) for p in PACKAGES])
-Pkg.test(PACKAGES; coverage=get(ENV, "COVERAGE", "") == "1")
+# Julia 1.12+ records a developed path in `[sources]` and rewrites the file; put the
+# committed text back so `git status` stays clean between runs.
+project_file = joinpath(@__DIR__, "Project.toml")
+committed = read(project_file, String)
+try
+    Pkg.develop([PackageSpec(; path=joinpath(REPO, "$p.jl")) for p in PACKAGES])
+    Pkg.test(PACKAGES; coverage=get(ENV, "COVERAGE", "") == "1")
+finally
+    write(project_file, committed)
+end

@@ -8,16 +8,6 @@ struct LossValueCurve <: OneOfAPIModel
 end
 _decode(::Type{LossValueCurve}, value) = _decode(LossValueCurve, value, true)
 function _decode(::Type{LossValueCurve}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/LossValueCurve",
-        ),
-        value,
-        "decoding LossValueCurve";
-        direction=:neutral,
-    )
     object = _object(value, "LossValueCurve")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
@@ -45,26 +35,17 @@ function _decode(::Type{LossValueCurve}, value, _openapi_validate::Bool)
     )
     selected === nothing &&
         throw(DecodeError("unknown discriminator value $(repr(tag)) for LossValueCurve"))
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for LossValueCurve",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding LossValueCurve";
+        direction=:neutral,
+    )
     return LossValueCurve(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::LossValueCurve)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::LossValueCurve) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-        pointer="/\$defs/LossValueCurve",
-    ),
-    _encode_unvalidated(value),
-    "encoding LossValueCurve";
-    direction=:neutral,
-)
+_encode(value::LossValueCurve) = _encode(value.value)

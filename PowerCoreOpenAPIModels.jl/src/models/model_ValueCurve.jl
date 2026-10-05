@@ -15,16 +15,6 @@ struct ValueCurve <: OneOfAPIModel
 end
 _decode(::Type{ValueCurve}, value) = _decode(ValueCurve, value, true)
 function _decode(::Type{ValueCurve}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ValueCurve",
-        ),
-        value,
-        "decoding ValueCurve";
-        direction=:neutral,
-    )
     object = _object(value, "ValueCurve")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
@@ -80,22 +70,17 @@ function _decode(::Type{ValueCurve}, value, _openapi_validate::Bool)
     )
     selected === nothing &&
         throw(DecodeError("unknown discriminator value $(repr(tag)) for ValueCurve"))
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(DecodeError("discriminator-selected schema did not validate for ValueCurve"))
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding ValueCurve";
+        direction=:neutral,
+    )
     return ValueCurve(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::ValueCurve)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::ValueCurve) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-        pointer="/\$defs/ValueCurve",
-    ),
-    _encode_unvalidated(value),
-    "encoding ValueCurve";
-    direction=:neutral,
-)
+_encode(value::ValueCurve) = _encode(value.value)

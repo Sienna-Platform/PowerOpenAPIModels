@@ -9,16 +9,6 @@ end
 _decode(::Type{ProductionVariableCostCurve}, value) =
     _decode(ProductionVariableCostCurve, value, true)
 function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-            pointer="/\$defs/ProductionVariableCostCurve",
-        ),
-        value,
-        "decoding ProductionVariableCostCurve";
-        direction=:neutral,
-    )
     object = _object(value, "ProductionVariableCostCurve")
     tag = get(object, "variable_cost_type", ABSENT)
     tag isa Absent ||
@@ -53,26 +43,17 @@ function _decode(::Type{ProductionVariableCostCurve}, value, _openapi_validate::
             "unknown discriminator value $(repr(tag)) for ProductionVariableCostCurve",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for ProductionVariableCostCurve",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding ProductionVariableCostCurve";
+        direction=:neutral,
+    )
     return ProductionVariableCostCurve(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::ProductionVariableCostCurve)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::ProductionVariableCostCurve) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
-        pointer="/\$defs/ProductionVariableCostCurve",
-    ),
-    _encode_unvalidated(value),
-    "encoding ProductionVariableCostCurve";
-    direction=:neutral,
-)
+_encode(value::ProductionVariableCostCurve) = _encode(value.value)

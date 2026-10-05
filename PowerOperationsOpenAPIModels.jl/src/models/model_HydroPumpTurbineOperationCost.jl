@@ -14,16 +14,6 @@ end
 _decode(::Type{HydroPumpTurbineOperationCost}, value) =
     _decode(HydroPumpTurbineOperationCost, value, true)
 function _decode(::Type{HydroPumpTurbineOperationCost}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-e18af837c2d0e608e9b3.json",
-            pointer="/properties/operation_cost",
-        ),
-        value,
-        "decoding HydroPumpTurbineOperationCost";
-        direction=:neutral,
-    )
     object = _object(value, "HydroPumpTurbineOperationCost")
     tag = get(object, "cost_type", ABSENT)
     tag isa Absent ||
@@ -72,26 +62,17 @@ function _decode(::Type{HydroPumpTurbineOperationCost}, value, _openapi_validate
             "unknown discriminator value $(repr(tag)) for HydroPumpTurbineOperationCost",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for HydroPumpTurbineOperationCost",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding HydroPumpTurbineOperationCost";
+        direction=:neutral,
+    )
     return HydroPumpTurbineOperationCost(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::HydroPumpTurbineOperationCost)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::HydroPumpTurbineOperationCost) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-e18af837c2d0e608e9b3.json",
-        pointer="/properties/operation_cost",
-    ),
-    _encode_unvalidated(value),
-    "encoding HydroPumpTurbineOperationCost";
-    direction=:neutral,
-)
+_encode(value::HydroPumpTurbineOperationCost) = _encode(value.value)

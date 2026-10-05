@@ -166,8 +166,40 @@ Deserialize one row into `T`.
 _row(::Type{T}, raw::AbstractDict) where {T} =
     OpenAPI.Runtime._decode(T, Dict{String, Any}(raw))
 
+const _GRAPHS_LOCK = ReentrantLock()
+
+# OpenAPI.jl's `_schema_graph` reads `spec.graphs` outside its lock, so a cold first use
+# can race across threads. Remove this once that is fixed upstream. Generated code only
+# asks for the `:neutral` direction. The registry names every loaded domain package, so
+# this package needs no dependency on them.
+function _warm_schema_graphs()
+    lock(_GRAPHS_LOCK) do
+        for m in unique(parentmodule(T) for T in values(MODEL_TYPES))
+            OpenAPI.Runtime._schema_graph(m._SPEC, :neutral)
+        end
+    end
+    return nothing
+end
+
+"""
+Deserialize every row into `T`, across threads. Raises the error of the lowest-index bad
+row, so a failure reads the same on every run and thread count.
+"""
 function _rows(::Type{T}, raws) where {T}
-    return T[_row(T, raw) for raw in raws]
+    out = Vector{T}(undef, length(raws))
+    # Every spec's schema graph is built before any thread decodes.
+    _warm_schema_graphs()
+    errors = Vector{Any}(nothing, length(raws))
+    Threads.@threads for i in eachindex(out)
+        try
+            out[i] = _row(T, raws[i])
+        catch err
+            errors[i] = err
+        end
+    end
+    bad = findfirst(!isnothing, errors)
+    isnothing(bad) || throw(errors[bad])
+    return out
 end
 
 _encode_optional(::Nothing) = nothing
