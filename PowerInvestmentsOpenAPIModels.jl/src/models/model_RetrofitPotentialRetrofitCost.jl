@@ -16,16 +16,6 @@ end
 _decode(::Type{RetrofitPotentialRetrofitCost}, value) =
     _decode(RetrofitPotentialRetrofitCost, value, true)
 function _decode(::Type{RetrofitPotentialRetrofitCost}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-16cedac303a10bb9798b.json",
-            pointer="/properties/retrofit_cost",
-        ),
-        value,
-        "decoding RetrofitPotentialRetrofitCost";
-        direction=:neutral,
-    )
     object = _object(value, "RetrofitPotentialRetrofitCost")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
@@ -88,26 +78,17 @@ function _decode(::Type{RetrofitPotentialRetrofitCost}, value, _openapi_validate
             "unknown discriminator value $(repr(tag)) for RetrofitPotentialRetrofitCost",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for RetrofitPotentialRetrofitCost",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding RetrofitPotentialRetrofitCost";
+        direction=:neutral,
+    )
     return RetrofitPotentialRetrofitCost(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::RetrofitPotentialRetrofitCost)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::RetrofitPotentialRetrofitCost) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-16cedac303a10bb9798b.json",
-        pointer="/properties/retrofit_cost",
-    ),
-    _encode_unvalidated(value),
-    "encoding RetrofitPotentialRetrofitCost";
-    direction=:neutral,
-)
+_encode(value::RetrofitPotentialRetrofitCost) = _encode(value.value)

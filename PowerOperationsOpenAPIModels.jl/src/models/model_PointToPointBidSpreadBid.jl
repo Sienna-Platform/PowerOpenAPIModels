@@ -9,16 +9,6 @@ end
 _decode(::Type{PointToPointBidSpreadBid}, value) =
     _decode(PointToPointBidSpreadBid, value, true)
 function _decode(::Type{PointToPointBidSpreadBid}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
-            pointer="/properties/spread_bid",
-        ),
-        value,
-        "decoding PointToPointBidSpreadBid";
-        direction=:neutral,
-    )
     object = _object(value, "PointToPointBidSpreadBid")
     tag = get(object, "cost_type", ABSENT)
     tag isa Absent ||
@@ -53,26 +43,17 @@ function _decode(::Type{PointToPointBidSpreadBid}, value, _openapi_validate::Boo
             "unknown discriminator value $(repr(tag)) for PointToPointBidSpreadBid",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for PointToPointBidSpreadBid",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding PointToPointBidSpreadBid";
+        direction=:neutral,
+    )
     return PointToPointBidSpreadBid(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::PointToPointBidSpreadBid)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::PointToPointBidSpreadBid) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-30167f85563379bc208f.json",
-        pointer="/properties/spread_bid",
-    ),
-    _encode_unvalidated(value),
-    "encoding PointToPointBidSpreadBid";
-    direction=:neutral,
-)
+_encode(value::PointToPointBidSpreadBid) = _encode(value.value)

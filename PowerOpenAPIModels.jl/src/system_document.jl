@@ -390,6 +390,18 @@ function document_tree(doc::SystemDocument)
 end
 
 """
+    time_series_association_json(doc::SystemDocument) -> String
+
+The document's `time_series_associations` rows as one JSON array, the form a time series
+store imports. Encoded like [`write_document`](@ref), without a second schema check:
+reading a document checks every row against the full schema.
+Rows are not schema-checked here: a document built in memory reaches the store as built,
+while one read with `read_document` had every row checked.
+"""
+time_series_association_json(doc::SystemDocument) =
+    JSON.json(_bucket(doc.time_series_associations))
+
+"""
 Write `doc` to `path` as JSON.
 
 `path` names the JSON file only. The HDF5 sidecar named by `time_series_storage_file` is not

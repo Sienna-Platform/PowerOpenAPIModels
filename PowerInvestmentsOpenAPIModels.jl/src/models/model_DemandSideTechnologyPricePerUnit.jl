@@ -16,16 +16,6 @@ end
 _decode(::Type{DemandSideTechnologyPricePerUnit}, value) =
     _decode(DemandSideTechnologyPricePerUnit, value, true)
 function _decode(::Type{DemandSideTechnologyPricePerUnit}, value, _openapi_validate::Bool)
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
-            pointer="/properties/price_per_unit",
-        ),
-        value,
-        "decoding DemandSideTechnologyPricePerUnit";
-        direction=:neutral,
-    )
     object = _object(value, "DemandSideTechnologyPricePerUnit")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
@@ -88,26 +78,17 @@ function _decode(::Type{DemandSideTechnologyPricePerUnit}, value, _openapi_valid
             "unknown discriminator value $(repr(tag)) for DemandSideTechnologyPricePerUnit",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for DemandSideTechnologyPricePerUnit",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding DemandSideTechnologyPricePerUnit";
+        direction=:neutral,
+    )
     return DemandSideTechnologyPricePerUnit(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::DemandSideTechnologyPricePerUnit)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::DemandSideTechnologyPricePerUnit) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
-        pointer="/properties/price_per_unit",
-    ),
-    _encode_unvalidated(value),
-    "encoding DemandSideTechnologyPricePerUnit";
-    direction=:neutral,
-)
+_encode(value::DemandSideTechnologyPricePerUnit) = _encode(value.value)

@@ -20,16 +20,6 @@ function _decode(
     value,
     _openapi_validate::Bool,
 )
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-d257bbdda9d1dc230759.json",
-            pointer="/properties/line_loss",
-        ),
-        value,
-        "decoding NodalHVDCTransportTechnologyLineLoss";
-        direction=:neutral,
-    )
     object = _object(value, "NodalHVDCTransportTechnologyLineLoss")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
@@ -92,26 +82,17 @@ function _decode(
             "unknown discriminator value $(repr(tag)) for NodalHVDCTransportTechnologyLineLoss",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for NodalHVDCTransportTechnologyLineLoss",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding NodalHVDCTransportTechnologyLineLoss";
+        direction=:neutral,
+    )
     return NodalHVDCTransportTechnologyLineLoss(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::NodalHVDCTransportTechnologyLineLoss)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::NodalHVDCTransportTechnologyLineLoss) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-d257bbdda9d1dc230759.json",
-        pointer="/properties/line_loss",
-    ),
-    _encode_unvalidated(value),
-    "encoding NodalHVDCTransportTechnologyLineLoss";
-    direction=:neutral,
-)
+_encode(value::NodalHVDCTransportTechnologyLineLoss) = _encode(value.value)

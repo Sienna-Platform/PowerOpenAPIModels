@@ -20,16 +20,6 @@ function _decode(
     value,
     _openapi_validate::Bool,
 )
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
-            pointer="/properties/curtailment_cost",
-        ),
-        value,
-        "decoding DemandSideTechnologyCurtailmentCost";
-        direction=:neutral,
-    )
     object = _object(value, "DemandSideTechnologyCurtailmentCost")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
@@ -92,26 +82,17 @@ function _decode(
             "unknown discriminator value $(repr(tag)) for DemandSideTechnologyCurtailmentCost",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for DemandSideTechnologyCurtailmentCost",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding DemandSideTechnologyCurtailmentCost";
+        direction=:neutral,
+    )
     return DemandSideTechnologyCurtailmentCost(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::DemandSideTechnologyCurtailmentCost)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::DemandSideTechnologyCurtailmentCost) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-604d83c79216e8337181.json",
-        pointer="/properties/curtailment_cost",
-    ),
-    _encode_unvalidated(value),
-    "encoding DemandSideTechnologyCurtailmentCost";
-    direction=:neutral,
-)
+_encode(value::DemandSideTechnologyCurtailmentCost) = _encode(value.value)

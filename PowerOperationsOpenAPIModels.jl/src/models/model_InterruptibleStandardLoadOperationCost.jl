@@ -18,16 +18,6 @@ function _decode(
     value,
     _openapi_validate::Bool,
 )
-    _openapi_validate && _validate_schema(
-        _SPEC,
-        (
-            resource="https://openapi.invalid/schema/external-317b259df5575f72623a.json",
-            pointer="/properties/operation_cost",
-        ),
-        value,
-        "decoding InterruptibleStandardLoadOperationCost";
-        direction=:neutral,
-    )
     object = _object(value, "InterruptibleStandardLoadOperationCost")
     tag = get(object, "cost_type", ABSENT)
     tag isa Absent ||
@@ -76,26 +66,17 @@ function _decode(
             "unknown discriminator value $(repr(tag)) for InterruptibleStandardLoadOperationCost",
         ),
     )
-    !_openapi_validate ||
-        _schema_valid(_SPEC, selected[2], value; direction=:neutral) ||
-        throw(
-            DecodeError(
-                "discriminator-selected schema did not validate for InterruptibleStandardLoadOperationCost",
-            ),
-        )
+    _openapi_validate && _validate_schema(
+        _SPEC,
+        selected[2],
+        value,
+        "decoding InterruptibleStandardLoadOperationCost";
+        direction=:neutral,
+    )
     return InterruptibleStandardLoadOperationCost(_decode(selected[1], value, false))
 end
 function _encode_unvalidated(value::InterruptibleStandardLoadOperationCost)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::InterruptibleStandardLoadOperationCost) = _validate_schema(
-    _SPEC,
-    (
-        resource="https://openapi.invalid/schema/external-317b259df5575f72623a.json",
-        pointer="/properties/operation_cost",
-    ),
-    _encode_unvalidated(value),
-    "encoding InterruptibleStandardLoadOperationCost";
-    direction=:neutral,
-)
+_encode(value::InterruptibleStandardLoadOperationCost) = _encode(value.value)
