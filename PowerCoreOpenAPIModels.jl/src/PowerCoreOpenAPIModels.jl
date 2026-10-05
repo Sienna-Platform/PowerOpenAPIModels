@@ -569,6 +569,7 @@ include("models/model_GenericOperationCost.jl")
 include("models/model_HydroStorageGenerationCost.jl")
 
 include("units.jl")
+include("document.jl")
 include("register.jl")
 
 export ACBus

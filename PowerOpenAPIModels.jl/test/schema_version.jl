@@ -2,7 +2,6 @@
 # reader-rule vectors, the check-before-decode guarantee, stamping on write, and `source`-
 # version writes validated against a strict bundle built from the sibling schema checkout.
 
-const POM = PowerOpenAPIModels
 const ICORE = InfrastructureCoreOpenAPIModels
 
 function _cases_path()
@@ -36,19 +35,26 @@ function _requirement(id, extras)
     )
 end
 
-_system(extras...) = _filled(POM.SystemDocument(), _bus, extras...)
-_portfolio(extras...) = _filled(POM.PortfolioDocument("Zone"), _requirement, extras...)
+_system(extras...) = _filled(PowerCoreOpenAPIModels.SystemDocument(), _bus, extras...)
+_portfolio(extras...) = _filled(
+    PowerInvestmentsOpenAPIModels.PortfolioDocument("Zone"),
+    _requirement,
+    extras...,
+)
 
 function _filled(doc, make, extras...)
     for extra in extras
-        POM.add_component!(doc, make(POM.next_id!(doc), extra))
+        PowerCoreOpenAPIModels.add_component!(
+            doc,
+            make(PowerCoreOpenAPIModels.next_id!(doc), extra),
+        )
     end
     return doc
 end
 
 function _raw(doc)
     return ICORE.JSON.parse(
-        ICORE.JSON.json(POM.document_tree(doc));
+        ICORE.JSON.json(PowerCoreOpenAPIModels.document_tree(doc));
         dicttype=Dict{String, Any},
     )
 end
@@ -62,7 +68,7 @@ end
 
 # Derived from the reader so tests hold for any shipped version.
 function _stamps(reader)
-    major, minor, patch = POM._parse_version(reader)[1:3]
+    major, minor, patch = ICORE._parse_version(reader)[1:3]
     next_line = "$major.$(minor + 1).0"
     if !iszero(major)
         next_line = "$(major + 1).0.0"
@@ -77,9 +83,9 @@ end
 
 @testset "schema version" begin
     @testset "reader version comes from the shipped schema-version file" begin
-        shipped = strip(read(joinpath(pkgdir(POM), "schema-version"), String))
-        @test POM.READER_VERSION == lstrip(shipped, 'v')
-        @test !startswith(POM.READER_VERSION, "v")
+        shipped = strip(read(joinpath(pkgdir(ICORE), "schema-version"), String))
+        @test ICORE.READER_VERSION == lstrip(shipped, 'v')
+        @test !startswith(ICORE.READER_VERSION, "v")
     end
 
     @testset "shared vectors" begin
@@ -89,12 +95,12 @@ end
             cases = ICORE.JSON.parsefile(CASES_PATH; dicttype=Dict{String, Any})["cases"]
             @test !isempty(cases)
             for c in cases
-                @test POM._check_schema_version(c["reader"], c["document"]) ==
+                @test ICORE._check_schema_version(c["reader"], c["document"]) ==
                       Symbol(c["outcome"])
                 if haskey(c, "expected_message")
                     e = _caught(
-                        POM.SchemaVersionError,
-                        () -> POM._checked_schema_version(c["document"], c["reader"]),
+                        ICORE.SchemaVersionError,
+                        () -> ICORE._checked_schema_version(c["document"], c["reader"]),
                     )
                     @test e.outcome == Symbol(c["outcome"])
                     @test e.message == c["expected_message"]
@@ -106,8 +112,8 @@ end
     @testset "canonical messages" begin
         raw(v) = Dict{String, Any}("schema_version" => v)
         err(reader, document) = _caught(
-            POM.SchemaVersionError,
-            () -> POM._checked_schema_version(document, reader),
+            ICORE.SchemaVersionError,
+            () -> ICORE._checked_schema_version(document, reader),
         )
         e = err("0.1.0", Dict{String, Any}())
         @test e.outcome == :missing
@@ -136,7 +142,7 @@ end
         @test e.message ==
               "document written by schema 0.2.0 cannot be read by schema 0.2.0-rc.1: dev " *
               "builds read only their own output"
-        @test err(POM.READER_VERSION, Dict{String, Any}()).outcome == :missing
+        @test err(ICORE.READER_VERSION, Dict{String, Any}()).outcome == :missing
     end
 
     @testset "$kind reader rejects before decoding" for (
@@ -149,16 +155,16 @@ end
         (
             "SystemDocument",
             _system(Dict{String, Any}()),
-            POM.document_from_json,
-            POM.read_document,
-            POM._document_from_json,
+            PowerCoreOpenAPIModels.document_from_json,
+            PowerCoreOpenAPIModels.read_document,
+            PowerCoreOpenAPIModels._document_from_json,
         ),
         (
             "PortfolioDocument",
             _portfolio(Dict{String, Any}()),
-            POM.portfolio_document_from_json,
-            POM.read_portfolio_document,
-            POM._portfolio_document_from_json,
+            PowerInvestmentsOpenAPIModels.portfolio_document_from_json,
+            PowerInvestmentsOpenAPIModels.read_portfolio_document,
+            PowerInvestmentsOpenAPIModels._portfolio_document_from_json,
         ),
     )
         base = _raw(doc)
@@ -166,47 +172,50 @@ end
         base["surprise"] = 1
         base["components"]["Surprise"] = []
 
-        for reader in (POM.READER_VERSION, "0.1.0", "0.1.9", "1.2.3")
+        for reader in (ICORE.READER_VERSION, "0.1.0", "0.1.9", "1.2.3")
             for (outcome, stamp) in _stamps(reader)
                 raw = deepcopy(base)
                 _stamp!(raw, stamp)
                 e = _caught(
-                    POM.SchemaVersionError,
+                    ICORE.SchemaVersionError,
                     () -> reader_from_json(raw, "doc", reader),
                 )
                 @test e.outcome == outcome
             end
         end
 
-        for (outcome, stamp) in _stamps(POM.READER_VERSION)
+        for (outcome, stamp) in _stamps(ICORE.READER_VERSION)
             raw = deepcopy(base)
             _stamp!(raw, stamp)
-            e = _caught(POM.SchemaVersionError, () -> from_json(raw))
+            e = _caught(ICORE.SchemaVersionError, () -> from_json(raw))
             @test e.outcome == outcome
 
             mktempdir() do dir
                 path = joinpath(dir, "doc.json")
                 write(path, ICORE.JSON.json(raw))
-                @test_throws POM.SchemaVersionError read_path(path)
+                @test_throws ICORE.SchemaVersionError read_path(path)
             end
         end
     end
 
     @testset "round trip stamps the reader version and keeps the source version" begin
-        r = POM.READER_VERSION
+        r = ICORE.READER_VERSION
         for (doc, read_path) in (
-            (_system(Dict{String, Any}()), POM.read_document),
-            (_portfolio(Dict{String, Any}()), POM.read_portfolio_document),
+            (_system(Dict{String, Any}()), PowerCoreOpenAPIModels.read_document),
+            (
+                _portfolio(Dict{String, Any}()),
+                PowerInvestmentsOpenAPIModels.read_portfolio_document,
+            ),
         )
-            @test POM.get_source_schema_version(doc) == r
+            @test ICORE.get_source_schema_version(doc) == r
             mktempdir() do dir
                 path = joinpath(dir, "doc.json")
-                POM.write_document(doc, path)
+                PowerCoreOpenAPIModels.write_document(doc, path)
                 written = ICORE.JSON.parsefile(path; dicttype=Dict{String, Any})
                 @test written["schema_version"] == r
                 text = read(path, String)
                 @test startswith(text, "{\"schema_version\":\"$r\"")
-                @test POM.get_source_schema_version(read_path(path)) == r
+                @test ICORE.get_source_schema_version(read_path(path)) == r
             end
         end
 
@@ -214,60 +223,69 @@ end
         # is re-stamped by a `current` write. `0.1.5` stands in as the reader.
         raw = _raw(_system(Dict{String, Any}()))
         raw["schema_version"] = "0.1.0"
-        old = POM._document_from_json(raw, "doc", "0.1.5")
-        @test POM.get_source_schema_version(old) == "0.1.0"
+        old = PowerCoreOpenAPIModels._document_from_json(raw, "doc", "0.1.5")
+        @test ICORE.get_source_schema_version(old) == "0.1.0"
         mktempdir() do dir
             path = joinpath(dir, "old.json")
-            POM.write_document(old, path)
-            @test ICORE.JSON.parsefile(path)["schema_version"] == POM.READER_VERSION
+            PowerCoreOpenAPIModels.write_document(old, path)
+            @test ICORE.JSON.parsefile(path)["schema_version"] == ICORE.READER_VERSION
         end
         raw = _raw(_portfolio(Dict{String, Any}()))
         raw["schema_version"] = "0.1.0"
-        @test POM.get_source_schema_version(
-            POM._portfolio_document_from_json(raw, "doc", "0.1.5"),
+        @test ICORE.get_source_schema_version(
+            PowerInvestmentsOpenAPIModels._portfolio_document_from_json(
+                raw,
+                "doc",
+                "0.1.5",
+            ),
         ) == "0.1.0"
     end
 
     @testset "upgrade_document re-stamps" begin
         mktempdir() do dir
             for (doc, upgrade, read_path) in (
-                (_system(Dict{String, Any}()), POM.upgrade_document, POM.read_document),
+                (
+                    _system(Dict{String, Any}()),
+                    PowerCoreOpenAPIModels.upgrade_document,
+                    PowerCoreOpenAPIModels.read_document,
+                ),
                 (
                     _portfolio(Dict{String, Any}()),
-                    POM.upgrade_portfolio_document,
-                    POM.read_portfolio_document,
+                    PowerInvestmentsOpenAPIModels.upgrade_portfolio_document,
+                    PowerInvestmentsOpenAPIModels.read_portfolio_document,
                 ),
             )
                 src = joinpath(dir, "src.json")
                 dst = joinpath(dir, "dst.json")
                 rm(src; force=true)
                 rm(dst; force=true)
-                POM.write_document(doc, src)
+                PowerCoreOpenAPIModels.write_document(doc, src)
                 upgrade(src, dst)
-                @test POM.get_source_schema_version(read_path(dst)) == POM.READER_VERSION
+                @test ICORE.get_source_schema_version(read_path(dst)) ==
+                      ICORE.READER_VERSION
                 @test_throws ICORE.DocumentFormatError upgrade(src, dst)
                 upgrade(src, dst; force=true)
 
                 raw = ICORE.JSON.parsefile(src; dicttype=Dict{String, Any})
-                raw["schema_version"] = _stamps(POM.READER_VERSION)[2][2]
+                raw["schema_version"] = _stamps(ICORE.READER_VERSION)[2][2]
                 write(src, ICORE.JSON.json(raw))
-                @test_throws POM.SchemaVersionError upgrade(src, dst; force=true)
+                @test_throws ICORE.SchemaVersionError upgrade(src, dst; force=true)
             end
         end
     end
 
     @testset "canonical encoding" begin
         sys = _system(Dict{String, Any}())
-        tree = POM.document_tree(sys)
+        tree = PowerCoreOpenAPIModels.document_tree(sys)
         @test collect(keys(tree)) ==
               ["schema_version"; sort(collect(setdiff(keys(tree), ["schema_version"])))]
         @test !haskey(tree, "trading_hub_associations")
         @test tree["ext"] == Dict{String, Any}()
         push!(sys.trading_hub_associations, :row)
-        @test haskey(POM.document_tree(sys), "trading_hub_associations")
+        @test haskey(PowerCoreOpenAPIModels.document_tree(sys), "trading_hub_associations")
 
         pf = _portfolio(Dict{String, Any}())
-        ptree = POM.document_tree(pf)
+        ptree = PowerCoreOpenAPIModels.document_tree(pf)
         @test collect(keys(ptree)) ==
               ["schema_version"; sort(collect(setdiff(keys(ptree), ["schema_version"])))]
         @test ptree["ext"] == Dict{String, Any}()
@@ -279,7 +297,7 @@ end
         # JSONSchema.jl is loaded in this suite, so reach the no-extension fallback directly.
         function no_validator()
             return invoke(
-                POM._bundle_problems,
+                ICORE._bundle_problems,
                 Tuple{Any, Any},
                 Dict{String, Any}(),
                 Dict{String, Any}(),
@@ -292,10 +310,10 @@ end
     @testset "source write without a bundle or validator names the extra" begin
         sys = _system(Dict{String, Any}())
         sys.source_schema_version[] = "0.1.0"
-        POM._VALIDATOR_LOADED[] = false
+        ICORE._VALIDATOR_LOADED[] = false
         try
             function validate()
-                return POM._validate_target(
+                return ICORE._validate_target(
                     Val(:source),
                     sys,
                     Dict{String, Any}(),
@@ -306,19 +324,19 @@ end
             e = _caught(ICORE.DocumentFormatError, validate)
             @test occursin("JSONSchema.jl", sprint(showerror, e))
         finally
-            POM._VALIDATOR_LOADED[] = true
+            ICORE._VALIDATOR_LOADED[] = true
         end
     end
 
     @testset "huge version components are valid versions" begin
         raw = Dict{String, Any}("schema_version" => "99999999999999999999.0.0")
-        @test POM._check_schema_version("0.1.0", raw) == :incompatible
-        @test POM._check_schema_version("99999999999999999999.0.0", raw) == :current
+        @test ICORE._check_schema_version("0.1.0", raw) == :incompatible
+        @test ICORE._check_schema_version("99999999999999999999.0.0", raw) == :current
     end
 
     @testset "check_schema_version rejects a non-object root" begin
         for root in (Any[1], "0.1.0", 1, nothing)
-            @test_throws ICORE.DocumentFormatError POM.check_schema_version(root)
+            @test_throws ICORE.DocumentFormatError ICORE.check_schema_version(root)
         end
     end
 
@@ -326,7 +344,10 @@ end
         mktempdir() do dir
             path = joinpath(dir, "array.json")
             write(path, "[1, 2]")
-            for read_path in (POM.read_document, POM.read_portfolio_document)
+            for read_path in (
+                PowerCoreOpenAPIModels.read_document,
+                PowerInvestmentsOpenAPIModels.read_portfolio_document,
+            )
                 @test_throws ICORE.DocumentFormatError read_path(path)
             end
         end
@@ -361,7 +382,7 @@ end
             ),
             "kind" => "z",
         )
-        problems = POM._bundle_problems(tree, bundle)
+        problems = ICORE._bundle_problems(tree, bundle)
         @test problems == [
             "/kind: enum",
             "/m/12/newkey: property unknown to this schema",
@@ -369,9 +390,9 @@ end
         ]
         @test problems == sort(problems)
         slashed = Dict{String, Any}("m" => Dict{String, Any}("a/b~c" => Dict("min" => 1)))
-        @test POM._bundle_problems(slashed, bundle) ==
+        @test ICORE._bundle_problems(slashed, bundle) ==
               ["/m/a~1b~0c/max: required property missing"]
-        ext = Base.get_extension(POM, :PowerOpenAPIModelsJSONSchemaExt)
+        ext = Base.get_extension(ICORE, :InfrastructureCoreOpenAPIModelsJSONSchemaExt)
         issue = JSONSchema.validate(
             JSONSchema.Schema(Dict{String, Any}("required" => ["min"])),
             Dict{String, Any}(),
@@ -409,7 +430,7 @@ end
                     components["ThermalStandard"][1]["operation_cost"]["new_c"] = 1
                     tree["supplemental_attributes"][1]["new_d"] = 1
                     tree["supplemental_attributes"][1]["new_e"] = 2
-                    problems = join(POM._bundle_problems(tree, bundle), "\n")
+                    problems = join(ICORE._bundle_problems(tree, bundle), "\n")
                     for key in (
                         "/components/TransformerCircuit/0/new_a",
                         "/components/SwitchedAdmittance/0/new_b",
@@ -423,7 +444,7 @@ end
 
                 reader = "0.1.5"
                 function write_source(doc, path)
-                    return POM._write_document(
+                    return ICORE._write_document(
                         doc,
                         path,
                         false,
@@ -436,11 +457,15 @@ end
 
                 mktempdir() do dir
                     @testset "$kind" for (kind, make, from_json) in (
-                        ("SystemDocument", _system, POM._document_from_json),
+                        (
+                            "SystemDocument",
+                            _system,
+                            PowerCoreOpenAPIModels._document_from_json,
+                        ),
                         (
                             "PortfolioDocument",
                             _portfolio,
-                            POM._portfolio_document_from_json,
+                            PowerInvestmentsOpenAPIModels._portfolio_document_from_json,
                         ),
                     )
                         ok = make(Dict{String, Any}())
@@ -454,7 +479,7 @@ end
                             path,
                             reader,
                         )
-                        @test POM.get_source_schema_version(back) == "0.1.0"
+                        @test ICORE.get_source_schema_version(back) == "0.1.0"
 
                         bad = make(
                             Dict{String, Any}("brand_new" => 1),
@@ -496,22 +521,22 @@ end
                         )
 
                         same = make(Dict{String, Any}("brand_new" => 1))
-                        POM._write_document(
+                        ICORE._write_document(
                             same,
                             joinpath(dir, "$kind-same.json"),
                             false,
                             false,
                             Val(:source),
-                            POM.READER_VERSION,
+                            ICORE.READER_VERSION,
                             bundles,
                         )
                         @test ICORE.JSON.parsefile(joinpath(dir, "$kind-same.json"))["schema_version"] ==
-                              POM.READER_VERSION
+                              ICORE.READER_VERSION
                     end
                 end
             end
         end
-        @test_throws ArgumentError POM.write_document(
+        @test_throws ArgumentError PowerCoreOpenAPIModels.write_document(
             _system(Dict{String, Any}()),
             tempname();
             schema_version=:bogus,

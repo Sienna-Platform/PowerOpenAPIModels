@@ -56,8 +56,8 @@ jobs:
             $CODEGEN_IMAGE
           echo "${{ steps.schema.outputs.latest }}" > .schema-version
 
-      # The umbrella package ships its reader version and the strict bundles inside its own
-      # directory; the registered package cannot see the repo root.
+      # InfrastructureCoreOpenAPIModels ships the document reader version and the strict
+      # bundles inside its own directory; the registered package cannot see the repo root.
       - name: Ship schema assets
         if: steps.schema.outputs.changed == 'true'
         run: |
