@@ -203,17 +203,24 @@ from it — a per-unit value needs a base, not a factor:
 
 ## Documents
 
-`PowerOpenAPIModels` adds the two containers that hold a complete data set. They are
-hand-written rather than generated, because typed heterogeneous `components` buckets are not
-expressible in OpenAPI — so their fields are asserted against the schemas in the test suite
-instead.
+Two containers hold a complete data set: `SystemDocument` in `PowerCoreOpenAPIModels` and
+`PortfolioDocument` in `PowerInvestmentsOpenAPIModels`. Both subtype `AbstractDocument`, and
+the operations they share — ids, components, supplemental attributes, `ext`, writing, and
+schema versioning — live in `InfrastructureCoreOpenAPIModels`, imported into both so either
+module reaches them. They are hand-written rather than generated, because typed heterogeneous
+`components` buckets are not expressible in OpenAPI — so their fields are asserted against the
+schemas in the test suite instead.
+
+A document resolves its component and association types by name through the model-type
+registry, so a reader needs the domain packages that define those types loaded — not the
+umbrella.
 
 Their accessors are not exported: reach them qualified, so `get_name` here never collides
 with a consumer's own.
 
 ```@example document
-using PowerOpenAPIModels
-const P = PowerOpenAPIModels
+using PowerCoreOpenAPIModels
+const P = PowerCoreOpenAPIModels
 
 doc = P.SystemDocument(; name = "example", frequency = 60.0)
 
@@ -239,23 +246,36 @@ reading a document reserves every id it already contains. `read_document` runs
 `validate_document`: a duplicate id or an association pointing at a component that is not
 there raises [`DocumentFormatError`](@ref InfrastructureCoreOpenAPIModels.DocumentFormatError) instead of being read and quietly dropped.
 
-`PortfolioDocument` is the investment-side counterpart with the same shape, read back with
-`read_portfolio_document`.
+Every document is stamped with a `schema_version`, checked before anything is decoded: a
+document that is missing it, malformed, from another compatibility line, or newer than the
+package raises [`SchemaVersionError`](@ref InfrastructureCoreOpenAPIModels.SchemaVersionError).
+[`check_schema_version`](@ref InfrastructureCoreOpenAPIModels.check_schema_version) classifies raw JSON
+without throwing. `write_document` stamps the package's version by default
+(`schema_version = :current`); `schema_version = :source` stamps the version the document was
+read at ([`get_source_schema_version`](@ref InfrastructureCoreOpenAPIModels.get_source_schema_version)),
+validated against that version's strict bundle and needing JSONSchema.jl loaded.
+[`upgrade_document`](@ref PowerCoreOpenAPIModels.upgrade_document) rewrites an older document on
+the same line with the current stamp.
 
-Reference: [`SystemDocument`](@ref PowerOpenAPIModels.SystemDocument),
-[`PortfolioDocument`](@ref PowerOpenAPIModels.PortfolioDocument),
-[`next_id!`](@ref PowerOpenAPIModels.next_id!),
-[`add_component!`](@ref PowerOpenAPIModels.add_component!),
-[`add_supplemental_attribute!`](@ref PowerOpenAPIModels.add_supplemental_attribute!),
-[`add_time_series_association!`](@ref PowerOpenAPIModels.add_time_series_association!),
-[`get_components`](@ref PowerOpenAPIModels.get_components),
-[`component_type_names`](@ref PowerOpenAPIModels.component_type_names),
-[`set_ext!`](@ref PowerOpenAPIModels.set_ext!),
-[`get_ext`](@ref PowerOpenAPIModels.get_ext),
-[`validate_document`](@ref PowerOpenAPIModels.validate_document),
-[`write_document`](@ref PowerOpenAPIModels.write_document),
-[`read_document`](@ref PowerOpenAPIModels.read_document),
-[`read_portfolio_document`](@ref PowerOpenAPIModels.read_portfolio_document).
+`PortfolioDocument` is the investment-side counterpart with the same shape, read back with
+`PowerInvestmentsOpenAPIModels.read_portfolio_document`.
+
+Reference: [`AbstractDocument`](@ref InfrastructureCoreOpenAPIModels.AbstractDocument),
+[`SystemDocument`](@ref PowerCoreOpenAPIModels.SystemDocument),
+[`PortfolioDocument`](@ref PowerInvestmentsOpenAPIModels.PortfolioDocument),
+[`next_id!`](@ref InfrastructureCoreOpenAPIModels.next_id!),
+[`add_component!`](@ref InfrastructureCoreOpenAPIModels.add_component!),
+[`add_supplemental_attribute!`](@ref InfrastructureCoreOpenAPIModels.add_supplemental_attribute!),
+[`add_time_series_association!`](@ref InfrastructureCoreOpenAPIModels.add_time_series_association!),
+[`get_components`](@ref InfrastructureCoreOpenAPIModels.get_components),
+[`component_type_names`](@ref InfrastructureCoreOpenAPIModels.component_type_names),
+[`set_ext!`](@ref InfrastructureCoreOpenAPIModels.set_ext!),
+[`get_ext`](@ref InfrastructureCoreOpenAPIModels.get_ext),
+[`validate_document`](@ref InfrastructureCoreOpenAPIModels.validate_document),
+[`write_document`](@ref InfrastructureCoreOpenAPIModels.write_document),
+[`read_document`](@ref PowerCoreOpenAPIModels.read_document),
+[`read_portfolio_document`](@ref PowerInvestmentsOpenAPIModels.read_portfolio_document),
+[`upgrade_portfolio_document`](@ref PowerInvestmentsOpenAPIModels.upgrade_portfolio_document).
 
 ## Choosing a package
 

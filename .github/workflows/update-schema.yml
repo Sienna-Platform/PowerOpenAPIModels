@@ -78,6 +78,13 @@ jobs:
             $CODEGEN_IMAGE
           echo "${{ steps.schema.outputs.latest }}" > .schema-version
 
+      # InfrastructureCoreOpenAPIModels ships the document reader version and the strict
+      # bundles inside its own directory; the registered package cannot see the repo root.
+      - name: Ship schema assets
+        if: steps.schema.outputs.changed == 'true'
+        run: |
+          make schema-version package-assets SCHEMA_DIR=/tmp/schemas
+
       - name: Bump the package versions
         id: bump
         if: steps.schema.outputs.changed == 'true'

@@ -10,6 +10,7 @@ using PowerOperationsOpenAPIModels
 using PowerInvestmentsOpenAPIModels
 using PowerDynamicsOpenAPIModels
 using Dates
+using JSONSchema
 using TOML
 using Test
 
@@ -36,14 +37,17 @@ time_series_row() = Dict{String, Any}(
     "length" => 8760,
 )
 
-"""A document holding the decoded (schema-checked) `rows` as its association table."""
+"""
+A document holding the decoded (schema-checked) `rows` as its association table.
+"""
 function time_series_document(rows)
-    doc = PowerOpenAPIModels.SystemDocument()
+    doc = PowerCoreOpenAPIModels.SystemDocument()
     for row in rows
         push!(
             doc.time_series_associations,
             InfrastructureCoreOpenAPIModels.decode(
-                InfrastructureTimeSeriesOpenAPIModels.TimeSeriesAssociation, row,
+                InfrastructureTimeSeriesOpenAPIModels.TimeSeriesAssociation,
+                row,
             ),
         )
     end
@@ -72,13 +76,15 @@ _type_name(::Any) = ""
             Dict{String, Any}("association_id" => 2, "name" => "other"),
         )
         doc = time_series_document([time_series_row(), second])
-        json = PowerOpenAPIModels.time_series_association_json(doc)
+        json = PowerCoreOpenAPIModels.time_series_association_json(doc)
         # The encoder writes initial_timestamp with milliseconds.
-        wire(row) = merge(row, Dict{String, Any}("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
+        wire(row) =
+            merge(row, Dict{String, Any}("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
         JSON = InfrastructureCoreOpenAPIModels.JSON
-        @test JSON.parse(json) == JSON.parse(JSON.json([wire(time_series_row()), wire(second)]))
-        @test PowerOpenAPIModels.time_series_association_json(
-            PowerOpenAPIModels.SystemDocument(),
+        @test JSON.parse(json) ==
+              JSON.parse(JSON.json([wire(time_series_row()), wire(second)]))
+        @test PowerCoreOpenAPIModels.time_series_association_json(
+            PowerCoreOpenAPIModels.SystemDocument(),
         ) == "[]"
     end
 
@@ -201,17 +207,22 @@ _type_name(::Any) = ""
             # the schema through it rather than making this harness carry its own dependency.
             schema = InfrastructureCoreOpenAPIModels.JSON.parsefile(schema_path)
             schema_fields = Set(keys(schema["properties"]))
-            # `counter`, `component_types_by_id`, `service_membership`, and
-            # `trading_hub_membership` are build-time scaffolding that is deliberately not
-            # serialized.
-            struct_fields = setdiff(
-                Set(string.(fieldnames(PowerOpenAPIModels.SystemDocument))),
-                Set([
-                    "counter",
-                    "component_types_by_id",
-                    "service_membership",
-                    "trading_hub_membership",
-                ]),
+            # `counter`, `component_types_by_id`, `service_membership`,
+            # `trading_hub_membership`, and `source_schema_version` are build-time
+            # scaffolding that is deliberately not serialized; `schema_version` is stamped
+            # by the writer from the package's own version, so it has no field.
+            struct_fields = union(
+                setdiff(
+                    Set(string.(fieldnames(PowerCoreOpenAPIModels.SystemDocument))),
+                    Set([
+                        "counter",
+                        "component_types_by_id",
+                        "service_membership",
+                        "trading_hub_membership",
+                        "source_schema_version",
+                    ]),
+                ),
+                Set(["schema_version"]),
             )
 
             @test isempty(setdiff(schema_fields, struct_fields))
@@ -219,20 +230,24 @@ _type_name(::Any) = ""
 
             # Every required field must be one the container always emits.
             emitted = Set(
-                keys(PowerOpenAPIModels.document_tree(PowerOpenAPIModels.SystemDocument())),
+                keys(
+                    PowerCoreOpenAPIModels.document_tree(
+                        PowerCoreOpenAPIModels.SystemDocument(),
+                    ),
+                ),
             )
             @test isempty(setdiff(Set(schema["required"]), emitted))
         end
     end
 
     @testset "SystemDocument round-trips" begin
-        doc = PowerOpenAPIModels.SystemDocument(;
+        doc = PowerCoreOpenAPIModels.SystemDocument(;
             name="validate",
             description="round-trip fixture",
             frequency=50.0,
         )
-        bus_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        bus_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             # ACBus lives in PowerCore, not Operations.
             PowerCoreOpenAPIModels.ACBus(;
@@ -245,24 +260,24 @@ _type_name(::Any) = ""
                 available=true,
             ),
         )
-        PowerOpenAPIModels.set_ext!(doc, bus_id, Dict("Zone" => "1"))
+        PowerCoreOpenAPIModels.set_ext!(doc, bus_id, Dict("Zone" => "1"))
 
         mktempdir() do dir
             path = joinpath(dir, "system.json")
-            PowerOpenAPIModels.write_document(doc, path)
+            PowerCoreOpenAPIModels.write_document(doc, path)
             # Trailing newline, as the Python and TypeScript writers emit: without it a
             # document written here differs from the same document written there by one byte.
             @test endswith(read(path, String), "\n")
-            back = PowerOpenAPIModels.read_document(path)
+            back = PowerCoreOpenAPIModels.read_document(path)
 
-            @test PowerOpenAPIModels.get_name(back) == "validate"
-            @test PowerOpenAPIModels.get_description(back) == "round-trip fixture"
-            @test PowerOpenAPIModels.get_frequency(back) == 50.0
+            @test PowerCoreOpenAPIModels.get_name(back) == "validate"
+            @test PowerCoreOpenAPIModels.get_description(back) == "round-trip fixture"
+            @test PowerCoreOpenAPIModels.get_frequency(back) == 50.0
             # Buckets come back concretely typed, not as Vector{Any}.
             @test eltype(back.components["ACBus"]) === PowerCoreOpenAPIModels.ACBus
-            @test PowerOpenAPIModels.get_ext(back, bus_id)["Zone"] == "1"
+            @test PowerCoreOpenAPIModels.get_ext(back, bus_id)["Zone"] == "1"
             # Ids already handed out are not reissued after a read.
-            @test PowerOpenAPIModels.next_id!(back) > bus_id
+            @test PowerCoreOpenAPIModels.next_id!(back) > bus_id
         end
     end
 
@@ -270,11 +285,11 @@ _type_name(::Any) = ""
         # Components carry ids that must be reserved when reading a document;
         # `_highest_id` must walk them or a read document's id counter under-reserves
         # and `next_id!` can mint a colliding id.
-        doc = PowerOpenAPIModels.SystemDocument(;
+        doc = PowerCoreOpenAPIModels.SystemDocument(;
             time_series_storage_file="fixture_time_series_storage.h5",
         )
-        bus_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        bus_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             PowerCoreOpenAPIModels.ACBus(;
                 id=bus_id,
@@ -284,7 +299,7 @@ _type_name(::Any) = ""
                 available=true,
             ),
         )
-        ts_id = PowerOpenAPIModels.next_id!(doc)
+        ts_id = PowerCoreOpenAPIModels.next_id!(doc)
         ts = InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeries(;
             association_id=ts_id,
             owner_id=bus_id,
@@ -300,25 +315,25 @@ _type_name(::Any) = ""
             length=24,
             time_series_type="SingleTimeSeries",
         )
-        PowerOpenAPIModels.add_time_series_association!(
+        PowerCoreOpenAPIModels.add_time_series_association!(
             doc,
             InfrastructureTimeSeriesOpenAPIModels.TimeSeriesAssociation(ts),
         )
 
         mktempdir() do dir
             path = joinpath(dir, "system_ts.json")
-            PowerOpenAPIModels.write_document(doc, path)
-            back = PowerOpenAPIModels.read_document(path)
-            @test PowerOpenAPIModels.next_id!(back) > bus_id
+            PowerCoreOpenAPIModels.write_document(doc, path)
+            back = PowerCoreOpenAPIModels.read_document(path)
+            @test PowerCoreOpenAPIModels.next_id!(back) > bus_id
         end
     end
 
     @testset "SystemDocument reads a document with no ext key" begin
         # `ext` is optional in the schema (Core/SystemDocument.json's `required` list omits
         # it); a producer that mapped every field is allowed to omit the key entirely.
-        doc = PowerOpenAPIModels.SystemDocument()
-        bus_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        doc = PowerCoreOpenAPIModels.SystemDocument()
+        bus_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             PowerCoreOpenAPIModels.ACBus(;
                 id=bus_id,
@@ -330,21 +345,21 @@ _type_name(::Any) = ""
         )
         raw = InfrastructureCoreOpenAPIModels.JSON.parse(
             InfrastructureCoreOpenAPIModels.JSON.json(
-                PowerOpenAPIModels.document_tree(doc),
+                PowerCoreOpenAPIModels.document_tree(doc),
             ),
         )
         delete!(raw, "ext")
-        back = PowerOpenAPIModels.document_from_json(raw)
-        @test isempty(PowerOpenAPIModels.get_ext(back, bus_id))
+        back = PowerCoreOpenAPIModels.document_from_json(raw)
+        @test isempty(PowerCoreOpenAPIModels.get_ext(back, bus_id))
     end
 
     @testset "SystemDocument reads a document written before trading hubs" begin
         # Every document written before `trading_hub_associations` existed omits the key.
         # Reading one back is the whole reason the field is optional, so assert it directly
         # rather than trusting the schema's `required` list to stay correct.
-        doc = PowerOpenAPIModels.SystemDocument()
-        bus_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        doc = PowerCoreOpenAPIModels.SystemDocument()
+        bus_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             PowerCoreOpenAPIModels.ACBus(;
                 id=bus_id,
@@ -356,20 +371,20 @@ _type_name(::Any) = ""
         )
         encoded = InfrastructureCoreOpenAPIModels.JSON.parse(
             InfrastructureCoreOpenAPIModels.JSON.json(
-                PowerOpenAPIModels.document_tree(doc),
+                PowerCoreOpenAPIModels.document_tree(doc),
             ),
         )
 
         raw = deepcopy(encoded)
         delete!(raw, "trading_hub_associations")
-        back = PowerOpenAPIModels.document_from_json(raw)
+        back = PowerCoreOpenAPIModels.document_from_json(raw)
         @test isempty(back.trading_hub_associations)
         @test isempty(back.trading_hub_membership)
 
         # The siblings stay required: omitting one is still malformed input.
         raw2 = deepcopy(encoded)
         delete!(raw2, "service_associations")
-        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.document_from_json(
+        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerCoreOpenAPIModels.document_from_json(
             raw2,
         )
     end
@@ -380,9 +395,9 @@ _type_name(::Any) = ""
         )
 
         # An unresolved reference must error rather than be dropped.
-        doc = PowerOpenAPIModels.SystemDocument()
-        bus_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        doc = PowerCoreOpenAPIModels.SystemDocument()
+        bus_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             PowerCoreOpenAPIModels.ACBus(;
                 id=bus_id,
@@ -401,7 +416,7 @@ _type_name(::Any) = ""
                 attribute_type="OnlineReserve",
             ),
         )
-        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.validate_document(
+        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerCoreOpenAPIModels.validate_document(
             doc,
         )
     end
@@ -416,11 +431,24 @@ _type_name(::Any) = ""
         else
             schema = InfrastructureCoreOpenAPIModels.JSON.parsefile(schema_path)
             schema_fields = Set(keys(schema["properties"]))
-            # `counter`, `component_types_by_id`, and `requirements_membership` are build-time
-            # scaffolding that is deliberately not serialized.
-            struct_fields = setdiff(
-                Set(string.(fieldnames(PowerOpenAPIModels.PortfolioDocument))),
-                Set(["counter", "component_types_by_id", "requirements_membership"]),
+            # `counter`, `component_types_by_id`, `requirements_membership`, and
+            # `source_schema_version` are build-time scaffolding that is deliberately not
+            # serialized; `schema_version` is stamped by the writer.
+            struct_fields = union(
+                setdiff(
+                    Set(
+                        string.(
+                            fieldnames(PowerInvestmentsOpenAPIModels.PortfolioDocument),
+                        ),
+                    ),
+                    Set([
+                        "counter",
+                        "component_types_by_id",
+                        "requirements_membership",
+                        "source_schema_version",
+                    ]),
+                ),
+                Set(["schema_version"]),
             )
 
             @test isempty(setdiff(schema_fields, struct_fields))
@@ -429,8 +457,8 @@ _type_name(::Any) = ""
             # Every required field must be one the container always emits.
             emitted = Set(
                 keys(
-                    PowerOpenAPIModels.document_tree(
-                        PowerOpenAPIModels.PortfolioDocument("Zone"),
+                    PowerCoreOpenAPIModels.document_tree(
+                        PowerInvestmentsOpenAPIModels.PortfolioDocument("Zone"),
                     ),
                 ),
             )
@@ -439,12 +467,12 @@ _type_name(::Any) = ""
     end
 
     @testset "PortfolioDocument round-trips requirements_associations" begin
-        doc = PowerOpenAPIModels.PortfolioDocument("Zone"; name="validate")
+        doc = PowerInvestmentsOpenAPIModels.PortfolioDocument("Zone"; name="validate")
         # A policy requirement (the service) and a member subject to it. Both are components, so
         # both ids resolve in `validate_document`; the member reuses a requirement type here only
         # to keep the fixture minimal (its identity as a component id is all the ref-check needs).
-        requirement_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        requirement_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             PowerInvestmentsOpenAPIModels.MaximumCapacityRequirements(;
                 id=requirement_id,
@@ -452,8 +480,8 @@ _type_name(::Any) = ""
                 available=true,
             ),
         )
-        member_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        member_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             PowerInvestmentsOpenAPIModels.MaximumCapacityRequirements(;
                 id=member_id,
@@ -461,7 +489,7 @@ _type_name(::Any) = ""
                 available=true,
             ),
         )
-        PowerOpenAPIModels.add_requirement_association!(
+        PowerInvestmentsOpenAPIModels.add_requirement_association!(
             doc,
             PowerInvestmentsOpenAPIModels.RequirementAssociation(;
                 requirement_id=requirement_id,
@@ -470,7 +498,7 @@ _type_name(::Any) = ""
         )
 
         # The membership cache is the document's one duplicate guard.
-        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.add_requirement_association!(
+        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerInvestmentsOpenAPIModels.add_requirement_association!(
             doc,
             PowerInvestmentsOpenAPIModels.RequirementAssociation(;
                 requirement_id=requirement_id,
@@ -480,12 +508,12 @@ _type_name(::Any) = ""
 
         mktempdir() do dir
             path = joinpath(dir, "portfolio.json")
-            PowerOpenAPIModels.write_document(doc, path)
+            PowerCoreOpenAPIModels.write_document(doc, path)
             @test endswith(read(path, String), "\n")
-            back = PowerOpenAPIModels.read_portfolio_document(path)
+            back = PowerInvestmentsOpenAPIModels.read_portfolio_document(path)
 
-            @test PowerOpenAPIModels.get_name(back) == "validate"
-            @test PowerOpenAPIModels.get_aggregation(back) == "Zone"
+            @test PowerCoreOpenAPIModels.get_name(back) == "validate"
+            @test PowerInvestmentsOpenAPIModels.get_aggregation(back) == "Zone"
             @test length(back.requirements_associations) == 1
             # A first-class Investments type, so the bucket comes back concretely typed.
             @test eltype(back.requirements_associations) ===
@@ -503,9 +531,9 @@ _type_name(::Any) = ""
         # as SystemDocument's does. Handing the structs over raw serialized each one field by
         # field, so every association row grew an empty `"additional_properties": {}` that the
         # schema never names and the other two languages never write.
-        doc = PowerOpenAPIModels.PortfolioDocument("Zone"; name="passthrough")
-        requirement_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        doc = PowerInvestmentsOpenAPIModels.PortfolioDocument("Zone"; name="passthrough")
+        requirement_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             PowerInvestmentsOpenAPIModels.MaximumCapacityRequirements(;
                 id=requirement_id,
@@ -513,8 +541,8 @@ _type_name(::Any) = ""
                 available=true,
             ),
         )
-        member_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_component!(
+        member_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_component!(
             doc,
             PowerInvestmentsOpenAPIModels.MaximumCapacityRequirements(;
                 id=member_id,
@@ -522,15 +550,15 @@ _type_name(::Any) = ""
                 available=true,
             ),
         )
-        PowerOpenAPIModels.add_requirement_association!(
+        PowerInvestmentsOpenAPIModels.add_requirement_association!(
             doc,
             PowerInvestmentsOpenAPIModels.RequirementAssociation(;
                 requirement_id=requirement_id,
                 entity_id=member_id,
             ),
         )
-        attribute_id = PowerOpenAPIModels.next_id!(doc)
-        PowerOpenAPIModels.add_supplemental_attribute!(
+        attribute_id = PowerCoreOpenAPIModels.next_id!(doc)
+        PowerCoreOpenAPIModels.add_supplemental_attribute!(
             doc,
             PowerInvestmentsOpenAPIModels.TopologyMapping(;
                 id=attribute_id,
@@ -541,11 +569,11 @@ _type_name(::Any) = ""
 
         mktempdir() do dir
             path = joinpath(dir, "portfolio.json")
-            PowerOpenAPIModels.write_document(doc, path)
+            PowerCoreOpenAPIModels.write_document(doc, path)
             text = read(path, String)
             @test !occursin("additional_properties", text)
             # Still a readable document, not merely a smaller one.
-            back = PowerOpenAPIModels.read_portfolio_document(path)
+            back = PowerInvestmentsOpenAPIModels.read_portfolio_document(path)
             @test length(back.requirements_associations) == 1
             @test length(back.supplemental_attribute_associations) == 1
         end
@@ -554,14 +582,14 @@ _type_name(::Any) = ""
     @testset "PortfolioDocument requires requirements_associations" begin
         # The field is required: a document omitting the key is malformed input, not an empty
         # requirement set.
-        doc = PowerOpenAPIModels.PortfolioDocument("Zone")
+        doc = PowerInvestmentsOpenAPIModels.PortfolioDocument("Zone")
         raw = InfrastructureCoreOpenAPIModels.JSON.parse(
             InfrastructureCoreOpenAPIModels.JSON.json(
-                PowerOpenAPIModels.document_tree(doc),
+                PowerCoreOpenAPIModels.document_tree(doc),
             ),
         )
         delete!(raw, "requirements_associations")
-        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerOpenAPIModels.portfolio_document_from_json(
+        @test_throws InfrastructureCoreOpenAPIModels.DocumentFormatError PowerInvestmentsOpenAPIModels.portfolio_document_from_json(
             raw,
         )
     end
@@ -580,26 +608,31 @@ _type_name(::Any) = ""
         fixture = joinpath(@__DIR__, "fixtures", "case14_operations.COMPONENT_BASE.json")
         template = first(
             InfrastructureCoreOpenAPIModels.JSON.parsefile(
-                fixture; dicttype=Dict{String, Any},
+                fixture;
+                dicttype=Dict{String, Any},
             )["components"]["ACBus"],
         )
-        bus(i) = merge(template, Dict{String, Any}("id" => i, "name" => "b$i", "number" => i))
+        bus(i) =
+            merge(template, Dict{String, Any}("id" => i, "name" => "b$i", "number" => i))
         raws = [bus(i) for i in 1:2_000]
-        decoded = PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, raws)
+        decoded = InfrastructureCoreOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, raws)
         @test [b.number for b in decoded] == 1:2_000
-        @test isempty(PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, ()))
+        @test isempty(
+            InfrastructureCoreOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, ()),
+        )
 
         # Two different schema violations, so the message names which row was reported.
         raws[300]["available"] = 1
         raws[1_700]["number"] = "x"
         for _ in 1:20
             err = try
-                PowerOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, raws)
+                InfrastructureCoreOpenAPIModels._rows(PowerCoreOpenAPIModels.ACBus, raws)
                 nothing
             catch e
                 e
             end
-            @test err isa PowerOpenAPIModels.OpenAPI.Runtime.SchemaValidationError
+            @test err isa
+                  InfrastructureCoreOpenAPIModels.OpenAPI.Runtime.SchemaValidationError
             @test occursin("available", sprint(showerror, err))
         end
     end
@@ -607,9 +640,11 @@ _type_name(::Any) = ""
     @testset "validate_time_series_catalog checks the catalog against the document" begin
         JSON = InfrastructureCoreOpenAPIModels.JSON
         DocumentFormatError = InfrastructureCoreOpenAPIModels.DocumentFormatError
-        SchemaValidationError = PowerOpenAPIModels.OpenAPI.Runtime.SchemaValidationError
+        SchemaValidationError =
+            InfrastructureCoreOpenAPIModels.OpenAPI.Runtime.SchemaValidationError
         doc = time_series_document([time_series_row()])
-        check(rows) = PowerOpenAPIModels.validate_time_series_catalog(doc, JSON.json(rows))
+        check(rows) =
+            PowerCoreOpenAPIModels.validate_time_series_catalog(doc, JSON.json(rows))
         edited(changes...) = merge(time_series_row(), Dict{String, Any}(changes...))
         other = edited("association_id" => 2, "name" => "not_in_the_document")
 
@@ -620,7 +655,9 @@ _type_name(::Any) = ""
 
         @test_throws r"no matching row" check([other])
         @test_throws r"association_id" check([edited("association_id" => 7)])
-        @test_throws r"drifted from the time series catalog on: length" check([edited("length" => 1)])
+        @test_throws r"drifted from the time series catalog on: length" check([
+            edited("length" => 1),
+        ])
         # Features are part of the identity, so a changed value is a missing row, not drift.
         @test_throws r"no matching row" check([
             edited("features" => Dict{String, Any}("model_year" => 2040)),
@@ -629,7 +666,10 @@ _type_name(::Any) = ""
 
         # Every catalog row gets the schema check, matched or not.
         reserved = Dict{String, Any}("resolution" => "PT1H")
-        @test_throws SchemaValidationError check([time_series_row(), merge(other, Dict{String, Any}("features" => reserved))])
+        @test_throws SchemaValidationError check([
+            time_series_row(),
+            merge(other, Dict{String, Any}("features" => reserved)),
+        ])
         @test_throws SchemaValidationError check([edited("uri" => 5)])
         @test_throws SchemaValidationError check([edited("data_hash" => nothing)])
 
@@ -649,14 +689,18 @@ _type_name(::Any) = ""
         )
         nonsequential_doc = time_series_document([nonsequential])
         @test isnothing(
-            PowerOpenAPIModels.validate_time_series_catalog(
-                nonsequential_doc, JSON.json([nonsequential]),
+            PowerCoreOpenAPIModels.validate_time_series_catalog(
+                nonsequential_doc,
+                JSON.json([nonsequential]),
             ),
         )
 
         # The owner category is part of the identity.
-        @test_throws r"no matching row" check([edited("owner_category" => "SupplementalAttribute")])
+        @test_throws r"no matching row" check([
+            edited("owner_category" => "SupplementalAttribute"),
+        ])
     end
 
     include("serde_fixture.jl")
+    include("schema_version.jl")
 end

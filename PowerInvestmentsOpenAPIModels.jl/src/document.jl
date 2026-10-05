@@ -1,24 +1,22 @@
 # Hand-written (NOT generated): the PortfolioDocument container and its type-specific JSON I/O.
 #
-# The sibling of `document.jl`'s SystemDocument, for investment portfolios. Like that file,
-# `PortfolioDocument.components` is a map from type name to an array of heterogeneous component
-# objects (the portfolio's regional aggregations, policy requirements, and candidate
-# technologies), which the generated client cannot express as typed buckets — so this container
-# needs every domain in scope at once, which is exactly what this umbrella package provides.
-# `financial_data` is a concrete `PortfolioFinancialData` from the Investments domain, and
-# `time_series_associations`/`supplemental_attribute_associations` reference TimeSeries- and
-# Core-layer types, all reachable here.
+# The sibling of PowerCoreOpenAPIModels' SystemDocument, for investment portfolios. Like that
+# container, `PortfolioDocument.components` is a map from type name to an array of
+# heterogeneous component objects (the portfolio's regional aggregations, policy requirements,
+# and candidate technologies), resolved by name through the InfrastructureCore model-type
+# registry. `financial_data` and `requirements_associations` are concrete types from this
+# package; `time_series_associations` is the one concretely typed foreign table, hence the
+# InfrastructureTimeSeries dependency.
 #
 # `SiennaSchemas/Investments/PortfolioDocument.json` stays authoritative for the shape (and for
-# every non-Julia binding); `test/validate.jl` checks this struct against it.
+# every non-Julia binding); the umbrella PowerOpenAPIModels test suite checks this struct
+# against it.
 #
-# Plumbing shared with SystemDocument — the type-agnostic helpers (`_optional`, `_require`,
-# `_row`, `_model_id`, `_check_ref`, ...) and the operations whose bodies touch only the fields
-# both containers share (`get_components`, `add_component!`, `next_id!`, `write_document`, ...) —
-# lives in document_utils.jl, dispatched on `DocumentType`. Only PortfolioDocument-specific code
-# is here: the struct, its constructor, the portfolio-only accessors, and the
-# `validate_document`/`document_tree`/`portfolio_document_from_json`/`read_portfolio_document`
-# operations whose field sets differ from a system's.
+# Plumbing shared with SystemDocument — the type-agnostic helpers, the operations on fields both
+# containers share (`get_components`, `add_component!`, `next_id!`, `write_document`, ...), and
+# schema versioning — lives in InfrastructureCoreOpenAPIModels' `document.jl`, dispatched on
+# `AbstractDocument`, and is imported below so callers reach it through this module too. Only
+# PortfolioDocument-specific code is here.
 #
 # Differences from SystemDocument, per the schema:
 #   adds    `data_source`, `aggregation` (required), `financial_data`, `investment_schedule`,
@@ -37,7 +35,49 @@
 # the two differ only in return type and Julia cannot dispatch on that.
 #
 # Nothing here is exported: accessors are reached qualified
-# (`PowerOpenAPIModels.get_components(doc, "SupplyTechnology")`).
+# (`PowerInvestmentsOpenAPIModels.get_components(doc, "SupplyTechnology")`).
+
+import InfrastructureCoreOpenAPIModels:
+    AbstractDocument,
+    validate_document,
+    document_tree,
+    _bundle_name,
+    add_component!,
+    add_supplemental_attribute!,
+    add_time_series_association!,
+    check_schema_version,
+    component_type_names,
+    get_components,
+    get_description,
+    get_ext,
+    get_name,
+    get_source_schema_version,
+    get_supplemental_attributes,
+    get_time_series_storage_file,
+    next_id!,
+    reserve_ids!,
+    set_ext!,
+    write_document,
+    READER_VERSION,
+    _attribute_ids,
+    _attribute_type_by_id,
+    _bucket,
+    _canonical_tree,
+    _check_ref,
+    _checked_schema_version,
+    _component_ids,
+    _highest_id,
+    _model_id,
+    _optional,
+    _optional_string,
+    _parse_document_file,
+    _put_optional!,
+    _require,
+    _row,
+    _rows,
+    _typed_attribute,
+    _encode_optional
+using InfrastructureTimeSeriesOpenAPIModels: TimeSeriesAssociation
 
 # ── the container ────────────────────────────────────────────────────────────────
 
@@ -54,8 +94,10 @@ CostCurve or FuelCurve), intrinsic to that curve.
 `components` values are concrete `Vector{T}`, so per-type iteration stays inferable behind a
 function barrier even though the field itself is untyped.
 
-`counter`, `component_types_by_id`, and `requirements_membership` are build-time scaffolding and
-are not serialized: everything they hold is recoverable from the emitted rows. `counter`'s ids
+`counter`, `component_types_by_id`, `requirements_membership`, and `source_schema_version` (the
+schema version the document was read at, or this package's own for a new one; see
+[`get_source_schema_version`](@ref)) are build-time scaffolding and are not serialized:
+everything they hold is recoverable from the emitted rows. `counter`'s ids
 come from one counter shared by every type; `component_types_by_id` lets
 [`add_supplemental_attribute!`](@ref) check membership in O(1) instead of rescanning
 `components`, and `requirements_membership` lets [`add_requirement_association!`](@ref) reject a
@@ -63,9 +105,8 @@ duplicate `(requirement_id, entity_id)` pair in O(1) instead of rescanning
 `requirements_associations` — each add path is the sole writer of its cache, and
 [`portfolio_document_from_json`](@ref) rebuilds both once after a bulk load.
 
-`requirements_associations` is a concrete `Vector{RequirementAssociation}`, an Investments-layer
-type this umbrella can name directly (unlike `SystemDocument`'s Operations-layer association
-tables): each row's `requirement_id` names the policy requirement and its `entity_id` names a
+`requirements_associations` is a concrete `Vector{RequirementAssociation}`, a type this package
+defines (unlike `SystemDocument`'s Operations-layer association tables): each row's `requirement_id` names the policy requirement and its `entity_id` names a
 member the requirement applies to. Callers construct the row and hand it to
 [`add_requirement_association!`](@ref).
 
@@ -81,7 +122,7 @@ they are always emitted (as JSON `null` when absent); the rest are omitted entir
 produced by solving the portfolio — absent from an inputs-only portfolio and carried opaquely,
 its internal shape not constrained here.
 """
-struct PortfolioDocument
+struct PortfolioDocument <: AbstractDocument
     name::Union{Nothing, String}
     description::Union{Nothing, String}
     data_source::Union{Nothing, String}
@@ -99,6 +140,7 @@ struct PortfolioDocument
     counter::Base.RefValue{Int}
     component_types_by_id::Dict{Int, String}
     requirements_membership::Set{Tuple{Int, Int}}
+    source_schema_version::Base.RefValue{String}
 end
 
 """
@@ -134,20 +176,18 @@ function PortfolioDocument(
         Ref(0),
         Dict{Int, String}(),
         Set{Tuple{Int, Int}}(),
+        Ref(READER_VERSION),
     )
 end
 
 _optional_schedule(::Nothing) = nothing
 _optional_schedule(value::AbstractDict) = Dict{String, Any}(value)
 
-get_name(doc::PortfolioDocument) = doc.name
-get_description(doc::PortfolioDocument) = doc.description
 get_data_source(doc::PortfolioDocument) = doc.data_source
 get_aggregation(doc::PortfolioDocument) = doc.aggregation
 get_financial_data(doc::PortfolioDocument) = doc.financial_data
 get_investment_schedule(doc::PortfolioDocument) = doc.investment_schedule
 get_base_system_file(doc::PortfolioDocument) = doc.base_system_file
-get_time_series_storage_file(doc::PortfolioDocument) = doc.time_series_storage_file
 
 # ── builder (PortfolioDocument-specific association writers) ─────────────────────────
 
@@ -162,10 +202,7 @@ checked in O(1) against `requirements_membership` rather than rescanning
 This is the document's one guard against a duplicate association row; callers must not rescan
 `requirements_associations` themselves before calling this.
 """
-function add_requirement_association!(
-    doc::PortfolioDocument,
-    assoc::RequirementAssociation,
-)
+function add_requirement_association!(doc::PortfolioDocument, assoc::RequirementAssociation)
     requirement_id = assoc.requirement_id
     entity_id = assoc.entity_id
     key = (Int(requirement_id), Int(entity_id))
@@ -284,93 +321,68 @@ end
 # ── writing ──────────────────────────────────────────────────────────────────────
 
 """
-The document as a tree of model objects, ready for a single JSON encoding pass.
+The document as a tree of plain JSON-safe values, ready for a single JSON encoding pass.
 
-`JSON.lower(::Any)` yields a wrapper that iterates properties and skips the unset
-ones, so nesting and optional fields need no handling here. `base_system_file` and
-`time_series_storage_file` are required-but-nullable keys, so they are always present (as JSON
-`null` when absent); `name`/`description`/`data_source`/`financial_data`/`investment_schedule`
-are omitted entirely when unset.
+`base_system_file` and `time_series_storage_file` are required-but-nullable keys, so they are
+always present (as JSON `null` when absent); `name`/`description`/`data_source`/
+`financial_data`/`investment_schedule` are omitted entirely when unset; `ext` is always
+written. `schema_version` comes first, then the remaining keys sorted.
 """
-function document_tree(doc::PortfolioDocument)
+function document_tree(
+    doc::PortfolioDocument;
+    schema_version::AbstractString=READER_VERSION,
+)
     components = Dict{String, Any}()
     for type_name in component_type_names(doc)
         components[type_name] = _bucket(doc.components[type_name])
     end
-    tree = Dict{String, Any}(
-        "aggregation" => doc.aggregation,
-        "components" => components,
-        # Every array goes through `_bucket`, exactly as `system_document.jl`'s SystemDocument tree
-        # does. Handing the structs over raw instead would serialize each one field by field,
-        # including the `additional_properties` passthrough that `_encode` exists to splat --
-        # so a read/write round trip grew an empty `"additional_properties": {}` on every
-        # association row.
-        "supplemental_attributes" => _bucket(doc.supplemental_attributes),
-        "supplemental_attribute_associations" =>
-            _bucket(doc.supplemental_attribute_associations),
-        "requirements_associations" => _bucket(doc.requirements_associations),
-        "time_series_associations" => _bucket(doc.time_series_associations),
-        # Keyed by component id, which is unique across every type.
-        "ext" => Dict(string(id) => extras for (id, extras) in doc.ext),
-        "base_system_file" => doc.base_system_file,
-        "time_series_storage_file" => doc.time_series_storage_file,
-    )
+    tree = Dict{String, Any}()
+    tree["schema_version"] = String(schema_version)
     _put_optional!(tree, "name", doc.name)
     _put_optional!(tree, "description", doc.description)
     _put_optional!(tree, "data_source", doc.data_source)
-    _put_optional!(tree, "financial_data", doc.financial_data)
+    tree["aggregation"] = doc.aggregation
+    _put_optional!(tree, "financial_data", _encode_optional(doc.financial_data))
+    tree["components"] = components
+    # Every array goes through `_bucket`, exactly as `system_document.jl`'s SystemDocument tree
+    # does. Handing the structs over raw instead would serialize each one field by field,
+    # including the `additional_properties` passthrough that `_encode` exists to splat --
+    # so a read/write round trip grew an empty `"additional_properties": {}` on every
+    # association row.
+    tree["supplemental_attributes"] = _bucket(doc.supplemental_attributes)
+    tree["supplemental_attribute_associations"] =
+        _bucket(doc.supplemental_attribute_associations)
+    tree["requirements_associations"] = _bucket(doc.requirements_associations)
     _put_optional!(tree, "investment_schedule", doc.investment_schedule)
-    return tree
+    tree["time_series_associations"] = _bucket(doc.time_series_associations)
+    # Keyed by component id, which is unique across every type.
+    tree["ext"] = Dict(string(id) => extras for (id, extras) in doc.ext)
+    tree["base_system_file"] = doc.base_system_file
+    tree["time_series_storage_file"] = doc.time_series_storage_file
+    return _canonical_tree(tree)
 end
 
-"""
-Write `doc` to `path` as JSON.
-
-`path` names the JSON file only. Neither the base-system sidecar named by `base_system_file`
-nor the HDF5 sidecar named by `time_series_storage_file` is written here — this package handles
-neither base systems nor time series values — so the caller writes them and sets those
-basenames, which keeps the file layout the caller's choice.
-
-Validates first: a document that fails [`validate_document`](@ref) must not reach disk.
-"""
-function write_document(
-    doc::PortfolioDocument,
-    path::AbstractString;
-    pretty::Bool=false,
-    force::Bool=false,
-)
-    validate_document(doc)
-    if isfile(path) && !force
-        throw(
-            InfrastructureCoreOpenAPIModels.DocumentFormatError(
-                "$path already exists; pass force = true to overwrite",
-            ),
-        )
-    end
-    tree = document_tree(doc)
-    open(path, "w") do io
-        if pretty
-            JSON.print(io, tree, 2)
-        else
-            JSON.print(io, tree)
-        end
-        # Trailing newline: POSIX text-file convention, and it is what the Python and
-        # TypeScript writers emit — without it a document written here differs from the same
-        # document written there by exactly one byte.
-        print(io, "\n")
-    end
-    return nothing
-end
+_bundle_name(::PortfolioDocument) = "PortfolioDocument"
 
 # ── reading ──────────────────────────────────────────────────────────────────────
 
 """
 Build a [`PortfolioDocument`](@ref) from already-parsed JSON.
 
-Every `components` key must name a registered model type — an unknown type name errors rather
-than being skipped, since dropping the rows would lose data silently.
+The schema version is checked first ([`check_schema_version`](@ref)); every `components` key
+must name a registered model type — an unknown type name errors rather than being skipped,
+since dropping the rows would lose data silently.
 """
 function portfolio_document_from_json(raw::AbstractDict; source::AbstractString="document")
+    return _portfolio_document_from_json(raw, source, READER_VERSION)
+end
+
+function _portfolio_document_from_json(
+    raw::AbstractDict,
+    source::AbstractString,
+    reader::AbstractString,
+)
+    doc_version = _checked_schema_version(raw, reader)
     financial_data_raw = _optional(raw, "financial_data")
     doc = PortfolioDocument(
         String(_require(raw, "aggregation", source));
@@ -412,15 +424,15 @@ function portfolio_document_from_json(raw::AbstractDict; source::AbstractString=
     )
     append!(
         doc.requirements_associations,
-        _rows(
-            RequirementAssociation,
-            _require(raw, "requirements_associations", source),
-        ),
+        _rows(RequirementAssociation, _require(raw, "requirements_associations", source)),
     )
     # Bulk-loaded above rather than through `add_requirement_association!`, so
     # `requirements_membership` needs its one rebuild pass here.
     for assoc in doc.requirements_associations
-        push!(doc.requirements_membership, (Int(assoc.requirement_id), Int(assoc.entity_id)))
+        push!(
+            doc.requirements_membership,
+            (Int(assoc.requirement_id), Int(assoc.entity_id)),
+        )
     end
     append!(
         doc.time_series_associations,
@@ -434,6 +446,7 @@ function portfolio_document_from_json(raw::AbstractDict; source::AbstractString=
 
     reserve_ids!(doc, _highest_id(doc))
     validate_document(doc)
+    doc.source_schema_version[] = doc_version
     return doc
 end
 
@@ -455,6 +468,20 @@ function read_portfolio_document(path::AbstractString)
             ),
         )
     end
-    raw = JSON.parsefile(path; dicttype=Dict{String, Any})
+    raw = _parse_document_file(path)
     return portfolio_document_from_json(raw; source=path)
+end
+
+"""
+Read the PortfolioDocument at `src` and write it to `dst` stamped with this package's schema
+version. Fails unless `src` is current or upgradable.
+"""
+function upgrade_portfolio_document(
+    src::AbstractString,
+    dst::AbstractString;
+    force::Bool=false,
+)
+    doc = read_portfolio_document(src)
+    write_document(doc, dst; force=force)
+    return nothing
 end

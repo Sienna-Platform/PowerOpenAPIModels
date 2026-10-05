@@ -20,7 +20,7 @@ those packages read and write, not the data model itself.
 - Per-type field tables: the [`docs/`](docs) directory in this package
 - Monorepo README, regeneration, and release process: [the repository root](https://github.com/Sienna-Platform/PowerOpenAPIModels#readme)
 
-Depends on `InfrastructureCoreOpenAPIModels`. The three domain packages
+Depends on `InfrastructureCoreOpenAPIModels` and `InfrastructureTimeSeriesOpenAPIModels`. The three domain packages
 (`PowerOperationsOpenAPIModels`, `PowerInvestmentsOpenAPIModels`, `PowerDynamicsOpenAPIModels`)
 depend on this one.
 
@@ -73,6 +73,44 @@ conversion_factor("Angle", "deg")           # 0.017453292519943295
 ```
 
 `pu` has no conversion factor on purpose: it needs a base, which is what `unit_base` names.
+
+### A whole document
+
+`SystemDocument` is the container a system serializes to: typed component buckets, the
+association rows, and the id counter that keeps references resolvable. Its accessors are not
+exported — reach them qualified, so `get_name` here never collides with a consumer's own.
+
+```julia
+using PowerCoreOpenAPIModels
+const P = PowerCoreOpenAPIModels
+
+doc = P.SystemDocument(; name = "example", frequency = 60.0)
+
+bus_id = P.next_id!(doc)
+P.add_component!(doc, ACBus(;
+    id = bus_id,
+    number = 1,
+    name = "bus1",
+    available = true,
+    bustype = ACBusType("REF"),
+))
+
+P.write_document(doc, "system.json")
+back = P.read_document("system.json")   # validates: ids unique, references resolvable
+```
+
+`read_document` runs `validate_document`, so an unresolved reference or a duplicate id raises
+`DocumentFormatError` rather than being read and silently dropped.
+`read_document` decodes rows on every available thread; start Julia with `--threads=auto` to read
+large documents faster. Component and association
+types are resolved by name through the InfrastructureCore registry, so load the domain
+packages that define a document's types (`PowerOperationsOpenAPIModels` for any operations
+system) before reading it. `PortfolioDocument`, in
+`PowerInvestmentsOpenAPIModels`, is the investment-side counterpart.
+
+The full walkthrough — supplemental attributes, time series associations, `ext`, and the
+accessor list — is in
+[the API documentation](https://sienna-platform.github.io/PowerOpenAPIModels/dev/api/#Documents).
 
 ## Generated code
 

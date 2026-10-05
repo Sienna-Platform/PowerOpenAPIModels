@@ -22,13 +22,13 @@ only what it needs. The dependency chain is acyclic and each package owns one la
 
 | Package | Owns | Depends on |
 | --- | --- | --- |
-| [`InfrastructureCoreOpenAPIModels`](packages/infrastructure_core.md) | Domain-neutral types, the model-type registry, the unit vocabulary, the `APIModel` supertypes | — |
+| [`InfrastructureCoreOpenAPIModels`](packages/infrastructure_core.md) | Domain-neutral types, the model-type registry, the unit vocabulary, the `APIModel` supertypes, `AbstractDocument` and document versioning | — |
 | [`InfrastructureTimeSeriesOpenAPIModels`](packages/infrastructure_timeseries.md) | The six time series association types | InfrastructureCore |
-| [`PowerCoreOpenAPIModels`](packages/power_core.md) | Power types shared across domains: topology, curves, costs, enums | InfrastructureCore |
+| [`PowerCoreOpenAPIModels`](packages/power_core.md) | Power types shared across domains: topology, curves, costs, enums; `SystemDocument` | InfrastructureCore, InfrastructureTimeSeries |
 | [`PowerOperationsOpenAPIModels`](packages/power_operations.md) | Branches, injections, services, outages, market structures | PowerCore |
-| [`PowerInvestmentsOpenAPIModels`](packages/power_investments.md) | Technologies, financial data, policy requirements | PowerCore |
+| [`PowerInvestmentsOpenAPIModels`](packages/power_investments.md) | Technologies, financial data, policy requirements; `PortfolioDocument` | PowerCore, InfrastructureTimeSeries |
 | [`PowerDynamicsOpenAPIModels`](packages/power_dynamics.md) | Dynamic machine, exciter, governor, and inverter models | PowerCore |
-| [`PowerOpenAPIModels`](packages/umbrella.md) | Re-exports all six, plus `SystemDocument` and `PortfolioDocument` | all |
+| [`PowerOpenAPIModels`](packages/umbrella.md) | Re-exports all six | all |
 
 The two `Infrastructure*` packages must never gain a `Power*` dependency; the test suites
 enforce it.
