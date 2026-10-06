@@ -8,8 +8,10 @@ A High Voltage DC line, which must be connected to an ACBus on each end. This mo
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `active_power_flow`: Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `arc`: An Arc defining this line `from` a bus `to` another bus.
-  - `active_power_limits_from`: Minimum and maximum active power flows to the FROM node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `active_power_limits_to`: Minimum and maximum active power flows to the TO node. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `rating`: Transfer rating of the DC line, independent of the converter ratings at each end. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_from`: Converter rating in the `from` bus. Absent means the converter imposes no limit beyond `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_to`: Converter rating in the `to` bus. Absent means the converter imposes no limit beyond `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power_limits_from`: Minimum and maximum reactive power limits to the FROM node. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `reactive_power_limits_to`: Minimum and maximum reactive power limits to the TO node. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `loss`: Loss model coefficients. It accepts a linear model with a constant loss and a proportional loss rate (MW of loss per MW of flow). It also accepts a Piecewise loss, with N segments to specify different proportional losses for different segments.
@@ -22,8 +24,10 @@ Base.@kwdef struct TwoTerminalGenericHVDCLine <: APIModel
     available::Bool
     active_power_flow::Float64
     arc::Int64
-    active_power_limits_from::MinMax
-    active_power_limits_to::MinMax
+    rating::Float64
+    rating_from::Union{Absent, Float64, Nothing} = ABSENT
+    rating_to::Union{Absent, Float64, Nothing} = ABSENT
+    operational_flow_limit::Union{Absent, Nothing, OperationalFlowLimit} = ABSENT
     reactive_power_limits_from::MinMax
     reactive_power_limits_to::MinMax
     loss::Union{Absent, LossCurve, Nothing} = ABSENT
@@ -37,7 +41,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-4c5708037f3c86ddf356.json",
+            resource="https://openapi.invalid/schema/external-792ee008f53ba647574a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -70,20 +74,26 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
         _required(_openapi_object, "arc", "TwoTerminalGenericHVDCLine"),
         false,
     )
-    _openapi_field_active_power_limits_from = _decode(
-        MinMax,
-        _required(
-            _openapi_object,
-            "active_power_limits_from",
-            "TwoTerminalGenericHVDCLine",
-        ),
+    _openapi_field_rating = _decode(
+        Float64,
+        _required(_openapi_object, "rating", "TwoTerminalGenericHVDCLine"),
         false,
     )
-    _openapi_field_active_power_limits_to = _decode(
-        MinMax,
-        _required(_openapi_object, "active_power_limits_to", "TwoTerminalGenericHVDCLine"),
-        false,
-    )
+    _openapi_field_rating_from =
+        haskey(_openapi_object, "rating_from") ?
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_from"], false) :
+        ABSENT
+    _openapi_field_rating_to =
+        haskey(_openapi_object, "rating_to") ?
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_to"], false) :
+        ABSENT
+    _openapi_field_operational_flow_limit =
+        haskey(_openapi_object, "operational_flow_limit") ?
+        _decode(
+            Union{Absent, Nothing, OperationalFlowLimit},
+            _openapi_object["operational_flow_limit"],
+            false,
+        ) : ABSENT
     _openapi_field_reactive_power_limits_from = _decode(
         MinMax,
         _required(
@@ -123,8 +133,10 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
             "available",
             "active_power_flow",
             "arc",
-            "active_power_limits_from",
-            "active_power_limits_to",
+            "rating",
+            "rating_from",
+            "rating_to",
+            "operational_flow_limit",
             "reactive_power_limits_from",
             "reactive_power_limits_to",
             "loss",
@@ -140,8 +152,10 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
         available=_openapi_field_available,
         active_power_flow=_openapi_field_active_power_flow,
         arc=_openapi_field_arc,
-        active_power_limits_from=_openapi_field_active_power_limits_from,
-        active_power_limits_to=_openapi_field_active_power_limits_to,
+        rating=_openapi_field_rating,
+        rating_from=_openapi_field_rating_from,
+        rating_to=_openapi_field_rating_to,
+        operational_flow_limit=_openapi_field_operational_flow_limit,
         reactive_power_limits_from=_openapi_field_reactive_power_limits_from,
         reactive_power_limits_to=_openapi_field_reactive_power_limits_to,
         loss=_openapi_field_loss,
@@ -164,13 +178,15 @@ function _encode_unvalidated(_openapi_value::TwoTerminalGenericHVDCLine)
     )
     _openapi_value.arc isa Absent ||
         (_openapi_output["arc"] = _encode_unvalidated(_openapi_value.arc))
-    _openapi_value.active_power_limits_from isa Absent || (
-        _openapi_output["active_power_limits_from"] =
-            _encode_unvalidated(_openapi_value.active_power_limits_from)
-    )
-    _openapi_value.active_power_limits_to isa Absent || (
-        _openapi_output["active_power_limits_to"] =
-            _encode_unvalidated(_openapi_value.active_power_limits_to)
+    _openapi_value.rating isa Absent ||
+        (_openapi_output["rating"] = _encode_unvalidated(_openapi_value.rating))
+    _openapi_value.rating_from isa Absent ||
+        (_openapi_output["rating_from"] = _encode_unvalidated(_openapi_value.rating_from))
+    _openapi_value.rating_to isa Absent ||
+        (_openapi_output["rating_to"] = _encode_unvalidated(_openapi_value.rating_to))
+    _openapi_value.operational_flow_limit isa Absent || (
+        _openapi_output["operational_flow_limit"] =
+            _encode_unvalidated(_openapi_value.operational_flow_limit)
     )
     _openapi_value.reactive_power_limits_from isa Absent || (
         _openapi_output["reactive_power_limits_from"] =
@@ -199,7 +215,7 @@ end
 _encode(_openapi_value::TwoTerminalGenericHVDCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-4c5708037f3c86ddf356.json",
+        resource="https://openapi.invalid/schema/external-792ee008f53ba647574a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -216,13 +232,15 @@ function _form_fields(_openapi_value::TwoTerminalGenericHVDCLine)
     _openapi_value.active_power_flow isa Absent ||
         push!(_openapi_output, "active_power_flow" => _openapi_value.active_power_flow)
     _openapi_value.arc isa Absent || push!(_openapi_output, "arc" => _openapi_value.arc)
-    _openapi_value.active_power_limits_from isa Absent || push!(
+    _openapi_value.rating isa Absent ||
+        push!(_openapi_output, "rating" => _openapi_value.rating)
+    _openapi_value.rating_from isa Absent ||
+        push!(_openapi_output, "rating_from" => _openapi_value.rating_from)
+    _openapi_value.rating_to isa Absent ||
+        push!(_openapi_output, "rating_to" => _openapi_value.rating_to)
+    _openapi_value.operational_flow_limit isa Absent || push!(
         _openapi_output,
-        "active_power_limits_from" => _openapi_value.active_power_limits_from,
-    )
-    _openapi_value.active_power_limits_to isa Absent || push!(
-        _openapi_output,
-        "active_power_limits_to" => _openapi_value.active_power_limits_to,
+        "operational_flow_limit" => _openapi_value.operational_flow_limit,
     )
     _openapi_value.reactive_power_limits_from isa Absent || push!(
         _openapi_output,

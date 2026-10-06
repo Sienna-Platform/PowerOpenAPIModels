@@ -8,6 +8,36 @@ const PC = PowerCoreOpenAPIModels
 const IC = InfrastructureCoreOpenAPIModels
 const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
 
+# The association writers read only `control_id` and `entity_id`, so this stands in for the
+# Operations-layer VoltageControlAssociation, which this package cannot load.
+struct VoltageControlRow
+    control_id::Int64
+    entity_id::Int64
+end
+
+function voltage_control_document()
+    doc = PC.SystemDocument(; name="voltage control")
+    PC.add_component!(
+        doc,
+        ACBus(;
+            id=1,
+            number=1,
+            name="bus1",
+            available=true,
+            bustype=ACBusType("REF"),
+            base_voltage=138.0,
+        ),
+    )
+    geo_json = GeographicInfoGeoJson(;
+        additional_properties=Dict{String, Any}(
+            "type" => "Point",
+            "coordinates" => [0.0, 0.0],
+        ),
+    )
+    PC.add_supplemental_attribute!(doc, GeographicInfo(; id=2, geo_json=geo_json), 1)
+    return doc
+end
+
 @testset "PowerCoreOpenAPIModels" begin
     @testset "a component round-trips through JSON" begin
         bus = ACBus(;
@@ -56,7 +86,10 @@ const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
     @testset "a tagged wrapper with a primitive branch keeps both checks" begin
         @test decode(ThermalGenerationCostStartUp, 0.0).value === 0.0
         stages = Dict{String, Any}(
-            "startup_stages_type" => "STAGES", "cold" => 3.0, "hot" => 1.0, "warm" => 2.0,
+            "startup_stages_type" => "STAGES",
+            "cold" => 3.0,
+            "hot" => 1.0,
+            "warm" => 2.0,
         )
         @test decode(ThermalGenerationCostStartUp, stages).value isa StartUpStages
         bad = merge(stages, Dict{String, Any}("cold" => "expensive"))
@@ -103,6 +136,26 @@ const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
         @test declared_unit(zone("NATURAL_UNITS"), Val(:peak_active_power)) == "MW"
         @test declared_quantity(zone("NATURAL_UNITS"), Val(:peak_active_power)) ==
               "ActivePower"
+    end
+
+    @testset "voltage control associations" begin
+        doc = voltage_control_document()
+        @test !haskey(PC.document_tree(doc), "voltage_control_associations")
+
+        PC.add_voltage_control_association!(doc, VoltageControlRow(2, 1))
+        @test length(doc.voltage_control_associations) == 1
+        @test (2, 1) in doc.voltage_control_membership
+        @test_throws IC.DocumentFormatError PC.add_voltage_control_association!(
+            doc,
+            VoltageControlRow(2, 1),
+        )
+        @test PC.validate_document(doc) === nothing
+        @test length(PC.document_tree(doc)["voltage_control_associations"]) == 1
+
+        # control_id must name a supplemental attribute, entity_id a component.
+        swapped = voltage_control_document()
+        push!(swapped.voltage_control_associations, VoltageControlRow(1, 2))
+        @test_throws IC.DocumentFormatError PC.validate_document(swapped)
     end
 
     @testset "this package's types are registered under their bare names" begin

@@ -60,7 +60,7 @@ function _decode(::Type{Probabilistic}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e5b804af91a246181db8.json",
+            resource="https://openapi.invalid/schema/external-a58c91cb1d39181808c8.json",
             pointer="",
         ),
         _openapi_raw,
@@ -295,7 +295,7 @@ end
 _encode(_openapi_value::Probabilistic) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-e5b804af91a246181db8.json",
+        resource="https://openapi.invalid/schema/external-a58c91cb1d39181808c8.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

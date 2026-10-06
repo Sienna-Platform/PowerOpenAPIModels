@@ -34,7 +34,7 @@ function _decode(::Type{SynchronousCondenser}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bbeb5c06e8fed240cc2e.json",
+            resource="https://openapi.invalid/schema/external-f25fad8f4f6af9edac0d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -172,7 +172,7 @@ end
 _encode(_openapi_value::SynchronousCondenser) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-bbeb5c06e8fed240cc2e.json",
+        resource="https://openapi.invalid/schema/external-f25fad8f4f6af9edac0d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

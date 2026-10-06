@@ -6,7 +6,7 @@ GE General Governor/Turbine Model. The GeneralGovModel (GGOV1) model is a genera
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
-**`r_select`** | **`Union{Absent,Int64,Nothing}`** | Feedback signal for governor droop | [optional]
+**`rselect`** | **`Int64`** | Feedback signal for governor droop | [required]
 **`fuel_flag`** | **`Int64`** | Flag switch for fuel source characteristic | [required]
 **`r`** | **`Union{Absent,Float64,Nothing}`** | Speed droop parameter | [optional]
 **`tpelec`** | **`Float64`** | Electrical power transducer time constant | [required]

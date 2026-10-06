@@ -1,0 +1,29 @@
+coverage:
+  status:
+    patch:
+      # Each schema release regenerates thousands of lines that the tests reach only
+      # through the hand-written layer, so the generated diff reports without gating.
+      generated:
+        informational: true
+        paths:
+          - "*/src/models/*"
+          - "*/src/units.jl"
+          - "*/src/register.jl"
+          - "InfrastructureCoreOpenAPIModels.jl/src/InfrastructureCoreOpenAPIModels.jl"
+          - "InfrastructureTimeSeriesOpenAPIModels.jl/src/InfrastructureTimeSeriesOpenAPIModels.jl"
+          - "PowerCoreOpenAPIModels.jl/src/PowerCoreOpenAPIModels.jl"
+          - "PowerOperationsOpenAPIModels.jl/src/PowerOperationsOpenAPIModels.jl"
+          - "PowerInvestmentsOpenAPIModels.jl/src/PowerInvestmentsOpenAPIModels.jl"
+          - "PowerDynamicsOpenAPIModels.jl/src/PowerDynamicsOpenAPIModels.jl"
+      hand-written:
+        target: auto
+        paths:
+          - "!*/src/models/*"
+          - "!*/src/units.jl"
+          - "!*/src/register.jl"
+          - "!InfrastructureCoreOpenAPIModels.jl/src/InfrastructureCoreOpenAPIModels.jl"
+          - "!InfrastructureTimeSeriesOpenAPIModels.jl/src/InfrastructureTimeSeriesOpenAPIModels.jl"
+          - "!PowerCoreOpenAPIModels.jl/src/PowerCoreOpenAPIModels.jl"
+          - "!PowerOperationsOpenAPIModels.jl/src/PowerOperationsOpenAPIModels.jl"
+          - "!PowerInvestmentsOpenAPIModels.jl/src/PowerInvestmentsOpenAPIModels.jl"
+          - "!PowerDynamicsOpenAPIModels.jl/src/PowerDynamicsOpenAPIModels.jl"

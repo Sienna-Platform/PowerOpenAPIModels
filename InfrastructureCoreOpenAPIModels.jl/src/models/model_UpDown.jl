@@ -13,7 +13,7 @@ function _decode(::Type{UpDown}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+            resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
             pointer="/\$defs/UpDown",
         ),
         _openapi_raw,
@@ -55,7 +55,7 @@ end
 _encode(_openapi_value::UpDown) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+        resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
         pointer="/\$defs/UpDown",
     ),
     _encode_unvalidated(_openapi_value),

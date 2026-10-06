@@ -23,5 +23,6 @@ Name | Type | Description | Notes
 **`e_sat`** | **`Vector{Float64}`** | Exciter output voltage for saturation factor | [required]
 **`se`** | **`Vector{Float64}`** | Exciter saturation factor at exciter output voltage | [required]
 **`kp`** | **`Float64`** | Potential source gain | [required]
+**`ki`** | **`Float64`** | Current source gain | [required]
 **`kc`** | **`Float64`** | Exciter regulator factor | [required]
 **`v_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference voltage set-point | [optional]

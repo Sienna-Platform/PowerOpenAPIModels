@@ -3,20 +3,18 @@
 
 A High Voltage DC transmission line for modeling DC transmission networks.
 
-This line must be connected to a `DCBus` on each end. It uses a T-Model of the line impedance. This is suitable for operational simulations with a multi-terminal DC network. This line has no independent per-component power base, so its power fields are always natural units.
+This line must be connected to a `DCBus` on each end. It uses a T-Model of the line impedance. This is suitable for operational simulations with a multi-terminal DC network. This line has no independent per-component power base, so its power fields are always natural units. Impedance, voltage, and voltage-droop fields are natural units only: there is no conventional DC base voltage from which to per-unitize them.
 
   - `id`: Unique integer identifier for this component.
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `active_power_flow`: Initial condition of active power flow on the line. Units: MW.
   - `arc`: An `Arc` defining this line `from` a bus `to` another bus.
-  - `parameter_units`: Unit basis for this line's impedance field (r).
-  - `base_current`: Base current for per-unitization of this line's per-unit fields — this DC line per-unitizes against a current base, not a power base. Units: A.
-  - `r`: Total series resistance, split equally on both sides of the shunt capacitance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
-  - `l`: Total series inductance, split equally on both sides of the shunt capacitance. Per-unit on this line's `base_current`. Units: pu.
-  - `c`: Shunt capacitance. Per-unit on this line's `base_current`. Units: pu.
-  - `active_power_limits_from`: Minimum and maximum active power flows to the FROM node. Units: MW.
-  - `active_power_limits_to`: Minimum and maximum active power flows to the TO node. Units: MW.
+  - `base_current`: Base current of the line as recorded by the source data. No field of this component is per-unit on it. Units: A.
+  - `r`: Total series resistance, split equally on both sides of the shunt capacitance. Units: ohm.
+  - `l`: Total series inductance, split equally on both sides of the shunt capacitance. Units: H.
+  - `c`: Shunt capacitance. Units: F.
+  - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction. Absent means no operational limit. Units: MW.
 """
 Base.@kwdef struct TModelHVDCLine <: APIModel
     id::Int64
@@ -24,13 +22,11 @@ Base.@kwdef struct TModelHVDCLine <: APIModel
     available::Bool
     active_power_flow::Float64
     arc::Int64
-    parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
     base_current::Float64
     r::Float64
     l::Float64
     c::Float64
-    active_power_limits_from::MinMax
-    active_power_limits_to::MinMax
+    operational_flow_limit::Union{Absent, Nothing, OperationalFlowLimit} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{TModelHVDCLine}, value) = _decode(TModelHVDCLine, value, true)
@@ -38,7 +34,7 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3ebeabbbbe6abb45db1e.json",
+            resource="https://openapi.invalid/schema/external-d22a537d95adef403347.json",
             pointer="",
         ),
         _openapi_raw,
@@ -59,13 +55,6 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_field_arc =
         _decode(Int64, _required(_openapi_object, "arc", "TModelHVDCLine"), false)
-    _openapi_field_parameter_units =
-        haskey(_openapi_object, "parameter_units") ?
-        _decode(
-            Union{Absent, ImpedanceUnitBasis, Nothing},
-            _openapi_object["parameter_units"],
-            false,
-        ) : ABSENT
     _openapi_field_base_current = _decode(
         Float64,
         _required(_openapi_object, "base_current", "TModelHVDCLine"),
@@ -77,16 +66,13 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
         _decode(Float64, _required(_openapi_object, "l", "TModelHVDCLine"), false)
     _openapi_field_c =
         _decode(Float64, _required(_openapi_object, "c", "TModelHVDCLine"), false)
-    _openapi_field_active_power_limits_from = _decode(
-        MinMax,
-        _required(_openapi_object, "active_power_limits_from", "TModelHVDCLine"),
-        false,
-    )
-    _openapi_field_active_power_limits_to = _decode(
-        MinMax,
-        _required(_openapi_object, "active_power_limits_to", "TModelHVDCLine"),
-        false,
-    )
+    _openapi_field_operational_flow_limit =
+        haskey(_openapi_object, "operational_flow_limit") ?
+        _decode(
+            Union{Absent, Nothing, OperationalFlowLimit},
+            _openapi_object["operational_flow_limit"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -95,13 +81,11 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
             "available",
             "active_power_flow",
             "arc",
-            "parameter_units",
             "base_current",
             "r",
             "l",
             "c",
-            "active_power_limits_from",
-            "active_power_limits_to",
+            "operational_flow_limit",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, false)
@@ -112,13 +96,11 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
         available=_openapi_field_available,
         active_power_flow=_openapi_field_active_power_flow,
         arc=_openapi_field_arc,
-        parameter_units=_openapi_field_parameter_units,
         base_current=_openapi_field_base_current,
         r=_openapi_field_r,
         l=_openapi_field_l,
         c=_openapi_field_c,
-        active_power_limits_from=_openapi_field_active_power_limits_from,
-        active_power_limits_to=_openapi_field_active_power_limits_to,
+        operational_flow_limit=_openapi_field_operational_flow_limit,
         additional_properties=_openapi_additional_properties,
     )
 end
@@ -136,10 +118,6 @@ function _encode_unvalidated(_openapi_value::TModelHVDCLine)
     )
     _openapi_value.arc isa Absent ||
         (_openapi_output["arc"] = _encode_unvalidated(_openapi_value.arc))
-    _openapi_value.parameter_units isa Absent || (
-        _openapi_output["parameter_units"] =
-            _encode_unvalidated(_openapi_value.parameter_units)
-    )
     _openapi_value.base_current isa Absent ||
         (_openapi_output["base_current"] = _encode_unvalidated(_openapi_value.base_current))
     _openapi_value.r isa Absent ||
@@ -148,13 +126,9 @@ function _encode_unvalidated(_openapi_value::TModelHVDCLine)
         (_openapi_output["l"] = _encode_unvalidated(_openapi_value.l))
     _openapi_value.c isa Absent ||
         (_openapi_output["c"] = _encode_unvalidated(_openapi_value.c))
-    _openapi_value.active_power_limits_from isa Absent || (
-        _openapi_output["active_power_limits_from"] =
-            _encode_unvalidated(_openapi_value.active_power_limits_from)
-    )
-    _openapi_value.active_power_limits_to isa Absent || (
-        _openapi_output["active_power_limits_to"] =
-            _encode_unvalidated(_openapi_value.active_power_limits_to)
+    _openapi_value.operational_flow_limit isa Absent || (
+        _openapi_output["operational_flow_limit"] =
+            _encode_unvalidated(_openapi_value.operational_flow_limit)
     )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
@@ -169,7 +143,7 @@ end
 _encode(_openapi_value::TModelHVDCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3ebeabbbbe6abb45db1e.json",
+        resource="https://openapi.invalid/schema/external-d22a537d95adef403347.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -186,20 +160,14 @@ function _form_fields(_openapi_value::TModelHVDCLine)
     _openapi_value.active_power_flow isa Absent ||
         push!(_openapi_output, "active_power_flow" => _openapi_value.active_power_flow)
     _openapi_value.arc isa Absent || push!(_openapi_output, "arc" => _openapi_value.arc)
-    _openapi_value.parameter_units isa Absent ||
-        push!(_openapi_output, "parameter_units" => _openapi_value.parameter_units)
     _openapi_value.base_current isa Absent ||
         push!(_openapi_output, "base_current" => _openapi_value.base_current)
     _openapi_value.r isa Absent || push!(_openapi_output, "r" => _openapi_value.r)
     _openapi_value.l isa Absent || push!(_openapi_output, "l" => _openapi_value.l)
     _openapi_value.c isa Absent || push!(_openapi_output, "c" => _openapi_value.c)
-    _openapi_value.active_power_limits_from isa Absent || push!(
+    _openapi_value.operational_flow_limit isa Absent || push!(
         _openapi_output,
-        "active_power_limits_from" => _openapi_value.active_power_limits_from,
-    )
-    _openapi_value.active_power_limits_to isa Absent || push!(
-        _openapi_output,
-        "active_power_limits_to" => _openapi_value.active_power_limits_to,
+        "operational_flow_limit" => _openapi_value.operational_flow_limit,
     )
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output

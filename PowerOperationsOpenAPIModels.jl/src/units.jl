@@ -102,6 +102,38 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{DiscreteControlledACBranch},
+    ::Val{:operational_flow_limit},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::DiscreteControlledACBranch,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error(
+        "DiscreteControlledACBranch.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::DiscreteControlledACBranch,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error(
+        "DiscreteControlledACBranch.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{DiscreteControlledACBranch},
     ::Val{:active_power_flow},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -437,6 +469,94 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
         return "ReactivePower"
     end
     error("MotorLoad.reactive_power: no unit declared for power_units=$(o.power_units)")
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{VoltageDroopControl},
+    ::Val{:deadband_reactive_power},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{VoltageDroopControl},
+    ::Val{:deadband_reactive_power},
+) = "MVAr"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{VoltageDroopControl},
+    ::Val{:deadband_reactive_power},
+) = "ReactivePower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{VoltageDroopControl},
+    ::Val{:voltage_limits},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::VoltageDroopControl,
+    ::Val{:voltage_limits},
+)
+    if string(o.voltage_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.voltage_units) == "NATURAL_UNITS"
+        return "kV"
+    end
+    error(
+        "VoltageDroopControl.voltage_limits: no unit declared for voltage_units=$(o.voltage_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::VoltageDroopControl,
+    ::Val{:voltage_limits},
+)
+    if string(o.voltage_units) == "COMPONENT_BASE"
+        return "Voltage"
+    end
+    if string(o.voltage_units) == "NATURAL_UNITS"
+        return "Voltage"
+    end
+    error(
+        "VoltageDroopControl.voltage_limits: no unit declared for voltage_units=$(o.voltage_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{VoltageDroopControl},
+    ::Val{:reactive_power_limits},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{VoltageDroopControl},
+    ::Val{:reactive_power_limits},
+) = "MVAr"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{VoltageDroopControl},
+    ::Val{:reactive_power_limits},
+) = "ReactivePower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{VoltageDroopControl},
+    ::Val{:deadband_voltage_limits},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::VoltageDroopControl,
+    ::Val{:deadband_voltage_limits},
+)
+    if string(o.voltage_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.voltage_units) == "NATURAL_UNITS"
+        return "kV"
+    end
+    error(
+        "VoltageDroopControl.deadband_voltage_limits: no unit declared for voltage_units=$(o.voltage_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::VoltageDroopControl,
+    ::Val{:deadband_voltage_limits},
+)
+    if string(o.voltage_units) == "COMPONENT_BASE"
+        return "Voltage"
+    end
+    if string(o.voltage_units) == "NATURAL_UNITS"
+        return "Voltage"
+    end
+    error(
+        "VoltageDroopControl.deadband_voltage_limits: no unit declared for voltage_units=$(o.voltage_units)",
+    )
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{HydroDispatch},
@@ -1136,6 +1256,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{ThermalStandard},
+    ::Val{:switching_times},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ThermalStandard},
+    ::Val{:switching_times},
+) = "min"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ThermalStandard},
+    ::Val{:switching_times},
+) = "OperationalDuration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ThermalStandard},
     ::Val{:active_power},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -1336,54 +1468,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
-    ::Val{:ac_setpoint},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::InterconnectingConverter,
-    ::Val{:ac_setpoint},
-)
-    if string(o.ac_control) == "AC_REACTIVE_POWER"
-        return "1"
-    end
-    if string(o.ac_control) == "AC_VOLTAGE"
-        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "InterconnectingConverter.ac_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)",
-        )
-    end
-    error(
-        "InterconnectingConverter.ac_setpoint: no unit declared for ac_control=$(o.ac_control)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::InterconnectingConverter,
-    ::Val{:ac_setpoint},
-)
-    if string(o.ac_control) == "AC_REACTIVE_POWER"
-        return "PowerFactor"
-    end
-    if string(o.ac_control) == "AC_VOLTAGE"
-        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "InterconnectingConverter.ac_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)",
-        )
-    end
-    error(
-        "InterconnectingConverter.ac_setpoint: no unit declared for ac_control=$(o.ac_control)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{InterconnectingConverter},
     ::Val{:rating},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -1416,74 +1500,16 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
-    ::Val{:dc_setpoint},
+    ::Val{:dc_voltage_setpoint},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::InterconnectingConverter,
-    ::Val{:dc_setpoint},
-)
-    if string(o.dc_control) == "DC_VOLTAGE_DROOP"
-        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "InterconnectingConverter.dc_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)",
-        )
-    end
-    if string(o.dc_control) == "DC_POWER"
-        return "MW"
-    end
-    if string(o.dc_control) == "DC_VOLTAGE"
-        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "InterconnectingConverter.dc_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)",
-        )
-    end
-    error(
-        "InterconnectingConverter.dc_setpoint: no unit declared for dc_control=$(o.dc_control)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::InterconnectingConverter,
-    ::Val{:dc_setpoint},
-)
-    if string(o.dc_control) == "DC_VOLTAGE_DROOP"
-        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "InterconnectingConverter.dc_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)",
-        )
-    end
-    if string(o.dc_control) == "DC_POWER"
-        return "ActivePower"
-    end
-    if string(o.dc_control) == "DC_VOLTAGE"
-        if string(o.voltage_setpoint_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.voltage_setpoint_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "InterconnectingConverter.dc_setpoint: no unit declared for voltage_setpoint_units=$(o.voltage_setpoint_units)",
-        )
-    end
-    error(
-        "InterconnectingConverter.dc_setpoint: no unit declared for dc_control=$(o.dc_control)",
-    )
-end
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{InterconnectingConverter},
+    ::Val{:dc_voltage_setpoint},
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{InterconnectingConverter},
+    ::Val{:dc_voltage_setpoint},
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
     ::Val{:dc_voltage_droop},
@@ -1491,11 +1517,11 @@ InfrastructureCoreOpenAPIModels.has_declared_unit(
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{InterconnectingConverter},
     ::Val{:dc_voltage_droop},
-) = "pu"
+) = "kV/MW"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{InterconnectingConverter},
     ::Val{:dc_voltage_droop},
-) = "Resistance"
+) = "VoltagePerPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
     ::Val{:active_power},
@@ -1530,16 +1556,16 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
-    ::Val{:rmpct},
+    ::Val{:ac_voltage_setpoint},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{InterconnectingConverter},
-    ::Val{:rmpct},
-) = "1"
+    ::Val{:ac_voltage_setpoint},
+) = "kV"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{InterconnectingConverter},
-    ::Val{:rmpct},
-) = "Fraction"
+    ::Val{:ac_voltage_setpoint},
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
     ::Val{:reactive_power_limits},
@@ -1586,12 +1612,44 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "CurrentFlow"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
+    ::Val{:dc_power_setpoint},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::InterconnectingConverter,
+    ::Val{:dc_power_setpoint},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error(
+        "InterconnectingConverter.dc_power_setpoint: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::InterconnectingConverter,
+    ::Val{:dc_power_setpoint},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error(
+        "InterconnectingConverter.dc_power_setpoint: no unit declared for power_units=$(o.power_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{InterconnectingConverter},
     ::Val{:voltage_limits},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{InterconnectingConverter},
     ::Val{:voltage_limits},
-) = "pu"
+) = "kV"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{InterconnectingConverter},
     ::Val{:voltage_limits},
@@ -1640,6 +1698,18 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{InterconnectingConverter},
     ::Val{:max_dc_current},
 ) = "CurrentFlow"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{InterconnectingConverter},
+    ::Val{:power_factor_setpoint},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{InterconnectingConverter},
+    ::Val{:power_factor_setpoint},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{InterconnectingConverter},
+    ::Val{:power_factor_setpoint},
+) = "PowerFactor"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
     ::Val{:power_factor_weighting_fraction},
@@ -1901,31 +1971,24 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     end
     error("HydroTurbine.reactive_power: no unit declared for power_units=$(o.power_units)")
 end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TModelHVDCLine},
+    ::Val{:active_power_flow},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TModelHVDCLine},
+    ::Val{:active_power_flow},
+) = "MW"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TModelHVDCLine},
+    ::Val{:active_power_flow},
+) = "ActivePower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{TModelHVDCLine}, ::Val{:c}) = true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{TModelHVDCLine}, ::Val{:c}) = "pu"
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{TModelHVDCLine}, ::Val{:c}) = "F"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TModelHVDCLine},
     ::Val{:c},
-) = "Susceptance"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{TModelHVDCLine}, ::Val{:r}) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::TModelHVDCLine, ::Val{:r})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error("TModelHVDCLine.r: no unit declared for parameter_units=$(o.parameter_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::TModelHVDCLine, ::Val{:r})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Resistance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Resistance"
-    end
-    error("TModelHVDCLine.r: no unit declared for parameter_units=$(o.parameter_units)")
-end
+) = "Capacitance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TModelHVDCLine},
     ::Val{:base_current},
@@ -1940,46 +2003,28 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "CurrentFlow"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TModelHVDCLine},
-    ::Val{:active_power_limits_to},
+    ::Val{:operational_flow_limit},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{TModelHVDCLine},
-    ::Val{:active_power_limits_to},
+    ::Val{:operational_flow_limit},
 ) = "MW"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TModelHVDCLine},
-    ::Val{:active_power_limits_to},
+    ::Val{:operational_flow_limit},
 ) = "ActivePower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{TModelHVDCLine}, ::Val{:r}) = true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{TModelHVDCLine}, ::Val{:r}) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TModelHVDCLine},
+    ::Val{:r},
+) = "Resistance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{TModelHVDCLine}, ::Val{:l}) = true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{TModelHVDCLine}, ::Val{:l}) = "pu"
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{TModelHVDCLine}, ::Val{:l}) = "H"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TModelHVDCLine},
     ::Val{:l},
-) = "Reactance"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TModelHVDCLine},
-    ::Val{:active_power_flow},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{TModelHVDCLine},
-    ::Val{:active_power_flow},
-) = "MW"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{TModelHVDCLine},
-    ::Val{:active_power_flow},
-) = "ActivePower"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TModelHVDCLine},
-    ::Val{:active_power_limits_from},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{TModelHVDCLine},
-    ::Val{:active_power_limits_from},
-) = "MW"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{TModelHVDCLine},
-    ::Val{:active_power_limits_from},
-) = "ActivePower"
+) = "Inductance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{FACTSControlDevice},
     ::Val{:base_power},
@@ -2706,6 +2751,38 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TransformerCircuit},
+    ::Val{:controlled_reactive_power_flow_limits},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TransformerCircuit,
+    ::Val{:controlled_reactive_power_flow_limits},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MVAr"
+    end
+    error(
+        "TransformerCircuit.controlled_reactive_power_flow_limits: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TransformerCircuit,
+    ::Val{:controlled_reactive_power_flow_limits},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ReactivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ReactivePower"
+    end
+    error(
+        "TransformerCircuit.controlled_reactive_power_flow_limits: no unit declared for power_units=$(o.power_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TransformerCircuit},
     ::Val{:rating},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -2774,98 +2851,6 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(o::TransformerCircuit
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TransformerCircuit},
-    ::Val{:controlled_quantity_limits},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TransformerCircuit,
-    ::Val{:controlled_quantity_limits},
-)
-    if string(o.control_objective) == "FIXED"
-        return "pu"
-    end
-    if string(o.control_objective) == "UNDEFINED"
-        return "pu"
-    end
-    if string(o.control_objective) == "ASYMMETRIC_ACTIVE_POWER_FLOW_DISABLED"
-        return "MW"
-    end
-    if string(o.control_objective) == "ASYMMETRIC_ACTIVE_POWER_FLOW"
-        return "MW"
-    end
-    if string(o.control_objective) == "REACTIVE_POWER_FLOW_DISABLED"
-        return "MVAr"
-    end
-    if string(o.control_objective) == "ACTIVE_POWER_FLOW_DISABLED"
-        return "MW"
-    end
-    if string(o.control_objective) == "CONTROL_OF_DC_LINE_DISABLED"
-        return "MW"
-    end
-    if string(o.control_objective) == "ACTIVE_POWER_FLOW"
-        return "MW"
-    end
-    if string(o.control_objective) == "REACTIVE_POWER_FLOW"
-        return "MVAr"
-    end
-    if string(o.control_objective) == "VOLTAGE"
-        return "pu"
-    end
-    if string(o.control_objective) == "CONTROL_OF_DC_LINE"
-        return "MW"
-    end
-    if string(o.control_objective) == "VOLTAGE_DISABLED"
-        return "pu"
-    end
-    error(
-        "TransformerCircuit.controlled_quantity_limits: no unit declared for control_objective=$(o.control_objective)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TransformerCircuit,
-    ::Val{:controlled_quantity_limits},
-)
-    if string(o.control_objective) == "FIXED"
-        return "Voltage"
-    end
-    if string(o.control_objective) == "UNDEFINED"
-        return "Voltage"
-    end
-    if string(o.control_objective) == "ASYMMETRIC_ACTIVE_POWER_FLOW_DISABLED"
-        return "ActivePower"
-    end
-    if string(o.control_objective) == "ASYMMETRIC_ACTIVE_POWER_FLOW"
-        return "ActivePower"
-    end
-    if string(o.control_objective) == "REACTIVE_POWER_FLOW_DISABLED"
-        return "ReactivePower"
-    end
-    if string(o.control_objective) == "ACTIVE_POWER_FLOW_DISABLED"
-        return "ActivePower"
-    end
-    if string(o.control_objective) == "CONTROL_OF_DC_LINE_DISABLED"
-        return "ActivePower"
-    end
-    if string(o.control_objective) == "ACTIVE_POWER_FLOW"
-        return "ActivePower"
-    end
-    if string(o.control_objective) == "REACTIVE_POWER_FLOW"
-        return "ReactivePower"
-    end
-    if string(o.control_objective) == "VOLTAGE"
-        return "Voltage"
-    end
-    if string(o.control_objective) == "CONTROL_OF_DC_LINE"
-        return "ActivePower"
-    end
-    if string(o.control_objective) == "VOLTAGE_DISABLED"
-        return "Voltage"
-    end
-    error(
-        "TransformerCircuit.controlled_quantity_limits: no unit declared for control_objective=$(o.control_objective)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TransformerCircuit},
     ::Val{:rating_c},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -2920,6 +2905,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     end
     error("TransformerCircuit.rating_b: no unit declared for power_units=$(o.power_units)")
 end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:controlled_voltage_limits},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:controlled_voltage_limits},
+) = "pu"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TransformerCircuit},
+    ::Val{:controlled_voltage_limits},
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TransformerCircuit},
     ::Val{:reactive_power_flow},
@@ -2966,98 +2963,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TransformerCircuit},
-    ::Val{:control_limits},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TransformerCircuit,
-    ::Val{:control_limits},
-)
-    if string(o.control_objective) == "FIXED"
-        return "1"
-    end
-    if string(o.control_objective) == "UNDEFINED"
-        return "1"
-    end
-    if string(o.control_objective) == "ASYMMETRIC_ACTIVE_POWER_FLOW_DISABLED"
-        return "rad"
-    end
-    if string(o.control_objective) == "ASYMMETRIC_ACTIVE_POWER_FLOW"
-        return "rad"
-    end
-    if string(o.control_objective) == "REACTIVE_POWER_FLOW_DISABLED"
-        return "1"
-    end
-    if string(o.control_objective) == "ACTIVE_POWER_FLOW_DISABLED"
-        return "rad"
-    end
-    if string(o.control_objective) == "CONTROL_OF_DC_LINE_DISABLED"
-        return "1"
-    end
-    if string(o.control_objective) == "ACTIVE_POWER_FLOW"
-        return "rad"
-    end
-    if string(o.control_objective) == "REACTIVE_POWER_FLOW"
-        return "1"
-    end
-    if string(o.control_objective) == "VOLTAGE"
-        return "1"
-    end
-    if string(o.control_objective) == "CONTROL_OF_DC_LINE"
-        return "1"
-    end
-    if string(o.control_objective) == "VOLTAGE_DISABLED"
-        return "1"
-    end
-    error(
-        "TransformerCircuit.control_limits: no unit declared for control_objective=$(o.control_objective)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TransformerCircuit,
-    ::Val{:control_limits},
-)
-    if string(o.control_objective) == "FIXED"
-        return "Dimensionless"
-    end
-    if string(o.control_objective) == "UNDEFINED"
-        return "Dimensionless"
-    end
-    if string(o.control_objective) == "ASYMMETRIC_ACTIVE_POWER_FLOW_DISABLED"
-        return "Angle"
-    end
-    if string(o.control_objective) == "ASYMMETRIC_ACTIVE_POWER_FLOW"
-        return "Angle"
-    end
-    if string(o.control_objective) == "REACTIVE_POWER_FLOW_DISABLED"
-        return "Dimensionless"
-    end
-    if string(o.control_objective) == "ACTIVE_POWER_FLOW_DISABLED"
-        return "Angle"
-    end
-    if string(o.control_objective) == "CONTROL_OF_DC_LINE_DISABLED"
-        return "Dimensionless"
-    end
-    if string(o.control_objective) == "ACTIVE_POWER_FLOW"
-        return "Angle"
-    end
-    if string(o.control_objective) == "REACTIVE_POWER_FLOW"
-        return "Dimensionless"
-    end
-    if string(o.control_objective) == "VOLTAGE"
-        return "Dimensionless"
-    end
-    if string(o.control_objective) == "CONTROL_OF_DC_LINE"
-        return "Dimensionless"
-    end
-    if string(o.control_objective) == "VOLTAGE_DISABLED"
-        return "Dimensionless"
-    end
-    error(
-        "TransformerCircuit.control_limits: no unit declared for control_objective=$(o.control_objective)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TransformerCircuit},
     ::Val{:alpha},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
@@ -3068,6 +2973,82 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TransformerCircuit},
     ::Val{:alpha},
 ) = "Angle"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:operational_flow_limit},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TransformerCircuit,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error(
+        "TransformerCircuit.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TransformerCircuit,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error(
+        "TransformerCircuit.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:tap_ratio_limits},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:tap_ratio_limits},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TransformerCircuit},
+    ::Val{:tap_ratio_limits},
+) = "Dimensionless"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:controlled_active_power_flow_limits},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TransformerCircuit,
+    ::Val{:controlled_active_power_flow_limits},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error(
+        "TransformerCircuit.controlled_active_power_flow_limits: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TransformerCircuit,
+    ::Val{:controlled_active_power_flow_limits},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error(
+        "TransformerCircuit.controlled_active_power_flow_limits: no unit declared for power_units=$(o.power_units)",
+    )
+end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TransformerCircuit},
     ::Val{:active_power_flow},
@@ -3100,6 +3081,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
         "TransformerCircuit.active_power_flow: no unit declared for power_units=$(o.power_units)",
     )
 end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:phase_angle_limits},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TransformerCircuit},
+    ::Val{:phase_angle_limits},
+) = "rad"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TransformerCircuit},
+    ::Val{:phase_angle_limits},
+) = "Angle"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TransformerCircuit},
     ::Val{:base_voltage_secondary},
@@ -3310,11 +3303,75 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalGenericHVDCLine},
-    ::Val{:active_power_limits_to},
+    ::Val{:rating},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
     o::TwoTerminalGenericHVDCLine,
-    ::Val{:active_power_limits_to},
+    ::Val{:rating},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MVA"
+    end
+    error(
+        "TwoTerminalGenericHVDCLine.rating: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TwoTerminalGenericHVDCLine,
+    ::Val{:rating},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ApparentPower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ApparentPower"
+    end
+    error(
+        "TwoTerminalGenericHVDCLine.rating: no unit declared for power_units=$(o.power_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalGenericHVDCLine},
+    ::Val{:rating_from},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TwoTerminalGenericHVDCLine,
+    ::Val{:rating_from},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MVA"
+    end
+    error(
+        "TwoTerminalGenericHVDCLine.rating_from: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TwoTerminalGenericHVDCLine,
+    ::Val{:rating_from},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ApparentPower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ApparentPower"
+    end
+    error(
+        "TwoTerminalGenericHVDCLine.rating_from: no unit declared for power_units=$(o.power_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalGenericHVDCLine},
+    ::Val{:operational_flow_limit},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TwoTerminalGenericHVDCLine,
+    ::Val{:operational_flow_limit},
 )
     if string(o.power_units) == "COMPONENT_BASE"
         return "pu"
@@ -3323,12 +3380,12 @@ function InfrastructureCoreOpenAPIModels.declared_unit(
         return "MW"
     end
     error(
-        "TwoTerminalGenericHVDCLine.active_power_limits_to: no unit declared for power_units=$(o.power_units)",
+        "TwoTerminalGenericHVDCLine.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
     )
 end
 function InfrastructureCoreOpenAPIModels.declared_quantity(
     o::TwoTerminalGenericHVDCLine,
-    ::Val{:active_power_limits_to},
+    ::Val{:operational_flow_limit},
 )
     if string(o.power_units) == "COMPONENT_BASE"
         return "ActivePower"
@@ -3337,7 +3394,7 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
         return "ActivePower"
     end
     error(
-        "TwoTerminalGenericHVDCLine.active_power_limits_to: no unit declared for power_units=$(o.power_units)",
+        "TwoTerminalGenericHVDCLine.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
     )
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
@@ -3374,34 +3431,34 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalGenericHVDCLine},
-    ::Val{:active_power_limits_from},
+    ::Val{:rating_to},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
     o::TwoTerminalGenericHVDCLine,
-    ::Val{:active_power_limits_from},
+    ::Val{:rating_to},
 )
     if string(o.power_units) == "COMPONENT_BASE"
         return "pu"
     end
     if string(o.power_units) == "NATURAL_UNITS"
-        return "MW"
+        return "MVA"
     end
     error(
-        "TwoTerminalGenericHVDCLine.active_power_limits_from: no unit declared for power_units=$(o.power_units)",
+        "TwoTerminalGenericHVDCLine.rating_to: no unit declared for power_units=$(o.power_units)",
     )
 end
 function InfrastructureCoreOpenAPIModels.declared_quantity(
     o::TwoTerminalGenericHVDCLine,
-    ::Val{:active_power_limits_from},
+    ::Val{:rating_to},
 )
     if string(o.power_units) == "COMPONENT_BASE"
-        return "ActivePower"
+        return "ApparentPower"
     end
     if string(o.power_units) == "NATURAL_UNITS"
-        return "ActivePower"
+        return "ApparentPower"
     end
     error(
-        "TwoTerminalGenericHVDCLine.active_power_limits_from: no unit declared for power_units=$(o.power_units)",
+        "TwoTerminalGenericHVDCLine.rating_to: no unit declared for power_units=$(o.power_units)",
     )
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
@@ -3506,52 +3563,16 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
-    ::Val{:ac_setpoint_to},
+    ::Val{:power_factor_setpoint_from},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalVSCLine,
-    ::Val{:ac_setpoint_to},
-)
-    if string(o.ac_control_to) == "AC_REACTIVE_POWER"
-        return "1"
-    end
-    if string(o.ac_control_to) == "AC_VOLTAGE"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "TwoTerminalVSCLine.ac_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    error(
-        "TwoTerminalVSCLine.ac_setpoint_to: no unit declared for ac_control_to=$(o.ac_control_to)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalVSCLine,
-    ::Val{:ac_setpoint_to},
-)
-    if string(o.ac_control_to) == "AC_REACTIVE_POWER"
-        return "PowerFactor"
-    end
-    if string(o.ac_control_to) == "AC_VOLTAGE"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "TwoTerminalVSCLine.ac_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    error(
-        "TwoTerminalVSCLine.ac_setpoint_to: no unit declared for ac_control_to=$(o.ac_control_to)",
-    )
-end
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:power_factor_setpoint_from},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:power_factor_setpoint_from},
+) = "PowerFactor"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:max_dc_current_from},
@@ -3622,48 +3643,28 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
-    ::Val{:rmpct_from},
+    ::Val{:ac_voltage_setpoint_from},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{TwoTerminalVSCLine},
-    ::Val{:rmpct_from},
-) = "1"
+    ::Val{:ac_voltage_setpoint_from},
+) = "kV"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TwoTerminalVSCLine},
-    ::Val{:rmpct_from},
-) = "Fraction"
+    ::Val{:ac_voltage_setpoint_from},
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:voltage_limits_from},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalVSCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalVSCLine},
     ::Val{:voltage_limits_from},
-)
-    if string(o.voltage_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.voltage_units) == "NATURAL_UNITS"
-        return "kV"
-    end
-    error(
-        "TwoTerminalVSCLine.voltage_limits_from: no unit declared for voltage_units=$(o.voltage_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalVSCLine,
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalVSCLine},
     ::Val{:voltage_limits_from},
-)
-    if string(o.voltage_units) == "COMPONENT_BASE"
-        return "Voltage"
-    end
-    if string(o.voltage_units) == "NATURAL_UNITS"
-        return "Voltage"
-    end
-    error(
-        "TwoTerminalVSCLine.voltage_limits_from: no unit declared for voltage_units=$(o.voltage_units)",
-    )
-end
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:rating_from},
@@ -3707,18 +3708,6 @@ InfrastructureCoreOpenAPIModels.declared_unit(
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TwoTerminalVSCLine},
     ::Val{:power_factor_weighting_fraction_from},
-) = "Fraction"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:rmpct_to},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:rmpct_to},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:rmpct_to},
 ) = "Fraction"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
@@ -3754,86 +3743,6 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
-    ::Val{:active_power_limits_to},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalVSCLine,
-    ::Val{:active_power_limits_to},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MW"
-    end
-    error(
-        "TwoTerminalVSCLine.active_power_limits_to: no unit declared for power_units=$(o.power_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalVSCLine,
-    ::Val{:active_power_limits_to},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ActivePower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ActivePower"
-    end
-    error(
-        "TwoTerminalVSCLine.active_power_limits_to: no unit declared for power_units=$(o.power_units)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:ac_setpoint_from},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalVSCLine,
-    ::Val{:ac_setpoint_from},
-)
-    if string(o.ac_control_from) == "AC_REACTIVE_POWER"
-        return "1"
-    end
-    if string(o.ac_control_from) == "AC_VOLTAGE"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "TwoTerminalVSCLine.ac_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    error(
-        "TwoTerminalVSCLine.ac_setpoint_from: no unit declared for ac_control_from=$(o.ac_control_from)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalVSCLine,
-    ::Val{:ac_setpoint_from},
-)
-    if string(o.ac_control_from) == "AC_REACTIVE_POWER"
-        return "PowerFactor"
-    end
-    if string(o.ac_control_from) == "AC_VOLTAGE"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "TwoTerminalVSCLine.ac_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    error(
-        "TwoTerminalVSCLine.ac_setpoint_from: no unit declared for ac_control_from=$(o.ac_control_from)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalVSCLine},
     ::Val{:rated_ac_voltage_from},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
@@ -3846,72 +3755,34 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
-    ::Val{:dc_setpoint_to},
+    ::Val{:dc_power_setpoint_to},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
     o::TwoTerminalVSCLine,
-    ::Val{:dc_setpoint_to},
+    ::Val{:dc_power_setpoint_to},
 )
-    if string(o.dc_control_to) == "DC_VOLTAGE_DROOP"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
     end
-    if string(o.dc_control_to) == "DC_POWER"
+    if string(o.power_units) == "NATURAL_UNITS"
         return "MW"
     end
-    if string(o.dc_control_to) == "DC_VOLTAGE"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
     error(
-        "TwoTerminalVSCLine.dc_setpoint_to: no unit declared for dc_control_to=$(o.dc_control_to)",
+        "TwoTerminalVSCLine.dc_power_setpoint_to: no unit declared for power_units=$(o.power_units)",
     )
 end
 function InfrastructureCoreOpenAPIModels.declared_quantity(
     o::TwoTerminalVSCLine,
-    ::Val{:dc_setpoint_to},
+    ::Val{:dc_power_setpoint_to},
 )
-    if string(o.dc_control_to) == "DC_VOLTAGE_DROOP"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    if string(o.dc_control_to) == "DC_POWER"
+    if string(o.power_units) == "COMPONENT_BASE"
         return "ActivePower"
     end
-    if string(o.dc_control_to) == "DC_VOLTAGE"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "TwoTerminalVSCLine.dc_setpoint_to: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
     end
     error(
-        "TwoTerminalVSCLine.dc_setpoint_to: no unit declared for dc_control_to=$(o.dc_control_to)",
+        "TwoTerminalVSCLine.dc_power_setpoint_to: no unit declared for power_units=$(o.power_units)",
     )
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
@@ -3928,36 +3799,16 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "Fraction"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
-    ::Val{:active_power_limits_from},
+    ::Val{:dc_voltage_setpoint_to},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalVSCLine,
-    ::Val{:active_power_limits_from},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MW"
-    end
-    error(
-        "TwoTerminalVSCLine.active_power_limits_from: no unit declared for power_units=$(o.power_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalVSCLine,
-    ::Val{:active_power_limits_from},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ActivePower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ActivePower"
-    end
-    error(
-        "TwoTerminalVSCLine.active_power_limits_from: no unit declared for power_units=$(o.power_units)",
-    )
-end
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:dc_voltage_setpoint_to},
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:dc_voltage_setpoint_to},
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:rating},
@@ -3985,76 +3836,6 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
         return "ApparentPower"
     end
     error("TwoTerminalVSCLine.rating: no unit declared for power_units=$(o.power_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:dc_setpoint_from},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalVSCLine,
-    ::Val{:dc_setpoint_from},
-)
-    if string(o.dc_control_from) == "DC_VOLTAGE_DROOP"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    if string(o.dc_control_from) == "DC_POWER"
-        return "MW"
-    end
-    if string(o.dc_control_from) == "DC_VOLTAGE"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "pu"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "kV"
-        end
-        error(
-            "TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    error(
-        "TwoTerminalVSCLine.dc_setpoint_from: no unit declared for dc_control_from=$(o.dc_control_from)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalVSCLine,
-    ::Val{:dc_setpoint_from},
-)
-    if string(o.dc_control_from) == "DC_VOLTAGE_DROOP"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    if string(o.dc_control_from) == "DC_POWER"
-        return "ActivePower"
-    end
-    if string(o.dc_control_from) == "DC_VOLTAGE"
-        if string(o.setpoint_voltage_units) == "COMPONENT_BASE"
-            return "Voltage"
-        end
-        if string(o.setpoint_voltage_units) == "NATURAL_UNITS"
-            return "Voltage"
-        end
-        error(
-            "TwoTerminalVSCLine.dc_setpoint_from: no unit declared for setpoint_voltage_units=$(o.setpoint_voltage_units)",
-        )
-    end
-    error(
-        "TwoTerminalVSCLine.dc_setpoint_from: no unit declared for dc_control_from=$(o.dc_control_from)",
-    )
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
@@ -4070,32 +3851,41 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:g}) =
     true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::TwoTerminalVSCLine, ::Val{:g})
-    if string(o.admittance_units) == "COMPONENT_BASE"
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{TwoTerminalVSCLine}, ::Val{:g}) = "S"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:g},
+) = "Conductance"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:operational_flow_limit},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TwoTerminalVSCLine,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
         return "pu"
     end
-    if string(o.admittance_units) == "COMPONENT_MVAR"
+    if string(o.power_units) == "NATURAL_UNITS"
         return "MW"
     end
-    if string(o.admittance_units) == "NATURAL_UNITS"
-        return "S"
-    end
     error(
-        "TwoTerminalVSCLine.g: no unit declared for admittance_units=$(o.admittance_units)",
+        "TwoTerminalVSCLine.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
     )
 end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::TwoTerminalVSCLine, ::Val{:g})
-    if string(o.admittance_units) == "COMPONENT_BASE"
-        return "Conductance"
-    end
-    if string(o.admittance_units) == "COMPONENT_MVAR"
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TwoTerminalVSCLine,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
         return "ActivePower"
     end
-    if string(o.admittance_units) == "NATURAL_UNITS"
-        return "Conductance"
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
     end
     error(
-        "TwoTerminalVSCLine.g: no unit declared for admittance_units=$(o.admittance_units)",
+        "TwoTerminalVSCLine.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
     )
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
@@ -4137,11 +3927,11 @@ InfrastructureCoreOpenAPIModels.has_declared_unit(
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:dc_voltage_droop_to},
-) = "pu"
+) = "kV/MW"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TwoTerminalVSCLine},
     ::Val{:dc_voltage_droop_to},
-) = "Resistance"
+) = "VoltagePerPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:dc_voltage_droop_from},
@@ -4149,11 +3939,11 @@ InfrastructureCoreOpenAPIModels.has_declared_unit(
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:dc_voltage_droop_from},
-) = "pu"
+) = "kV/MW"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TwoTerminalVSCLine},
     ::Val{:dc_voltage_droop_from},
-) = "Resistance"
+) = "VoltagePerPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:reactive_power_from},
@@ -4188,6 +3978,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
+    ::Val{:ac_voltage_setpoint_to},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:ac_voltage_setpoint_to},
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:ac_voltage_setpoint_to},
+) = "Voltage"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalVSCLine},
     ::Val{:rated_ac_voltage_to},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
@@ -4202,34 +4004,26 @@ InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:voltage_limits_to},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalVSCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalVSCLine},
     ::Val{:voltage_limits_to},
-)
-    if string(o.voltage_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.voltage_units) == "NATURAL_UNITS"
-        return "kV"
-    end
-    error(
-        "TwoTerminalVSCLine.voltage_limits_to: no unit declared for voltage_units=$(o.voltage_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalVSCLine,
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalVSCLine},
     ::Val{:voltage_limits_to},
-)
-    if string(o.voltage_units) == "COMPONENT_BASE"
-        return "Voltage"
-    end
-    if string(o.voltage_units) == "NATURAL_UNITS"
-        return "Voltage"
-    end
-    error(
-        "TwoTerminalVSCLine.voltage_limits_to: no unit declared for voltage_units=$(o.voltage_units)",
-    )
-end
+) = "Voltage"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:dc_voltage_setpoint_from},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:dc_voltage_setpoint_from},
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:dc_voltage_setpoint_from},
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:dc_current},
@@ -4242,6 +4036,38 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TwoTerminalVSCLine},
     ::Val{:dc_current},
 ) = "CurrentFlow"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:dc_power_setpoint_from},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TwoTerminalVSCLine,
+    ::Val{:dc_power_setpoint_from},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error(
+        "TwoTerminalVSCLine.dc_power_setpoint_from: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TwoTerminalVSCLine,
+    ::Val{:dc_power_setpoint_from},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error(
+        "TwoTerminalVSCLine.dc_power_setpoint_from: no unit declared for power_units=$(o.power_units)",
+    )
+end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:rating_to},
@@ -4270,6 +4096,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     end
     error("TwoTerminalVSCLine.rating_to: no unit declared for power_units=$(o.power_units)")
 end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:power_factor_setpoint_to},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:power_factor_setpoint_to},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalVSCLine},
+    ::Val{:power_factor_setpoint_to},
+) = "PowerFactor"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:base_power}) = true
 InfrastructureCoreOpenAPIModels.declared_unit(::Type{Line}, ::Val{:base_power}) = "MVA"
 InfrastructureCoreOpenAPIModels.declared_quantity(
@@ -4434,6 +4272,34 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(o::Line, ::Val{:g})
     end
     error("Line.g: no unit declared for parameter_units=$(o.parameter_units)")
 end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{Line},
+    ::Val{:operational_flow_limit},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::Line,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error("Line.operational_flow_limit: no unit declared for power_units=$(o.power_units)")
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::Line,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error("Line.operational_flow_limit: no unit declared for power_units=$(o.power_units)")
+end
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{Line}, ::Val{:active_power_flow}) =
     true
 function InfrastructureCoreOpenAPIModels.declared_unit(o::Line, ::Val{:active_power_flow})
@@ -4501,6 +4367,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
         "TwoWindingTransformer.magnetizing_shunt: no unit declared for admittance_units=$(o.admittance_units)",
     )
 end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{VoltageControlAssociation},
+    ::Val{:weight},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{VoltageControlAssociation},
+    ::Val{:weight},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{VoltageControlAssociation},
+    ::Val{:weight},
+) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{Source}, ::Val{:base_power}) = true
 InfrastructureCoreOpenAPIModels.declared_unit(::Type{Source}, ::Val{:base_power}) = "MVA"
 InfrastructureCoreOpenAPIModels.declared_quantity(
@@ -4689,6 +4567,30 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{GeometricDistributionForcedOutage},
     ::Val{:mean_time_to_recovery},
 ) = "OperationalDuration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ImpedanceCorrectionData},
+    ::Val{:phase_angle_correction_curve},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ImpedanceCorrectionData},
+    ::Val{:phase_angle_correction_curve},
+) = "rad"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ImpedanceCorrectionData},
+    ::Val{:phase_angle_correction_curve},
+) = "Angle"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ImpedanceCorrectionData},
+    ::Val{:tap_ratio_correction_curve},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ImpedanceCorrectionData},
+    ::Val{:tap_ratio_correction_curve},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ImpedanceCorrectionData},
+    ::Val{:tap_ratio_correction_curve},
+) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{PointToPointBid},
     ::Val{:max_active_power},
@@ -4950,34 +4852,6 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{GenericArcImpedance},
-    ::Val{:max_flow},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::GenericArcImpedance,
-    ::Val{:max_flow},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MW"
-    end
-    error("GenericArcImpedance.max_flow: no unit declared for power_units=$(o.power_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::GenericArcImpedance,
-    ::Val{:max_flow},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ActivePower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ActivePower"
-    end
-    error("GenericArcImpedance.max_flow: no unit declared for power_units=$(o.power_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{GenericArcImpedance},
     ::Val{:reactive_power_flow},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -5006,6 +4880,38 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
     end
     error(
         "GenericArcImpedance.reactive_power_flow: no unit declared for power_units=$(o.power_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{GenericArcImpedance},
+    ::Val{:operational_flow_limit},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::GenericArcImpedance,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error(
+        "GenericArcImpedance.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::GenericArcImpedance,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error(
+        "GenericArcImpedance.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
     )
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
@@ -5973,6 +5879,18 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{ThermalMultiStart},
+    ::Val{:switching_times},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ThermalMultiStart},
+    ::Val{:switching_times},
+) = "min"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ThermalMultiStart},
+    ::Val{:switching_times},
+) = "OperationalDuration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ThermalMultiStart},
     ::Val{:power_trajectory},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -6341,38 +6259,6 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
-    ::Val{:transfer_setpoint},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
-    ::Val{:transfer_setpoint},
-)
-    if string(o.power_mode) == "true"
-        return "MW"
-    end
-    if string(o.power_mode) == "false"
-        return "A"
-    end
-    error(
-        "TwoTerminalLCCLine.transfer_setpoint: no unit declared for power_mode=$(o.power_mode)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
-    ::Val{:transfer_setpoint},
-)
-    if string(o.power_mode) == "true"
-        return "ActivePower"
-    end
-    if string(o.power_mode) == "false"
-        return "CurrentFlow"
-    end
-    error(
-        "TwoTerminalLCCLine.transfer_setpoint: no unit declared for power_mode=$(o.power_mode)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_base_voltage},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
@@ -6417,24 +6303,11 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{TwoTerminalLCCLine}, ::Val{:r}) =
     true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::TwoTerminalLCCLine, ::Val{:r})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error("TwoTerminalLCCLine.r: no unit declared for parameter_units=$(o.parameter_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::TwoTerminalLCCLine, ::Val{:r})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Resistance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Resistance"
-    end
-    error("TwoTerminalLCCLine.r: no unit declared for parameter_units=$(o.parameter_units)")
-end
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{TwoTerminalLCCLine}, ::Val{:r}) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:r},
+) = "Resistance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_extinction_angle},
@@ -6447,6 +6320,38 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_extinction_angle},
 ) = "Angle"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:power_transfer_setpoint},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TwoTerminalLCCLine,
+    ::Val{:power_transfer_setpoint},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error(
+        "TwoTerminalLCCLine.power_transfer_setpoint: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TwoTerminalLCCLine,
+    ::Val{:power_transfer_setpoint},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error(
+        "TwoTerminalLCCLine.power_transfer_setpoint: no unit declared for power_units=$(o.power_units)",
+    )
+end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_transformer_ratio},
@@ -6463,66 +6368,26 @@ InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_rc},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_rc},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error(
-        "TwoTerminalLCCLine.inverter_rc: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
+) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_rc},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Resistance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Resistance"
-    end
-    error(
-        "TwoTerminalLCCLine.inverter_rc: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
+) = "Resistance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_capacitor_reactance},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_capacitor_reactance},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error(
-        "TwoTerminalLCCLine.rectifier_capacitor_reactance: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
+) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_capacitor_reactance},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Reactance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Reactance"
-    end
-    error(
-        "TwoTerminalLCCLine.rectifier_capacitor_reactance: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
+) = "Reactance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_tap_limits},
@@ -6593,6 +6458,38 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "Angle"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
+    ::Val{:rating_from},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TwoTerminalLCCLine,
+    ::Val{:rating_from},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MVA"
+    end
+    error(
+        "TwoTerminalLCCLine.rating_from: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TwoTerminalLCCLine,
+    ::Val{:rating_from},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ApparentPower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ApparentPower"
+    end
+    error(
+        "TwoTerminalLCCLine.rating_from: no unit declared for power_units=$(o.power_units)",
+    )
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_tap_limits},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
@@ -6605,132 +6502,40 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
-    ::Val{:active_power_limits_to},
+    ::Val{:inverter_xc},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
-    ::Val{:active_power_limits_to},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MW"
-    end
-    error(
-        "TwoTerminalLCCLine.active_power_limits_to: no unit declared for power_units=$(o.power_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
-    ::Val{:active_power_limits_to},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ActivePower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ActivePower"
-    end
-    error(
-        "TwoTerminalLCCLine.active_power_limits_to: no unit declared for power_units=$(o.power_units)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
+InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_xc},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
+) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_xc},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error(
-        "TwoTerminalLCCLine.inverter_xc: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
-    ::Val{:inverter_xc},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Reactance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Reactance"
-    end
-    error(
-        "TwoTerminalLCCLine.inverter_xc: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
+) = "Reactance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:min_compounding_voltage},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:min_compounding_voltage},
-)
-    if string(o.dc_voltage_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.dc_voltage_units) == "NATURAL_UNITS"
-        return "kV"
-    end
-    error(
-        "TwoTerminalLCCLine.min_compounding_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:min_compounding_voltage},
-)
-    if string(o.dc_voltage_units) == "COMPONENT_BASE"
-        return "Voltage"
-    end
-    if string(o.dc_voltage_units) == "NATURAL_UNITS"
-        return "Voltage"
-    end
-    error(
-        "TwoTerminalLCCLine.min_compounding_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)",
-    )
-end
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_rc},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_rc},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error(
-        "TwoTerminalLCCLine.rectifier_rc: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
+) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_rc},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Resistance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Resistance"
-    end
-    error(
-        "TwoTerminalLCCLine.rectifier_rc: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
+) = "Resistance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_transformer_ratio},
@@ -6747,161 +6552,77 @@ InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:compounding_resistance},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:compounding_resistance},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error(
-        "TwoTerminalLCCLine.compounding_resistance: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
+) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:compounding_resistance},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Resistance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Resistance"
-    end
-    error(
-        "TwoTerminalLCCLine.compounding_resistance: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
+) = "Resistance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:switch_mode_voltage},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:switch_mode_voltage},
-)
-    if string(o.dc_voltage_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.dc_voltage_units) == "NATURAL_UNITS"
-        return "kV"
-    end
-    error(
-        "TwoTerminalLCCLine.switch_mode_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:switch_mode_voltage},
-)
-    if string(o.dc_voltage_units) == "COMPONENT_BASE"
-        return "Voltage"
-    end
-    if string(o.dc_voltage_units) == "NATURAL_UNITS"
-        return "Voltage"
-    end
-    error(
-        "TwoTerminalLCCLine.switch_mode_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)",
-    )
-end
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
-    ::Val{:active_power_limits_from},
+    ::Val{:rectifier_xc},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:rectifier_xc},
+) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:rectifier_xc},
+) = "Reactance"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:inverter_capacitor_reactance},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:inverter_capacitor_reactance},
+) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:inverter_capacitor_reactance},
+) = "Reactance"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:rating},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
     o::TwoTerminalLCCLine,
-    ::Val{:active_power_limits_from},
+    ::Val{:rating},
 )
     if string(o.power_units) == "COMPONENT_BASE"
         return "pu"
     end
     if string(o.power_units) == "NATURAL_UNITS"
-        return "MW"
+        return "MVA"
     end
-    error(
-        "TwoTerminalLCCLine.active_power_limits_from: no unit declared for power_units=$(o.power_units)",
-    )
+    error("TwoTerminalLCCLine.rating: no unit declared for power_units=$(o.power_units)")
 end
 function InfrastructureCoreOpenAPIModels.declared_quantity(
     o::TwoTerminalLCCLine,
-    ::Val{:active_power_limits_from},
+    ::Val{:rating},
 )
     if string(o.power_units) == "COMPONENT_BASE"
-        return "ActivePower"
+        return "ApparentPower"
     end
     if string(o.power_units) == "NATURAL_UNITS"
-        return "ActivePower"
+        return "ApparentPower"
     end
-    error(
-        "TwoTerminalLCCLine.active_power_limits_from: no unit declared for power_units=$(o.power_units)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalLCCLine},
-    ::Val{:rectifier_xc},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
-    ::Val{:rectifier_xc},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error(
-        "TwoTerminalLCCLine.rectifier_xc: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
-    ::Val{:rectifier_xc},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Reactance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Reactance"
-    end
-    error(
-        "TwoTerminalLCCLine.rectifier_xc: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalLCCLine},
-    ::Val{:inverter_capacitor_reactance},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
-    ::Val{:inverter_capacitor_reactance},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error(
-        "TwoTerminalLCCLine.inverter_capacitor_reactance: no unit declared for parameter_units=$(o.parameter_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
-    ::Val{:inverter_capacitor_reactance},
-)
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Reactance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Reactance"
-    end
-    error(
-        "TwoTerminalLCCLine.inverter_capacitor_reactance: no unit declared for parameter_units=$(o.parameter_units)",
-    )
+    error("TwoTerminalLCCLine.rating: no unit declared for power_units=$(o.power_units)")
 end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
@@ -6927,6 +6648,38 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_delay_angle},
 ) = "Angle"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:operational_flow_limit},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TwoTerminalLCCLine,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MW"
+    end
+    error(
+        "TwoTerminalLCCLine.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
+    )
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TwoTerminalLCCLine,
+    ::Val{:operational_flow_limit},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ActivePower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ActivePower"
+    end
+    error(
+        "TwoTerminalLCCLine.operational_flow_limit: no unit declared for power_units=$(o.power_units)",
+    )
+end
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:inverter_tap_step},
@@ -6987,34 +6740,14 @@ InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:scheduled_dc_voltage},
 ) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::TwoTerminalLCCLine,
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:scheduled_dc_voltage},
-)
-    if string(o.dc_voltage_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.dc_voltage_units) == "NATURAL_UNITS"
-        return "kV"
-    end
-    error(
-        "TwoTerminalLCCLine.scheduled_dc_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::TwoTerminalLCCLine,
+) = "kV"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TwoTerminalLCCLine},
     ::Val{:scheduled_dc_voltage},
-)
-    if string(o.dc_voltage_units) == "COMPONENT_BASE"
-        return "Voltage"
-    end
-    if string(o.dc_voltage_units) == "NATURAL_UNITS"
-        return "Voltage"
-    end
-    error(
-        "TwoTerminalLCCLine.scheduled_dc_voltage: no unit declared for dc_voltage_units=$(o.dc_voltage_units)",
-    )
-end
+) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalLCCLine},
     ::Val{:rectifier_base_voltage},
@@ -7052,263 +6785,45 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:inverter_tap_setting},
 ) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{MonitoredLine},
-    ::Val{:base_power},
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:rating_to},
+) = true
+function InfrastructureCoreOpenAPIModels.declared_unit(
+    o::TwoTerminalLCCLine,
+    ::Val{:rating_to},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "pu"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "MVA"
+    end
+    error("TwoTerminalLCCLine.rating_to: no unit declared for power_units=$(o.power_units)")
+end
+function InfrastructureCoreOpenAPIModels.declared_quantity(
+    o::TwoTerminalLCCLine,
+    ::Val{:rating_to},
+)
+    if string(o.power_units) == "COMPONENT_BASE"
+        return "ApparentPower"
+    end
+    if string(o.power_units) == "NATURAL_UNITS"
+        return "ApparentPower"
+    end
+    error("TwoTerminalLCCLine.rating_to: no unit declared for power_units=$(o.power_units)")
+end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:current_transfer_setpoint},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{MonitoredLine},
-    ::Val{:base_power},
-) = "MVA"
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:current_transfer_setpoint},
+) = "A"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{MonitoredLine},
-    ::Val{:base_power},
-) = "ApparentPower"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{MonitoredLine},
-    ::Val{:flow_limits},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::MonitoredLine,
-    ::Val{:flow_limits},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MW"
-    end
-    error("MonitoredLine.flow_limits: no unit declared for power_units=$(o.power_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::MonitoredLine,
-    ::Val{:flow_limits},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ActivePower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ActivePower"
-    end
-    error("MonitoredLine.flow_limits: no unit declared for power_units=$(o.power_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:rating}) =
-    true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:rating})
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MVA"
-    end
-    error("MonitoredLine.rating: no unit declared for power_units=$(o.power_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:rating})
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ApparentPower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ApparentPower"
-    end
-    error("MonitoredLine.rating: no unit declared for power_units=$(o.power_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:x}) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:x})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error("MonitoredLine.x: no unit declared for parameter_units=$(o.parameter_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:x})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Reactance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Reactance"
-    end
-    error("MonitoredLine.x: no unit declared for parameter_units=$(o.parameter_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:b}) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:b})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "S"
-    end
-    error("MonitoredLine.b: no unit declared for parameter_units=$(o.parameter_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:b})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Susceptance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Susceptance"
-    end
-    error("MonitoredLine.b: no unit declared for parameter_units=$(o.parameter_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:r}) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:r})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "ohm"
-    end
-    error("MonitoredLine.r: no unit declared for parameter_units=$(o.parameter_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:r})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Resistance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Resistance"
-    end
-    error("MonitoredLine.r: no unit declared for parameter_units=$(o.parameter_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:rating_c}) =
-    true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:rating_c})
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MVA"
-    end
-    error("MonitoredLine.rating_c: no unit declared for power_units=$(o.power_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::MonitoredLine,
-    ::Val{:rating_c},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ApparentPower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ApparentPower"
-    end
-    error("MonitoredLine.rating_c: no unit declared for power_units=$(o.power_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:rating_b}) =
-    true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:rating_b})
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MVA"
-    end
-    error("MonitoredLine.rating_b: no unit declared for power_units=$(o.power_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::MonitoredLine,
-    ::Val{:rating_b},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ApparentPower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ApparentPower"
-    end
-    error("MonitoredLine.rating_b: no unit declared for power_units=$(o.power_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{MonitoredLine},
-    ::Val{:reactive_power_flow},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::MonitoredLine,
-    ::Val{:reactive_power_flow},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MVAr"
-    end
-    error(
-        "MonitoredLine.reactive_power_flow: no unit declared for power_units=$(o.power_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::MonitoredLine,
-    ::Val{:reactive_power_flow},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ReactivePower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ReactivePower"
-    end
-    error(
-        "MonitoredLine.reactive_power_flow: no unit declared for power_units=$(o.power_units)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{MonitoredLine}, ::Val{:g}) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(o::MonitoredLine, ::Val{:g})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "S"
-    end
-    error("MonitoredLine.g: no unit declared for parameter_units=$(o.parameter_units)")
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(o::MonitoredLine, ::Val{:g})
-    if string(o.parameter_units) == "COMPONENT_BASE"
-        return "Conductance"
-    end
-    if string(o.parameter_units) == "NATURAL_UNITS"
-        return "Conductance"
-    end
-    error("MonitoredLine.g: no unit declared for parameter_units=$(o.parameter_units)")
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{MonitoredLine},
-    ::Val{:active_power_flow},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::MonitoredLine,
-    ::Val{:active_power_flow},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "pu"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "MW"
-    end
-    error(
-        "MonitoredLine.active_power_flow: no unit declared for power_units=$(o.power_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::MonitoredLine,
-    ::Val{:active_power_flow},
-)
-    if string(o.power_units) == "COMPONENT_BASE"
-        return "ActivePower"
-    end
-    if string(o.power_units) == "NATURAL_UNITS"
-        return "ActivePower"
-    end
-    error(
-        "MonitoredLine.active_power_flow: no unit declared for power_units=$(o.power_units)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{MonitoredLine},
-    ::Val{:angle_limits},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{MonitoredLine},
-    ::Val{:angle_limits},
-) = "rad"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{MonitoredLine},
-    ::Val{:angle_limits},
-) = "Angle"
+    ::Type{TwoTerminalLCCLine},
+    ::Val{:current_transfer_setpoint},
+) = "CurrentFlow"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{PowerLoad}, ::Val{:base_power}) =
     true
 InfrastructureCoreOpenAPIModels.declared_unit(::Type{PowerLoad}, ::Val{:base_power}) = "MVA"
@@ -8219,38 +7734,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{SwitchedAdmittance},
-    ::Val{:admittance_limits},
-) = true
-function InfrastructureCoreOpenAPIModels.declared_unit(
-    o::SwitchedAdmittance,
-    ::Val{:admittance_limits},
-)
-    if string(o.admittance_units) == "COMPONENT_MVAR"
-        return "MVAr"
-    end
-    if string(o.admittance_units) == "NATURAL_UNITS"
-        return "S"
-    end
-    error(
-        "SwitchedAdmittance.admittance_limits: no unit declared for admittance_units=$(o.admittance_units)",
-    )
-end
-function InfrastructureCoreOpenAPIModels.declared_quantity(
-    o::SwitchedAdmittance,
-    ::Val{:admittance_limits},
-)
-    if string(o.admittance_units) == "COMPONENT_MVAR"
-        return "ReactivePower"
-    end
-    if string(o.admittance_units) == "NATURAL_UNITS"
-        return "Susceptance"
-    end
-    error(
-        "SwitchedAdmittance.admittance_limits: no unit declared for admittance_units=$(o.admittance_units)",
-    )
-end
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SwitchedAdmittance},
     ::Val{:solved_admittance},
 ) = true
 function InfrastructureCoreOpenAPIModels.declared_unit(
@@ -8313,3 +7796,27 @@ function InfrastructureCoreOpenAPIModels.declared_quantity(
         "SwitchedAdmittance.y_increase: no unit declared for admittance_units=$(o.admittance_units)",
     )
 end
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{SwitchedAdmittance},
+    ::Val{:voltage_limits},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{SwitchedAdmittance},
+    ::Val{:voltage_limits},
+) = "pu"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{SwitchedAdmittance},
+    ::Val{:voltage_limits},
+) = "Voltage"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{SwitchedAdmittance},
+    ::Val{:reactive_power_range_limits},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{SwitchedAdmittance},
+    ::Val{:reactive_power_range_limits},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{SwitchedAdmittance},
+    ::Val{:reactive_power_range_limits},
+) = "Fraction"

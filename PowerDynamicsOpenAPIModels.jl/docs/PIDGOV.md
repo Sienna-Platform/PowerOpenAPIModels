@@ -20,4 +20,5 @@ Name | Type | Description | Notes
 **`g_lim`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
 **`a_tw`** | **`Float64`** | Factor multiplying Tw | [required]
 **`tw`** | **`Float64`** | Water inertia time constant | [required]
+**`v_lim`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
 **`p_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference load set-point | [optional]

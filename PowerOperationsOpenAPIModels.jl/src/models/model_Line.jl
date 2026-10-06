@@ -18,6 +18,7 @@ An AC transmission line.
   - `rating`: Thermal rating. Flow on the line must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `rating_b`: Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `rating_c`: Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `angle_limits`: Minimum and maximum angle limits. Units: rad.
   - `g`: Shunt conductance, specified both on the `from` and `to` ends of the line. These are commonly modeled with the same value. Units: per parameter_units — NATURAL_UNITS: S, COMPONENT_BASE: pu .
 """
@@ -37,6 +38,7 @@ Base.@kwdef struct Line <: APIModel
     rating::Float64
     rating_b::Union{Absent, Float64, Nothing} = ABSENT
     rating_c::Union{Absent, Float64, Nothing} = ABSENT
+    operational_flow_limit::Union{Absent, OperationalFlowLimit, Nothing} = ABSENT
     angle_limits::MinMax
     g::Union{Absent, FromTo, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -46,7 +48,7 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8a55f2f7434162ba3b03.json",
+            resource="https://openapi.invalid/schema/external-171f45a3db6935046531.json",
             pointer="",
         ),
         _openapi_raw,
@@ -89,6 +91,13 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
         haskey(_openapi_object, "rating_c") ?
         _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
         ABSENT
+    _openapi_field_operational_flow_limit =
+        haskey(_openapi_object, "operational_flow_limit") ?
+        _decode(
+            Union{Absent, OperationalFlowLimit, Nothing},
+            _openapi_object["operational_flow_limit"],
+            false,
+        ) : ABSENT
     _openapi_field_angle_limits =
         _decode(MinMax, _required(_openapi_object, "angle_limits", "Line"), false)
     _openapi_field_g =
@@ -112,6 +121,7 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
             "rating",
             "rating_b",
             "rating_c",
+            "operational_flow_limit",
             "angle_limits",
             "g",
         ) && continue
@@ -134,6 +144,7 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
         rating=_openapi_field_rating,
         rating_b=_openapi_field_rating_b,
         rating_c=_openapi_field_rating_c,
+        operational_flow_limit=_openapi_field_operational_flow_limit,
         angle_limits=_openapi_field_angle_limits,
         g=_openapi_field_g,
         additional_properties=_openapi_additional_properties,
@@ -177,6 +188,10 @@ function _encode_unvalidated(_openapi_value::Line)
         (_openapi_output["rating_b"] = _encode_unvalidated(_openapi_value.rating_b))
     _openapi_value.rating_c isa Absent ||
         (_openapi_output["rating_c"] = _encode_unvalidated(_openapi_value.rating_c))
+    _openapi_value.operational_flow_limit isa Absent || (
+        _openapi_output["operational_flow_limit"] =
+            _encode_unvalidated(_openapi_value.operational_flow_limit)
+    )
     _openapi_value.angle_limits isa Absent ||
         (_openapi_output["angle_limits"] = _encode_unvalidated(_openapi_value.angle_limits))
     _openapi_value.g isa Absent ||
@@ -194,7 +209,7 @@ end
 _encode(_openapi_value::Line) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8a55f2f7434162ba3b03.json",
+        resource="https://openapi.invalid/schema/external-171f45a3db6935046531.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -228,6 +243,10 @@ function _form_fields(_openapi_value::Line)
         push!(_openapi_output, "rating_b" => _openapi_value.rating_b)
     _openapi_value.rating_c isa Absent ||
         push!(_openapi_output, "rating_c" => _openapi_value.rating_c)
+    _openapi_value.operational_flow_limit isa Absent || push!(
+        _openapi_output,
+        "operational_flow_limit" => _openapi_value.operational_flow_limit,
+    )
     _openapi_value.angle_limits isa Absent ||
         push!(_openapi_output, "angle_limits" => _openapi_value.angle_limits)
     _openapi_value.g isa Absent || push!(_openapi_output, "g" => _openapi_value.g)

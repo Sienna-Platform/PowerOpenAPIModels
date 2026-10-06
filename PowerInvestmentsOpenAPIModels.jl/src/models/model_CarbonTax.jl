@@ -22,7 +22,7 @@ function _decode(::Type{CarbonTax}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dd47d00e4023a6064137.json",
+            resource="https://openapi.invalid/schema/external-0aeaa4f4a62a48e26a2e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -89,7 +89,7 @@ end
 _encode(_openapi_value::CarbonTax) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-dd47d00e4023a6064137.json",
+        resource="https://openapi.invalid/schema/external-0aeaa4f4a62a48e26a2e.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

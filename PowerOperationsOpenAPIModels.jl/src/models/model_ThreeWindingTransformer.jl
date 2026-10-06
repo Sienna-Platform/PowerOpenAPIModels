@@ -51,7 +51,7 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-590b35ad44fcac75c3aa.json",
+            resource="https://openapi.invalid/schema/external-180471fc795053de4175.json",
             pointer="",
         ),
         _openapi_raw,
@@ -266,7 +266,7 @@ end
 _encode(_openapi_value::ThreeWindingTransformer) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-590b35ad44fcac75c3aa.json",
+        resource="https://openapi.invalid/schema/external-180471fc795053de4175.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

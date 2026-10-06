@@ -27,56 +27,56 @@ function _decode(::Type{FunctionData}, value, _openapi_validate::Bool)
             "LINEAR" => (
                 LinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+                    resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
                     pointer="/\$defs/LinearFunctionData",
                 ),
             ),
             "PIECEWISE_LINEAR" => (
                 PiecewiseLinearData,
                 (
-                    resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+                    resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
                     pointer="/\$defs/PiecewiseLinearData",
                 ),
             ),
             "PIECEWISE_STEP" => (
                 PiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+                    resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
                     pointer="/\$defs/PiecewiseStepData",
                 ),
             ),
             "QUADRATIC" => (
                 QuadraticFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+                    resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
                     pointer="/\$defs/QuadraticFunctionData",
                 ),
             ),
             "TIME_SERIES_LINEAR" => (
                 TimeSeriesLinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+                    resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
                     pointer="/\$defs/TimeSeriesLinearFunctionData",
                 ),
             ),
             "TIME_SERIES_PIECEWISE_LINEAR" => (
                 TimeSeriesPiecewiseLinearData,
                 (
-                    resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+                    resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
                     pointer="/\$defs/TimeSeriesPiecewiseLinearData",
                 ),
             ),
             "TIME_SERIES_PIECEWISE_STEP" => (
                 TimeSeriesPiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+                    resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
                     pointer="/\$defs/TimeSeriesPiecewiseStepData",
                 ),
             ),
             "TIME_SERIES_QUADRATIC" => (
                 TimeSeriesQuadraticFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+                    resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
                     pointer="/\$defs/TimeSeriesQuadraticFunctionData",
                 ),
             ),
