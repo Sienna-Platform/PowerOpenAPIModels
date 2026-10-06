@@ -3,7 +3,8 @@
 # `SystemDocument.components` maps a type name to an array of heterogeneous component objects,
 # which the generated client cannot express as typed buckets. Components and the
 # Operations-layer association tables (`PlantAssociation`, `CombinedCycleAssociation`,
-# `ServiceAssociation`, `TradingHubAssociation`) are resolved by name through the
+# `ServiceAssociation`, `TradingHubAssociation`, `VoltageControlAssociation`) are resolved
+# by name through the
 # InfrastructureCore model-type registry, so this package never depends on Operations; a
 # reader needs the domain packages defining a document's types loaded, nothing more.
 # `time_series_associations` is the one concretely typed foreign table, hence the
@@ -99,15 +100,17 @@ document omits them; the schema marks all four optional, and a consumer with its
 (PowerSystems' `System` frequency, for instance) should apply it rather than have this
 container invent one.
 
-`plant_associations`, `combined_cycle_associations`, `service_associations`, and
-`trading_hub_associations` are untyped `Vector{Any}`, like `components`:
-`PlantAssociation`, `CombinedCycleAssociation`, `ServiceAssociation`, and
-`TradingHubAssociation` are Operations-layer generated types, and this Core package cannot
+`plant_associations`, `combined_cycle_associations`, `service_associations`,
+`trading_hub_associations`, and `voltage_control_associations` are untyped `Vector{Any}`,
+like `components`: `PlantAssociation`, `CombinedCycleAssociation`, `ServiceAssociation`,
+`TradingHubAssociation`, and `VoltageControlAssociation` are Operations-layer generated
+types, and this Core package cannot
 depend on Operations. `Any` rather than a common generated-model supertype: the native
 (post-1.0) generator gives every schema the same plain `struct` shape, with nothing like the
 old `OpenAPI.APIModel` to bound these against. Callers construct the concrete row and hand it
 to [`add_plant_association!`](@ref), [`add_combined_cycle_association!`](@ref),
-[`add_service_association!`](@ref), or [`add_trading_hub_association!`](@ref);
+[`add_service_association!`](@ref), [`add_trading_hub_association!`](@ref), or
+[`add_voltage_control_association!`](@ref);
 deserialization resolves the concrete type through the same
 [`model_type`](@ref InfrastructureCoreOpenAPIModels.model_type) registry
 `components` uses.
@@ -123,6 +126,7 @@ struct SystemDocument <: AbstractDocument
     combined_cycle_associations::Vector{Any}
     service_associations::Vector{Any}
     trading_hub_associations::Vector{Any}
+    voltage_control_associations::Vector{Any}
     time_series_associations::Vector{TimeSeriesAssociation}
     ext::Dict{Int, Dict{String, Any}}
     time_series_storage_file::Union{Nothing, String}
@@ -130,6 +134,7 @@ struct SystemDocument <: AbstractDocument
     component_types_by_id::Dict{Int, String}
     service_membership::Set{Tuple{Int, Int}}
     trading_hub_membership::Set{Tuple{Int, Int}}
+    voltage_control_membership::Set{Tuple{Int, Int}}
     source_schema_version::Base.RefValue{String}
 end
 
@@ -153,11 +158,13 @@ function SystemDocument(;
         Vector{Any}(),
         Vector{Any}(),
         Vector{Any}(),
+        Vector{Any}(),
         Vector{TimeSeriesAssociation}(),
         Dict{Int, Dict{String, Any}}(),
         _optional_string(time_series_storage_file),
         Ref(0),
         Dict{Int, String}(),
+        Set{Tuple{Int, Int}}(),
         Set{Tuple{Int, Int}}(),
         Set{Tuple{Int, Int}}(),
         Ref(READER_VERSION),
@@ -245,6 +252,32 @@ function add_trading_hub_association!(doc::SystemDocument, assoc::T) where {T}
     end
     push!(doc.trading_hub_associations, assoc)
     push!(doc.trading_hub_membership, key)
+    return nothing
+end
+
+"""
+Record that `assoc` (a caller-constructed `VoltageControlAssociation`) links a voltage control
+group, a `VoltageDroopControl` or `ReactivePowerSharing` attribute, to one member device.
+
+Generic over `T`, for the same reason as [`add_plant_association!`](@ref).
+
+Duplicate `(control_id, entity_id)` pairs are rejected rather than collapsed, the same guard
+[`add_trading_hub_association!`](@ref) applies to trading hub membership.
+"""
+function add_voltage_control_association!(doc::SystemDocument, assoc::T) where {T}
+    control_id = assoc.control_id
+    entity_id = assoc.entity_id
+    key = (Int(control_id), Int(entity_id))
+    if key in doc.voltage_control_membership
+        throw(
+            InfrastructureCoreOpenAPIModels.DocumentFormatError(
+                "duplicate voltage control membership: control_id=$control_id " *
+                "entity_id=$entity_id",
+            ),
+        )
+    end
+    push!(doc.voltage_control_associations, assoc)
+    push!(doc.voltage_control_membership, key)
     return nothing
 end
 
@@ -364,6 +397,23 @@ function validate_document(doc::SystemDocument)
         )
     end
 
+    # control_id names a VoltageDroopControl or ReactivePowerSharing supplemental attribute;
+    # entity_id names the member device.
+    for assoc in doc.voltage_control_associations
+        _check_ref(
+            attribute_ids,
+            assoc.control_id,
+            "VoltageControlAssociation",
+            "entity_id=$(assoc.entity_id)",
+        )
+        _check_ref(
+            component_ids,
+            assoc.entity_id,
+            "VoltageControlAssociation",
+            "control_id=$(assoc.control_id)",
+        )
+    end
+
     # `.value` because `TimeSeriesAssociation` is the oneOf wrapper: the six per-type structs
     # hold the columns, one level down inside the `value::Union{...}` field.
     for assoc in doc.time_series_associations
@@ -397,8 +447,8 @@ row on its own with `OpenAPI.Runtime._encode` already returns a plain object, no
 so this still builds the whole tree before printing once rather than encoding twice.
 
 Canonical: `schema_version` comes first, then the remaining keys sorted. An optional property
-that is absent, null, or equal to its schema default (`trading_hub_associations` defaults to
-`[]`) is omitted; `ext` is always written.
+that is absent, null, or equal to its schema default (`trading_hub_associations` and
+`voltage_control_associations` default to `[]`) is omitted; `ext` is always written.
 """
 function document_tree(doc::SystemDocument; schema_version::AbstractString=READER_VERSION)
     components = Dict{String, Any}()
@@ -418,6 +468,11 @@ function document_tree(doc::SystemDocument; schema_version::AbstractString=READE
     tree["combined_cycle_associations"] = _bucket(doc.combined_cycle_associations)
     tree["service_associations"] = _bucket(doc.service_associations)
     _put_nonempty!(tree, "trading_hub_associations", _bucket(doc.trading_hub_associations))
+    _put_nonempty!(
+        tree,
+        "voltage_control_associations",
+        _bucket(doc.voltage_control_associations),
+    )
     tree["time_series_associations"] = _bucket(doc.time_series_associations)
     # Keyed by component id, which is unique across every type.
     tree["ext"] = Dict(string(id) => extras for (id, extras) in doc.ext)
@@ -535,6 +590,17 @@ function _document_from_json(
     # `trading_hub_membership` needs its one rebuild pass here.
     for assoc in doc.trading_hub_associations
         push!(doc.trading_hub_membership, (Int(assoc.trading_hub_id), Int(assoc.entity_id)))
+    end
+    # Optional for the same reason as `trading_hub_associations`.
+    append!(
+        doc.voltage_control_associations,
+        _rows(
+            InfrastructureCoreOpenAPIModels.model_type("VoltageControlAssociation"),
+            get(raw, "voltage_control_associations", ()),
+        ),
+    )
+    for assoc in doc.voltage_control_associations
+        push!(doc.voltage_control_membership, (Int(assoc.control_id), Int(assoc.entity_id)))
     end
     append!(
         doc.time_series_associations,

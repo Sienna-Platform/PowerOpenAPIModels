@@ -208,7 +208,8 @@ _type_name(::Any) = ""
             schema = InfrastructureCoreOpenAPIModels.JSON.parsefile(schema_path)
             schema_fields = Set(keys(schema["properties"]))
             # `counter`, `component_types_by_id`, `service_membership`,
-            # `trading_hub_membership`, and `source_schema_version` are build-time
+            # `trading_hub_membership`, `voltage_control_membership`, and
+            # `source_schema_version` are build-time
             # scaffolding that is deliberately not serialized; `schema_version` is stamped
             # by the writer from the package's own version, so it has no field.
             struct_fields = union(
@@ -219,6 +220,7 @@ _type_name(::Any) = ""
                         "component_types_by_id",
                         "service_membership",
                         "trading_hub_membership",
+                        "voltage_control_membership",
                         "source_schema_version",
                     ]),
                 ),
@@ -560,9 +562,9 @@ _type_name(::Any) = ""
         attribute_id = PowerCoreOpenAPIModels.next_id!(doc)
         PowerCoreOpenAPIModels.add_supplemental_attribute!(
             doc,
-            PowerInvestmentsOpenAPIModels.TopologyMapping(;
+            PowerInvestmentsOpenAPIModels.ExistingDevices(;
                 id=attribute_id,
-                buses=["bus1"],
+                existing_devices=["gen1"],
             ),
             requirement_id,
         )
