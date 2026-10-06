@@ -9,14 +9,9 @@ const PI = PowerInvestmentsOpenAPIModels
 const IC = InfrastructureCoreOpenAPIModels
 const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
 
-function _registrable_name(::Type{T}) where {T <: IC.APIModel}
-    if parentmodule(T) === PI
-        return string(nameof(T))
-    end
-    return ""
-end
-_registrable_name(::Type{<:IC.EnumAPIModel}) = ""
-_registrable_name(::Any) = ""
+_registrable(::Type{T}) where {T <: IC.APIModel} = parentmodule(T) === PI
+_registrable(::Type{<:IC.EnumAPIModel}) = false
+_registrable(::Any) = false
 
 @testset "PowerInvestmentsOpenAPIModels" begin
     @testset "a technology round-trips through JSON" begin
@@ -62,10 +57,10 @@ _registrable_name(::Any) = ""
 
     # A type missing from register.jl leaves a document that holds it unreadable.
     @testset "every non-enum type this package defines is registered" begin
-        own = filter(!isempty, [_registrable_name(getfield(PI, n)) for n in names(PI)])
-        @test "SupplyTechnology" in own
-        for name in own
-            @test IC.model_type(name) === getfield(PI, Symbol(name))
+        own = [n for n in names(PI) if _registrable(getfield(PI, n))]
+        @test :SupplyTechnology in own
+        for n in own
+            @test IC.model_type(string(n)) === getfield(PI, n)
         end
     end
 end

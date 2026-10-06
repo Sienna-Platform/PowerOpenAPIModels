@@ -225,7 +225,6 @@ if !isempty(DUPLICATE_RENAMES)
     end
 end
 
-# ── Phase 3b: the names each package registers ─────────────────────────────────────
 """
 Names `domain`'s `register.jl` should register: every struct it emits except the enum
 wrappers, which no document names as a component type.
