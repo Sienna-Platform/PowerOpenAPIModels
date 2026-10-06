@@ -9,13 +9,14 @@ const PD = PowerDynamicsOpenAPIModels
 const IC = InfrastructureCoreOpenAPIModels
 const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
 
-function _own_type_name(::Type{T}) where {T}
+function _registrable_name(::Type{T}) where {T <: IC.APIModel}
     if parentmodule(T) === PD
         return string(nameof(T))
     end
     return ""
 end
-_own_type_name(::Any) = ""
+_registrable_name(::Type{<:IC.EnumAPIModel}) = ""
+_registrable_name(::Any) = ""
 
 @testset "PowerDynamicsOpenAPIModels" begin
     @testset "a dynamic component round-trips through JSON" begin
@@ -69,13 +70,11 @@ _own_type_name(::Any) = ""
         @test !has_declared_unit(SEXS, Val(:k))
     end
 
-    # Every type this package defines is a dynamic component. A name missing from
-    # scripts/registered_names.jl leaves a document holding that component unreadable.
-    @testset "this package's types are registered under their bare names" begin
-        own = filter(!isempty, [_own_type_name(getfield(PD, n)) for n in names(PD)])
+    # A type missing from register.jl leaves a document that holds it unreadable.
+    @testset "every non-enum type this package defines is registered" begin
+        own = filter(!isempty, [_registrable_name(getfield(PD, n)) for n in names(PD)])
         @test "SEXS" in own
         for name in own
-            @test IC.has_model_type(name)
             @test IC.model_type(name) === getfield(PD, Symbol(name))
         end
     end

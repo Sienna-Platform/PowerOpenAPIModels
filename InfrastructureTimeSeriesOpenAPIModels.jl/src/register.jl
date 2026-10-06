@@ -1,4 +1,4 @@
-# Generated from the frozen pre-1.0 registered-name set. Do not edit.
+# Generated from every non-enum type this package emits. Do not edit.
 #
 # Runs in __init__ because the registry lives in another module: state
 # mutated there during precompilation would not be saved.
@@ -12,5 +12,6 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(SingleTimeSeries)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesAssociation)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesFeatureValue)
+    InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesFeatures)
     return nothing
 end
