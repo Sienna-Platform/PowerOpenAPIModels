@@ -7,6 +7,11 @@ using Test
 const IC = InfrastructureCoreOpenAPIModels
 const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
 
+_registrable(::Type{T}) where {T <: IC.APIModel} =
+    isconcretetype(T) && parentmodule(T) === IC
+_registrable(::Type{<:IC.EnumAPIModel}) = false
+_registrable(::Any) = false
+
 @testset "InfrastructureCoreOpenAPIModels" begin
     @testset "a model round-trips through JSON" begin
         bounds = MinMax(; min=0.0, max=1.0)
@@ -120,5 +125,14 @@ const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
             base != n && base in defined
         end
         @test sort(collect(aliases)) == String[]
+    end
+
+    # A type missing from register.jl leaves a document that holds it unreadable.
+    @testset "every non-enum type this package defines is registered" begin
+        own = [n for n in names(IC) if _registrable(getfield(IC, n))]
+        @test :MinMax in own
+        for n in own
+            @test IC.model_type(string(n)) === getfield(IC, n)
+        end
     end
 end

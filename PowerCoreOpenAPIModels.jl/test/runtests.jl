@@ -38,6 +38,10 @@ function voltage_control_document()
     return doc
 end
 
+_registrable(::Type{T}) where {T <: IC.APIModel} = parentmodule(T) === PC
+_registrable(::Type{<:IC.EnumAPIModel}) = false
+_registrable(::Any) = false
+
 @testset "PowerCoreOpenAPIModels" begin
     @testset "a component round-trips through JSON" begin
         bus = ACBus(;
@@ -158,10 +162,12 @@ end
         @test_throws IC.DocumentFormatError PC.validate_document(swapped)
     end
 
-    @testset "this package's types are registered under their bare names" begin
-        for name in ("ACBus", "LoadZone", "Area", "CostCurve")
-            @test IC.has_model_type(name)
-            @test IC.model_type(name) === getfield(PC, Symbol(name))
+    # A type missing from register.jl leaves a document that holds it unreadable.
+    @testset "every non-enum type this package defines is registered" begin
+        own = [n for n in names(PC) if _registrable(getfield(PC, n))]
+        @test :ACBus in own
+        for n in own
+            @test IC.model_type(string(n)) === getfield(PC, n)
         end
     end
 end

@@ -9,6 +9,10 @@ const PI = PowerInvestmentsOpenAPIModels
 const IC = InfrastructureCoreOpenAPIModels
 const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
 
+_registrable(::Type{T}) where {T <: IC.APIModel} = parentmodule(T) === PI
+_registrable(::Type{<:IC.EnumAPIModel}) = false
+_registrable(::Any) = false
+
 @testset "PowerInvestmentsOpenAPIModels" begin
     @testset "a technology round-trips through JSON" begin
         requirement = MaximumCapacityRequirements(;
@@ -51,10 +55,12 @@ const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
         @test !has_declared_unit(RequirementAssociation, Val(:entity_id))
     end
 
-    @testset "this package's types are registered under their bare names" begin
-        for name in ("MaximumCapacityRequirements", "SupplyTechnology", "StorageTechnology")
-            @test IC.has_model_type(name)
-            @test IC.model_type(name) === getfield(PI, Symbol(name))
+    # A type missing from register.jl leaves a document that holds it unreadable.
+    @testset "every non-enum type this package defines is registered" begin
+        own = [n for n in names(PI) if _registrable(getfield(PI, n))]
+        @test :SupplyTechnology in own
+        for n in own
+            @test IC.model_type(string(n)) === getfield(PI, n)
         end
     end
 end

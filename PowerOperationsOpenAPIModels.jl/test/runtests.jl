@@ -27,6 +27,10 @@ function line(; kwargs...)
     )
 end
 
+_registrable(::Type{T}) where {T <: IC.APIModel} = parentmodule(T) === PO
+_registrable(::Type{<:IC.EnumAPIModel}) = false
+_registrable(::Any) = false
+
 @testset "PowerOperationsOpenAPIModels" begin
     @testset "a component round-trips through JSON" begin
         text = JSON.json(encode(line(; b=FromTo(; from=0.0, to=0.0))))
@@ -86,10 +90,12 @@ end
         @test !has_unit_base(Line, Val(:r))
     end
 
-    @testset "this package's types are registered under their bare names" begin
-        for name in ("Line", "ThermalStandard", "PowerLoad", "TransmissionInterface")
-            @test IC.has_model_type(name)
-            @test IC.model_type(name) === getfield(PO, Symbol(name))
+    # A type missing from register.jl leaves a document that holds it unreadable.
+    @testset "every non-enum type this package defines is registered" begin
+        own = [n for n in names(PO) if _registrable(getfield(PO, n))]
+        @test :Line in own
+        for n in own
+            @test IC.model_type(string(n)) === getfield(PO, n)
         end
     end
 end

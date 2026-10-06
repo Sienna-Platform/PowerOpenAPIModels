@@ -1,52 +1,88 @@
 # Generated from SiennaSchemas x-unit annotations. Do not edit.
 
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Type{ActiveRenewableControllerAB},
     ::Val{:t_g},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Type{ActiveRenewableControllerAB},
     ::Val{:t_g},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Type{ActiveRenewableControllerAB},
     ::Val{:t_g},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{RenewableEnergyVoltageConverterTypeA},
-    ::Val{:t_fltr},
+    ::Type{ActiveRenewableControllerAB},
+    ::Val{:t_p},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{RenewableEnergyVoltageConverterTypeA},
-    ::Val{:t_fltr},
+    ::Type{ActiveRenewableControllerAB},
+    ::Val{:t_p},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RenewableEnergyVoltageConverterTypeA},
-    ::Val{:t_fltr},
+    ::Type{ActiveRenewableControllerAB},
+    ::Val{:t_p},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{RenewableEnergyConverterTypeA},
-    ::Val{:t_g},
+    ::Type{ActiveRenewableControllerAB},
+    ::Val{:t_pord},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{RenewableEnergyConverterTypeA},
-    ::Val{:t_g},
+    ::Type{ActiveRenewableControllerAB},
+    ::Val{:t_pord},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RenewableEnergyConverterTypeA},
-    ::Val{:t_g},
+    ::Type{ActiveRenewableControllerAB},
+    ::Val{:t_pord},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{RenewableEnergyConverterTypeA},
-    ::Val{:t_fltr},
+    ::Type{AndersonFouadMachine},
+    ::Val{:td0_pp},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{RenewableEnergyConverterTypeA},
-    ::Val{:t_fltr},
+    ::Type{AndersonFouadMachine},
+    ::Val{:td0_pp},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RenewableEnergyConverterTypeA},
-    ::Val{:t_fltr},
+    ::Type{AndersonFouadMachine},
+    ::Val{:td0_pp},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{AndersonFouadMachine},
+    ::Val{:tq0_pp},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{AndersonFouadMachine},
+    ::Val{:tq0_pp},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{AndersonFouadMachine},
+    ::Val{:tq0_pp},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{AndersonFouadMachine},
+    ::Val{:tq0_p},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{AndersonFouadMachine},
+    ::Val{:tq0_p},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{AndersonFouadMachine},
+    ::Val{:tq0_p},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{AndersonFouadMachine},
+    ::Val{:td0_p},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{AndersonFouadMachine},
+    ::Val{:td0_p},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{AndersonFouadMachine},
+    ::Val{:td0_p},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{ReactiveRenewableControllerAB},
@@ -59,6 +95,18 @@ InfrastructureCoreOpenAPIModels.declared_unit(
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{ReactiveRenewableControllerAB},
     ::Val{:t_p},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ReactiveRenewableControllerAB},
+    ::Val{:t_fltr},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ReactiveRenewableControllerAB},
+    ::Val{:t_fltr},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ReactiveRenewableControllerAB},
+    ::Val{:t_fltr},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{ReactiveRenewableControllerAB},
@@ -85,167 +133,141 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:t_ft},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{ReactiveRenewableControllerAB},
+    ::Type{RenewableEnergyConverterTypeA},
+    ::Val{:t_g},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{RenewableEnergyConverterTypeA},
+    ::Val{:t_g},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{RenewableEnergyConverterTypeA},
+    ::Val{:t_g},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{RenewableEnergyConverterTypeA},
     ::Val{:t_fltr},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{ReactiveRenewableControllerAB},
+    ::Type{RenewableEnergyConverterTypeA},
     ::Val{:t_fltr},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{ReactiveRenewableControllerAB},
+    ::Type{RenewableEnergyConverterTypeA},
     ::Val{:t_fltr},
 ) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SimpleAFMachine}, ::Val{:td0_p}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SimpleAFMachine}, ::Val{:td0_p}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SimpleAFMachine},
-    ::Val{:td0_p},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SimpleAFMachine}, ::Val{:td0_pp}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SimpleAFMachine}, ::Val{:td0_pp}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SimpleAFMachine},
-    ::Val{:td0_pp},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SimpleAFMachine}, ::Val{:tq0_pp}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SimpleAFMachine}, ::Val{:tq0_pp}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SimpleAFMachine},
-    ::Val{:tq0_pp},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SimpleAFMachine}, ::Val{:tq0_p}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SimpleAFMachine}, ::Val{:tq0_p}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SimpleAFMachine},
-    ::Val{:tq0_p},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SteamTurbineGov1}, ::Val{:t3}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SteamTurbineGov1}, ::Val{:t3}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SteamTurbineGov1},
-    ::Val{:t3},
-) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SteamTurbineGov1},
-    ::Val{:t_rate},
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_g},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SteamTurbineGov1},
-    ::Val{:t_rate},
-) = "MW"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SteamTurbineGov1},
-    ::Val{:t_rate},
-) = "ActivePower"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SteamTurbineGov1}, ::Val{:t1}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SteamTurbineGov1}, ::Val{:t1}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SteamTurbineGov1},
-    ::Val{:t1},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SteamTurbineGov1}, ::Val{:t2}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SteamTurbineGov1}, ::Val{:t2}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SteamTurbineGov1},
-    ::Val{:t2},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SalientPoleMachine},
-    ::Val{:td0_p},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SalientPoleMachine},
-    ::Val{:td0_p},
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_g},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SalientPoleMachine},
-    ::Val{:td0_p},
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_g},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SalientPoleMachine},
-    ::Val{:tq0_pp},
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_fltr},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SalientPoleMachine},
-    ::Val{:tq0_pp},
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_fltr},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SalientPoleMachine},
-    ::Val{:tq0_pp},
+    ::Type{RenewableEnergyVoltageConverterTypeA},
+    ::Val{:t_fltr},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SalientPoleMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:td0_pp},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SalientPoleMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:td0_pp},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SalientPoleMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:td0_pp},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{AndersonFouadMachine},
-    ::Val{:td0_p},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{AndersonFouadMachine},
-    ::Val{:td0_p},
-) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{AndersonFouadMachine},
-    ::Val{:td0_p},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{AndersonFouadMachine},
-    ::Val{:td0_pp},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{AndersonFouadMachine},
-    ::Val{:td0_pp},
-) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{AndersonFouadMachine},
-    ::Val{:td0_pp},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{AndersonFouadMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:tq0_pp},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{AndersonFouadMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:tq0_pp},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{AndersonFouadMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:tq0_pp},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{AndersonFouadMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:tq0_p},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{AndersonFouadMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:tq0_p},
 ) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{AndersonFouadMachine},
+    ::Type{RoundRotorMachine},
     ::Val{:tq0_p},
 ) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SauerPaiMachine}, ::Val{:td0_p}) =
-    true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SauerPaiMachine}, ::Val{:td0_p}) = "s"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{RoundRotorMachine},
+    ::Val{:td0_p},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{RoundRotorMachine},
+    ::Val{:td0_p},
+) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SauerPaiMachine},
+    ::Type{RoundRotorMachine},
+    ::Val{:td0_p},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SEXS}, ::Val{:te}) = true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SEXS}, ::Val{:te}) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(::Type{SEXS}, ::Val{:te}) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SEXS}, ::Val{:tb}) = true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SEXS}, ::Val{:tb}) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(::Type{SEXS}, ::Val{:tb}) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{SalientPoleMachine},
+    ::Val{:td0_pp},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{SalientPoleMachine},
+    ::Val{:td0_pp},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{SalientPoleMachine},
+    ::Val{:td0_pp},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{SalientPoleMachine},
+    ::Val{:tq0_pp},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{SalientPoleMachine},
+    ::Val{:tq0_pp},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{SalientPoleMachine},
+    ::Val{:tq0_pp},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{SalientPoleMachine},
+    ::Val{:td0_p},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{SalientPoleMachine},
+    ::Val{:td0_p},
+) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{SalientPoleMachine},
     ::Val{:td0_p},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SauerPaiMachine}, ::Val{:td0_pp}) =
@@ -269,93 +291,71 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{SauerPaiMachine},
     ::Val{:tq0_p},
 ) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SEXS}, ::Val{:te}) = true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SEXS}, ::Val{:te}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(::Type{SEXS}, ::Val{:te}) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SEXS}, ::Val{:tb}) = true
-InfrastructureCoreOpenAPIModels.declared_unit(::Type{SEXS}, ::Val{:tb}) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(::Type{SEXS}, ::Val{:tb}) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{RoundRotorMachine},
-    ::Val{:td0_p},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{RoundRotorMachine},
-    ::Val{:td0_p},
-) = "s"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SauerPaiMachine}, ::Val{:td0_p}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SauerPaiMachine}, ::Val{:td0_p}) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RoundRotorMachine},
+    ::Type{SauerPaiMachine},
     ::Val{:td0_p},
 ) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{RoundRotorMachine},
-    ::Val{:tq0_pp},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{RoundRotorMachine},
-    ::Val{:tq0_pp},
-) = "s"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SimpleAFMachine}, ::Val{:td0_pp}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SimpleAFMachine}, ::Val{:td0_pp}) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RoundRotorMachine},
-    ::Val{:tq0_pp},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{RoundRotorMachine},
-    ::Val{:td0_pp},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{RoundRotorMachine},
-    ::Val{:td0_pp},
-) = "s"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RoundRotorMachine},
+    ::Type{SimpleAFMachine},
     ::Val{:td0_pp},
 ) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{RoundRotorMachine},
-    ::Val{:tq0_p},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{RoundRotorMachine},
-    ::Val{:tq0_p},
-) = "s"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SimpleAFMachine}, ::Val{:tq0_pp}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SimpleAFMachine}, ::Val{:tq0_pp}) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{RoundRotorMachine},
+    ::Type{SimpleAFMachine},
+    ::Val{:tq0_pp},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SimpleAFMachine}, ::Val{:tq0_p}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SimpleAFMachine}, ::Val{:tq0_p}) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{SimpleAFMachine},
     ::Val{:tq0_p},
 ) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_g},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_g},
-) = "s"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SimpleAFMachine}, ::Val{:td0_p}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SimpleAFMachine}, ::Val{:td0_p}) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_g},
+    ::Type{SimpleAFMachine},
+    ::Val{:td0_p},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SteamTurbineGov1}, ::Val{:t3}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SteamTurbineGov1}, ::Val{:t3}) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{SteamTurbineGov1},
+    ::Val{:t3},
+) = "Duration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SteamTurbineGov1}, ::Val{:t1}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SteamTurbineGov1}, ::Val{:t1}) = "s"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{SteamTurbineGov1},
+    ::Val{:t1},
 ) = "Duration"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_pord},
+    ::Type{SteamTurbineGov1},
+    ::Val{:t_rate},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_pord},
-) = "s"
+    ::Type{SteamTurbineGov1},
+    ::Val{:t_rate},
+) = "MW"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_pord},
-) = "Duration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_p},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_p},
-) = "s"
+    ::Type{SteamTurbineGov1},
+    ::Val{:t_rate},
+) = "ActivePower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SteamTurbineGov1}, ::Val{:t2}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{SteamTurbineGov1}, ::Val{:t2}) = "s"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{ActiveRenewableControllerAB},
-    ::Val{:t_p},
+    ::Type{SteamTurbineGov1},
+    ::Val{:t2},
 ) = "Duration"
