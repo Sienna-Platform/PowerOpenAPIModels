@@ -123,6 +123,7 @@ const REGISTERED_NAMES = Dict{String, Vector{String}}(
         "PointToPointBid",
         "PointToPointBidSpreadBid",
         "PowerLoad",
+        "ReactivePowerSharing",
         "RenewableDispatch",
         "RenewableDispatchOperationCost",
         "RenewableNonDispatch",
@@ -152,6 +153,8 @@ const REGISTERED_NAMES = Dict{String, Vector{String}}(
         "TwoWindingTransformer",
         "VirtualParticipant",
         "VirtualParticipantOperationCost",
+        "VoltageControlAssociation",
+        "VoltageDroopControl",
     ],
     "investments" => [
         "AggregateTransportTechnology",
