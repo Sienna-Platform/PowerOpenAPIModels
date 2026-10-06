@@ -419,8 +419,8 @@ function emit_units_for(
             emit_vocabulary(io, factors)
             emit_fallbacks(io)
         end
-        for (type_name, schema) in pairs(schemas)
-            emit_type(io, prefix, by_unit, type_name, schema)
+        for type_name in sort!(collect(keys(schemas)))
+            emit_type(io, prefix, by_unit, type_name, schemas[type_name])
         end
     end
     return true
