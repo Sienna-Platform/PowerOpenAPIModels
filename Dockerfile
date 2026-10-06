@@ -11,7 +11,7 @@ RUN apt-get update && \
 # scripts/generate_native.jl reads the SiennaSchemas selectors (JSON) and lets OpenAPI.jl
 # resolve the $ref graph across files -- both must be in the depot before the repo is
 # mounted at /output.
-RUN julia -e 'using Pkg; Pkg.add(name="JSON", version="1"); Pkg.add(name="OpenAPI", version="1.1")'
+RUN julia -e 'using Pkg; Pkg.add(name="JSON", version="1"); Pkg.add(name="OpenAPI", version="1.2")'
 
 WORKDIR /output
 ENTRYPOINT ["make", "generate", "SCHEMA_DIR=/schemas"]
