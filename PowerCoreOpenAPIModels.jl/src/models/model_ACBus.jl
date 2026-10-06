@@ -34,7 +34,7 @@ function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dbc65345c443a0feb894.json",
+            resource="https://openapi.invalid/schema/external-a1670b1d70651f7ad39c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -146,7 +146,7 @@ end
 _encode(_openapi_value::ACBus) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-dbc65345c443a0feb894.json",
+        resource="https://openapi.invalid/schema/external-a1670b1d70651f7ad39c.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -2,6 +2,9 @@
     LinearFunctionData
 
 Data for a linear function `f(x) = proportional_term * x + constant_term`.
+
+  - `constant_term`: Units: the wrapped function's output unit.
+  - `proportional_term`: Units: the wrapped function's output unit per unit of its input.
 """
 Base.@kwdef struct LinearFunctionData <: APIModel
     constant_term::Float64
@@ -14,7 +17,7 @@ function _decode(::Type{LinearFunctionData}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+            resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
             pointer="/\$defs/LinearFunctionData",
         ),
         _openapi_raw,
@@ -78,7 +81,7 @@ end
 _encode(_openapi_value::LinearFunctionData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+        resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
         pointer="/\$defs/LinearFunctionData",
     ),
     _encode_unvalidated(_openapi_value),

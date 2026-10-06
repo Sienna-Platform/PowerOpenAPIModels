@@ -18,21 +18,21 @@ function _decode(::Type{InputOutputCurveFunctionData}, value, _openapi_validate:
             "LINEAR" => (
                 LinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+                    resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
                     pointer="/\$defs/LinearFunctionData",
                 ),
             ),
             "PIECEWISE_LINEAR" => (
                 PiecewiseLinearData,
                 (
-                    resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+                    resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
                     pointer="/\$defs/PiecewiseLinearData",
                 ),
             ),
             "QUADRATIC" => (
                 QuadraticFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+                    resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
                     pointer="/\$defs/QuadraticFunctionData",
                 ),
             ),

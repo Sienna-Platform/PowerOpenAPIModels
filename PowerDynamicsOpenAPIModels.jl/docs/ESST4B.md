@@ -5,6 +5,7 @@ In these excitation systems, voltage (and also current in compounded systems) is
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`tr`** | **`Float64`** | Regulator input filter time constant | [required]
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`k_pr`** | **`Float64`** | Regulator proportional gain | [required]
 **`k_ir`** | **`Float64`** | Regulator integral gain | [required]

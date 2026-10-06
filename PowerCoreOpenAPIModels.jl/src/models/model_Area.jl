@@ -26,7 +26,7 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-144b0877020365be5164.json",
+            resource="https://openapi.invalid/schema/external-cb0aa2fd63cfda4ba3c9.json",
             pointer="",
         ),
         _openapi_raw,
@@ -118,7 +118,7 @@ end
 _encode(_openapi_value::Area) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-144b0877020365be5164.json",
+        resource="https://openapi.invalid/schema/external-cb0aa2fd63cfda4ba3c9.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

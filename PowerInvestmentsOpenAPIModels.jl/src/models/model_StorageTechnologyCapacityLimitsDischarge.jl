@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8f108128966df617bd22.json",
+            resource="https://openapi.invalid/schema/external-32723302ddf158b8f68e.json",
             pointer="/properties/capacity_limits_discharge",
         ),
         value,
@@ -27,7 +27,7 @@ function _decode(
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
+            resource="https://openapi.invalid/schema/external-07322f5ca369953d3685.json",
             pointer="/\$defs/MinMax",
         ),
         value;
@@ -42,7 +42,7 @@ function _decode(
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1e9a0d19d7563e537121.json",
+            resource="https://openapi.invalid/schema/external-07322f5ca369953d3685.json",
             pointer="/\$defs/MinMaxByKey",
         ),
         value;
@@ -68,7 +68,7 @@ end
 _encode(value::StorageTechnologyCapacityLimitsDischarge) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8f108128966df617bd22.json",
+        resource="https://openapi.invalid/schema/external-32723302ddf158b8f68e.json",
         pointer="/properties/capacity_limits_discharge",
     ),
     _encode_unvalidated(value),

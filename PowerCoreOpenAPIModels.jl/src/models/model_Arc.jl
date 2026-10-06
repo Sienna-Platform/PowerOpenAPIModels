@@ -18,7 +18,7 @@ function _decode(::Type{Arc}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bca620a6534416791452.json",
+            resource="https://openapi.invalid/schema/external-a042d6927319832a7d78.json",
             pointer="",
         ),
         _openapi_raw,
@@ -64,7 +64,7 @@ end
 _encode(_openapi_value::Arc) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-bca620a6534416791452.json",
+        resource="https://openapi.invalid/schema/external-a042d6927319832a7d78.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

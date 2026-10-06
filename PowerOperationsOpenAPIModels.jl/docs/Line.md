@@ -20,5 +20,6 @@ Name | Type | Description | Notes
 **`rating`** | **`Float64`** | Thermal rating. Flow on the line must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [required]
 **`rating_b`** | **`Union{Absent,Float64,Nothing}`** | Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
 **`rating_c`** | **`Union{Absent,Float64,Nothing}`** | Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
+**`operational_flow_limit`** | **`Union{Absent,OperationalFlowLimit,Nothing}`** | Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
 **`angle_limits`** | **`MinMax`** | Minimum and maximum angle limits. Units: rad. | [required]
 **`g`** | **`Union{Absent,FromTo,Nothing}`** | Shunt conductance, specified both on the `from` and `to` ends of the line. These are commonly modeled with the same value. Units: per parameter_units — NATURAL_UNITS: S, COMPONENT_BASE: pu . | [optional]

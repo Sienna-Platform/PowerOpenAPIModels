@@ -8,7 +8,7 @@ A generic branch defined by a series impedance on an `Arc` between two buses.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `active_power_flow`: Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power_flow`: Initial condition of reactive power flow on the line. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `max_flow`: Maximum allowable flow on the generic impedance. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `arc`: An `Arc` defining this line `from` a bus `to` another bus.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
@@ -22,7 +22,7 @@ Base.@kwdef struct GenericArcImpedance <: APIModel
     available::Bool
     active_power_flow::Float64
     reactive_power_flow::Float64
-    max_flow::Float64
+    operational_flow_limit::Union{Absent, OperationalFlowLimit, Nothing} = ABSENT
     arc::Int64
     base_power::Float64
     power_units::UnitSystem
@@ -36,7 +36,7 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ba70bf8471cae8da9de1.json",
+            resource="https://openapi.invalid/schema/external-43ef517e81b9404bc476.json",
             pointer="",
         ),
         _openapi_raw,
@@ -60,11 +60,13 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
         _required(_openapi_object, "reactive_power_flow", "GenericArcImpedance"),
         false,
     )
-    _openapi_field_max_flow = _decode(
-        Float64,
-        _required(_openapi_object, "max_flow", "GenericArcImpedance"),
-        false,
-    )
+    _openapi_field_operational_flow_limit =
+        haskey(_openapi_object, "operational_flow_limit") ?
+        _decode(
+            Union{Absent, OperationalFlowLimit, Nothing},
+            _openapi_object["operational_flow_limit"],
+            false,
+        ) : ABSENT
     _openapi_field_arc =
         _decode(Int64, _required(_openapi_object, "arc", "GenericArcImpedance"), false)
     _openapi_field_base_power = _decode(
@@ -96,7 +98,7 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
             "available",
             "active_power_flow",
             "reactive_power_flow",
-            "max_flow",
+            "operational_flow_limit",
             "arc",
             "base_power",
             "power_units",
@@ -113,7 +115,7 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
         available=_openapi_field_available,
         active_power_flow=_openapi_field_active_power_flow,
         reactive_power_flow=_openapi_field_reactive_power_flow,
-        max_flow=_openapi_field_max_flow,
+        operational_flow_limit=_openapi_field_operational_flow_limit,
         arc=_openapi_field_arc,
         base_power=_openapi_field_base_power,
         power_units=_openapi_field_power_units,
@@ -139,8 +141,10 @@ function _encode_unvalidated(_openapi_value::GenericArcImpedance)
         _openapi_output["reactive_power_flow"] =
             _encode_unvalidated(_openapi_value.reactive_power_flow)
     )
-    _openapi_value.max_flow isa Absent ||
-        (_openapi_output["max_flow"] = _encode_unvalidated(_openapi_value.max_flow))
+    _openapi_value.operational_flow_limit isa Absent || (
+        _openapi_output["operational_flow_limit"] =
+            _encode_unvalidated(_openapi_value.operational_flow_limit)
+    )
     _openapi_value.arc isa Absent ||
         (_openapi_output["arc"] = _encode_unvalidated(_openapi_value.arc))
     _openapi_value.base_power isa Absent ||
@@ -168,7 +172,7 @@ end
 _encode(_openapi_value::GenericArcImpedance) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ba70bf8471cae8da9de1.json",
+        resource="https://openapi.invalid/schema/external-43ef517e81b9404bc476.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -186,8 +190,10 @@ function _form_fields(_openapi_value::GenericArcImpedance)
         push!(_openapi_output, "active_power_flow" => _openapi_value.active_power_flow)
     _openapi_value.reactive_power_flow isa Absent ||
         push!(_openapi_output, "reactive_power_flow" => _openapi_value.reactive_power_flow)
-    _openapi_value.max_flow isa Absent ||
-        push!(_openapi_output, "max_flow" => _openapi_value.max_flow)
+    _openapi_value.operational_flow_limit isa Absent || push!(
+        _openapi_output,
+        "operational_flow_limit" => _openapi_value.operational_flow_limit,
+    )
     _openapi_value.arc isa Absent || push!(_openapi_output, "arc" => _openapi_value.arc)
     _openapi_value.base_power isa Absent ||
         push!(_openapi_output, "base_power" => _openapi_value.base_power)

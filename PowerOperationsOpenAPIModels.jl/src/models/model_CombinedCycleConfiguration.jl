@@ -22,7 +22,7 @@ function _decode(::Type{CombinedCycleConfiguration}, value, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+            resource="https://openapi.invalid/schema/external-a25835039c119634c922.json",
             pointer="/\$defs/CombinedCycleConfiguration",
         ),
         value,
@@ -38,7 +38,7 @@ end
 _encode(value::CombinedCycleConfiguration) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-98ed6538b1d3543b4530.json",
+        resource="https://openapi.invalid/schema/external-a25835039c119634c922.json",
         pointer="/\$defs/CombinedCycleConfiguration",
     ),
     _encode_unvalidated(value),

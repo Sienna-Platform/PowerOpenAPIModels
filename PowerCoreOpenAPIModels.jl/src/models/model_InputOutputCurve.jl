@@ -2,6 +2,8 @@
     InputOutputCurve
 
 A curve whose y values are the total input `f(x)` at production level `x` — currency per hour against MW in a cost curve, fuel per hour against MW in a fuel curve. The y axis is an absolute quantity, not a rate; use `IncrementalCurve` for marginal-rate data.
+
+  - `input_at_zero`: Units: the curve's y-axis unit.
 """
 Base.@kwdef struct InputOutputCurve <: APIModel
     curve_type::String = "INPUT_OUTPUT"
@@ -14,7 +16,7 @@ function _decode(::Type{InputOutputCurve}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+            resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
             pointer="/\$defs/InputOutputCurve",
         ),
         _openapi_raw,
@@ -71,7 +73,7 @@ end
 _encode(_openapi_value::InputOutputCurve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
         pointer="/\$defs/InputOutputCurve",
     ),
     _encode_unvalidated(_openapi_value),

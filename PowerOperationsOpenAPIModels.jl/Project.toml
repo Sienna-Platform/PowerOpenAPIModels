@@ -1,7 +1,7 @@
 name = "PowerOperationsOpenAPIModels"
 uuid = "a372b6d7-45a2-44c2-8199-6a724b72e8ff"
 authors = ["Sienna-Platform"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
@@ -17,10 +17,10 @@ UUIDs = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 Base64 = "1"
 Dates = "1"
 HTTP = "1 - 2"
-InfrastructureCoreOpenAPIModels = "0.1"
+InfrastructureCoreOpenAPIModels = "0.2.0"
 JSON = "1"
 OpenAPI = "1.2"
-PowerCoreOpenAPIModels = "0.1"
+PowerCoreOpenAPIModels = "0.2.0"
 UUIDs = "1"
 julia = "1.10"
 

@@ -1,7 +1,7 @@
 name = "PowerCoreOpenAPIModels"
 uuid = "b7b40286-e793-417d-a9a0-b1583e4da1cb"
 authors = ["Sienna-Platform"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
@@ -17,8 +17,8 @@ UUIDs = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
 Base64 = "1"
 Dates = "1"
 HTTP = "1 - 2"
-InfrastructureCoreOpenAPIModels = "0.1"
-InfrastructureTimeSeriesOpenAPIModels = "0.1"
+InfrastructureCoreOpenAPIModels = "0.2.0"
+InfrastructureTimeSeriesOpenAPIModels = "0.2.0"
 JSON = "1"
 OpenAPI = "1.2"
 UUIDs = "1"

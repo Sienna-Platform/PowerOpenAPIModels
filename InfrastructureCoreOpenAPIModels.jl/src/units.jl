@@ -56,6 +56,7 @@ const UNIT_VOCABULARY = Dict{Tuple{String, String}, Float64}(
     ("StartFuelPerCapacity", "MMBtu/MW") => 1.0,
     ("Susceptance", "S") => 1.0,
     ("Voltage", "kV") => 1.0,
+    ("VoltagePerPower", "kV/MW") => 1.0,
     ("Volume", "m3") => 1.0,
     ("VolumeFlowRate", "m3/s") => 1.0,
 )

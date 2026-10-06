@@ -2,6 +2,9 @@
     XYCoords
 
 A single point, given as its `x` and `y` coordinates.
+
+  - `x`: Units: the wrapped function's input unit.
+  - `y`: Units: the wrapped function's output unit.
 """
 Base.@kwdef struct XYCoords <: APIModel
     x::Float64
@@ -13,7 +16,7 @@ function _decode(::Type{XYCoords}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+            resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
             pointer="/\$defs/XY_Coords",
         ),
         _openapi_raw,
@@ -54,7 +57,7 @@ end
 _encode(_openapi_value::XYCoords) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+        resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
         pointer="/\$defs/XY_Coords",
     ),
     _encode_unvalidated(_openapi_value),

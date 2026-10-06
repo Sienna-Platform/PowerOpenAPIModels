@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **`t1`** | **`Float64`** | First pole in s | [required]
 **`t2`** | **`Float64`** | First zero in s | [required]
 **`t3`** | **`Float64`** | First pole in s | [required]
-**`t4`** | **`Union{Absent,Float64,Nothing}`** | First zero in s | [optional]
+**`t4`** | **`Float64`** | First zero in s | [required]
 **`te`** | **`Float64`** | Field circuit time constant | [required]
 **`tr`** | **`Float64`** | Voltage measurement time constant | [required]
 **`va_lim`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]

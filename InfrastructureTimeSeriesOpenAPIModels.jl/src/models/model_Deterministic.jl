@@ -58,7 +58,7 @@ function _decode(::Type{Deterministic}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-042d3ef5a2d5edd0803d.json",
+            resource="https://openapi.invalid/schema/external-637cd0dfea1f9cb4a6aa.json",
             pointer="",
         ),
         _openapi_raw,
@@ -284,7 +284,7 @@ end
 _encode(_openapi_value::Deterministic) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-042d3ef5a2d5edd0803d.json",
+        resource="https://openapi.invalid/schema/external-637cd0dfea1f9cb4a6aa.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

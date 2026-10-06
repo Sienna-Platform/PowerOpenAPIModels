@@ -17,7 +17,7 @@ function _decode(::Type{ShuntAdmittanceUnitBasis}, value, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+            resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
             pointer="/\$defs/ShuntAdmittanceUnitBasis",
         ),
         value,
@@ -33,7 +33,7 @@ end
 _encode(value::ShuntAdmittanceUnitBasis) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-0936a17371037c3b813d.json",
+        resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
         pointer="/\$defs/ShuntAdmittanceUnitBasis",
     ),
     _encode_unvalidated(value),

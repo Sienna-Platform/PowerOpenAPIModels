@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **`g_lim`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
 **`tw`** | **`Float64`** | Water inertia time constant | [required]
 **`p_lim`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
-**`d_turb`** | **`Union{Absent,Float64,Nothing}`** | Turbine damping coefficient | [optional]
+**`d`** | **`Float64`** | Turbine damping coefficient | [required]
 **`gate_openings`** | **`Vector{Float64}`** | Gate opening speed at different loads | [required]
 **`power_gate_openings`** | **`Vector{Float64}`** | Power at gate_openings | [required]
 **`p_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference load set-point | [optional]

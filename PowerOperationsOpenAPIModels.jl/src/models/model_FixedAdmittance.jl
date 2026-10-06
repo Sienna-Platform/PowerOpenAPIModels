@@ -30,7 +30,7 @@ function _decode(::Type{FixedAdmittance}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-02f715cd383eaae07dfd.json",
+            resource="https://openapi.invalid/schema/external-440676bf1a3e03809eff.json",
             pointer="",
         ),
         _openapi_raw,
@@ -126,7 +126,7 @@ end
 _encode(_openapi_value::FixedAdmittance) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-02f715cd383eaae07dfd.json",
+        resource="https://openapi.invalid/schema/external-440676bf1a3e03809eff.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

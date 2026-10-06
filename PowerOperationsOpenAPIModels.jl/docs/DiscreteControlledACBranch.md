@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **`r`** | **`Float64`** | Resistance. Per-unit on `base_power`, which records the system base. Units: pu. | [required]
 **`x`** | **`Float64`** | Reactance. Per-unit on `base_power`, which records the system base. Units: pu. | [required]
 **`rating`** | **`Float64`** | Thermal rating. Flow on the branch must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [required]
+**`operational_flow_limit`** | **`Union{Absent,OperationalFlowLimit,Nothing}`** | Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
 **`discrete_branch_type`** | **`Union{Absent,DiscreteControlledACBranchDiscreteBranchType,Nothing}`** | Type of discrete control. | [optional]
 **`branch_status`** | **`Union{Absent,DiscreteControlledACBranchBranchStatus,Nothing}`** | Open or Close status. | [optional]
 **`normal_branch_status`** | **`Union{Absent,DiscreteControlledACBranchNormalBranchStatus,Nothing}`** | Normal (as-designed) open or close status of the device. | [optional]

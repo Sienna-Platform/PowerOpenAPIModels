@@ -2,6 +2,10 @@
     QuadraticFunctionData
 
 Data for a quadratic function `f(x) = quadratic_term * x^2 + proportional_term * x + constant_term`. A non-negative `quadratic_term` makes the function convex.
+
+  - `constant_term`: Units: the wrapped function's output unit.
+  - `proportional_term`: Units: the wrapped function's output unit per unit of its input.
+  - `quadratic_term`: Units: the wrapped function's output unit per unit of its input squared.
 """
 Base.@kwdef struct QuadraticFunctionData <: APIModel
     constant_term::Float64
@@ -15,7 +19,7 @@ function _decode(::Type{QuadraticFunctionData}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+            resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
             pointer="/\$defs/QuadraticFunctionData",
         ),
         _openapi_raw,
@@ -90,7 +94,7 @@ end
 _encode(_openapi_value::QuadraticFunctionData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-50d5243393bb9d77da58.json",
+        resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
         pointer="/\$defs/QuadraticFunctionData",
     ),
     _encode_unvalidated(_openapi_value),

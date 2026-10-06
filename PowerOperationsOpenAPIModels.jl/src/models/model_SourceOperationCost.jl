@@ -18,21 +18,21 @@ function _decode(::Type{SourceOperationCost}, value, _openapi_validate::Bool)
             "IMPORTEXPORT" => (
                 ImportExportCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
                     pointer="/\$defs/ImportExportCost",
                 ),
             ),
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-ca198532ff44628c87dd.json",
+                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
