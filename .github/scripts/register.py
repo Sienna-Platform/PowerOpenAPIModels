@@ -13,6 +13,10 @@ unfinished wave.
 Comments go out as github-actions[bot] (GITHUB_TOKEN): Registrator accepts that
 login by name, and would reject a GitHub App's bot, which is neither a
 collaborator nor an org member.
+
+Each comment carries release notes that link the SiennaSchemas changelog of the
+release in `.schema-version`. AutoMerge blocks a breaking version (a minor bump
+in 0.x) whose notes do not say "breaking" or "changelog".
 """
 
 import argparse
@@ -27,6 +31,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 GENERAL = "https://raw.githubusercontent.com/JuliaRegistries/General/master"
+SCHEMAS = "https://github.com/Sienna-Platform/SiennaSchemas"
 WAVE_TIMEOUT_S = 60 * 60
 POLL_S = 60
 
@@ -75,14 +80,23 @@ def registered(name: str, version: str) -> bool:
         raise
 
 
-def comment(sha: str, subdir: str) -> None:
+def registrator_body(subdir: str, schema_tag: str) -> str:
+    return (
+        f"@JuliaRegistrator register subdir={subdir}\n\n"
+        "Release notes:\n\n"
+        f"Generated from SiennaSchemas {schema_tag}. For the schema changes, including "
+        f"breaking ones, see the changelog: {SCHEMAS}/blob/{schema_tag}/CHANGELOG.md"
+    )
+
+
+def comment(sha: str, subdir: str, schema_tag: str) -> None:
     subprocess.run(
         [
             "gh",
             "api",
             f"repos/{os.environ['GITHUB_REPOSITORY']}/commits/{sha}/comments",
             "-f",
-            f"body=@JuliaRegistrator register subdir={subdir}",
+            f"body={registrator_body(subdir, schema_tag)}",
         ],
         check=True,
         stdout=subprocess.DEVNULL,
@@ -105,6 +119,7 @@ def main() -> int:
     versions = {version for _, version, _ in pkgs.values()}
     if len(versions) != 1:
         fail(f"the packages move together but carry {sorted(versions)}")
+    schema_tag = (REPO_ROOT / ".schema-version").read_text().strip()
     sha = (
         os.environ.get("GITHUB_SHA")
         or subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
@@ -115,11 +130,15 @@ def main() -> int:
         print(
             f"wave {number}: {', '.join(wave)}; pending: {', '.join(pending) or 'none'}", flush=True
         )
-        if args.dry_run or not pending:
+        if args.dry_run:
+            for name in pending:
+                print(registrator_body(pkgs[name][0], schema_tag), flush=True)
+            continue
+        if not pending:
             continue
 
         for name in pending:
-            comment(sha, pkgs[name][0])
+            comment(sha, pkgs[name][0], schema_tag)
         deadline = time.monotonic() + WAVE_TIMEOUT_S
         while pending:
             if time.monotonic() > deadline:
