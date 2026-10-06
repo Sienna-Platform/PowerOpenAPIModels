@@ -76,6 +76,10 @@ jobs:
             -v /tmp/schemas:/schemas:ro \
             -v ${{ github.workspace }}:/output \
             $CODEGEN_IMAGE
+          # The container runs as root, so the files and directories it writes are
+          # root's, and the runner's git cannot replace them when the PR step resets
+          # the branch. Its depot is root's too, so `--user` is not an option.
+          sudo chown -R "$(id -u):$(id -g)" "${{ github.workspace }}"
           echo "${{ steps.schema.outputs.latest }}" > .schema-version
 
       # InfrastructureCoreOpenAPIModels ships the document reader version and the strict
