@@ -27,6 +27,8 @@ const UNIT_EXPORTS = [
     "declared_quantity",
     "has_unit_base",
     "unit_base",
+    "unit_discriminator",
+    "unit_keys",
     "has_conversion_factor",
     "conversion_factor",
     "UNIT_VOCABULARY",
@@ -189,9 +191,40 @@ function emit_fallbacks(io)
         println(io, "end")
     end
     println(io)
-    for accessor in ("declared_unit", "declared_quantity", "unit_base")
-        println(io, "$accessor(o::T, v::Val) where {T} = $accessor(T, v)")
+    # A discriminated property's unit is selected by dispatch on its discriminators'
+    # values: `unit_discriminator` names the sibling field to read next (nothing once the
+    # unit is fixed), and `unit_keys` walks that chain, so the unit resolves from the type
+    # plus a few field values, with no instance required.
+    print(
+        io,
+        raw"""
+        unit_discriminator(::Type, ::Val, ::Val...) = nothing
+
+        # The values selecting `T.prop`'s unit, as a tuple of `Val`s, each read through
+        # `getter` from the field `unit_discriminator` names; empty for a fixed unit.
+        function unit_keys(getter, ::Type{T}, prop::Val, keys::Val...) where {T}
+            disc = unit_discriminator(T, prop, keys...)
+            disc === nothing && return keys
+            return unit_keys(getter, T, prop, keys..., Val(Symbol(string(getter(disc)))))
+        end
+
+        """,
+    )
+    for accessor in ("declared_unit", "declared_quantity")
+        print(
+            io,
+            """
+            function $accessor(::Type{T}, prop::Val{P}, key::Val, keys::Val...) where {T, P}
+                disc = unit_discriminator(T, prop, Base.front((key, keys...))...)
+                value = only(typeof(last((key, keys...))).parameters)
+                error("\$(nameof(T)).\$P: no unit declared for \$disc=\$value")
+            end
+            $accessor(o::T, v::Val) where {T} =
+                $accessor(T, v, unit_keys(d -> getproperty(o, d), T, v)...)
+            """,
+        )
     end
+    println(io, "unit_base(o::T, v::Val) where {T} = unit_base(T, v)")
     println(io)
     return
 end
@@ -277,38 +310,36 @@ function build_branches(by_unit, type_name, prop, xunits, declared=nothing)
     return branches
 end
 
-leaf_value(b::LeafBranch, ::Val{:unit}) = b.unit
-leaf_value(b::LeafBranch, ::Val{:quantity}) = b.quantity
+_val_type(key) = "::Val{$(repr(Symbol(key)))}"
 
-function emit_branch_interior(io, type_name, prop, b::LeafBranch, kind, level)
-    pad = "    "^level
-    println(io, "$(pad)return \"$(leaf_value(b, kind))\"")
-    return
-end
-
-function emit_branch_interior(io, type_name, prop, b::NestedBranch, kind, level)
-    emit_branches(io, type_name, prop, b.branches, b.discriminator, kind, level)
-    pad = "    "^level
-    println(
-        io,
-        "$(pad)error(\"$type_name.$prop: no unit declared for $(b.discriminator)=\$(o.$(b.discriminator))\")",
-    )
-    return
-end
-
-function emit_branches(io, type_name, prop, branches, disc, kind, level)
-    pad = "    "^level
+"""
+Emit one `x-units` level of a discriminated property as dispatch: `unit_discriminator`
+names the field selecting among `branches` given the keys chosen so far (`path`), each
+leaf becomes a `declared_unit`/`declared_quantity` method on the full key path, and a
+nested branch recurses one level deeper.
+"""
+function emit_branches(io, prefix, type_name, prop, branches, disc, path)
+    head = "::Type{$type_name}, ::Val{:$prop}" * join(", " .* path)
+    println(io, "$(prefix)unit_discriminator($head) = $(repr(Symbol(disc)))")
     for b in branches
-        println(io, "$(pad)if string(o.$disc) == \"$(b.key)\"")
-        emit_branch_interior(io, type_name, prop, b, kind, level + 1)
-        println(io, "$(pad)end")
+        emit_branch(io, prefix, type_name, prop, b, [path; _val_type(b.key)])
     end
     return
 end
 
+function emit_branch(io, prefix, type_name, prop, b::LeafBranch, path)
+    head = "::Type{$type_name}, ::Val{:$prop}, " * join(path, ", ")
+    println(io, "$(prefix)declared_unit($head) = \"$(b.unit)\"")
+    println(io, "$(prefix)declared_quantity($head) = \"$(b.quantity)\"")
+    return
+end
+
+emit_branch(io, prefix, type_name, prop, b::NestedBranch, path) =
+    emit_branches(io, prefix, type_name, prop, b.branches, b.discriminator, path)
+
 """
-Emit instance-dispatched unit and quantity accessors for an `x-units`
-property, recursing through any nested discriminators. TransformerCircuit's
+Emit dispatch-resolved unit and quantity methods for an `x-units` property,
+recursing through any nested discriminators. TransformerCircuit's
 controlled_quantity_limits (flat) maps pu / MVAr / MW to Voltage,
 ReactivePower and ActivePower; a VSC converter setpoint (nested) additionally
 resolves an inner voltage-basis discriminator for its voltage-control
@@ -328,16 +359,7 @@ function emit_discriminated(io, prefix, by_unit, type_name, prop, spec)
     end
 
     println(io, "$(prefix)has_declared_unit(::Type{$type_name}, ::Val{:$prop}) = true")
-    for (accessor, kind) in
-        (("declared_unit", Val(:unit)), ("declared_quantity", Val(:quantity)))
-        println(io, "function $(prefix)$(accessor)(o::$type_name, ::Val{:$prop})")
-        emit_branches(io, type_name, prop, branches, disc, kind, 1)
-        println(
-            io,
-            "    error(\"$type_name.$prop: no unit declared for $disc=\$(o.$disc)\")",
-        )
-        println(io, "end")
-    end
+    emit_branches(io, prefix, type_name, prop, branches, disc, String[])
     return true
 end
 

@@ -353,6 +353,8 @@ export declared_unit
 export declared_quantity
 export has_unit_base
 export unit_base
+export unit_discriminator
+export unit_keys
 export has_conversion_factor
 export conversion_factor
 export UNIT_VOCABULARY
