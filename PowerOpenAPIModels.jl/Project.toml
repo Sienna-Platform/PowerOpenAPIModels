@@ -1,6 +1,6 @@
 name = "PowerOpenAPIModels"
 uuid = "0730f07c-cff6-4c3b-a9df-c546153be50a"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Sienna-Platform"]
 
 [deps]
@@ -13,12 +13,12 @@ PowerOperationsOpenAPIModels = "a372b6d7-45a2-44c2-8199-6a724b72e8ff"
 Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 
 [compat]
-InfrastructureCoreOpenAPIModels = "0.2.0"
-InfrastructureTimeSeriesOpenAPIModels = "0.2.0"
-PowerCoreOpenAPIModels = "0.2.0"
-PowerDynamicsOpenAPIModels = "0.2.0"
-PowerInvestmentsOpenAPIModels = "0.2.0"
-PowerOperationsOpenAPIModels = "0.2.0"
+InfrastructureCoreOpenAPIModels = "0.2.1"
+InfrastructureTimeSeriesOpenAPIModels = "0.2.1"
+PowerCoreOpenAPIModels = "0.2.1"
+PowerDynamicsOpenAPIModels = "0.2.1"
+PowerInvestmentsOpenAPIModels = "0.2.1"
+PowerOperationsOpenAPIModels = "0.2.1"
 Reexport = "1"
 julia = "1.10"
 
