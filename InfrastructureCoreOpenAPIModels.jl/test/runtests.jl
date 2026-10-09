@@ -5,6 +5,14 @@ using TOML
 using Test
 
 const IC = InfrastructureCoreOpenAPIModels
+
+# No schema nests x-units today, so the nested discriminator chain is exercised on a
+# stand-in type: `mode` selects, and under VOLTAGE `basis` selects again.
+struct NestedUnits end
+IC.unit_discriminator(::Type{NestedUnits}, ::Val{:setpoint}) = :mode
+IC.unit_discriminator(::Type{NestedUnits}, ::Val{:setpoint}, ::Val{:VOLTAGE}) = :basis
+IC.declared_unit(::Type{NestedUnits}, ::Val{:setpoint}, ::Val{:POWER}) = "MW"
+IC.declared_unit(::Type{NestedUnits}, ::Val{:setpoint}, ::Val{:VOLTAGE}, ::Val{:PU}) = "pu"
 const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
 
 @testset "InfrastructureCoreOpenAPIModels" begin
@@ -93,6 +101,18 @@ const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
     @testset "an unannotated property falls through to the generic fallback" begin
         @test !has_declared_unit(MinMax, Val(:min))
         @test !has_unit_base(MinMax, Val(:min))
+    end
+
+    @testset "unit_keys walks a nested discriminator chain" begin
+        T, p = NestedUnits, Val(:setpoint)
+        fields(mode, basis="") = d -> Dict(:mode => mode, :basis => basis)[d]
+        @test IC.unit_keys(fields("POWER"), T, p) == (Val(:POWER),)
+        @test IC.declared_unit(T, p, IC.unit_keys(fields("VOLTAGE", "PU"), T, p)...) == "pu"
+        @test_throws "no unit declared for basis=KV" IC.declared_unit(
+            T,
+            p,
+            IC.unit_keys(fields("VOLTAGE", "KV"), T, p)...,
+        )
     end
 
     @testset "this package carries no power dependency" begin

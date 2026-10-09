@@ -138,6 +138,21 @@ end
               "ActivePower"
     end
 
+    @testset "a discriminated x-unit also resolves by dispatch on the type" begin
+        p = Val(:peak_active_power)
+        @test unit_discriminator(LoadZone, p) === :power_units
+        @test unit_discriminator(ACBus, Val(:angle)) === nothing
+        @test declared_unit(LoadZone, p, Val(:NATURAL_UNITS)) == "MW"
+        @test declared_quantity(LoadZone, p, Val(:COMPONENT_BASE)) == "ActivePower"
+        @test unit_keys(d -> "NATURAL_UNITS", LoadZone, p) == (Val(:NATURAL_UNITS),)
+        @test unit_keys(d -> error("unread"), ACBus, Val(:angle)) == ()
+        @test_throws "LoadZone.peak_active_power: no unit declared for power_units=BOGUS" declared_unit(
+            LoadZone,
+            p,
+            Val(:BOGUS),
+        )
+    end
+
     @testset "voltage control associations" begin
         doc = voltage_control_document()
         @test !haskey(PC.document_tree(doc), "voltage_control_associations")
