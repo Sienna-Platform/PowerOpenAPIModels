@@ -32,7 +32,7 @@ function _decode(::Type{AGC}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3b9e9b13da65b6d1f61c.json",
+            resource="https://openapi.invalid/schema/external-b25d5fef361aeba32bb4.json",
             pointer="",
         ),
         _openapi_raw,
@@ -123,7 +123,7 @@ end
 _encode(_openapi_value::AGC) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3b9e9b13da65b6d1f61c.json",
+        resource="https://openapi.invalid/schema/external-b25d5fef361aeba32bb4.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

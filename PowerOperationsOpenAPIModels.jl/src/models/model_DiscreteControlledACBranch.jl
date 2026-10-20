@@ -14,6 +14,8 @@ Used to represent switches and breakers connecting AC Buses.
   - `r`: Resistance. Per-unit on `base_power`, which records the system base. Units: pu.
   - `x`: Reactance. Per-unit on `base_power`, which records the system base. Units: pu.
   - `rating`: Thermal rating. Flow on the branch must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_b`: Short-term thermal rating (Rate B in PSS/E), the flow allowed for a limited time, such as after a contingency. Absent means no short-term rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_c`: Emergency thermal rating (Rate C in PSS/E), the highest flow allowed for a brief period. Absent means no emergency rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `discrete_branch_type`: Type of discrete control.
   - `branch_status`: Open or Close status.
@@ -31,6 +33,8 @@ Base.@kwdef struct DiscreteControlledACBranch <: APIModel
     r::Float64
     x::Float64
     rating::Float64
+    rating_b::Union{Absent, Float64, Nothing} = ABSENT
+    rating_c::Union{Absent, Float64, Nothing} = ABSENT
     operational_flow_limit::Union{Absent, OperationalFlowLimit, Nothing} = ABSENT
     discrete_branch_type::Union{
         Absent,
@@ -51,7 +55,7 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6caf10a5c55026291efe.json",
+            resource="https://openapi.invalid/schema/external-3d839a38673786588013.json",
             pointer="",
         ),
         _openapi_raw,
@@ -114,6 +118,14 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
         _required(_openapi_object, "rating", "DiscreteControlledACBranch"),
         false,
     )
+    _openapi_field_rating_b =
+        haskey(_openapi_object, "rating_b") ?
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
+        ABSENT
+    _openapi_field_rating_c =
+        haskey(_openapi_object, "rating_c") ?
+        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
+        ABSENT
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
         _decode(
@@ -156,6 +168,8 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
             "r",
             "x",
             "rating",
+            "rating_b",
+            "rating_c",
             "operational_flow_limit",
             "discrete_branch_type",
             "branch_status",
@@ -176,6 +190,8 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
         r=_openapi_field_r,
         x=_openapi_field_x,
         rating=_openapi_field_rating,
+        rating_b=_openapi_field_rating_b,
+        rating_c=_openapi_field_rating_c,
         operational_flow_limit=_openapi_field_operational_flow_limit,
         discrete_branch_type=_openapi_field_discrete_branch_type,
         branch_status=_openapi_field_branch_status,
@@ -211,6 +227,10 @@ function _encode_unvalidated(_openapi_value::DiscreteControlledACBranch)
         (_openapi_output["x"] = _encode_unvalidated(_openapi_value.x))
     _openapi_value.rating isa Absent ||
         (_openapi_output["rating"] = _encode_unvalidated(_openapi_value.rating))
+    _openapi_value.rating_b isa Absent ||
+        (_openapi_output["rating_b"] = _encode_unvalidated(_openapi_value.rating_b))
+    _openapi_value.rating_c isa Absent ||
+        (_openapi_output["rating_c"] = _encode_unvalidated(_openapi_value.rating_c))
     _openapi_value.operational_flow_limit isa Absent || (
         _openapi_output["operational_flow_limit"] =
             _encode_unvalidated(_openapi_value.operational_flow_limit)
@@ -240,7 +260,7 @@ end
 _encode(_openapi_value::DiscreteControlledACBranch) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6caf10a5c55026291efe.json",
+        resource="https://openapi.invalid/schema/external-3d839a38673786588013.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -267,6 +287,10 @@ function _form_fields(_openapi_value::DiscreteControlledACBranch)
     _openapi_value.x isa Absent || push!(_openapi_output, "x" => _openapi_value.x)
     _openapi_value.rating isa Absent ||
         push!(_openapi_output, "rating" => _openapi_value.rating)
+    _openapi_value.rating_b isa Absent ||
+        push!(_openapi_output, "rating_b" => _openapi_value.rating_b)
+    _openapi_value.rating_c isa Absent ||
+        push!(_openapi_output, "rating_c" => _openapi_value.rating_c)
     _openapi_value.operational_flow_limit isa Absent || push!(
         _openapi_output,
         "operational_flow_limit" => _openapi_value.operational_flow_limit,

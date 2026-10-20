@@ -22,7 +22,7 @@ A hydropower generator that must have a `HydroReservoir` attached, suitable for 
   - `ramp_limits`: Ramp up and ramp down limits. Units: per power_units — NATURAL_UNITS: MW/min, COMPONENT_BASE: pu/min .
   - `time_limits`: Minimum up and minimum down time limits. Units: min.
   - `outflow_limits`: Turbine outflow limits. Set to `null` if not applicable. Units: m3/s.
-  - `efficiency`: Turbine efficiency [0, 1.0].
+  - `efficiency`: Turbine efficiency [0, 1.0]. Units: 1.
   - `turbine_type`: Type of the turbine.
   - `conversion_factor`: Conversion factor from flow/volume to energy: m^3 -> p.u-hr. Units: 1.
   - `prime_mover_type`: Prime mover technology according to EIA 923.
@@ -62,7 +62,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-56efaaf55edd41a9aa00.json",
+            resource="https://openapi.invalid/schema/external-6b663a3a419286628845.json",
             pointer="",
         ),
         _openapi_raw,
@@ -335,7 +335,7 @@ end
 _encode(_openapi_value::HydroTurbine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-56efaaf55edd41a9aa00.json",
+        resource="https://openapi.invalid/schema/external-6b663a3a419286628845.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

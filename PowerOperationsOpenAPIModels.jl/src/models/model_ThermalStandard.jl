@@ -56,7 +56,7 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9d7fd1f8e375d5261259.json",
+            resource="https://openapi.invalid/schema/external-9323b59d496a84fd4348.json",
             pointer="",
         ),
         _openapi_raw,
@@ -282,7 +282,7 @@ end
 _encode(_openapi_value::ThermalStandard) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-9d7fd1f8e375d5261259.json",
+        resource="https://openapi.invalid/schema/external-9323b59d496a84fd4348.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

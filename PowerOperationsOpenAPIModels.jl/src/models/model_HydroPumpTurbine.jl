@@ -24,7 +24,7 @@ A hydropower pumped turbine that needs to have two `HydroReservoir`s attached, s
   - `time_at_status`: Time the generator has been in its current `status`. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min.
   - `operation_cost`: Operating cost of generation. or MarketBidCost; default PSY.HydroGenerationCost(nothing)
   - `active_power_pump`: Initial active power set point of the pump unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `efficiency`: Turbine/Pump efficiency [0, 1.0].
+  - `efficiency`: Turbine/Pump efficiency [0, 1.0]. Units: 1.
   - `transition_time`: Transition time to switch into the specific mode. Units: min.
   - `minimum_time`: Minimum operating time for the specific mode. Units: min.
   - `travel_time`: Downstream (from reservoir into turbine) travel time. Set to `null` if not applicable. Units: min.
@@ -55,7 +55,7 @@ Base.@kwdef struct HydroPumpTurbine <: APIModel
     time_at_status::Union{Absent, Float64, Nothing} = ABSENT
     operation_cost::HydroPumpTurbineOperationCost
     active_power_pump::Union{Absent, Float64, Nothing} = ABSENT
-    efficiency::Union{Absent, Nothing, TurbinePump} = ABSENT
+    efficiency::Union{Absent, TurbinePump, Nothing} = ABSENT
     transition_time::Union{Absent, TurbinePump, Nothing} = ABSENT
     minimum_time::Union{Absent, TurbinePump, Nothing} = ABSENT
     travel_time::Union{Absent, Union{Float64, Nothing}} = ABSENT
@@ -70,7 +70,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5c27c0c4f7f7ec174f94.json",
+            resource="https://openapi.invalid/schema/external-72138dd3f7811d9ca98d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -174,7 +174,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
         ) : ABSENT
     _openapi_field_efficiency =
         haskey(_openapi_object, "efficiency") ?
-        _decode(Union{Absent, Nothing, TurbinePump}, _openapi_object["efficiency"], false) :
+        _decode(Union{Absent, TurbinePump, Nothing}, _openapi_object["efficiency"], false) :
         ABSENT
     _openapi_field_transition_time =
         haskey(_openapi_object, "transition_time") ?
@@ -397,7 +397,7 @@ end
 _encode(_openapi_value::HydroPumpTurbine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-5c27c0c4f7f7ec174f94.json",
+        resource="https://openapi.invalid/schema/external-72138dd3f7811d9ca98d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -40,7 +40,7 @@ function _decode(::Type{RenewableNonDispatch}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cf9c4ed322fe1f211bba.json",
+            resource="https://openapi.invalid/schema/external-fc85300cf530360f9684.json",
             pointer="",
         ),
         _openapi_raw,
@@ -181,7 +181,7 @@ end
 _encode(_openapi_value::RenewableNonDispatch) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-cf9c4ed322fe1f211bba.json",
+        resource="https://openapi.invalid/schema/external-fc85300cf530360f9684.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

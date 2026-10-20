@@ -34,7 +34,7 @@ function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7fb51817666aeee46b28.json",
+            resource="https://openapi.invalid/schema/external-b1de5d6bdcd1008478ab.json",
             pointer="",
         ),
         _openapi_raw,
@@ -163,7 +163,7 @@ end
 _encode(_openapi_value::BilateralTransaction) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7fb51817666aeee46b28.json",
+        resource="https://openapi.invalid/schema/external-b1de5d6bdcd1008478ab.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

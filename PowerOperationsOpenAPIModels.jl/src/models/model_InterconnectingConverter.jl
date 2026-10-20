@@ -63,7 +63,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1735b14c0e7e52f29304.json",
+            resource="https://openapi.invalid/schema/external-82e62c0074fe2a8ad228.json",
             pointer="",
         ),
         _openapi_raw,
@@ -363,7 +363,7 @@ end
 _encode(_openapi_value::InterconnectingConverter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1735b14c0e7e52f29304.json",
+        resource="https://openapi.invalid/schema/external-82e62c0074fe2a8ad228.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

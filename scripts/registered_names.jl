@@ -135,6 +135,7 @@ const REGISTERED_NAMES = Dict{String, Vector{String}}(
         "StandardLoad",
         "Substation",
         "SwitchedAdmittance",
+        "SwitchingSchedule",
         "SynchronousCondenser",
         "TModelHVDCLine",
         "ThermalMultiStart",

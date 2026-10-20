@@ -62,7 +62,7 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c6726aa5ba568cda5e51.json",
+            resource="https://openapi.invalid/schema/external-8f8cf83f77c1e9824022.json",
             pointer="",
         ),
         _openapi_raw,
@@ -325,7 +325,7 @@ end
 _encode(_openapi_value::ThermalMultiStart) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c6726aa5ba568cda5e51.json",
+        resource="https://openapi.invalid/schema/external-8f8cf83f77c1e9824022.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

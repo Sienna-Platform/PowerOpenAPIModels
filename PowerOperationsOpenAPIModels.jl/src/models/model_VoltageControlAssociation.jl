@@ -21,7 +21,7 @@ function _decode(::Type{VoltageControlAssociation}, _openapi_raw, _openapi_valid
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-069c2c79f486343595e8.json",
+            resource="https://openapi.invalid/schema/external-675cb3065875ac364bf4.json",
             pointer="",
         ),
         _openapi_raw,
@@ -87,7 +87,7 @@ end
 _encode(_openapi_value::VoltageControlAssociation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-069c2c79f486343595e8.json",
+        resource="https://openapi.invalid/schema/external-675cb3065875ac364bf4.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

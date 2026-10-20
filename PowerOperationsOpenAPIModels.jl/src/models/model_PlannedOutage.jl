@@ -1,15 +1,13 @@
 """
     PlannedOutage
 
-Supplemental attribute describing outages that are scheduled in advance, naming the time series that carries the schedule.
+Supplemental attribute describing outages that are scheduled in advance, naming the time series that carries the schedule. Schedule values: 1 = out of service, 0 = in service.
 
-  - `monitored_components`: IDs of devices whose post-contingency state should be modeled when this outage occurs. Empty by default; semantics of an empty list are decided by the downstream consumer.
   - `identifier`: Optional user-supplied identifier for the outage, such as a name or a block id. Null when not set.
 """
 Base.@kwdef struct PlannedOutage <: APIModel
     id::Int64
     outage_schedule::String
-    monitored_components::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     identifier::Union{Absent, Union{Nothing, String}} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -18,7 +16,7 @@ function _decode(::Type{PlannedOutage}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6e31b5a4d8571951d641.json",
+            resource="https://openapi.invalid/schema/external-4acd7db136246c1aee10.json",
             pointer="",
         ),
         _openapi_raw,
@@ -33,13 +31,6 @@ function _decode(::Type{PlannedOutage}, _openapi_raw, _openapi_validate::Bool)
         _required(_openapi_object, "outage_schedule", "PlannedOutage"),
         false,
     )
-    _openapi_field_monitored_components =
-        haskey(_openapi_object, "monitored_components") ?
-        _decode(
-            Union{Absent, Nothing, Vector{Int64}},
-            _openapi_object["monitored_components"],
-            false,
-        ) : ABSENT
     _openapi_field_identifier =
         haskey(_openapi_object, "identifier") ?
         _decode(
@@ -49,15 +40,13 @@ function _decode(::Type{PlannedOutage}, _openapi_raw, _openapi_validate::Bool)
         ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in
-        ("id", "outage_schedule", "monitored_components", "identifier") && continue
+        String(_openapi_key) in ("id", "outage_schedule", "identifier") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode(Any, _openapi_item, false)
     end
     return PlannedOutage(;
         id=_openapi_field_id,
         outage_schedule=_openapi_field_outage_schedule,
-        monitored_components=_openapi_field_monitored_components,
         identifier=_openapi_field_identifier,
         additional_properties=_openapi_additional_properties,
     )
@@ -69,10 +58,6 @@ function _encode_unvalidated(_openapi_value::PlannedOutage)
     _openapi_value.outage_schedule isa Absent || (
         _openapi_output["outage_schedule"] =
             _encode_unvalidated(_openapi_value.outage_schedule)
-    )
-    _openapi_value.monitored_components isa Absent || (
-        _openapi_output["monitored_components"] =
-            _encode_unvalidated(_openapi_value.monitored_components)
     )
     _openapi_value.identifier isa Absent ||
         (_openapi_output["identifier"] = _encode_unvalidated(_openapi_value.identifier))
@@ -89,7 +74,7 @@ end
 _encode(_openapi_value::PlannedOutage) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6e31b5a4d8571951d641.json",
+        resource="https://openapi.invalid/schema/external-4acd7db136246c1aee10.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -102,10 +87,6 @@ function _form_fields(_openapi_value::PlannedOutage)
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.outage_schedule isa Absent ||
         push!(_openapi_output, "outage_schedule" => _openapi_value.outage_schedule)
-    _openapi_value.monitored_components isa Absent || push!(
-        _openapi_output,
-        "monitored_components" => _openapi_value.monitored_components,
-    )
     _openapi_value.identifier isa Absent ||
         push!(_openapi_output, "identifier" => _openapi_value.identifier)
     append!(_openapi_output, collect(_openapi_value.additional_properties))

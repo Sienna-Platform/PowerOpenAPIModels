@@ -16,8 +16,8 @@ An AC transmission line.
   - `parameter_units`: Unit basis for this line's impedance and shunt admittance fields (r, x, b, g).
   - `b`: Shunt susceptance, specified both on the `from` and `to` ends of the line. These are commonly modeled with the same value. Units: per parameter_units — NATURAL_UNITS: S, COMPONENT_BASE: pu .
   - `rating`: Thermal rating. Flow on the line must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `rating_b`: Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `rating_c`: Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_b`: Short-term thermal rating (Rate B in PSS/E), the flow allowed for a limited time, such as after a contingency. Absent means no short-term rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_c`: Emergency thermal rating (Rate C in PSS/E), the highest flow allowed for a brief period. Absent means no emergency rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `angle_limits`: Minimum and maximum angle limits. Units: rad.
   - `g`: Shunt conductance, specified both on the `from` and `to` ends of the line. These are commonly modeled with the same value. Units: per parameter_units — NATURAL_UNITS: S, COMPONENT_BASE: pu .
@@ -48,7 +48,7 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-171f45a3db6935046531.json",
+            resource="https://openapi.invalid/schema/external-b6587c88f0631630c947.json",
             pointer="",
         ),
         _openapi_raw,
@@ -209,7 +209,7 @@ end
 _encode(_openapi_value::Line) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-171f45a3db6935046531.json",
+        resource="https://openapi.invalid/schema/external-b6587c88f0631630c947.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

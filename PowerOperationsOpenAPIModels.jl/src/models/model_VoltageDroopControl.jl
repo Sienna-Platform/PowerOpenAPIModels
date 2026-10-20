@@ -30,7 +30,7 @@ function _decode(::Type{VoltageDroopControl}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-332d6e7455ca8e6a52ce.json",
+            resource="https://openapi.invalid/schema/external-b5a12a759e22448db26e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -151,7 +151,7 @@ end
 _encode(_openapi_value::VoltageDroopControl) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-332d6e7455ca8e6a52ce.json",
+        resource="https://openapi.invalid/schema/external-b5a12a759e22448db26e.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -28,28 +28,28 @@ function _decode(::Type{ThermalStandardOperationCost}, value, _openapi_validate:
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
+                    resource="https://openapi.invalid/schema/external-398d2c7b110df506eb78.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
+                    resource="https://openapi.invalid/schema/external-398d2c7b110df506eb78.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
+                    resource="https://openapi.invalid/schema/external-398d2c7b110df506eb78.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
             "THERMAL" => (
                 ThermalGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
+                    resource="https://openapi.invalid/schema/external-398d2c7b110df506eb78.json",
                     pointer="/\$defs/ThermalGenerationCost",
                 ),
             ),

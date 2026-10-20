@@ -26,7 +26,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ca916908a6385a5a69cc.json",
+            resource="https://openapi.invalid/schema/external-b2be6eaa1ecd6ac94d85.json",
             pointer="",
         ),
         _openapi_raw,
@@ -119,7 +119,7 @@ end
 _encode(_openapi_value::GeometricDistributionForcedOutage) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ca916908a6385a5a69cc.json",
+        resource="https://openapi.invalid/schema/external-b2be6eaa1ecd6ac94d85.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
