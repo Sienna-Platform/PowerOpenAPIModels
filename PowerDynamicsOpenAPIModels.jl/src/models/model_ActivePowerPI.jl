@@ -10,7 +10,7 @@ function _decode(::Type{ActivePowerPI}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-85a1b89b8cb4b4cf48ff.json",
+            resource="https://openapi.invalid/schema/external-cec32044a5a27e9e0492.json",
             pointer="",
         ),
         _openapi_raw,
@@ -64,7 +64,7 @@ end
 _encode(_openapi_value::ActivePowerPI) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-85a1b89b8cb4b4cf48ff.json",
+        resource="https://openapi.invalid/schema/external-cec32044a5a27e9e0492.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

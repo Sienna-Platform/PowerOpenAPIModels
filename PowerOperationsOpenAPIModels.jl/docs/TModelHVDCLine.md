@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
 **`active_power_flow`** | **`Float64`** | Initial condition of active power flow on the line. Units: MW. | [required]
 **`arc`** | **`Int64`** | An `Arc` defining this line `from` a bus `to` another bus. | [required]
-**`base_current`** | **`Float64`** | Base current of the line as recorded by the source data. No field of this component is per-unit on it. Units: A. | [required]
+**`base_current`** | **`Float64`** | Base current of the line as recorded by the source data. No field of this component is per-unit on it. Units: kA. | [required]
 **`r`** | **`Float64`** | Total series resistance, split equally on both sides of the shunt capacitance. Units: ohm. | [required]
 **`l`** | **`Float64`** | Total series inductance, split equally on both sides of the shunt capacitance. Units: H. | [required]
 **`c`** | **`Float64`** | Shunt capacitance. Units: F. | [required]

@@ -16,7 +16,7 @@ function _decode(::Type{TimeSeriesPiecewiseStepData}, _openapi_raw, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
+            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
             pointer="/\$defs/TimeSeriesPiecewiseStepData",
         ),
         _openapi_raw,
@@ -69,7 +69,7 @@ end
 _encode(_openapi_value::TimeSeriesPiecewiseStepData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
+        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
         pointer="/\$defs/TimeSeriesPiecewiseStepData",
     ),
     _encode_unvalidated(_openapi_value),

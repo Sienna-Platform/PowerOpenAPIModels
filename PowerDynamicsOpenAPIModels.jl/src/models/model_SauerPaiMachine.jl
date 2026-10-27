@@ -38,7 +38,7 @@ function _decode(::Type{SauerPaiMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-58426dc3d800e7d07c55.json",
+            resource="https://openapi.invalid/schema/external-1443a3232626b8cb113f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -150,7 +150,7 @@ end
 _encode(_openapi_value::SauerPaiMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-58426dc3d800e7d07c55.json",
+        resource="https://openapi.invalid/schema/external-1443a3232626b8cb113f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

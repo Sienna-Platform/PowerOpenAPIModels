@@ -46,7 +46,7 @@ function _decode(::Type{PIDGOV}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9778c2fe6e815398c341.json",
+            resource="https://openapi.invalid/schema/external-51070051af0936e99ab0.json",
             pointer="",
         ),
         _openapi_raw,
@@ -188,7 +188,7 @@ end
 _encode(_openapi_value::PIDGOV) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-9778c2fe6e815398c341.json",
+        resource="https://openapi.invalid/schema/external-51070051af0936e99ab0.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

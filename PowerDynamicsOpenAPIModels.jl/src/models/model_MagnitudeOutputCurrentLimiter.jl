@@ -19,7 +19,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b82a48768159315d00c4.json",
+            resource="https://openapi.invalid/schema/external-8615b878e661e2de5f82.json",
             pointer="",
         ),
         _openapi_raw,
@@ -60,7 +60,7 @@ end
 _encode(_openapi_value::MagnitudeOutputCurrentLimiter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b82a48768159315d00c4.json",
+        resource="https://openapi.invalid/schema/external-8615b878e661e2de5f82.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

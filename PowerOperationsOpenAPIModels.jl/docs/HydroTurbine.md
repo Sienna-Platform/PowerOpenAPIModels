@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **`ramp_limits`** | **`Union{Absent,UpDown,Nothing}`** | Ramp up and ramp down limits. Units: per power_units — NATURAL_UNITS: MW/min, COMPONENT_BASE: pu/min . | [optional]
 **`time_limits`** | **`Union{Absent,UpDown,Nothing}`** | Minimum up and minimum down time limits. Units: min. | [optional]
 **`outflow_limits`** | **`Union{Absent,MinMax,Nothing}`** | Turbine outflow limits. Set to `null` if not applicable. Units: m3/s. | [optional]
-**`efficiency`** | **`Union{Absent,Float64,Nothing}`** | Turbine efficiency [0, 1.0]. | [optional]
+**`efficiency`** | **`Union{Absent,Float64,Nothing}`** | Turbine efficiency [0, 1.0]. Units: 1. | [optional]
 **`turbine_type`** | **`Union{Absent,HydroTurbineTurbineType,Nothing}`** | Type of the turbine. | [optional]
 **`conversion_factor`** | **`Union{Absent,Float64,Nothing}`** | Conversion factor from flow/volume to energy: m^3 -> p.u-hr. Units: 1. | [optional]
 **`prime_mover_type`** | **`Union{Absent,Nothing,PrimeMovers}`** | Prime mover technology according to EIA 923. | [optional]

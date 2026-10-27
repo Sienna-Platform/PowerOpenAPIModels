@@ -6,4 +6,4 @@ Data for a piecewise linear function defined by (x, y) points and interpolated l
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`function_type`** | **`String`** |  | [required]
-**`points`** | **`Vector{XYCoords}`** |  | [required]
+**`points`** | **`Vector{TwoDimensionalFunctionPoint}`** |  | [required]

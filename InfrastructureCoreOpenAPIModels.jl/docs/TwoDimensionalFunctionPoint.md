@@ -1,4 +1,4 @@
-# XYCoords
+# TwoDimensionalFunctionPoint
 
 A single point, given as its `x` and `y` coordinates.
 

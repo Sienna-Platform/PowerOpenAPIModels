@@ -10,7 +10,7 @@ This line must be connected to a `DCBus` on each end. It uses a T-Model of the l
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `active_power_flow`: Initial condition of active power flow on the line. Units: MW.
   - `arc`: An `Arc` defining this line `from` a bus `to` another bus.
-  - `base_current`: Base current of the line as recorded by the source data. No field of this component is per-unit on it. Units: A.
+  - `base_current`: Base current of the line as recorded by the source data. No field of this component is per-unit on it. Units: kA.
   - `r`: Total series resistance, split equally on both sides of the shunt capacitance. Units: ohm.
   - `l`: Total series inductance, split equally on both sides of the shunt capacitance. Units: H.
   - `c`: Shunt capacitance. Units: F.
@@ -34,7 +34,7 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d22a537d95adef403347.json",
+            resource="https://openapi.invalid/schema/external-41416870008c05b291fb.json",
             pointer="",
         ),
         _openapi_raw,
@@ -143,7 +143,7 @@ end
 _encode(_openapi_value::TModelHVDCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-d22a537d95adef403347.json",
+        resource="https://openapi.invalid/schema/external-41416870008c05b291fb.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

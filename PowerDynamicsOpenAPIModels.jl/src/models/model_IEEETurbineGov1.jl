@@ -54,7 +54,7 @@ function _decode(::Type{IEEETurbineGov1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-00eed8e892c6b4b0c778.json",
+            resource="https://openapi.invalid/schema/external-158b02b1c53a50540f91.json",
             pointer="",
         ),
         _openapi_raw,
@@ -220,7 +220,7 @@ end
 _encode(_openapi_value::IEEETurbineGov1) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-00eed8e892c6b4b0c778.json",
+        resource="https://openapi.invalid/schema/external-158b02b1c53a50540f91.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

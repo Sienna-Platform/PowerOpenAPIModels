@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **`time_at_status`** | **`Union{Absent,Float64,Nothing}`** | Time the generator has been in its current `status`. default is the INFINITE_TIME sentinel (1e4 hours, 600000 minutes). Units: min. | [optional]
 **`operation_cost`** | **`HydroPumpTurbineOperationCost`** | Operating cost of generation. or MarketBidCost; default PSY.HydroGenerationCost(nothing) | [required]
 **`active_power_pump`** | **`Union{Absent,Float64,Nothing}`** | Initial active power set point of the pump unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
-**`efficiency`** | **`Union{Absent,Nothing,TurbinePump}`** | Turbine/Pump efficiency [0, 1.0]. | [optional]
+**`efficiency`** | **`Union{Absent,TurbinePump,Nothing}`** | Turbine/Pump efficiency [0, 1.0]. Units: 1. | [optional]
 **`transition_time`** | **`Union{Absent,TurbinePump,Nothing}`** | Transition time to switch into the specific mode. Units: min. | [optional]
 **`minimum_time`** | **`Union{Absent,TurbinePump,Nothing}`** | Minimum operating time for the specific mode. Units: min. | [optional]
 **`travel_time`** | **`Union{Absent,Union{Float64,Nothing}}`** | Downstream (from reservoir into turbine) travel time. Set to `null` if not applicable. Units: min. | [optional]

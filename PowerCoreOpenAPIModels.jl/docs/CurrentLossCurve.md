@@ -1,0 +1,9 @@
+# CurrentLossCurve
+
+Losses of a device as a function of the current through it (a converter's DC current), together with the basis the curve is expressed in. `power_units` governs both axes: the y values are power and the x values current, each per-unit on the component's base (current's base being base power over base voltage) or natural. Units: x-axis per power_units — NATURAL_UNITS: kA, COMPONENT_BASE: pu ; y-axis per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**`power_units`** | **`UnitSystem`** | Unit basis a stored value is expressed in. COMPONENT_BASE: per-unit against a base the component records itself. NATURAL_UNITS: the quantity's own physical unit. No system-wide option: a value per-unitized against a shared base records that base on the component and rides as COMPONENT_BASE. Used in three scopes, each read against its own record rather than a document-wide table: a component's own `power_units` (against that component's `base_power`), a cost payload's own `power_units` (e.g. `CostCurve`, against the owning component's `base_power`), and a time series association's own `unit_system` (governing only that one series). | [required]
+**`value_curve`** | **`LossValueCurve`** | The shape of a loss curve, selected by `curve_type`. `INPUT_OUTPUT` gives the total loss at each flow level -- a constant loss plus a proportional loss rate, in MW of loss per MW of flow. `INCREMENTAL` gives the marginal loss rate instead, the form a piecewise model uses to give different proportional losses on different flow segments. Individual loss fields accept narrower sets of shapes than this union admits; the consuming data layer enforces that, not this schema. | [required]

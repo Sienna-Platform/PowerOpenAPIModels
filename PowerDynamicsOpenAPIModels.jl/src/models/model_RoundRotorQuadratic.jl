@@ -18,7 +18,7 @@ function _decode(::Type{RoundRotorQuadratic}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-303424ebf481a640ddc6.json",
+            resource="https://openapi.invalid/schema/external-826a42a6c7e08862d7fe.json",
             pointer="",
         ),
         _openapi_raw,
@@ -74,7 +74,7 @@ end
 _encode(_openapi_value::RoundRotorQuadratic) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-303424ebf481a640ddc6.json",
+        resource="https://openapi.invalid/schema/external-826a42a6c7e08862d7fe.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

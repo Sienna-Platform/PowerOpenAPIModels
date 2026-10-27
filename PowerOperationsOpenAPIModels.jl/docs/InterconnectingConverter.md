@@ -1,6 +1,6 @@
 # InterconnectingConverter
 
-Interconnecting Power Converter (IPC) for transforming power from an ACBus to a DCBus. Voltage and voltage-droop fields are natural units only: there is no conventional DC base voltage from which to per-unitize them.
+Interconnecting Power Converter (IPC) for transforming power from an ACBus to a DCBus. Voltage and voltage-droop fields are natural units only: there is no conventional DC base voltage from which to per-unitize them. `rated_dc_voltage` and `rated_ac_voltage` record the voltage bases, so a consumer can convert the voltage fields to per unit.
 
 ## Properties
 Name | Type | Description | Notes
@@ -16,15 +16,17 @@ Name | Type | Description | Notes
 **`base_power`** | **`Float64`** | Base power of the converter for per unitization. Units: MVA. | [required]
 **`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
 **`reactive_power_limits`** | **`Union{Absent,MinMax,Nothing}`** | Minimum and maximum reactive power limits. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [optional]
-**`dc_current`** | **`Union{Absent,Float64,Nothing}`** | DC current on the converter. Units: A. | [optional]
-**`max_dc_current`** | **`Union{Absent,Float64,Nothing}`** | Maximum stable dc current limits. Units: A. | [optional]
-**`loss_function`** | **`Union{Absent,LossCurve,Nothing}`** | Linear or quadratic loss function with respect to the converter current. | [optional]
+**`dc_current`** | **`Union{Absent,Float64,Nothing}`** | DC current on the converter. Units: kA. | [optional]
+**`max_dc_current`** | **`Union{Absent,Float64,Nothing}`** | Maximum stable dc current limits. 9999 means no limit. Units: kA. | [optional]
+**`loss_function`** | **`Union{Absent,CurrentLossCurve,Nothing}`** | Linear or quadratic loss (power) as a function of the converter's DC current. | [optional]
 **`dc_control`** | **`Union{Absent,Nothing,VSCDCControlModes}`** | DC-side control mode of the converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly. | [optional]
 **`ac_control`** | **`Union{Absent,Nothing,VSCACControlModes}`** | AC-side control mode of the converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly. | [optional]
 **`dc_power_setpoint`** | **`Union{Absent,Union{Float64,Nothing}}`** | Active-power order of the converter, used when `dc_control` is `DC_POWER`; `null` otherwise. Positive means the converter supplies power to the AC network; negative means it withdraws power from it. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
 **`dc_voltage_setpoint`** | **`Union{Absent,Union{Float64,Nothing}}`** | DC-side voltage target of the converter, used when `dc_control` is `DC_VOLTAGE` or `DC_VOLTAGE_DROOP`; `null` otherwise. Units: kV. | [optional]
+**`rated_dc_voltage`** | **`Union{Absent,Float64,Nothing}`** | Rated DC voltage of the converter, the base for `dc_voltage_setpoint` and `voltage_limits`; 0.0 means unspecified. Units: kV. | [optional]
 **`power_factor_setpoint`** | **`Union{Absent,Union{Float64,Nothing}}`** | Power-factor setpoint of the converter, used when `ac_control` is `AC_REACTIVE_POWER`; `null` otherwise. Units: 1. | [optional]
 **`ac_voltage_setpoint`** | **`Union{Absent,Union{Float64,Nothing}}`** | AC-side voltage magnitude target of the converter, used when `ac_control` is `AC_VOLTAGE`; `null` otherwise. Units: kV. | [optional]
+**`rated_ac_voltage`** | **`Union{Absent,Float64,Nothing}`** | Rated AC voltage at the converter's AC terminal, the base for `ac_voltage_setpoint`; 0.0 means unspecified. Units: kV. | [optional]
 **`dc_voltage_droop`** | **`Union{Absent,Float64,Nothing}`** | DC-voltage droop gain on the converter, used when `dc_control` is `DC_VOLTAGE_DROOP`: `V_dc = dc_voltage_setpoint - dc_voltage_droop * P_c`, with `V_dc` in kV and `P_c` in MW regardless of `power_units`. A value of 0.0 disables droop. Units: kV/MW. | [optional]
 **`remote_bus_control`** | **`Union{Absent,Union{Int64,Nothing}}`** | Number of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE`; null regulates its own terminal bus. | [optional]
 **`power_factor_weighting_fraction`** | **`Union{Absent,Float64,Nothing}`** | Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1. | [optional]

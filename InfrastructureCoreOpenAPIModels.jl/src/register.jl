@@ -23,7 +23,7 @@ function __init__()
     register_model_type!(TimeSeriesPiecewiseLinearData)
     register_model_type!(TimeSeriesPiecewiseStepData)
     register_model_type!(TimeSeriesQuadraticFunctionData)
+    register_model_type!(TwoDimensionalFunctionPoint)
     register_model_type!(UpDown)
-    register_model_type!(XYCoords)
     return nothing
 end

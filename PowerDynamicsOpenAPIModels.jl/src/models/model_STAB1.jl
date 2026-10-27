@@ -28,7 +28,7 @@ function _decode(::Type{STAB1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-38a1f2a40b2a88ac4251.json",
+            resource="https://openapi.invalid/schema/external-ce362a89391157c751e7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -97,7 +97,7 @@ end
 _encode(_openapi_value::STAB1) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-38a1f2a40b2a88ac4251.json",
+        resource="https://openapi.invalid/schema/external-ce362a89391157c751e7.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

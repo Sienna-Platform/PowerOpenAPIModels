@@ -46,7 +46,7 @@ function _decode(::Type{ST6B}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c4641abf4791527fdf31.json",
+            resource="https://openapi.invalid/schema/external-adde0763d912c223b1f7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -178,7 +178,7 @@ end
 _encode(_openapi_value::ST6B) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c4641abf4791527fdf31.json",
+        resource="https://openapi.invalid/schema/external-adde0763d912c223b1f7.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

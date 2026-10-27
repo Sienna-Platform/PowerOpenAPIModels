@@ -21,7 +21,7 @@ function _decode(::Type{BilateralConfirmation}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a25835039c119634c922.json",
+            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
             pointer="/\$defs/BilateralConfirmation",
         ),
         value,
@@ -37,7 +37,7 @@ end
 _encode(value::BilateralConfirmation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a25835039c119634c922.json",
+        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
         pointer="/\$defs/BilateralConfirmation",
     ),
     _encode_unvalidated(value),

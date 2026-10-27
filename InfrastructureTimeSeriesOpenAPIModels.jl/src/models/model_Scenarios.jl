@@ -19,6 +19,7 @@ A scenarios forecast: per-scenario, per-window horizon arrays. Adds a scenario a
   - `quantity_kind`: Kind of physical quantity the values measure (e.g. ActivePower, ReactivePower, ElectricalEnergy). Coarser than `units` but finer than a dimension: ActivePower, ReactivePower, and ApparentPower share the dimension {M:1,L:2,T:-3}, so a dimension cannot tell them apart and a quantity kind can. It is also the only record of what the values measure when `unit_system` is a per-unit basis.
   - `unit_system`: Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a COMPONENT_BASE series back to natural units needs the owning component's base_power. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS.
   - `time_reference`: How this series' timestamps were spelled, so a read hands back what the write declared instead of relabelling everything UTC. Absent means unspecified, which is not a claim the timestamps were written as UTC.
+  - `interval_alignment`: Position of each timestamp in the period it represents.
   - `component_field`: The field on the owning component or supplemental attribute whose value these values are the time-varying form of (e.g. max_active_power, rating). Free-form: it names a field in the consumer's own object model. Records what the values are for, where `name` only says which series they are.
   - `application_data`: Opaque, package-owned payload (typically JSON) carried verbatim for an application to reconstruct its own domain objects. Never parsed or interpreted here, and end users are not expected to set it. Element typing does not belong here — that is `element_type`.
   - `initial_timestamp`: Start of the first forecast window.
@@ -45,6 +46,7 @@ Base.@kwdef struct Scenarios <: APIModel
     quantity_kind::Union{Absent, Nothing, String} = ABSENT
     unit_system::Union{Absent, Nothing, UnitSystem} = ABSENT
     time_reference::Union{Absent, Nothing, String} = ABSENT
+    interval_alignment::Union{Absent, IntervalAlignment, Nothing} = ABSENT
     component_field::Union{Absent, Nothing, String} = ABSENT
     application_data::Union{Absent, Nothing, String} = ABSENT
     initial_timestamp::Dates.DateTime
@@ -60,7 +62,7 @@ function _decode(::Type{Scenarios}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c1ab68929472e0df6ddd.json",
+            resource="https://openapi.invalid/schema/external-4c0d5558c513c8a15479.json",
             pointer="",
         ),
         _openapi_raw,
@@ -123,6 +125,13 @@ function _decode(::Type{Scenarios}, _openapi_raw, _openapi_validate::Bool)
         haskey(_openapi_object, "time_reference") ?
         _decode(Union{Absent, Nothing, String}, _openapi_object["time_reference"], false) :
         ABSENT
+    _openapi_field_interval_alignment =
+        haskey(_openapi_object, "interval_alignment") ?
+        _decode(
+            Union{Absent, IntervalAlignment, Nothing},
+            _openapi_object["interval_alignment"],
+            false,
+        ) : ABSENT
     _openapi_field_component_field =
         haskey(_openapi_object, "component_field") ?
         _decode(Union{Absent, Nothing, String}, _openapi_object["component_field"], false) :
@@ -168,6 +177,7 @@ function _decode(::Type{Scenarios}, _openapi_raw, _openapi_validate::Bool)
             "quantity_kind",
             "unit_system",
             "time_reference",
+            "interval_alignment",
             "component_field",
             "application_data",
             "initial_timestamp",
@@ -197,6 +207,7 @@ function _decode(::Type{Scenarios}, _openapi_raw, _openapi_validate::Bool)
         quantity_kind=_openapi_field_quantity_kind,
         unit_system=_openapi_field_unit_system,
         time_reference=_openapi_field_time_reference,
+        interval_alignment=_openapi_field_interval_alignment,
         component_field=_openapi_field_component_field,
         application_data=_openapi_field_application_data,
         initial_timestamp=_openapi_field_initial_timestamp,
@@ -254,6 +265,10 @@ function _encode_unvalidated(_openapi_value::Scenarios)
         _openapi_output["time_reference"] =
             _encode_unvalidated(_openapi_value.time_reference)
     )
+    _openapi_value.interval_alignment isa Absent || (
+        _openapi_output["interval_alignment"] =
+            _encode_unvalidated(_openapi_value.interval_alignment)
+    )
     _openapi_value.component_field isa Absent || (
         _openapi_output["component_field"] =
             _encode_unvalidated(_openapi_value.component_field)
@@ -291,7 +306,7 @@ end
 _encode(_openapi_value::Scenarios) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c1ab68929472e0df6ddd.json",
+        resource="https://openapi.invalid/schema/external-4c0d5558c513c8a15479.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -331,6 +346,8 @@ function _form_fields(_openapi_value::Scenarios)
         push!(_openapi_output, "unit_system" => _openapi_value.unit_system)
     _openapi_value.time_reference isa Absent ||
         push!(_openapi_output, "time_reference" => _openapi_value.time_reference)
+    _openapi_value.interval_alignment isa Absent ||
+        push!(_openapi_output, "interval_alignment" => _openapi_value.interval_alignment)
     _openapi_value.component_field isa Absent ||
         push!(_openapi_output, "component_field" => _openapi_value.component_field)
     _openapi_value.application_data isa Absent ||

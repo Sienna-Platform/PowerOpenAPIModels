@@ -1,7 +1,7 @@
 """
     LCCControlMode
 
-Control mode of an LCC-HVDC line (PSS/E MDC). BLOCKED: the line is blocked and holds no schedule. POWER: the line holds a power schedule (power_transfer_setpoint, MW). CURRENT: the line holds a current schedule (current_transfer_setpoint, A).
+Control mode of an LCC-HVDC line (PSS/E MDC). BLOCKED: the line is blocked and holds no schedule. POWER: the line holds a power schedule (power_transfer_setpoint, MW). CURRENT: the line holds a current schedule (current_transfer_setpoint, kA).
 """
 struct LCCControlMode <: EnumAPIModel
     value::String
@@ -16,7 +16,7 @@ function _decode(::Type{LCCControlMode}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a25835039c119634c922.json",
+            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
             pointer="/\$defs/LCCControlMode",
         ),
         value,
@@ -32,7 +32,7 @@ end
 _encode(value::LCCControlMode) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a25835039c119634c922.json",
+        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
         pointer="/\$defs/LCCControlMode",
     ),
     _encode_unvalidated(value),

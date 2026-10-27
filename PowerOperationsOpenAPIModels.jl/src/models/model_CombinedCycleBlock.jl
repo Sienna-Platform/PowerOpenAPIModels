@@ -19,7 +19,7 @@ function _decode(::Type{CombinedCycleBlock}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cc003f2db8d2fa9ee359.json",
+            resource="https://openapi.invalid/schema/external-c7dbc93a37107f177a6b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -85,7 +85,7 @@ end
 _encode(_openapi_value::CombinedCycleBlock) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-cc003f2db8d2fa9ee359.json",
+        resource="https://openapi.invalid/schema/external-c7dbc93a37107f177a6b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

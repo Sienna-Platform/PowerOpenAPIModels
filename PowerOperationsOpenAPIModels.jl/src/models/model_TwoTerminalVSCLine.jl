@@ -10,7 +10,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
   - `active_power_flow`: Initial condition of active power flowing from the from-bus to the to-bus in DC. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `rating`: Transfer rating of the DC line, independent of the converter ratings at each end. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `g`: Series conductance of the DC line. Units: S.
-  - `dc_current`: DC current on the converter flowing in the DC line, from `from` bus to `to` bus. Units: A.
+  - `dc_current`: DC current on the converter flowing in the DC line, from `from` bus to `to` bus. Units: kA.
   - `reactive_power_from`: Initial condition of reactive power flowing into the from-bus. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `dc_control_from`: DC-side control mode of the `from` converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
   - `ac_control_from`: AC-side control mode of the `from` converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
@@ -20,7 +20,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
   - `ac_voltage_setpoint_from`: AC-side voltage magnitude target of the `from` bus converter, used when `ac_control_from` is `AC_VOLTAGE`; `null` otherwise. Units: kV.
   - `rated_ac_voltage_from`: Rated AC voltage at the `from` converter's AC terminal; 0.0 means unspecified. Units: kV.
   - `converter_loss_from`: Loss model coefficients in the `from` bus converter. It accepts a linear model or quadratic. Same converter data is used in both ends.
-  - `max_dc_current_from`: Maximum stable dc current limits. Units: A.
+  - `max_dc_current_from`: Maximum stable dc current limits. 9999 means no limit. Units: kA.
   - `rating_from`: Converter rating in the `from` bus. Absent means the converter imposes no limit beyond `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `reactive_power_limits_from`: Limits on the Reactive Power at the `from` side. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `power_factor_weighting_fraction_from`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
@@ -35,7 +35,7 @@ A High Voltage Voltage-Source Converter DC line, which must be connected to an A
   - `ac_voltage_setpoint_to`: AC-side voltage magnitude target of the `to` bus converter, used when `ac_control_to` is `AC_VOLTAGE`; `null` otherwise. Units: kV.
   - `rated_ac_voltage_to`: Rated AC voltage at the `to` converter's AC terminal; 0.0 means unspecified. Units: kV.
   - `converter_loss_to`: Loss model coefficients in the `to` bus converter. It accepts a linear model or quadratic. Same converter data is used in both ends.
-  - `max_dc_current_to`: Maximum stable dc current limits. Units: A.
+  - `max_dc_current_to`: Maximum stable dc current limits. 9999 means no limit. Units: kA.
   - `rating_to`: Converter rating in the `to` bus. Absent means the converter imposes no limit beyond `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power_limits_to`: Limits on the Reactive Power at the `to` side. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
@@ -100,7 +100,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-20c9f6f1567c312dbf9e.json",
+            resource="https://openapi.invalid/schema/external-a131f566ad1764df63fc.json",
             pointer="",
         ),
         _openapi_raw,
@@ -640,7 +640,7 @@ end
 _encode(_openapi_value::TwoTerminalVSCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-20c9f6f1567c312dbf9e.json",
+        resource="https://openapi.invalid/schema/external-a131f566ad1764df63fc.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

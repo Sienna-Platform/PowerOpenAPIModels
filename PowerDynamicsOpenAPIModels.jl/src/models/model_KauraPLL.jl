@@ -18,7 +18,7 @@ function _decode(::Type{KauraPLL}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-292d5a19b79a7d973e58.json",
+            resource="https://openapi.invalid/schema/external-bfd62b021fded1912fc5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::KauraPLL) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-292d5a19b79a7d973e58.json",
+        resource="https://openapi.invalid/schema/external-bfd62b021fded1912fc5.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

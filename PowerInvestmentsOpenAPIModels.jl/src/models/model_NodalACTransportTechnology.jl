@@ -39,7 +39,7 @@ function _decode(::Type{NodalACTransportTechnology}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f54ed6947305ad773776.json",
+            resource="https://openapi.invalid/schema/external-8fb2e899cd5d660fca2f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -194,7 +194,7 @@ end
 _encode(_openapi_value::NodalACTransportTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-f54ed6947305ad773776.json",
+        resource="https://openapi.invalid/schema/external-8fb2e899cd5d660fca2f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

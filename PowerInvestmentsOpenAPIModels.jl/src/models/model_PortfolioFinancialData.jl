@@ -23,7 +23,7 @@ function _decode(::Type{PortfolioFinancialData}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-4dce55dbaa38123e8a41.json",
+            resource="https://openapi.invalid/schema/external-f6cc9e88d6e5a2e236e7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -100,7 +100,7 @@ end
 _encode(_openapi_value::PortfolioFinancialData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-4dce55dbaa38123e8a41.json",
+        resource="https://openapi.invalid/schema/external-f6cc9e88d6e5a2e236e7.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

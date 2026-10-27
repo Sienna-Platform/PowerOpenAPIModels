@@ -18,7 +18,7 @@ function _decode(::Type{AVRFixed}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1966f7320d9ef65ee5a7.json",
+            resource="https://openapi.invalid/schema/external-f20cf3d8907f047b39ec.json",
             pointer="",
         ),
         _openapi_raw,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::AVRFixed) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1966f7320d9ef65ee5a7.json",
+        resource="https://openapi.invalid/schema/external-f20cf3d8907f047b39ec.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

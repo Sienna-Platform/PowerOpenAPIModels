@@ -18,7 +18,7 @@ function _decode(::Type{SalientPoleQuadratic}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-42fc6851db40c254f97d.json",
+            resource="https://openapi.invalid/schema/external-7b0619e752671439881a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -74,7 +74,7 @@ end
 _encode(_openapi_value::SalientPoleQuadratic) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-42fc6851db40c254f97d.json",
+        resource="https://openapi.invalid/schema/external-7b0619e752671439881a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

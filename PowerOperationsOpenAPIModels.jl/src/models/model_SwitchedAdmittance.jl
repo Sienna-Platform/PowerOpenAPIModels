@@ -42,7 +42,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-4e3b458ffedbfd7cd90b.json",
+            resource="https://openapi.invalid/schema/external-5b61654c0dec8572b477.json",
             pointer="",
         ),
         _openapi_raw,
@@ -223,7 +223,7 @@ end
 _encode(_openapi_value::SwitchedAdmittance) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-4e3b458ffedbfd7cd90b.json",
+        resource="https://openapi.invalid/schema/external-5b61654c0dec8572b477.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

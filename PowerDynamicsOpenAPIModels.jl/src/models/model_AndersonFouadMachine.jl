@@ -36,7 +36,7 @@ function _decode(::Type{AndersonFouadMachine}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-426a999167583969e1fa.json",
+            resource="https://openapi.invalid/schema/external-dd0966e08f16a38f8542.json",
             pointer="",
         ),
         _openapi_raw,
@@ -148,7 +148,7 @@ end
 _encode(_openapi_value::AndersonFouadMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-426a999167583969e1fa.json",
+        resource="https://openapi.invalid/schema/external-dd0966e08f16a38f8542.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **`active_power_flow`** | **`Float64`** | Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
 **`r`** | **`Float64`** | Series resistance of the DC line. Units: ohm. | [required]
 **`power_transfer_setpoint`** | **`Union{Absent,Union{Float64,Nothing}}`** | Scheduled power transfer, used when `control_mode` is `POWER`; `null` otherwise. Must not be specified in per-unit. A positive value is the power consumed at the rectifier bus; a negative value is the power delivered at the inverter bus (its absolute value is the generated power at the inverter bus). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
-**`current_transfer_setpoint`** | **`Union{Absent,Union{Float64,Nothing}}`** | Scheduled current transfer, used when `control_mode` is `CURRENT`; `null` otherwise. Units: A. | [optional]
+**`current_transfer_setpoint`** | **`Union{Absent,Union{Float64,Nothing}}`** | Scheduled current transfer, used when `control_mode` is `CURRENT`; `null` otherwise. Units: kA. | [optional]
 **`scheduled_dc_voltage`** | **`Float64`** | Scheduled compounded DC voltage. By default this parameter is the scheduled DC voltage in the inverter bus. Units: kV. | [required]
 **`rectifier_bridges`** | **`Int64`** | Number of bridges in series in the rectifier side. | [required]
 **`rectifier_delay_angle_limits`** | **`MinMax`** | Minimum and maximum rectifier firing delay angle (alpha). Units: rad. | [required]

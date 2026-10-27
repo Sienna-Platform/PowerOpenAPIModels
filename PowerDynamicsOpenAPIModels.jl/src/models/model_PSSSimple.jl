@@ -18,7 +18,7 @@ function _decode(::Type{PSSSimple}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-64d2e600e2fedd5fdca9.json",
+            resource="https://openapi.invalid/schema/external-b6e0cd44a8c262341580.json",
             pointer="",
         ),
         _openapi_raw,
@@ -65,7 +65,7 @@ end
 _encode(_openapi_value::PSSSimple) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-64d2e600e2fedd5fdca9.json",
+        resource="https://openapi.invalid/schema/external-b6e0cd44a8c262341580.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
