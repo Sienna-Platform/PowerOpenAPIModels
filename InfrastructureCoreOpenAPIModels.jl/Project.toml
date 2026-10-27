@@ -1,7 +1,7 @@
 name = "InfrastructureCoreOpenAPIModels"
 uuid = "1f5e1c8d-e0cc-4dbf-8c6d-f2a3d2ae70a8"
 authors = ["Sienna-Platform"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"

@@ -80,6 +80,28 @@ function unit_base(::Type{T}, ::Val{P}) where {T, P}
     error("$(nameof(T)).$P has no unit base")
 end
 
-declared_unit(o::T, v::Val) where {T} = declared_unit(T, v)
-declared_quantity(o::T, v::Val) where {T} = declared_quantity(T, v)
+unit_discriminator(::Type, ::Val, ::Val...) = nothing
+
+# The values selecting `T.prop`'s unit, as a tuple of `Val`s, each read through
+# `getter` from the field `unit_discriminator` names; empty for a fixed unit.
+function unit_keys(getter, ::Type{T}, prop::Val, keys::Val...) where {T}
+    disc = unit_discriminator(T, prop, keys...)
+    disc === nothing && return keys
+    return unit_keys(getter, T, prop, keys..., Val(Symbol(string(getter(disc)))))
+end
+
+function declared_unit(::Type{T}, prop::Val{P}, key::Val, keys::Val...) where {T, P}
+    disc = unit_discriminator(T, prop, Base.front((key, keys...))...)
+    value = only(typeof(last((key, keys...))).parameters)
+    error("$(nameof(T)).$P: no unit declared for $disc=$value")
+end
+declared_unit(o::T, v::Val) where {T} =
+    declared_unit(T, v, unit_keys(d -> getproperty(o, d), T, v)...)
+function declared_quantity(::Type{T}, prop::Val{P}, key::Val, keys::Val...) where {T, P}
+    disc = unit_discriminator(T, prop, Base.front((key, keys...))...)
+    value = only(typeof(last((key, keys...))).parameters)
+    error("$(nameof(T)).$P: no unit declared for $disc=$value")
+end
+declared_quantity(o::T, v::Val) where {T} =
+    declared_quantity(T, v, unit_keys(d -> getproperty(o, d), T, v)...)
 unit_base(o::T, v::Val) where {T} = unit_base(T, v)
