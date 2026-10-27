@@ -69,7 +69,7 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a1389dc3afe47554e8b2.json",
+            resource="https://openapi.invalid/schema/external-6a44d75cd1531efb3c19.json",
             pointer="",
         ),
         _openapi_raw,
@@ -374,7 +374,7 @@ end
 _encode(_openapi_value::EnergyReservoirStorage) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a1389dc3afe47554e8b2.json",
+        resource="https://openapi.invalid/schema/external-6a44d75cd1531efb3c19.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

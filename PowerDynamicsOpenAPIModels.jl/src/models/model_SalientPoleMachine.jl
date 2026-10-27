@@ -34,7 +34,7 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d89ec72f534dd02ea53f.json",
+            resource="https://openapi.invalid/schema/external-a4baa87a75678a822a67.json",
             pointer="",
         ),
         _openapi_raw,
@@ -127,7 +127,7 @@ end
 _encode(_openapi_value::SalientPoleMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-d89ec72f534dd02ea53f.json",
+        resource="https://openapi.invalid/schema/external-a4baa87a75678a822a67.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

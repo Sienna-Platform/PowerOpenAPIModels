@@ -16,7 +16,7 @@ function _decode(::Type{MarketStage}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a25835039c119634c922.json",
+            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
             pointer="/\$defs/MarketStage",
         ),
         value,
@@ -32,7 +32,7 @@ end
 _encode(value::MarketStage) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a25835039c119634c922.json",
+        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
         pointer="/\$defs/MarketStage",
     ),
     _encode_unvalidated(value),

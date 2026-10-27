@@ -18,7 +18,7 @@ function _decode(::Type{TGFixed}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a2fb0e6f71332eeaad4f.json",
+            resource="https://openapi.invalid/schema/external-7f5410cba8662b90d4c6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::TGFixed) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a2fb0e6f71332eeaad4f.json",
+        resource="https://openapi.invalid/schema/external-7f5410cba8662b90d4c6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

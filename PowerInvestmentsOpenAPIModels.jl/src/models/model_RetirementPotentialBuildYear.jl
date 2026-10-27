@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-043698aabc9a2a37ab99.json",
+            resource="https://openapi.invalid/schema/external-d4083d8660ee551535fd.json",
             pointer="/properties/build_year",
         ),
         _openapi_raw,
@@ -49,7 +49,7 @@ end
 _encode(_openapi_value::RetirementPotentialBuildYear) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-043698aabc9a2a37ab99.json",
+        resource="https://openapi.invalid/schema/external-d4083d8660ee551535fd.json",
         pointer="/properties/build_year",
     ),
     _encode_unvalidated(_openapi_value),

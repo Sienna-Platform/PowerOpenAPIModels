@@ -16,7 +16,7 @@ function _decode(::Type{AverageConverter}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-28210c94f0487e6159f7.json",
+            resource="https://openapi.invalid/schema/external-0dacaa6b17b95b3a2796.json",
             pointer="",
         ),
         _openapi_raw,
@@ -69,7 +69,7 @@ end
 _encode(_openapi_value::AverageConverter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-28210c94f0487e6159f7.json",
+        resource="https://openapi.invalid/schema/external-0dacaa6b17b95b3a2796.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -53,7 +53,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1b4fd9676e66dcffbe1f.json",
+            resource="https://openapi.invalid/schema/external-d809ec800229ced94193.json",
             pointer="",
         ),
         _openapi_raw,
@@ -278,7 +278,7 @@ end
 _encode(_openapi_value::NonSequentialTimeSeries) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1b4fd9676e66dcffbe1f.json",
+        resource="https://openapi.invalid/schema/external-d809ec800229ced94193.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

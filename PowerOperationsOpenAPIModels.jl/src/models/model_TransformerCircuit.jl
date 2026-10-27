@@ -66,7 +66,7 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-26edb698b79b92fcdfe2.json",
+            resource="https://openapi.invalid/schema/external-2e037b1c1648c0b8cb6d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -367,7 +367,7 @@ end
 _encode(_openapi_value::TransformerCircuit) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-26edb698b79b92fcdfe2.json",
+        resource="https://openapi.invalid/schema/external-2e037b1c1648c0b8cb6d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

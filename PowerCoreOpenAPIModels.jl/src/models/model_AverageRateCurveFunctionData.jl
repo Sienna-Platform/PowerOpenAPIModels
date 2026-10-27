@@ -18,14 +18,14 @@ function _decode(::Type{AverageRateCurveFunctionData}, value, _openapi_validate:
             "LINEAR" => (
                 LinearFunctionData,
                 (
-                    resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
+                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
                     pointer="/\$defs/LinearFunctionData",
                 ),
             ),
             "PIECEWISE_STEP" => (
                 PiecewiseStepData,
                 (
-                    resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
+                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
                     pointer="/\$defs/PiecewiseStepData",
                 ),
             ),

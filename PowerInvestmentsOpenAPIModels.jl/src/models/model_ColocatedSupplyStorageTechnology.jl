@@ -43,7 +43,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3cbcb071e072a9fe3d26.json",
+            resource="https://openapi.invalid/schema/external-2790b43e514648a50e19.json",
             pointer="",
         ),
         _openapi_raw,
@@ -235,7 +235,7 @@ end
 _encode(_openapi_value::ColocatedSupplyStorageTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3cbcb071e072a9fe3d26.json",
+        resource="https://openapi.invalid/schema/external-2790b43e514648a50e19.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

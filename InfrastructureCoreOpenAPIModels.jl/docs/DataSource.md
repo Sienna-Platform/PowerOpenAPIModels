@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **`dataset`** | **`Union{Absent,Nothing,String}`** | Dataset identifier within the publishing organization, e.g. 'EIA-860 2023, Schedule 3'. | [optional]
 **`url`** | **`Union{Absent,Nothing,String}`** | URL the data was retrieved from. | [optional]
 **`version`** | **`Union{Absent,Nothing,String}`** | Data version or vintage, e.g. '2023 final'. | [optional]
+**`license`** | **`Union{Absent,Nothing,String}`** | License of the source data, if known: an SPDX identifier such as 'CC-BY-4.0', or a license name or URL. | [optional]
 **`published_at`** | **`Union{Absent,Union{Dates.DateTime,Nothing}}`** | When the source published the data; null if unknown. | [optional]
 **`confidence`** | **`Union{Absent,Nothing,String}`** | Confidence qualifier, e.g. 'high', 'medium'. | [optional]
 **`recorded_by`** | **`Union{Absent,Union{Nothing,String}}`** | User or agent that recorded the value. | [optional]

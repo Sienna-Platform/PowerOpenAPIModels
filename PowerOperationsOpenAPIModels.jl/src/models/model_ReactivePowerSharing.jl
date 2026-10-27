@@ -16,7 +16,7 @@ function _decode(::Type{ReactivePowerSharing}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bd3b1a38c590e11ae6cc.json",
+            resource="https://openapi.invalid/schema/external-972fc55f92b07272c5b9.json",
             pointer="",
         ),
         _openapi_raw,
@@ -59,7 +59,7 @@ end
 _encode(_openapi_value::ReactivePowerSharing) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-bd3b1a38c590e11ae6cc.json",
+        resource="https://openapi.invalid/schema/external-972fc55f92b07272c5b9.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

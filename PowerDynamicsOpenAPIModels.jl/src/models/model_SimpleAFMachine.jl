@@ -36,7 +36,7 @@ function _decode(::Type{SimpleAFMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8cd51499bbfc7bb352f7.json",
+            resource="https://openapi.invalid/schema/external-e7fc9870131e6aaa0865.json",
             pointer="",
         ),
         _openapi_raw,
@@ -142,7 +142,7 @@ end
 _encode(_openapi_value::SimpleAFMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8cd51499bbfc7bb352f7.json",
+        resource="https://openapi.invalid/schema/external-e7fc9870131e6aaa0865.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

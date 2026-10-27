@@ -18,7 +18,7 @@ function _decode(::Type{LCFilter}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d8dbe4d354c280d9367c.json",
+            resource="https://openapi.invalid/schema/external-d3f21606ff31d3022f5a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::LCFilter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-d8dbe4d354c280d9367c.json",
+        resource="https://openapi.invalid/schema/external-d3f21606ff31d3022f5a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

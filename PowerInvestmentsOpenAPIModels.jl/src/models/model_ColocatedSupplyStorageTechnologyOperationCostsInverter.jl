@@ -27,14 +27,14 @@ function _decode(
             "COST" => (
                 CostCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-07322f5ca369953d3685.json",
+                    resource="https://openapi.invalid/schema/external-8c6756d537f0626fc160.json",
                     pointer="/\$defs/CostCurve",
                 ),
             ),
             "FUEL" => (
                 FuelCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-07322f5ca369953d3685.json",
+                    resource="https://openapi.invalid/schema/external-8c6756d537f0626fc160.json",
                     pointer="/\$defs/FuelCurve",
                 ),
             ),

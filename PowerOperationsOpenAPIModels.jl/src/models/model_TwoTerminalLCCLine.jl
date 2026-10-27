@@ -10,7 +10,7 @@ A Non-Capacitor Line Commutated Converter (LCC)-HVDC transmission line. As imple
   - `active_power_flow`: Initial condition of active power flow on the line. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `r`: Series resistance of the DC line. Units: ohm.
   - `power_transfer_setpoint`: Scheduled power transfer, used when `control_mode` is `POWER`; `null` otherwise. Must not be specified in per-unit. A positive value is the power consumed at the rectifier bus; a negative value is the power delivered at the inverter bus (its absolute value is the generated power at the inverter bus). Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `current_transfer_setpoint`: Scheduled current transfer, used when `control_mode` is `CURRENT`; `null` otherwise. Units: A.
+  - `current_transfer_setpoint`: Scheduled current transfer, used when `control_mode` is `CURRENT`; `null` otherwise. Units: kA.
   - `scheduled_dc_voltage`: Scheduled compounded DC voltage. By default this parameter is the scheduled DC voltage in the inverter bus. Units: kV.
   - `rectifier_bridges`: Number of bridges in series in the rectifier side.
   - `rectifier_delay_angle_limits`: Minimum and maximum rectifier firing delay angle (alpha). Units: rad.
@@ -100,7 +100,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7d5705fba5958053d6e0.json",
+            resource="https://openapi.invalid/schema/external-45cce4abd7b31cda6601.json",
             pointer="",
         ),
         _openapi_raw,
@@ -610,7 +610,7 @@ end
 _encode(_openapi_value::TwoTerminalLCCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7d5705fba5958053d6e0.json",
+        resource="https://openapi.invalid/schema/external-45cce4abd7b31cda6601.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

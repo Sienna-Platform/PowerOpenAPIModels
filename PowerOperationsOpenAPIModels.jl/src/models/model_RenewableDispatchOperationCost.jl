@@ -28,28 +28,28 @@ function _decode(::Type{RenewableDispatchOperationCost}, value, _openapi_validat
             "IMPORT_EXPORT_TIME_SERIES" => (
                 ImportExportTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
+                    resource="https://openapi.invalid/schema/external-4ef1fa5e7782c05d7c1e.json",
                     pointer="/\$defs/ImportExportTimeSeriesCost",
                 ),
             ),
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
+                    resource="https://openapi.invalid/schema/external-4ef1fa5e7782c05d7c1e.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
+                    resource="https://openapi.invalid/schema/external-4ef1fa5e7782c05d7c1e.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),
             "RENEWABLE" => (
                 RenewableGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-b5b452f268c6b68cab8f.json",
+                    resource="https://openapi.invalid/schema/external-4ef1fa5e7782c05d7c1e.json",
                     pointer="/\$defs/RenewableGenerationCost",
                 ),
             ),

@@ -44,7 +44,7 @@ function _decode(::Type{WPIDHY}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-94db827ce407465523c0.json",
+            resource="https://openapi.invalid/schema/external-1d470a18e87edc01962b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -177,7 +177,7 @@ end
 _encode(_openapi_value::WPIDHY) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-94db827ce407465523c0.json",
+        resource="https://openapi.invalid/schema/external-1d470a18e87edc01962b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -1,7 +1,7 @@
 """
     InterconnectingConverter
 
-Interconnecting Power Converter (IPC) for transforming power from an ACBus to a DCBus. Voltage and voltage-droop fields are natural units only: there is no conventional DC base voltage from which to per-unitize them.
+Interconnecting Power Converter (IPC) for transforming power from an ACBus to a DCBus. Voltage and voltage-droop fields are natural units only: there is no conventional DC base voltage from which to per-unitize them. `rated_dc_voltage` and `rated_ac_voltage` record the voltage bases, so a consumer can convert the voltage fields to per unit.
 
   - `id`: Unique integer identifier for this component.
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
@@ -14,15 +14,17 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
   - `base_power`: Base power of the converter for per unitization. Units: MVA.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
-  - `dc_current`: DC current on the converter. Units: A.
-  - `max_dc_current`: Maximum stable dc current limits. Units: A.
-  - `loss_function`: Linear or quadratic loss function with respect to the converter current.
+  - `dc_current`: DC current on the converter. Units: kA.
+  - `max_dc_current`: Maximum stable dc current limits. 9999 means no limit. Units: kA.
+  - `loss_function`: Linear or quadratic loss (power) as a function of the converter's DC current.
   - `dc_control`: DC-side control mode of the converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
   - `ac_control`: AC-side control mode of the converter. No default: an in-service converter always controls something on each side, so the mode is supplied explicitly.
   - `dc_power_setpoint`: Active-power order of the converter, used when `dc_control` is `DC_POWER`; `null` otherwise. Positive means the converter supplies power to the AC network; negative means it withdraws power from it. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `dc_voltage_setpoint`: DC-side voltage target of the converter, used when `dc_control` is `DC_VOLTAGE` or `DC_VOLTAGE_DROOP`; `null` otherwise. Units: kV.
+  - `rated_dc_voltage`: Rated DC voltage of the converter, the base for `dc_voltage_setpoint` and `voltage_limits`; 0.0 means unspecified. Units: kV.
   - `power_factor_setpoint`: Power-factor setpoint of the converter, used when `ac_control` is `AC_REACTIVE_POWER`; `null` otherwise. Units: 1.
   - `ac_voltage_setpoint`: AC-side voltage magnitude target of the converter, used when `ac_control` is `AC_VOLTAGE`; `null` otherwise. Units: kV.
+  - `rated_ac_voltage`: Rated AC voltage at the converter's AC terminal, the base for `ac_voltage_setpoint`; 0.0 means unspecified. Units: kV.
   - `dc_voltage_droop`: DC-voltage droop gain on the converter, used when `dc_control` is `DC_VOLTAGE_DROOP`: `V_dc = dc_voltage_setpoint - dc_voltage_droop * P_c`, with `V_dc` in kV and `P_c` in MW regardless of `power_units`. A value of 0.0 disables droop. Units: kV/MW.
   - `remote_bus_control`: Number of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE`; null regulates its own terminal bus.
   - `power_factor_weighting_fraction`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
@@ -43,13 +45,15 @@ Base.@kwdef struct InterconnectingConverter <: APIModel
     reactive_power_limits::Union{Absent, MinMax, Nothing} = ABSENT
     dc_current::Union{Absent, Float64, Nothing} = ABSENT
     max_dc_current::Union{Absent, Float64, Nothing} = ABSENT
-    loss_function::Union{Absent, LossCurve, Nothing} = ABSENT
+    loss_function::Union{Absent, CurrentLossCurve, Nothing} = ABSENT
     dc_control::Union{Absent, Nothing, VSCDCControlModes} = ABSENT
     ac_control::Union{Absent, Nothing, VSCACControlModes} = ABSENT
     dc_power_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
     dc_voltage_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    rated_dc_voltage::Union{Absent, Float64, Nothing} = ABSENT
     power_factor_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
     ac_voltage_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    rated_ac_voltage::Union{Absent, Float64, Nothing} = ABSENT
     dc_voltage_droop::Union{Absent, Float64, Nothing} = ABSENT
     remote_bus_control::Union{Absent, Union{Int64, Nothing}} = ABSENT
     power_factor_weighting_fraction::Union{Absent, Float64, Nothing} = ABSENT
@@ -63,7 +67,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1735b14c0e7e52f29304.json",
+            resource="https://openapi.invalid/schema/external-62435e5f18a3d48cb368.json",
             pointer="",
         ),
         _openapi_raw,
@@ -133,7 +137,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_field_loss_function =
         haskey(_openapi_object, "loss_function") ?
         _decode(
-            Union{Absent, LossCurve, Nothing},
+            Union{Absent, CurrentLossCurve, Nothing},
             _openapi_object["loss_function"],
             false,
         ) : ABSENT
@@ -165,6 +169,13 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["dc_voltage_setpoint"],
             false,
         ) : ABSENT
+    _openapi_field_rated_dc_voltage =
+        haskey(_openapi_object, "rated_dc_voltage") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["rated_dc_voltage"],
+            false,
+        ) : ABSENT
     _openapi_field_power_factor_setpoint =
         haskey(_openapi_object, "power_factor_setpoint") ?
         _decode(
@@ -177,6 +188,13 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
         _decode(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["ac_voltage_setpoint"],
+            false,
+        ) : ABSENT
+    _openapi_field_rated_ac_voltage =
+        haskey(_openapi_object, "rated_ac_voltage") ?
+        _decode(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["rated_ac_voltage"],
             false,
         ) : ABSENT
     _openapi_field_dc_voltage_droop =
@@ -232,8 +250,10 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             "ac_control",
             "dc_power_setpoint",
             "dc_voltage_setpoint",
+            "rated_dc_voltage",
             "power_factor_setpoint",
             "ac_voltage_setpoint",
+            "rated_ac_voltage",
             "dc_voltage_droop",
             "remote_bus_control",
             "power_factor_weighting_fraction",
@@ -262,8 +282,10 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
         ac_control=_openapi_field_ac_control,
         dc_power_setpoint=_openapi_field_dc_power_setpoint,
         dc_voltage_setpoint=_openapi_field_dc_voltage_setpoint,
+        rated_dc_voltage=_openapi_field_rated_dc_voltage,
         power_factor_setpoint=_openapi_field_power_factor_setpoint,
         ac_voltage_setpoint=_openapi_field_ac_voltage_setpoint,
+        rated_ac_voltage=_openapi_field_rated_ac_voltage,
         dc_voltage_droop=_openapi_field_dc_voltage_droop,
         remote_bus_control=_openapi_field_remote_bus_control,
         power_factor_weighting_fraction=_openapi_field_power_factor_weighting_fraction,
@@ -322,6 +344,10 @@ function _encode_unvalidated(_openapi_value::InterconnectingConverter)
         _openapi_output["dc_voltage_setpoint"] =
             _encode_unvalidated(_openapi_value.dc_voltage_setpoint)
     )
+    _openapi_value.rated_dc_voltage isa Absent || (
+        _openapi_output["rated_dc_voltage"] =
+            _encode_unvalidated(_openapi_value.rated_dc_voltage)
+    )
     _openapi_value.power_factor_setpoint isa Absent || (
         _openapi_output["power_factor_setpoint"] =
             _encode_unvalidated(_openapi_value.power_factor_setpoint)
@@ -329,6 +355,10 @@ function _encode_unvalidated(_openapi_value::InterconnectingConverter)
     _openapi_value.ac_voltage_setpoint isa Absent || (
         _openapi_output["ac_voltage_setpoint"] =
             _encode_unvalidated(_openapi_value.ac_voltage_setpoint)
+    )
+    _openapi_value.rated_ac_voltage isa Absent || (
+        _openapi_output["rated_ac_voltage"] =
+            _encode_unvalidated(_openapi_value.rated_ac_voltage)
     )
     _openapi_value.dc_voltage_droop isa Absent || (
         _openapi_output["dc_voltage_droop"] =
@@ -363,7 +393,7 @@ end
 _encode(_openapi_value::InterconnectingConverter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1735b14c0e7e52f29304.json",
+        resource="https://openapi.invalid/schema/external-62435e5f18a3d48cb368.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -408,12 +438,16 @@ function _form_fields(_openapi_value::InterconnectingConverter)
         push!(_openapi_output, "dc_power_setpoint" => _openapi_value.dc_power_setpoint)
     _openapi_value.dc_voltage_setpoint isa Absent ||
         push!(_openapi_output, "dc_voltage_setpoint" => _openapi_value.dc_voltage_setpoint)
+    _openapi_value.rated_dc_voltage isa Absent ||
+        push!(_openapi_output, "rated_dc_voltage" => _openapi_value.rated_dc_voltage)
     _openapi_value.power_factor_setpoint isa Absent || push!(
         _openapi_output,
         "power_factor_setpoint" => _openapi_value.power_factor_setpoint,
     )
     _openapi_value.ac_voltage_setpoint isa Absent ||
         push!(_openapi_output, "ac_voltage_setpoint" => _openapi_value.ac_voltage_setpoint)
+    _openapi_value.rated_ac_voltage isa Absent ||
+        push!(_openapi_output, "rated_ac_voltage" => _openapi_value.rated_ac_voltage)
     _openapi_value.dc_voltage_droop isa Absent ||
         push!(_openapi_output, "dc_voltage_droop" => _openapi_value.dc_voltage_droop)
     _openapi_value.remote_bus_control isa Absent ||

@@ -18,7 +18,7 @@ function _decode(::Type{SingleMass}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-88f4b3998d21ed9ad164.json",
+            resource="https://openapi.invalid/schema/external-5ab52d7e53553cea6031.json",
             pointer="",
         ),
         _openapi_raw,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::SingleMass) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-88f4b3998d21ed9ad164.json",
+        resource="https://openapi.invalid/schema/external-5ab52d7e53553cea6031.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

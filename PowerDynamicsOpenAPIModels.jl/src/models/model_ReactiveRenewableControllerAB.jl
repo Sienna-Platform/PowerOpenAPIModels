@@ -71,7 +71,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6545ac1b28342eceb8ee.json",
+            resource="https://openapi.invalid/schema/external-73f61f59b0e95f9d33fc.json",
             pointer="",
         ),
         _openapi_raw,
@@ -350,7 +350,7 @@ end
 _encode(_openapi_value::ReactiveRenewableControllerAB) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6545ac1b28342eceb8ee.json",
+        resource="https://openapi.invalid/schema/external-73f61f59b0e95f9d33fc.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

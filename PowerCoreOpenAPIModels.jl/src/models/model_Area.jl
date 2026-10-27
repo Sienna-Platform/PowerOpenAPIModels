@@ -8,6 +8,8 @@ A collection of buses for control purposes. The `Area` can be specified when def
   - `peak_active_power`: Peak active power in the area. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `peak_reactive_power`: Peak reactive power in the area. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `load_response`: Load-frequency damping parameter modeling how much the load in the area changes due to changes in frequency. Units: MW/Hz.
+  - `scheduled_net_interchange`: Scheduled net active power interchange of the area (PSS/E PDES): the area's total export minus its total import that area interchange control holds. Positive means the area exports power. `null` when the area has no scheduled interchange; `0.0` is a valid schedule. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `out_of_area_load_ids`: IDs of the loads that belong to this area but connect to a bus in another area (PSS/E off-area loads). When area interchange control includes these loads (PSS/E AREAIN=2), their demand counts in the net interchange of this area, not of the area of their bus.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
 """
@@ -17,6 +19,8 @@ Base.@kwdef struct Area <: APIModel
     peak_active_power::Union{Absent, Float64, Nothing} = ABSENT
     peak_reactive_power::Union{Absent, Float64, Nothing} = ABSENT
     load_response::Union{Absent, Float64, Nothing} = ABSENT
+    scheduled_net_interchange::Union{Absent, Union{Float64, Nothing}} = ABSENT
+    out_of_area_load_ids::Union{Absent, Nothing, Vector{Int64}} = ABSENT
     base_power::Float64
     power_units::UnitSystem
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -26,7 +30,7 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cb0aa2fd63cfda4ba3c9.json",
+            resource="https://openapi.invalid/schema/external-7cd174a1aa6d0ce95912.json",
             pointer="",
         ),
         _openapi_raw,
@@ -54,6 +58,20 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
         haskey(_openapi_object, "load_response") ?
         _decode(Union{Absent, Float64, Nothing}, _openapi_object["load_response"], false) :
         ABSENT
+    _openapi_field_scheduled_net_interchange =
+        haskey(_openapi_object, "scheduled_net_interchange") ?
+        _decode(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["scheduled_net_interchange"],
+            false,
+        ) : ABSENT
+    _openapi_field_out_of_area_load_ids =
+        haskey(_openapi_object, "out_of_area_load_ids") ?
+        _decode(
+            Union{Absent, Nothing, Vector{Int64}},
+            _openapi_object["out_of_area_load_ids"],
+            false,
+        ) : ABSENT
     _openapi_field_base_power =
         _decode(Float64, _required(_openapi_object, "base_power", "Area"), false)
     _openapi_field_power_units =
@@ -66,6 +84,8 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
             "peak_active_power",
             "peak_reactive_power",
             "load_response",
+            "scheduled_net_interchange",
+            "out_of_area_load_ids",
             "base_power",
             "power_units",
         ) && continue
@@ -78,6 +98,8 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
         peak_active_power=_openapi_field_peak_active_power,
         peak_reactive_power=_openapi_field_peak_reactive_power,
         load_response=_openapi_field_load_response,
+        scheduled_net_interchange=_openapi_field_scheduled_net_interchange,
+        out_of_area_load_ids=_openapi_field_out_of_area_load_ids,
         base_power=_openapi_field_base_power,
         power_units=_openapi_field_power_units,
         additional_properties=_openapi_additional_properties,
@@ -101,6 +123,14 @@ function _encode_unvalidated(_openapi_value::Area)
         _openapi_output["load_response"] =
             _encode_unvalidated(_openapi_value.load_response)
     )
+    _openapi_value.scheduled_net_interchange isa Absent || (
+        _openapi_output["scheduled_net_interchange"] =
+            _encode_unvalidated(_openapi_value.scheduled_net_interchange)
+    )
+    _openapi_value.out_of_area_load_ids isa Absent || (
+        _openapi_output["out_of_area_load_ids"] =
+            _encode_unvalidated(_openapi_value.out_of_area_load_ids)
+    )
     _openapi_value.base_power isa Absent ||
         (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
@@ -118,7 +148,7 @@ end
 _encode(_openapi_value::Area) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-cb0aa2fd63cfda4ba3c9.json",
+        resource="https://openapi.invalid/schema/external-7cd174a1aa6d0ce95912.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -136,6 +166,14 @@ function _form_fields(_openapi_value::Area)
         push!(_openapi_output, "peak_reactive_power" => _openapi_value.peak_reactive_power)
     _openapi_value.load_response isa Absent ||
         push!(_openapi_output, "load_response" => _openapi_value.load_response)
+    _openapi_value.scheduled_net_interchange isa Absent || push!(
+        _openapi_output,
+        "scheduled_net_interchange" => _openapi_value.scheduled_net_interchange,
+    )
+    _openapi_value.out_of_area_load_ids isa Absent || push!(
+        _openapi_output,
+        "out_of_area_load_ids" => _openapi_value.out_of_area_load_ids,
+    )
     _openapi_value.base_power isa Absent ||
         push!(_openapi_output, "base_power" => _openapi_value.base_power)
     _openapi_value.power_units isa Absent ||

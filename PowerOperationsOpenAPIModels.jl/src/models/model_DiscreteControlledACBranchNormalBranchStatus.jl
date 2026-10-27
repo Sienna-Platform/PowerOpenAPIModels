@@ -24,7 +24,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6caf10a5c55026291efe.json",
+            resource="https://openapi.invalid/schema/external-0f8df0f8f73cff78e85e.json",
             pointer="/properties/normal_branch_status",
         ),
         value,
@@ -40,7 +40,7 @@ end
 _encode(value::DiscreteControlledACBranchNormalBranchStatus) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6caf10a5c55026291efe.json",
+        resource="https://openapi.invalid/schema/external-0f8df0f8f73cff78e85e.json",
         pointer="/properties/normal_branch_status",
     ),
     _encode_unvalidated(value),

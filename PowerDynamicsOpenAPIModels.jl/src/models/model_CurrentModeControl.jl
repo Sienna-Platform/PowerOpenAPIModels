@@ -9,7 +9,7 @@ function _decode(::Type{CurrentModeControl}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-60cdcc7a1bbfcf4538cd.json",
+            resource="https://openapi.invalid/schema/external-6297dc4a0ea50a8f316f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -57,7 +57,7 @@ end
 _encode(_openapi_value::CurrentModeControl) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-60cdcc7a1bbfcf4538cd.json",
+        resource="https://openapi.invalid/schema/external-6297dc4a0ea50a8f316f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

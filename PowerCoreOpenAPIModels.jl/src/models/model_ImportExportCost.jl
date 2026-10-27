@@ -21,7 +21,7 @@ function _decode(::Type{ImportExportCost}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
+            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
             pointer="/\$defs/ImportExportCost",
         ),
         _openapi_raw,
@@ -111,7 +111,7 @@ end
 _encode(_openapi_value::ImportExportCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c81497f0bf964a0b130d.json",
+        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
         pointer="/\$defs/ImportExportCost",
     ),
     _encode_unvalidated(_openapi_value),

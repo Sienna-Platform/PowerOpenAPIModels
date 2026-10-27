@@ -8,6 +8,7 @@ Records data provenance for a component's field values: which organization or da
   - `dataset`: Dataset identifier within the publishing organization, e.g. 'EIA-860 2023, Schedule 3'.
   - `url`: URL the data was retrieved from.
   - `version`: Data version or vintage, e.g. '2023 final'.
+  - `license`: License of the source data, if known: an SPDX identifier such as 'CC-BY-4.0', or a license name or URL.
   - `published_at`: When the source published the data; null if unknown.
   - `confidence`: Confidence qualifier, e.g. 'high', 'medium'.
   - `recorded_by`: User or agent that recorded the value.
@@ -21,6 +22,7 @@ Base.@kwdef struct DataSource <: APIModel
     dataset::Union{Absent, Nothing, String} = ABSENT
     url::Union{Absent, Nothing, String} = ABSENT
     version::Union{Absent, Nothing, String} = ABSENT
+    license::Union{Absent, Nothing, String} = ABSENT
     published_at::Union{Absent, Union{Dates.DateTime, Nothing}} = ABSENT
     confidence::Union{Absent, Nothing, String} = ABSENT
     recorded_by::Union{Absent, Union{Nothing, String}} = ABSENT
@@ -33,7 +35,7 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f3d4a4963b9715cd1b59.json",
+            resource="https://openapi.invalid/schema/external-ee90207aa26447aee0bb.json",
             pointer="",
         ),
         _openapi_raw,
@@ -61,6 +63,9 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_version =
         haskey(_openapi_object, "version") ?
         _decode(Union{Absent, Nothing, String}, _openapi_object["version"], false) : ABSENT
+    _openapi_field_license =
+        haskey(_openapi_object, "license") ?
+        _decode(Union{Absent, Nothing, String}, _openapi_object["license"], false) : ABSENT
     _openapi_field_published_at =
         haskey(_openapi_object, "published_at") ?
         _decode(
@@ -94,6 +99,7 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
             "dataset",
             "url",
             "version",
+            "license",
             "published_at",
             "confidence",
             "recorded_by",
@@ -110,6 +116,7 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
         dataset=_openapi_field_dataset,
         url=_openapi_field_url,
         version=_openapi_field_version,
+        license=_openapi_field_license,
         published_at=_openapi_field_published_at,
         confidence=_openapi_field_confidence,
         recorded_by=_openapi_field_recorded_by,
@@ -132,6 +139,8 @@ function _encode_unvalidated(_openapi_value::DataSource)
         (_openapi_output["url"] = _encode_unvalidated(_openapi_value.url))
     _openapi_value.version isa Absent ||
         (_openapi_output["version"] = _encode_unvalidated(_openapi_value.version))
+    _openapi_value.license isa Absent ||
+        (_openapi_output["license"] = _encode_unvalidated(_openapi_value.license))
     _openapi_value.published_at isa Absent ||
         (_openapi_output["published_at"] = _encode_unvalidated(_openapi_value.published_at))
     _openapi_value.confidence isa Absent ||
@@ -155,7 +164,7 @@ end
 _encode(_openapi_value::DataSource) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-f3d4a4963b9715cd1b59.json",
+        resource="https://openapi.invalid/schema/external-ee90207aa26447aee0bb.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
@@ -175,6 +184,8 @@ function _form_fields(_openapi_value::DataSource)
     _openapi_value.url isa Absent || push!(_openapi_output, "url" => _openapi_value.url)
     _openapi_value.version isa Absent ||
         push!(_openapi_output, "version" => _openapi_value.version)
+    _openapi_value.license isa Absent ||
+        push!(_openapi_output, "license" => _openapi_value.license)
     _openapi_value.published_at isa Absent ||
         push!(_openapi_output, "published_at" => _openapi_value.published_at)
     _openapi_value.confidence isa Absent ||

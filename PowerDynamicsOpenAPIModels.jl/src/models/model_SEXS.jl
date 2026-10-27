@@ -26,7 +26,7 @@ function _decode(::Type{SEXS}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dd6a9a0aa79b4d7c998f.json",
+            resource="https://openapi.invalid/schema/external-1ff8dff56ddc1df5147a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -92,7 +92,7 @@ end
 _encode(_openapi_value::SEXS) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-dd6a9a0aa79b4d7c998f.json",
+        resource="https://openapi.invalid/schema/external-1ff8dff56ddc1df5147a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

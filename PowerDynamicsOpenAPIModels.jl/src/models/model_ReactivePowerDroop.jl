@@ -9,7 +9,7 @@ function _decode(::Type{ReactivePowerDroop}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5529bdadd39634e49b34.json",
+            resource="https://openapi.invalid/schema/external-6d2ae54623d7d53093d1.json",
             pointer="",
         ),
         _openapi_raw,
@@ -58,7 +58,7 @@ end
 _encode(_openapi_value::ReactivePowerDroop) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-5529bdadd39634e49b34.json",
+        resource="https://openapi.invalid/schema/external-6d2ae54623d7d53093d1.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -5,7 +5,7 @@ Data for a piecewise linear function defined by (x, y) points and interpolated l
 """
 Base.@kwdef struct PiecewiseLinearData <: APIModel
     function_type::String = "PIECEWISE_LINEAR"
-    points::Vector{XYCoords}
+    points::Vector{TwoDimensionalFunctionPoint}
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{PiecewiseLinearData}, value) = _decode(PiecewiseLinearData, value, true)
@@ -13,7 +13,7 @@ function _decode(::Type{PiecewiseLinearData}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
+            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
             pointer="/\$defs/PiecewiseLinearData",
         ),
         _openapi_raw,
@@ -27,7 +27,7 @@ function _decode(::Type{PiecewiseLinearData}, _openapi_raw, _openapi_validate::B
         false,
     )
     _openapi_field_points = _decode(
-        Vector{XYCoords},
+        Vector{TwoDimensionalFunctionPoint},
         _required(_openapi_object, "points", "PiecewiseLinearData"),
         false,
     )
@@ -64,7 +64,7 @@ end
 _encode(_openapi_value::PiecewiseLinearData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
+        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
         pointer="/\$defs/PiecewiseLinearData",
     ),
     _encode_unvalidated(_openapi_value),

@@ -14,7 +14,7 @@ function _decode(::Type{FixedDCSource}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-51211031289b5e1b22dc.json",
+            resource="https://openapi.invalid/schema/external-328f0b370a117fc286f5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -52,7 +52,7 @@ end
 _encode(_openapi_value::FixedDCSource) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-51211031289b5e1b22dc.json",
+        resource="https://openapi.invalid/schema/external-328f0b370a117fc286f5.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

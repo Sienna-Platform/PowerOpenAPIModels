@@ -27,42 +27,42 @@ function _decode(::Type{TimeSeriesAssociation}, value, _openapi_validate::Bool)
             "Deterministic" => (
                 Deterministic,
                 (
-                    resource="https://openapi.invalid/schema/external-637cd0dfea1f9cb4a6aa.json",
+                    resource="https://openapi.invalid/schema/external-0a053d4f7e925922eb41.json",
                     pointer="",
                 ),
             ),
             "DeterministicSingleTimeSeries" => (
                 DeterministicSingleTimeSeries,
                 (
-                    resource="https://openapi.invalid/schema/external-d0050f76b7bec5919256.json",
+                    resource="https://openapi.invalid/schema/external-64c6908fd44c784ca124.json",
                     pointer="",
                 ),
             ),
             "NonSequentialTimeSeries" => (
                 NonSequentialTimeSeries,
                 (
-                    resource="https://openapi.invalid/schema/external-1b4fd9676e66dcffbe1f.json",
+                    resource="https://openapi.invalid/schema/external-d809ec800229ced94193.json",
                     pointer="",
                 ),
             ),
             "Probabilistic" => (
                 Probabilistic,
                 (
-                    resource="https://openapi.invalid/schema/external-a58c91cb1d39181808c8.json",
+                    resource="https://openapi.invalid/schema/external-5c7977e1a0bcb57dd3f7.json",
                     pointer="",
                 ),
             ),
             "Scenarios" => (
                 Scenarios,
                 (
-                    resource="https://openapi.invalid/schema/external-c1ab68929472e0df6ddd.json",
+                    resource="https://openapi.invalid/schema/external-4c0d5558c513c8a15479.json",
                     pointer="",
                 ),
             ),
             "SingleTimeSeries" => (
                 SingleTimeSeries,
                 (
-                    resource="https://openapi.invalid/schema/external-53f2e9486f4f23e14df7.json",
+                    resource="https://openapi.invalid/schema/external-54f9282b7dfcc35b7654.json",
                     pointer="",
                 ),
             ),

@@ -30,7 +30,7 @@ function _decode(::Type{AreaInterchange}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-919db374f73d659d5b5c.json",
+            resource="https://openapi.invalid/schema/external-6130ca35a7afd113611f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -129,7 +129,7 @@ end
 _encode(_openapi_value::AreaInterchange) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-919db374f73d659d5b5c.json",
+        resource="https://openapi.invalid/schema/external-6130ca35a7afd113611f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

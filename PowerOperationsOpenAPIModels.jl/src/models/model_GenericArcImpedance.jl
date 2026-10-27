@@ -36,7 +36,7 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-43ef517e81b9404bc476.json",
+            resource="https://openapi.invalid/schema/external-6eeab61c2eb5d7ed46e5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -172,7 +172,7 @@ end
 _encode(_openapi_value::GenericArcImpedance) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-43ef517e81b9404bc476.json",
+        resource="https://openapi.invalid/schema/external-6eeab61c2eb5d7ed46e5.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

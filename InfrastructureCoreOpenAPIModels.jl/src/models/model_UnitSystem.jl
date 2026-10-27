@@ -16,7 +16,7 @@ function _decode(::Type{UnitSystem}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
+            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
             pointer="/\$defs/UnitSystem",
         ),
         value,
@@ -32,7 +32,7 @@ end
 _encode(value::UnitSystem) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8cc4f801ef3ee70e68d9.json",
+        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
         pointer="/\$defs/UnitSystem",
     ),
     _encode_unvalidated(value),
