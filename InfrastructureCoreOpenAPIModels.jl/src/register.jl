@@ -1,4 +1,4 @@
-# Generated from the frozen pre-1.0 registered-name set. Do not edit.
+# Generated from every non-enum type this package emits. Do not edit.
 #
 # Runs in __init__ because the registry lives in another module: state
 # mutated there during precompilation would not be saved.
@@ -6,10 +6,12 @@
 function __init__()
     register_model_type!(ComplexNumber)
     register_model_type!(DataSource)
+    register_model_type!(DataSourceExtra)
     register_model_type!(FromTo)
     register_model_type!(FromToToFrom)
     register_model_type!(FunctionData)
     register_model_type!(GeographicInfo)
+    register_model_type!(GeographicInfoGeoJson)
     register_model_type!(InOut)
     register_model_type!(LinearFunctionData)
     register_model_type!(MinMax)

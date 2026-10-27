@@ -2,9 +2,9 @@
 #
 # Three pieces live here because every domain package can reach this one:
 #
-#   1. The cross-domain model-type registry. `scripts/registered_names.jl` drives one
-#      `register.jl` per domain package that calls `register_model_type!` in `__init__`, and
-#      every one of those calls targets THIS module, so each domain package loads standalone.
+#   1. The cross-domain model-type registry. The generator writes one `register.jl` per
+#      domain package that calls `register_model_type!` in `__init__`, and every one of
+#      those calls targets THIS module, so each domain package loads standalone.
 #
 #   2. `AbstractDocument` and the plumbing its subtypes share. `SystemDocument` lives in
 #      PowerCoreOpenAPIModels and `PortfolioDocument` in PowerInvestmentsOpenAPIModels, each
@@ -40,10 +40,8 @@ const MODEL_TYPES = Dict{String, Type}()
 """
 Register `T` under its bare type name so documents naming it can be deserialized.
 
-Called from each domain package's generated `register.jl`, which enumerates a frozen name
-set rather than filtering by a common supertype: the native (post-1.0) generator gives every
-schema -- component and small value type alike -- the same plain `struct` shape, with no
-marker like the old `OpenAPI.APIModel` distinguishing one from the other.
+Called from each domain package's generated `register.jl`, which registers every type the
+package emits except the enum wrappers.
 
 Re-registering the same type is a no-op; two different types with one name is a build error,
 not something to resolve at read time.

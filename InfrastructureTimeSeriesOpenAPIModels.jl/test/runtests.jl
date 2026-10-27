@@ -29,6 +29,10 @@ function single_time_series(; kwargs...)
     )
 end
 
+_registrable(::Type{T}) where {T <: IC.APIModel} = parentmodule(T) === ITS
+_registrable(::Type{<:IC.EnumAPIModel}) = false
+_registrable(::Any) = false
+
 @testset "InfrastructureTimeSeriesOpenAPIModels" begin
     @testset "an association round-trips through JSON" begin
         series = single_time_series()
@@ -143,6 +147,15 @@ end
         @test isempty(filter(startswith("Power"), collect(deps)))
         for sym in [:ACBusType, :ThermalFuels]
             @test !isdefined(ITS, sym)
+        end
+    end
+
+    # A type missing from register.jl leaves a document that holds it unreadable.
+    @testset "every non-enum type this package defines is registered" begin
+        own = [n for n in names(ITS) if _registrable(getfield(ITS, n))]
+        @test :SingleTimeSeries in own
+        for n in own
+            @test IC.model_type(string(n)) === getfield(ITS, n)
         end
     end
 end

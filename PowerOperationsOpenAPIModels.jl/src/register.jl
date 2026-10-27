@@ -1,4 +1,4 @@
-# Generated from the frozen pre-1.0 registered-name set. Do not edit.
+# Generated from every non-enum type this package emits. Do not edit.
 #
 # Runs in __init__ because the registry lives in another module: state
 # mutated there during precompilation would not be saved.
@@ -27,9 +27,11 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(HydroDispatchOperationCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(HydroPowerPlant)
     InfrastructureCoreOpenAPIModels.register_model_type!(HydroPumpTurbine)
+    InfrastructureCoreOpenAPIModels.register_model_type!(HydroPumpTurbineOperationCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(HydroReservoir)
     InfrastructureCoreOpenAPIModels.register_model_type!(HydroReservoirOperationCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(HydroTurbine)
+    InfrastructureCoreOpenAPIModels.register_model_type!(HydroTurbineOperationCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(ImpedanceCorrectionData)
     InfrastructureCoreOpenAPIModels.register_model_type!(InterconnectingConverter)
     InfrastructureCoreOpenAPIModels.register_model_type!(InterruptiblePowerLoad)
@@ -37,6 +39,9 @@ function __init__()
         InterruptiblePowerLoadOperationCost,
     )
     InfrastructureCoreOpenAPIModels.register_model_type!(InterruptibleStandardLoad)
+    InfrastructureCoreOpenAPIModels.register_model_type!(
+        InterruptibleStandardLoadOperationCost,
+    )
     InfrastructureCoreOpenAPIModels.register_model_type!(Line)
     InfrastructureCoreOpenAPIModels.register_model_type!(MotorLoad)
     InfrastructureCoreOpenAPIModels.register_model_type!(OfflineReserve)
@@ -53,6 +58,7 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(RenewablePowerPlant)
     InfrastructureCoreOpenAPIModels.register_model_type!(ServiceAssociation)
     InfrastructureCoreOpenAPIModels.register_model_type!(ShiftablePowerLoad)
+    InfrastructureCoreOpenAPIModels.register_model_type!(ShiftablePowerLoadOperationCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(Source)
     InfrastructureCoreOpenAPIModels.register_model_type!(SourceOperationCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(StandardLoad)
@@ -70,6 +76,9 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(TradingHubAssociation)
     InfrastructureCoreOpenAPIModels.register_model_type!(TransformerCircuit)
     InfrastructureCoreOpenAPIModels.register_model_type!(TransmissionInterface)
+    InfrastructureCoreOpenAPIModels.register_model_type!(
+        TransmissionInterfaceDirectionMapping,
+    )
     InfrastructureCoreOpenAPIModels.register_model_type!(TwoTerminalGenericHVDCLine)
     InfrastructureCoreOpenAPIModels.register_model_type!(TwoTerminalLCCLine)
     InfrastructureCoreOpenAPIModels.register_model_type!(TwoTerminalVSCLine)

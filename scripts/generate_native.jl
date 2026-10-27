@@ -23,7 +23,6 @@ const RAW_DIR = joinpath(REPO, ".native_raw") # scratch: one unsplit file per do
 include(joinpath(@__DIR__, "selector.jl"))
 include(joinpath(@__DIR__, "emit_units.jl"))
 include(joinpath(@__DIR__, "emit_docs.jl"))
-include(joinpath(@__DIR__, "registered_names.jl"))
 include(joinpath(@__DIR__, "prettify.jl"))
 include(joinpath(@__DIR__, "supertypes.jl"))
 
@@ -226,45 +225,17 @@ if !isempty(DUPLICATE_RENAMES)
     end
 end
 
-# ── Phase 3b: reconcile the frozen registered-name set with what exists now ────────
-# `REGISTERED_NAMES` is frozen from the pre-1.0 `register.jl` files, so it goes stale as the
-# schemas move: a type the schemas delete would be registered anyway and `register.jl` would
-# fail to load (`UndefVarError: TwoTerminalLoss`, after the loss-curve wrappers collapsed),
-# and a type that moves between packages would be registered from the package that no longer
-# owns it. Reconcile against the names actually generated, and say out loud what moved or
-# went away -- silently dropping a name would hide a real schema deletion.
-const OWNER_OF_NAME = Dict{String, String}()
-for (domain, _, _, _) in DOMAINS
-    for name in KEPT_NAMES[domain]
-        OWNER_OF_NAME[name] = domain
-    end
-end
-
-const FROZEN_ALL = Set{String}(name for names in values(REGISTERED_NAMES) for name in names)
-
 """
-Names `domain`'s `register.jl` should register: every frozen name the generated output says
-this domain now owns, wherever it was frozen.
+Names `domain`'s `register.jl` should register: every struct it emits except the enum
+wrappers, which no document names as a component type.
 """
 function registered_for(domain)
-    return sort!([n for n in FROZEN_ALL if get(OWNER_OF_NAME, n, "") == domain])
-end
-
-let
-    vanished = sort!([n for n in FROZEN_ALL if !haskey(OWNER_OF_NAME, n)])
-    isempty(vanished) || println(
-        "Frozen registered name(s) no longer generated, dropped from register.jl: " *
-        join(vanished, ", "),
-    )
-    moved = String[]
-    for (frozen_domain, names) in REGISTERED_NAMES, name in names
-        haskey(OWNER_OF_NAME, name) || continue
-        owner = OWNER_OF_NAME[name]
-        owner == frozen_domain || push!(moved, "$name: $frozen_domain -> $owner")
-    end
-    isempty(moved) || println(
-        "Frozen registered name(s) that changed package: " * join(sort!(moved), ", "),
-    )
+    return sort!([
+        c.name for c in KEPT_CHUNKS[domain] if occursin(
+            r"^(Base\.@kwdef )?struct \w+ <: (APIModel|OneOfAPIModel)$"m,
+            add_supertype(c.text),
+        )
+    ])
 end
 
 # ── Phase 4: assemble and write each package ────────────────────────────────────────
@@ -338,7 +309,7 @@ for (domain, pkgdir, modname, bases) in DOMAINS
         open(joinpath(dest, "register.jl"), "w") do io
             println(
                 io,
-                "# Generated from the frozen pre-1.0 registered-name set. Do not edit.",
+                "# Generated from every non-enum type this package emits. Do not edit.",
             )
             println(io, "#")
             println(
