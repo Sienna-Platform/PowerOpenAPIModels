@@ -92,7 +92,14 @@ Run OpenAPI.client() on `domain`'s selector; return the raw generated module tex
 function generate_raw(domain, modname)
     mkpath(RAW_DIR)
     outpath = joinpath(RAW_DIR, "$domain.jl")
-    OpenAPI.client(selector_path(SCHEMA_DIR, domain); name=modname, path=outpath)
+    # `:zoned`: a `date-time` keeps its offset as a `ZonedDateTime`, and a `date-time-local`
+    # is a `Dates.DateTime` wall clock. Neither is read as UTC.
+    OpenAPI.client(
+        selector_path(SCHEMA_DIR, domain);
+        name=modname,
+        path=outpath,
+        datetime=:zoned,
+    )
     return read(outpath, String)
 end
 
@@ -249,6 +256,17 @@ end
 # OpenAPI.client -- so nothing to rewrite there.
 const TOTAL_DEFAULTED = Ref(0)
 
+"""
+Drop the generator's `using TimeZones` from a package whose kept structs have no date-time
+field, so only the packages that hold one depend on TimeZones.
+"""
+function drop_unused_timezones(preamble, chunks)
+    if any(c -> occursin("TimeZones.", c.text), chunks)
+        return preamble
+    end
+    return replace(preamble, r"^using TimeZones\n"m => "")
+end
+
 for (domain, pkgdir, modname, bases) in DOMAINS
     preamble, _, _ = RAW[domain]
     chunks = KEPT_CHUNKS[domain]
@@ -276,7 +294,7 @@ for (domain, pkgdir, modname, bases) in DOMAINS
     TOTAL_DEFAULTED[] += domain_defaulted
 
     lines_out = IOBuffer()
-    println(lines_out, preamble)
+    println(lines_out, drop_unused_timezones(preamble, chunks))
     for b in bases
         println(lines_out, "using $(MODULE_FOR_DOMAIN[b])")
     end

@@ -37,7 +37,9 @@ const ENCODE_UNVALIDATED_DEFINITIONS = """
 `_encode` without the schema check. A generated model's `_encode` builds its fields with this
 and checks the finished object once, since that object's schema covers every nested one.
 \"\"\"
-_encode_unvalidated(value) = _encode(value)
+# The generated `_encode` of a `datetime = :zoned` module calls `_encode_zoned`, which writes
+# a `Dates.DateTime` (a `date-time-local` wall clock) with no offset.
+_encode_unvalidated(value) = OpenAPI.Runtime._encode_zoned(value)
 _encode_unvalidated(value::AbstractVector{UInt8}) = _encode(value)
 _encode_unvalidated(value::AbstractVector) = Any[_encode_unvalidated(item) for item in value]
 function _encode_unvalidated(value::AbstractDict)
@@ -114,8 +116,13 @@ function validate_once(text::AbstractString, name::AbstractString)
                 "_encode_unvalidated($arg), $context; direction = $direction)\n"
             end
             return "function _encode_unvalidated($arg::$type)\n" *
-                   replace(body, "_encode(" => "_encode_unvalidated(") *
-                   "    return $output\nend\n" * checked
+                   replace(
+                       body,
+                       "_encode(" => "_encode_unvalidated(",
+                       "_encode_zoned(" => "_encode_unvalidated(",
+                   ) *
+                   "    return $output\nend\n" *
+                   checked
         end,
     )
     patched == expected ||

@@ -77,9 +77,18 @@ _type_name(::Any) = ""
         )
         doc = time_series_document([time_series_row(), second])
         json = PowerCoreOpenAPIModels.time_series_association_json(doc)
-        # The encoder writes initial_timestamp with milliseconds.
-        wire(row) =
-            merge(row, Dict{String, Any}("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
+        # The encoder writes initial_timestamp with milliseconds, and a zero offset as `Z`
+        # under `datetime = :utc` or `+00:00` under `:zoned` (from schema 0.4.0).
+        zero_offset = "Z"
+        if parse(Int, split(InfrastructureCoreOpenAPIModels.READER_VERSION, '.')[2]) >= 4
+            zero_offset = "+00:00"
+        end
+        wire(row) = merge(
+            row,
+            Dict{String, Any}(
+                "initial_timestamp" => "2030-01-01T00:00:00.000" * zero_offset,
+            ),
+        )
         JSON = InfrastructureCoreOpenAPIModels.JSON
         @test JSON.parse(json) ==
               JSON.parse(JSON.json([wire(time_series_row()), wire(second)]))
@@ -302,20 +311,24 @@ _type_name(::Any) = ""
             ),
         )
         ts_id = PowerCoreOpenAPIModels.next_id!(doc)
-        ts = InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeries(;
-            association_id=ts_id,
-            owner_id=bus_id,
-            owner_type="ACBus",
-            owner_category=InfrastructureTimeSeriesOpenAPIModels.OwnerCategory("Component"),
-            name="max_active_power",
-            features=InfrastructureTimeSeriesOpenAPIModels.TimeSeriesFeatures(),
-            uri="fixture_time_series_storage.h5",
-            element_type="Float64",
-            element_shape=Int64[],
-            initial_timestamp=DateTime(2024, 1, 1),
-            resolution="PT1H",
-            length=24,
-            time_series_type="SingleTimeSeries",
+        # Built from the wire form: the Julia type of `initial_timestamp` follows the schema.
+        ts = InfrastructureCoreOpenAPIModels.decode(
+            InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeries,
+            Dict{String, Any}(
+                "association_id" => ts_id,
+                "owner_id" => bus_id,
+                "owner_type" => "ACBus",
+                "owner_category" => "Component",
+                "name" => "max_active_power",
+                "features" => Dict{String, Any}(),
+                "uri" => "fixture_time_series_storage.h5",
+                "element_type" => "Float64",
+                "element_shape" => Any[],
+                "initial_timestamp" => "2024-01-01T00:00:00Z",
+                "resolution" => "PT1H",
+                "length" => 24,
+                "time_series_type" => "SingleTimeSeries",
+            ),
         )
         PowerCoreOpenAPIModels.add_time_series_association!(
             doc,

@@ -10,23 +10,44 @@ const ITS = InfrastructureTimeSeriesOpenAPIModels
 const IC = InfrastructureCoreOpenAPIModels
 const SchemaValidationError = OpenAPI.Runtime.SchemaValidationError
 
-function single_time_series(; kwargs...)
-    return SingleTimeSeries(;
-        association_id=1,
-        owner_id=2,
-        owner_type="ACBus",
-        owner_category=OwnerCategory("Component"),
-        name="max_active_power",
-        features=TimeSeriesFeatures(),
-        uri="time_series_storage.h5",
-        element_type="Float64",
-        element_shape=Int64[],
-        initial_timestamp=DateTime(2024, 1, 1),
-        resolution="PT1H",
-        length=24,
-        time_series_type="SingleTimeSeries",
-        kwargs...,
+# Built from the wire form: the Julia type of `initial_timestamp` follows the schema
+# (`ZonedDateTime`, or from schema 0.4.0 a wrapper of either RFC 3339 form).
+function single_time_series_wire(; kwargs...)
+    raw = Dict{String, Any}(
+        "association_id" => 1,
+        "owner_id" => 2,
+        "owner_type" => "ACBus",
+        "owner_category" => "Component",
+        "name" => "max_active_power",
+        "features" => Dict{String, Any}(),
+        "uri" => "time_series_storage.h5",
+        "element_type" => "Float64",
+        "element_shape" => Any[],
+        "initial_timestamp" => "2024-01-01T00:00:00Z",
+        "resolution" => "PT1H",
+        "length" => 24,
+        "time_series_type" => "SingleTimeSeries",
     )
+    for (key, value) in kwargs
+        raw[String(key)] = value
+    end
+    return raw
+end
+single_time_series(; kwargs...) =
+    decode(SingleTimeSeries, single_time_series_wire(; kwargs...))
+
+function schema_at_least(major, minor)
+    parts = split(IC.READER_VERSION, '.')
+    return (parse(Int, parts[1]), parse(Int, parts[2])) >= (major, minor)
+end
+
+# How a zero offset is written: `Z` under `datetime = :utc`, and `+00:00` under
+# `datetime = :zoned`, which the packages use from schema 0.4.0.
+function utc(clock)
+    if schema_at_least(0, 4)
+        return clock * "+00:00"
+    end
+    return clock * "Z"
 end
 
 _registrable(::Type{T}) where {T <: IC.APIModel} = parentmodule(T) === ITS
@@ -40,10 +61,26 @@ _registrable(::Any) = false
         back = decode(SingleTimeSeries, JSON.parse(text))
 
         @test back.name == "max_active_power"
-        @test back.initial_timestamp == DateTime(2024, 1, 1)
+        @test encode(back)["initial_timestamp"] == utc("2024-01-01T00:00:00.000")
         @test back.length == 24
         @test string(back.owner_category) == "Component"
         @test JSON.json(encode(back)) == text
+    end
+
+    # From schema 0.4.0 the packages generate with `datetime = :zoned`: a `date-time` keeps
+    # its offset, and a `date-time-local` is a wall clock written with no offset.
+    schema_at_least(0, 4) && @testset "a timestamp keeps its RFC 3339 form" begin
+        offset = encode(single_time_series(; initial_timestamp="2024-01-01T02:00:00-07:00"))
+        @test offset["initial_timestamp"] == "2024-01-01T02:00:00.000-07:00"
+        wall = encode(single_time_series(; initial_timestamp="2024-01-01T00:00:00"))
+        @test wall["initial_timestamp"] == "2024-01-01T00:00:00.000"
+        for bad in ("2024-01-01 00:00:00Z", "2024-01-01T00:00:00Z\n", "2024-01-01")
+            @test_throws Exception single_time_series(; initial_timestamp=bad)
+        end
+        @test_throws Exception single_time_series(;
+            initial_timestamp="2024-01-01T00:00:00Z",
+            time_reference="zoneless",
+        )
     end
 
     @testset "dense values are never carried inline" begin
@@ -108,7 +145,7 @@ _registrable(::Any) = false
         good = decode(TimeSeriesAssociation, row())
         @test good.value isa SingleTimeSeries
         # The encoder writes timestamps with milliseconds.
-        encoded = merge(row(), Dict("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
+        encoded = merge(row(), Dict("initial_timestamp" => utc("2030-01-01T00:00:00.000")))
         @test JSON.parse(JSON.json(encode(good))) == JSON.parse(JSON.json(encoded))
 
         # The schema reserves `resolution` as a feature name; the structural decode accepts it.
