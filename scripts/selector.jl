@@ -54,8 +54,7 @@ Every component the domain declares, as `name => authored schema body`.
 function selector_definitions(schema_dir, domain)
     path = selector_path(schema_dir, domain)
     spec = _load_schema_file(path)
-    schemas =
-        get(get(spec, "components", Dict{String, Any}()), "schemas", Dict{String, Any}())
+    schemas = get(get(spec, "components", Dict{String, Any}()), "schemas", Dict{String, Any}())
     result = Dict{String, Any}()
     for (name, entry) in schemas
         if !_is_bare_ref(entry)
