@@ -31,12 +31,15 @@ end
 selector_path(schema_dir, domain) = joinpath(schema_dir, "openapi-$domain.json")
 
 # common.json is the target of most entries in every domain; parse each file once.
-const _SCHEMA_FILE_CACHE = Dict{String, Dict{String, Any}}()
+# Parsed in file order (`JSON.Object`), so whatever iterates a schema -- the `units.jl`
+# writer walks `properties` -- emits the schema's order on every Julia version. A `Dict`
+# iterated in hash order, which changes between Julia releases.
+const _SCHEMA_FILE_CACHE = Dict{String, JSON.Object{String, Any}}()
 
 function _load_schema_file(path)
     key = abspath(path)
     return get!(_SCHEMA_FILE_CACHE, key) do
-        JSON.parsefile(key; dicttype=Dict{String, Any})
+        JSON.parsefile(key)
     end
 end
 
@@ -51,7 +54,8 @@ Every component the domain declares, as `name => authored schema body`.
 function selector_definitions(schema_dir, domain)
     path = selector_path(schema_dir, domain)
     spec = _load_schema_file(path)
-    schemas = get(get(spec, "components", Dict{String, Any}()), "schemas", Dict{String, Any}())
+    schemas =
+        get(get(spec, "components", Dict{String, Any}()), "schemas", Dict{String, Any}())
     result = Dict{String, Any}()
     for (name, entry) in schemas
         if !_is_bare_ref(entry)
