@@ -15,7 +15,7 @@ Cost representation for static (non-time-varying) market bids of energy and anci
   - `curve_multistep`: Multi-step block indicator for the bid: 0 = SINGLE_STEP (default; each step of the bid clears independently); 1 = MULTI_STEP (the bid must be awarded as one block across every step it covers). Counted in model steps so it applies at any resolution. Independent of curve_style: curve_style is the quantity structure, curve_multistep is the time structure, and they compose.
 """
 Base.@kwdef struct MarketBidCost <: APIModel
-    cost_type::Union{Absent, Nothing, String} = ABSENT
+    cost_type::String = "MARKET_BID"
     minimum_energy_offer::InputOutputCurve
     start_up::StartUpStages
     shut_down::InputOutputCurve
@@ -43,8 +43,7 @@ function _decode(::Type{MarketBidCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "MarketBidCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
-        ABSENT
+        _decode(String, _openapi_object["cost_type"], false) : "MARKET_BID"
     _openapi_field_minimum_energy_offer = _decode(
         InputOutputCurve,
         _required(_openapi_object, "minimum_energy_offer", "MarketBidCost"),

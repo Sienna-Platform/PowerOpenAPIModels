@@ -107,6 +107,18 @@ _registrable(::Any) = false
         @test occursin("decoding ThermalGenerationCostStartUp", sprint(showerror, err))
     end
 
+    @testset "an optional const field defaults to its schema value" begin
+        @test StartUpStages(; cold=3.0, hot=1.0, warm=2.0).startup_stages_type == "STAGES"
+        stages = Dict{String, Any}("cold" => 3.0, "hot" => 1.0, "warm" => 2.0)
+        back = decode(StartUpStages, stages)
+        @test back.startup_stages_type == "STAGES"
+        @test encode(back)["startup_stages_type"] == "STAGES"
+        wrong = merge(stages, Dict{String, Any}("startup_stages_type" => "PHASES"))
+        @test_throws SchemaValidationError decode(StartUpStages, wrong)
+        @test StorageCost(; fixed=0.0, shut_down=0.0, start_up=StorageCostStartUp(0.0)).cost_type ==
+              "STORAGE"
+    end
+
     @testset "a fixed x-unit resolves from the type alone" begin
         @test has_declared_unit(ACBus, Val(:angle))
         @test declared_unit(ACBus, Val(:angle)) == "rad"
