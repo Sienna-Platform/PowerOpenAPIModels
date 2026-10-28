@@ -51,9 +51,8 @@ inserts it: this package and the Python, TypeScript and Rust packages behave the
   field that was not given from one set to its default value.
 - A field the schema marks `required` stays required, even when it has a default
   (`CostCurve.vom_cost`, the portfolio financial rates).
-- A required `const` field, such as a discriminator (`time_series_type`, `curve_type`), is
-  set to its fixed value. An optional `const` field (`cost_type`) decodes to `ABSENT` when
-  omitted; the other packages set it to its fixed value.
+- A `const` field, such as a discriminator (`time_series_type`, `curve_type`, `cost_type`),
+  is set to its fixed value, whether the schema marks it required or optional.
 
 To use a default, apply it where you read the field. The schema reference lists every
 default.
