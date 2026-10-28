@@ -77,9 +77,18 @@ _type_name(::Any) = ""
         )
         doc = time_series_document([time_series_row(), second])
         json = PowerCoreOpenAPIModels.time_series_association_json(doc)
-        # The encoder writes initial_timestamp with milliseconds.
-        wire(row) =
-            merge(row, Dict{String, Any}("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
+        # The encoder writes initial_timestamp with milliseconds, and a zero offset as `Z`
+        # under `datetime = :utc` or `+00:00` under `:zoned` (from schema 0.4.0).
+        zero_offset = "Z"
+        if parse(Int, split(InfrastructureCoreOpenAPIModels.READER_VERSION, '.')[2]) >= 4
+            zero_offset = "+00:00"
+        end
+        wire(row) = merge(
+            row,
+            Dict{String, Any}(
+                "initial_timestamp" => "2030-01-01T00:00:00.000" * zero_offset,
+            ),
+        )
         JSON = InfrastructureCoreOpenAPIModels.JSON
         @test JSON.parse(json) ==
               JSON.parse(JSON.json([wire(time_series_row()), wire(second)]))

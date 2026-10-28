@@ -46,15 +46,19 @@ _registrable(::Any) = false
             "fields" => Any[],
             "retrieved_at" => "2024-01-01T00:00:00Z",
         )
-        @test encode(decode(DataSource, raw))["retrieved_at"] == "2024-01-01T00:00:00.000Z"
+        written = encode(decode(DataSource, raw))["retrieved_at"]
         # From schema 0.4.0 the timestamp has a `pattern`, and a value with no offset fails.
+        # `datetime = :zoned` then writes a zero offset as `+00:00`; `:utc` writes `Z`.
         if parse(Int, split(IC.READER_VERSION, '.')[2]) >= 4
+            @test written == "2024-01-01T00:00:00.000+00:00"
             @test_throws Exception decode(
                 DataSource,
                 merge(raw, Dict("retrieved_at" => "2024-01-01T00:00:00")),
             )
             @test decode(DataSource, merge(raw, Dict("published_at" => nothing))).published_at ===
                   nothing
+        else
+            @test written == "2024-01-01T00:00:00.000Z"
         end
     end
 

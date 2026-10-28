@@ -41,6 +41,15 @@ function schema_at_least(major, minor)
     return (parse(Int, parts[1]), parse(Int, parts[2])) >= (major, minor)
 end
 
+# How a zero offset is written: `Z` under `datetime = :utc`, and `+00:00` under
+# `datetime = :zoned`, which the packages use from schema 0.4.0.
+function utc(clock)
+    if schema_at_least(0, 4)
+        return clock * "+00:00"
+    end
+    return clock * "Z"
+end
+
 _registrable(::Type{T}) where {T <: IC.APIModel} = parentmodule(T) === ITS
 _registrable(::Type{<:IC.EnumAPIModel}) = false
 _registrable(::Any) = false
@@ -52,7 +61,7 @@ _registrable(::Any) = false
         back = decode(SingleTimeSeries, JSON.parse(text))
 
         @test back.name == "max_active_power"
-        @test encode(back)["initial_timestamp"] == "2024-01-01T00:00:00.000Z"
+        @test encode(back)["initial_timestamp"] == utc("2024-01-01T00:00:00.000")
         @test back.length == 24
         @test string(back.owner_category) == "Component"
         @test JSON.json(encode(back)) == text
@@ -136,7 +145,7 @@ _registrable(::Any) = false
         good = decode(TimeSeriesAssociation, row())
         @test good.value isa SingleTimeSeries
         # The encoder writes timestamps with milliseconds.
-        encoded = merge(row(), Dict("initial_timestamp" => "2030-01-01T00:00:00.000Z"))
+        encoded = merge(row(), Dict("initial_timestamp" => utc("2030-01-01T00:00:00.000")))
         @test JSON.parse(JSON.json(encode(good))) == JSON.parse(JSON.json(encoded))
 
         # The schema reserves `resolution` as a feature name; the structural decode accepts it.
