@@ -40,6 +40,24 @@ _registrable(::Any) = false
         @test decode(MinMax, Dict{String, Any}("min" => 0.0)).max === IC.ABSENT
     end
 
+    @testset "a data source timestamp needs an offset" begin
+        raw = Dict{String, Any}(
+            "id" => 1,
+            "fields" => Any[],
+            "retrieved_at" => "2024-01-01T00:00:00Z",
+        )
+        @test encode(decode(DataSource, raw))["retrieved_at"] == "2024-01-01T00:00:00.000Z"
+        # From schema 0.4.0 the timestamp has a `pattern`, and a value with no offset fails.
+        if parse(Int, split(IC.READER_VERSION, '.')[2]) >= 4
+            @test_throws Exception decode(
+                DataSource,
+                merge(raw, Dict("retrieved_at" => "2024-01-01T00:00:00")),
+            )
+            @test decode(DataSource, merge(raw, Dict("published_at" => nothing))).published_at ===
+                  nothing
+        end
+    end
+
     @testset "decoding enforces the schema" begin
         @test_throws SchemaValidationError decode(
             LinearFunctionData,

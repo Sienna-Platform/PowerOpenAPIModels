@@ -302,20 +302,24 @@ _type_name(::Any) = ""
             ),
         )
         ts_id = PowerCoreOpenAPIModels.next_id!(doc)
-        ts = InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeries(;
-            association_id=ts_id,
-            owner_id=bus_id,
-            owner_type="ACBus",
-            owner_category=InfrastructureTimeSeriesOpenAPIModels.OwnerCategory("Component"),
-            name="max_active_power",
-            features=InfrastructureTimeSeriesOpenAPIModels.TimeSeriesFeatures(),
-            uri="fixture_time_series_storage.h5",
-            element_type="Float64",
-            element_shape=Int64[],
-            initial_timestamp=DateTime(2024, 1, 1),
-            resolution="PT1H",
-            length=24,
-            time_series_type="SingleTimeSeries",
+        # Built from the wire form: the Julia type of `initial_timestamp` follows the schema.
+        ts = InfrastructureCoreOpenAPIModels.decode(
+            InfrastructureTimeSeriesOpenAPIModels.SingleTimeSeries,
+            Dict{String, Any}(
+                "association_id" => ts_id,
+                "owner_id" => bus_id,
+                "owner_type" => "ACBus",
+                "owner_category" => "Component",
+                "name" => "max_active_power",
+                "features" => Dict{String, Any}(),
+                "uri" => "fixture_time_series_storage.h5",
+                "element_type" => "Float64",
+                "element_shape" => Any[],
+                "initial_timestamp" => "2024-01-01T00:00:00Z",
+                "resolution" => "PT1H",
+                "length" => 24,
+                "time_series_type" => "SingleTimeSeries",
+            ),
         )
         PowerCoreOpenAPIModels.add_time_series_association!(
             doc,

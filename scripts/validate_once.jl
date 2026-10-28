@@ -38,6 +38,16 @@ const ENCODE_UNVALIDATED_DEFINITIONS = """
 and checks the finished object once, since that object's schema covers every nested one.
 \"\"\"
 _encode_unvalidated(value) = _encode(value)
+# `datetime = :zoned`: a `Dates.DateTime` is a `date-time-local` wall clock, written with no
+# offset, and a zero offset is written as `Z`, as the Python and Rust packages write it.
+_encode_unvalidated(value::Dates.DateTime) = OpenAPI.Runtime._encode_zoned(value)
+function _encode_unvalidated(value::TimeZones.ZonedDateTime)
+    text = _encode(value)
+    if endswith(text, "+00:00")
+        return chop(text; tail=6) * "Z"
+    end
+    return text
+end
 _encode_unvalidated(value::AbstractVector{UInt8}) = _encode(value)
 _encode_unvalidated(value::AbstractVector) = Any[_encode_unvalidated(item) for item in value]
 function _encode_unvalidated(value::AbstractDict)
@@ -114,8 +124,13 @@ function validate_once(text::AbstractString, name::AbstractString)
                 "_encode_unvalidated($arg), $context; direction = $direction)\n"
             end
             return "function _encode_unvalidated($arg::$type)\n" *
-                   replace(body, "_encode(" => "_encode_unvalidated(") *
-                   "    return $output\nend\n" * checked
+                   replace(
+                       body,
+                       "_encode(" => "_encode_unvalidated(",
+                       "_encode_zoned(" => "_encode_unvalidated(",
+                   ) *
+                   "    return $output\nend\n" *
+                   checked
         end,
     )
     patched == expected ||
