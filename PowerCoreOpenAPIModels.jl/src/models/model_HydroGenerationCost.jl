@@ -6,7 +6,7 @@ Cost representation for hydro gen units
   - `variable_operation_cost`: Variable production cost of a device, selected by `variable_cost_type` between a curve denominated directly in currency (`COST`) and one denominated in fuel with a separate fuel price (`FUEL`).
 """
 Base.@kwdef struct HydroGenerationCost <: APIModel
-    cost_type::Union{Absent, Nothing, String} = ABSENT
+    cost_type::String = "HYDRO_GEN"
     fixed::Union{Absent, Float64, Nothing} = ABSENT
     variable_operation_cost::ProductionVariableCostCurve
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -26,8 +26,7 @@ function _decode(::Type{HydroGenerationCost}, _openapi_raw, _openapi_validate::B
     _openapi_object = _object(_openapi_raw, "HydroGenerationCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
-        ABSENT
+        _decode(String, _openapi_object["cost_type"], false) : "HYDRO_GEN"
     _openapi_field_fixed =
         haskey(_openapi_object, "fixed") ?
         _decode(Union{Absent, Float64, Nothing}, _openapi_object["fixed"], false) : ABSENT

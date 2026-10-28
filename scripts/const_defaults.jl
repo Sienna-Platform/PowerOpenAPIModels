@@ -7,15 +7,13 @@
 # downstream repos must repeat `function_type = "LINEAR"` or fail with `UndefKeywordError`.
 # This is the single largest error class in those repos' test suites.
 #
-# Only a field with no default already (a required, non-`Absent` `name::String`) is rewritten.
-# A `const` property the schema also marks optional (e.g. `HydroGenerationCost.cost_type`)
-# already generates as `Union{Absent, Nothing, String} = ABSENT` and is left alone -- it has a
-# default, just not this one, and defaulting it further is out of scope here.
+# A `const` property the schema marks optional (e.g. `HydroGenerationCost.cost_type`) generates
+# as `Union{Absent,Nothing,String} = ABSENT`. It becomes `name::String = "VALUE"` too, and its
+# decoder reads an omitted field as that value, as the Python, TypeScript, and Rust packages do.
 #
-# `_decode`/`_encode` are untouched: decode still runs `_validate_schema`, so an explicit wrong
-# value still fails there, and encode already omits a field only when it `isa Absent`, which a
-# plain `String` never is -- so a defaulted field is always emitted, with no encode change
-# needed.
+# Decode still runs `_validate_schema`, so an explicit wrong value still fails there. Encode
+# omits a field only when it `isa Absent`, which a plain `String` never is, so a defaulted
+# field is always emitted.
 
 """
 Map every generated struct name to its `const` fields, as `{field_name => const_value}`.
@@ -64,17 +62,37 @@ const EMPTY_CONST_FIELDS = Dict{String, String}()
 """
 Give each of `chunk_text`'s `const` fields its schema value as a Julia default.
 
-Matches only the exact bare declaration line `    <field>::String` (a required field with no
-default yet); a field already defaulted to `ABSENT` does not match and is left unchanged.
-Returns `(text, n)`, `n` the number of fields defaulted, for the caller's summary count.
+A required field matches the bare declaration `    <field>::String`. An optional field matches
+`    <field>::Union{Absent,...String} = ABSENT`; its type narrows to `String` and its decoder
+falls back to the value instead of `ABSENT`. Returns `(text, n)`, `n` the number of fields
+defaulted, for the caller's summary count.
 """
-function default_const_fields(text::AbstractString, const_fields::AbstractDict{String, String})
+function default_const_fields(
+    text::AbstractString,
+    const_fields::AbstractDict{String, String},
+)
     isempty(const_fields) && return text, 0
     n = 0
     for (field, value) in const_fields
-        old = "    $field::String\n"
-        occursin(old, text) || continue
-        text = replace(text, old => "    $field::String = \"$value\"\n"; count=1)
+        literal = repr(value)
+        required = "    $field::String\n"
+        if occursin(required, text)
+            text = replace(text, required => "    $field::String = $literal\n"; count=1)
+            n += 1
+            continue
+        end
+        optional = match(
+            Regex("    $field::(Union\\{Absent,(?:Nothing,)?String\\}) = ABSENT\n"),
+            text,
+        )
+        optional === nothing && continue
+        decode = "_decode($(optional[1]), _openapi_object[\"$field\"], _openapi_validate) : ABSENT\n"
+        occursin(decode, text) || error("no decoder line for optional const field $field")
+        text = replace(
+            text,
+            optional.match => "    $field::String = $literal\n",
+            decode => "_decode(String, _openapi_object[\"$field\"], _openapi_validate) : $literal\n",
+        )
         n += 1
     end
     return text, n
