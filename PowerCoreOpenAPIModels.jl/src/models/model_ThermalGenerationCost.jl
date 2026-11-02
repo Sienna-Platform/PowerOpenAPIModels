@@ -9,7 +9,7 @@ Cost representation for thermal generation units
   - `variable_operation_cost`: Variable production cost of a device, selected by `variable_cost_type` between a curve denominated directly in currency (`COST`) and one denominated in fuel with a separate fuel price (`FUEL`).
 """
 Base.@kwdef struct ThermalGenerationCost <: APIModel
-    cost_type::Union{Absent, Nothing, String} = ABSENT
+    cost_type::String = "THERMAL"
     fixed::Float64
     shut_down::Float64
     start_up::ThermalGenerationCostStartUp
@@ -31,8 +31,7 @@ function _decode(::Type{ThermalGenerationCost}, _openapi_raw, _openapi_validate:
     _openapi_object = _object(_openapi_raw, "ThermalGenerationCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
-        ABSENT
+        _decode(String, _openapi_object["cost_type"], false) : "THERMAL"
     _openapi_field_fixed = _decode(
         Float64,
         _required(_openapi_object, "fixed", "ThermalGenerationCost"),

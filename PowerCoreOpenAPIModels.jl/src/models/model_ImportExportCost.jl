@@ -9,7 +9,7 @@ Cost representation for static (non-time-varying) imports and exports with neigh
   - `energy_export_weekly_limit`: Weekly limit on exported energy, in MWh. MWh is the only representation: neither producers nor consumers rescale it by a system base. Units: MWh.
 """
 Base.@kwdef struct ImportExportCost <: APIModel
-    cost_type::Union{Absent, Nothing, String} = ABSENT
+    cost_type::String = "IMPORTEXPORT"
     import_offer_curves::Union{Absent, CostCurve, Nothing} = ABSENT
     export_offer_curves::Union{Absent, CostCurve, Nothing} = ABSENT
     energy_import_weekly_limit::Float64
@@ -31,8 +31,7 @@ function _decode(::Type{ImportExportCost}, _openapi_raw, _openapi_validate::Bool
     _openapi_object = _object(_openapi_raw, "ImportExportCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
-        ABSENT
+        _decode(String, _openapi_object["cost_type"], false) : "IMPORTEXPORT"
     _openapi_field_import_offer_curves =
         haskey(_openapi_object, "import_offer_curves") ?
         _decode(

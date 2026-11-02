@@ -7,7 +7,7 @@ Cost representation for renewable generation units
   - `variable_operation_cost`: Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term. Units: x-axis per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu ; y-axis USD/h .
 """
 Base.@kwdef struct RenewableGenerationCost <: APIModel
-    cost_type::Union{Absent, Nothing, String} = ABSENT
+    cost_type::String = "RENEWABLE"
     curtailment_cost::Union{Absent, CostCurve, Nothing} = ABSENT
     variable_operation_cost::CostCurve
     fixed::Union{Absent, Float64, Nothing} = ABSENT
@@ -29,8 +29,7 @@ function _decode(::Type{RenewableGenerationCost}, _openapi_raw, _openapi_validat
     _openapi_object = _object(_openapi_raw, "RenewableGenerationCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
-        ABSENT
+        _decode(String, _openapi_object["cost_type"], false) : "RENEWABLE"
     _openapi_field_curtailment_cost =
         haskey(_openapi_object, "curtailment_cost") ?
         _decode(

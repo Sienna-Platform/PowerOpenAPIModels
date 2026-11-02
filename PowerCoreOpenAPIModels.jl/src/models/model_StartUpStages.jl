@@ -4,7 +4,7 @@
 A triple of values, one for each stage of a thermal unit's start-up: `hot`, `warm`, and `cold`.
 """
 Base.@kwdef struct StartUpStages <: APIModel
-    startup_stages_type::Union{Absent, Nothing, String} = ABSENT
+    startup_stages_type::String = "STAGES"
     cold::Float64
     hot::Float64
     warm::Float64
@@ -25,11 +25,7 @@ function _decode(::Type{StartUpStages}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "StartUpStages")
     _openapi_field_startup_stages_type =
         haskey(_openapi_object, "startup_stages_type") ?
-        _decode(
-            Union{Absent, Nothing, String},
-            _openapi_object["startup_stages_type"],
-            false,
-        ) : ABSENT
+        _decode(String, _openapi_object["startup_stages_type"], false) : "STAGES"
     _openapi_field_cold =
         _decode(Float64, _required(_openapi_object, "cold", "StartUpStages"), false)
     _openapi_field_hot =

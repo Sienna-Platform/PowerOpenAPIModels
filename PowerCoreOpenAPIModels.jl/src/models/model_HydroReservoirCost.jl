@@ -4,7 +4,7 @@
 Cost representation for hydro reservoir
 """
 Base.@kwdef struct HydroReservoirCost <: APIModel
-    cost_type::Union{Absent, Nothing, String} = ABSENT
+    cost_type::String = "HYDRO_RES"
     level_shortage_cost::Union{Absent, Float64, Nothing} = ABSENT
     level_surplus_cost::Union{Absent, Float64, Nothing} = ABSENT
     spillage_cost::Union{Absent, Float64, Nothing} = ABSENT
@@ -25,8 +25,7 @@ function _decode(::Type{HydroReservoirCost}, _openapi_raw, _openapi_validate::Bo
     _openapi_object = _object(_openapi_raw, "HydroReservoirCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
-        ABSENT
+        _decode(String, _openapi_object["cost_type"], false) : "HYDRO_RES"
     _openapi_field_level_shortage_cost =
         haskey(_openapi_object, "level_shortage_cost") ?
         _decode(

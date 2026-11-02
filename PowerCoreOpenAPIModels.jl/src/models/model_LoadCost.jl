@@ -6,7 +6,7 @@ Cost representation for controllable load units
   - `variable_operation_cost`: Variable operation cost of a device expressed directly in currency. Wraps a `ValueCurve` that may be in input-output, incremental, or average-rate form, with `power_units` declaring the basis of the x axis and `vom_cost` adding a proportional variable operation and maintenance term. Units: x-axis per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu ; y-axis USD/h .
 """
 Base.@kwdef struct LoadCost <: APIModel
-    cost_type::Union{Absent, Nothing, String} = ABSENT
+    cost_type::String = "LOAD"
     fixed::Union{Absent, Float64, Nothing} = ABSENT
     variable_operation_cost::CostCurve
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -26,8 +26,7 @@ function _decode(::Type{LoadCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "LoadCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["cost_type"], false) :
-        ABSENT
+        _decode(String, _openapi_object["cost_type"], false) : "LOAD"
     _openapi_field_fixed =
         haskey(_openapi_object, "fixed") ?
         _decode(Union{Absent, Float64, Nothing}, _openapi_object["fixed"], false) : ABSENT
