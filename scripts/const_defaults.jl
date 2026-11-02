@@ -87,11 +87,14 @@ function default_const_fields(
         )
         optional === nothing && continue
         decode = "_decode($(optional[1]), _openapi_object[\"$field\"], _openapi_validate) : ABSENT\n"
+        # A `datetime = :zoned` module decodes through `_decode_zoned`.
+        occursin(decode, text) || (decode = replace(decode, "_decode(" => "_decode_zoned("))
         occursin(decode, text) || error("no decoder line for optional const field $field")
+        fixed = replace(decode, "$(optional[1])" => "String", ": ABSENT" => ": $literal")
         text = replace(
             text,
             optional.match => "    $field::String = $literal\n",
-            decode => "_decode(String, _openapi_object[\"$field\"], _openapi_validate) : $literal\n",
+            decode => fixed,
         )
         n += 1
     end
