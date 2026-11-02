@@ -54,7 +54,7 @@ function _decode(::Type{EXAC2}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-88430641d598e6cb613c.json",
+            resource="https://openapi.invalid/schema/external-bf9a76655863e8babaf0.json",
             pointer="",
         ),
         _openapi_raw,
@@ -62,34 +62,50 @@ function _decode(::Type{EXAC2}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "EXAC2")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "EXAC2"), false)
-    _openapi_field_tr = _decode(Float64, _required(_openapi_object, "Tr", "EXAC2"), false)
-    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "EXAC2"), false)
-    _openapi_field_tc = _decode(Float64, _required(_openapi_object, "Tc", "EXAC2"), false)
-    _openapi_field_ka = _decode(Float64, _required(_openapi_object, "Ka", "EXAC2"), false)
-    _openapi_field_ta = _decode(Float64, _required(_openapi_object, "Ta", "EXAC2"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "EXAC2"), false)
+    _openapi_field_tr =
+        _decode_zoned(Float64, _required(_openapi_object, "Tr", "EXAC2"), false)
+    _openapi_field_tb =
+        _decode_zoned(Float64, _required(_openapi_object, "Tb", "EXAC2"), false)
+    _openapi_field_tc =
+        _decode_zoned(Float64, _required(_openapi_object, "Tc", "EXAC2"), false)
+    _openapi_field_ka =
+        _decode_zoned(Float64, _required(_openapi_object, "Ka", "EXAC2"), false)
+    _openapi_field_ta =
+        _decode_zoned(Float64, _required(_openapi_object, "Ta", "EXAC2"), false)
     _openapi_field_va_lim =
-        _decode(MinMax, _required(_openapi_object, "Va_lim", "EXAC2"), false)
-    _openapi_field_kb = _decode(Float64, _required(_openapi_object, "Kb", "EXAC2"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Va_lim", "EXAC2"), false)
+    _openapi_field_kb =
+        _decode_zoned(Float64, _required(_openapi_object, "Kb", "EXAC2"), false)
     _openapi_field_vr_lim =
-        _decode(MinMax, _required(_openapi_object, "Vr_lim", "EXAC2"), false)
-    _openapi_field_te = _decode(Float64, _required(_openapi_object, "Te", "EXAC2"), false)
-    _openapi_field_kl = _decode(Float64, _required(_openapi_object, "Kl", "EXAC2"), false)
-    _openapi_field_kh = _decode(Float64, _required(_openapi_object, "Kh", "EXAC2"), false)
-    _openapi_field_kf = _decode(Float64, _required(_openapi_object, "Kf", "EXAC2"), false)
-    _openapi_field_tf = _decode(Float64, _required(_openapi_object, "Tf", "EXAC2"), false)
-    _openapi_field_kc = _decode(Float64, _required(_openapi_object, "Kc", "EXAC2"), false)
-    _openapi_field_kd = _decode(Float64, _required(_openapi_object, "Kd", "EXAC2"), false)
-    _openapi_field_ke = _decode(Float64, _required(_openapi_object, "Ke", "EXAC2"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Vr_lim", "EXAC2"), false)
+    _openapi_field_te =
+        _decode_zoned(Float64, _required(_openapi_object, "Te", "EXAC2"), false)
+    _openapi_field_kl =
+        _decode_zoned(Float64, _required(_openapi_object, "Kl", "EXAC2"), false)
+    _openapi_field_kh =
+        _decode_zoned(Float64, _required(_openapi_object, "Kh", "EXAC2"), false)
+    _openapi_field_kf =
+        _decode_zoned(Float64, _required(_openapi_object, "Kf", "EXAC2"), false)
+    _openapi_field_tf =
+        _decode_zoned(Float64, _required(_openapi_object, "Tf", "EXAC2"), false)
+    _openapi_field_kc =
+        _decode_zoned(Float64, _required(_openapi_object, "Kc", "EXAC2"), false)
+    _openapi_field_kd =
+        _decode_zoned(Float64, _required(_openapi_object, "Kd", "EXAC2"), false)
+    _openapi_field_ke =
+        _decode_zoned(Float64, _required(_openapi_object, "Ke", "EXAC2"), false)
     _openapi_field_v_lr =
-        _decode(Float64, _required(_openapi_object, "V_lr", "EXAC2"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "V_lr", "EXAC2"), false)
     _openapi_field_e_sat =
-        _decode(Vector{Float64}, _required(_openapi_object, "E_sat", "EXAC2"), false)
+        _decode_zoned(Vector{Float64}, _required(_openapi_object, "E_sat", "EXAC2"), false)
     _openapi_field_se =
-        _decode(Vector{Float64}, _required(_openapi_object, "Se", "EXAC2"), false)
+        _decode_zoned(Vector{Float64}, _required(_openapi_object, "Se", "EXAC2"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -116,7 +132,7 @@ function _decode(::Type{EXAC2}, _openapi_raw, _openapi_validate::Bool)
             "V_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return EXAC2(;
         id=_openapi_field_id,
@@ -200,7 +216,7 @@ end
 _encode(_openapi_value::EXAC2) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-88430641d598e6cb613c.json",
+        resource="https://openapi.invalid/schema/external-bf9a76655863e8babaf0.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

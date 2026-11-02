@@ -42,7 +42,7 @@ function _decode(::Type{ExponentialLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-27757da0d988f5c9c153.json",
+            resource="https://openapi.invalid/schema/external-fdf61bd728f58ec994d1.json",
             pointer="",
         ),
         _openapi_raw,
@@ -51,54 +51,63 @@ function _decode(::Type{ExponentialLoad}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "ExponentialLoad")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "ExponentialLoad"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "ExponentialLoad"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "ExponentialLoad"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "ExponentialLoad"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "ExponentialLoad"), false)
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "ExponentialLoad"),
+        false,
+    )
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "ExponentialLoad"), false)
-    _openapi_field_active_power = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "ExponentialLoad"), false)
+    _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "ExponentialLoad"),
         false,
     )
-    _openapi_field_reactive_power = _decode(
+    _openapi_field_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power", "ExponentialLoad"),
         false,
     )
-    _openapi_field_alpha =
-        _decode(Float64, _required(_openapi_object, "alpha", "ExponentialLoad"), false)
+    _openapi_field_alpha = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "alpha", "ExponentialLoad"),
+        false,
+    )
     _openapi_field_beta =
-        _decode(Float64, _required(_openapi_object, "beta", "ExponentialLoad"), false)
-    _openapi_field_base_power =
-        _decode(Float64, _required(_openapi_object, "base_power", "ExponentialLoad"), false)
-    _openapi_field_power_units = _decode(
+        _decode_zoned(Float64, _required(_openapi_object, "beta", "ExponentialLoad"), false)
+    _openapi_field_base_power = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "base_power", "ExponentialLoad"),
+        false,
+    )
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "ExponentialLoad"),
         false,
     )
-    _openapi_field_max_active_power = _decode(
+    _openapi_field_max_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "max_active_power", "ExponentialLoad"),
         false,
     )
-    _openapi_field_max_reactive_power = _decode(
+    _openapi_field_max_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "max_reactive_power", "ExponentialLoad"),
         false,
     )
     _openapi_field_conformity =
         haskey(_openapi_object, "conformity") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, LoadConformity, Nothing},
             _openapi_object["conformity"],
             false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -122,7 +131,7 @@ function _decode(::Type{ExponentialLoad}, _openapi_raw, _openapi_validate::Bool)
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ExponentialLoad(;
         id=_openapi_field_id,
@@ -193,7 +202,7 @@ end
 _encode(_openapi_value::ExponentialLoad) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-27757da0d988f5c9c153.json",
+        resource="https://openapi.invalid/schema/external-fdf61bd728f58ec994d1.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

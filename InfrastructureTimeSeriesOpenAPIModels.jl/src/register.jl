@@ -5,11 +5,18 @@
 
 function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(Deterministic)
+    InfrastructureCoreOpenAPIModels.register_model_type!(DeterministicInitialTimestamp)
     InfrastructureCoreOpenAPIModels.register_model_type!(DeterministicSingleTimeSeries)
+    InfrastructureCoreOpenAPIModels.register_model_type!(
+        DeterministicSingleTimeSeriesInitialTimestamp,
+    )
     InfrastructureCoreOpenAPIModels.register_model_type!(NonSequentialTimeSeries)
     InfrastructureCoreOpenAPIModels.register_model_type!(Probabilistic)
+    InfrastructureCoreOpenAPIModels.register_model_type!(ProbabilisticInitialTimestamp)
     InfrastructureCoreOpenAPIModels.register_model_type!(Scenarios)
+    InfrastructureCoreOpenAPIModels.register_model_type!(ScenariosInitialTimestamp)
     InfrastructureCoreOpenAPIModels.register_model_type!(SingleTimeSeries)
+    InfrastructureCoreOpenAPIModels.register_model_type!(SingleTimeSeriesInitialTimestamp)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesAssociation)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesFeatureValue)
     InfrastructureCoreOpenAPIModels.register_model_type!(TimeSeriesFeatures)

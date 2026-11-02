@@ -17,7 +17,7 @@ function _decode(::Type{LinearFunctionData}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/LinearFunctionData",
         ),
         _openapi_raw,
@@ -25,17 +25,17 @@ function _decode(::Type{LinearFunctionData}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "LinearFunctionData")
-    _openapi_field_constant_term = _decode(
+    _openapi_field_constant_term = _decode_zoned(
         Float64,
         _required(_openapi_object, "constant_term", "LinearFunctionData"),
         false,
     )
-    _openapi_field_function_type = _decode(
+    _openapi_field_function_type = _decode_zoned(
         String,
         _required(_openapi_object, "function_type", "LinearFunctionData"),
         false,
     )
-    _openapi_field_proportional_term = _decode(
+    _openapi_field_proportional_term = _decode_zoned(
         Float64,
         _required(_openapi_object, "proportional_term", "LinearFunctionData"),
         false,
@@ -45,7 +45,7 @@ function _decode(::Type{LinearFunctionData}, _openapi_raw, _openapi_validate::Bo
         String(_openapi_key) in ("constant_term", "function_type", "proportional_term") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return LinearFunctionData(;
         constant_term=_openapi_field_constant_term,
@@ -81,7 +81,7 @@ end
 _encode(_openapi_value::LinearFunctionData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/LinearFunctionData",
     ),
     _encode_unvalidated(_openapi_value),

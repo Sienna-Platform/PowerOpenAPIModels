@@ -80,7 +80,7 @@ function _decode(::Type{GeneralGovModel}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-737bed7cc51b44769097.json",
+            resource="https://openapi.invalid/schema/external-c0ee03d2d2fae8367a0c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -89,81 +89,142 @@ function _decode(::Type{GeneralGovModel}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "GeneralGovModel")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "GeneralGovModel"), false)
-    _openapi_field_rselect =
-        _decode(Int64, _required(_openapi_object, "Rselect", "GeneralGovModel"), false)
-    _openapi_field_fuel_flag =
-        _decode(Int64, _required(_openapi_object, "fuel_flag", "GeneralGovModel"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "GeneralGovModel"), false)
+    _openapi_field_rselect = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "Rselect", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_fuel_flag = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "fuel_flag", "GeneralGovModel"),
+        false,
+    )
     _openapi_field_r =
         haskey(_openapi_object, "R") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["R"], false) : ABSENT
-    _openapi_field_tpelec =
-        _decode(Float64, _required(_openapi_object, "Tpelec", "GeneralGovModel"), false)
-    _openapi_field_speed_error_signal = _decode(
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["R"], false) : ABSENT
+    _openapi_field_tpelec = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Tpelec", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_speed_error_signal = _decode_zoned(
         MinMax,
         _required(_openapi_object, "speed_error_signal", "GeneralGovModel"),
         false,
     )
-    _openapi_field_kp_gov =
-        _decode(Float64, _required(_openapi_object, "Kp_gov", "GeneralGovModel"), false)
-    _openapi_field_ki_gov =
-        _decode(Float64, _required(_openapi_object, "Ki_gov", "GeneralGovModel"), false)
-    _openapi_field_kd_gov =
-        _decode(Float64, _required(_openapi_object, "Kd_gov", "GeneralGovModel"), false)
-    _openapi_field_td_gov =
-        _decode(Float64, _required(_openapi_object, "Td_gov", "GeneralGovModel"), false)
-    _openapi_field_valve_position_limits = _decode(
+    _openapi_field_kp_gov = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Kp_gov", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_ki_gov = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Ki_gov", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_kd_gov = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Kd_gov", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_td_gov = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Td_gov", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_valve_position_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "valve_position_limits", "GeneralGovModel"),
         false,
     )
-    _openapi_field_t_act =
-        _decode(Float64, _required(_openapi_object, "T_act", "GeneralGovModel"), false)
-    _openapi_field_k_turb =
-        _decode(Float64, _required(_openapi_object, "K_turb", "GeneralGovModel"), false)
-    _openapi_field_wf_nl =
-        _decode(Float64, _required(_openapi_object, "Wf_nl", "GeneralGovModel"), false)
+    _openapi_field_t_act = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "T_act", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_k_turb = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "K_turb", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_wf_nl = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Wf_nl", "GeneralGovModel"),
+        false,
+    )
     _openapi_field_tb =
-        _decode(Float64, _required(_openapi_object, "Tb", "GeneralGovModel"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tb", "GeneralGovModel"), false)
     _openapi_field_tc =
-        _decode(Float64, _required(_openapi_object, "Tc", "GeneralGovModel"), false)
-    _openapi_field_t_eng =
-        _decode(Float64, _required(_openapi_object, "T_eng", "GeneralGovModel"), false)
-    _openapi_field_tf_load =
-        _decode(Float64, _required(_openapi_object, "Tf_load", "GeneralGovModel"), false)
-    _openapi_field_kp_load =
-        _decode(Float64, _required(_openapi_object, "Kp_load", "GeneralGovModel"), false)
-    _openapi_field_ki_load =
-        _decode(Float64, _required(_openapi_object, "Ki_load", "GeneralGovModel"), false)
-    _openapi_field_ld_ref =
-        _decode(Float64, _required(_openapi_object, "Ld_ref", "GeneralGovModel"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tc", "GeneralGovModel"), false)
+    _openapi_field_t_eng = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "T_eng", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_tf_load = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Tf_load", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_kp_load = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Kp_load", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_ki_load = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Ki_load", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_ld_ref = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Ld_ref", "GeneralGovModel"),
+        false,
+    )
     _openapi_field_dm =
-        _decode(Float64, _required(_openapi_object, "Dm", "GeneralGovModel"), false)
-    _openapi_field_r_open =
-        _decode(Float64, _required(_openapi_object, "R_open", "GeneralGovModel"), false)
-    _openapi_field_r_close =
-        _decode(Float64, _required(_openapi_object, "R_close", "GeneralGovModel"), false)
-    _openapi_field_ki_mw =
-        _decode(Float64, _required(_openapi_object, "Ki_mw", "GeneralGovModel"), false)
-    _openapi_field_a_set =
-        _decode(Float64, _required(_openapi_object, "A_set", "GeneralGovModel"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Dm", "GeneralGovModel"), false)
+    _openapi_field_r_open = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R_open", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_r_close = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R_close", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_ki_mw = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Ki_mw", "GeneralGovModel"),
+        false,
+    )
+    _openapi_field_a_set = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "A_set", "GeneralGovModel"),
+        false,
+    )
     _openapi_field_ka =
-        _decode(Float64, _required(_openapi_object, "Ka", "GeneralGovModel"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Ka", "GeneralGovModel"), false)
     _openapi_field_ta =
-        _decode(Float64, _required(_openapi_object, "Ta", "GeneralGovModel"), false)
-    _openapi_field_t_rate =
-        _decode(Float64, _required(_openapi_object, "T_rate", "GeneralGovModel"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Ta", "GeneralGovModel"), false)
+    _openapi_field_t_rate = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "T_rate", "GeneralGovModel"),
+        false,
+    )
     _openapi_field_db =
-        _decode(Float64, _required(_openapi_object, "db", "GeneralGovModel"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "db", "GeneralGovModel"), false)
     _openapi_field_tsa =
-        _decode(Float64, _required(_openapi_object, "Tsa", "GeneralGovModel"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tsa", "GeneralGovModel"), false)
     _openapi_field_tsb =
-        _decode(Float64, _required(_openapi_object, "Tsb", "GeneralGovModel"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tsb", "GeneralGovModel"), false)
     _openapi_field_r_lim =
-        _decode(UpDown, _required(_openapi_object, "R_lim", "GeneralGovModel"), false)
+        _decode_zoned(UpDown, _required(_openapi_object, "R_lim", "GeneralGovModel"), false)
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -203,7 +264,7 @@ function _decode(::Type{GeneralGovModel}, _openapi_raw, _openapi_validate::Bool)
             "P_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return GeneralGovModel(;
         id=_openapi_field_id,
@@ -330,7 +391,7 @@ end
 _encode(_openapi_value::GeneralGovModel) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-737bed7cc51b44769097.json",
+        resource="https://openapi.invalid/schema/external-c0ee03d2d2fae8367a0c.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

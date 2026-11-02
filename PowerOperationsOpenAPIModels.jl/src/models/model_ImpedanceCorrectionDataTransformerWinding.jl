@@ -21,14 +21,14 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f6808bcdb32fca10e356.json",
+            resource="https://openapi.invalid/schema/external-c2684df6f535ddba70c5.json",
             pointer="/properties/transformer_winding",
         ),
         value,
         "decoding ImpedanceCorrectionDataTransformerWinding";
         direction=:neutral,
     )
-    return ImpedanceCorrectionDataTransformerWinding(_decode(String, value, false))
+    return ImpedanceCorrectionDataTransformerWinding(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::ImpedanceCorrectionDataTransformerWinding)
     output = _encode_unvalidated(value.value)
@@ -37,7 +37,7 @@ end
 _encode(value::ImpedanceCorrectionDataTransformerWinding) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-f6808bcdb32fca10e356.json",
+        resource="https://openapi.invalid/schema/external-c2684df6f535ddba70c5.json",
         pointer="/properties/transformer_winding",
     ),
     _encode_unvalidated(value),

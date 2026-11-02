@@ -15,14 +15,14 @@ function _decode(::Type{CurveStyles}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/CurveStyles",
         ),
         value,
         "decoding CurveStyles";
         direction=:neutral,
     )
-    return CurveStyles(_decode(Int64, value, false))
+    return CurveStyles(_decode_zoned(Int64, value, false))
 end
 function _encode_unvalidated(value::CurveStyles)
     output = _encode_unvalidated(value.value)
@@ -31,7 +31,7 @@ end
 _encode(value::CurveStyles) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/CurveStyles",
     ),
     _encode_unvalidated(value),

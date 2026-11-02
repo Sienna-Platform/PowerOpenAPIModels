@@ -25,42 +25,42 @@ function _decode(::Type{ValueCurve}, value, _openapi_validate::Bool)
             "AVERAGE_RATE" => (
                 AverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/AverageRateCurve",
                 ),
             ),
             "INCREMENTAL" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/IncrementalCurve",
                 ),
             ),
             "INPUT_OUTPUT" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/InputOutputCurve",
                 ),
             ),
             "TIME_SERIES_AVERAGE_RATE" => (
                 TimeSeriesAverageRateCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/TimeSeriesAverageRateCurve",
                 ),
             ),
             "TIME_SERIES_INCREMENTAL" => (
                 TimeSeriesIncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/TimeSeriesIncrementalCurve",
                 ),
             ),
             "TIME_SERIES_INPUT_OUTPUT" => (
                 TimeSeriesInputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/TimeSeriesInputOutputCurve",
                 ),
             ),

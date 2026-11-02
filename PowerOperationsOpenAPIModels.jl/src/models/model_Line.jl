@@ -48,7 +48,7 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5ca120349a28b375df49.json",
+            resource="https://openapi.invalid/schema/external-7e45880ad3e9364c9f59.json",
             pointer="",
         ),
         _openapi_raw,
@@ -56,53 +56,64 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "Line")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "Line"), false)
-    _openapi_field_name = _decode(String, _required(_openapi_object, "name", "Line"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "Line"), false)
+    _openapi_field_name =
+        _decode_zoned(String, _required(_openapi_object, "name", "Line"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "Line"), false)
-    _openapi_field_active_power_flow =
-        _decode(Float64, _required(_openapi_object, "active_power_flow", "Line"), false)
-    _openapi_field_reactive_power_flow =
-        _decode(Float64, _required(_openapi_object, "reactive_power_flow", "Line"), false)
-    _openapi_field_arc = _decode(Int64, _required(_openapi_object, "arc", "Line"), false)
-    _openapi_field_r = _decode(Float64, _required(_openapi_object, "r", "Line"), false)
-    _openapi_field_x = _decode(Float64, _required(_openapi_object, "x", "Line"), false)
+        _decode_zoned(Bool, _required(_openapi_object, "available", "Line"), false)
+    _openapi_field_active_power_flow = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "active_power_flow", "Line"),
+        false,
+    )
+    _openapi_field_reactive_power_flow = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "reactive_power_flow", "Line"),
+        false,
+    )
+    _openapi_field_arc =
+        _decode_zoned(Int64, _required(_openapi_object, "arc", "Line"), false)
+    _openapi_field_r =
+        _decode_zoned(Float64, _required(_openapi_object, "r", "Line"), false)
+    _openapi_field_x =
+        _decode_zoned(Float64, _required(_openapi_object, "x", "Line"), false)
     _openapi_field_base_power =
-        _decode(Float64, _required(_openapi_object, "base_power", "Line"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "base_power", "Line"), false)
     _openapi_field_power_units =
-        _decode(UnitSystem, _required(_openapi_object, "power_units", "Line"), false)
+        _decode_zoned(UnitSystem, _required(_openapi_object, "power_units", "Line"), false)
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             false,
         ) : ABSENT
     _openapi_field_b =
         haskey(_openapi_object, "b") ?
-        _decode(Union{Absent, FromTo, Nothing}, _openapi_object["b"], false) : ABSENT
+        _decode_zoned(Union{Absent, FromTo, Nothing}, _openapi_object["b"], false) : ABSENT
     _openapi_field_rating =
-        _decode(Float64, _required(_openapi_object, "rating", "Line"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "rating", "Line"), false)
     _openapi_field_rating_b =
         haskey(_openapi_object, "rating_b") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
         ABSENT
     _openapi_field_rating_c =
         haskey(_openapi_object, "rating_c") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
         ABSENT
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, OperationalFlowLimit, Nothing},
             _openapi_object["operational_flow_limit"],
             false,
         ) : ABSENT
     _openapi_field_angle_limits =
-        _decode(MinMax, _required(_openapi_object, "angle_limits", "Line"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "angle_limits", "Line"), false)
     _openapi_field_g =
         haskey(_openapi_object, "g") ?
-        _decode(Union{Absent, FromTo, Nothing}, _openapi_object["g"], false) : ABSENT
+        _decode_zoned(Union{Absent, FromTo, Nothing}, _openapi_object["g"], false) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -126,7 +137,7 @@ function _decode(::Type{Line}, _openapi_raw, _openapi_validate::Bool)
             "g",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return Line(;
         id=_openapi_field_id,
@@ -209,7 +220,7 @@ end
 _encode(_openapi_value::Line) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-5ca120349a28b375df49.json",
+        resource="https://openapi.invalid/schema/external-7e45880ad3e9364c9f59.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

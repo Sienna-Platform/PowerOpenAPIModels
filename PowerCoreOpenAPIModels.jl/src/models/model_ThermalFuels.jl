@@ -50,14 +50,14 @@ function _decode(::Type{ThermalFuels}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/ThermalFuels",
         ),
         value,
         "decoding ThermalFuels";
         direction=:neutral,
     )
-    return ThermalFuels(_decode(String, value, false))
+    return ThermalFuels(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::ThermalFuels)
     output = _encode_unvalidated(value.value)
@@ -66,7 +66,7 @@ end
 _encode(value::ThermalFuels) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/ThermalFuels",
     ),
     _encode_unvalidated(value),

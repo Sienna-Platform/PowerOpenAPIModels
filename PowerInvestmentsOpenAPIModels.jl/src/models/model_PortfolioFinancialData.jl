@@ -23,7 +23,7 @@ function _decode(::Type{PortfolioFinancialData}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f6cc9e88d6e5a2e236e7.json",
+            resource="https://openapi.invalid/schema/external-c05caa59ef92489be1c0.json",
             pointer="",
         ),
         _openapi_raw,
@@ -31,24 +31,27 @@ function _decode(::Type{PortfolioFinancialData}, _openapi_raw, _openapi_validate
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PortfolioFinancialData")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "PortfolioFinancialData"), false)
-    _openapi_field_discount_rate = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "PortfolioFinancialData"),
+        false,
+    )
+    _openapi_field_discount_rate = _decode_zoned(
         Float64,
         _required(_openapi_object, "discount_rate", "PortfolioFinancialData"),
         false,
     )
-    _openapi_field_inflation_rate = _decode(
+    _openapi_field_inflation_rate = _decode_zoned(
         Float64,
         _required(_openapi_object, "inflation_rate", "PortfolioFinancialData"),
         false,
     )
-    _openapi_field_interest_rate = _decode(
+    _openapi_field_interest_rate = _decode_zoned(
         Float64,
         _required(_openapi_object, "interest_rate", "PortfolioFinancialData"),
         false,
     )
-    _openapi_field_base_year = _decode(
+    _openapi_field_base_year = _decode_zoned(
         Int64,
         _required(_openapi_object, "base_year", "PortfolioFinancialData"),
         false,
@@ -58,7 +61,7 @@ function _decode(::Type{PortfolioFinancialData}, _openapi_raw, _openapi_validate
         String(_openapi_key) in
         ("id", "discount_rate", "inflation_rate", "interest_rate", "base_year") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PortfolioFinancialData(;
         id=_openapi_field_id,
@@ -100,7 +103,7 @@ end
 _encode(_openapi_value::PortfolioFinancialData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-f6cc9e88d6e5a2e236e7.json",
+        resource="https://openapi.invalid/schema/external-c05caa59ef92489be1c0.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

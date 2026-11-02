@@ -50,7 +50,7 @@ function _decode(::Type{IEEEST}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1280a93f0e0b7a5eca7a.json",
+            resource="https://openapi.invalid/schema/external-c1382b7982a557030f60.json",
             pointer="",
         ),
         _openapi_raw,
@@ -58,30 +58,50 @@ function _decode(::Type{IEEEST}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "IEEEST")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "IEEEST"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "IEEEST"), false)
     _openapi_field_input_code =
-        _decode(Int64, _required(_openapi_object, "input_code", "IEEEST"), false)
-    _openapi_field_remote_bus_control =
-        _decode(Int64, _required(_openapi_object, "remote_bus_control", "IEEEST"), false)
-    _openapi_field_a1 = _decode(Float64, _required(_openapi_object, "A1", "IEEEST"), false)
-    _openapi_field_a2 = _decode(Float64, _required(_openapi_object, "A2", "IEEEST"), false)
-    _openapi_field_a3 = _decode(Float64, _required(_openapi_object, "A3", "IEEEST"), false)
-    _openapi_field_a4 = _decode(Float64, _required(_openapi_object, "A4", "IEEEST"), false)
-    _openapi_field_a5 = _decode(Float64, _required(_openapi_object, "A5", "IEEEST"), false)
-    _openapi_field_a6 = _decode(Float64, _required(_openapi_object, "A6", "IEEEST"), false)
-    _openapi_field_t1 = _decode(Float64, _required(_openapi_object, "T1", "IEEEST"), false)
-    _openapi_field_t2 = _decode(Float64, _required(_openapi_object, "T2", "IEEEST"), false)
-    _openapi_field_t3 = _decode(Float64, _required(_openapi_object, "T3", "IEEEST"), false)
-    _openapi_field_t4 = _decode(Float64, _required(_openapi_object, "T4", "IEEEST"), false)
-    _openapi_field_t5 = _decode(Float64, _required(_openapi_object, "T5", "IEEEST"), false)
-    _openapi_field_t6 = _decode(Float64, _required(_openapi_object, "T6", "IEEEST"), false)
-    _openapi_field_ks = _decode(Float64, _required(_openapi_object, "Ks", "IEEEST"), false)
-    _openapi_field_ls_lim =
-        _decode(Vector{Float64}, _required(_openapi_object, "Ls_lim", "IEEEST"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "input_code", "IEEEST"), false)
+    _openapi_field_remote_bus_control = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "remote_bus_control", "IEEEST"),
+        false,
+    )
+    _openapi_field_a1 =
+        _decode_zoned(Float64, _required(_openapi_object, "A1", "IEEEST"), false)
+    _openapi_field_a2 =
+        _decode_zoned(Float64, _required(_openapi_object, "A2", "IEEEST"), false)
+    _openapi_field_a3 =
+        _decode_zoned(Float64, _required(_openapi_object, "A3", "IEEEST"), false)
+    _openapi_field_a4 =
+        _decode_zoned(Float64, _required(_openapi_object, "A4", "IEEEST"), false)
+    _openapi_field_a5 =
+        _decode_zoned(Float64, _required(_openapi_object, "A5", "IEEEST"), false)
+    _openapi_field_a6 =
+        _decode_zoned(Float64, _required(_openapi_object, "A6", "IEEEST"), false)
+    _openapi_field_t1 =
+        _decode_zoned(Float64, _required(_openapi_object, "T1", "IEEEST"), false)
+    _openapi_field_t2 =
+        _decode_zoned(Float64, _required(_openapi_object, "T2", "IEEEST"), false)
+    _openapi_field_t3 =
+        _decode_zoned(Float64, _required(_openapi_object, "T3", "IEEEST"), false)
+    _openapi_field_t4 =
+        _decode_zoned(Float64, _required(_openapi_object, "T4", "IEEEST"), false)
+    _openapi_field_t5 =
+        _decode_zoned(Float64, _required(_openapi_object, "T5", "IEEEST"), false)
+    _openapi_field_t6 =
+        _decode_zoned(Float64, _required(_openapi_object, "T6", "IEEEST"), false)
+    _openapi_field_ks =
+        _decode_zoned(Float64, _required(_openapi_object, "Ks", "IEEEST"), false)
+    _openapi_field_ls_lim = _decode_zoned(
+        Vector{Float64},
+        _required(_openapi_object, "Ls_lim", "IEEEST"),
+        false,
+    )
     _openapi_field_vcu =
-        _decode(Float64, _required(_openapi_object, "Vcu", "IEEEST"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Vcu", "IEEEST"), false)
     _openapi_field_vcl =
-        _decode(Float64, _required(_openapi_object, "Vcl", "IEEEST"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Vcl", "IEEEST"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -106,7 +126,7 @@ function _decode(::Type{IEEEST}, _openapi_raw, _openapi_validate::Bool)
             "Vcl",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return IEEEST(;
         id=_openapi_field_id,
@@ -186,7 +206,7 @@ end
 _encode(_openapi_value::IEEEST) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1280a93f0e0b7a5eca7a.json",
+        resource="https://openapi.invalid/schema/external-c1382b7982a557030f60.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

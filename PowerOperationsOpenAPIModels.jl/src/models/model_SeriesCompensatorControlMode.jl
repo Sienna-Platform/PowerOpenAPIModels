@@ -18,14 +18,14 @@ function _decode(::Type{SeriesCompensatorControlMode}, value, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+            resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
             pointer="/\$defs/SeriesCompensatorControlMode",
         ),
         value,
         "decoding SeriesCompensatorControlMode";
         direction=:neutral,
     )
-    return SeriesCompensatorControlMode(_decode(String, value, false))
+    return SeriesCompensatorControlMode(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::SeriesCompensatorControlMode)
     output = _encode_unvalidated(value.value)
@@ -34,7 +34,7 @@ end
 _encode(value::SeriesCompensatorControlMode) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+        resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
         pointer="/\$defs/SeriesCompensatorControlMode",
     ),
     _encode_unvalidated(value),

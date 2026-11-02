@@ -38,7 +38,7 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-4eff85e8be3ebaec7988.json",
+            resource="https://openapi.invalid/schema/external-4dbead0853d0d9479b9c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -47,35 +47,36 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "HydroTurbineGov")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "HydroTurbineGov"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "HydroTurbineGov"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "R", "HydroTurbineGov"), false)
     _openapi_field_r_2 =
-        _decode(Float64, _required(_openapi_object, "r", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "r", "HydroTurbineGov"), false)
     _openapi_field_tr =
-        _decode(Float64, _required(_openapi_object, "Tr", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tr", "HydroTurbineGov"), false)
     _openapi_field_tf =
-        _decode(Float64, _required(_openapi_object, "Tf", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tf", "HydroTurbineGov"), false)
     _openapi_field_tg =
-        _decode(Float64, _required(_openapi_object, "Tg", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tg", "HydroTurbineGov"), false)
     _openapi_field_velm =
-        _decode(Float64, _required(_openapi_object, "VELM", "HydroTurbineGov"), false)
-    _openapi_field_gate_position_limits = _decode(
+        _decode_zoned(Float64, _required(_openapi_object, "VELM", "HydroTurbineGov"), false)
+    _openapi_field_gate_position_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "gate_position_limits", "HydroTurbineGov"),
         false,
     )
     _openapi_field_tw =
-        _decode(Float64, _required(_openapi_object, "Tw", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tw", "HydroTurbineGov"), false)
     _openapi_field_at =
-        _decode(Float64, _required(_openapi_object, "At", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "At", "HydroTurbineGov"), false)
     _openapi_field_d_t =
-        _decode(Float64, _required(_openapi_object, "D_T", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_T", "HydroTurbineGov"), false)
     _openapi_field_q_nl =
-        _decode(Float64, _required(_openapi_object, "q_nl", "HydroTurbineGov"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "q_nl", "HydroTurbineGov"), false)
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -94,7 +95,7 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
             "P_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return HydroTurbineGov(;
         id=_openapi_field_id,
@@ -156,7 +157,7 @@ end
 _encode(_openapi_value::HydroTurbineGov) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-4eff85e8be3ebaec7988.json",
+        resource="https://openapi.invalid/schema/external-4dbead0853d0d9479b9c.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

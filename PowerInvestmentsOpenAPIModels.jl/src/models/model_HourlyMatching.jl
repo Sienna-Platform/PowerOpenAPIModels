@@ -18,7 +18,7 @@ function _decode(::Type{HourlyMatching}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7c3f05dec854d9c2fed2.json",
+            resource="https://openapi.invalid/schema/external-0a4f4342bd6073d76ac7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -27,16 +27,19 @@ function _decode(::Type{HourlyMatching}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "HourlyMatching")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "HourlyMatching"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "HourlyMatching"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "HourlyMatching"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "HourlyMatching"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "HourlyMatching"), false)
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "HourlyMatching"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "name", "available") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return HourlyMatching(;
         id=_openapi_field_id,
@@ -66,7 +69,7 @@ end
 _encode(_openapi_value::HourlyMatching) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7c3f05dec854d9c2fed2.json",
+        resource="https://openapi.invalid/schema/external-0a4f4342bd6073d76ac7.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

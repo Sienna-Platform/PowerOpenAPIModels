@@ -13,7 +13,7 @@ function _decode(::Type{PiecewiseLinearData}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/PiecewiseLinearData",
         ),
         _openapi_raw,
@@ -21,12 +21,12 @@ function _decode(::Type{PiecewiseLinearData}, _openapi_raw, _openapi_validate::B
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PiecewiseLinearData")
-    _openapi_field_function_type = _decode(
+    _openapi_field_function_type = _decode_zoned(
         String,
         _required(_openapi_object, "function_type", "PiecewiseLinearData"),
         false,
     )
-    _openapi_field_points = _decode(
+    _openapi_field_points = _decode_zoned(
         Vector{TwoDimensionalFunctionPoint},
         _required(_openapi_object, "points", "PiecewiseLinearData"),
         false,
@@ -35,7 +35,7 @@ function _decode(::Type{PiecewiseLinearData}, _openapi_raw, _openapi_validate::B
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("function_type", "points") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PiecewiseLinearData(;
         function_type=_openapi_field_function_type,
@@ -64,7 +64,7 @@ end
 _encode(_openapi_value::PiecewiseLinearData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/PiecewiseLinearData",
     ),
     _encode_unvalidated(_openapi_value),

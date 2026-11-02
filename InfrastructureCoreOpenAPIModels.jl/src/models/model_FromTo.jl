@@ -13,7 +13,7 @@ function _decode(::Type{FromTo}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/FromTo",
         ),
         _openapi_raw,
@@ -23,15 +23,17 @@ function _decode(::Type{FromTo}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "FromTo")
     _openapi_field_from =
         haskey(_openapi_object, "from") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["from"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["from"], false) :
+        ABSENT
     _openapi_field_to =
         haskey(_openapi_object, "to") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["to"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["to"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("from", "to") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return FromTo(;
         from=_openapi_field_from,
@@ -58,7 +60,7 @@ end
 _encode(_openapi_value::FromTo) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/FromTo",
     ),
     _encode_unvalidated(_openapi_value),

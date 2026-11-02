@@ -11,7 +11,7 @@ function _decode(::Type{DataSourceExtra}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ee90207aa26447aee0bb.json",
+            resource="https://openapi.invalid/schema/external-3b24162d2e805e3f7b67.json",
             pointer="/properties/extra",
         ),
         _openapi_raw,
@@ -23,7 +23,7 @@ function _decode(::Type{DataSourceExtra}, _openapi_raw, _openapi_validate::Bool)
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in () && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(String, _openapi_item, false)
+            _decode_zoned(String, _openapi_item, false)
     end
     return DataSourceExtra(; additional_properties=_openapi_additional_properties)
 end
@@ -42,7 +42,7 @@ end
 _encode(_openapi_value::DataSourceExtra) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ee90207aa26447aee0bb.json",
+        resource="https://openapi.invalid/schema/external-3b24162d2e805e3f7b67.json",
         pointer="/properties/extra",
     ),
     _encode_unvalidated(_openapi_value),

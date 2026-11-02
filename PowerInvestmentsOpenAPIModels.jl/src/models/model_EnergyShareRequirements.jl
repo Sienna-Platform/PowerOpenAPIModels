@@ -23,7 +23,7 @@ function _decode(::Type{EnergyShareRequirements}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-4210f456e4c7b8de4eaf.json",
+            resource="https://openapi.invalid/schema/external-5123afc482467cad6288.json",
             pointer="",
         ),
         _openapi_raw,
@@ -31,25 +31,31 @@ function _decode(::Type{EnergyShareRequirements}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "EnergyShareRequirements")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "EnergyShareRequirements"), false)
-    _openapi_field_name = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "EnergyShareRequirements"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "EnergyShareRequirements"),
         false,
     )
-    _openapi_field_available = _decode(
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "EnergyShareRequirements"),
         false,
     )
     _openapi_field_target_year =
         haskey(_openapi_object, "target_year") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["target_year"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Int64, Nothing},
+            _openapi_object["target_year"],
+            false,
+        ) : ABSENT
     _openapi_field_generation_fraction_requirement =
         haskey(_openapi_object, "generation_fraction_requirement") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["generation_fraction_requirement"],
             false,
@@ -60,7 +66,7 @@ function _decode(::Type{EnergyShareRequirements}, _openapi_raw, _openapi_validat
         ("id", "name", "available", "target_year", "generation_fraction_requirement") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return EnergyShareRequirements(;
         id=_openapi_field_id,
@@ -98,7 +104,7 @@ end
 _encode(_openapi_value::EnergyShareRequirements) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-4210f456e4c7b8de4eaf.json",
+        resource="https://openapi.invalid/schema/external-5123afc482467cad6288.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

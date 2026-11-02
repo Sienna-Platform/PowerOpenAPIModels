@@ -32,7 +32,7 @@ function _decode(::Type{GasTG}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-036463b82a6506d8a332.json",
+            resource="https://openapi.invalid/schema/external-e293d728cdc48e28694c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -40,26 +40,34 @@ function _decode(::Type{GasTG}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "GasTG")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "GasTG"), false)
-    _openapi_field_r = _decode(Float64, _required(_openapi_object, "R", "GasTG"), false)
-    _openapi_field_t1 = _decode(Float64, _required(_openapi_object, "T1", "GasTG"), false)
-    _openapi_field_t2 = _decode(Float64, _required(_openapi_object, "T2", "GasTG"), false)
-    _openapi_field_t3 = _decode(Float64, _required(_openapi_object, "T3", "GasTG"), false)
-    _openapi_field_at = _decode(Float64, _required(_openapi_object, "AT", "GasTG"), false)
-    _openapi_field_kt = _decode(Float64, _required(_openapi_object, "Kt", "GasTG"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "GasTG"), false)
+    _openapi_field_r =
+        _decode_zoned(Float64, _required(_openapi_object, "R", "GasTG"), false)
+    _openapi_field_t1 =
+        _decode_zoned(Float64, _required(_openapi_object, "T1", "GasTG"), false)
+    _openapi_field_t2 =
+        _decode_zoned(Float64, _required(_openapi_object, "T2", "GasTG"), false)
+    _openapi_field_t3 =
+        _decode_zoned(Float64, _required(_openapi_object, "T3", "GasTG"), false)
+    _openapi_field_at =
+        _decode_zoned(Float64, _required(_openapi_object, "AT", "GasTG"), false)
+    _openapi_field_kt =
+        _decode_zoned(Float64, _required(_openapi_object, "Kt", "GasTG"), false)
     _openapi_field_v_lim =
-        _decode(Vector{Float64}, _required(_openapi_object, "V_lim", "GasTG"), false)
+        _decode_zoned(Vector{Float64}, _required(_openapi_object, "V_lim", "GasTG"), false)
     _openapi_field_d_turb =
-        _decode(Float64, _required(_openapi_object, "D_turb", "GasTG"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_turb", "GasTG"), false)
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("id", "R", "T1", "T2", "T3", "AT", "Kt", "V_lim", "D_turb", "P_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return GasTG(;
         id=_openapi_field_id,
@@ -110,7 +118,7 @@ end
 _encode(_openapi_value::GasTG) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-036463b82a6506d8a332.json",
+        resource="https://openapi.invalid/schema/external-e293d728cdc48e28694c.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

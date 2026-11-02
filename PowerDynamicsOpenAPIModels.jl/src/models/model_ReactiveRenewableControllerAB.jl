@@ -71,7 +71,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-73f61f59b0e95f9d33fc.json",
+            resource="https://openapi.invalid/schema/external-d9b96e60811fc90add3c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -79,137 +79,139 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ReactiveRenewableControllerAB")
-    _openapi_field_bus_control = _decode(
+    _openapi_field_bus_control = _decode_zoned(
         Int64,
         _required(_openapi_object, "bus_control", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_from_branch_control = _decode(
+    _openapi_field_from_branch_control = _decode_zoned(
         Int64,
         _required(_openapi_object, "from_branch_control", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_to_branch_control = _decode(
+    _openapi_field_to_branch_control = _decode_zoned(
         Int64,
         _required(_openapi_object, "to_branch_control", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_branch_id_control = _decode(
+    _openapi_field_branch_id_control = _decode_zoned(
         String,
         _required(_openapi_object, "branch_id_control", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_vc_flag = _decode(
+    _openapi_field_vc_flag = _decode_zoned(
         Bool,
         _required(_openapi_object, "VC_Flag", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_ref_flag = _decode(
+    _openapi_field_ref_flag = _decode_zoned(
         Bool,
         _required(_openapi_object, "Ref_Flag", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_pf_flag = _decode(
+    _openapi_field_pf_flag = _decode_zoned(
         Bool,
         _required(_openapi_object, "PF_Flag", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_v_flag = _decode(
+    _openapi_field_v_flag = _decode_zoned(
         Bool,
         _required(_openapi_object, "V_Flag", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_t_fltr = _decode(
+    _openapi_field_t_fltr = _decode_zoned(
         Float64,
         _required(_openapi_object, "T_fltr", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_k_p = _decode(
+    _openapi_field_k_p = _decode_zoned(
         Float64,
         _required(_openapi_object, "K_p", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_k_i = _decode(
+    _openapi_field_k_i = _decode_zoned(
         Float64,
         _required(_openapi_object, "K_i", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_t_ft = _decode(
+    _openapi_field_t_ft = _decode_zoned(
         Float64,
         _required(_openapi_object, "T_ft", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_t_fv = _decode(
+    _openapi_field_t_fv = _decode_zoned(
         Float64,
         _required(_openapi_object, "T_fv", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_v_frz = _decode(
+    _openapi_field_v_frz = _decode_zoned(
         Float64,
         _required(_openapi_object, "V_frz", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_r_c = _decode(
+    _openapi_field_r_c = _decode_zoned(
         Float64,
         _required(_openapi_object, "R_c", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_x_c = _decode(
+    _openapi_field_x_c = _decode_zoned(
         Float64,
         _required(_openapi_object, "X_c", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_k_c = _decode(
+    _openapi_field_k_c = _decode_zoned(
         Float64,
         _required(_openapi_object, "K_c", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_e_lim = _decode(
+    _openapi_field_e_lim = _decode_zoned(
         MinMax,
         _required(_openapi_object, "e_lim", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_dbd_pnts = _decode(
+    _openapi_field_dbd_pnts = _decode_zoned(
         DbdPnts,
         _required(_openapi_object, "dbd_pnts", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_q_lim = _decode(
+    _openapi_field_q_lim = _decode_zoned(
         MinMax,
         _required(_openapi_object, "Q_lim", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_t_p = _decode(
+    _openapi_field_t_p = _decode_zoned(
         Float64,
         _required(_openapi_object, "T_p", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_q_lim_inner = _decode(
+    _openapi_field_q_lim_inner = _decode_zoned(
         MinMax,
         _required(_openapi_object, "Q_lim_inner", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_v_lim = _decode(
+    _openapi_field_v_lim = _decode_zoned(
         MinMax,
         _required(_openapi_object, "V_lim", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_k_qp = _decode(
+    _openapi_field_k_qp = _decode_zoned(
         Float64,
         _required(_openapi_object, "K_qp", "ReactiveRenewableControllerAB"),
         false,
     )
-    _openapi_field_k_qi = _decode(
+    _openapi_field_k_qi = _decode_zoned(
         Float64,
         _required(_openapi_object, "K_qi", "ReactiveRenewableControllerAB"),
         false,
     )
     _openapi_field_q_ref =
         haskey(_openapi_object, "Q_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["Q_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["Q_ref"], false) :
+        ABSENT
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -242,7 +244,7 @@ function _decode(
             "V_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ReactiveRenewableControllerAB(;
         bus_control=_openapi_field_bus_control,
@@ -350,7 +352,7 @@ end
 _encode(_openapi_value::ReactiveRenewableControllerAB) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-73f61f59b0e95f9d33fc.json",
+        resource="https://openapi.invalid/schema/external-d9b96e60811fc90add3c.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -19,7 +19,7 @@ function _decode(::Type{CostCurve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/CostCurve",
         ),
         _openapi_raw,
@@ -27,16 +27,22 @@ function _decode(::Type{CostCurve}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CostCurve")
-    _openapi_field_power_units =
-        _decode(UnitSystem, _required(_openapi_object, "power_units", "CostCurve"), false)
-    _openapi_field_value_curve =
-        _decode(ValueCurve, _required(_openapi_object, "value_curve", "CostCurve"), false)
-    _openapi_field_variable_cost_type = _decode(
+    _openapi_field_power_units = _decode_zoned(
+        UnitSystem,
+        _required(_openapi_object, "power_units", "CostCurve"),
+        false,
+    )
+    _openapi_field_value_curve = _decode_zoned(
+        ValueCurve,
+        _required(_openapi_object, "value_curve", "CostCurve"),
+        false,
+    )
+    _openapi_field_variable_cost_type = _decode_zoned(
         String,
         _required(_openapi_object, "variable_cost_type", "CostCurve"),
         false,
     )
-    _openapi_field_vom_cost = _decode(
+    _openapi_field_vom_cost = _decode_zoned(
         InputOutputCurve,
         _required(_openapi_object, "vom_cost", "CostCurve"),
         false,
@@ -46,7 +52,7 @@ function _decode(::Type{CostCurve}, _openapi_raw, _openapi_validate::Bool)
         String(_openapi_key) in
         ("power_units", "value_curve", "variable_cost_type", "vom_cost") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return CostCurve(;
         power_units=_openapi_field_power_units,
@@ -81,7 +87,7 @@ end
 _encode(_openapi_value::CostCurve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/CostCurve",
     ),
     _encode_unvalidated(_openapi_value),

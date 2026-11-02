@@ -21,7 +21,7 @@ function _decode(::Type{VoltageControlAssociation}, _openapi_raw, _openapi_valid
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1c81cf2d26c0575c3045.json",
+            resource="https://openapi.invalid/schema/external-aa5e6b9bdff0e411a772.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,22 +29,23 @@ function _decode(::Type{VoltageControlAssociation}, _openapi_raw, _openapi_valid
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "VoltageControlAssociation")
-    _openapi_field_control_id = _decode(
+    _openapi_field_control_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "control_id", "VoltageControlAssociation"),
         false,
     )
-    _openapi_field_entity_id = _decode(
+    _openapi_field_entity_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "entity_id", "VoltageControlAssociation"),
         false,
     )
     _openapi_field_weight =
         haskey(_openapi_object, "weight") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["weight"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["weight"], false) :
+        ABSENT
     _openapi_field_terminal =
         haskey(_openapi_object, "terminal") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VoltageControlTerminal},
             _openapi_object["terminal"],
             false,
@@ -54,7 +55,7 @@ function _decode(::Type{VoltageControlAssociation}, _openapi_raw, _openapi_valid
         String(_openapi_key) in ("control_id", "entity_id", "weight", "terminal") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return VoltageControlAssociation(;
         control_id=_openapi_field_control_id,
@@ -87,7 +88,7 @@ end
 _encode(_openapi_value::VoltageControlAssociation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1c81cf2d26c0575c3045.json",
+        resource="https://openapi.invalid/schema/external-aa5e6b9bdff0e411a772.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

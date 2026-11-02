@@ -66,7 +66,7 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2e037b1c1648c0b8cb6d.json",
+            resource="https://openapi.invalid/schema/external-a9e1522b138b141ce664.json",
             pointer="",
         ),
         _openapi_raw,
@@ -75,136 +75,147 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
     )
     _openapi_object = _object(_openapi_raw, "TransformerCircuit")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "TransformerCircuit"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "TransformerCircuit"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "TransformerCircuit"), false)
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "TransformerCircuit"),
+        false,
+    )
     _openapi_field_arc =
-        _decode(Int64, _required(_openapi_object, "arc", "TransformerCircuit"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "arc", "TransformerCircuit"), false)
     _openapi_field_tap =
         haskey(_openapi_object, "tap") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["tap"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["tap"], false) :
+        ABSENT
     _openapi_field_alpha =
         haskey(_openapi_object, "alpha") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["alpha"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["alpha"], false) :
+        ABSENT
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             false,
         ) : ABSENT
     _openapi_field_r =
         haskey(_openapi_object, "r") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["r"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["r"], false) : ABSENT
     _openapi_field_x =
         haskey(_openapi_object, "x") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["x"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["x"], false) : ABSENT
     _openapi_field_control_objective =
         haskey(_openapi_object, "control_objective") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, TransformerControlObjective},
             _openapi_object["control_objective"],
             false,
         ) : ABSENT
     _openapi_field_regulated_bus_number =
         haskey(_openapi_object, "regulated_bus_number") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Int64, Nothing},
             _openapi_object["regulated_bus_number"],
             false,
         ) : ABSENT
     _openapi_field_tap_ratio_limits =
         haskey(_openapi_object, "tap_ratio_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["tap_ratio_limits"],
             false,
         ) : ABSENT
     _openapi_field_phase_angle_limits =
         haskey(_openapi_object, "phase_angle_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["phase_angle_limits"],
             false,
         ) : ABSENT
     _openapi_field_controlled_voltage_limits =
         haskey(_openapi_object, "controlled_voltage_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["controlled_voltage_limits"],
             false,
         ) : ABSENT
     _openapi_field_controlled_reactive_power_flow_limits =
         haskey(_openapi_object, "controlled_reactive_power_flow_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["controlled_reactive_power_flow_limits"],
             false,
         ) : ABSENT
     _openapi_field_controlled_active_power_flow_limits =
         haskey(_openapi_object, "controlled_active_power_flow_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["controlled_active_power_flow_limits"],
             false,
         ) : ABSENT
     _openapi_field_number_of_tap_positions =
         haskey(_openapi_object, "number_of_tap_positions") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Int64, Nothing},
             _openapi_object["number_of_tap_positions"],
             false,
         ) : ABSENT
-    _openapi_field_rating =
-        _decode(Float64, _required(_openapi_object, "rating", "TransformerCircuit"), false)
+    _openapi_field_rating = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "rating", "TransformerCircuit"),
+        false,
+    )
     _openapi_field_rating_b =
         haskey(_openapi_object, "rating_b") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
         ABSENT
     _openapi_field_rating_c =
         haskey(_openapi_object, "rating_c") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
         ABSENT
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, OperationalFlowLimit},
             _openapi_object["operational_flow_limit"],
             false,
         ) : ABSENT
     _openapi_field_active_power_flow =
         haskey(_openapi_object, "active_power_flow") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["active_power_flow"],
             false,
         ) : ABSENT
     _openapi_field_reactive_power_flow =
         haskey(_openapi_object, "reactive_power_flow") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["reactive_power_flow"],
             false,
         ) : ABSENT
     _openapi_field_base_power =
         haskey(_openapi_object, "base_power") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_power"], false) :
-        ABSENT
-    _openapi_field_power_units = _decode(
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["base_power"],
+            false,
+        ) : ABSENT
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "TransformerCircuit"),
         false,
     )
     _openapi_field_base_voltage_primary =
         haskey(_openapi_object, "base_voltage_primary") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["base_voltage_primary"],
             false,
         ) : ABSENT
     _openapi_field_base_voltage_secondary =
         haskey(_openapi_object, "base_voltage_secondary") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["base_voltage_secondary"],
             false,
@@ -240,7 +251,7 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
             "base_voltage_secondary",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TransformerCircuit(;
         id=_openapi_field_id,
@@ -367,7 +378,7 @@ end
 _encode(_openapi_value::TransformerCircuit) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-2e037b1c1648c0b8cb6d.json",
+        resource="https://openapi.invalid/schema/external-a9e1522b138b141ce664.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -16,14 +16,14 @@ function _decode(::Type{LCCControlMode}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+            resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
             pointer="/\$defs/LCCControlMode",
         ),
         value,
         "decoding LCCControlMode";
         direction=:neutral,
     )
-    return LCCControlMode(_decode(String, value, false))
+    return LCCControlMode(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::LCCControlMode)
     output = _encode_unvalidated(value.value)
@@ -32,7 +32,7 @@ end
 _encode(value::LCCControlMode) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+        resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
         pointer="/\$defs/LCCControlMode",
     ),
     _encode_unvalidated(value),

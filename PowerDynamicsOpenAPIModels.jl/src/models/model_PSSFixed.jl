@@ -16,7 +16,7 @@ function _decode(::Type{PSSFixed}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8ccd190ae9418b176307.json",
+            resource="https://openapi.invalid/schema/external-05b3f126c2c5fd2617f6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -24,14 +24,15 @@ function _decode(::Type{PSSFixed}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PSSFixed")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "PSSFixed"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "PSSFixed"), false)
     _openapi_field_v_pss =
-        _decode(Float64, _required(_openapi_object, "V_pss", "PSSFixed"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "V_pss", "PSSFixed"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "V_pss") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PSSFixed(;
         id=_openapi_field_id,
@@ -58,7 +59,7 @@ end
 _encode(_openapi_value::PSSFixed) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8ccd190ae9418b176307.json",
+        resource="https://openapi.invalid/schema/external-05b3f126c2c5fd2617f6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

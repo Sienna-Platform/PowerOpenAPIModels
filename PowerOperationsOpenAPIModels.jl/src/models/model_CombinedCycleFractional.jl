@@ -18,7 +18,7 @@ function _decode(::Type{CombinedCycleFractional}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-de71d95528e295d9373b.json",
+            resource="https://openapi.invalid/schema/external-58a87401aec4c728ec9b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,14 +26,17 @@ function _decode(::Type{CombinedCycleFractional}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CombinedCycleFractional")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "CombinedCycleFractional"), false)
-    _openapi_field_name = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "CombinedCycleFractional"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "CombinedCycleFractional"),
         false,
     )
-    _openapi_field_configuration = _decode(
+    _openapi_field_configuration = _decode_zoned(
         CombinedCycleConfiguration,
         _required(_openapi_object, "configuration", "CombinedCycleFractional"),
         false,
@@ -42,7 +45,7 @@ function _decode(::Type{CombinedCycleFractional}, _openapi_raw, _openapi_validat
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "name", "configuration") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return CombinedCycleFractional(;
         id=_openapi_field_id,
@@ -74,7 +77,7 @@ end
 _encode(_openapi_value::CombinedCycleFractional) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-de71d95528e295d9373b.json",
+        resource="https://openapi.invalid/schema/external-58a87401aec4c728ec9b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

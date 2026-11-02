@@ -20,7 +20,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/TimeSeriesLinearFunctionData",
         ),
         _openapi_raw,
@@ -28,12 +28,12 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TimeSeriesLinearFunctionData")
-    _openapi_field_function_type = _decode(
+    _openapi_field_function_type = _decode_zoned(
         String,
         _required(_openapi_object, "function_type", "TimeSeriesLinearFunctionData"),
         false,
     )
-    _openapi_field_association_id = _decode(
+    _openapi_field_association_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "association_id", "TimeSeriesLinearFunctionData"),
         false,
@@ -42,7 +42,7 @@ function _decode(
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("function_type", "association_id") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TimeSeriesLinearFunctionData(;
         function_type=_openapi_field_function_type,
@@ -73,7 +73,7 @@ end
 _encode(_openapi_value::TimeSeriesLinearFunctionData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/TimeSeriesLinearFunctionData",
     ),
     _encode_unvalidated(_openapi_value),

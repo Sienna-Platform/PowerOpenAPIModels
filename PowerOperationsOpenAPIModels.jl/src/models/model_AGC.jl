@@ -32,7 +32,7 @@ function _decode(::Type{AGC}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-32185736655d742d519f.json",
+            resource="https://openapi.invalid/schema/external-31f8a35a895f7812f27e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -40,23 +40,32 @@ function _decode(::Type{AGC}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "AGC")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "AGC"), false)
-    _openapi_field_name = _decode(String, _required(_openapi_object, "name", "AGC"), false)
+    _openapi_field_id = _decode_zoned(Int64, _required(_openapi_object, "id", "AGC"), false)
+    _openapi_field_name =
+        _decode_zoned(String, _required(_openapi_object, "name", "AGC"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "AGC"), false)
-    _openapi_field_bias = _decode(Float64, _required(_openapi_object, "bias", "AGC"), false)
-    _openapi_field_k_p = _decode(Float64, _required(_openapi_object, "K_p", "AGC"), false)
-    _openapi_field_k_i = _decode(Float64, _required(_openapi_object, "K_i", "AGC"), false)
-    _openapi_field_k_d = _decode(Float64, _required(_openapi_object, "K_d", "AGC"), false)
+        _decode_zoned(Bool, _required(_openapi_object, "available", "AGC"), false)
+    _openapi_field_bias =
+        _decode_zoned(Float64, _required(_openapi_object, "bias", "AGC"), false)
+    _openapi_field_k_p =
+        _decode_zoned(Float64, _required(_openapi_object, "K_p", "AGC"), false)
+    _openapi_field_k_i =
+        _decode_zoned(Float64, _required(_openapi_object, "K_i", "AGC"), false)
+    _openapi_field_k_d =
+        _decode_zoned(Float64, _required(_openapi_object, "K_d", "AGC"), false)
     _openapi_field_delta_t =
-        _decode(Float64, _required(_openapi_object, "delta_t", "AGC"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "delta_t", "AGC"), false)
     _openapi_field_area =
         haskey(_openapi_object, "area") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["area"], false) : ABSENT
+        _decode_zoned(Union{Absent, Int64, Nothing}, _openapi_object["area"], false) :
+        ABSENT
     _openapi_field_initial_ace =
         haskey(_openapi_object, "initial_ace") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["initial_ace"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["initial_ace"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -72,7 +81,7 @@ function _decode(::Type{AGC}, _openapi_raw, _openapi_validate::Bool)
             "initial_ace",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return AGC(;
         id=_openapi_field_id,
@@ -123,7 +132,7 @@ end
 _encode(_openapi_value::AGC) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-32185736655d742d519f.json",
+        resource="https://openapi.invalid/schema/external-31f8a35a895f7812f27e.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

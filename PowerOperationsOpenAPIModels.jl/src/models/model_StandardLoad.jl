@@ -56,7 +56,7 @@ function _decode(::Type{StandardLoad}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-aace88e38adfddd9806a.json",
+            resource="https://openapi.invalid/schema/external-ac25a57eb3c75da124b3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -65,114 +65,117 @@ function _decode(::Type{StandardLoad}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "StandardLoad")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "StandardLoad"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "StandardLoad"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "StandardLoad"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "StandardLoad"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "StandardLoad"), false)
+        _decode_zoned(Bool, _required(_openapi_object, "available", "StandardLoad"), false)
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "StandardLoad"), false)
-    _openapi_field_base_power =
-        _decode(Float64, _required(_openapi_object, "base_power", "StandardLoad"), false)
-    _openapi_field_power_units = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "StandardLoad"), false)
+    _openapi_field_base_power = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "base_power", "StandardLoad"),
+        false,
+    )
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "StandardLoad"),
         false,
     )
     _openapi_field_constant_active_power =
         haskey(_openapi_object, "constant_active_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["constant_active_power"],
             false,
         ) : ABSENT
     _openapi_field_constant_reactive_power =
         haskey(_openapi_object, "constant_reactive_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["constant_reactive_power"],
             false,
         ) : ABSENT
     _openapi_field_impedance_active_power =
         haskey(_openapi_object, "impedance_active_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["impedance_active_power"],
             false,
         ) : ABSENT
     _openapi_field_impedance_reactive_power =
         haskey(_openapi_object, "impedance_reactive_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["impedance_reactive_power"],
             false,
         ) : ABSENT
     _openapi_field_current_active_power =
         haskey(_openapi_object, "current_active_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["current_active_power"],
             false,
         ) : ABSENT
     _openapi_field_current_reactive_power =
         haskey(_openapi_object, "current_reactive_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["current_reactive_power"],
             false,
         ) : ABSENT
     _openapi_field_max_constant_active_power =
         haskey(_openapi_object, "max_constant_active_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_constant_active_power"],
             false,
         ) : ABSENT
     _openapi_field_max_constant_reactive_power =
         haskey(_openapi_object, "max_constant_reactive_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_constant_reactive_power"],
             false,
         ) : ABSENT
     _openapi_field_max_impedance_active_power =
         haskey(_openapi_object, "max_impedance_active_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_impedance_active_power"],
             false,
         ) : ABSENT
     _openapi_field_max_impedance_reactive_power =
         haskey(_openapi_object, "max_impedance_reactive_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_impedance_reactive_power"],
             false,
         ) : ABSENT
     _openapi_field_max_current_active_power =
         haskey(_openapi_object, "max_current_active_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_current_active_power"],
             false,
         ) : ABSENT
     _openapi_field_max_current_reactive_power =
         haskey(_openapi_object, "max_current_reactive_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_current_reactive_power"],
             false,
         ) : ABSENT
     _openapi_field_conformity =
         haskey(_openapi_object, "conformity") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, LoadConformity, Nothing},
             _openapi_object["conformity"],
             false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -202,7 +205,7 @@ function _decode(::Type{StandardLoad}, _openapi_raw, _openapi_validate::Bool)
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return StandardLoad(;
         id=_openapi_field_id,
@@ -309,7 +312,7 @@ end
 _encode(_openapi_value::StandardLoad) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-aace88e38adfddd9806a.json",
+        resource="https://openapi.invalid/schema/external-ac25a57eb3c75da124b3.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

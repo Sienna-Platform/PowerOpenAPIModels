@@ -54,7 +54,7 @@ function _decode(::Type{IEEETurbineGov1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-158b02b1c53a50540f91.json",
+            resource="https://openapi.invalid/schema/external-fafa3786a259c29e2372.json",
             pointer="",
         ),
         _openapi_raw,
@@ -63,51 +63,52 @@ function _decode(::Type{IEEETurbineGov1}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "IEEETurbineGov1")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "IEEETurbineGov1"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "IEEETurbineGov1"), false)
     _openapi_field_k =
-        _decode(Int64, _required(_openapi_object, "K", "IEEETurbineGov1"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "K", "IEEETurbineGov1"), false)
     _openapi_field_t1 =
-        _decode(Int64, _required(_openapi_object, "T1", "IEEETurbineGov1"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "T1", "IEEETurbineGov1"), false)
     _openapi_field_t2 =
-        _decode(Float64, _required(_openapi_object, "T2", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T2", "IEEETurbineGov1"), false)
     _openapi_field_t3 =
-        _decode(Float64, _required(_openapi_object, "T3", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T3", "IEEETurbineGov1"), false)
     _openapi_field_u0 =
-        _decode(Float64, _required(_openapi_object, "U0", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "U0", "IEEETurbineGov1"), false)
     _openapi_field_u_c =
-        _decode(Float64, _required(_openapi_object, "U_c", "IEEETurbineGov1"), false)
-    _openapi_field_valve_position_limits = _decode(
+        _decode_zoned(Float64, _required(_openapi_object, "U_c", "IEEETurbineGov1"), false)
+    _openapi_field_valve_position_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "valve_position_limits", "IEEETurbineGov1"),
         false,
     )
     _openapi_field_t4 =
-        _decode(Float64, _required(_openapi_object, "T4", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T4", "IEEETurbineGov1"), false)
     _openapi_field_k1 =
-        _decode(Float64, _required(_openapi_object, "K1", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K1", "IEEETurbineGov1"), false)
     _openapi_field_k2 =
-        _decode(Float64, _required(_openapi_object, "K2", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K2", "IEEETurbineGov1"), false)
     _openapi_field_t5 =
-        _decode(Float64, _required(_openapi_object, "T5", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T5", "IEEETurbineGov1"), false)
     _openapi_field_k3 =
-        _decode(Float64, _required(_openapi_object, "K3", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K3", "IEEETurbineGov1"), false)
     _openapi_field_k4 =
-        _decode(Float64, _required(_openapi_object, "K4", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K4", "IEEETurbineGov1"), false)
     _openapi_field_t6 =
-        _decode(Float64, _required(_openapi_object, "T6", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T6", "IEEETurbineGov1"), false)
     _openapi_field_k5 =
-        _decode(Float64, _required(_openapi_object, "K5", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K5", "IEEETurbineGov1"), false)
     _openapi_field_k6 =
-        _decode(Float64, _required(_openapi_object, "K6", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K6", "IEEETurbineGov1"), false)
     _openapi_field_t7 =
-        _decode(Float64, _required(_openapi_object, "T7", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T7", "IEEETurbineGov1"), false)
     _openapi_field_k7 =
-        _decode(Float64, _required(_openapi_object, "K7", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K7", "IEEETurbineGov1"), false)
     _openapi_field_k8 =
-        _decode(Float64, _required(_openapi_object, "K8", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K8", "IEEETurbineGov1"), false)
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -134,7 +135,7 @@ function _decode(::Type{IEEETurbineGov1}, _openapi_raw, _openapi_validate::Bool)
             "P_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return IEEETurbineGov1(;
         id=_openapi_field_id,
@@ -220,7 +221,7 @@ end
 _encode(_openapi_value::IEEETurbineGov1) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-158b02b1c53a50540f91.json",
+        resource="https://openapi.invalid/schema/external-fafa3786a259c29e2372.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

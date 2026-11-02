@@ -31,7 +31,7 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2274c63c8bb833c03106.json",
+            resource="https://openapi.invalid/schema/external-81cb51c2e2b925c75a64.json",
             pointer="",
         ),
         _openapi_raw,
@@ -40,40 +40,51 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "EmissionsData")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "EmissionsData"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "EmissionsData"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "EmissionsData"), false)
-    _openapi_field_pollutant = _decode(
+        _decode_zoned(String, _required(_openapi_object, "name", "EmissionsData"), false)
+    _openapi_field_pollutant = _decode_zoned(
         PollutantType,
         _required(_openapi_object, "pollutant", "EmissionsData"),
         false,
     )
-    _openapi_field_emission_rate = _decode(
+    _openapi_field_emission_rate = _decode_zoned(
         ValueCurve,
         _required(_openapi_object, "emission_rate", "EmissionsData"),
         false,
     )
-    _openapi_field_basis =
-        _decode(EmissionBasis, _required(_openapi_object, "basis", "EmissionsData"), false)
+    _openapi_field_basis = _decode_zoned(
+        EmissionBasis,
+        _required(_openapi_object, "basis", "EmissionsData"),
+        false,
+    )
     _openapi_field_start_up_adder =
         haskey(_openapi_object, "start_up_adder") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["start_up_adder"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["start_up_adder"],
+            false,
+        ) : ABSENT
     _openapi_field_mass_unit =
         haskey(_openapi_object, "mass_unit") ?
-        _decode(Union{Absent, MassUnit, Nothing}, _openapi_object["mass_unit"], false) :
-        ABSENT
-    _openapi_field_energy_unit = _decode(
+        _decode_zoned(
+            Union{Absent, MassUnit, Nothing},
+            _openapi_object["mass_unit"],
+            false,
+        ) : ABSENT
+    _openapi_field_energy_unit = _decode_zoned(
         EnergyUnit,
         _required(_openapi_object, "energy_unit", "EmissionsData"),
         false,
     )
     _openapi_field_gwp =
         haskey(_openapi_object, "gwp") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["gwp"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["gwp"], false) :
+        ABSENT
     _openapi_field_available =
         haskey(_openapi_object, "available") ?
-        _decode(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) : ABSENT
+        _decode_zoned(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -89,7 +100,7 @@ function _decode(::Type{EmissionsData}, _openapi_raw, _openapi_validate::Bool)
             "available",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return EmissionsData(;
         id=_openapi_field_id,
@@ -144,7 +155,7 @@ end
 _encode(_openapi_value::EmissionsData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-2274c63c8bb833c03106.json",
+        resource="https://openapi.invalid/schema/external-81cb51c2e2b925c75a64.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -13,7 +13,7 @@ function _decode(::Type{ComplexNumber}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/ComplexNumber",
         ),
         _openapi_raw,
@@ -23,15 +23,17 @@ function _decode(::Type{ComplexNumber}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "ComplexNumber")
     _openapi_field_real =
         haskey(_openapi_object, "real") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["real"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["real"], false) :
+        ABSENT
     _openapi_field_imag =
         haskey(_openapi_object, "imag") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["imag"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["imag"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("real", "imag") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ComplexNumber(;
         real=_openapi_field_real,
@@ -58,7 +60,7 @@ end
 _encode(_openapi_value::ComplexNumber) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/ComplexNumber",
     ),
     _encode_unvalidated(_openapi_value),

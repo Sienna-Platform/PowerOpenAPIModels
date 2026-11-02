@@ -17,14 +17,14 @@ function _decode(::Type{CommitmentModes}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+            resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
             pointer="/\$defs/CommitmentModes",
         ),
         value,
         "decoding CommitmentModes";
         direction=:neutral,
     )
-    return CommitmentModes(_decode(String, value, false))
+    return CommitmentModes(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::CommitmentModes)
     output = _encode_unvalidated(value.value)
@@ -33,7 +33,7 @@ end
 _encode(value::CommitmentModes) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+        resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
         pointer="/\$defs/CommitmentModes",
     ),
     _encode_unvalidated(value),

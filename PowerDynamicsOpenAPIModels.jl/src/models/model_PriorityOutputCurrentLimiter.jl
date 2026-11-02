@@ -21,7 +21,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7efc3734c6fbd3df5940.json",
+            resource="https://openapi.invalid/schema/external-b4a6b7418e0e5a3008d5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,12 +29,12 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PriorityOutputCurrentLimiter")
-    _openapi_field_i_max = _decode(
+    _openapi_field_i_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "I_max", "PriorityOutputCurrentLimiter"),
         false,
     )
-    _openapi_field_phi_i = _decode(
+    _openapi_field_phi_i = _decode_zoned(
         Float64,
         _required(_openapi_object, "phi_I", "PriorityOutputCurrentLimiter"),
         false,
@@ -43,7 +43,7 @@ function _decode(
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("I_max", "phi_I") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PriorityOutputCurrentLimiter(;
         i_max=_openapi_field_i_max,
@@ -70,7 +70,7 @@ end
 _encode(_openapi_value::PriorityOutputCurrentLimiter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7efc3734c6fbd3df5940.json",
+        resource="https://openapi.invalid/schema/external-b4a6b7418e0e5a3008d5.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

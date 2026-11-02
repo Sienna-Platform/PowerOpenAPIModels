@@ -43,7 +43,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2790b43e514648a50e19.json",
+            resource="https://openapi.invalid/schema/external-8695cbd06e638ac06741.json",
             pointer="",
         ),
         _openapi_raw,
@@ -51,20 +51,21 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ColocatedSupplyStorageTechnology")
-    _openapi_field_id = _decode(
+    _openapi_field_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "id", "ColocatedSupplyStorageTechnology"),
         false,
     )
-    _openapi_field_name = _decode(
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "ColocatedSupplyStorageTechnology"),
         false,
     )
     _openapi_field_available =
         haskey(_openapi_object, "available") ?
-        _decode(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) : ABSENT
-    _openapi_field_power_systems_type = _decode(
+        _decode_zoned(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) :
+        ABSENT
+    _openapi_field_power_systems_type = _decode_zoned(
         String,
         _required(
             _openapi_object,
@@ -75,19 +76,22 @@ function _decode(
     )
     _openapi_field_region =
         haskey(_openapi_object, "region") ?
-        _decode(Union{Absent, Nothing, Vector{Int64}}, _openapi_object["region"], false) :
-        ABSENT
-    _openapi_field_financial_data = _decode(
+        _decode_zoned(
+            Union{Absent, Nothing, Vector{Int64}},
+            _openapi_object["region"],
+            false,
+        ) : ABSENT
+    _openapi_field_financial_data = _decode_zoned(
         TechnologyFinancialData,
         _required(_openapi_object, "financial_data", "ColocatedSupplyStorageTechnology"),
         false,
     )
-    _openapi_field_supply_technology = _decode(
+    _openapi_field_supply_technology = _decode_zoned(
         Int64,
         _required(_openapi_object, "supply_technology", "ColocatedSupplyStorageTechnology"),
         false,
     )
-    _openapi_field_storage_technology = _decode(
+    _openapi_field_storage_technology = _decode_zoned(
         Int64,
         _required(
             _openapi_object,
@@ -98,12 +102,12 @@ function _decode(
     )
     _openapi_field_inverter_capacity_limits =
         haskey(_openapi_object, "inverter_capacity_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, MinMax, Nothing},
             _openapi_object["inverter_capacity_limits"],
             false,
         ) : ABSENT
-    _openapi_field_capital_costs_inverter = _decode(
+    _openapi_field_capital_costs_inverter = _decode_zoned(
         CapitalCost,
         _required(
             _openapi_object,
@@ -112,7 +116,7 @@ function _decode(
         ),
         false,
     )
-    _openapi_field_operation_costs_inverter = _decode(
+    _openapi_field_operation_costs_inverter = _decode_zoned(
         ColocatedSupplyStorageTechnologyOperationCostsInverter,
         _required(
             _openapi_object,
@@ -121,7 +125,7 @@ function _decode(
         ),
         false,
     )
-    _openapi_field_inverter_efficiency = _decode(
+    _openapi_field_inverter_efficiency = _decode_zoned(
         Float64,
         _required(
             _openapi_object,
@@ -130,7 +134,7 @@ function _decode(
         ),
         false,
     )
-    _openapi_field_inverter_supply_ratio = _decode(
+    _openapi_field_inverter_supply_ratio = _decode_zoned(
         Float64,
         _required(
             _openapi_object,
@@ -157,7 +161,7 @@ function _decode(
             "inverter_supply_ratio",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ColocatedSupplyStorageTechnology(;
         id=_openapi_field_id,
@@ -235,7 +239,7 @@ end
 _encode(_openapi_value::ColocatedSupplyStorageTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-2790b43e514648a50e19.json",
+        resource="https://openapi.invalid/schema/external-8695cbd06e638ac06741.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

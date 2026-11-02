@@ -44,7 +44,7 @@ function _decode(::Type{RenewableDispatch}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-236a40c57c27167693cb.json",
+            resource="https://openapi.invalid/schema/external-2a596c7ad88e57b60d9e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -53,60 +53,69 @@ function _decode(::Type{RenewableDispatch}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "RenewableDispatch")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "RenewableDispatch"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "RenewableDispatch"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "RenewableDispatch"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "RenewableDispatch"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "RenewableDispatch"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "RenewableDispatch"),
+        false,
+    )
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "RenewableDispatch"), false)
-    _openapi_field_active_power = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "RenewableDispatch"), false)
+    _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "RenewableDispatch"),
         false,
     )
-    _openapi_field_reactive_power = _decode(
+    _openapi_field_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power", "RenewableDispatch"),
         false,
     )
-    _openapi_field_rating =
-        _decode(Float64, _required(_openapi_object, "rating", "RenewableDispatch"), false)
-    _openapi_field_prime_mover_type = _decode(
+    _openapi_field_rating = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "rating", "RenewableDispatch"),
+        false,
+    )
+    _openapi_field_prime_mover_type = _decode_zoned(
         PrimeMovers,
         _required(_openapi_object, "prime_mover_type", "RenewableDispatch"),
         false,
     )
     _openapi_field_reactive_power_limits =
         haskey(_openapi_object, "reactive_power_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits"],
             false,
         ) : ABSENT
-    _openapi_field_power_factor = _decode(
+    _openapi_field_power_factor = _decode_zoned(
         Float64,
         _required(_openapi_object, "power_factor", "RenewableDispatch"),
         false,
     )
-    _openapi_field_operation_cost = _decode(
+    _openapi_field_operation_cost = _decode_zoned(
         RenewableDispatchOperationCost,
         _required(_openapi_object, "operation_cost", "RenewableDispatch"),
         false,
     )
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "RenewableDispatch"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "RenewableDispatch"),
         false,
     )
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -130,7 +139,7 @@ function _decode(::Type{RenewableDispatch}, _openapi_raw, _openapi_validate::Boo
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RenewableDispatch(;
         id=_openapi_field_id,
@@ -203,7 +212,7 @@ end
 _encode(_openapi_value::RenewableDispatch) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-236a40c57c27167693cb.json",
+        resource="https://openapi.invalid/schema/external-2a596c7ad88e57b60d9e.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

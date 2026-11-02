@@ -16,7 +16,7 @@ function _decode(::Type{ExistingDevices}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-64bcf586d0f5002d87f6.json",
+            resource="https://openapi.invalid/schema/external-928df4e48698bcf94430.json",
             pointer="",
         ),
         _openapi_raw,
@@ -25,10 +25,10 @@ function _decode(::Type{ExistingDevices}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "ExistingDevices")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "ExistingDevices"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "ExistingDevices"), false)
     _openapi_field_existing_devices =
         haskey(_openapi_object, "existing_devices") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{String}},
             _openapi_object["existing_devices"],
             false,
@@ -37,7 +37,7 @@ function _decode(::Type{ExistingDevices}, _openapi_raw, _openapi_validate::Bool)
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "existing_devices") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ExistingDevices(;
         id=_openapi_field_id,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::ExistingDevices) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-64bcf586d0f5002d87f6.json",
+        resource="https://openapi.invalid/schema/external-928df4e48698bcf94430.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

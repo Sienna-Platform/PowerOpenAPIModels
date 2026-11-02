@@ -15,7 +15,7 @@ function _decode(::Type{OperationalFlowLimit}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/OperationalFlowLimit",
         ),
         _openapi_raw,
@@ -23,22 +23,22 @@ function _decode(::Type{OperationalFlowLimit}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "OperationalFlowLimit")
-    _openapi_field_from_to_min = _decode(
+    _openapi_field_from_to_min = _decode_zoned(
         Float64,
         _required(_openapi_object, "from_to_min", "OperationalFlowLimit"),
         false,
     )
-    _openapi_field_from_to_max = _decode(
+    _openapi_field_from_to_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "from_to_max", "OperationalFlowLimit"),
         false,
     )
-    _openapi_field_to_from_min = _decode(
+    _openapi_field_to_from_min = _decode_zoned(
         Float64,
         _required(_openapi_object, "to_from_min", "OperationalFlowLimit"),
         false,
     )
-    _openapi_field_to_from_max = _decode(
+    _openapi_field_to_from_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "to_from_max", "OperationalFlowLimit"),
         false,
@@ -48,7 +48,7 @@ function _decode(::Type{OperationalFlowLimit}, _openapi_raw, _openapi_validate::
         String(_openapi_key) in
         ("from_to_min", "from_to_max", "to_from_min", "to_from_max") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return OperationalFlowLimit(;
         from_to_min=_openapi_field_from_to_min,
@@ -81,7 +81,7 @@ end
 _encode(_openapi_value::OperationalFlowLimit) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/OperationalFlowLimit",
     ),
     _encode_unvalidated(_openapi_value),

@@ -18,7 +18,7 @@ function _decode(::Type{KauraPLL}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bfd62b021fded1912fc5.json",
+            resource="https://openapi.invalid/schema/external-a5774927bbe625f743a3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -27,16 +27,16 @@ function _decode(::Type{KauraPLL}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "KauraPLL")
     _openapi_field_omega_lp =
-        _decode(Float64, _required(_openapi_object, "omega_lp", "KauraPLL"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "omega_lp", "KauraPLL"), false)
     _openapi_field_kp_pll =
-        _decode(Float64, _required(_openapi_object, "kp_pll", "KauraPLL"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "kp_pll", "KauraPLL"), false)
     _openapi_field_ki_pll =
-        _decode(Float64, _required(_openapi_object, "ki_pll", "KauraPLL"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "ki_pll", "KauraPLL"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("omega_lp", "kp_pll", "ki_pll") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return KauraPLL(;
         omega_lp=_openapi_field_omega_lp,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::KauraPLL) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-bfd62b021fded1912fc5.json",
+        resource="https://openapi.invalid/schema/external-a5774927bbe625f743a3.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

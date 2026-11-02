@@ -22,7 +22,7 @@ function _decode(::Type{LCLFilter}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-73e7513a61e97660e83e.json",
+            resource="https://openapi.invalid/schema/external-dcb3fe37c2577cdc1f2a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -31,20 +31,20 @@ function _decode(::Type{LCLFilter}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "LCLFilter")
     _openapi_field_lf =
-        _decode(Float64, _required(_openapi_object, "lf", "LCLFilter"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "lf", "LCLFilter"), false)
     _openapi_field_rf =
-        _decode(Float64, _required(_openapi_object, "rf", "LCLFilter"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "rf", "LCLFilter"), false)
     _openapi_field_cf =
-        _decode(Float64, _required(_openapi_object, "cf", "LCLFilter"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "cf", "LCLFilter"), false)
     _openapi_field_lg =
-        _decode(Float64, _required(_openapi_object, "lg", "LCLFilter"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "lg", "LCLFilter"), false)
     _openapi_field_rg =
-        _decode(Float64, _required(_openapi_object, "rg", "LCLFilter"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "rg", "LCLFilter"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("lf", "rf", "cf", "lg", "rg") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return LCLFilter(;
         lf=_openapi_field_lf,
@@ -80,7 +80,7 @@ end
 _encode(_openapi_value::LCLFilter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-73e7513a61e97660e83e.json",
+        resource="https://openapi.invalid/schema/external-dcb3fe37c2577cdc1f2a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

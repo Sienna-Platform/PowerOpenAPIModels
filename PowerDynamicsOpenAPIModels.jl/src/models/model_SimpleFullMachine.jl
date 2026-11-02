@@ -38,7 +38,7 @@ function _decode(::Type{SimpleFullMachine}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-90a94e0b83ef2f0dbf65.json",
+            resource="https://openapi.invalid/schema/external-23548fe1aa56268a2fdc.json",
             pointer="",
         ),
         _openapi_raw,
@@ -47,31 +47,64 @@ function _decode(::Type{SimpleFullMachine}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "SimpleFullMachine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "SimpleFullMachine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "SimpleFullMachine"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "SimpleFullMachine"), false)
-    _openapi_field_r_f =
-        _decode(Float64, _required(_openapi_object, "R_f", "SimpleFullMachine"), false)
-    _openapi_field_r_1d =
-        _decode(Float64, _required(_openapi_object, "R_1d", "SimpleFullMachine"), false)
-    _openapi_field_r_1q =
-        _decode(Float64, _required(_openapi_object, "R_1q", "SimpleFullMachine"), false)
-    _openapi_field_l_d =
-        _decode(Float64, _required(_openapi_object, "L_d", "SimpleFullMachine"), false)
-    _openapi_field_l_q =
-        _decode(Float64, _required(_openapi_object, "L_q", "SimpleFullMachine"), false)
-    _openapi_field_l_ad =
-        _decode(Float64, _required(_openapi_object, "L_ad", "SimpleFullMachine"), false)
-    _openapi_field_l_aq =
-        _decode(Float64, _required(_openapi_object, "L_aq", "SimpleFullMachine"), false)
-    _openapi_field_l_f1d =
-        _decode(Float64, _required(_openapi_object, "L_f1d", "SimpleFullMachine"), false)
-    _openapi_field_l_ff =
-        _decode(Float64, _required(_openapi_object, "L_ff", "SimpleFullMachine"), false)
-    _openapi_field_l_1d =
-        _decode(Float64, _required(_openapi_object, "L_1d", "SimpleFullMachine"), false)
-    _openapi_field_l_1q =
-        _decode(Float64, _required(_openapi_object, "L_1q", "SimpleFullMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "R", "SimpleFullMachine"), false)
+    _openapi_field_r_f = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R_f", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_r_1d = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R_1d", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_r_1q = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R_1q", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_l_d = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "L_d", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_l_q = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "L_q", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_l_ad = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "L_ad", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_l_aq = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "L_aq", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_l_f1d = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "L_f1d", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_l_ff = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "L_ff", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_l_1d = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "L_1d", "SimpleFullMachine"),
+        false,
+    )
+    _openapi_field_l_1q = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "L_1q", "SimpleFullMachine"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -90,7 +123,7 @@ function _decode(::Type{SimpleFullMachine}, _openapi_raw, _openapi_validate::Boo
             "L_1q",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SimpleFullMachine(;
         id=_openapi_field_id,
@@ -150,7 +183,7 @@ end
 _encode(_openapi_value::SimpleFullMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-90a94e0b83ef2f0dbf65.json",
+        resource="https://openapi.invalid/schema/external-23548fe1aa56268a2fdc.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

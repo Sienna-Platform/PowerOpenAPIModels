@@ -16,14 +16,14 @@ function _decode(::Type{VoltageUnitBasis}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+            resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
             pointer="/\$defs/VoltageUnitBasis",
         ),
         value,
         "decoding VoltageUnitBasis";
         direction=:neutral,
     )
-    return VoltageUnitBasis(_decode(String, value, false))
+    return VoltageUnitBasis(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::VoltageUnitBasis)
     output = _encode_unvalidated(value.value)
@@ -32,7 +32,7 @@ end
 _encode(value::VoltageUnitBasis) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+        resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
         pointer="/\$defs/VoltageUnitBasis",
     ),
     _encode_unvalidated(value),

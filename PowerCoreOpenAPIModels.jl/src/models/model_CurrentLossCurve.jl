@@ -16,7 +16,7 @@ function _decode(::Type{CurrentLossCurve}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/CurrentLossCurve",
         ),
         _openapi_raw,
@@ -24,12 +24,12 @@ function _decode(::Type{CurrentLossCurve}, _openapi_raw, _openapi_validate::Bool
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CurrentLossCurve")
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "CurrentLossCurve"),
         false,
     )
-    _openapi_field_value_curve = _decode(
+    _openapi_field_value_curve = _decode_zoned(
         LossValueCurve,
         _required(_openapi_object, "value_curve", "CurrentLossCurve"),
         false,
@@ -38,7 +38,7 @@ function _decode(::Type{CurrentLossCurve}, _openapi_raw, _openapi_validate::Bool
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("power_units", "value_curve") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return CurrentLossCurve(;
         power_units=_openapi_field_power_units,
@@ -65,7 +65,7 @@ end
 _encode(_openapi_value::CurrentLossCurve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/CurrentLossCurve",
     ),
     _encode_unvalidated(_openapi_value),

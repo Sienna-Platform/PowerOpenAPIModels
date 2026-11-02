@@ -41,7 +41,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6e008447e9af6bcbdfb9.json",
+            resource="https://openapi.invalid/schema/external-c2711d986ad91df118ba.json",
             pointer="",
         ),
         _openapi_raw,
@@ -49,52 +49,58 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TwoTerminalGenericHVDCLine")
-    _openapi_field_id = _decode(
+    _openapi_field_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "id", "TwoTerminalGenericHVDCLine"),
         false,
     )
-    _openapi_field_name = _decode(
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "TwoTerminalGenericHVDCLine"),
         false,
     )
-    _openapi_field_available = _decode(
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "TwoTerminalGenericHVDCLine"),
         false,
     )
-    _openapi_field_active_power_flow = _decode(
+    _openapi_field_active_power_flow = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power_flow", "TwoTerminalGenericHVDCLine"),
         false,
     )
-    _openapi_field_arc = _decode(
+    _openapi_field_arc = _decode_zoned(
         Int64,
         _required(_openapi_object, "arc", "TwoTerminalGenericHVDCLine"),
         false,
     )
-    _openapi_field_rating = _decode(
+    _openapi_field_rating = _decode_zoned(
         Float64,
         _required(_openapi_object, "rating", "TwoTerminalGenericHVDCLine"),
         false,
     )
     _openapi_field_rating_from =
         haskey(_openapi_object, "rating_from") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_from"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["rating_from"],
+            false,
+        ) : ABSENT
     _openapi_field_rating_to =
         haskey(_openapi_object, "rating_to") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_to"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["rating_to"],
+            false,
+        ) : ABSENT
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, OperationalFlowLimit},
             _openapi_object["operational_flow_limit"],
             false,
         ) : ABSENT
-    _openapi_field_reactive_power_limits_from = _decode(
+    _openapi_field_reactive_power_limits_from = _decode_zoned(
         MinMax,
         _required(
             _openapi_object,
@@ -103,7 +109,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
         ),
         false,
     )
-    _openapi_field_reactive_power_limits_to = _decode(
+    _openapi_field_reactive_power_limits_to = _decode_zoned(
         MinMax,
         _required(
             _openapi_object,
@@ -114,13 +120,14 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
     )
     _openapi_field_loss =
         haskey(_openapi_object, "loss") ?
-        _decode(Union{Absent, LossCurve, Nothing}, _openapi_object["loss"], false) : ABSENT
-    _openapi_field_base_power = _decode(
+        _decode_zoned(Union{Absent, LossCurve, Nothing}, _openapi_object["loss"], false) :
+        ABSENT
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "TwoTerminalGenericHVDCLine"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "TwoTerminalGenericHVDCLine"),
         false,
@@ -144,7 +151,7 @@ function _decode(::Type{TwoTerminalGenericHVDCLine}, _openapi_raw, _openapi_vali
             "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TwoTerminalGenericHVDCLine(;
         id=_openapi_field_id,
@@ -215,7 +222,7 @@ end
 _encode(_openapi_value::TwoTerminalGenericHVDCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6e008447e9af6bcbdfb9.json",
+        resource="https://openapi.invalid/schema/external-c2711d986ad91df118ba.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

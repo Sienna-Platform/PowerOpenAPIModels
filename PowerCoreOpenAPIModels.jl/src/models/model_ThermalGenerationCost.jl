@@ -21,7 +21,7 @@ function _decode(::Type{ThermalGenerationCost}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/ThermalGenerationCost",
         ),
         _openapi_raw,
@@ -31,23 +31,23 @@ function _decode(::Type{ThermalGenerationCost}, _openapi_raw, _openapi_validate:
     _openapi_object = _object(_openapi_raw, "ThermalGenerationCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(String, _openapi_object["cost_type"], false) : "THERMAL"
-    _openapi_field_fixed = _decode(
+        _decode_zoned(String, _openapi_object["cost_type"], false) : "THERMAL"
+    _openapi_field_fixed = _decode_zoned(
         Float64,
         _required(_openapi_object, "fixed", "ThermalGenerationCost"),
         false,
     )
-    _openapi_field_shut_down = _decode(
+    _openapi_field_shut_down = _decode_zoned(
         Float64,
         _required(_openapi_object, "shut_down", "ThermalGenerationCost"),
         false,
     )
-    _openapi_field_start_up = _decode(
+    _openapi_field_start_up = _decode_zoned(
         ThermalGenerationCostStartUp,
         _required(_openapi_object, "start_up", "ThermalGenerationCost"),
         false,
     )
-    _openapi_field_variable_operation_cost = _decode(
+    _openapi_field_variable_operation_cost = _decode_zoned(
         ProductionVariableCostCurve,
         _required(_openapi_object, "variable_operation_cost", "ThermalGenerationCost"),
         false,
@@ -58,7 +58,7 @@ function _decode(::Type{ThermalGenerationCost}, _openapi_raw, _openapi_validate:
         ("cost_type", "fixed", "shut_down", "start_up", "variable_operation_cost") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ThermalGenerationCost(;
         cost_type=_openapi_field_cost_type,
@@ -96,7 +96,7 @@ end
 _encode(_openapi_value::ThermalGenerationCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/ThermalGenerationCost",
     ),
     _encode_unvalidated(_openapi_value),

@@ -20,7 +20,7 @@ function _decode(::Type{RetrofitPotential}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e70d731e1a1dbe3be4fe.json",
+            resource="https://openapi.invalid/schema/external-b22424e257b193e5d5fb.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,20 +29,20 @@ function _decode(::Type{RetrofitPotential}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "RetrofitPotential")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "RetrofitPotential"), false)
-    _openapi_field_eligible_generators = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "id", "RetrofitPotential"), false)
+    _openapi_field_eligible_generators = _decode_zoned(
         Vector{String},
         _required(_openapi_object, "eligible_generators", "RetrofitPotential"),
         false,
     )
     _openapi_field_retrofit_fraction =
         haskey(_openapi_object, "retrofit_fraction") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["retrofit_fraction"],
             false,
         ) : ABSENT
-    _openapi_field_retrofit_cost = _decode(
+    _openapi_field_retrofit_cost = _decode_zoned(
         RetrofitPotentialRetrofitCost,
         _required(_openapi_object, "retrofit_cost", "RetrofitPotential"),
         false,
@@ -52,7 +52,7 @@ function _decode(::Type{RetrofitPotential}, _openapi_raw, _openapi_validate::Boo
         String(_openapi_key) in
         ("id", "eligible_generators", "retrofit_fraction", "retrofit_cost") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RetrofitPotential(;
         id=_openapi_field_id,
@@ -91,7 +91,7 @@ end
 _encode(_openapi_value::RetrofitPotential) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-e70d731e1a1dbe3be4fe.json",
+        resource="https://openapi.invalid/schema/external-b22424e257b193e5d5fb.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

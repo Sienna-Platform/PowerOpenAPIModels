@@ -67,7 +67,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-62435e5f18a3d48cb368.json",
+            resource="https://openapi.invalid/schema/external-d25add4a84860b2f1906.json",
             pointer="",
         ),
         _openapi_raw,
@@ -75,156 +75,171 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "InterconnectingConverter")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "InterconnectingConverter"), false)
-    _openapi_field_name = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "InterconnectingConverter"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "InterconnectingConverter"),
         false,
     )
-    _openapi_field_available = _decode(
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "InterconnectingConverter"),
         false,
     )
-    _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "InterconnectingConverter"), false)
-    _openapi_field_dc_bus = _decode(
+    _openapi_field_bus = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "bus", "InterconnectingConverter"),
+        false,
+    )
+    _openapi_field_dc_bus = _decode_zoned(
         Int64,
         _required(_openapi_object, "dc_bus", "InterconnectingConverter"),
         false,
     )
-    _openapi_field_active_power = _decode(
+    _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "InterconnectingConverter"),
         false,
     )
-    _openapi_field_rating = _decode(
+    _openapi_field_rating = _decode_zoned(
         Float64,
         _required(_openapi_object, "rating", "InterconnectingConverter"),
         false,
     )
-    _openapi_field_active_power_limits = _decode(
+    _openapi_field_active_power_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "active_power_limits", "InterconnectingConverter"),
         false,
     )
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "InterconnectingConverter"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "InterconnectingConverter"),
         false,
     )
     _openapi_field_reactive_power_limits =
         haskey(_openapi_object, "reactive_power_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, MinMax, Nothing},
             _openapi_object["reactive_power_limits"],
             false,
         ) : ABSENT
     _openapi_field_dc_current =
         haskey(_openapi_object, "dc_current") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["dc_current"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["dc_current"],
+            false,
+        ) : ABSENT
     _openapi_field_max_dc_current =
         haskey(_openapi_object, "max_dc_current") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["max_dc_current"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["max_dc_current"],
+            false,
+        ) : ABSENT
     _openapi_field_loss_function =
         haskey(_openapi_object, "loss_function") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CurrentLossCurve, Nothing},
             _openapi_object["loss_function"],
             false,
         ) : ABSENT
     _openapi_field_dc_control =
         haskey(_openapi_object, "dc_control") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VSCDCControlModes},
             _openapi_object["dc_control"],
             false,
         ) : ABSENT
     _openapi_field_ac_control =
         haskey(_openapi_object, "ac_control") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VSCACControlModes},
             _openapi_object["ac_control"],
             false,
         ) : ABSENT
     _openapi_field_dc_power_setpoint =
         haskey(_openapi_object, "dc_power_setpoint") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["dc_power_setpoint"],
             false,
         ) : ABSENT
     _openapi_field_dc_voltage_setpoint =
         haskey(_openapi_object, "dc_voltage_setpoint") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["dc_voltage_setpoint"],
             false,
         ) : ABSENT
     _openapi_field_rated_dc_voltage =
         haskey(_openapi_object, "rated_dc_voltage") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rated_dc_voltage"],
             false,
         ) : ABSENT
     _openapi_field_power_factor_setpoint =
         haskey(_openapi_object, "power_factor_setpoint") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["power_factor_setpoint"],
             false,
         ) : ABSENT
     _openapi_field_ac_voltage_setpoint =
         haskey(_openapi_object, "ac_voltage_setpoint") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["ac_voltage_setpoint"],
             false,
         ) : ABSENT
     _openapi_field_rated_ac_voltage =
         haskey(_openapi_object, "rated_ac_voltage") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rated_ac_voltage"],
             false,
         ) : ABSENT
     _openapi_field_dc_voltage_droop =
         haskey(_openapi_object, "dc_voltage_droop") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["dc_voltage_droop"],
             false,
         ) : ABSENT
     _openapi_field_remote_bus_control =
         haskey(_openapi_object, "remote_bus_control") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["remote_bus_control"],
             false,
         ) : ABSENT
     _openapi_field_power_factor_weighting_fraction =
         haskey(_openapi_object, "power_factor_weighting_fraction") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["power_factor_weighting_fraction"],
             false,
         ) : ABSENT
     _openapi_field_voltage_limits =
         haskey(_openapi_object, "voltage_limits") ?
-        _decode(Union{Absent, MinMax, Nothing}, _openapi_object["voltage_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, MinMax, Nothing},
+            _openapi_object["voltage_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -261,7 +276,7 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return InterconnectingConverter(;
         id=_openapi_field_id,
@@ -393,7 +408,7 @@ end
 _encode(_openapi_value::InterconnectingConverter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-62435e5f18a3d48cb368.json",
+        resource="https://openapi.invalid/schema/external-d25add4a84860b2f1906.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

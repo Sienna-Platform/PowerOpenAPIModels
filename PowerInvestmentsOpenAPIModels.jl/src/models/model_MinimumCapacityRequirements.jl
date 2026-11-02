@@ -23,7 +23,7 @@ function _decode(::Type{MinimumCapacityRequirements}, _openapi_raw, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-14ae0ea56f3825997dde.json",
+            resource="https://openapi.invalid/schema/external-58ab4ef9451f5ae59aa9.json",
             pointer="",
         ),
         _openapi_raw,
@@ -31,28 +31,31 @@ function _decode(::Type{MinimumCapacityRequirements}, _openapi_raw, _openapi_val
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "MinimumCapacityRequirements")
-    _openapi_field_id = _decode(
+    _openapi_field_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "id", "MinimumCapacityRequirements"),
         false,
     )
-    _openapi_field_name = _decode(
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "MinimumCapacityRequirements"),
         false,
     )
-    _openapi_field_available = _decode(
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "MinimumCapacityRequirements"),
         false,
     )
     _openapi_field_target_year =
         haskey(_openapi_object, "target_year") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["target_year"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Int64, Nothing},
+            _openapi_object["target_year"],
+            false,
+        ) : ABSENT
     _openapi_field_min_capacity_mw =
         haskey(_openapi_object, "min_capacity_mw") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["min_capacity_mw"],
             false,
@@ -62,7 +65,7 @@ function _decode(::Type{MinimumCapacityRequirements}, _openapi_raw, _openapi_val
         String(_openapi_key) in
         ("id", "name", "available", "target_year", "min_capacity_mw") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return MinimumCapacityRequirements(;
         id=_openapi_field_id,
@@ -100,7 +103,7 @@ end
 _encode(_openapi_value::MinimumCapacityRequirements) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-14ae0ea56f3825997dde.json",
+        resource="https://openapi.invalid/schema/external-58ab4ef9451f5ae59aa9.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

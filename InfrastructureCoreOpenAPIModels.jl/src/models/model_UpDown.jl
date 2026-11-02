@@ -13,7 +13,7 @@ function _decode(::Type{UpDown}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/UpDown",
         ),
         _openapi_raw,
@@ -22,13 +22,14 @@ function _decode(::Type{UpDown}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "UpDown")
     _openapi_field_down =
-        _decode(Float64, _required(_openapi_object, "down", "UpDown"), false)
-    _openapi_field_up = _decode(Float64, _required(_openapi_object, "up", "UpDown"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "down", "UpDown"), false)
+    _openapi_field_up =
+        _decode_zoned(Float64, _required(_openapi_object, "up", "UpDown"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("down", "up") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return UpDown(;
         down=_openapi_field_down,
@@ -55,7 +56,7 @@ end
 _encode(_openapi_value::UpDown) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/UpDown",
     ),
     _encode_unvalidated(_openapi_value),

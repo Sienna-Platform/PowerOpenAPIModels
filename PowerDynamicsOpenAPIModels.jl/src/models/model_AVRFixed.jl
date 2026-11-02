@@ -18,7 +18,7 @@ function _decode(::Type{AVRFixed}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f20cf3d8907f047b39ec.json",
+            resource="https://openapi.invalid/schema/external-d5cccfe2078792c98723.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,17 +26,19 @@ function _decode(::Type{AVRFixed}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "AVRFixed")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "AVRFixed"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "AVRFixed"), false)
     _openapi_field_vf =
-        _decode(Float64, _required(_openapi_object, "Vf", "AVRFixed"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Vf", "AVRFixed"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "Vf", "V_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return AVRFixed(;
         id=_openapi_field_id,
@@ -66,7 +68,7 @@ end
 _encode(_openapi_value::AVRFixed) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-f20cf3d8907f047b39ec.json",
+        resource="https://openapi.invalid/schema/external-d5cccfe2078792c98723.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -39,7 +39,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c3f68abf9136ea5d268f.json",
+            resource="https://openapi.invalid/schema/external-6f7ceee16838e14526cd.json",
             pointer="",
         ),
         _openapi_raw,
@@ -47,59 +47,65 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "NodalHVDCTransportTechnology")
-    _openapi_field_id = _decode(
+    _openapi_field_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "id", "NodalHVDCTransportTechnology"),
         false,
     )
-    _openapi_field_name = _decode(
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "NodalHVDCTransportTechnology"),
         false,
     )
-    _openapi_field_available = _decode(
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "NodalHVDCTransportTechnology"),
         false,
     )
-    _openapi_field_power_systems_type = _decode(
+    _openapi_field_power_systems_type = _decode_zoned(
         String,
         _required(_openapi_object, "power_systems_type", "NodalHVDCTransportTechnology"),
         false,
     )
-    _openapi_field_start_node = _decode(
+    _openapi_field_start_node = _decode_zoned(
         Int64,
         _required(_openapi_object, "start_node", "NodalHVDCTransportTechnology"),
         false,
     )
-    _openapi_field_end_node = _decode(
+    _openapi_field_end_node = _decode_zoned(
         Int64,
         _required(_openapi_object, "end_node", "NodalHVDCTransportTechnology"),
         false,
     )
     _openapi_field_capacity_limits =
         haskey(_openapi_object, "capacity_limits") ?
-        _decode(Union{Absent, MinMax, Nothing}, _openapi_object["capacity_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, MinMax, Nothing},
+            _openapi_object["capacity_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_capital_costs =
         haskey(_openapi_object, "capital_costs") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CapitalCost, Nothing},
             _openapi_object["capital_costs"],
             false,
         ) : ABSENT
     _openapi_field_line_loss =
         haskey(_openapi_object, "line_loss") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, NodalHVDCTransportTechnologyLineLoss, Nothing},
             _openapi_object["line_loss"],
             false,
         ) : ABSENT
     _openapi_field_unit_size =
         haskey(_openapi_object, "unit_size") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["unit_size"], false) :
-        ABSENT
-    _openapi_field_financial_data = _decode(
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["unit_size"],
+            false,
+        ) : ABSENT
+    _openapi_field_financial_data = _decode_zoned(
         TechnologyFinancialData,
         _required(_openapi_object, "financial_data", "NodalHVDCTransportTechnology"),
         false,
@@ -120,7 +126,7 @@ function _decode(
             "financial_data",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return NodalHVDCTransportTechnology(;
         id=_openapi_field_id,
@@ -182,7 +188,7 @@ end
 _encode(_openapi_value::NodalHVDCTransportTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c3f68abf9136ea5d268f.json",
+        resource="https://openapi.invalid/schema/external-6f7ceee16838e14526cd.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

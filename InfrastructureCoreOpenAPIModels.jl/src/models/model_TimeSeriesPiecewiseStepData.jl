@@ -16,7 +16,7 @@ function _decode(::Type{TimeSeriesPiecewiseStepData}, _openapi_raw, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/TimeSeriesPiecewiseStepData",
         ),
         _openapi_raw,
@@ -24,12 +24,12 @@ function _decode(::Type{TimeSeriesPiecewiseStepData}, _openapi_raw, _openapi_val
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TimeSeriesPiecewiseStepData")
-    _openapi_field_function_type = _decode(
+    _openapi_field_function_type = _decode_zoned(
         String,
         _required(_openapi_object, "function_type", "TimeSeriesPiecewiseStepData"),
         false,
     )
-    _openapi_field_association_id = _decode(
+    _openapi_field_association_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "association_id", "TimeSeriesPiecewiseStepData"),
         false,
@@ -38,7 +38,7 @@ function _decode(::Type{TimeSeriesPiecewiseStepData}, _openapi_raw, _openapi_val
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("function_type", "association_id") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TimeSeriesPiecewiseStepData(;
         function_type=_openapi_field_function_type,
@@ -69,7 +69,7 @@ end
 _encode(_openapi_value::TimeSeriesPiecewiseStepData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/TimeSeriesPiecewiseStepData",
     ),
     _encode_unvalidated(_openapi_value),

@@ -100,7 +100,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a131f566ad1764df63fc.json",
+            resource="https://openapi.invalid/schema/external-ca005d93edb42adff191.json",
             pointer="",
         ),
         _openapi_raw,
@@ -109,265 +109,283 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
     )
     _openapi_object = _object(_openapi_raw, "TwoTerminalVSCLine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "TwoTerminalVSCLine"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "TwoTerminalVSCLine"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "TwoTerminalVSCLine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "TwoTerminalVSCLine"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "TwoTerminalVSCLine"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "TwoTerminalVSCLine"),
+        false,
+    )
     _openapi_field_arc =
-        _decode(Int64, _required(_openapi_object, "arc", "TwoTerminalVSCLine"), false)
-    _openapi_field_active_power_flow = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "arc", "TwoTerminalVSCLine"), false)
+    _openapi_field_active_power_flow = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power_flow", "TwoTerminalVSCLine"),
         false,
     )
-    _openapi_field_rating =
-        _decode(Float64, _required(_openapi_object, "rating", "TwoTerminalVSCLine"), false)
+    _openapi_field_rating = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "rating", "TwoTerminalVSCLine"),
+        false,
+    )
     _openapi_field_g =
         haskey(_openapi_object, "g") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["g"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["g"], false) : ABSENT
     _openapi_field_dc_current =
         haskey(_openapi_object, "dc_current") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["dc_current"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["dc_current"],
+            false,
+        ) : ABSENT
     _openapi_field_reactive_power_from =
         haskey(_openapi_object, "reactive_power_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["reactive_power_from"],
             false,
         ) : ABSENT
     _openapi_field_dc_control_from =
         haskey(_openapi_object, "dc_control_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VSCDCControlModes},
             _openapi_object["dc_control_from"],
             false,
         ) : ABSENT
     _openapi_field_ac_control_from =
         haskey(_openapi_object, "ac_control_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VSCACControlModes},
             _openapi_object["ac_control_from"],
             false,
         ) : ABSENT
     _openapi_field_dc_power_setpoint_from =
         haskey(_openapi_object, "dc_power_setpoint_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["dc_power_setpoint_from"],
             false,
         ) : ABSENT
     _openapi_field_dc_voltage_setpoint_from =
         haskey(_openapi_object, "dc_voltage_setpoint_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["dc_voltage_setpoint_from"],
             false,
         ) : ABSENT
     _openapi_field_power_factor_setpoint_from =
         haskey(_openapi_object, "power_factor_setpoint_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["power_factor_setpoint_from"],
             false,
         ) : ABSENT
     _openapi_field_ac_voltage_setpoint_from =
         haskey(_openapi_object, "ac_voltage_setpoint_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["ac_voltage_setpoint_from"],
             false,
         ) : ABSENT
     _openapi_field_rated_ac_voltage_from =
         haskey(_openapi_object, "rated_ac_voltage_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rated_ac_voltage_from"],
             false,
         ) : ABSENT
     _openapi_field_converter_loss_from =
         haskey(_openapi_object, "converter_loss_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, LossCurve, Nothing},
             _openapi_object["converter_loss_from"],
             false,
         ) : ABSENT
     _openapi_field_max_dc_current_from =
         haskey(_openapi_object, "max_dc_current_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_dc_current_from"],
             false,
         ) : ABSENT
     _openapi_field_rating_from =
         haskey(_openapi_object, "rating_from") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_from"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["rating_from"],
+            false,
+        ) : ABSENT
     _openapi_field_reactive_power_limits_from =
         haskey(_openapi_object, "reactive_power_limits_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits_from"],
             false,
         ) : ABSENT
     _openapi_field_power_factor_weighting_fraction_from =
         haskey(_openapi_object, "power_factor_weighting_fraction_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["power_factor_weighting_fraction_from"],
             false,
         ) : ABSENT
     _openapi_field_voltage_limits_from =
         haskey(_openapi_object, "voltage_limits_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["voltage_limits_from"],
             false,
         ) : ABSENT
     _openapi_field_dc_voltage_droop_from =
         haskey(_openapi_object, "dc_voltage_droop_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["dc_voltage_droop_from"],
             false,
         ) : ABSENT
     _openapi_field_reactive_power_to =
         haskey(_openapi_object, "reactive_power_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["reactive_power_to"],
             false,
         ) : ABSENT
     _openapi_field_dc_control_to =
         haskey(_openapi_object, "dc_control_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VSCDCControlModes},
             _openapi_object["dc_control_to"],
             false,
         ) : ABSENT
     _openapi_field_ac_control_to =
         haskey(_openapi_object, "ac_control_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VSCACControlModes},
             _openapi_object["ac_control_to"],
             false,
         ) : ABSENT
     _openapi_field_dc_power_setpoint_to =
         haskey(_openapi_object, "dc_power_setpoint_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["dc_power_setpoint_to"],
             false,
         ) : ABSENT
     _openapi_field_dc_voltage_setpoint_to =
         haskey(_openapi_object, "dc_voltage_setpoint_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["dc_voltage_setpoint_to"],
             false,
         ) : ABSENT
     _openapi_field_power_factor_setpoint_to =
         haskey(_openapi_object, "power_factor_setpoint_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["power_factor_setpoint_to"],
             false,
         ) : ABSENT
     _openapi_field_ac_voltage_setpoint_to =
         haskey(_openapi_object, "ac_voltage_setpoint_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["ac_voltage_setpoint_to"],
             false,
         ) : ABSENT
     _openapi_field_rated_ac_voltage_to =
         haskey(_openapi_object, "rated_ac_voltage_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rated_ac_voltage_to"],
             false,
         ) : ABSENT
     _openapi_field_converter_loss_to =
         haskey(_openapi_object, "converter_loss_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, LossCurve, Nothing},
             _openapi_object["converter_loss_to"],
             false,
         ) : ABSENT
     _openapi_field_max_dc_current_to =
         haskey(_openapi_object, "max_dc_current_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_dc_current_to"],
             false,
         ) : ABSENT
     _openapi_field_rating_to =
         haskey(_openapi_object, "rating_to") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_to"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["rating_to"],
+            false,
+        ) : ABSENT
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, OperationalFlowLimit},
             _openapi_object["operational_flow_limit"],
             false,
         ) : ABSENT
     _openapi_field_reactive_power_limits_to =
         haskey(_openapi_object, "reactive_power_limits_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits_to"],
             false,
         ) : ABSENT
     _openapi_field_power_factor_weighting_fraction_to =
         haskey(_openapi_object, "power_factor_weighting_fraction_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["power_factor_weighting_fraction_to"],
             false,
         ) : ABSENT
     _openapi_field_voltage_limits_to =
         haskey(_openapi_object, "voltage_limits_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["voltage_limits_to"],
             false,
         ) : ABSENT
     _openapi_field_dc_voltage_droop_to =
         haskey(_openapi_object, "dc_voltage_droop_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["dc_voltage_droop_to"],
             false,
         ) : ABSENT
     _openapi_field_rated_dc_voltage =
         haskey(_openapi_object, "rated_dc_voltage") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rated_dc_voltage"],
             false,
         ) : ABSENT
     _openapi_field_remote_bus_control_from =
         haskey(_openapi_object, "remote_bus_control_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["remote_bus_control_from"],
             false,
         ) : ABSENT
     _openapi_field_remote_bus_control_to =
         haskey(_openapi_object, "remote_bus_control_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["remote_bus_control_to"],
             false,
         ) : ABSENT
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "TwoTerminalVSCLine"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "TwoTerminalVSCLine"),
         false,
@@ -421,7 +439,7 @@ function _decode(::Type{TwoTerminalVSCLine}, _openapi_raw, _openapi_validate::Bo
             "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TwoTerminalVSCLine(;
         id=_openapi_field_id,
@@ -640,7 +658,7 @@ end
 _encode(_openapi_value::TwoTerminalVSCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a131f566ad1764df63fc.json",
+        resource="https://openapi.invalid/schema/external-ca005d93edb42adff191.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

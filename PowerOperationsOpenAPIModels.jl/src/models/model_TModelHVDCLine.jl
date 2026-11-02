@@ -34,7 +34,7 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-41416870008c05b291fb.json",
+            resource="https://openapi.invalid/schema/external-7aef97aef7c03609c0e7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -43,32 +43,35 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "TModelHVDCLine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "TModelHVDCLine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "TModelHVDCLine"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "TModelHVDCLine"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "TModelHVDCLine"), false)
-    _openapi_field_active_power_flow = _decode(
+        _decode_zoned(String, _required(_openapi_object, "name", "TModelHVDCLine"), false)
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "TModelHVDCLine"),
+        false,
+    )
+    _openapi_field_active_power_flow = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power_flow", "TModelHVDCLine"),
         false,
     )
     _openapi_field_arc =
-        _decode(Int64, _required(_openapi_object, "arc", "TModelHVDCLine"), false)
-    _openapi_field_base_current = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "arc", "TModelHVDCLine"), false)
+    _openapi_field_base_current = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_current", "TModelHVDCLine"),
         false,
     )
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "r", "TModelHVDCLine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "r", "TModelHVDCLine"), false)
     _openapi_field_l =
-        _decode(Float64, _required(_openapi_object, "l", "TModelHVDCLine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "l", "TModelHVDCLine"), false)
     _openapi_field_c =
-        _decode(Float64, _required(_openapi_object, "c", "TModelHVDCLine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "c", "TModelHVDCLine"), false)
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, OperationalFlowLimit},
             _openapi_object["operational_flow_limit"],
             false,
@@ -88,7 +91,7 @@ function _decode(::Type{TModelHVDCLine}, _openapi_raw, _openapi_validate::Bool)
             "operational_flow_limit",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TModelHVDCLine(;
         id=_openapi_field_id,
@@ -143,7 +146,7 @@ end
 _encode(_openapi_value::TModelHVDCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-41416870008c05b291fb.json",
+        resource="https://openapi.invalid/schema/external-7aef97aef7c03609c0e7.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

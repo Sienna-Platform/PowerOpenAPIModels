@@ -54,7 +54,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5447f43de781966539cf.json",
+            resource="https://openapi.invalid/schema/external-acd667d5dc5fff314caf.json",
             pointer="",
         ),
         _openapi_raw,
@@ -63,107 +63,116 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "HybridSystem")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "HybridSystem"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "HybridSystem"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "HybridSystem"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "HybridSystem"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "HybridSystem"), false)
-    _openapi_field_status = _decode(
+        _decode_zoned(Bool, _required(_openapi_object, "available", "HybridSystem"), false)
+    _openapi_field_status = _decode_zoned(
         OperationalStates,
         _required(_openapi_object, "status", "HybridSystem"),
         false,
     )
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "HybridSystem"), false)
-    _openapi_field_active_power =
-        _decode(Float64, _required(_openapi_object, "active_power", "HybridSystem"), false)
-    _openapi_field_reactive_power = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "HybridSystem"), false)
+    _openapi_field_active_power = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "active_power", "HybridSystem"),
+        false,
+    )
+    _openapi_field_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power", "HybridSystem"),
         false,
     )
-    _openapi_field_base_power =
-        _decode(Float64, _required(_openapi_object, "base_power", "HybridSystem"), false)
-    _openapi_field_power_units = _decode(
+    _openapi_field_base_power = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "base_power", "HybridSystem"),
+        false,
+    )
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "HybridSystem"),
         false,
     )
-    _openapi_field_operation_cost = _decode(
+    _openapi_field_operation_cost = _decode_zoned(
         MarketBidCost,
         _required(_openapi_object, "operation_cost", "HybridSystem"),
         false,
     )
     _openapi_field_thermal_unit =
         haskey(_openapi_object, "thermal_unit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["thermal_unit"],
             false,
         ) : ABSENT
     _openapi_field_electric_load =
         haskey(_openapi_object, "electric_load") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["electric_load"],
             false,
         ) : ABSENT
     _openapi_field_storage =
         haskey(_openapi_object, "storage") ?
-        _decode(Union{Absent, Union{Int64, Nothing}}, _openapi_object["storage"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["storage"],
+            false,
+        ) : ABSENT
     _openapi_field_renewable_unit =
         haskey(_openapi_object, "renewable_unit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["renewable_unit"],
             false,
         ) : ABSENT
     _openapi_field_interconnection_impedance =
         haskey(_openapi_object, "interconnection_impedance") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, ComplexNumber, Nothing},
             _openapi_object["interconnection_impedance"],
             false,
         ) : ABSENT
     _openapi_field_interconnection_rating =
         haskey(_openapi_object, "interconnection_rating") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["interconnection_rating"],
             false,
         ) : ABSENT
     _openapi_field_input_active_power_limits =
         haskey(_openapi_object, "input_active_power_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, MinMax, Nothing},
             _openapi_object["input_active_power_limits"],
             false,
         ) : ABSENT
     _openapi_field_output_active_power_limits =
         haskey(_openapi_object, "output_active_power_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, MinMax, Nothing},
             _openapi_object["output_active_power_limits"],
             false,
         ) : ABSENT
     _openapi_field_reactive_power_limits =
         haskey(_openapi_object, "reactive_power_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, MinMax, Nothing},
             _openapi_object["reactive_power_limits"],
             false,
         ) : ABSENT
     _openapi_field_interconnection_efficiency =
         haskey(_openapi_object, "interconnection_efficiency") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, InOut, Nothing},
             _openapi_object["interconnection_efficiency"],
             false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -194,7 +203,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return HybridSystem(;
         id=_openapi_field_id,
@@ -300,7 +309,7 @@ end
 _encode(_openapi_value::HybridSystem) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-5447f43de781966539cf.json",
+        resource="https://openapi.invalid/schema/external-acd667d5dc5fff314caf.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

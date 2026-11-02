@@ -16,7 +16,7 @@ function _decode(::Type{TradingHubAssociation}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-18d7cc82b269a63014e6.json",
+            resource="https://openapi.invalid/schema/external-739f28c06736792798fe.json",
             pointer="",
         ),
         _openapi_raw,
@@ -24,12 +24,12 @@ function _decode(::Type{TradingHubAssociation}, _openapi_raw, _openapi_validate:
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TradingHubAssociation")
-    _openapi_field_trading_hub_id = _decode(
+    _openapi_field_trading_hub_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "trading_hub_id", "TradingHubAssociation"),
         false,
     )
-    _openapi_field_entity_id = _decode(
+    _openapi_field_entity_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "entity_id", "TradingHubAssociation"),
         false,
@@ -38,7 +38,7 @@ function _decode(::Type{TradingHubAssociation}, _openapi_raw, _openapi_validate:
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("trading_hub_id", "entity_id") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TradingHubAssociation(;
         trading_hub_id=_openapi_field_trading_hub_id,
@@ -67,7 +67,7 @@ end
 _encode(_openapi_value::TradingHubAssociation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-18d7cc82b269a63014e6.json",
+        resource="https://openapi.invalid/schema/external-739f28c06736792798fe.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

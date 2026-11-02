@@ -29,7 +29,7 @@ function _decode(::Type{TransmissionInterface}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-75b72899f43bdcd79310.json",
+            resource="https://openapi.invalid/schema/external-5835c6de27d435d348d6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -37,40 +37,46 @@ function _decode(::Type{TransmissionInterface}, _openapi_raw, _openapi_validate:
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TransmissionInterface")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "TransmissionInterface"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "TransmissionInterface"), false)
-    _openapi_field_available = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "TransmissionInterface"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "TransmissionInterface"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "TransmissionInterface"),
         false,
     )
-    _openapi_field_active_power_flow_limits = _decode(
+    _openapi_field_active_power_flow_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "active_power_flow_limits", "TransmissionInterface"),
         false,
     )
     _openapi_field_violation_penalty =
         haskey(_openapi_object, "violation_penalty") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["violation_penalty"],
             false,
         ) : ABSENT
     _openapi_field_direction_mapping =
         haskey(_openapi_object, "direction_mapping") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, TransmissionInterfaceDirectionMapping},
             _openapi_object["direction_mapping"],
             false,
         ) : ABSENT
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "TransmissionInterface"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "TransmissionInterface"),
         false,
@@ -88,7 +94,7 @@ function _decode(::Type{TransmissionInterface}, _openapi_raw, _openapi_validate:
             "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TransmissionInterface(;
         id=_openapi_field_id,
@@ -139,7 +145,7 @@ end
 _encode(_openapi_value::TransmissionInterface) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-75b72899f43bdcd79310.json",
+        resource="https://openapi.invalid/schema/external-5835c6de27d435d348d6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

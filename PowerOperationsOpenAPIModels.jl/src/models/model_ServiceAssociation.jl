@@ -16,7 +16,7 @@ function _decode(::Type{ServiceAssociation}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-12651f94005397b86a98.json",
+            resource="https://openapi.invalid/schema/external-49ddeedef382b7a71199.json",
             pointer="",
         ),
         _openapi_raw,
@@ -24,18 +24,21 @@ function _decode(::Type{ServiceAssociation}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ServiceAssociation")
-    _openapi_field_service_id = _decode(
+    _openapi_field_service_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "service_id", "ServiceAssociation"),
         false,
     )
-    _openapi_field_entity_id =
-        _decode(Int64, _required(_openapi_object, "entity_id", "ServiceAssociation"), false)
+    _openapi_field_entity_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "entity_id", "ServiceAssociation"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("service_id", "entity_id") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ServiceAssociation(;
         service_id=_openapi_field_service_id,
@@ -62,7 +65,7 @@ end
 _encode(_openapi_value::ServiceAssociation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-12651f94005397b86a98.json",
+        resource="https://openapi.invalid/schema/external-49ddeedef382b7a71199.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -21,7 +21,7 @@ function _decode(::Type{CombinedCycleAssociation}, _openapi_raw, _openapi_valida
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b512699ea83769151c21.json",
+            resource="https://openapi.invalid/schema/external-02e8c680358dc2b2c05b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,22 +29,22 @@ function _decode(::Type{CombinedCycleAssociation}, _openapi_raw, _openapi_valida
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CombinedCycleAssociation")
-    _openapi_field_plant_id = _decode(
+    _openapi_field_plant_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "plant_id", "CombinedCycleAssociation"),
         false,
     )
-    _openapi_field_entity_id = _decode(
+    _openapi_field_entity_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "entity_id", "CombinedCycleAssociation"),
         false,
     )
-    _openapi_field_role = _decode(
+    _openapi_field_role = _decode_zoned(
         CombinedCycleAssociationRole,
         _required(_openapi_object, "role", "CombinedCycleAssociation"),
         false,
     )
-    _openapi_field_hrsg_index = _decode(
+    _openapi_field_hrsg_index = _decode_zoned(
         Int64,
         _required(_openapi_object, "hrsg_index", "CombinedCycleAssociation"),
         false,
@@ -53,7 +53,7 @@ function _decode(::Type{CombinedCycleAssociation}, _openapi_raw, _openapi_valida
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("plant_id", "entity_id", "role", "hrsg_index") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return CombinedCycleAssociation(;
         plant_id=_openapi_field_plant_id,
@@ -86,7 +86,7 @@ end
 _encode(_openapi_value::CombinedCycleAssociation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b512699ea83769151c21.json",
+        resource="https://openapi.invalid/schema/external-02e8c680358dc2b2c05b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

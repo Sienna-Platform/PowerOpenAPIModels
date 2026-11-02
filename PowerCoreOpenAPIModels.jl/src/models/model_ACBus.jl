@@ -34,7 +34,7 @@ function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-2e93d9ff9269d363d36a.json",
+            resource="https://openapi.invalid/schema/external-8a8a39f0b1d043012ce3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -42,38 +42,54 @@ function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ACBus")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "ACBus"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "ACBus"), false)
     _openapi_field_number =
-        _decode(Int64, _required(_openapi_object, "number", "ACBus"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "number", "ACBus"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "ACBus"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "ACBus"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "ACBus"), false)
+        _decode_zoned(Bool, _required(_openapi_object, "available", "ACBus"), false)
     _openapi_field_bustype =
         haskey(_openapi_object, "bustype") ?
-        _decode(Union{ACBusType, Absent, Nothing}, _openapi_object["bustype"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{ACBusType, Absent, Nothing},
+            _openapi_object["bustype"],
+            false,
+        ) : ABSENT
     _openapi_field_angle =
         haskey(_openapi_object, "angle") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["angle"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["angle"], false) :
+        ABSENT
     _openapi_field_magnitude =
         haskey(_openapi_object, "magnitude") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["magnitude"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["magnitude"],
+            false,
+        ) : ABSENT
     _openapi_field_voltage_limits =
         haskey(_openapi_object, "voltage_limits") ?
-        _decode(Union{MinMax, Absent, Nothing}, _openapi_object["voltage_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{MinMax, Absent, Nothing},
+            _openapi_object["voltage_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_base_voltage =
         haskey(_openapi_object, "base_voltage") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_voltage"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["base_voltage"],
+            false,
+        ) : ABSENT
     _openapi_field_area =
         haskey(_openapi_object, "area") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["area"], false) : ABSENT
+        _decode_zoned(Union{Absent, Int64, Nothing}, _openapi_object["area"], false) :
+        ABSENT
     _openapi_field_load_zone =
         haskey(_openapi_object, "load_zone") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["load_zone"], false) : ABSENT
+        _decode_zoned(Union{Absent, Int64, Nothing}, _openapi_object["load_zone"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -90,7 +106,7 @@ function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
             "load_zone",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ACBus(;
         id=_openapi_field_id,
@@ -146,7 +162,7 @@ end
 _encode(_openapi_value::ACBus) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-2e93d9ff9269d363d36a.json",
+        resource="https://openapi.invalid/schema/external-8a8a39f0b1d043012ce3.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

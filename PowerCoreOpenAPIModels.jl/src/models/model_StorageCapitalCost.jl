@@ -19,7 +19,7 @@ function _decode(::Type{StorageCapitalCost}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/StorageCapitalCost",
         ),
         _openapi_raw,
@@ -27,22 +27,22 @@ function _decode(::Type{StorageCapitalCost}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "StorageCapitalCost")
-    _openapi_field_charge_capital_cost = _decode(
+    _openapi_field_charge_capital_cost = _decode_zoned(
         ValueCurve,
         _required(_openapi_object, "charge_capital_cost", "StorageCapitalCost"),
         false,
     )
-    _openapi_field_discharge_capital_cost = _decode(
+    _openapi_field_discharge_capital_cost = _decode_zoned(
         ValueCurve,
         _required(_openapi_object, "discharge_capital_cost", "StorageCapitalCost"),
         false,
     )
-    _openapi_field_energy_capital_cost = _decode(
+    _openapi_field_energy_capital_cost = _decode_zoned(
         ValueCurve,
         _required(_openapi_object, "energy_capital_cost", "StorageCapitalCost"),
         false,
     )
-    _openapi_field_interconnection_cost = _decode(
+    _openapi_field_interconnection_cost = _decode_zoned(
         Float64,
         _required(_openapi_object, "interconnection_cost", "StorageCapitalCost"),
         false,
@@ -56,7 +56,7 @@ function _decode(::Type{StorageCapitalCost}, _openapi_raw, _openapi_validate::Bo
             "interconnection_cost",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return StorageCapitalCost(;
         charge_capital_cost=_openapi_field_charge_capital_cost,
@@ -97,7 +97,7 @@ end
 _encode(_openapi_value::StorageCapitalCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/StorageCapitalCost",
     ),
     _encode_unvalidated(_openapi_value),

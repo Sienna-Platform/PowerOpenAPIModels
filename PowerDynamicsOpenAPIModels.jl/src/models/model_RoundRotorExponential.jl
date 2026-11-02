@@ -18,7 +18,7 @@ function _decode(::Type{RoundRotorExponential}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a7707606eb739c54322b.json",
+            resource="https://openapi.invalid/schema/external-cd2c0d0fc2552531072e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,14 +26,17 @@ function _decode(::Type{RoundRotorExponential}, _openapi_raw, _openapi_validate:
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RoundRotorExponential")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "RoundRotorExponential"), false)
-    _openapi_field_base_machine = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "RoundRotorExponential"),
+        false,
+    )
+    _openapi_field_base_machine = _decode_zoned(
         Int64,
         _required(_openapi_object, "base_machine", "RoundRotorExponential"),
         false,
     )
-    _openapi_field_saturation_coeffs = _decode(
+    _openapi_field_saturation_coeffs = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "saturation_coeffs", "RoundRotorExponential"),
         false,
@@ -42,7 +45,7 @@ function _decode(::Type{RoundRotorExponential}, _openapi_raw, _openapi_validate:
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "base_machine", "saturation_coeffs") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RoundRotorExponential(;
         id=_openapi_field_id,
@@ -74,7 +77,7 @@ end
 _encode(_openapi_value::RoundRotorExponential) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a7707606eb739c54322b.json",
+        resource="https://openapi.invalid/schema/external-cd2c0d0fc2552531072e.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

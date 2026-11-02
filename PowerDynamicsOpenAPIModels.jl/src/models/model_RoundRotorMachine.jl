@@ -38,7 +38,7 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0f314608d735bca99410.json",
+            resource="https://openapi.invalid/schema/external-0b60cc5a31bb7b66406f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -47,30 +47,51 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "RoundRotorMachine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "RoundRotorMachine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "RoundRotorMachine"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "RoundRotorMachine"), false)
-    _openapi_field_td0_p =
-        _decode(Float64, _required(_openapi_object, "Td0_p", "RoundRotorMachine"), false)
-    _openapi_field_td0_pp =
-        _decode(Float64, _required(_openapi_object, "Td0_pp", "RoundRotorMachine"), false)
-    _openapi_field_tq0_p =
-        _decode(Float64, _required(_openapi_object, "Tq0_p", "RoundRotorMachine"), false)
-    _openapi_field_tq0_pp =
-        _decode(Float64, _required(_openapi_object, "Tq0_pp", "RoundRotorMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "R", "RoundRotorMachine"), false)
+    _openapi_field_td0_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Td0_p", "RoundRotorMachine"),
+        false,
+    )
+    _openapi_field_td0_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Td0_pp", "RoundRotorMachine"),
+        false,
+    )
+    _openapi_field_tq0_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Tq0_p", "RoundRotorMachine"),
+        false,
+    )
+    _openapi_field_tq0_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Tq0_pp", "RoundRotorMachine"),
+        false,
+    )
     _openapi_field_xd =
-        _decode(Float64, _required(_openapi_object, "Xd", "RoundRotorMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Xd", "RoundRotorMachine"), false)
     _openapi_field_xq =
-        _decode(Float64, _required(_openapi_object, "Xq", "RoundRotorMachine"), false)
-    _openapi_field_xd_p =
-        _decode(Float64, _required(_openapi_object, "Xd_p", "RoundRotorMachine"), false)
-    _openapi_field_xq_p =
-        _decode(Float64, _required(_openapi_object, "Xq_p", "RoundRotorMachine"), false)
-    _openapi_field_xd_pp =
-        _decode(Float64, _required(_openapi_object, "Xd_pp", "RoundRotorMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Xq", "RoundRotorMachine"), false)
+    _openapi_field_xd_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd_p", "RoundRotorMachine"),
+        false,
+    )
+    _openapi_field_xq_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xq_p", "RoundRotorMachine"),
+        false,
+    )
+    _openapi_field_xd_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd_pp", "RoundRotorMachine"),
+        false,
+    )
     _openapi_field_xl =
-        _decode(Float64, _required(_openapi_object, "Xl", "RoundRotorMachine"), false)
-    _openapi_field_se = _decode(
+        _decode_zoned(Float64, _required(_openapi_object, "Xl", "RoundRotorMachine"), false)
+    _openapi_field_se = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "Se", "RoundRotorMachine"),
         false,
@@ -93,7 +114,7 @@ function _decode(::Type{RoundRotorMachine}, _openapi_raw, _openapi_validate::Boo
             "Se",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RoundRotorMachine(;
         id=_openapi_field_id,
@@ -153,7 +174,7 @@ end
 _encode(_openapi_value::RoundRotorMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-0f314608d735bca99410.json",
+        resource="https://openapi.invalid/schema/external-0b60cc5a31bb7b66406f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

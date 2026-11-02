@@ -13,7 +13,7 @@ function _decode(::Type{MinMax}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/MinMax",
         ),
         _openapi_raw,
@@ -23,15 +23,17 @@ function _decode(::Type{MinMax}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "MinMax")
     _openapi_field_max =
         haskey(_openapi_object, "max") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["max"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["max"], false) :
+        ABSENT
     _openapi_field_min =
         haskey(_openapi_object, "min") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["min"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["min"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("max", "min") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return MinMax(;
         max=_openapi_field_max,
@@ -58,7 +60,7 @@ end
 _encode(_openapi_value::MinMax) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/MinMax",
     ),
     _encode_unvalidated(_openapi_value),

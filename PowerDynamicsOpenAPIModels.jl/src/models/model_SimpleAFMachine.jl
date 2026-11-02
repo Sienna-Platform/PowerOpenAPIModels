@@ -36,7 +36,7 @@ function _decode(::Type{SimpleAFMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e7fc9870131e6aaa0865.json",
+            resource="https://openapi.invalid/schema/external-3d201012f2e351b0a335.json",
             pointer="",
         ),
         _openapi_raw,
@@ -45,29 +45,47 @@ function _decode(::Type{SimpleAFMachine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "SimpleAFMachine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "SimpleAFMachine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "SimpleAFMachine"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "SimpleAFMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "R", "SimpleAFMachine"), false)
     _openapi_field_xd =
-        _decode(Float64, _required(_openapi_object, "Xd", "SimpleAFMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Xd", "SimpleAFMachine"), false)
     _openapi_field_xq =
-        _decode(Float64, _required(_openapi_object, "Xq", "SimpleAFMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Xq", "SimpleAFMachine"), false)
     _openapi_field_xd_p =
-        _decode(Float64, _required(_openapi_object, "Xd_p", "SimpleAFMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Xd_p", "SimpleAFMachine"), false)
     _openapi_field_xq_p =
-        _decode(Float64, _required(_openapi_object, "Xq_p", "SimpleAFMachine"), false)
-    _openapi_field_xd_pp =
-        _decode(Float64, _required(_openapi_object, "Xd_pp", "SimpleAFMachine"), false)
-    _openapi_field_xq_pp =
-        _decode(Float64, _required(_openapi_object, "Xq_pp", "SimpleAFMachine"), false)
-    _openapi_field_td0_p =
-        _decode(Float64, _required(_openapi_object, "Td0_p", "SimpleAFMachine"), false)
-    _openapi_field_tq0_p =
-        _decode(Float64, _required(_openapi_object, "Tq0_p", "SimpleAFMachine"), false)
-    _openapi_field_td0_pp =
-        _decode(Float64, _required(_openapi_object, "Td0_pp", "SimpleAFMachine"), false)
-    _openapi_field_tq0_pp =
-        _decode(Float64, _required(_openapi_object, "Tq0_pp", "SimpleAFMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Xq_p", "SimpleAFMachine"), false)
+    _openapi_field_xd_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd_pp", "SimpleAFMachine"),
+        false,
+    )
+    _openapi_field_xq_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xq_pp", "SimpleAFMachine"),
+        false,
+    )
+    _openapi_field_td0_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Td0_p", "SimpleAFMachine"),
+        false,
+    )
+    _openapi_field_tq0_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Tq0_p", "SimpleAFMachine"),
+        false,
+    )
+    _openapi_field_td0_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Td0_pp", "SimpleAFMachine"),
+        false,
+    )
+    _openapi_field_tq0_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Tq0_pp", "SimpleAFMachine"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -85,7 +103,7 @@ function _decode(::Type{SimpleAFMachine}, _openapi_raw, _openapi_validate::Bool)
             "Tq0_pp",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SimpleAFMachine(;
         id=_openapi_field_id,
@@ -142,7 +160,7 @@ end
 _encode(_openapi_value::SimpleAFMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-e7fc9870131e6aaa0865.json",
+        resource="https://openapi.invalid/schema/external-3d201012f2e351b0a335.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

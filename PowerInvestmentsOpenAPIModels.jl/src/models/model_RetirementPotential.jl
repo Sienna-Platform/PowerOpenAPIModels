@@ -26,7 +26,7 @@ function _decode(::Type{RetirementPotential}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d4083d8660ee551535fd.json",
+            resource="https://openapi.invalid/schema/external-50a864da11f6e799789e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -35,27 +35,27 @@ function _decode(::Type{RetirementPotential}, _openapi_raw, _openapi_validate::B
     )
     _openapi_object = _object(_openapi_raw, "RetirementPotential")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "RetirementPotential"), false)
-    _openapi_field_eligible_generators = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "id", "RetirementPotential"), false)
+    _openapi_field_eligible_generators = _decode_zoned(
         Vector{String},
         _required(_openapi_object, "eligible_generators", "RetirementPotential"),
         false,
     )
     _openapi_field_planned_retirement_year =
         haskey(_openapi_object, "planned_retirement_year") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, RetirementPotentialPlannedRetirementYear},
             _openapi_object["planned_retirement_year"],
             false,
         ) : ABSENT
     _openapi_field_build_year =
         haskey(_openapi_object, "build_year") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, RetirementPotentialBuildYear},
             _openapi_object["build_year"],
             false,
         ) : ABSENT
-    _openapi_field_retirement_cost = _decode(
+    _openapi_field_retirement_cost = _decode_zoned(
         RetirementPotentialRetirementCost,
         _required(_openapi_object, "retirement_cost", "RetirementPotential"),
         false,
@@ -70,7 +70,7 @@ function _decode(::Type{RetirementPotential}, _openapi_raw, _openapi_validate::B
             "retirement_cost",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RetirementPotential(;
         id=_openapi_field_id,
@@ -112,7 +112,7 @@ end
 _encode(_openapi_value::RetirementPotential) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-d4083d8660ee551535fd.json",
+        resource="https://openapi.invalid/schema/external-50a864da11f6e799789e.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -40,7 +40,7 @@ function _decode(::Type{DEGOV1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b8b9eeec785d224019de.json",
+            resource="https://openapi.invalid/schema/external-d730200b8adc111d046a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -48,26 +48,38 @@ function _decode(::Type{DEGOV1}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "DEGOV1")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "DEGOV1"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "DEGOV1"), false)
     _openapi_field_droop_flag =
         haskey(_openapi_object, "droop_flag") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["droop_flag"], false) :
+        _decode_zoned(Union{Absent, Int64, Nothing}, _openapi_object["droop_flag"], false) :
         ABSENT
-    _openapi_field_t1 = _decode(Float64, _required(_openapi_object, "T1", "DEGOV1"), false)
-    _openapi_field_t2 = _decode(Float64, _required(_openapi_object, "T2", "DEGOV1"), false)
-    _openapi_field_t3 = _decode(Float64, _required(_openapi_object, "T3", "DEGOV1"), false)
-    _openapi_field_k = _decode(Float64, _required(_openapi_object, "K", "DEGOV1"), false)
-    _openapi_field_t4 = _decode(Float64, _required(_openapi_object, "T4", "DEGOV1"), false)
-    _openapi_field_t5 = _decode(Float64, _required(_openapi_object, "T5", "DEGOV1"), false)
-    _openapi_field_t6 = _decode(Float64, _required(_openapi_object, "T6", "DEGOV1"), false)
-    _openapi_field_td = _decode(Float64, _required(_openapi_object, "Td", "DEGOV1"), false)
+    _openapi_field_t1 =
+        _decode_zoned(Float64, _required(_openapi_object, "T1", "DEGOV1"), false)
+    _openapi_field_t2 =
+        _decode_zoned(Float64, _required(_openapi_object, "T2", "DEGOV1"), false)
+    _openapi_field_t3 =
+        _decode_zoned(Float64, _required(_openapi_object, "T3", "DEGOV1"), false)
+    _openapi_field_k =
+        _decode_zoned(Float64, _required(_openapi_object, "K", "DEGOV1"), false)
+    _openapi_field_t4 =
+        _decode_zoned(Float64, _required(_openapi_object, "T4", "DEGOV1"), false)
+    _openapi_field_t5 =
+        _decode_zoned(Float64, _required(_openapi_object, "T5", "DEGOV1"), false)
+    _openapi_field_t6 =
+        _decode_zoned(Float64, _required(_openapi_object, "T6", "DEGOV1"), false)
+    _openapi_field_td =
+        _decode_zoned(Float64, _required(_openapi_object, "Td", "DEGOV1"), false)
     _openapi_field_t_lim =
-        _decode(Vector{Float64}, _required(_openapi_object, "T_lim", "DEGOV1"), false)
-    _openapi_field_r = _decode(Float64, _required(_openapi_object, "R", "DEGOV1"), false)
-    _openapi_field_te = _decode(Float64, _required(_openapi_object, "Te", "DEGOV1"), false)
+        _decode_zoned(Vector{Float64}, _required(_openapi_object, "T_lim", "DEGOV1"), false)
+    _openapi_field_r =
+        _decode_zoned(Float64, _required(_openapi_object, "R", "DEGOV1"), false)
+    _openapi_field_te =
+        _decode_zoned(Float64, _required(_openapi_object, "Te", "DEGOV1"), false)
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -87,7 +99,7 @@ function _decode(::Type{DEGOV1}, _openapi_raw, _openapi_validate::Bool)
             "P_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return DEGOV1(;
         id=_openapi_field_id,
@@ -150,7 +162,7 @@ end
 _encode(_openapi_value::DEGOV1) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b8b9eeec785d224019de.json",
+        resource="https://openapi.invalid/schema/external-d730200b8adc111d046a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

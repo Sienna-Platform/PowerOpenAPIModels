@@ -24,7 +24,7 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dfcca220224dff646f6c.json",
+            resource="https://openapi.invalid/schema/external-2ee4c3d8a166d41b62f4.json",
             pointer="",
         ),
         _openapi_raw,
@@ -33,18 +33,24 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "GroupReserve")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "GroupReserve"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "GroupReserve"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "GroupReserve"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "GroupReserve"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "GroupReserve"), false)
-    _openapi_field_requirement =
-        _decode(Float64, _required(_openapi_object, "requirement", "GroupReserve"), false)
+        _decode_zoned(Bool, _required(_openapi_object, "available", "GroupReserve"), false)
+    _openapi_field_requirement = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "requirement", "GroupReserve"),
+        false,
+    )
     _openapi_field_variable =
         haskey(_openapi_object, "variable") ?
-        _decode(Union{Absent, CostCurve, Nothing}, _openapi_object["variable"], false) :
-        ABSENT
-    _openapi_field_reserve_direction = _decode(
+        _decode_zoned(
+            Union{Absent, CostCurve, Nothing},
+            _openapi_object["variable"],
+            false,
+        ) : ABSENT
+    _openapi_field_reserve_direction = _decode_zoned(
         ReserveDirection,
         _required(_openapi_object, "reserve_direction", "GroupReserve"),
         false,
@@ -55,7 +61,7 @@ function _decode(::Type{GroupReserve}, _openapi_raw, _openapi_validate::Bool)
         ("id", "name", "available", "requirement", "variable", "reserve_direction") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return GroupReserve(;
         id=_openapi_field_id,
@@ -96,7 +102,7 @@ end
 _encode(_openapi_value::GroupReserve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-dfcca220224dff646f6c.json",
+        resource="https://openapi.invalid/schema/external-2ee4c3d8a166d41b62f4.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

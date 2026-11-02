@@ -20,7 +20,7 @@ function _decode(::Type{BaseMachine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-014b252db03252bebb8b.json",
+            resource="https://openapi.invalid/schema/external-7a6cec69c146420273b6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,18 +29,18 @@ function _decode(::Type{BaseMachine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "BaseMachine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "BaseMachine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "BaseMachine"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "BaseMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "R", "BaseMachine"), false)
     _openapi_field_xd_p =
-        _decode(Float64, _required(_openapi_object, "Xd_p", "BaseMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Xd_p", "BaseMachine"), false)
     _openapi_field_eq_p =
-        _decode(Float64, _required(_openapi_object, "eq_p", "BaseMachine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "eq_p", "BaseMachine"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "R", "Xd_p", "eq_p") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return BaseMachine(;
         id=_openapi_field_id,
@@ -73,7 +73,7 @@ end
 _encode(_openapi_value::BaseMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-014b252db03252bebb8b.json",
+        resource="https://openapi.invalid/schema/external-7a6cec69c146420273b6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

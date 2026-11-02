@@ -13,7 +13,7 @@ function _decode(::Type{FdbdPnts}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/FdbdPnts",
         ),
         _openapi_raw,
@@ -23,15 +23,17 @@ function _decode(::Type{FdbdPnts}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "FdbdPnts")
     _openapi_field_fdbd1 =
         haskey(_openapi_object, "fdbd1") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["fdbd1"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["fdbd1"], false) :
+        ABSENT
     _openapi_field_fdbd2 =
         haskey(_openapi_object, "fdbd2") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["fdbd2"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["fdbd2"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("fdbd1", "fdbd2") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return FdbdPnts(;
         fdbd1=_openapi_field_fdbd1,
@@ -58,7 +60,7 @@ end
 _encode(_openapi_value::FdbdPnts) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/FdbdPnts",
     ),
     _encode_unvalidated(_openapi_value),

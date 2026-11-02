@@ -51,7 +51,7 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0f8df0f8f73cff78e85e.json",
+            resource="https://openapi.invalid/schema/external-3dc692f9c5710dda8bbb.json",
             pointer="",
         ),
         _openapi_raw,
@@ -59,85 +59,85 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "DiscreteControlledACBranch")
-    _openapi_field_id = _decode(
+    _openapi_field_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "id", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_name = _decode(
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_available = _decode(
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_active_power_flow = _decode(
+    _openapi_field_active_power_flow = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power_flow", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_reactive_power_flow = _decode(
+    _openapi_field_reactive_power_flow = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power_flow", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_arc = _decode(
+    _openapi_field_arc = _decode_zoned(
         Int64,
         _required(_openapi_object, "arc", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_r = _decode(
+    _openapi_field_r = _decode_zoned(
         Float64,
         _required(_openapi_object, "r", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_x = _decode(
+    _openapi_field_x = _decode_zoned(
         Float64,
         _required(_openapi_object, "x", "DiscreteControlledACBranch"),
         false,
     )
-    _openapi_field_rating = _decode(
+    _openapi_field_rating = _decode_zoned(
         Float64,
         _required(_openapi_object, "rating", "DiscreteControlledACBranch"),
         false,
     )
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, OperationalFlowLimit, Nothing},
             _openapi_object["operational_flow_limit"],
             false,
         ) : ABSENT
     _openapi_field_discrete_branch_type =
         haskey(_openapi_object, "discrete_branch_type") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, DiscreteControlledACBranchDiscreteBranchType, Nothing},
             _openapi_object["discrete_branch_type"],
             false,
         ) : ABSENT
     _openapi_field_branch_status =
         haskey(_openapi_object, "branch_status") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, DiscreteControlledACBranchBranchStatus, Nothing},
             _openapi_object["branch_status"],
             false,
         ) : ABSENT
     _openapi_field_normal_branch_status =
         haskey(_openapi_object, "normal_branch_status") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, DiscreteControlledACBranchNormalBranchStatus, Nothing},
             _openapi_object["normal_branch_status"],
             false,
@@ -162,7 +162,7 @@ function _decode(::Type{DiscreteControlledACBranch}, _openapi_raw, _openapi_vali
             "normal_branch_status",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return DiscreteControlledACBranch(;
         id=_openapi_field_id,
@@ -240,7 +240,7 @@ end
 _encode(_openapi_value::DiscreteControlledACBranch) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-0f8df0f8f73cff78e85e.json",
+        resource="https://openapi.invalid/schema/external-3dc692f9c5710dda8bbb.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -24,14 +24,14 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0f8df0f8f73cff78e85e.json",
+            resource="https://openapi.invalid/schema/external-3dc692f9c5710dda8bbb.json",
             pointer="/properties/discrete_branch_type",
         ),
         value,
         "decoding DiscreteControlledACBranchDiscreteBranchType";
         direction=:neutral,
     )
-    return DiscreteControlledACBranchDiscreteBranchType(_decode(String, value, false))
+    return DiscreteControlledACBranchDiscreteBranchType(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::DiscreteControlledACBranchDiscreteBranchType)
     output = _encode_unvalidated(value.value)
@@ -40,7 +40,7 @@ end
 _encode(value::DiscreteControlledACBranchDiscreteBranchType) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-0f8df0f8f73cff78e85e.json",
+        resource="https://openapi.invalid/schema/external-3dc692f9c5710dda8bbb.json",
         pointer="/properties/discrete_branch_type",
     ),
     _encode_unvalidated(value),

@@ -14,7 +14,7 @@ function _decode(::Type{PiecewiseStepData}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/PiecewiseStepData",
         ),
         _openapi_raw,
@@ -22,17 +22,17 @@ function _decode(::Type{PiecewiseStepData}, _openapi_raw, _openapi_validate::Boo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PiecewiseStepData")
-    _openapi_field_function_type = _decode(
+    _openapi_field_function_type = _decode_zoned(
         String,
         _required(_openapi_object, "function_type", "PiecewiseStepData"),
         false,
     )
-    _openapi_field_x_coords = _decode(
+    _openapi_field_x_coords = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "x_coords", "PiecewiseStepData"),
         false,
     )
-    _openapi_field_y_coords = _decode(
+    _openapi_field_y_coords = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "y_coords", "PiecewiseStepData"),
         false,
@@ -41,7 +41,7 @@ function _decode(::Type{PiecewiseStepData}, _openapi_raw, _openapi_validate::Boo
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("function_type", "x_coords", "y_coords") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PiecewiseStepData(;
         function_type=_openapi_field_function_type,
@@ -73,7 +73,7 @@ end
 _encode(_openapi_value::PiecewiseStepData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/PiecewiseStepData",
     ),
     _encode_unvalidated(_openapi_value),

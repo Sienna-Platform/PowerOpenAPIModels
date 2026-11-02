@@ -13,7 +13,7 @@ function _decode(::Type{TurbinePump}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/TurbinePump",
         ),
         _openapi_raw,
@@ -22,14 +22,14 @@ function _decode(::Type{TurbinePump}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "TurbinePump")
     _openapi_field_turbine =
-        _decode(Float64, _required(_openapi_object, "turbine", "TurbinePump"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "turbine", "TurbinePump"), false)
     _openapi_field_pump =
-        _decode(Float64, _required(_openapi_object, "pump", "TurbinePump"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "pump", "TurbinePump"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("turbine", "pump") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TurbinePump(;
         turbine=_openapi_field_turbine,
@@ -56,7 +56,7 @@ end
 _encode(_openapi_value::TurbinePump) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/TurbinePump",
     ),
     _encode_unvalidated(_openapi_value),

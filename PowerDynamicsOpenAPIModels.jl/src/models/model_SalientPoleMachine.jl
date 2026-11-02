@@ -34,7 +34,7 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a4baa87a75678a822a67.json",
+            resource="https://openapi.invalid/schema/external-db5d1024aa160cd093ea.json",
             pointer="",
         ),
         _openapi_raw,
@@ -43,26 +43,50 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
     )
     _openapi_object = _object(_openapi_raw, "SalientPoleMachine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "SalientPoleMachine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "SalientPoleMachine"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "SalientPoleMachine"), false)
-    _openapi_field_td0_p =
-        _decode(Float64, _required(_openapi_object, "Td0_p", "SalientPoleMachine"), false)
-    _openapi_field_td0_pp =
-        _decode(Float64, _required(_openapi_object, "Td0_pp", "SalientPoleMachine"), false)
-    _openapi_field_tq0_pp =
-        _decode(Float64, _required(_openapi_object, "Tq0_pp", "SalientPoleMachine"), false)
-    _openapi_field_xd =
-        _decode(Float64, _required(_openapi_object, "Xd", "SalientPoleMachine"), false)
-    _openapi_field_xq =
-        _decode(Float64, _required(_openapi_object, "Xq", "SalientPoleMachine"), false)
-    _openapi_field_xd_p =
-        _decode(Float64, _required(_openapi_object, "Xd_p", "SalientPoleMachine"), false)
-    _openapi_field_xd_pp =
-        _decode(Float64, _required(_openapi_object, "Xd_pp", "SalientPoleMachine"), false)
-    _openapi_field_xl =
-        _decode(Float64, _required(_openapi_object, "Xl", "SalientPoleMachine"), false)
-    _openapi_field_se = _decode(
+        _decode_zoned(Float64, _required(_openapi_object, "R", "SalientPoleMachine"), false)
+    _openapi_field_td0_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Td0_p", "SalientPoleMachine"),
+        false,
+    )
+    _openapi_field_td0_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Td0_pp", "SalientPoleMachine"),
+        false,
+    )
+    _openapi_field_tq0_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Tq0_pp", "SalientPoleMachine"),
+        false,
+    )
+    _openapi_field_xd = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd", "SalientPoleMachine"),
+        false,
+    )
+    _openapi_field_xq = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xq", "SalientPoleMachine"),
+        false,
+    )
+    _openapi_field_xd_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd_p", "SalientPoleMachine"),
+        false,
+    )
+    _openapi_field_xd_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd_pp", "SalientPoleMachine"),
+        false,
+    )
+    _openapi_field_xl = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xl", "SalientPoleMachine"),
+        false,
+    )
+    _openapi_field_se = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "Se", "SalientPoleMachine"),
         false,
@@ -73,7 +97,7 @@ function _decode(::Type{SalientPoleMachine}, _openapi_raw, _openapi_validate::Bo
         ("id", "R", "Td0_p", "Td0_pp", "Tq0_pp", "Xd", "Xq", "Xd_p", "Xd_pp", "Xl", "Se") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SalientPoleMachine(;
         id=_openapi_field_id,
@@ -127,7 +151,7 @@ end
 _encode(_openapi_value::SalientPoleMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a4baa87a75678a822a67.json",
+        resource="https://openapi.invalid/schema/external-db5d1024aa160cd093ea.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

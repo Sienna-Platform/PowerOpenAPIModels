@@ -6,7 +6,7 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/StorageCost/properties/start_up",
         ),
         value,
@@ -17,14 +17,14 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/StorageCost/properties/start_up/oneOf/0",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(Float64, value, false))
+            push!(matches, _decode_zoned(Float64, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -32,14 +32,14 @@ function _decode(::Type{StorageCostStartUp}, value, _openapi_validate::Bool)
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/ChargeDischarge",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(ChargeDischarge, value, false))
+            push!(matches, _decode_zoned(ChargeDischarge, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -56,7 +56,7 @@ end
 _encode(value::StorageCostStartUp) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/StorageCost/properties/start_up",
     ),
     _encode_unvalidated(value),

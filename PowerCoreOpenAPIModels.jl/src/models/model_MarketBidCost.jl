@@ -33,7 +33,7 @@ function _decode(::Type{MarketBidCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/MarketBidCost",
         ),
         _openapi_raw,
@@ -43,55 +43,61 @@ function _decode(::Type{MarketBidCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "MarketBidCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(String, _openapi_object["cost_type"], false) : "MARKET_BID"
-    _openapi_field_minimum_energy_offer = _decode(
+        _decode_zoned(String, _openapi_object["cost_type"], false) : "MARKET_BID"
+    _openapi_field_minimum_energy_offer = _decode_zoned(
         InputOutputCurve,
         _required(_openapi_object, "minimum_energy_offer", "MarketBidCost"),
         false,
     )
-    _openapi_field_start_up = _decode(
+    _openapi_field_start_up = _decode_zoned(
         StartUpStages,
         _required(_openapi_object, "start_up", "MarketBidCost"),
         false,
     )
-    _openapi_field_shut_down = _decode(
+    _openapi_field_shut_down = _decode_zoned(
         InputOutputCurve,
         _required(_openapi_object, "shut_down", "MarketBidCost"),
         false,
     )
-    _openapi_field_incremental_offer_curves = _decode(
+    _openapi_field_incremental_offer_curves = _decode_zoned(
         CostCurve,
         _required(_openapi_object, "incremental_offer_curves", "MarketBidCost"),
         false,
     )
-    _openapi_field_decremental_offer_curves = _decode(
+    _openapi_field_decremental_offer_curves = _decode_zoned(
         CostCurve,
         _required(_openapi_object, "decremental_offer_curves", "MarketBidCost"),
         false,
     )
-    _openapi_field_ancillary_service_offers = _decode(
+    _openapi_field_ancillary_service_offers = _decode_zoned(
         Vector{Int64},
         _required(_openapi_object, "ancillary_service_offers", "MarketBidCost"),
         false,
     )
     _openapi_field_incremental_slope =
         haskey(_openapi_object, "incremental_slope") ?
-        _decode(Union{Absent, Bool, Nothing}, _openapi_object["incremental_slope"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Bool, Nothing},
+            _openapi_object["incremental_slope"],
+            false,
+        ) : ABSENT
     _openapi_field_decremental_slope =
         haskey(_openapi_object, "decremental_slope") ?
-        _decode(Union{Absent, Bool, Nothing}, _openapi_object["decremental_slope"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Bool, Nothing},
+            _openapi_object["decremental_slope"],
+            false,
+        ) : ABSENT
     _openapi_field_curve_style =
         haskey(_openapi_object, "curve_style") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CurveStyles, Nothing},
             _openapi_object["curve_style"],
             false,
         ) : ABSENT
     _openapi_field_curve_multistep =
         haskey(_openapi_object, "curve_multistep") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CurveMultiStep, Nothing},
             _openapi_object["curve_multistep"],
             false,
@@ -112,7 +118,7 @@ function _decode(::Type{MarketBidCost}, _openapi_raw, _openapi_validate::Bool)
             "curve_multistep",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return MarketBidCost(;
         cost_type=_openapi_field_cost_type,
@@ -180,7 +186,7 @@ end
 _encode(_openapi_value::MarketBidCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/MarketBidCost",
     ),
     _encode_unvalidated(_openapi_value),

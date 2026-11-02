@@ -50,7 +50,7 @@ function _decode(::Type{FiveMassShaft}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5a721aec0c9a977e14d5.json",
+            resource="https://openapi.invalid/schema/external-3758d752f244794f815b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -59,43 +59,43 @@ function _decode(::Type{FiveMassShaft}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "FiveMassShaft")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "FiveMassShaft"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "FiveMassShaft"), false)
     _openapi_field_h =
-        _decode(Float64, _required(_openapi_object, "H", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "H", "FiveMassShaft"), false)
     _openapi_field_h_hp =
-        _decode(Float64, _required(_openapi_object, "H_hp", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "H_hp", "FiveMassShaft"), false)
     _openapi_field_h_ip =
-        _decode(Float64, _required(_openapi_object, "H_ip", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "H_ip", "FiveMassShaft"), false)
     _openapi_field_h_lp =
-        _decode(Float64, _required(_openapi_object, "H_lp", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "H_lp", "FiveMassShaft"), false)
     _openapi_field_h_ex =
-        _decode(Float64, _required(_openapi_object, "H_ex", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "H_ex", "FiveMassShaft"), false)
     _openapi_field_d =
-        _decode(Float64, _required(_openapi_object, "D", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D", "FiveMassShaft"), false)
     _openapi_field_d_hp =
-        _decode(Float64, _required(_openapi_object, "D_hp", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_hp", "FiveMassShaft"), false)
     _openapi_field_d_ip =
-        _decode(Float64, _required(_openapi_object, "D_ip", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_ip", "FiveMassShaft"), false)
     _openapi_field_d_lp =
-        _decode(Float64, _required(_openapi_object, "D_lp", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_lp", "FiveMassShaft"), false)
     _openapi_field_d_ex =
-        _decode(Float64, _required(_openapi_object, "D_ex", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_ex", "FiveMassShaft"), false)
     _openapi_field_d_12 =
-        _decode(Float64, _required(_openapi_object, "D_12", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_12", "FiveMassShaft"), false)
     _openapi_field_d_23 =
-        _decode(Float64, _required(_openapi_object, "D_23", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_23", "FiveMassShaft"), false)
     _openapi_field_d_34 =
-        _decode(Float64, _required(_openapi_object, "D_34", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_34", "FiveMassShaft"), false)
     _openapi_field_d_45 =
-        _decode(Float64, _required(_openapi_object, "D_45", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "D_45", "FiveMassShaft"), false)
     _openapi_field_k_hp =
-        _decode(Float64, _required(_openapi_object, "K_hp", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_hp", "FiveMassShaft"), false)
     _openapi_field_k_ip =
-        _decode(Float64, _required(_openapi_object, "K_ip", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_ip", "FiveMassShaft"), false)
     _openapi_field_k_lp =
-        _decode(Float64, _required(_openapi_object, "K_lp", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_lp", "FiveMassShaft"), false)
     _openapi_field_k_ex =
-        _decode(Float64, _required(_openapi_object, "K_ex", "FiveMassShaft"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_ex", "FiveMassShaft"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -120,7 +120,7 @@ function _decode(::Type{FiveMassShaft}, _openapi_raw, _openapi_validate::Bool)
             "K_ex",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return FiveMassShaft(;
         id=_openapi_field_id,
@@ -198,7 +198,7 @@ end
 _encode(_openapi_value::FiveMassShaft) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-5a721aec0c9a977e14d5.json",
+        resource="https://openapi.invalid/schema/external-3758d752f244794f815b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -62,7 +62,7 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-af60c591042e678c6304.json",
+            resource="https://openapi.invalid/schema/external-372916d5882ac5f0a0ab.json",
             pointer="",
         ),
         _openapi_raw,
@@ -71,116 +71,137 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "ThermalMultiStart")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "ThermalMultiStart"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "ThermalMultiStart"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "ThermalMultiStart"), false)
-    _openapi_field_status = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "id", "ThermalMultiStart"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "ThermalMultiStart"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "ThermalMultiStart"),
+        false,
+    )
+    _openapi_field_status = _decode_zoned(
         OperationalStates,
         _required(_openapi_object, "status", "ThermalMultiStart"),
         false,
     )
     _openapi_field_commitment_mode =
         haskey(_openapi_object, "commitment_mode") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CommitmentModes, Nothing},
             _openapi_object["commitment_mode"],
             false,
         ) : ABSENT
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "ThermalMultiStart"), false)
-    _openapi_field_active_power = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "ThermalMultiStart"), false)
+    _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "ThermalMultiStart"),
         false,
     )
-    _openapi_field_reactive_power = _decode(
+    _openapi_field_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power", "ThermalMultiStart"),
         false,
     )
-    _openapi_field_rating =
-        _decode(Float64, _required(_openapi_object, "rating", "ThermalMultiStart"), false)
-    _openapi_field_prime_mover_type = _decode(
+    _openapi_field_rating = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "rating", "ThermalMultiStart"),
+        false,
+    )
+    _openapi_field_prime_mover_type = _decode_zoned(
         PrimeMovers,
         _required(_openapi_object, "prime_mover_type", "ThermalMultiStart"),
         false,
     )
-    _openapi_field_fuel = _decode(
+    _openapi_field_fuel = _decode_zoned(
         ThermalFuels,
         _required(_openapi_object, "fuel", "ThermalMultiStart"),
         false,
     )
-    _openapi_field_active_power_limits = _decode(
+    _openapi_field_active_power_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "active_power_limits", "ThermalMultiStart"),
         false,
     )
     _openapi_field_reactive_power_limits =
         haskey(_openapi_object, "reactive_power_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits"],
             false,
         ) : ABSENT
     _openapi_field_ramp_limits =
         haskey(_openapi_object, "ramp_limits") ?
-        _decode(Union{Absent, Nothing, UpDown}, _openapi_object["ramp_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, UpDown},
+            _openapi_object["ramp_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_power_trajectory =
         haskey(_openapi_object, "power_trajectory") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, StartUpShutDown},
             _openapi_object["power_trajectory"],
             false,
         ) : ABSENT
     _openapi_field_time_limits =
         haskey(_openapi_object, "time_limits") ?
-        _decode(Union{Absent, Nothing, UpDown}, _openapi_object["time_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, UpDown},
+            _openapi_object["time_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_start_time_limits =
         haskey(_openapi_object, "start_time_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, StartUpStages},
             _openapi_object["start_time_limits"],
             false,
         ) : ABSENT
-    _openapi_field_start_types = _decode(
+    _openapi_field_start_types = _decode_zoned(
         Int64,
         _required(_openapi_object, "start_types", "ThermalMultiStart"),
         false,
     )
-    _openapi_field_operation_cost = _decode(
+    _openapi_field_operation_cost = _decode_zoned(
         ThermalMultiStartOperationCost,
         _required(_openapi_object, "operation_cost", "ThermalMultiStart"),
         false,
     )
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "ThermalMultiStart"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "ThermalMultiStart"),
         false,
     )
     _openapi_field_time_at_status =
         haskey(_openapi_object, "time_at_status") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["time_at_status"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["time_at_status"],
+            false,
+        ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
         ) : ABSENT
     _openapi_field_switching_times =
         haskey(_openapi_object, "switching_times") ?
-        _decode(Union{Absent, Nothing, UpDown}, _openapi_object["switching_times"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, UpDown},
+            _openapi_object["switching_times"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -210,7 +231,7 @@ function _decode(::Type{ThermalMultiStart}, _openapi_raw, _openapi_validate::Boo
             "switching_times",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ThermalMultiStart(;
         id=_openapi_field_id,
@@ -325,7 +346,7 @@ end
 _encode(_openapi_value::ThermalMultiStart) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-af60c591042e678c6304.json",
+        resource="https://openapi.invalid/schema/external-372916d5882ac5f0a0ab.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

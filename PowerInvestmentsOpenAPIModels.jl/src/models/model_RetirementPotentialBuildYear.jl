@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d4083d8660ee551535fd.json",
+            resource="https://openapi.invalid/schema/external-50a864da11f6e799789e.json",
             pointer="/properties/build_year",
         ),
         _openapi_raw,
@@ -28,7 +28,7 @@ function _decode(
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in () && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Int64, _openapi_item, false)
+            _decode_zoned(Int64, _openapi_item, false)
     end
     return RetirementPotentialBuildYear(;
         additional_properties=_openapi_additional_properties,
@@ -49,7 +49,7 @@ end
 _encode(_openapi_value::RetirementPotentialBuildYear) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-d4083d8660ee551535fd.json",
+        resource="https://openapi.invalid/schema/external-50a864da11f6e799789e.json",
         pointer="/properties/build_year",
     ),
     _encode_unvalidated(_openapi_value),

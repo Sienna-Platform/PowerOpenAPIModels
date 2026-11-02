@@ -17,7 +17,7 @@ function _decode(::Type{RequirementAssociation}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-886b4b9de9a824722c78.json",
+            resource="https://openapi.invalid/schema/external-071df31b55abc876ac4a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -25,12 +25,12 @@ function _decode(::Type{RequirementAssociation}, _openapi_raw, _openapi_validate
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RequirementAssociation")
-    _openapi_field_requirement_id = _decode(
+    _openapi_field_requirement_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "requirement_id", "RequirementAssociation"),
         false,
     )
-    _openapi_field_entity_id = _decode(
+    _openapi_field_entity_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "entity_id", "RequirementAssociation"),
         false,
@@ -39,7 +39,7 @@ function _decode(::Type{RequirementAssociation}, _openapi_raw, _openapi_validate
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("requirement_id", "entity_id") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RequirementAssociation(;
         requirement_id=_openapi_field_requirement_id,
@@ -68,7 +68,7 @@ end
 _encode(_openapi_value::RequirementAssociation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-886b4b9de9a824722c78.json",
+        resource="https://openapi.invalid/schema/external-071df31b55abc876ac4a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

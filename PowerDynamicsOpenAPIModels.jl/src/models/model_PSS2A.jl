@@ -58,7 +58,7 @@ function _decode(::Type{PSS2A}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8aa0eeba1a80b7197e35.json",
+            resource="https://openapi.invalid/schema/external-85e3e3da6a08302bbe6d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -66,36 +66,61 @@ function _decode(::Type{PSS2A}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PSS2A")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "PSS2A"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "PSS2A"), false)
     _openapi_field_input_code_1 =
-        _decode(Int64, _required(_openapi_object, "input_code_1", "PSS2A"), false)
-    _openapi_field_remote_bus_control_1 =
-        _decode(Int64, _required(_openapi_object, "remote_bus_control_1", "PSS2A"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "input_code_1", "PSS2A"), false)
+    _openapi_field_remote_bus_control_1 = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "remote_bus_control_1", "PSS2A"),
+        false,
+    )
     _openapi_field_input_code_2 =
-        _decode(Int64, _required(_openapi_object, "input_code_2", "PSS2A"), false)
-    _openapi_field_remote_bus_control_2 =
-        _decode(Int64, _required(_openapi_object, "remote_bus_control_2", "PSS2A"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "input_code_2", "PSS2A"), false)
+    _openapi_field_remote_bus_control_2 = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "remote_bus_control_2", "PSS2A"),
+        false,
+    )
     _openapi_field_m_rtf =
-        _decode(Int64, _required(_openapi_object, "M_rtf", "PSS2A"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "M_rtf", "PSS2A"), false)
     _openapi_field_n_rtf =
-        _decode(Int64, _required(_openapi_object, "N_rtf", "PSS2A"), false)
-    _openapi_field_tw1 = _decode(Float64, _required(_openapi_object, "Tw1", "PSS2A"), false)
-    _openapi_field_tw2 = _decode(Float64, _required(_openapi_object, "Tw2", "PSS2A"), false)
-    _openapi_field_t6 = _decode(Float64, _required(_openapi_object, "T6", "PSS2A"), false)
-    _openapi_field_tw3 = _decode(Float64, _required(_openapi_object, "Tw3", "PSS2A"), false)
-    _openapi_field_tw4 = _decode(Float64, _required(_openapi_object, "Tw4", "PSS2A"), false)
-    _openapi_field_t7 = _decode(Float64, _required(_openapi_object, "T7", "PSS2A"), false)
-    _openapi_field_ks2 = _decode(Float64, _required(_openapi_object, "Ks2", "PSS2A"), false)
-    _openapi_field_ks3 = _decode(Float64, _required(_openapi_object, "Ks3", "PSS2A"), false)
-    _openapi_field_t8 = _decode(Float64, _required(_openapi_object, "T8", "PSS2A"), false)
-    _openapi_field_t9 = _decode(Float64, _required(_openapi_object, "T9", "PSS2A"), false)
-    _openapi_field_ks1 = _decode(Float64, _required(_openapi_object, "Ks1", "PSS2A"), false)
-    _openapi_field_t1 = _decode(Float64, _required(_openapi_object, "T1", "PSS2A"), false)
-    _openapi_field_t2 = _decode(Float64, _required(_openapi_object, "T2", "PSS2A"), false)
-    _openapi_field_t3 = _decode(Float64, _required(_openapi_object, "T3", "PSS2A"), false)
-    _openapi_field_t4 = _decode(Float64, _required(_openapi_object, "T4", "PSS2A"), false)
-    _openapi_field_vst_lim =
-        _decode(Vector{Float64}, _required(_openapi_object, "Vst_lim", "PSS2A"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "N_rtf", "PSS2A"), false)
+    _openapi_field_tw1 =
+        _decode_zoned(Float64, _required(_openapi_object, "Tw1", "PSS2A"), false)
+    _openapi_field_tw2 =
+        _decode_zoned(Float64, _required(_openapi_object, "Tw2", "PSS2A"), false)
+    _openapi_field_t6 =
+        _decode_zoned(Float64, _required(_openapi_object, "T6", "PSS2A"), false)
+    _openapi_field_tw3 =
+        _decode_zoned(Float64, _required(_openapi_object, "Tw3", "PSS2A"), false)
+    _openapi_field_tw4 =
+        _decode_zoned(Float64, _required(_openapi_object, "Tw4", "PSS2A"), false)
+    _openapi_field_t7 =
+        _decode_zoned(Float64, _required(_openapi_object, "T7", "PSS2A"), false)
+    _openapi_field_ks2 =
+        _decode_zoned(Float64, _required(_openapi_object, "Ks2", "PSS2A"), false)
+    _openapi_field_ks3 =
+        _decode_zoned(Float64, _required(_openapi_object, "Ks3", "PSS2A"), false)
+    _openapi_field_t8 =
+        _decode_zoned(Float64, _required(_openapi_object, "T8", "PSS2A"), false)
+    _openapi_field_t9 =
+        _decode_zoned(Float64, _required(_openapi_object, "T9", "PSS2A"), false)
+    _openapi_field_ks1 =
+        _decode_zoned(Float64, _required(_openapi_object, "Ks1", "PSS2A"), false)
+    _openapi_field_t1 =
+        _decode_zoned(Float64, _required(_openapi_object, "T1", "PSS2A"), false)
+    _openapi_field_t2 =
+        _decode_zoned(Float64, _required(_openapi_object, "T2", "PSS2A"), false)
+    _openapi_field_t3 =
+        _decode_zoned(Float64, _required(_openapi_object, "T3", "PSS2A"), false)
+    _openapi_field_t4 =
+        _decode_zoned(Float64, _required(_openapi_object, "T4", "PSS2A"), false)
+    _openapi_field_vst_lim = _decode_zoned(
+        Vector{Float64},
+        _required(_openapi_object, "Vst_lim", "PSS2A"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -124,7 +149,7 @@ function _decode(::Type{PSS2A}, _openapi_raw, _openapi_validate::Bool)
             "Vst_lim",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PSS2A(;
         id=_openapi_field_id,
@@ -218,7 +243,7 @@ end
 _encode(_openapi_value::PSS2A) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8aa0eeba1a80b7197e35.json",
+        resource="https://openapi.invalid/schema/external-85e3e3da6a08302bbe6d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

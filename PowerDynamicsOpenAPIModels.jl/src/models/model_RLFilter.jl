@@ -16,7 +16,7 @@ function _decode(::Type{RLFilter}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9a4cc0536b500906e869.json",
+            resource="https://openapi.invalid/schema/external-0dd051a8fba0aafc913a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -25,14 +25,14 @@ function _decode(::Type{RLFilter}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "RLFilter")
     _openapi_field_rf =
-        _decode(Float64, _required(_openapi_object, "rf", "RLFilter"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "rf", "RLFilter"), false)
     _openapi_field_lf =
-        _decode(Float64, _required(_openapi_object, "lf", "RLFilter"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "lf", "RLFilter"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("rf", "lf") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RLFilter(;
         rf=_openapi_field_rf,
@@ -59,7 +59,7 @@ end
 _encode(_openapi_value::RLFilter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-9a4cc0536b500906e869.json",
+        resource="https://openapi.invalid/schema/external-0dd051a8fba0aafc913a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

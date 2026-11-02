@@ -15,7 +15,7 @@ function _decode(::Type{StartUpStages}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/StartUpStages",
         ),
         _openapi_raw,
@@ -25,18 +25,18 @@ function _decode(::Type{StartUpStages}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "StartUpStages")
     _openapi_field_startup_stages_type =
         haskey(_openapi_object, "startup_stages_type") ?
-        _decode(String, _openapi_object["startup_stages_type"], false) : "STAGES"
+        _decode_zoned(String, _openapi_object["startup_stages_type"], false) : "STAGES"
     _openapi_field_cold =
-        _decode(Float64, _required(_openapi_object, "cold", "StartUpStages"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "cold", "StartUpStages"), false)
     _openapi_field_hot =
-        _decode(Float64, _required(_openapi_object, "hot", "StartUpStages"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "hot", "StartUpStages"), false)
     _openapi_field_warm =
-        _decode(Float64, _required(_openapi_object, "warm", "StartUpStages"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "warm", "StartUpStages"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("startup_stages_type", "cold", "hot", "warm") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return StartUpStages(;
         startup_stages_type=_openapi_field_startup_stages_type,
@@ -71,7 +71,7 @@ end
 _encode(_openapi_value::StartUpStages) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/StartUpStages",
     ),
     _encode_unvalidated(_openapi_value),

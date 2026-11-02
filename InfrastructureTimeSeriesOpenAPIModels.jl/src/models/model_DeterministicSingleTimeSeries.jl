@@ -22,7 +22,7 @@ A synthetic deterministic forecast derived from a SingleTimeSeries by `transform
   - `interval_alignment`: Position of each timestamp in the period it represents.
   - `component_field`: The field on the owning component or supplemental attribute whose value these values are the time-varying form of (e.g. max_active_power, rating). Free-form: it names a field in the consumer's own object model. Records what the values are for, where `name` only says which series they are.
   - `application_data`: Opaque, package-owned payload (typically JSON) carried verbatim for an application to reconstruct its own domain objects. Never parsed or interpreted here, and end users are not expected to set it. Element typing does not belong here — that is `element_type`.
-  - `initial_timestamp`: Start of the first forecast window.
+  - `initial_timestamp`: Start of the first forecast window. Written in one of two RFC 3339 forms, with at most 3 fractional-second digits: `date-time`, with `Z` or a UTC offset, names an instant; `date-time-local`, with no offset, is a wall clock and names no instant. `time_reference` fixes the form: `zoneless` requires `date-time-local`, `utc` requires a zero offset, and a fixed offset or an IANA zone requires `date-time`. With no `time_reference`, either form is accepted and none is assumed.
   - `resolution`: Cadence within a forecast window. Always present for a forecast, and part of the series' identity.
   - `horizon`: Length of one forecast window. Descriptive, not part of the series' identity.
   - `interval`: Step between the start of consecutive forecast windows. Part of the series' identity: two forecasts of one variable at the same resolution but different intervals — a day-ahead and a real-time forecast — are distinct series. `PT0S` is the canonical interval of a single-window forecast, which has no second window to step to.
@@ -48,7 +48,7 @@ Base.@kwdef struct DeterministicSingleTimeSeries <: APIModel
     interval_alignment::Union{Absent, IntervalAlignment, Nothing} = ABSENT
     component_field::Union{Absent, Nothing, String} = ABSENT
     application_data::Union{Absent, Nothing, String} = ABSENT
-    initial_timestamp::Dates.DateTime
+    initial_timestamp::DeterministicSingleTimeSeriesInitialTimestamp
     resolution::String
     horizon::String
     interval::String
@@ -65,7 +65,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-64c6908fd44c784ca124.json",
+            resource="https://openapi.invalid/schema/external-39f75cee1eaff6e51dd6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -73,121 +73,134 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "DeterministicSingleTimeSeries")
-    _openapi_field_association_id = _decode(
+    _openapi_field_association_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "association_id", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_owner_id = _decode(
+    _openapi_field_owner_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "owner_id", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_owner_type = _decode(
+    _openapi_field_owner_type = _decode_zoned(
         String,
         _required(_openapi_object, "owner_type", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_owner_category = _decode(
+    _openapi_field_owner_category = _decode_zoned(
         OwnerCategory,
         _required(_openapi_object, "owner_category", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_time_series_type = _decode(
+    _openapi_field_time_series_type = _decode_zoned(
         String,
         _required(_openapi_object, "time_series_type", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_name = _decode(
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_features = _decode(
+    _openapi_field_features = _decode_zoned(
         TimeSeriesFeatures,
         _required(_openapi_object, "features", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_uri = _decode(
+    _openapi_field_uri = _decode_zoned(
         String,
         _required(_openapi_object, "uri", "DeterministicSingleTimeSeries"),
         false,
     )
     _openapi_field_data_hash =
         haskey(_openapi_object, "data_hash") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["data_hash"], false) :
+        _decode_zoned(Union{Absent, Nothing, String}, _openapi_object["data_hash"], false) :
         ABSENT
-    _openapi_field_element_type = _decode(
+    _openapi_field_element_type = _decode_zoned(
         String,
         _required(_openapi_object, "element_type", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_element_shape = _decode(
+    _openapi_field_element_shape = _decode_zoned(
         Vector{Int64},
         _required(_openapi_object, "element_shape", "DeterministicSingleTimeSeries"),
         false,
     )
     _openapi_field_array_shape =
         haskey(_openapi_object, "array_shape") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["array_shape"],
             false,
         ) : ABSENT
     _openapi_field_units =
         haskey(_openapi_object, "units") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["units"], false) : ABSENT
+        _decode_zoned(Union{Absent, Nothing, String}, _openapi_object["units"], false) :
+        ABSENT
     _openapi_field_quantity_kind =
         haskey(_openapi_object, "quantity_kind") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["quantity_kind"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["quantity_kind"],
+            false,
+        ) : ABSENT
     _openapi_field_unit_system =
         haskey(_openapi_object, "unit_system") ?
-        _decode(Union{Absent, Nothing, UnitSystem}, _openapi_object["unit_system"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, UnitSystem},
+            _openapi_object["unit_system"],
+            false,
+        ) : ABSENT
     _openapi_field_time_reference =
         haskey(_openapi_object, "time_reference") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["time_reference"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["time_reference"],
+            false,
+        ) : ABSENT
     _openapi_field_interval_alignment =
         haskey(_openapi_object, "interval_alignment") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, IntervalAlignment, Nothing},
             _openapi_object["interval_alignment"],
             false,
         ) : ABSENT
     _openapi_field_component_field =
         haskey(_openapi_object, "component_field") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["component_field"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["component_field"],
+            false,
+        ) : ABSENT
     _openapi_field_application_data =
         haskey(_openapi_object, "application_data") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, String},
             _openapi_object["application_data"],
             false,
         ) : ABSENT
-    _openapi_field_initial_timestamp = _decode(
-        Dates.DateTime,
+    _openapi_field_initial_timestamp = _decode_zoned(
+        DeterministicSingleTimeSeriesInitialTimestamp,
         _required(_openapi_object, "initial_timestamp", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_resolution = _decode(
+    _openapi_field_resolution = _decode_zoned(
         String,
         _required(_openapi_object, "resolution", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_horizon = _decode(
+    _openapi_field_horizon = _decode_zoned(
         String,
         _required(_openapi_object, "horizon", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_interval = _decode(
+    _openapi_field_interval = _decode_zoned(
         String,
         _required(_openapi_object, "interval", "DeterministicSingleTimeSeries"),
         false,
     )
-    _openapi_field_count = _decode(
+    _openapi_field_count = _decode_zoned(
         Int64,
         _required(_openapi_object, "count", "DeterministicSingleTimeSeries"),
         false,
@@ -221,7 +234,7 @@ function _decode(
             "count",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return DeterministicSingleTimeSeries(;
         association_id=_openapi_field_association_id,
@@ -334,7 +347,7 @@ end
 _encode(_openapi_value::DeterministicSingleTimeSeries) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-64c6908fd44c784ca124.json",
+        resource="https://openapi.invalid/schema/external-39f75cee1eaff6e51dd6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

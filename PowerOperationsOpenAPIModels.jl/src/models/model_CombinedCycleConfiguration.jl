@@ -22,14 +22,14 @@ function _decode(::Type{CombinedCycleConfiguration}, value, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+            resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
             pointer="/\$defs/CombinedCycleConfiguration",
         ),
         value,
         "decoding CombinedCycleConfiguration";
         direction=:neutral,
     )
-    return CombinedCycleConfiguration(_decode(String, value, false))
+    return CombinedCycleConfiguration(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::CombinedCycleConfiguration)
     output = _encode_unvalidated(value.value)
@@ -38,7 +38,7 @@ end
 _encode(value::CombinedCycleConfiguration) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+        resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
         pointer="/\$defs/CombinedCycleConfiguration",
     ),
     _encode_unvalidated(value),

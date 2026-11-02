@@ -62,7 +62,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-308ef037d4f184715adf.json",
+            resource="https://openapi.invalid/schema/external-903b053e5292fc1791c4.json",
             pointer="",
         ),
         _openapi_raw,
@@ -71,118 +71,139 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "HydroTurbine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "HydroTurbine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "HydroTurbine"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "HydroTurbine"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "HydroTurbine"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "HydroTurbine"), false)
+        _decode_zoned(Bool, _required(_openapi_object, "available", "HydroTurbine"), false)
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "HydroTurbine"), false)
-    _openapi_field_active_power =
-        _decode(Float64, _required(_openapi_object, "active_power", "HydroTurbine"), false)
-    _openapi_field_reactive_power = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "HydroTurbine"), false)
+    _openapi_field_active_power = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "active_power", "HydroTurbine"),
+        false,
+    )
+    _openapi_field_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power", "HydroTurbine"),
         false,
     )
     _openapi_field_rating =
-        _decode(Float64, _required(_openapi_object, "rating", "HydroTurbine"), false)
-    _openapi_field_active_power_limits = _decode(
+        _decode_zoned(Float64, _required(_openapi_object, "rating", "HydroTurbine"), false)
+    _openapi_field_active_power_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "active_power_limits", "HydroTurbine"),
         false,
     )
     _openapi_field_reactive_power_limits =
         haskey(_openapi_object, "reactive_power_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, MinMax, Nothing},
             _openapi_object["reactive_power_limits"],
             false,
         ) : ABSENT
-    _openapi_field_base_power =
-        _decode(Float64, _required(_openapi_object, "base_power", "HydroTurbine"), false)
-    _openapi_field_power_units = _decode(
+    _openapi_field_base_power = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "base_power", "HydroTurbine"),
+        false,
+    )
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "HydroTurbine"),
         false,
     )
     _openapi_field_status =
         haskey(_openapi_object, "status") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, OperationalStates},
             _openapi_object["status"],
             false,
         ) : ABSENT
     _openapi_field_time_at_status =
         haskey(_openapi_object, "time_at_status") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["time_at_status"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["time_at_status"],
+            false,
+        ) : ABSENT
     _openapi_field_commitment_mode =
         haskey(_openapi_object, "commitment_mode") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CommitmentModes, Nothing},
             _openapi_object["commitment_mode"],
             false,
         ) : ABSENT
-    _openapi_field_operation_cost = _decode(
+    _openapi_field_operation_cost = _decode_zoned(
         HydroTurbineOperationCost,
         _required(_openapi_object, "operation_cost", "HydroTurbine"),
         false,
     )
     _openapi_field_powerhouse_elevation =
         haskey(_openapi_object, "powerhouse_elevation") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["powerhouse_elevation"],
             false,
         ) : ABSENT
     _openapi_field_ramp_limits =
         haskey(_openapi_object, "ramp_limits") ?
-        _decode(Union{Absent, UpDown, Nothing}, _openapi_object["ramp_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, UpDown, Nothing},
+            _openapi_object["ramp_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_time_limits =
         haskey(_openapi_object, "time_limits") ?
-        _decode(Union{Absent, UpDown, Nothing}, _openapi_object["time_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, UpDown, Nothing},
+            _openapi_object["time_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_outflow_limits =
         haskey(_openapi_object, "outflow_limits") ?
-        _decode(Union{Absent, MinMax, Nothing}, _openapi_object["outflow_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, MinMax, Nothing},
+            _openapi_object["outflow_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_efficiency =
         haskey(_openapi_object, "efficiency") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["efficiency"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["efficiency"],
+            false,
+        ) : ABSENT
     _openapi_field_turbine_type =
         haskey(_openapi_object, "turbine_type") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, HydroTurbineTurbineType, Nothing},
             _openapi_object["turbine_type"],
             false,
         ) : ABSENT
     _openapi_field_conversion_factor =
         haskey(_openapi_object, "conversion_factor") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["conversion_factor"],
             false,
         ) : ABSENT
     _openapi_field_prime_mover_type =
         haskey(_openapi_object, "prime_mover_type") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, PrimeMovers},
             _openapi_object["prime_mover_type"],
             false,
         ) : ABSENT
     _openapi_field_travel_time =
         haskey(_openapi_object, "travel_time") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["travel_time"],
             false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -217,7 +238,7 @@ function _decode(::Type{HydroTurbine}, _openapi_raw, _openapi_validate::Bool)
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return HydroTurbine(;
         id=_openapi_field_id,
@@ -335,7 +356,7 @@ end
 _encode(_openapi_value::HydroTurbine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-308ef037d4f184715adf.json",
+        resource="https://openapi.invalid/schema/external-903b053e5292fc1791c4.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

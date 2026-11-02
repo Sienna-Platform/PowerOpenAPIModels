@@ -18,21 +18,21 @@ function _decode(::Type{GenericOperationCost}, value, _openapi_validate::Bool)
             "HYDRO_GEN" => (
                 HydroGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/HydroGenerationCost",
                 ),
             ),
             "RENEWABLE" => (
                 RenewableGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/RenewableGenerationCost",
                 ),
             ),
             "THERMAL" => (
                 ThermalGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/ThermalGenerationCost",
                 ),
             ),

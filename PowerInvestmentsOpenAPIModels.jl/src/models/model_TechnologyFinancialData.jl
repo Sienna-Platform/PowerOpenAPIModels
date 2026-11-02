@@ -25,7 +25,7 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a114decda10e8877b41c.json",
+            resource="https://openapi.invalid/schema/external-bd42ffca4cfe36d06c8d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -33,32 +33,32 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TechnologyFinancialData")
-    _openapi_field_capital_recovery_period = _decode(
+    _openapi_field_capital_recovery_period = _decode_zoned(
         Int64,
         _required(_openapi_object, "capital_recovery_period", "TechnologyFinancialData"),
         false,
     )
-    _openapi_field_technology_base_year = _decode(
+    _openapi_field_technology_base_year = _decode_zoned(
         Int64,
         _required(_openapi_object, "technology_base_year", "TechnologyFinancialData"),
         false,
     )
-    _openapi_field_debt_fraction = _decode(
+    _openapi_field_debt_fraction = _decode_zoned(
         Float64,
         _required(_openapi_object, "debt_fraction", "TechnologyFinancialData"),
         false,
     )
-    _openapi_field_debt_rate = _decode(
+    _openapi_field_debt_rate = _decode_zoned(
         Float64,
         _required(_openapi_object, "debt_rate", "TechnologyFinancialData"),
         false,
     )
-    _openapi_field_return_on_equity = _decode(
+    _openapi_field_return_on_equity = _decode_zoned(
         Float64,
         _required(_openapi_object, "return_on_equity", "TechnologyFinancialData"),
         false,
     )
-    _openapi_field_tax_rate = _decode(
+    _openapi_field_tax_rate = _decode_zoned(
         Float64,
         _required(_openapi_object, "tax_rate", "TechnologyFinancialData"),
         false,
@@ -74,7 +74,7 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
             "tax_rate",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TechnologyFinancialData(;
         capital_recovery_period=_openapi_field_capital_recovery_period,
@@ -121,7 +121,7 @@ end
 _encode(_openapi_value::TechnologyFinancialData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a114decda10e8877b41c.json",
+        resource="https://openapi.invalid/schema/external-bd42ffca4cfe36d06c8d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

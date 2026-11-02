@@ -10,7 +10,7 @@ function _decode(::Type{ReactiveVirtualOscillator}, _openapi_raw, _openapi_valid
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-203bfead321662b3ae0f.json",
+            resource="https://openapi.invalid/schema/external-518d30c186b607e84972.json",
             pointer="",
         ),
         _openapi_raw,
@@ -18,22 +18,24 @@ function _decode(::Type{ReactiveVirtualOscillator}, _openapi_raw, _openapi_valid
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ReactiveVirtualOscillator")
-    _openapi_field_k2 = _decode(
+    _openapi_field_k2 = _decode_zoned(
         Float64,
         _required(_openapi_object, "k2", "ReactiveVirtualOscillator"),
         false,
     )
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_field_q_ref =
         haskey(_openapi_object, "Q_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["Q_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["Q_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("k2", "V_ref", "Q_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ReactiveVirtualOscillator(;
         k2=_openapi_field_k2,
@@ -63,7 +65,7 @@ end
 _encode(_openapi_value::ReactiveVirtualOscillator) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-203bfead321662b3ae0f.json",
+        resource="https://openapi.invalid/schema/external-518d30c186b607e84972.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

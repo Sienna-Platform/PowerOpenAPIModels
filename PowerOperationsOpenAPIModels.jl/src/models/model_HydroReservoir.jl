@@ -38,7 +38,7 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-561192d415378b6442c0.json",
+            resource="https://openapi.invalid/schema/external-3f82357977e9fad971f3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -47,79 +47,94 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "HydroReservoir")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "HydroReservoir"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "HydroReservoir"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "HydroReservoir"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "HydroReservoir"), false)
-    _openapi_field_storage_level_limits = _decode(
+        _decode_zoned(String, _required(_openapi_object, "name", "HydroReservoir"), false)
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "HydroReservoir"),
+        false,
+    )
+    _openapi_field_storage_level_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "storage_level_limits", "HydroReservoir"),
         false,
     )
-    _openapi_field_initial_level = _decode(
+    _openapi_field_initial_level = _decode_zoned(
         Float64,
         _required(_openapi_object, "initial_level", "HydroReservoir"),
         false,
     )
     _openapi_field_spillage_limits =
         haskey(_openapi_object, "spillage_limits") ?
-        _decode(Union{Absent, MinMax, Nothing}, _openapi_object["spillage_limits"], false) :
-        ABSENT
-    _openapi_field_inflow =
-        _decode(Float64, _required(_openapi_object, "inflow", "HydroReservoir"), false)
-    _openapi_field_outflow =
-        _decode(Float64, _required(_openapi_object, "outflow", "HydroReservoir"), false)
+        _decode_zoned(
+            Union{Absent, MinMax, Nothing},
+            _openapi_object["spillage_limits"],
+            false,
+        ) : ABSENT
+    _openapi_field_inflow = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "inflow", "HydroReservoir"),
+        false,
+    )
+    _openapi_field_outflow = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "outflow", "HydroReservoir"),
+        false,
+    )
     _openapi_field_level_targets =
         haskey(_openapi_object, "level_targets") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["level_targets"], false) :
-        ABSENT
-    _openapi_field_intake_elevation = _decode(
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["level_targets"],
+            false,
+        ) : ABSENT
+    _openapi_field_intake_elevation = _decode_zoned(
         Float64,
         _required(_openapi_object, "intake_elevation", "HydroReservoir"),
         false,
     )
-    _openapi_field_head_to_volume_factor = _decode(
+    _openapi_field_head_to_volume_factor = _decode_zoned(
         FunctionData,
         _required(_openapi_object, "head_to_volume_factor", "HydroReservoir"),
         false,
     )
     _openapi_field_upstream_turbines =
         haskey(_openapi_object, "upstream_turbines") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["upstream_turbines"],
             false,
         ) : ABSENT
     _openapi_field_downstream_turbines =
         haskey(_openapi_object, "downstream_turbines") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["downstream_turbines"],
             false,
         ) : ABSENT
     _openapi_field_upstream_reservoirs =
         haskey(_openapi_object, "upstream_reservoirs") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["upstream_reservoirs"],
             false,
         ) : ABSENT
-    _openapi_field_operation_cost = _decode(
+    _openapi_field_operation_cost = _decode_zoned(
         HydroReservoirOperationCost,
         _required(_openapi_object, "operation_cost", "HydroReservoir"),
         false,
     )
     _openapi_field_evaporative_loss =
         haskey(_openapi_object, "evaporative_loss") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["evaporative_loss"],
             false,
         ) : ABSENT
     _openapi_field_level_data_type =
         haskey(_openapi_object, "level_data_type") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, HydroReservoirLevelDataType, Nothing},
             _openapi_object["level_data_type"],
             false,
@@ -146,7 +161,7 @@ function _decode(::Type{HydroReservoir}, _openapi_raw, _openapi_validate::Bool)
             "level_data_type",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return HydroReservoir(;
         id=_openapi_field_id,
@@ -242,7 +257,7 @@ end
 _encode(_openapi_value::HydroReservoir) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-561192d415378b6442c0.json",
+        resource="https://openapi.invalid/schema/external-3f82357977e9fad971f3.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

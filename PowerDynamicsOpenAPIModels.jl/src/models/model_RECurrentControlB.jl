@@ -25,7 +25,7 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-36db6bfad125fb5995a3.json",
+            resource="https://openapi.invalid/schema/external-1f20e923c33b4ee38ca7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -33,30 +33,66 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RECurrentControlB")
-    _openapi_field_q_flag =
-        _decode(Bool, _required(_openapi_object, "Q_Flag", "RECurrentControlB"), false)
-    _openapi_field_pq_flag =
-        _decode(Bool, _required(_openapi_object, "PQ_Flag", "RECurrentControlB"), false)
-    _openapi_field_vdip_lim =
-        _decode(MinMax, _required(_openapi_object, "Vdip_lim", "RECurrentControlB"), false)
-    _openapi_field_t_rv =
-        _decode(Float64, _required(_openapi_object, "T_rv", "RECurrentControlB"), false)
-    _openapi_field_dbd_pnts =
-        _decode(DbdPnts, _required(_openapi_object, "dbd_pnts", "RECurrentControlB"), false)
-    _openapi_field_k_qv =
-        _decode(Float64, _required(_openapi_object, "K_qv", "RECurrentControlB"), false)
-    _openapi_field_iqinj_lim =
-        _decode(MinMax, _required(_openapi_object, "Iqinj_lim", "RECurrentControlB"), false)
-    _openapi_field_v_ref0 =
-        _decode(Float64, _required(_openapi_object, "V_ref0", "RECurrentControlB"), false)
-    _openapi_field_k_vp =
-        _decode(Float64, _required(_openapi_object, "K_vp", "RECurrentControlB"), false)
-    _openapi_field_k_vi =
-        _decode(Float64, _required(_openapi_object, "K_vi", "RECurrentControlB"), false)
-    _openapi_field_t_iq =
-        _decode(Float64, _required(_openapi_object, "T_iq", "RECurrentControlB"), false)
-    _openapi_field_i_max =
-        _decode(Float64, _required(_openapi_object, "I_max", "RECurrentControlB"), false)
+    _openapi_field_q_flag = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "Q_Flag", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_pq_flag = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "PQ_Flag", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_vdip_lim = _decode_zoned(
+        MinMax,
+        _required(_openapi_object, "Vdip_lim", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_t_rv = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "T_rv", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_dbd_pnts = _decode_zoned(
+        DbdPnts,
+        _required(_openapi_object, "dbd_pnts", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_k_qv = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "K_qv", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_iqinj_lim = _decode_zoned(
+        MinMax,
+        _required(_openapi_object, "Iqinj_lim", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_v_ref0 = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "V_ref0", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_k_vp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "K_vp", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_k_vi = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "K_vi", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_t_iq = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "T_iq", "RECurrentControlB"),
+        false,
+    )
+    _openapi_field_i_max = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "I_max", "RECurrentControlB"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -74,7 +110,7 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
             "I_max",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RECurrentControlB(;
         q_flag=_openapi_field_q_flag,
@@ -131,7 +167,7 @@ end
 _encode(_openapi_value::RECurrentControlB) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-36db6bfad125fb5995a3.json",
+        resource="https://openapi.invalid/schema/external-1f20e923c33b4ee38ca7.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -15,7 +15,7 @@ function _decode(::Type{ThermalPowerPlant}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c42517f85177ed3dd0be.json",
+            resource="https://openapi.invalid/schema/external-28ede869813e258160b0.json",
             pointer="",
         ),
         _openapi_raw,
@@ -24,14 +24,17 @@ function _decode(::Type{ThermalPowerPlant}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "ThermalPowerPlant")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "ThermalPowerPlant"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "ThermalPowerPlant"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "ThermalPowerPlant"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "ThermalPowerPlant"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "name") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ThermalPowerPlant(;
         id=_openapi_field_id,
@@ -58,7 +61,7 @@ end
 _encode(_openapi_value::ThermalPowerPlant) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c42517f85177ed3dd0be.json",
+        resource="https://openapi.invalid/schema/external-28ede869813e258160b0.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

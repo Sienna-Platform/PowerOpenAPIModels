@@ -46,7 +46,7 @@ function _decode(::Type{PIDGOV}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-51070051af0936e99ab0.json",
+            resource="https://openapi.invalid/schema/external-94f703416906ebfa8dec.json",
             pointer="",
         ),
         _openapi_raw,
@@ -54,40 +54,48 @@ function _decode(::Type{PIDGOV}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PIDGOV")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "PIDGOV"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "PIDGOV"), false)
     _openapi_field_feedback_flag =
-        _decode(Int64, _required(_openapi_object, "feedback_flag", "PIDGOV"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "feedback_flag", "PIDGOV"), false)
     _openapi_field_rperm =
-        _decode(Float64, _required(_openapi_object, "Rperm", "PIDGOV"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Rperm", "PIDGOV"), false)
     _openapi_field_t_reg =
-        _decode(Float64, _required(_openapi_object, "T_reg", "PIDGOV"), false)
-    _openapi_field_kp = _decode(Float64, _required(_openapi_object, "Kp", "PIDGOV"), false)
-    _openapi_field_ki = _decode(Float64, _required(_openapi_object, "Ki", "PIDGOV"), false)
-    _openapi_field_kd = _decode(Float64, _required(_openapi_object, "Kd", "PIDGOV"), false)
-    _openapi_field_ta = _decode(Float64, _required(_openapi_object, "Ta", "PIDGOV"), false)
-    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "PIDGOV"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T_reg", "PIDGOV"), false)
+    _openapi_field_kp =
+        _decode_zoned(Float64, _required(_openapi_object, "Kp", "PIDGOV"), false)
+    _openapi_field_ki =
+        _decode_zoned(Float64, _required(_openapi_object, "Ki", "PIDGOV"), false)
+    _openapi_field_kd =
+        _decode_zoned(Float64, _required(_openapi_object, "Kd", "PIDGOV"), false)
+    _openapi_field_ta =
+        _decode_zoned(Float64, _required(_openapi_object, "Ta", "PIDGOV"), false)
+    _openapi_field_tb =
+        _decode_zoned(Float64, _required(_openapi_object, "Tb", "PIDGOV"), false)
     _openapi_field_d_turb =
-        _decode(Float64, _required(_openapi_object, "D_turb", "PIDGOV"), false)
-    _openapi_field_gate_openings = _decode(
+        _decode_zoned(Float64, _required(_openapi_object, "D_turb", "PIDGOV"), false)
+    _openapi_field_gate_openings = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "gate_openings", "PIDGOV"),
         false,
     )
-    _openapi_field_power_gate_openings = _decode(
+    _openapi_field_power_gate_openings = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "power_gate_openings", "PIDGOV"),
         false,
     )
     _openapi_field_g_lim =
-        _decode(MinMax, _required(_openapi_object, "G_lim", "PIDGOV"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "G_lim", "PIDGOV"), false)
     _openapi_field_a_tw =
-        _decode(Float64, _required(_openapi_object, "A_tw", "PIDGOV"), false)
-    _openapi_field_tw = _decode(Float64, _required(_openapi_object, "Tw", "PIDGOV"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "A_tw", "PIDGOV"), false)
+    _openapi_field_tw =
+        _decode_zoned(Float64, _required(_openapi_object, "Tw", "PIDGOV"), false)
     _openapi_field_v_lim =
-        _decode(MinMax, _required(_openapi_object, "V_lim", "PIDGOV"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "V_lim", "PIDGOV"), false)
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -110,7 +118,7 @@ function _decode(::Type{PIDGOV}, _openapi_raw, _openapi_validate::Bool)
             "P_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PIDGOV(;
         id=_openapi_field_id,
@@ -188,7 +196,7 @@ end
 _encode(_openapi_value::PIDGOV) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-51070051af0936e99ab0.json",
+        resource="https://openapi.invalid/schema/external-94f703416906ebfa8dec.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

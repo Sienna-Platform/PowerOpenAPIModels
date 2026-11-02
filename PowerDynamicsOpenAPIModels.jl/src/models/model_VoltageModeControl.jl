@@ -16,7 +16,7 @@ function _decode(::Type{VoltageModeControl}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1ba1657e03a4a5e211eb.json",
+            resource="https://openapi.invalid/schema/external-30e43177d2634062fb48.json",
             pointer="",
         ),
         _openapi_raw,
@@ -24,33 +24,63 @@ function _decode(::Type{VoltageModeControl}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "VoltageModeControl")
-    _openapi_field_kpv =
-        _decode(Float64, _required(_openapi_object, "kpv", "VoltageModeControl"), false)
-    _openapi_field_kiv =
-        _decode(Float64, _required(_openapi_object, "kiv", "VoltageModeControl"), false)
-    _openapi_field_kffv =
-        _decode(Float64, _required(_openapi_object, "kffv", "VoltageModeControl"), false)
-    _openapi_field_rv =
-        _decode(Float64, _required(_openapi_object, "rv", "VoltageModeControl"), false)
-    _openapi_field_lv =
-        _decode(Float64, _required(_openapi_object, "lv", "VoltageModeControl"), false)
-    _openapi_field_kpc =
-        _decode(Float64, _required(_openapi_object, "kpc", "VoltageModeControl"), false)
-    _openapi_field_kic =
-        _decode(Float64, _required(_openapi_object, "kic", "VoltageModeControl"), false)
-    _openapi_field_kffi =
-        _decode(Float64, _required(_openapi_object, "kffi", "VoltageModeControl"), false)
-    _openapi_field_omegaad =
-        _decode(Float64, _required(_openapi_object, "omegaad", "VoltageModeControl"), false)
-    _openapi_field_kad =
-        _decode(Float64, _required(_openapi_object, "kad", "VoltageModeControl"), false)
+    _openapi_field_kpv = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "kpv", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_kiv = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "kiv", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_kffv = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "kffv", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_rv = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "rv", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_lv = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "lv", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_kpc = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "kpc", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_kic = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "kic", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_kffi = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "kffi", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_omegaad = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "omegaad", "VoltageModeControl"),
+        false,
+    )
+    _openapi_field_kad = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "kad", "VoltageModeControl"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("kpv", "kiv", "kffv", "rv", "lv", "kpc", "kic", "kffi", "omegaad", "kad") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return VoltageModeControl(;
         kpv=_openapi_field_kpv,
@@ -101,7 +131,7 @@ end
 _encode(_openapi_value::VoltageModeControl) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1ba1657e03a4a5e211eb.json",
+        resource="https://openapi.invalid/schema/external-30e43177d2634062fb48.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

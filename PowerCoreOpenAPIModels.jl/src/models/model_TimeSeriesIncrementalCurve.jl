@@ -20,7 +20,7 @@ function _decode(::Type{TimeSeriesIncrementalCurve}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/TimeSeriesIncrementalCurve",
         ),
         _openapi_raw,
@@ -28,26 +28,26 @@ function _decode(::Type{TimeSeriesIncrementalCurve}, _openapi_raw, _openapi_vali
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TimeSeriesIncrementalCurve")
-    _openapi_field_curve_type = _decode(
+    _openapi_field_curve_type = _decode_zoned(
         String,
         _required(_openapi_object, "curve_type", "TimeSeriesIncrementalCurve"),
         false,
     )
-    _openapi_field_function_data = _decode(
+    _openapi_field_function_data = _decode_zoned(
         FunctionData,
         _required(_openapi_object, "function_data", "TimeSeriesIncrementalCurve"),
         false,
     )
     _openapi_field_initial_input_association_id =
         haskey(_openapi_object, "initial_input_association_id") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["initial_input_association_id"],
             false,
         ) : ABSENT
     _openapi_field_input_at_zero_association_id =
         haskey(_openapi_object, "input_at_zero_association_id") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["input_at_zero_association_id"],
             false,
@@ -61,7 +61,7 @@ function _decode(::Type{TimeSeriesIncrementalCurve}, _openapi_raw, _openapi_vali
             "input_at_zero_association_id",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TimeSeriesIncrementalCurve(;
         curve_type=_openapi_field_curve_type,
@@ -100,7 +100,7 @@ end
 _encode(_openapi_value::TimeSeriesIncrementalCurve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/TimeSeriesIncrementalCurve",
     ),
     _encode_unvalidated(_openapi_value),

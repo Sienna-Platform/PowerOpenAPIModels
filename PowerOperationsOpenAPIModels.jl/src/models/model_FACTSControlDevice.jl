@@ -44,7 +44,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-fdebfdb2d85674e6afc0.json",
+            resource="https://openapi.invalid/schema/external-763a4c16dd8bf29c4b05.json",
             pointer="",
         ),
         _openapi_raw,
@@ -52,77 +52,83 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "FACTSControlDevice")
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "FACTSControlDevice"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "FACTSControlDevice"),
+        false,
+    )
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "FACTSControlDevice"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "FACTSControlDevice"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "FACTSControlDevice"), false)
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "FACTSControlDevice"),
+        false,
+    )
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "FACTSControlDevice"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "FACTSControlDevice"), false)
     _openapi_field_control_mode =
         haskey(_openapi_object, "control_mode") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, FACTSControlDeviceControlMode, Nothing},
             _openapi_object["control_mode"],
             false,
         ) : ABSENT
     _openapi_field_voltage_setpoint_units =
         haskey(_openapi_object, "voltage_setpoint_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VoltageUnitBasis},
             _openapi_object["voltage_setpoint_units"],
             false,
         ) : ABSENT
-    _openapi_field_voltage_setpoint = _decode(
+    _openapi_field_voltage_setpoint = _decode_zoned(
         Float64,
         _required(_openapi_object, "voltage_setpoint", "FACTSControlDevice"),
         false,
     )
-    _openapi_field_max_shunt_current = _decode(
+    _openapi_field_max_shunt_current = _decode_zoned(
         Float64,
         _required(_openapi_object, "max_shunt_current", "FACTSControlDevice"),
         false,
     )
-    _openapi_field_reactive_power_required = _decode(
+    _openapi_field_reactive_power_required = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power_required", "FACTSControlDevice"),
         false,
     )
     _openapi_field_max_reactive_power =
         haskey(_openapi_object, "max_reactive_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_reactive_power"],
             false,
         ) : ABSENT
     _openapi_field_shunt_control_type =
         haskey(_openapi_object, "shunt_control_type") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, FACTSControlDeviceShuntControlType, Nothing},
             _openapi_object["shunt_control_type"],
             false,
         ) : ABSENT
     _openapi_field_regulated_bus_number =
         haskey(_openapi_object, "regulated_bus_number") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Int64, Nothing},
             _openapi_object["regulated_bus_number"],
             false,
         ) : ABSENT
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "FACTSControlDevice"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "FACTSControlDevice"),
         false,
     )
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -147,7 +153,7 @@ function _decode(::Type{FACTSControlDevice}, _openapi_raw, _openapi_validate::Bo
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return FACTSControlDevice(;
         name=_openapi_field_name,
@@ -229,7 +235,7 @@ end
 _encode(_openapi_value::FACTSControlDevice) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-fdebfdb2d85674e6afc0.json",
+        resource="https://openapi.invalid/schema/external-763a4c16dd8bf29c4b05.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

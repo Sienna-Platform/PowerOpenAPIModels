@@ -18,14 +18,14 @@ function _decode(::Type{LossValueCurve}, value, _openapi_validate::Bool)
             "INCREMENTAL" => (
                 IncrementalCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/IncrementalCurve",
                 ),
             ),
             "INPUT_OUTPUT" => (
                 InputOutputCurve,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/InputOutputCurve",
                 ),
             ),

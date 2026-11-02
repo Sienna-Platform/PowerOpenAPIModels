@@ -19,7 +19,7 @@ function _decode(::Type{HybridOutputCurrentLimiter}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f8c8487143ceb4902823.json",
+            resource="https://openapi.invalid/schema/external-9b24c2389b4e0801130f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -27,17 +27,17 @@ function _decode(::Type{HybridOutputCurrentLimiter}, _openapi_raw, _openapi_vali
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "HybridOutputCurrentLimiter")
-    _openapi_field_i_max = _decode(
+    _openapi_field_i_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "I_max", "HybridOutputCurrentLimiter"),
         false,
     )
-    _openapi_field_rv = _decode(
+    _openapi_field_rv = _decode_zoned(
         Float64,
         _required(_openapi_object, "rv", "HybridOutputCurrentLimiter"),
         false,
     )
-    _openapi_field_lv = _decode(
+    _openapi_field_lv = _decode_zoned(
         Float64,
         _required(_openapi_object, "lv", "HybridOutputCurrentLimiter"),
         false,
@@ -46,7 +46,7 @@ function _decode(::Type{HybridOutputCurrentLimiter}, _openapi_raw, _openapi_vali
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("I_max", "rv", "lv") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return HybridOutputCurrentLimiter(;
         i_max=_openapi_field_i_max,
@@ -76,7 +76,7 @@ end
 _encode(_openapi_value::HybridOutputCurrentLimiter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-f8c8487143ceb4902823.json",
+        resource="https://openapi.invalid/schema/external-9b24c2389b4e0801130f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

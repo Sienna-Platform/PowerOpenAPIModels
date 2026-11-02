@@ -18,7 +18,7 @@ function _decode(::Type{RoundRotorQuadratic}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-826a42a6c7e08862d7fe.json",
+            resource="https://openapi.invalid/schema/external-f308b2a35cf67fcebff1.json",
             pointer="",
         ),
         _openapi_raw,
@@ -27,13 +27,13 @@ function _decode(::Type{RoundRotorQuadratic}, _openapi_raw, _openapi_validate::B
     )
     _openapi_object = _object(_openapi_raw, "RoundRotorQuadratic")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "RoundRotorQuadratic"), false)
-    _openapi_field_base_machine = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "id", "RoundRotorQuadratic"), false)
+    _openapi_field_base_machine = _decode_zoned(
         Int64,
         _required(_openapi_object, "base_machine", "RoundRotorQuadratic"),
         false,
     )
-    _openapi_field_saturation_coeffs = _decode(
+    _openapi_field_saturation_coeffs = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "saturation_coeffs", "RoundRotorQuadratic"),
         false,
@@ -42,7 +42,7 @@ function _decode(::Type{RoundRotorQuadratic}, _openapi_raw, _openapi_validate::B
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "base_machine", "saturation_coeffs") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RoundRotorQuadratic(;
         id=_openapi_field_id,
@@ -74,7 +74,7 @@ end
 _encode(_openapi_value::RoundRotorQuadratic) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-826a42a6c7e08862d7fe.json",
+        resource="https://openapi.invalid/schema/external-f308b2a35cf67fcebff1.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
