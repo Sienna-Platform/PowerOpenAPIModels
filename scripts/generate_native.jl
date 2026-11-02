@@ -92,7 +92,14 @@ Run OpenAPI.client() on `domain`'s selector; return the raw generated module tex
 function generate_raw(domain, modname)
     mkpath(RAW_DIR)
     outpath = joinpath(RAW_DIR, "$domain.jl")
-    OpenAPI.client(selector_path(SCHEMA_DIR, domain); name=modname, path=outpath)
+    # `:zoned`: a `date-time` keeps its offset as a `ZonedDateTime`, and a `date-time-local`
+    # is a `Dates.DateTime` wall clock. Neither is read as UTC.
+    OpenAPI.client(
+        selector_path(SCHEMA_DIR, domain);
+        name=modname,
+        path=outpath,
+        datetime=:zoned,
+    )
     return read(outpath, String)
 end
 
