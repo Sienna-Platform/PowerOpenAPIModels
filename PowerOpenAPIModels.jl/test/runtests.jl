@@ -180,6 +180,32 @@ _type_name(::Any) = ""
         @test isempty(overlapping)
     end
 
+    # scripts/selector.jl parsed schemas into a `Dict`, so units.jl followed hash order, which
+    # changes between Julia releases: regeneration rewrote thousands of lines. Schemas now
+    # parse in file order, and the methods follow each type's fields, which follow the schema.
+    @testset "units.jl follows each type's field order" begin
+        for pkg in [
+            InfrastructureCoreOpenAPIModels,
+            InfrastructureTimeSeriesOpenAPIModels,
+            PowerCoreOpenAPIModels,
+            PowerOperationsOpenAPIModels,
+            PowerInvestmentsOpenAPIModels,
+            PowerDynamicsOpenAPIModels,
+        ]
+            units = joinpath(pkgdir(pkg), "src", "units.jl")
+            isfile(units) || continue
+            order = Dict{Symbol, Vector{Symbol}}()
+            pattern = r"has_declared_unit\(\s*::Type\{(\w+)\},\s*::Val\{:(\w+)\}"
+            for m in eachmatch(pattern, read(units, String))
+                push!(get!(order, Symbol(m.captures[1]), Symbol[]), Symbol(m.captures[2]))
+            end
+            for (name, props) in order
+                fields = [f for f in fieldnames(getfield(pkg, name)) if f in props]
+                @test unique(props) == fields
+            end
+        end
+    end
+
     @testset "Infrastructure packages carry no power dependency" begin
         for pkg in [InfrastructureCoreOpenAPIModels, InfrastructureTimeSeriesOpenAPIModels]
             deps = keys(TOML.parsefile(joinpath(pkgdir(pkg), "Project.toml"))["deps"])
