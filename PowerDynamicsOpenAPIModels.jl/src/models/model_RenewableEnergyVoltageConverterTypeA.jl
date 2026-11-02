@@ -45,7 +45,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1460c593a8c2d471350d.json",
+            resource="https://openapi.invalid/schema/external-985cd42806f5143ec64f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -53,74 +53,75 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RenewableEnergyVoltageConverterTypeA")
-    _openapi_field_t_g = _decode(
+    _openapi_field_t_g = _decode_zoned(
         Float64,
         _required(_openapi_object, "T_g", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_rrpwr = _decode(
+    _openapi_field_rrpwr = _decode_zoned(
         Float64,
         _required(_openapi_object, "Rrpwr", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_brkpt = _decode(
+    _openapi_field_brkpt = _decode_zoned(
         Float64,
         _required(_openapi_object, "Brkpt", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_zerox = _decode(
+    _openapi_field_zerox = _decode_zoned(
         Float64,
         _required(_openapi_object, "Zerox", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_lvpl1 = _decode(
+    _openapi_field_lvpl1 = _decode_zoned(
         Float64,
         _required(_openapi_object, "Lvpl1", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_vo_lim = _decode(
+    _openapi_field_vo_lim = _decode_zoned(
         Float64,
         _required(_openapi_object, "Vo_lim", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_lv_pnts = _decode(
+    _openapi_field_lv_pnts = _decode_zoned(
         MinMax,
         _required(_openapi_object, "Lv_pnts", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_io_lim = _decode(
+    _openapi_field_io_lim = _decode_zoned(
         Float64,
         _required(_openapi_object, "Io_lim", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_t_fltr = _decode(
+    _openapi_field_t_fltr = _decode_zoned(
         Float64,
         _required(_openapi_object, "T_fltr", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_k_hv = _decode(
+    _openapi_field_k_hv = _decode_zoned(
         Float64,
         _required(_openapi_object, "K_hv", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_iqr_lims = _decode(
+    _openapi_field_iqr_lims = _decode_zoned(
         MinMax,
         _required(_openapi_object, "Iqr_lims", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_accel = _decode(
+    _openapi_field_accel = _decode_zoned(
         Float64,
         _required(_openapi_object, "Accel", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
-    _openapi_field_lvpl_sw = _decode(
+    _openapi_field_lvpl_sw = _decode_zoned(
         Int64,
         _required(_openapi_object, "Lvpl_sw", "RenewableEnergyVoltageConverterTypeA"),
         false,
     )
     _openapi_field_q_ref =
         haskey(_openapi_object, "Q_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["Q_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["Q_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -140,7 +141,7 @@ function _decode(
             "Q_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RenewableEnergyVoltageConverterTypeA(;
         t_g=_openapi_field_t_g,
@@ -203,7 +204,7 @@ end
 _encode(_openapi_value::RenewableEnergyVoltageConverterTypeA) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1460c593a8c2d471350d.json",
+        resource="https://openapi.invalid/schema/external-985cd42806f5143ec64f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

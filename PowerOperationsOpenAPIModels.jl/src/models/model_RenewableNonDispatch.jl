@@ -40,7 +40,7 @@ function _decode(::Type{RenewableNonDispatch}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b47991088cf1bb61a8f7.json",
+            resource="https://openapi.invalid/schema/external-64d27c715ccb2acb3e98.json",
             pointer="",
         ),
         _openapi_raw,
@@ -48,55 +48,64 @@ function _decode(::Type{RenewableNonDispatch}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RenewableNonDispatch")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "RenewableNonDispatch"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "RenewableNonDispatch"), false)
-    _openapi_field_available = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "RenewableNonDispatch"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "RenewableNonDispatch"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "RenewableNonDispatch"),
         false,
     )
-    _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "RenewableNonDispatch"), false)
-    _openapi_field_active_power = _decode(
+    _openapi_field_bus = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "bus", "RenewableNonDispatch"),
+        false,
+    )
+    _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "RenewableNonDispatch"),
         false,
     )
-    _openapi_field_reactive_power = _decode(
+    _openapi_field_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power", "RenewableNonDispatch"),
         false,
     )
-    _openapi_field_rating = _decode(
+    _openapi_field_rating = _decode_zoned(
         Float64,
         _required(_openapi_object, "rating", "RenewableNonDispatch"),
         false,
     )
-    _openapi_field_prime_mover_type = _decode(
+    _openapi_field_prime_mover_type = _decode_zoned(
         PrimeMovers,
         _required(_openapi_object, "prime_mover_type", "RenewableNonDispatch"),
         false,
     )
-    _openapi_field_power_factor = _decode(
+    _openapi_field_power_factor = _decode_zoned(
         Float64,
         _required(_openapi_object, "power_factor", "RenewableNonDispatch"),
         false,
     )
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "RenewableNonDispatch"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "RenewableNonDispatch"),
         false,
     )
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -118,7 +127,7 @@ function _decode(::Type{RenewableNonDispatch}, _openapi_raw, _openapi_validate::
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RenewableNonDispatch(;
         id=_openapi_field_id,
@@ -181,7 +190,7 @@ end
 _encode(_openapi_value::RenewableNonDispatch) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b47991088cf1bb61a8f7.json",
+        resource="https://openapi.invalid/schema/external-64d27c715ccb2acb3e98.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

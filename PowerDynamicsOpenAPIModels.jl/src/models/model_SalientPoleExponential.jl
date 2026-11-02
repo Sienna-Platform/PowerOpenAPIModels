@@ -19,7 +19,7 @@ function _decode(::Type{SalientPoleExponential}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b4f5860b1e6570e8db7d.json",
+            resource="https://openapi.invalid/schema/external-a30b8e78448683364960.json",
             pointer="",
         ),
         _openapi_raw,
@@ -27,14 +27,17 @@ function _decode(::Type{SalientPoleExponential}, _openapi_raw, _openapi_validate
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SalientPoleExponential")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "SalientPoleExponential"), false)
-    _openapi_field_base_machine = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "SalientPoleExponential"),
+        false,
+    )
+    _openapi_field_base_machine = _decode_zoned(
         Int64,
         _required(_openapi_object, "base_machine", "SalientPoleExponential"),
         false,
     )
-    _openapi_field_saturation_coeffs = _decode(
+    _openapi_field_saturation_coeffs = _decode_zoned(
         Vector{Float64},
         _required(_openapi_object, "saturation_coeffs", "SalientPoleExponential"),
         false,
@@ -43,7 +46,7 @@ function _decode(::Type{SalientPoleExponential}, _openapi_raw, _openapi_validate
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "base_machine", "saturation_coeffs") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SalientPoleExponential(;
         id=_openapi_field_id,
@@ -75,7 +78,7 @@ end
 _encode(_openapi_value::SalientPoleExponential) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b4f5860b1e6570e8db7d.json",
+        resource="https://openapi.invalid/schema/external-a30b8e78448683364960.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -40,7 +40,7 @@ function _decode(::Type{EX4VSA}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a2baeae1d2403428cafd.json",
+            resource="https://openapi.invalid/schema/external-bcc22a8b5845417ced00.json",
             pointer="",
         ),
         _openapi_raw,
@@ -48,26 +48,36 @@ function _decode(::Type{EX4VSA}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "EX4VSA")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "EX4VSA"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "EX4VSA"), false)
     _openapi_field_iflim =
-        _decode(Float64, _required(_openapi_object, "Iflim", "EX4VSA"), false)
-    _openapi_field_d = _decode(Float64, _required(_openapi_object, "d", "EX4VSA"), false)
-    _openapi_field_f = _decode(Float64, _required(_openapi_object, "f", "EX4VSA"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Iflim", "EX4VSA"), false)
+    _openapi_field_d =
+        _decode_zoned(Float64, _required(_openapi_object, "d", "EX4VSA"), false)
+    _openapi_field_f =
+        _decode_zoned(Float64, _required(_openapi_object, "f", "EX4VSA"), false)
     _openapi_field_spar =
-        _decode(Float64, _required(_openapi_object, "Spar", "EX4VSA"), false)
-    _openapi_field_k1 = _decode(Float64, _required(_openapi_object, "K1", "EX4VSA"), false)
-    _openapi_field_k2 = _decode(Float64, _required(_openapi_object, "K2", "EX4VSA"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Spar", "EX4VSA"), false)
+    _openapi_field_k1 =
+        _decode_zoned(Float64, _required(_openapi_object, "K1", "EX4VSA"), false)
+    _openapi_field_k2 =
+        _decode_zoned(Float64, _required(_openapi_object, "K2", "EX4VSA"), false)
     _openapi_field_oel_lim =
-        _decode(MinMax, _required(_openapi_object, "Oel_lim", "EX4VSA"), false)
-    _openapi_field_g = _decode(Float64, _required(_openapi_object, "G", "EX4VSA"), false)
-    _openapi_field_ta = _decode(Float64, _required(_openapi_object, "Ta", "EX4VSA"), false)
-    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "EX4VSA"), false)
-    _openapi_field_te = _decode(Float64, _required(_openapi_object, "Te", "EX4VSA"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Oel_lim", "EX4VSA"), false)
+    _openapi_field_g =
+        _decode_zoned(Float64, _required(_openapi_object, "G", "EX4VSA"), false)
+    _openapi_field_ta =
+        _decode_zoned(Float64, _required(_openapi_object, "Ta", "EX4VSA"), false)
+    _openapi_field_tb =
+        _decode_zoned(Float64, _required(_openapi_object, "Tb", "EX4VSA"), false)
+    _openapi_field_te =
+        _decode_zoned(Float64, _required(_openapi_object, "Te", "EX4VSA"), false)
     _openapi_field_e_lim =
-        _decode(MinMax, _required(_openapi_object, "E_lim", "EX4VSA"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "E_lim", "EX4VSA"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -87,7 +97,7 @@ function _decode(::Type{EX4VSA}, _openapi_raw, _openapi_validate::Bool)
             "V_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return EX4VSA(;
         id=_openapi_field_id,
@@ -150,7 +160,7 @@ end
 _encode(_openapi_value::EX4VSA) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a2baeae1d2403428cafd.json",
+        resource="https://openapi.invalid/schema/external-bcc22a8b5845417ced00.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

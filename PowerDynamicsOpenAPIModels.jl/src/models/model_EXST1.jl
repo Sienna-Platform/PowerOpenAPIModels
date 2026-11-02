@@ -36,7 +36,7 @@ function _decode(::Type{EXST1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-641b314432bf503aa64b.json",
+            resource="https://openapi.invalid/schema/external-ebe97f798fa2762792cc.json",
             pointer="",
         ),
         _openapi_raw,
@@ -44,22 +44,32 @@ function _decode(::Type{EXST1}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "EXST1")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "EXST1"), false)
-    _openapi_field_tr = _decode(Float64, _required(_openapi_object, "Tr", "EXST1"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "EXST1"), false)
+    _openapi_field_tr =
+        _decode_zoned(Float64, _required(_openapi_object, "Tr", "EXST1"), false)
     _openapi_field_vi_lim =
-        _decode(MinMax, _required(_openapi_object, "Vi_lim", "EXST1"), false)
-    _openapi_field_tc = _decode(Float64, _required(_openapi_object, "Tc", "EXST1"), false)
-    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "EXST1"), false)
-    _openapi_field_ka = _decode(Float64, _required(_openapi_object, "Ka", "EXST1"), false)
-    _openapi_field_ta = _decode(Float64, _required(_openapi_object, "Ta", "EXST1"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Vi_lim", "EXST1"), false)
+    _openapi_field_tc =
+        _decode_zoned(Float64, _required(_openapi_object, "Tc", "EXST1"), false)
+    _openapi_field_tb =
+        _decode_zoned(Float64, _required(_openapi_object, "Tb", "EXST1"), false)
+    _openapi_field_ka =
+        _decode_zoned(Float64, _required(_openapi_object, "Ka", "EXST1"), false)
+    _openapi_field_ta =
+        _decode_zoned(Float64, _required(_openapi_object, "Ta", "EXST1"), false)
     _openapi_field_vr_lim =
-        _decode(MinMax, _required(_openapi_object, "Vr_lim", "EXST1"), false)
-    _openapi_field_kc = _decode(Float64, _required(_openapi_object, "Kc", "EXST1"), false)
-    _openapi_field_kf = _decode(Float64, _required(_openapi_object, "Kf", "EXST1"), false)
-    _openapi_field_tf = _decode(Float64, _required(_openapi_object, "Tf", "EXST1"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Vr_lim", "EXST1"), false)
+    _openapi_field_kc =
+        _decode_zoned(Float64, _required(_openapi_object, "Kc", "EXST1"), false)
+    _openapi_field_kf =
+        _decode_zoned(Float64, _required(_openapi_object, "Kf", "EXST1"), false)
+    _openapi_field_tf =
+        _decode_zoned(Float64, _required(_openapi_object, "Tf", "EXST1"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -77,7 +87,7 @@ function _decode(::Type{EXST1}, _openapi_raw, _openapi_validate::Bool)
             "V_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return EXST1(;
         id=_openapi_field_id,
@@ -134,7 +144,7 @@ end
 _encode(_openapi_value::EXST1) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-641b314432bf503aa64b.json",
+        resource="https://openapi.invalid/schema/external-ebe97f798fa2762792cc.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

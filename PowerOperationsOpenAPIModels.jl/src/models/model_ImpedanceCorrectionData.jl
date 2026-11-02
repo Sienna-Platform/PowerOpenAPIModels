@@ -21,7 +21,7 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f6808bcdb32fca10e356.json",
+            resource="https://openapi.invalid/schema/external-c2684df6f535ddba70c5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,33 +29,36 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ImpedanceCorrectionData")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "ImpedanceCorrectionData"), false)
-    _openapi_field_table_number = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "ImpedanceCorrectionData"),
+        false,
+    )
+    _openapi_field_table_number = _decode_zoned(
         Int64,
         _required(_openapi_object, "table_number", "ImpedanceCorrectionData"),
         false,
     )
     _openapi_field_tap_ratio_correction_curve =
         haskey(_openapi_object, "tap_ratio_correction_curve") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, PiecewiseLinearData, Nothing},
             _openapi_object["tap_ratio_correction_curve"],
             false,
         ) : ABSENT
     _openapi_field_phase_angle_correction_curve =
         haskey(_openapi_object, "phase_angle_correction_curve") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, PiecewiseLinearData, Nothing},
             _openapi_object["phase_angle_correction_curve"],
             false,
         ) : ABSENT
-    _openapi_field_transformer_winding = _decode(
+    _openapi_field_transformer_winding = _decode_zoned(
         ImpedanceCorrectionDataTransformerWinding,
         _required(_openapi_object, "transformer_winding", "ImpedanceCorrectionData"),
         false,
     )
-    _openapi_field_transformer_control_mode = _decode(
+    _openapi_field_transformer_control_mode = _decode_zoned(
         ImpedanceCorrectionDataTransformerControlMode,
         _required(_openapi_object, "transformer_control_mode", "ImpedanceCorrectionData"),
         false,
@@ -71,7 +74,7 @@ function _decode(::Type{ImpedanceCorrectionData}, _openapi_raw, _openapi_validat
             "transformer_control_mode",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ImpedanceCorrectionData(;
         id=_openapi_field_id,
@@ -118,7 +121,7 @@ end
 _encode(_openapi_value::ImpedanceCorrectionData) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-f6808bcdb32fca10e356.json",
+        resource="https://openapi.invalid/schema/external-c2684df6f535ddba70c5.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

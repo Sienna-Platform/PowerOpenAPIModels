@@ -24,7 +24,7 @@ function _decode(::Type{CarbonCaps}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-bf13b403a3ca71f29bce.json",
+            resource="https://openapi.invalid/schema/external-55b58a0a316f66a54c4f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -33,29 +33,38 @@ function _decode(::Type{CarbonCaps}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "CarbonCaps")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "CarbonCaps"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "CarbonCaps"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "CarbonCaps"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "CarbonCaps"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "CarbonCaps"), false)
+        _decode_zoned(Bool, _required(_openapi_object, "available", "CarbonCaps"), false)
     _openapi_field_target_year =
         haskey(_openapi_object, "target_year") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["target_year"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Int64, Nothing},
+            _openapi_object["target_year"],
+            false,
+        ) : ABSENT
     _openapi_field_max_tons_mwh =
         haskey(_openapi_object, "max_tons_mwh") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["max_tons_mwh"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["max_tons_mwh"],
+            false,
+        ) : ABSENT
     _openapi_field_max_mtons =
         haskey(_openapi_object, "max_mtons") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["max_mtons"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["max_mtons"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("id", "name", "available", "target_year", "max_tons_mwh", "max_mtons") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return CarbonCaps(;
         id=_openapi_field_id,
@@ -94,7 +103,7 @@ end
 _encode(_openapi_value::CarbonCaps) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-bf13b403a3ca71f29bce.json",
+        resource="https://openapi.invalid/schema/external-55b58a0a316f66a54c4f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

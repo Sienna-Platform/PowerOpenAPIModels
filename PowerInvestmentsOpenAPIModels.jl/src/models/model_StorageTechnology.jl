@@ -60,7 +60,7 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6559e67bd15a2ef94f8a.json",
+            resource="https://openapi.invalid/schema/external-6605a29de35f5435fb7d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -69,110 +69,124 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "StorageTechnology")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "StorageTechnology"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "StorageTechnology"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "StorageTechnology"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "StorageTechnology"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "StorageTechnology"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "StorageTechnology"),
+        false,
+    )
     _openapi_field_region =
         haskey(_openapi_object, "region") ?
-        _decode(Union{Absent, Nothing, Vector{Int64}}, _openapi_object["region"], false) :
-        ABSENT
-    _openapi_field_power_systems_type = _decode(
+        _decode_zoned(
+            Union{Absent, Nothing, Vector{Int64}},
+            _openapi_object["region"],
+            false,
+        ) : ABSENT
+    _openapi_field_power_systems_type = _decode_zoned(
         String,
         _required(_openapi_object, "power_systems_type", "StorageTechnology"),
         false,
     )
     _openapi_field_min_discharge_fraction =
         haskey(_openapi_object, "min_discharge_fraction") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["min_discharge_fraction"],
             false,
         ) : ABSENT
     _openapi_field_prime_mover_type =
         haskey(_openapi_object, "prime_mover_type") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, PrimeMovers},
             _openapi_object["prime_mover_type"],
             false,
         ) : ABSENT
-    _openapi_field_storage_tech = _decode(
+    _openapi_field_storage_tech = _decode_zoned(
         StorageTech,
         _required(_openapi_object, "storage_tech", "StorageTechnology"),
         false,
     )
     _openapi_field_capital_costs =
         haskey(_openapi_object, "capital_costs") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, StorageCapitalCost},
             _openapi_object["capital_costs"],
             false,
         ) : ABSENT
     _openapi_field_operation_costs =
         haskey(_openapi_object, "operation_costs") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, StorageCost},
             _openapi_object["operation_costs"],
             false,
         ) : ABSENT
     _openapi_field_unit_size_discharge =
         haskey(_openapi_object, "unit_size_discharge") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["unit_size_discharge"],
             false,
         ) : ABSENT
     _openapi_field_unit_size_charge =
         haskey(_openapi_object, "unit_size_charge") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["unit_size_charge"],
             false,
         ) : ABSENT
     _openapi_field_unit_size_energy =
         haskey(_openapi_object, "unit_size_energy") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["unit_size_energy"],
             false,
         ) : ABSENT
     _openapi_field_capacity_limits_charge =
         haskey(_openapi_object, "capacity_limits_charge") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, StorageTechnologyCapacityLimitsCharge},
             _openapi_object["capacity_limits_charge"],
             false,
         ) : ABSENT
     _openapi_field_capacity_limits_discharge =
         haskey(_openapi_object, "capacity_limits_discharge") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, StorageTechnologyCapacityLimitsDischarge},
             _openapi_object["capacity_limits_discharge"],
             false,
         ) : ABSENT
     _openapi_field_capacity_limits_energy =
         haskey(_openapi_object, "capacity_limits_energy") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, StorageTechnologyCapacityLimitsEnergy},
             _openapi_object["capacity_limits_energy"],
             false,
         ) : ABSENT
     _openapi_field_duration_limits =
         haskey(_openapi_object, "duration_limits") ?
-        _decode(Union{Absent, Nothing, MinMax}, _openapi_object["duration_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, MinMax},
+            _openapi_object["duration_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_efficiency =
         haskey(_openapi_object, "efficiency") ?
-        _decode(Union{Absent, Nothing, InOut}, _openapi_object["efficiency"], false) :
+        _decode_zoned(Union{Absent, Nothing, InOut}, _openapi_object["efficiency"], false) :
         ABSENT
     _openapi_field_losses =
         haskey(_openapi_object, "losses") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["losses"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["losses"], false) :
+        ABSENT
     _openapi_field_lifetime =
         haskey(_openapi_object, "lifetime") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["lifetime"], false) : ABSENT
-    _openapi_field_financial_data = _decode(
+        _decode_zoned(Union{Absent, Int64, Nothing}, _openapi_object["lifetime"], false) :
+        ABSENT
+    _openapi_field_financial_data = _decode_zoned(
         TechnologyFinancialData,
         _required(_openapi_object, "financial_data", "StorageTechnology"),
         false,
@@ -203,7 +217,7 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
             "financial_data",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return StorageTechnology(;
         id=_openapi_field_id,
@@ -313,7 +327,7 @@ end
 _encode(_openapi_value::StorageTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6559e67bd15a2ef94f8a.json",
+        resource="https://openapi.invalid/schema/external-6605a29de35f5435fb7d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

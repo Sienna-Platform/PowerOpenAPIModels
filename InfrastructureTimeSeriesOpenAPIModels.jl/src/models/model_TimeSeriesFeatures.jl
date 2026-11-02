@@ -12,7 +12,7 @@ function _decode(::Type{TimeSeriesFeatures}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+            resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
             pointer="/\$defs/TimeSeriesFeatures",
         ),
         _openapi_raw,
@@ -24,7 +24,7 @@ function _decode(::Type{TimeSeriesFeatures}, _openapi_raw, _openapi_validate::Bo
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in () && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(TimeSeriesFeatureValue, _openapi_item, false)
+            _decode_zoned(TimeSeriesFeatureValue, _openapi_item, false)
     end
     return TimeSeriesFeatures(; additional_properties=_openapi_additional_properties)
 end
@@ -43,7 +43,7 @@ end
 _encode(_openapi_value::TimeSeriesFeatures) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+        resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
         pointer="/\$defs/TimeSeriesFeatures",
     ),
     _encode_unvalidated(_openapi_value),

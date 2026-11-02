@@ -14,7 +14,7 @@ function _decode(::Type{FixedFrequency}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-4d4ca459a50203ca40f1.json",
+            resource="https://openapi.invalid/schema/external-21965df3354b27119ab6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -24,13 +24,16 @@ function _decode(::Type{FixedFrequency}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "FixedFrequency")
     _openapi_field_frequency =
         haskey(_openapi_object, "frequency") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["frequency"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["frequency"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("frequency",) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return FixedFrequency(;
         frequency=_openapi_field_frequency,
@@ -54,7 +57,7 @@ end
 _encode(_openapi_value::FixedFrequency) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-4d4ca459a50203ca40f1.json",
+        resource="https://openapi.invalid/schema/external-21965df3354b27119ab6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

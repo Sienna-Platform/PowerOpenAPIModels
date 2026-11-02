@@ -30,7 +30,7 @@ function _decode(::Type{SCRX}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-43906ea3793de7061867.json",
+            resource="https://openapi.invalid/schema/external-05c7111bb6a5746a31f4.json",
             pointer="",
         ),
         _openapi_raw,
@@ -38,27 +38,32 @@ function _decode(::Type{SCRX}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SCRX")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "SCRX"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "SCRX"), false)
     _openapi_field_ta_tb =
-        _decode(Float64, _required(_openapi_object, "Ta_Tb", "SCRX"), false)
-    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "SCRX"), false)
-    _openapi_field_k = _decode(Float64, _required(_openapi_object, "K", "SCRX"), false)
-    _openapi_field_te = _decode(Float64, _required(_openapi_object, "Te", "SCRX"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Ta_Tb", "SCRX"), false)
+    _openapi_field_tb =
+        _decode_zoned(Float64, _required(_openapi_object, "Tb", "SCRX"), false)
+    _openapi_field_k =
+        _decode_zoned(Float64, _required(_openapi_object, "K", "SCRX"), false)
+    _openapi_field_te =
+        _decode_zoned(Float64, _required(_openapi_object, "Te", "SCRX"), false)
     _openapi_field_efd_lim =
-        _decode(MinMax, _required(_openapi_object, "Efd_lim", "SCRX"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Efd_lim", "SCRX"), false)
     _openapi_field_switch =
-        _decode(Int64, _required(_openapi_object, "switch", "SCRX"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "switch", "SCRX"), false)
     _openapi_field_rc_rfd =
-        _decode(Float64, _required(_openapi_object, "rc_rfd", "SCRX"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "rc_rfd", "SCRX"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("id", "Ta_Tb", "Tb", "K", "Te", "Efd_lim", "switch", "rc_rfd", "V_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SCRX(;
         id=_openapi_field_id,
@@ -106,7 +111,7 @@ end
 _encode(_openapi_value::SCRX) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-43906ea3793de7061867.json",
+        resource="https://openapi.invalid/schema/external-05c7111bb6a5746a31f4.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

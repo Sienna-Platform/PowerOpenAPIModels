@@ -30,7 +30,7 @@ function _decode(::Type{PointToPointBid}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-115706c1fd00cf3cb701.json",
+            resource="https://openapi.invalid/schema/external-9e86f2e578e91d765116.json",
             pointer="",
         ),
         _openapi_raw,
@@ -39,33 +39,39 @@ function _decode(::Type{PointToPointBid}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "PointToPointBid")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "PointToPointBid"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "PointToPointBid"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "PointToPointBid"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "PointToPointBid"), false)
-    _openapi_field_from_id =
-        _decode(Int64, _required(_openapi_object, "from_id", "PointToPointBid"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "PointToPointBid"), false)
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "PointToPointBid"),
+        false,
+    )
+    _openapi_field_from_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "from_id", "PointToPointBid"),
+        false,
+    )
     _openapi_field_to_id =
-        _decode(Int64, _required(_openapi_object, "to_id", "PointToPointBid"), false)
-    _openapi_field_max_active_power = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "to_id", "PointToPointBid"), false)
+    _openapi_field_max_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "max_active_power", "PointToPointBid"),
         false,
     )
-    _openapi_field_spread_bid = _decode(
+    _openapi_field_spread_bid = _decode_zoned(
         PointToPointBidSpreadBid,
         _required(_openapi_object, "spread_bid", "PointToPointBid"),
         false,
     )
-    _openapi_field_price_limits = _decode(
+    _openapi_field_price_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "price_limits", "PointToPointBid"),
         false,
     )
     _openapi_field_linked_crr =
         haskey(_openapi_object, "linked_crr") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Nothing, String}},
             _openapi_object["linked_crr"],
             false,
@@ -84,7 +90,7 @@ function _decode(::Type{PointToPointBid}, _openapi_raw, _openapi_validate::Bool)
             "linked_crr",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PointToPointBid(;
         id=_openapi_field_id,
@@ -134,7 +140,7 @@ end
 _encode(_openapi_value::PointToPointBid) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-115706c1fd00cf3cb701.json",
+        resource="https://openapi.invalid/schema/external-9e86f2e578e91d765116.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

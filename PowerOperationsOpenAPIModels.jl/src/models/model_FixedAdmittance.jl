@@ -30,7 +30,7 @@ function _decode(::Type{FixedAdmittance}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ef24ae0de4d72099f609.json",
+            resource="https://openapi.invalid/schema/external-31ef56d68cdca757adae.json",
             pointer="",
         ),
         _openapi_raw,
@@ -39,27 +39,36 @@ function _decode(::Type{FixedAdmittance}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "FixedAdmittance")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "FixedAdmittance"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "FixedAdmittance"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "FixedAdmittance"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "FixedAdmittance"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "FixedAdmittance"), false)
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "FixedAdmittance"),
+        false,
+    )
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "FixedAdmittance"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "FixedAdmittance"), false)
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, ShuntAdmittanceUnitBasis},
             _openapi_object["admittance_units"],
             false,
         ) : ABSENT
-    _openapi_field_y =
-        _decode(ComplexNumber, _required(_openapi_object, "Y", "FixedAdmittance"), false)
-    _openapi_field_base_power =
-        _decode(Float64, _required(_openapi_object, "base_power", "FixedAdmittance"), false)
+    _openapi_field_y = _decode_zoned(
+        ComplexNumber,
+        _required(_openapi_object, "Y", "FixedAdmittance"),
+        false,
+    )
+    _openapi_field_base_power = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "base_power", "FixedAdmittance"),
+        false,
+    )
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -77,7 +86,7 @@ function _decode(::Type{FixedAdmittance}, _openapi_raw, _openapi_validate::Bool)
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return FixedAdmittance(;
         id=_openapi_field_id,
@@ -126,7 +135,7 @@ end
 _encode(_openapi_value::FixedAdmittance) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ef24ae0de4d72099f609.json",
+        resource="https://openapi.invalid/schema/external-31ef56d68cdca757adae.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -15,7 +15,7 @@ function _decode(::Type{CapitalCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/CapitalCost",
         ),
         _openapi_raw,
@@ -23,14 +23,14 @@ function _decode(::Type{CapitalCost}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CapitalCost")
-    _openapi_field_capital_cost = _decode(
+    _openapi_field_capital_cost = _decode_zoned(
         ValueCurve,
         _required(_openapi_object, "capital_cost", "CapitalCost"),
         false,
     )
     _openapi_field_interconnection_cost =
         haskey(_openapi_object, "interconnection_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["interconnection_cost"],
             false,
@@ -39,7 +39,7 @@ function _decode(::Type{CapitalCost}, _openapi_raw, _openapi_validate::Bool)
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("capital_cost", "interconnection_cost") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return CapitalCost(;
         capital_cost=_openapi_field_capital_cost,
@@ -68,7 +68,7 @@ end
 _encode(_openapi_value::CapitalCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/CapitalCost",
     ),
     _encode_unvalidated(_openapi_value),

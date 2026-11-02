@@ -68,7 +68,7 @@ function _decode(::Type{ST8C}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5434f6c4745bbc69fcf5.json",
+            resource="https://openapi.invalid/schema/external-2c07398c60373350889c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -76,56 +76,66 @@ function _decode(::Type{ST8C}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ST8C")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "ST8C"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "ST8C"), false)
     _openapi_field_oel_flag =
-        _decode(Int64, _required(_openapi_object, "OEL_Flag", "ST8C"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "OEL_Flag", "ST8C"), false)
     _openapi_field_uel_flag =
-        _decode(Int64, _required(_openapi_object, "UEL_Flag", "ST8C"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "UEL_Flag", "ST8C"), false)
     _openapi_field_scl_flag =
-        _decode(Int64, _required(_openapi_object, "SCL_Flag", "ST8C"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "SCL_Flag", "ST8C"), false)
     _openapi_field_sw1_flag =
-        _decode(Int64, _required(_openapi_object, "SW1_Flag", "ST8C"), false)
-    _openapi_field_tr = _decode(Float64, _required(_openapi_object, "Tr", "ST8C"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "SW1_Flag", "ST8C"), false)
+    _openapi_field_tr =
+        _decode_zoned(Float64, _required(_openapi_object, "Tr", "ST8C"), false)
     _openapi_field_k_pr =
-        _decode(Float64, _required(_openapi_object, "K_pr", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_pr", "ST8C"), false)
     _openapi_field_k_ir =
-        _decode(Float64, _required(_openapi_object, "K_ir", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_ir", "ST8C"), false)
     _openapi_field_vpi_lim =
-        _decode(MinMax, _required(_openapi_object, "Vpi_lim", "ST8C"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Vpi_lim", "ST8C"), false)
     _openapi_field_k_pa =
-        _decode(Float64, _required(_openapi_object, "K_pa", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_pa", "ST8C"), false)
     _openapi_field_k_ia =
-        _decode(Float64, _required(_openapi_object, "K_ia", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_ia", "ST8C"), false)
     _openapi_field_va_lim =
-        _decode(MinMax, _required(_openapi_object, "Va_lim", "ST8C"), false)
-    _openapi_field_k_a = _decode(Float64, _required(_openapi_object, "K_a", "ST8C"), false)
-    _openapi_field_t_a = _decode(Float64, _required(_openapi_object, "T_a", "ST8C"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Va_lim", "ST8C"), false)
+    _openapi_field_k_a =
+        _decode_zoned(Float64, _required(_openapi_object, "K_a", "ST8C"), false)
+    _openapi_field_t_a =
+        _decode_zoned(Float64, _required(_openapi_object, "T_a", "ST8C"), false)
     _openapi_field_vr_lim =
-        _decode(MinMax, _required(_openapi_object, "Vr_lim", "ST8C"), false)
-    _openapi_field_k_f = _decode(Float64, _required(_openapi_object, "K_f", "ST8C"), false)
-    _openapi_field_t_f = _decode(Float64, _required(_openapi_object, "T_f", "ST8C"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Vr_lim", "ST8C"), false)
+    _openapi_field_k_f =
+        _decode_zoned(Float64, _required(_openapi_object, "K_f", "ST8C"), false)
+    _openapi_field_t_f =
+        _decode_zoned(Float64, _required(_openapi_object, "T_f", "ST8C"), false)
     _openapi_field_k_c1 =
-        _decode(Float64, _required(_openapi_object, "K_c1", "ST8C"), false)
-    _openapi_field_k_p = _decode(Float64, _required(_openapi_object, "K_p", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_c1", "ST8C"), false)
+    _openapi_field_k_p =
+        _decode_zoned(Float64, _required(_openapi_object, "K_p", "ST8C"), false)
     _openapi_field_k_i1 =
-        _decode(Float64, _required(_openapi_object, "K_i1", "ST8C"), false)
-    _openapi_field_x_l = _decode(Float64, _required(_openapi_object, "X_l", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_i1", "ST8C"), false)
+    _openapi_field_x_l =
+        _decode_zoned(Float64, _required(_openapi_object, "X_l", "ST8C"), false)
     _openapi_field_theta_p =
-        _decode(Float64, _required(_openapi_object, "theta_p", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "theta_p", "ST8C"), false)
     _openapi_field_vb1_max =
-        _decode(Float64, _required(_openapi_object, "VB1_max", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "VB1_max", "ST8C"), false)
     _openapi_field_k_c2 =
-        _decode(Float64, _required(_openapi_object, "K_c2", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_c2", "ST8C"), false)
     _openapi_field_k_i2 =
-        _decode(Float64, _required(_openapi_object, "K_i2", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_i2", "ST8C"), false)
     _openapi_field_vb2_max =
-        _decode(Float64, _required(_openapi_object, "VB2_max", "ST8C"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "VB2_max", "ST8C"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_field_ifd_ref =
         haskey(_openapi_object, "Ifd_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["Ifd_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["Ifd_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -159,7 +169,7 @@ function _decode(::Type{ST8C}, _openapi_raw, _openapi_validate::Bool)
             "Ifd_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ST8C(;
         id=_openapi_field_id,
@@ -264,7 +274,7 @@ end
 _encode(_openapi_value::ST8C) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-5434f6c4745bbc69fcf5.json",
+        resource="https://openapi.invalid/schema/external-2c07398c60373350889c.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

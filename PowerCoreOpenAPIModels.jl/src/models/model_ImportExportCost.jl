@@ -21,7 +21,7 @@ function _decode(::Type{ImportExportCost}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/ImportExportCost",
         ),
         _openapi_raw,
@@ -31,27 +31,27 @@ function _decode(::Type{ImportExportCost}, _openapi_raw, _openapi_validate::Bool
     _openapi_object = _object(_openapi_raw, "ImportExportCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(String, _openapi_object["cost_type"], false) : "IMPORTEXPORT"
+        _decode_zoned(String, _openapi_object["cost_type"], false) : "IMPORTEXPORT"
     _openapi_field_import_offer_curves =
         haskey(_openapi_object, "import_offer_curves") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CostCurve, Nothing},
             _openapi_object["import_offer_curves"],
             false,
         ) : ABSENT
     _openapi_field_export_offer_curves =
         haskey(_openapi_object, "export_offer_curves") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CostCurve, Nothing},
             _openapi_object["export_offer_curves"],
             false,
         ) : ABSENT
-    _openapi_field_energy_import_weekly_limit = _decode(
+    _openapi_field_energy_import_weekly_limit = _decode_zoned(
         Float64,
         _required(_openapi_object, "energy_import_weekly_limit", "ImportExportCost"),
         false,
     )
-    _openapi_field_energy_export_weekly_limit = _decode(
+    _openapi_field_energy_export_weekly_limit = _decode_zoned(
         Float64,
         _required(_openapi_object, "energy_export_weekly_limit", "ImportExportCost"),
         false,
@@ -66,7 +66,7 @@ function _decode(::Type{ImportExportCost}, _openapi_raw, _openapi_validate::Bool
             "energy_export_weekly_limit",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ImportExportCost(;
         cost_type=_openapi_field_cost_type,
@@ -110,7 +110,7 @@ end
 _encode(_openapi_value::ImportExportCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/ImportExportCost",
     ),
     _encode_unvalidated(_openapi_value),

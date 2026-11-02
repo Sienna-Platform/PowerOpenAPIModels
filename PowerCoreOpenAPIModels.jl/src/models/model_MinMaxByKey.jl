@@ -11,7 +11,7 @@ function _decode(::Type{MinMaxByKey}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/MinMaxByKey",
         ),
         _openapi_raw,
@@ -23,7 +23,7 @@ function _decode(::Type{MinMaxByKey}, _openapi_raw, _openapi_validate::Bool)
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in () && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(MinMax, _openapi_item, false)
+            _decode_zoned(MinMax, _openapi_item, false)
     end
     return MinMaxByKey(; additional_properties=_openapi_additional_properties)
 end
@@ -42,7 +42,7 @@ end
 _encode(_openapi_value::MinMaxByKey) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/MinMaxByKey",
     ),
     _encode_unvalidated(_openapi_value),

@@ -23,7 +23,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/ImportExportTimeSeriesCost",
         ),
         _openapi_raw,
@@ -31,22 +31,22 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ImportExportTimeSeriesCost")
-    _openapi_field_cost_type = _decode(
+    _openapi_field_cost_type = _decode_zoned(
         String,
         _required(_openapi_object, "cost_type", "ImportExportTimeSeriesCost"),
         false,
     )
-    _openapi_field_import_offer_curves = _decode(
+    _openapi_field_import_offer_curves = _decode_zoned(
         CostCurve,
         _required(_openapi_object, "import_offer_curves", "ImportExportTimeSeriesCost"),
         false,
     )
-    _openapi_field_export_offer_curves = _decode(
+    _openapi_field_export_offer_curves = _decode_zoned(
         CostCurve,
         _required(_openapi_object, "export_offer_curves", "ImportExportTimeSeriesCost"),
         false,
     )
-    _openapi_field_energy_import_weekly_limit = _decode(
+    _openapi_field_energy_import_weekly_limit = _decode_zoned(
         Float64,
         _required(
             _openapi_object,
@@ -55,7 +55,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
         ),
         false,
     )
-    _openapi_field_energy_export_weekly_limit = _decode(
+    _openapi_field_energy_export_weekly_limit = _decode_zoned(
         Float64,
         _required(
             _openapi_object,
@@ -64,7 +64,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
         ),
         false,
     )
-    _openapi_field_ancillary_service_offers = _decode(
+    _openapi_field_ancillary_service_offers = _decode_zoned(
         Vector{Int64},
         _required(
             _openapi_object,
@@ -84,7 +84,7 @@ function _decode(::Type{ImportExportTimeSeriesCost}, _openapi_raw, _openapi_vali
             "ancillary_service_offers",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ImportExportTimeSeriesCost(;
         cost_type=_openapi_field_cost_type,
@@ -133,7 +133,7 @@ end
 _encode(_openapi_value::ImportExportTimeSeriesCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/ImportExportTimeSeriesCost",
     ),
     _encode_unvalidated(_openapi_value),

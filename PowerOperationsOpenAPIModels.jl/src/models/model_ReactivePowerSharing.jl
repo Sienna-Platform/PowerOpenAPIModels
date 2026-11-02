@@ -16,7 +16,7 @@ function _decode(::Type{ReactivePowerSharing}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-972fc55f92b07272c5b9.json",
+            resource="https://openapi.invalid/schema/external-72b7bde4fcfce28e1d53.json",
             pointer="",
         ),
         _openapi_raw,
@@ -24,15 +24,21 @@ function _decode(::Type{ReactivePowerSharing}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ReactivePowerSharing")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "ReactivePowerSharing"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "ReactivePowerSharing"), false)
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "ReactivePowerSharing"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "ReactivePowerSharing"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "name") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ReactivePowerSharing(;
         id=_openapi_field_id,
@@ -59,7 +65,7 @@ end
 _encode(_openapi_value::ReactivePowerSharing) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-972fc55f92b07272c5b9.json",
+        resource="https://openapi.invalid/schema/external-72b7bde4fcfce28e1d53.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

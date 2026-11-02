@@ -16,7 +16,7 @@ function _decode(::Type{HydroGenerationCost}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/HydroGenerationCost",
         ),
         _openapi_raw,
@@ -26,11 +26,12 @@ function _decode(::Type{HydroGenerationCost}, _openapi_raw, _openapi_validate::B
     _openapi_object = _object(_openapi_raw, "HydroGenerationCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(String, _openapi_object["cost_type"], false) : "HYDRO_GEN"
+        _decode_zoned(String, _openapi_object["cost_type"], false) : "HYDRO_GEN"
     _openapi_field_fixed =
         haskey(_openapi_object, "fixed") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["fixed"], false) : ABSENT
-    _openapi_field_variable_operation_cost = _decode(
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["fixed"], false) :
+        ABSENT
+    _openapi_field_variable_operation_cost = _decode_zoned(
         ProductionVariableCostCurve,
         _required(_openapi_object, "variable_operation_cost", "HydroGenerationCost"),
         false,
@@ -40,7 +41,7 @@ function _decode(::Type{HydroGenerationCost}, _openapi_raw, _openapi_validate::B
         String(_openapi_key) in ("cost_type", "fixed", "variable_operation_cost") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return HydroGenerationCost(;
         cost_type=_openapi_field_cost_type,
@@ -72,7 +73,7 @@ end
 _encode(_openapi_value::HydroGenerationCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/HydroGenerationCost",
     ),
     _encode_unvalidated(_openapi_value),

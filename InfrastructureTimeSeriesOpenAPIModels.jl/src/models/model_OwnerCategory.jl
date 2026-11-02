@@ -16,14 +16,14 @@ function _decode(::Type{OwnerCategory}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+            resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
             pointer="/\$defs/OwnerCategory",
         ),
         value,
         "decoding OwnerCategory";
         direction=:neutral,
     )
-    return OwnerCategory(_decode(String, value, false))
+    return OwnerCategory(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::OwnerCategory)
     output = _encode_unvalidated(value.value)
@@ -32,7 +32,7 @@ end
 _encode(value::OwnerCategory) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+        resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
         pointer="/\$defs/OwnerCategory",
     ),
     _encode_unvalidated(value),

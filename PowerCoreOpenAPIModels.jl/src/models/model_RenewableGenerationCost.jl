@@ -19,7 +19,7 @@ function _decode(::Type{RenewableGenerationCost}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/RenewableGenerationCost",
         ),
         _openapi_raw,
@@ -29,28 +29,29 @@ function _decode(::Type{RenewableGenerationCost}, _openapi_raw, _openapi_validat
     _openapi_object = _object(_openapi_raw, "RenewableGenerationCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(String, _openapi_object["cost_type"], false) : "RENEWABLE"
+        _decode_zoned(String, _openapi_object["cost_type"], false) : "RENEWABLE"
     _openapi_field_curtailment_cost =
         haskey(_openapi_object, "curtailment_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CostCurve, Nothing},
             _openapi_object["curtailment_cost"],
             false,
         ) : ABSENT
-    _openapi_field_variable_operation_cost = _decode(
+    _openapi_field_variable_operation_cost = _decode_zoned(
         CostCurve,
         _required(_openapi_object, "variable_operation_cost", "RenewableGenerationCost"),
         false,
     )
     _openapi_field_fixed =
         haskey(_openapi_object, "fixed") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["fixed"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["fixed"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("cost_type", "curtailment_cost", "variable_operation_cost", "fixed") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return RenewableGenerationCost(;
         cost_type=_openapi_field_cost_type,
@@ -87,7 +88,7 @@ end
 _encode(_openapi_value::RenewableGenerationCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/RenewableGenerationCost",
     ),
     _encode_unvalidated(_openapi_value),

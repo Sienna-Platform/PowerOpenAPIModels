@@ -28,7 +28,7 @@ function _decode(::Type{STAB1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ce362a89391157c751e7.json",
+            resource="https://openapi.invalid/schema/external-bee7b9dfb1c8be49f0ca.json",
             pointer="",
         ),
         _openapi_raw,
@@ -36,23 +36,28 @@ function _decode(::Type{STAB1}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "STAB1")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "STAB1"), false)
-    _openapi_field_kt = _decode(Float64, _required(_openapi_object, "KT", "STAB1"), false)
-    _openapi_field_t = _decode(Float64, _required(_openapi_object, "T", "STAB1"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "STAB1"), false)
+    _openapi_field_kt =
+        _decode_zoned(Float64, _required(_openapi_object, "KT", "STAB1"), false)
+    _openapi_field_t =
+        _decode_zoned(Float64, _required(_openapi_object, "T", "STAB1"), false)
     _openapi_field_t1t3 =
-        _decode(Float64, _required(_openapi_object, "T1T3", "STAB1"), false)
-    _openapi_field_t3 = _decode(Float64, _required(_openapi_object, "T3", "STAB1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T1T3", "STAB1"), false)
+    _openapi_field_t3 =
+        _decode_zoned(Float64, _required(_openapi_object, "T3", "STAB1"), false)
     _openapi_field_t2t4 =
-        _decode(Float64, _required(_openapi_object, "T2T4", "STAB1"), false)
-    _openapi_field_t4 = _decode(Float64, _required(_openapi_object, "T4", "STAB1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T2T4", "STAB1"), false)
+    _openapi_field_t4 =
+        _decode_zoned(Float64, _required(_openapi_object, "T4", "STAB1"), false)
     _openapi_field_h_lim =
-        _decode(Float64, _required(_openapi_object, "H_lim", "STAB1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "H_lim", "STAB1"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "KT", "T", "T1T3", "T3", "T2T4", "T4", "H_lim") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return STAB1(;
         id=_openapi_field_id,
@@ -97,7 +102,7 @@ end
 _encode(_openapi_value::STAB1) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ce362a89391157c751e7.json",
+        resource="https://openapi.invalid/schema/external-bee7b9dfb1c8be49f0ca.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

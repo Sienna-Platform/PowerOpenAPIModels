@@ -21,7 +21,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7d6f23bd98d2d98c3542.json",
+            resource="https://openapi.invalid/schema/external-f2a5e3fa571823652af7.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,12 +29,12 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SaturationOutputCurrentLimiter")
-    _openapi_field_i_max = _decode(
+    _openapi_field_i_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "I_max", "SaturationOutputCurrentLimiter"),
         false,
     )
-    _openapi_field_kw = _decode(
+    _openapi_field_kw = _decode_zoned(
         Float64,
         _required(_openapi_object, "kw", "SaturationOutputCurrentLimiter"),
         false,
@@ -43,7 +43,7 @@ function _decode(
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("I_max", "kw") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SaturationOutputCurrentLimiter(;
         i_max=_openapi_field_i_max,
@@ -70,7 +70,7 @@ end
 _encode(_openapi_value::SaturationOutputCurrentLimiter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7d6f23bd98d2d98c3542.json",
+        resource="https://openapi.invalid/schema/external-f2a5e3fa571823652af7.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

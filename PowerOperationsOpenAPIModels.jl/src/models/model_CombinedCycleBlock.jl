@@ -19,7 +19,7 @@ function _decode(::Type{CombinedCycleBlock}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-c7dbc93a37107f177a6b.json",
+            resource="https://openapi.invalid/schema/external-67686ea8f335176d539d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -28,17 +28,20 @@ function _decode(::Type{CombinedCycleBlock}, _openapi_raw, _openapi_validate::Bo
     )
     _openapi_object = _object(_openapi_raw, "CombinedCycleBlock")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "CombinedCycleBlock"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "CombinedCycleBlock"), false)
-    _openapi_field_configuration = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "id", "CombinedCycleBlock"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "CombinedCycleBlock"),
+        false,
+    )
+    _openapi_field_configuration = _decode_zoned(
         CombinedCycleConfiguration,
         _required(_openapi_object, "configuration", "CombinedCycleBlock"),
         false,
     )
     _openapi_field_heat_recovery_to_steam_factor =
         haskey(_openapi_object, "heat_recovery_to_steam_factor") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["heat_recovery_to_steam_factor"],
             false,
@@ -48,7 +51,7 @@ function _decode(::Type{CombinedCycleBlock}, _openapi_raw, _openapi_validate::Bo
         String(_openapi_key) in
         ("id", "name", "configuration", "heat_recovery_to_steam_factor") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return CombinedCycleBlock(;
         id=_openapi_field_id,
@@ -85,7 +88,7 @@ end
 _encode(_openapi_value::CombinedCycleBlock) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-c7dbc93a37107f177a6b.json",
+        resource="https://openapi.invalid/schema/external-67686ea8f335176d539d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

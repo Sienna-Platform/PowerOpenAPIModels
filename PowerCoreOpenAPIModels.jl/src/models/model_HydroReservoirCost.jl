@@ -15,7 +15,7 @@ function _decode(::Type{HydroReservoirCost}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/HydroReservoirCost",
         ),
         _openapi_raw,
@@ -25,32 +25,35 @@ function _decode(::Type{HydroReservoirCost}, _openapi_raw, _openapi_validate::Bo
     _openapi_object = _object(_openapi_raw, "HydroReservoirCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(String, _openapi_object["cost_type"], false) : "HYDRO_RES"
+        _decode_zoned(String, _openapi_object["cost_type"], false) : "HYDRO_RES"
     _openapi_field_level_shortage_cost =
         haskey(_openapi_object, "level_shortage_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["level_shortage_cost"],
             false,
         ) : ABSENT
     _openapi_field_level_surplus_cost =
         haskey(_openapi_object, "level_surplus_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["level_surplus_cost"],
             false,
         ) : ABSENT
     _openapi_field_spillage_cost =
         haskey(_openapi_object, "spillage_cost") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["spillage_cost"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["spillage_cost"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("cost_type", "level_shortage_cost", "level_surplus_cost", "spillage_cost") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return HydroReservoirCost(;
         cost_type=_openapi_field_cost_type,
@@ -89,7 +92,7 @@ end
 _encode(_openapi_value::HydroReservoirCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/HydroReservoirCost",
     ),
     _encode_unvalidated(_openapi_value),

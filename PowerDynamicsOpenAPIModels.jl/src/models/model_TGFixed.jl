@@ -18,7 +18,7 @@ function _decode(::Type{TGFixed}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7f5410cba8662b90d4c6.json",
+            resource="https://openapi.invalid/schema/external-27c8cb8ba9bba3f2505b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,17 +26,19 @@ function _decode(::Type{TGFixed}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TGFixed")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "TGFixed"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "TGFixed"), false)
     _openapi_field_efficiency =
-        _decode(Float64, _required(_openapi_object, "efficiency", "TGFixed"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "efficiency", "TGFixed"), false)
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "efficiency", "P_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TGFixed(;
         id=_openapi_field_id,
@@ -66,7 +68,7 @@ end
 _encode(_openapi_value::TGFixed) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7f5410cba8662b90d4c6.json",
+        resource="https://openapi.invalid/schema/external-27c8cb8ba9bba3f2505b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

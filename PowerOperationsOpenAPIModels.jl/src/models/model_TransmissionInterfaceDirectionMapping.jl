@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-75b72899f43bdcd79310.json",
+            resource="https://openapi.invalid/schema/external-5835c6de27d435d348d6.json",
             pointer="/properties/direction_mapping",
         ),
         _openapi_raw,
@@ -28,7 +28,7 @@ function _decode(
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in () && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Int64, _openapi_item, false)
+            _decode_zoned(Int64, _openapi_item, false)
     end
     return TransmissionInterfaceDirectionMapping(;
         additional_properties=_openapi_additional_properties,
@@ -49,7 +49,7 @@ end
 _encode(_openapi_value::TransmissionInterfaceDirectionMapping) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-75b72899f43bdcd79310.json",
+        resource="https://openapi.invalid/schema/external-5835c6de27d435d348d6.json",
         pointer="/properties/direction_mapping",
     ),
     _encode_unvalidated(_openapi_value),

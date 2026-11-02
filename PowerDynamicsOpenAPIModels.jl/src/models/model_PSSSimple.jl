@@ -18,7 +18,7 @@ function _decode(::Type{PSSSimple}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b6e0cd44a8c262341580.json",
+            resource="https://openapi.invalid/schema/external-1a1c174903d04218588a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,16 +26,17 @@ function _decode(::Type{PSSSimple}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PSSSimple")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "PSSSimple"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "PSSSimple"), false)
     _openapi_field_k_omega =
-        _decode(Float64, _required(_openapi_object, "K_omega", "PSSSimple"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_omega", "PSSSimple"), false)
     _openapi_field_k_p =
-        _decode(Float64, _required(_openapi_object, "K_p", "PSSSimple"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K_p", "PSSSimple"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "K_omega", "K_p") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return PSSSimple(;
         id=_openapi_field_id,
@@ -65,7 +66,7 @@ end
 _encode(_openapi_value::PSSSimple) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b6e0cd44a8c262341580.json",
+        resource="https://openapi.invalid/schema/external-1a1c174903d04218588a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

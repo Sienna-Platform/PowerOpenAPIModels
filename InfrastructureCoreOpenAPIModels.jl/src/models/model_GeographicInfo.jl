@@ -13,7 +13,7 @@ function _decode(::Type{GeographicInfo}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a3a65c50006879b42862.json",
+            resource="https://openapi.invalid/schema/external-332340d8df76e9664135.json",
             pointer="",
         ),
         _openapi_raw,
@@ -22,8 +22,8 @@ function _decode(::Type{GeographicInfo}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "GeographicInfo")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "GeographicInfo"), false)
-    _openapi_field_geo_json = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "id", "GeographicInfo"), false)
+    _openapi_field_geo_json = _decode_zoned(
         GeographicInfoGeoJson,
         _required(_openapi_object, "geo_json", "GeographicInfo"),
         false,
@@ -32,7 +32,7 @@ function _decode(::Type{GeographicInfo}, _openapi_raw, _openapi_validate::Bool)
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "geo_json") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return GeographicInfo(;
         id=_openapi_field_id,
@@ -59,7 +59,7 @@ end
 _encode(_openapi_value::GeographicInfo) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a3a65c50006879b42862.json",
+        resource="https://openapi.invalid/schema/external-332340d8df76e9664135.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

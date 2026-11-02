@@ -34,7 +34,7 @@ function _decode(::Type{OnlineReserve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0d0173e39860f5449a95.json",
+            resource="https://openapi.invalid/schema/external-a06c058eb4ad85265fe6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -43,47 +43,59 @@ function _decode(::Type{OnlineReserve}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "OnlineReserve")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "OnlineReserve"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "OnlineReserve"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "OnlineReserve"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "OnlineReserve"), false)
     _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "OnlineReserve"), false)
-    _openapi_field_time_frame =
-        _decode(Float64, _required(_openapi_object, "time_frame", "OnlineReserve"), false)
+        _decode_zoned(Bool, _required(_openapi_object, "available", "OnlineReserve"), false)
+    _openapi_field_time_frame = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "time_frame", "OnlineReserve"),
+        false,
+    )
     _openapi_field_requirement =
         haskey(_openapi_object, "requirement") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["requirement"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["requirement"],
+            false,
+        ) : ABSENT
     _openapi_field_variable =
         haskey(_openapi_object, "variable") ?
-        _decode(Union{Absent, CostCurve, Nothing}, _openapi_object["variable"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, CostCurve, Nothing},
+            _openapi_object["variable"],
+            false,
+        ) : ABSENT
     _openapi_field_sustained_time =
         haskey(_openapi_object, "sustained_time") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["sustained_time"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["sustained_time"],
+            false,
+        ) : ABSENT
     _openapi_field_max_output_fraction =
         haskey(_openapi_object, "max_output_fraction") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_output_fraction"],
             false,
         ) : ABSENT
     _openapi_field_max_participation_factor =
         haskey(_openapi_object, "max_participation_factor") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_participation_factor"],
             false,
         ) : ABSENT
     _openapi_field_deployed_fraction =
         haskey(_openapi_object, "deployed_fraction") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["deployed_fraction"],
             false,
         ) : ABSENT
-    _openapi_field_reserve_direction = _decode(
+    _openapi_field_reserve_direction = _decode_zoned(
         ReserveDirection,
         _required(_openapi_object, "reserve_direction", "OnlineReserve"),
         false,
@@ -104,7 +116,7 @@ function _decode(::Type{OnlineReserve}, _openapi_raw, _openapi_validate::Bool)
             "reserve_direction",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return OnlineReserve(;
         id=_openapi_field_id,
@@ -168,7 +180,7 @@ end
 _encode(_openapi_value::OnlineReserve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-0d0173e39860f5449a95.json",
+        resource="https://openapi.invalid/schema/external-a06c058eb4ad85265fe6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

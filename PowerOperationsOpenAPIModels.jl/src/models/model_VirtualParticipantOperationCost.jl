@@ -23,14 +23,14 @@ function _decode(::Type{VirtualParticipantOperationCost}, value, _openapi_valida
             "MARKET_BID" => (
                 MarketBidCost,
                 (
-                    resource="https://openapi.invalid/schema/external-4ef1fa5e7782c05d7c1e.json",
+                    resource="https://openapi.invalid/schema/external-6c7b899e6ece5010f78a.json",
                     pointer="/\$defs/MarketBidCost",
                 ),
             ),
             "MARKET_BID_TIME_SERIES" => (
                 MarketBidTimeSeriesCost,
                 (
-                    resource="https://openapi.invalid/schema/external-4ef1fa5e7782c05d7c1e.json",
+                    resource="https://openapi.invalid/schema/external-6c7b899e6ece5010f78a.json",
                     pointer="/\$defs/MarketBidTimeSeriesCost",
                 ),
             ),

@@ -23,14 +23,14 @@ function _decode(::Type{HydroStorageGenerationCost}, value, _openapi_validate::B
             "HYDRO_GEN" => (
                 HydroGenerationCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/HydroGenerationCost",
                 ),
             ),
             "STORAGE" => (
                 StorageCost,
                 (
-                    resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+                    resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
                     pointer="/\$defs/StorageCost",
                 ),
             ),

@@ -16,14 +16,14 @@ function _decode(::Type{UnitSystem}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/UnitSystem",
         ),
         value,
         "decoding UnitSystem";
         direction=:neutral,
     )
-    return UnitSystem(_decode(String, value, false))
+    return UnitSystem(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::UnitSystem)
     output = _encode_unvalidated(value.value)
@@ -32,7 +32,7 @@ end
 _encode(value::UnitSystem) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/UnitSystem",
     ),
     _encode_unvalidated(value),

@@ -53,7 +53,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-d809ec800229ced94193.json",
+            resource="https://openapi.invalid/schema/external-d638f198e33807ab6d5b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -61,95 +61,114 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "NonSequentialTimeSeries")
-    _openapi_field_association_id = _decode(
+    _openapi_field_association_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "association_id", "NonSequentialTimeSeries"),
         false,
     )
-    _openapi_field_owner_id = _decode(
+    _openapi_field_owner_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "owner_id", "NonSequentialTimeSeries"),
         false,
     )
-    _openapi_field_owner_type = _decode(
+    _openapi_field_owner_type = _decode_zoned(
         String,
         _required(_openapi_object, "owner_type", "NonSequentialTimeSeries"),
         false,
     )
-    _openapi_field_owner_category = _decode(
+    _openapi_field_owner_category = _decode_zoned(
         OwnerCategory,
         _required(_openapi_object, "owner_category", "NonSequentialTimeSeries"),
         false,
     )
-    _openapi_field_time_series_type = _decode(
+    _openapi_field_time_series_type = _decode_zoned(
         String,
         _required(_openapi_object, "time_series_type", "NonSequentialTimeSeries"),
         false,
     )
-    _openapi_field_name = _decode(
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "NonSequentialTimeSeries"),
         false,
     )
-    _openapi_field_features = _decode(
+    _openapi_field_features = _decode_zoned(
         TimeSeriesFeatures,
         _required(_openapi_object, "features", "NonSequentialTimeSeries"),
         false,
     )
-    _openapi_field_uri =
-        _decode(String, _required(_openapi_object, "uri", "NonSequentialTimeSeries"), false)
+    _openapi_field_uri = _decode_zoned(
+        String,
+        _required(_openapi_object, "uri", "NonSequentialTimeSeries"),
+        false,
+    )
     _openapi_field_timestamps_uri =
         haskey(_openapi_object, "timestamps_uri") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["timestamps_uri"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["timestamps_uri"],
+            false,
+        ) : ABSENT
     _openapi_field_data_hash =
         haskey(_openapi_object, "data_hash") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["data_hash"], false) :
+        _decode_zoned(Union{Absent, Nothing, String}, _openapi_object["data_hash"], false) :
         ABSENT
-    _openapi_field_element_type = _decode(
+    _openapi_field_element_type = _decode_zoned(
         String,
         _required(_openapi_object, "element_type", "NonSequentialTimeSeries"),
         false,
     )
-    _openapi_field_element_shape = _decode(
+    _openapi_field_element_shape = _decode_zoned(
         Vector{Int64},
         _required(_openapi_object, "element_shape", "NonSequentialTimeSeries"),
         false,
     )
     _openapi_field_array_shape =
         haskey(_openapi_object, "array_shape") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["array_shape"],
             false,
         ) : ABSENT
     _openapi_field_units =
         haskey(_openapi_object, "units") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["units"], false) : ABSENT
+        _decode_zoned(Union{Absent, Nothing, String}, _openapi_object["units"], false) :
+        ABSENT
     _openapi_field_quantity_kind =
         haskey(_openapi_object, "quantity_kind") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["quantity_kind"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["quantity_kind"],
+            false,
+        ) : ABSENT
     _openapi_field_unit_system =
         haskey(_openapi_object, "unit_system") ?
-        _decode(Union{Absent, Nothing, UnitSystem}, _openapi_object["unit_system"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, UnitSystem},
+            _openapi_object["unit_system"],
+            false,
+        ) : ABSENT
     _openapi_field_time_reference =
         haskey(_openapi_object, "time_reference") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["time_reference"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["time_reference"],
+            false,
+        ) : ABSENT
     _openapi_field_component_field =
         haskey(_openapi_object, "component_field") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["component_field"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["component_field"],
+            false,
+        ) : ABSENT
     _openapi_field_application_data =
         haskey(_openapi_object, "application_data") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, String},
             _openapi_object["application_data"],
             false,
         ) : ABSENT
-    _openapi_field_length = _decode(
+    _openapi_field_length = _decode_zoned(
         Int64,
         _required(_openapi_object, "length", "NonSequentialTimeSeries"),
         false,
@@ -179,7 +198,7 @@ function _decode(::Type{NonSequentialTimeSeries}, _openapi_raw, _openapi_validat
             "length",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return NonSequentialTimeSeries(;
         association_id=_openapi_field_association_id,
@@ -278,7 +297,7 @@ end
 _encode(_openapi_value::NonSequentialTimeSeries) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-d809ec800229ced94193.json",
+        resource="https://openapi.invalid/schema/external-d638f198e33807ab6d5b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -13,7 +13,7 @@ function _decode(::Type{ChargeDischarge}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/ChargeDischarge",
         ),
         _openapi_raw,
@@ -21,15 +21,21 @@ function _decode(::Type{ChargeDischarge}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ChargeDischarge")
-    _openapi_field_charge =
-        _decode(Float64, _required(_openapi_object, "charge", "ChargeDischarge"), false)
-    _openapi_field_discharge =
-        _decode(Float64, _required(_openapi_object, "discharge", "ChargeDischarge"), false)
+    _openapi_field_charge = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "charge", "ChargeDischarge"),
+        false,
+    )
+    _openapi_field_discharge = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "discharge", "ChargeDischarge"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("charge", "discharge") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ChargeDischarge(;
         charge=_openapi_field_charge,
@@ -56,7 +62,7 @@ end
 _encode(_openapi_value::ChargeDischarge) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/ChargeDischarge",
     ),
     _encode_unvalidated(_openapi_value),

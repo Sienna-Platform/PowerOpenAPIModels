@@ -19,7 +19,7 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-51736d6ddd9477589116.json",
+            resource="https://openapi.invalid/schema/external-f5778999e21d1763d644.json",
             pointer="",
         ),
         _openapi_raw,
@@ -28,12 +28,12 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "Substation")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "Substation"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "Substation"), false)
     _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "Substation"), false)
+        _decode_zoned(String, _required(_openapi_object, "name", "Substation"), false)
     _openapi_field_number =
-        _decode(Int64, _required(_openapi_object, "number", "Substation"), false)
-    _openapi_field_grounding_resistance = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "number", "Substation"), false)
+    _openapi_field_grounding_resistance = _decode_zoned(
         Float64,
         _required(_openapi_object, "grounding_resistance", "Substation"),
         false,
@@ -42,7 +42,7 @@ function _decode(::Type{Substation}, _openapi_raw, _openapi_validate::Bool)
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "name", "number", "grounding_resistance") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return Substation(;
         id=_openapi_field_id,
@@ -77,7 +77,7 @@ end
 _encode(_openapi_value::Substation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-51736d6ddd9477589116.json",
+        resource="https://openapi.invalid/schema/external-f5778999e21d1763d644.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

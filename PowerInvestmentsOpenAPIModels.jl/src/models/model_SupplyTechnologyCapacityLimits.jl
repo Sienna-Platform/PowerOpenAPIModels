@@ -12,7 +12,7 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ad19715a084dd2bcf1cf.json",
+            resource="https://openapi.invalid/schema/external-b1fd408b212eecae5da7.json",
             pointer="/properties/capacity_limits",
         ),
         value,
@@ -23,14 +23,14 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8c6756d537f0626fc160.json",
+            resource="https://openapi.invalid/schema/external-bfc1913848b9653bdd99.json",
             pointer="/\$defs/MinMax",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(MinMax, value, false))
+            push!(matches, _decode_zoned(MinMax, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -38,14 +38,14 @@ function _decode(::Type{SupplyTechnologyCapacityLimits}, value, _openapi_validat
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8c6756d537f0626fc160.json",
+            resource="https://openapi.invalid/schema/external-bfc1913848b9653bdd99.json",
             pointer="/\$defs/MinMaxByKey",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(MinMaxByKey, value, false))
+            push!(matches, _decode_zoned(MinMaxByKey, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -64,7 +64,7 @@ end
 _encode(value::SupplyTechnologyCapacityLimits) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ad19715a084dd2bcf1cf.json",
+        resource="https://openapi.invalid/schema/external-b1fd408b212eecae5da7.json",
         pointer="/properties/capacity_limits",
     ),
     _encode_unvalidated(value),

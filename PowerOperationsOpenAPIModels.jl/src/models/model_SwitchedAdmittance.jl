@@ -42,7 +42,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-5b61654c0dec8572b477.json",
+            resource="https://openapi.invalid/schema/external-ce5800123d6a2deb0830.json",
             pointer="",
         ),
         _openapi_raw,
@@ -51,76 +51,85 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
     )
     _openapi_object = _object(_openapi_raw, "SwitchedAdmittance")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "SwitchedAdmittance"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "SwitchedAdmittance"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "SwitchedAdmittance"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "SwitchedAdmittance"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "SwitchedAdmittance"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "SwitchedAdmittance"),
+        false,
+    )
     _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "SwitchedAdmittance"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "bus", "SwitchedAdmittance"), false)
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, ShuntAdmittanceUnitBasis},
             _openapi_object["admittance_units"],
             false,
         ) : ABSENT
     _openapi_field_number_engaged =
         haskey(_openapi_object, "number_engaged") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["number_engaged"],
             false,
         ) : ABSENT
     _openapi_field_number_of_steps =
         haskey(_openapi_object, "number_of_steps") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["number_of_steps"],
             false,
         ) : ABSENT
     _openapi_field_y_increase =
         haskey(_openapi_object, "Y_increase") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{ComplexNumber}},
             _openapi_object["Y_increase"],
             false,
         ) : ABSENT
     _openapi_field_solved_admittance =
         haskey(_openapi_object, "solved_admittance") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["solved_admittance"],
             false,
         ) : ABSENT
     _openapi_field_voltage_limits =
         haskey(_openapi_object, "voltage_limits") ?
-        _decode(Union{Absent, Nothing, MinMax}, _openapi_object["voltage_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, MinMax},
+            _openapi_object["voltage_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_reactive_power_range_limits =
         haskey(_openapi_object, "reactive_power_range_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_range_limits"],
             false,
         ) : ABSENT
     _openapi_field_control_mode =
         haskey(_openapi_object, "control_mode") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, SwitchedAdmittanceControlMode},
             _openapi_object["control_mode"],
             false,
         ) : ABSENT
     _openapi_field_regulated_bus_number =
         haskey(_openapi_object, "regulated_bus_number") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Int64, Nothing},
             _openapi_object["regulated_bus_number"],
             false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -144,7 +153,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SwitchedAdmittance(;
         id=_openapi_field_id,
@@ -223,7 +232,7 @@ end
 _encode(_openapi_value::SwitchedAdmittance) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-5b61654c0dec8572b477.json",
+        resource="https://openapi.invalid/schema/external-ce5800123d6a2deb0830.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

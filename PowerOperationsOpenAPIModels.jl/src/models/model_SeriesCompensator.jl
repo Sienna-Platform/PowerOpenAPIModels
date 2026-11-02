@@ -48,7 +48,7 @@ function _decode(::Type{SeriesCompensator}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-a11a39bc189f8f9a62dc.json",
+            resource="https://openapi.invalid/schema/external-3c193ab2bbf145ff72b8.json",
             pointer="",
         ),
         _openapi_raw,
@@ -57,78 +57,87 @@ function _decode(::Type{SeriesCompensator}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "SeriesCompensator")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "SeriesCompensator"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "SeriesCompensator"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "SeriesCompensator"), false)
-    _openapi_field_active_power_flow = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "id", "SeriesCompensator"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "SeriesCompensator"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "SeriesCompensator"),
+        false,
+    )
+    _openapi_field_active_power_flow = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power_flow", "SeriesCompensator"),
         false,
     )
-    _openapi_field_reactive_power_flow = _decode(
+    _openapi_field_reactive_power_flow = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power_flow", "SeriesCompensator"),
         false,
     )
     _openapi_field_arc =
-        _decode(Int64, _required(_openapi_object, "arc", "SeriesCompensator"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "arc", "SeriesCompensator"), false)
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "r", "SeriesCompensator"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "r", "SeriesCompensator"), false)
     _openapi_field_x =
-        _decode(Float64, _required(_openapi_object, "x", "SeriesCompensator"), false)
-    _openapi_field_rating =
-        _decode(Float64, _required(_openapi_object, "rating", "SeriesCompensator"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "x", "SeriesCompensator"), false)
+    _openapi_field_rating = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "rating", "SeriesCompensator"),
+        false,
+    )
     _openapi_field_control_mode =
         haskey(_openapi_object, "control_mode") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, SeriesCompensatorControlMode},
             _openapi_object["control_mode"],
             false,
         ) : ABSENT
     _openapi_field_reactance_limits =
         haskey(_openapi_object, "reactance_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactance_limits"],
             false,
         ) : ABSENT
     _openapi_field_active_power_flow_setpoint =
         haskey(_openapi_object, "active_power_flow_setpoint") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["active_power_flow_setpoint"],
             false,
         ) : ABSENT
     _openapi_field_rating_b =
         haskey(_openapi_object, "rating_b") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
         ABSENT
     _openapi_field_rating_c =
         haskey(_openapi_object, "rating_c") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["rating_c"], false) :
         ABSENT
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, OperationalFlowLimit},
             _openapi_object["operational_flow_limit"],
             false,
         ) : ABSENT
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "SeriesCompensator"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "SeriesCompensator"),
         false,
     )
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             false,
@@ -156,7 +165,7 @@ function _decode(::Type{SeriesCompensator}, _openapi_raw, _openapi_validate::Boo
             "parameter_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SeriesCompensator(;
         id=_openapi_field_id,
@@ -243,7 +252,7 @@ end
 _encode(_openapi_value::SeriesCompensator) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-a11a39bc189f8f9a62dc.json",
+        resource="https://openapi.invalid/schema/external-3c193ab2bbf145ff72b8.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

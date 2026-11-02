@@ -39,7 +39,7 @@ function _decode(::Type{SimpleMarconatoMachine}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-223307577995866def53.json",
+            resource="https://openapi.invalid/schema/external-a5c26dac6b0b25e7e68f.json",
             pointer="",
         ),
         _openapi_raw,
@@ -47,55 +47,67 @@ function _decode(::Type{SimpleMarconatoMachine}, _openapi_raw, _openapi_validate
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SimpleMarconatoMachine")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "SimpleMarconatoMachine"), false)
-    _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "SimpleMarconatoMachine"), false)
-    _openapi_field_xd =
-        _decode(Float64, _required(_openapi_object, "Xd", "SimpleMarconatoMachine"), false)
-    _openapi_field_xq =
-        _decode(Float64, _required(_openapi_object, "Xq", "SimpleMarconatoMachine"), false)
-    _openapi_field_xd_p = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "SimpleMarconatoMachine"),
+        false,
+    )
+    _openapi_field_r = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R", "SimpleMarconatoMachine"),
+        false,
+    )
+    _openapi_field_xd = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd", "SimpleMarconatoMachine"),
+        false,
+    )
+    _openapi_field_xq = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xq", "SimpleMarconatoMachine"),
+        false,
+    )
+    _openapi_field_xd_p = _decode_zoned(
         Float64,
         _required(_openapi_object, "Xd_p", "SimpleMarconatoMachine"),
         false,
     )
-    _openapi_field_xq_p = _decode(
+    _openapi_field_xq_p = _decode_zoned(
         Float64,
         _required(_openapi_object, "Xq_p", "SimpleMarconatoMachine"),
         false,
     )
-    _openapi_field_xd_pp = _decode(
+    _openapi_field_xd_pp = _decode_zoned(
         Float64,
         _required(_openapi_object, "Xd_pp", "SimpleMarconatoMachine"),
         false,
     )
-    _openapi_field_xq_pp = _decode(
+    _openapi_field_xq_pp = _decode_zoned(
         Float64,
         _required(_openapi_object, "Xq_pp", "SimpleMarconatoMachine"),
         false,
     )
-    _openapi_field_td0_p = _decode(
+    _openapi_field_td0_p = _decode_zoned(
         Float64,
         _required(_openapi_object, "Td0_p", "SimpleMarconatoMachine"),
         false,
     )
-    _openapi_field_tq0_p = _decode(
+    _openapi_field_tq0_p = _decode_zoned(
         Float64,
         _required(_openapi_object, "Tq0_p", "SimpleMarconatoMachine"),
         false,
     )
-    _openapi_field_td0_pp = _decode(
+    _openapi_field_td0_pp = _decode_zoned(
         Float64,
         _required(_openapi_object, "Td0_pp", "SimpleMarconatoMachine"),
         false,
     )
-    _openapi_field_tq0_pp = _decode(
+    _openapi_field_tq0_pp = _decode_zoned(
         Float64,
         _required(_openapi_object, "Tq0_pp", "SimpleMarconatoMachine"),
         false,
     )
-    _openapi_field_t_aa = _decode(
+    _openapi_field_t_aa = _decode_zoned(
         Float64,
         _required(_openapi_object, "T_AA", "SimpleMarconatoMachine"),
         false,
@@ -118,7 +130,7 @@ function _decode(::Type{SimpleMarconatoMachine}, _openapi_raw, _openapi_validate
             "T_AA",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SimpleMarconatoMachine(;
         id=_openapi_field_id,
@@ -178,7 +190,7 @@ end
 _encode(_openapi_value::SimpleMarconatoMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-223307577995866def53.json",
+        resource="https://openapi.invalid/schema/external-a5c26dac6b0b25e7e68f.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

@@ -100,7 +100,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-45cce4abd7b31cda6601.json",
+            resource="https://openapi.invalid/schema/external-52542e0b9087d3688052.json",
             pointer="",
         ),
         _openapi_raw,
@@ -109,70 +109,76 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
     )
     _openapi_object = _object(_openapi_raw, "TwoTerminalLCCLine")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "TwoTerminalLCCLine"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "TwoTerminalLCCLine"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "TwoTerminalLCCLine"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "TwoTerminalLCCLine"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "TwoTerminalLCCLine"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "TwoTerminalLCCLine"),
+        false,
+    )
     _openapi_field_arc =
-        _decode(Int64, _required(_openapi_object, "arc", "TwoTerminalLCCLine"), false)
-    _openapi_field_active_power_flow = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "arc", "TwoTerminalLCCLine"), false)
+    _openapi_field_active_power_flow = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power_flow", "TwoTerminalLCCLine"),
         false,
     )
     _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "r", "TwoTerminalLCCLine"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "r", "TwoTerminalLCCLine"), false)
     _openapi_field_power_transfer_setpoint =
         haskey(_openapi_object, "power_transfer_setpoint") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["power_transfer_setpoint"],
             false,
         ) : ABSENT
     _openapi_field_current_transfer_setpoint =
         haskey(_openapi_object, "current_transfer_setpoint") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["current_transfer_setpoint"],
             false,
         ) : ABSENT
-    _openapi_field_scheduled_dc_voltage = _decode(
+    _openapi_field_scheduled_dc_voltage = _decode_zoned(
         Float64,
         _required(_openapi_object, "scheduled_dc_voltage", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_rectifier_bridges = _decode(
+    _openapi_field_rectifier_bridges = _decode_zoned(
         Int64,
         _required(_openapi_object, "rectifier_bridges", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_rectifier_delay_angle_limits = _decode(
+    _openapi_field_rectifier_delay_angle_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "rectifier_delay_angle_limits", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_rectifier_rc = _decode(
+    _openapi_field_rectifier_rc = _decode_zoned(
         Float64,
         _required(_openapi_object, "rectifier_rc", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_rectifier_xc = _decode(
+    _openapi_field_rectifier_xc = _decode_zoned(
         Float64,
         _required(_openapi_object, "rectifier_xc", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_rectifier_base_voltage = _decode(
+    _openapi_field_rectifier_base_voltage = _decode_zoned(
         Float64,
         _required(_openapi_object, "rectifier_base_voltage", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_inverter_bridges = _decode(
+    _openapi_field_inverter_bridges = _decode_zoned(
         Int64,
         _required(_openapi_object, "inverter_bridges", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_inverter_extinction_angle_limits = _decode(
+    _openapi_field_inverter_extinction_angle_limits = _decode_zoned(
         MinMax,
         _required(
             _openapi_object,
@@ -181,173 +187,183 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
         ),
         false,
     )
-    _openapi_field_inverter_rc = _decode(
+    _openapi_field_inverter_rc = _decode_zoned(
         Float64,
         _required(_openapi_object, "inverter_rc", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_inverter_xc = _decode(
+    _openapi_field_inverter_xc = _decode_zoned(
         Float64,
         _required(_openapi_object, "inverter_xc", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_inverter_base_voltage = _decode(
+    _openapi_field_inverter_base_voltage = _decode_zoned(
         Float64,
         _required(_openapi_object, "inverter_base_voltage", "TwoTerminalLCCLine"),
         false,
     )
     _openapi_field_control_mode =
         haskey(_openapi_object, "control_mode") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, LCCControlMode, Nothing},
             _openapi_object["control_mode"],
             false,
         ) : ABSENT
     _openapi_field_switch_mode_voltage =
         haskey(_openapi_object, "switch_mode_voltage") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["switch_mode_voltage"],
             false,
         ) : ABSENT
     _openapi_field_compounding_resistance =
         haskey(_openapi_object, "compounding_resistance") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["compounding_resistance"],
             false,
         ) : ABSENT
     _openapi_field_min_compounding_voltage =
         haskey(_openapi_object, "min_compounding_voltage") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["min_compounding_voltage"],
             false,
         ) : ABSENT
     _openapi_field_rectifier_transformer_ratio =
         haskey(_openapi_object, "rectifier_transformer_ratio") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_transformer_ratio"],
             false,
         ) : ABSENT
     _openapi_field_rectifier_tap_setting =
         haskey(_openapi_object, "rectifier_tap_setting") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_tap_setting"],
             false,
         ) : ABSENT
     _openapi_field_rectifier_tap_limits =
         haskey(_openapi_object, "rectifier_tap_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["rectifier_tap_limits"],
             false,
         ) : ABSENT
     _openapi_field_rectifier_tap_step =
         haskey(_openapi_object, "rectifier_tap_step") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_tap_step"],
             false,
         ) : ABSENT
     _openapi_field_rectifier_delay_angle =
         haskey(_openapi_object, "rectifier_delay_angle") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_delay_angle"],
             false,
         ) : ABSENT
     _openapi_field_rectifier_capacitor_reactance =
         haskey(_openapi_object, "rectifier_capacitor_reactance") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["rectifier_capacitor_reactance"],
             false,
         ) : ABSENT
     _openapi_field_inverter_transformer_ratio =
         haskey(_openapi_object, "inverter_transformer_ratio") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_transformer_ratio"],
             false,
         ) : ABSENT
     _openapi_field_inverter_tap_setting =
         haskey(_openapi_object, "inverter_tap_setting") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_tap_setting"],
             false,
         ) : ABSENT
     _openapi_field_inverter_tap_limits =
         haskey(_openapi_object, "inverter_tap_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["inverter_tap_limits"],
             false,
         ) : ABSENT
     _openapi_field_inverter_tap_step =
         haskey(_openapi_object, "inverter_tap_step") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_tap_step"],
             false,
         ) : ABSENT
     _openapi_field_inverter_extinction_angle =
         haskey(_openapi_object, "inverter_extinction_angle") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_extinction_angle"],
             false,
         ) : ABSENT
     _openapi_field_inverter_capacitor_reactance =
         haskey(_openapi_object, "inverter_capacitor_reactance") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["inverter_capacitor_reactance"],
             false,
         ) : ABSENT
-    _openapi_field_rating =
-        _decode(Float64, _required(_openapi_object, "rating", "TwoTerminalLCCLine"), false)
+    _openapi_field_rating = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "rating", "TwoTerminalLCCLine"),
+        false,
+    )
     _openapi_field_rating_from =
         haskey(_openapi_object, "rating_from") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_from"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["rating_from"],
+            false,
+        ) : ABSENT
     _openapi_field_rating_to =
         haskey(_openapi_object, "rating_to") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["rating_to"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["rating_to"],
+            false,
+        ) : ABSENT
     _openapi_field_operational_flow_limit =
         haskey(_openapi_object, "operational_flow_limit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, OperationalFlowLimit},
             _openapi_object["operational_flow_limit"],
             false,
         ) : ABSENT
     _openapi_field_reactive_power_limits_from =
         haskey(_openapi_object, "reactive_power_limits_from") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits_from"],
             false,
         ) : ABSENT
     _openapi_field_reactive_power_limits_to =
         haskey(_openapi_object, "reactive_power_limits_to") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, MinMax},
             _openapi_object["reactive_power_limits_to"],
             false,
         ) : ABSENT
     _openapi_field_loss =
         haskey(_openapi_object, "loss") ?
-        _decode(Union{Absent, LossCurve, Nothing}, _openapi_object["loss"], false) : ABSENT
-    _openapi_field_base_power = _decode(
+        _decode_zoned(Union{Absent, LossCurve, Nothing}, _openapi_object["loss"], false) :
+        ABSENT
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "TwoTerminalLCCLine"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "TwoTerminalLCCLine"),
         false,
@@ -401,7 +417,7 @@ function _decode(::Type{TwoTerminalLCCLine}, _openapi_raw, _openapi_validate::Bo
             "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TwoTerminalLCCLine(;
         id=_openapi_field_id,
@@ -610,7 +626,7 @@ end
 _encode(_openapi_value::TwoTerminalLCCLine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-45cce4abd7b31cda6601.json",
+        resource="https://openapi.invalid/schema/external-52542e0b9087d3688052.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

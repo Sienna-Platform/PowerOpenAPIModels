@@ -18,12 +18,12 @@ Records data provenance for a component's field values: which organization or da
 Base.@kwdef struct DataSource <: APIModel
     id::Int64
     organization::Union{Absent, Nothing, String} = ABSENT
-    retrieved_at::Dates.DateTime
+    retrieved_at::TimeZones.ZonedDateTime
     dataset::Union{Absent, Nothing, String} = ABSENT
     url::Union{Absent, Nothing, String} = ABSENT
     version::Union{Absent, Nothing, String} = ABSENT
     license::Union{Absent, Nothing, String} = ABSENT
-    published_at::Union{Absent, Union{Dates.DateTime, Nothing}} = ABSENT
+    published_at::Union{Absent, Union{Nothing, TimeZones.ZonedDateTime}} = ABSENT
     confidence::Union{Absent, Nothing, String} = ABSENT
     recorded_by::Union{Absent, Union{Nothing, String}} = ABSENT
     fields::Vector{String}
@@ -35,7 +35,7 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ee90207aa26447aee0bb.json",
+            resource="https://openapi.invalid/schema/external-3b24162d2e805e3f7b67.json",
             pointer="",
         ),
         _openapi_raw,
@@ -44,52 +44,68 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "DataSource")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "DataSource"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "DataSource"), false)
     _openapi_field_organization =
         haskey(_openapi_object, "organization") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["organization"], false) :
-        ABSENT
-    _openapi_field_retrieved_at = _decode(
-        Dates.DateTime,
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["organization"],
+            false,
+        ) : ABSENT
+    _openapi_field_retrieved_at = _decode_zoned(
+        TimeZones.ZonedDateTime,
         _required(_openapi_object, "retrieved_at", "DataSource"),
         false,
     )
     _openapi_field_dataset =
         haskey(_openapi_object, "dataset") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["dataset"], false) : ABSENT
+        _decode_zoned(Union{Absent, Nothing, String}, _openapi_object["dataset"], false) :
+        ABSENT
     _openapi_field_url =
         haskey(_openapi_object, "url") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["url"], false) : ABSENT
+        _decode_zoned(Union{Absent, Nothing, String}, _openapi_object["url"], false) :
+        ABSENT
     _openapi_field_version =
         haskey(_openapi_object, "version") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["version"], false) : ABSENT
+        _decode_zoned(Union{Absent, Nothing, String}, _openapi_object["version"], false) :
+        ABSENT
     _openapi_field_license =
         haskey(_openapi_object, "license") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["license"], false) : ABSENT
+        _decode_zoned(Union{Absent, Nothing, String}, _openapi_object["license"], false) :
+        ABSENT
     _openapi_field_published_at =
         haskey(_openapi_object, "published_at") ?
-        _decode(
-            Union{Absent, Union{Dates.DateTime, Nothing}},
+        _decode_zoned(
+            Union{Absent, Union{Nothing, TimeZones.ZonedDateTime}},
             _openapi_object["published_at"],
             false,
         ) : ABSENT
     _openapi_field_confidence =
         haskey(_openapi_object, "confidence") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["confidence"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["confidence"],
+            false,
+        ) : ABSENT
     _openapi_field_recorded_by =
         haskey(_openapi_object, "recorded_by") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Nothing, String}},
             _openapi_object["recorded_by"],
             false,
         ) : ABSENT
-    _openapi_field_fields =
-        _decode(Vector{String}, _required(_openapi_object, "fields", "DataSource"), false)
+    _openapi_field_fields = _decode_zoned(
+        Vector{String},
+        _required(_openapi_object, "fields", "DataSource"),
+        false,
+    )
     _openapi_field_extra =
         haskey(_openapi_object, "extra") ?
-        _decode(Union{Absent, DataSourceExtra, Nothing}, _openapi_object["extra"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, DataSourceExtra, Nothing},
+            _openapi_object["extra"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -107,7 +123,7 @@ function _decode(::Type{DataSource}, _openapi_raw, _openapi_validate::Bool)
             "extra",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return DataSource(;
         id=_openapi_field_id,
@@ -164,7 +180,7 @@ end
 _encode(_openapi_value::DataSource) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ee90207aa26447aee0bb.json",
+        resource="https://openapi.invalid/schema/external-3b24162d2e805e3f7b67.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

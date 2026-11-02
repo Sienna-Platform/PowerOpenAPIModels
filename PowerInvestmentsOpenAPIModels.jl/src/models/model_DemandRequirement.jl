@@ -35,7 +35,7 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-0a5f097d89af1062c56e.json",
+            resource="https://openapi.invalid/schema/external-6195854905af537ab71d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -44,50 +44,66 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "DemandRequirement")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "DemandRequirement"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "DemandRequirement"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "DemandRequirement"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "DemandRequirement"),
+        false,
+    )
     _openapi_field_available =
         haskey(_openapi_object, "available") ?
-        _decode(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) : ABSENT
-    _openapi_field_power_systems_type = _decode(
+        _decode_zoned(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) :
+        ABSENT
+    _openapi_field_power_systems_type = _decode_zoned(
         String,
         _required(_openapi_object, "power_systems_type", "DemandRequirement"),
         false,
     )
     _openapi_field_conformity =
         haskey(_openapi_object, "conformity") ?
-        _decode(Union{Absent, Nothing, String}, _openapi_object["conformity"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["conformity"],
+            false,
+        ) : ABSENT
     _openapi_field_growth_rate =
         haskey(_openapi_object, "growth_rate") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["growth_rate"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["growth_rate"],
+            false,
+        ) : ABSENT
     _openapi_field_new_demand_mw =
         haskey(_openapi_object, "new_demand_mw") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["new_demand_mw"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["new_demand_mw"],
+            false,
+        ) : ABSENT
     _openapi_field_new_construction_year =
         haskey(_openapi_object, "new_construction_year") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Int64, Nothing},
             _openapi_object["new_construction_year"],
             false,
         ) : ABSENT
     _openapi_field_region =
         haskey(_openapi_object, "region") ?
-        _decode(Union{Absent, Nothing, Vector{Int64}}, _openapi_object["region"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Nothing, Vector{Int64}},
+            _openapi_object["region"],
+            false,
+        ) : ABSENT
     _openapi_field_value_of_lost_load =
         haskey(_openapi_object, "value_of_lost_load") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["value_of_lost_load"],
             false,
         ) : ABSENT
     _openapi_field_unserved_demand_curve =
         haskey(_openapi_object, "unserved_demand_curve") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, DemandRequirementUnservedDemandCurve, Nothing},
             _openapi_object["unserved_demand_curve"],
             false,
@@ -108,7 +124,7 @@ function _decode(::Type{DemandRequirement}, _openapi_raw, _openapi_validate::Boo
             "unserved_demand_curve",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return DemandRequirement(;
         id=_openapi_field_id,
@@ -172,7 +188,7 @@ end
 _encode(_openapi_value::DemandRequirement) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-0a5f097d89af1062c56e.json",
+        resource="https://openapi.invalid/schema/external-6195854905af537ab71d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

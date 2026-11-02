@@ -34,7 +34,7 @@ function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8b104e91e08853d4b252.json",
+            resource="https://openapi.invalid/schema/external-1b2ea3414ec340a689f5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -42,49 +42,61 @@ function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "BilateralTransaction")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "BilateralTransaction"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "BilateralTransaction"), false)
-    _openapi_field_seller_id = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "BilateralTransaction"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "BilateralTransaction"),
+        false,
+    )
+    _openapi_field_seller_id = _decode_zoned(
         String,
         _required(_openapi_object, "seller_id", "BilateralTransaction"),
         false,
     )
-    _openapi_field_buyer_id = _decode(
+    _openapi_field_buyer_id = _decode_zoned(
         String,
         _required(_openapi_object, "buyer_id", "BilateralTransaction"),
         false,
     )
-    _openapi_field_from_id =
-        _decode(Int64, _required(_openapi_object, "from_id", "BilateralTransaction"), false)
+    _openapi_field_from_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "from_id", "BilateralTransaction"),
+        false,
+    )
     _openapi_field_to_id =
         haskey(_openapi_object, "to_id") ?
-        _decode(Union{Absent, Union{Int64, Nothing}}, _openapi_object["to_id"], false) :
-        ABSENT
-    _openapi_field_product = _decode(
+        _decode_zoned(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["to_id"],
+            false,
+        ) : ABSENT
+    _openapi_field_product = _decode_zoned(
         BilateralProduct,
         _required(_openapi_object, "product", "BilateralTransaction"),
         false,
     )
-    _openapi_field_market = _decode(
+    _openapi_field_market = _decode_zoned(
         MarketStage,
         _required(_openapi_object, "market", "BilateralTransaction"),
         false,
     )
-    _openapi_field_confirmation = _decode(
+    _openapi_field_confirmation = _decode_zoned(
         BilateralConfirmation,
         _required(_openapi_object, "confirmation", "BilateralTransaction"),
         false,
     )
-    _openapi_field_max_active_power = _decode(
+    _openapi_field_max_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "max_active_power", "BilateralTransaction"),
         false,
     )
     _openapi_field_active_power_association_id =
         haskey(_openapi_object, "active_power_association_id") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["active_power_association_id"],
             false,
@@ -105,7 +117,7 @@ function _decode(::Type{BilateralTransaction}, _openapi_raw, _openapi_validate::
             "active_power_association_id",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return BilateralTransaction(;
         id=_openapi_field_id,
@@ -163,7 +175,7 @@ end
 _encode(_openapi_value::BilateralTransaction) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8b104e91e08853d4b252.json",
+        resource="https://openapi.invalid/schema/external-1b2ea3414ec340a689f5.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

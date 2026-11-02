@@ -26,7 +26,7 @@ function _decode(::Type{SEXS}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-1ff8dff56ddc1df5147a.json",
+            resource="https://openapi.invalid/schema/external-7b0dd1644f964186de5c.json",
             pointer="",
         ),
         _openapi_raw,
@@ -34,23 +34,28 @@ function _decode(::Type{SEXS}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SEXS")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "SEXS"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "SEXS"), false)
     _openapi_field_ta_tb =
-        _decode(Float64, _required(_openapi_object, "Ta_Tb", "SEXS"), false)
-    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "SEXS"), false)
-    _openapi_field_k = _decode(Float64, _required(_openapi_object, "K", "SEXS"), false)
-    _openapi_field_te = _decode(Float64, _required(_openapi_object, "Te", "SEXS"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Ta_Tb", "SEXS"), false)
+    _openapi_field_tb =
+        _decode_zoned(Float64, _required(_openapi_object, "Tb", "SEXS"), false)
+    _openapi_field_k =
+        _decode_zoned(Float64, _required(_openapi_object, "K", "SEXS"), false)
+    _openapi_field_te =
+        _decode_zoned(Float64, _required(_openapi_object, "Te", "SEXS"), false)
     _openapi_field_v_lim =
-        _decode(MinMax, _required(_openapi_object, "V_lim", "SEXS"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "V_lim", "SEXS"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("id", "Ta_Tb", "Tb", "K", "Te", "V_lim", "V_ref") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return SEXS(;
         id=_openapi_field_id,
@@ -92,7 +97,7 @@ end
 _encode(_openapi_value::SEXS) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-1ff8dff56ddc1df5147a.json",
+        resource="https://openapi.invalid/schema/external-7b0dd1644f964186de5c.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

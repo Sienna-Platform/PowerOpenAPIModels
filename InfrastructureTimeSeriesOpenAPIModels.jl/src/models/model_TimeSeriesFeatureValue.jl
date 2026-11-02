@@ -12,7 +12,7 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+            resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
             pointer="/\$defs/TimeSeriesFeatureValue",
         ),
         value,
@@ -23,14 +23,14 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+            resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
             pointer="/\$defs/TimeSeriesFeatureValue/anyOf/0",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(Int64, value, false))
+            push!(matches, _decode_zoned(Int64, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -38,14 +38,14 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+            resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
             pointer="/\$defs/TimeSeriesFeatureValue/anyOf/1",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(Float64, value, false))
+            push!(matches, _decode_zoned(Float64, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -53,14 +53,14 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+            resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
             pointer="/\$defs/TimeSeriesFeatureValue/anyOf/2",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(Bool, value, false))
+            push!(matches, _decode_zoned(Bool, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -68,14 +68,14 @@ function _decode(::Type{TimeSeriesFeatureValue}, value, _openapi_validate::Bool)
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+            resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
             pointer="/\$defs/TimeSeriesFeatureValue/anyOf/3",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(String, value, false))
+            push!(matches, _decode_zoned(String, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -91,7 +91,7 @@ end
 _encode(value::TimeSeriesFeatureValue) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-cfad214ee20f7aceaf00.json",
+        resource="https://openapi.invalid/schema/external-08eea82ff06196a76dbf.json",
         pointer="/\$defs/TimeSeriesFeatureValue",
     ),
     _encode_unvalidated(value),

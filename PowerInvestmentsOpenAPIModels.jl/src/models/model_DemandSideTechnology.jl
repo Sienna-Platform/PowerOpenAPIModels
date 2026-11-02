@@ -43,7 +43,7 @@ function _decode(::Type{DemandSideTechnology}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ac2daf5438c8bc705bb9.json",
+            resource="https://openapi.invalid/schema/external-51aedeaae1475aeec613.json",
             pointer="",
         ),
         _openapi_raw,
@@ -51,84 +51,99 @@ function _decode(::Type{DemandSideTechnology}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "DemandSideTechnology")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "DemandSideTechnology"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "DemandSideTechnology"), false)
-    _openapi_field_available = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "DemandSideTechnology"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "DemandSideTechnology"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "DemandSideTechnology"),
         false,
     )
     _openapi_field_region =
         haskey(_openapi_object, "region") ?
-        _decode(Union{Absent, Nothing, Vector{Int64}}, _openapi_object["region"], false) :
-        ABSENT
-    _openapi_field_power_systems_type = _decode(
+        _decode_zoned(
+            Union{Absent, Nothing, Vector{Int64}},
+            _openapi_object["region"],
+            false,
+        ) : ABSENT
+    _openapi_field_power_systems_type = _decode_zoned(
         String,
         _required(_openapi_object, "power_systems_type", "DemandSideTechnology"),
         false,
     )
     _openapi_field_technology_efficiency =
         haskey(_openapi_object, "technology_efficiency") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["technology_efficiency"],
             false,
         ) : ABSENT
     _openapi_field_price_per_unit =
         haskey(_openapi_object, "price_per_unit") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, DemandSideTechnologyPricePerUnit, Nothing},
             _openapi_object["price_per_unit"],
             false,
         ) : ABSENT
     _openapi_field_min_power =
         haskey(_openapi_object, "min_power") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["min_power"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["min_power"],
+            false,
+        ) : ABSENT
     _openapi_field_peak_demand_mw =
         haskey(_openapi_object, "peak_demand_mw") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["peak_demand_mw"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["peak_demand_mw"],
+            false,
+        ) : ABSENT
     _openapi_field_max_demand_delay =
         haskey(_openapi_object, "max_demand_delay") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_demand_delay"],
             false,
         ) : ABSENT
     _openapi_field_max_demand_advance =
         haskey(_openapi_object, "max_demand_advance") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_demand_advance"],
             false,
         ) : ABSENT
     _openapi_field_demand_energy_efficiency =
         haskey(_openapi_object, "demand_energy_efficiency") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["demand_energy_efficiency"],
             false,
         ) : ABSENT
     _openapi_field_shift_variable_cost =
         haskey(_openapi_object, "shift_variable_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, DemandSideTechnologyShiftVariableCost, Nothing},
             _openapi_object["shift_variable_cost"],
             false,
         ) : ABSENT
     _openapi_field_curtailment_cost =
         haskey(_openapi_object, "curtailment_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, DemandSideTechnologyCurtailmentCost, Nothing},
             _openapi_object["curtailment_cost"],
             false,
         ) : ABSENT
     _openapi_field_max_demand_curtailment =
         haskey(_openapi_object, "max_demand_curtailment") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_demand_curtailment"],
             false,
@@ -153,7 +168,7 @@ function _decode(::Type{DemandSideTechnology}, _openapi_raw, _openapi_validate::
             "max_demand_curtailment",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return DemandSideTechnology(;
         id=_openapi_field_id,
@@ -239,7 +254,7 @@ end
 _encode(_openapi_value::DemandSideTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ac2daf5438c8bc705bb9.json",
+        resource="https://openapi.invalid/schema/external-51aedeaae1475aeec613.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

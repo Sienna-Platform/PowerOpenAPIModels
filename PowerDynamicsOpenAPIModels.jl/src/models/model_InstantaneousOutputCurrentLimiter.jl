@@ -21,7 +21,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b06b368a1b8ddba1b7da.json",
+            resource="https://openapi.invalid/schema/external-683e4db674ff8a8a5a6a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -29,12 +29,12 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "InstantaneousOutputCurrentLimiter")
-    _openapi_field_id_max = _decode(
+    _openapi_field_id_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "Id_max", "InstantaneousOutputCurrentLimiter"),
         false,
     )
-    _openapi_field_iq_max = _decode(
+    _openapi_field_iq_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "Iq_max", "InstantaneousOutputCurrentLimiter"),
         false,
@@ -43,7 +43,7 @@ function _decode(
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("Id_max", "Iq_max") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return InstantaneousOutputCurrentLimiter(;
         id_max=_openapi_field_id_max,
@@ -70,7 +70,7 @@ end
 _encode(_openapi_value::InstantaneousOutputCurrentLimiter) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b06b368a1b8ddba1b7da.json",
+        resource="https://openapi.invalid/schema/external-683e4db674ff8a8a5a6a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

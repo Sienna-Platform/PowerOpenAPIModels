@@ -17,14 +17,14 @@ function _decode(::Type{MotorLoadMotorTechnology}, value, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-62c91f9e45377c593c28.json",
+            resource="https://openapi.invalid/schema/external-9bb2e58500da49e4ee6c.json",
             pointer="/properties/motor_technology",
         ),
         value,
         "decoding MotorLoadMotorTechnology";
         direction=:neutral,
     )
-    return MotorLoadMotorTechnology(_decode(String, value, false))
+    return MotorLoadMotorTechnology(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::MotorLoadMotorTechnology)
     output = _encode_unvalidated(value.value)
@@ -33,7 +33,7 @@ end
 _encode(value::MotorLoadMotorTechnology) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-62c91f9e45377c593c28.json",
+        resource="https://openapi.invalid/schema/external-9bb2e58500da49e4ee6c.json",
         pointer="/properties/motor_technology",
     ),
     _encode_unvalidated(value),

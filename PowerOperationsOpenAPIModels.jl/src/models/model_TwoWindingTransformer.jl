@@ -26,7 +26,7 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9422a1c9dcb0fef66a67.json",
+            resource="https://openapi.invalid/schema/external-693176c7e0a0b225879d.json",
             pointer="",
         ),
         _openapi_raw,
@@ -34,32 +34,38 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TwoWindingTransformer")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "TwoWindingTransformer"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "TwoWindingTransformer"), false)
-    _openapi_field_circuit = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "TwoWindingTransformer"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "TwoWindingTransformer"),
+        false,
+    )
+    _openapi_field_circuit = _decode_zoned(
         Int64,
         _required(_openapi_object, "circuit", "TwoWindingTransformer"),
         false,
     )
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, AdmittanceUnitBasis, Nothing},
             _openapi_object["admittance_units"],
             false,
         ) : ABSENT
     _openapi_field_magnetizing_shunt =
         haskey(_openapi_object, "magnetizing_shunt") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, ComplexNumber},
             _openapi_object["magnetizing_shunt"],
             false,
         ) : ABSENT
     _openapi_field_shunt_location =
         haskey(_openapi_object, "shunt_location") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, TwoWindingTransformerShuntLocation},
             _openapi_object["shunt_location"],
             false,
@@ -75,7 +81,7 @@ function _decode(::Type{TwoWindingTransformer}, _openapi_raw, _openapi_validate:
             "shunt_location",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TwoWindingTransformer(;
         id=_openapi_field_id,
@@ -120,7 +126,7 @@ end
 _encode(_openapi_value::TwoWindingTransformer) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-9422a1c9dcb0fef66a67.json",
+        resource="https://openapi.invalid/schema/external-693176c7e0a0b225879d.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

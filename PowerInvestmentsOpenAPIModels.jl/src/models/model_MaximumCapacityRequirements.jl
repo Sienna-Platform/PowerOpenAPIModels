@@ -23,7 +23,7 @@ function _decode(::Type{MaximumCapacityRequirements}, _openapi_raw, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-76212fce03942562c0e3.json",
+            resource="https://openapi.invalid/schema/external-efe01904b38f03c0555a.json",
             pointer="",
         ),
         _openapi_raw,
@@ -31,28 +31,31 @@ function _decode(::Type{MaximumCapacityRequirements}, _openapi_raw, _openapi_val
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "MaximumCapacityRequirements")
-    _openapi_field_id = _decode(
+    _openapi_field_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "id", "MaximumCapacityRequirements"),
         false,
     )
-    _openapi_field_name = _decode(
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "MaximumCapacityRequirements"),
         false,
     )
-    _openapi_field_available = _decode(
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "MaximumCapacityRequirements"),
         false,
     )
     _openapi_field_target_year =
         haskey(_openapi_object, "target_year") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["target_year"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Int64, Nothing},
+            _openapi_object["target_year"],
+            false,
+        ) : ABSENT
     _openapi_field_max_capacity_mw =
         haskey(_openapi_object, "max_capacity_mw") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["max_capacity_mw"],
             false,
@@ -62,7 +65,7 @@ function _decode(::Type{MaximumCapacityRequirements}, _openapi_raw, _openapi_val
         String(_openapi_key) in
         ("id", "name", "available", "target_year", "max_capacity_mw") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return MaximumCapacityRequirements(;
         id=_openapi_field_id,
@@ -100,7 +103,7 @@ end
 _encode(_openapi_value::MaximumCapacityRequirements) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-76212fce03942562c0e3.json",
+        resource="https://openapi.invalid/schema/external-efe01904b38f03c0555a.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

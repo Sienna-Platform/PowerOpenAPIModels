@@ -16,7 +16,7 @@ function _decode(::Type{InputOutputCurve}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/InputOutputCurve",
         ),
         _openapi_raw,
@@ -24,22 +24,28 @@ function _decode(::Type{InputOutputCurve}, _openapi_raw, _openapi_validate::Bool
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "InputOutputCurve")
-    _openapi_field_curve_type =
-        _decode(String, _required(_openapi_object, "curve_type", "InputOutputCurve"), false)
-    _openapi_field_function_data = _decode(
+    _openapi_field_curve_type = _decode_zoned(
+        String,
+        _required(_openapi_object, "curve_type", "InputOutputCurve"),
+        false,
+    )
+    _openapi_field_function_data = _decode_zoned(
         InputOutputCurveFunctionData,
         _required(_openapi_object, "function_data", "InputOutputCurve"),
         false,
     )
     _openapi_field_input_at_zero =
         haskey(_openapi_object, "input_at_zero") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["input_at_zero"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["input_at_zero"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("curve_type", "function_data", "input_at_zero") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return InputOutputCurve(;
         curve_type=_openapi_field_curve_type,
@@ -73,7 +79,7 @@ end
 _encode(_openapi_value::InputOutputCurve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/InputOutputCurve",
     ),
     _encode_unvalidated(_openapi_value),

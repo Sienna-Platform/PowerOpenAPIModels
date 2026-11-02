@@ -18,7 +18,7 @@ function _decode(::Type{ReducedOrderPLL}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ffdee3463c69e4c93f23.json",
+            resource="https://openapi.invalid/schema/external-5ffeca8abd991534beaa.json",
             pointer="",
         ),
         _openapi_raw,
@@ -26,17 +26,26 @@ function _decode(::Type{ReducedOrderPLL}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ReducedOrderPLL")
-    _openapi_field_omega_lp =
-        _decode(Float64, _required(_openapi_object, "omega_lp", "ReducedOrderPLL"), false)
-    _openapi_field_kp_pll =
-        _decode(Float64, _required(_openapi_object, "kp_pll", "ReducedOrderPLL"), false)
-    _openapi_field_ki_pll =
-        _decode(Float64, _required(_openapi_object, "ki_pll", "ReducedOrderPLL"), false)
+    _openapi_field_omega_lp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "omega_lp", "ReducedOrderPLL"),
+        false,
+    )
+    _openapi_field_kp_pll = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "kp_pll", "ReducedOrderPLL"),
+        false,
+    )
+    _openapi_field_ki_pll = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "ki_pll", "ReducedOrderPLL"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("omega_lp", "kp_pll", "ki_pll") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ReducedOrderPLL(;
         omega_lp=_openapi_field_omega_lp,
@@ -66,7 +75,7 @@ end
 _encode(_openapi_value::ReducedOrderPLL) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ffdee3463c69e4c93f23.json",
+        resource="https://openapi.invalid/schema/external-5ffeca8abd991534beaa.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

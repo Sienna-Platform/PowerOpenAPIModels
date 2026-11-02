@@ -16,7 +16,7 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6559e67bd15a2ef94f8a.json",
+            resource="https://openapi.invalid/schema/external-6605a29de35f5435fb7d.json",
             pointer="/properties/capacity_limits_charge",
         ),
         value,
@@ -27,14 +27,14 @@ function _decode(
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8c6756d537f0626fc160.json",
+            resource="https://openapi.invalid/schema/external-bfc1913848b9653bdd99.json",
             pointer="/\$defs/MinMax",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(MinMax, value, false))
+            push!(matches, _decode_zoned(MinMax, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -42,14 +42,14 @@ function _decode(
     if _schema_valid(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8c6756d537f0626fc160.json",
+            resource="https://openapi.invalid/schema/external-bfc1913848b9653bdd99.json",
             pointer="/\$defs/MinMaxByKey",
         ),
         value;
         direction=:neutral,
     )
         try
-            push!(matches, _decode(MinMaxByKey, value, false))
+            push!(matches, _decode_zoned(MinMaxByKey, value, false))
         catch error
             error isa DecodeError || rethrow()
         end
@@ -68,7 +68,7 @@ end
 _encode(value::StorageTechnologyCapacityLimitsCharge) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6559e67bd15a2ef94f8a.json",
+        resource="https://openapi.invalid/schema/external-6605a29de35f5435fb7d.json",
         pointer="/properties/capacity_limits_charge",
     ),
     _encode_unvalidated(value),

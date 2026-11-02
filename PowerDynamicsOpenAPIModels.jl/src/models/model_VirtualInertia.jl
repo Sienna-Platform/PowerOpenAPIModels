@@ -10,7 +10,7 @@ function _decode(::Type{VirtualInertia}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-ed00d26914255d6d77a0.json",
+            resource="https://openapi.invalid/schema/external-deada64929c3dcfc2f3e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -19,19 +19,23 @@ function _decode(::Type{VirtualInertia}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_object = _object(_openapi_raw, "VirtualInertia")
     _openapi_field_ta =
-        _decode(Float64, _required(_openapi_object, "Ta", "VirtualInertia"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Ta", "VirtualInertia"), false)
     _openapi_field_kd =
-        _decode(Float64, _required(_openapi_object, "kd", "VirtualInertia"), false)
-    _openapi_field_komega =
-        _decode(Float64, _required(_openapi_object, "komega", "VirtualInertia"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "kd", "VirtualInertia"), false)
+    _openapi_field_komega = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "komega", "VirtualInertia"),
+        false,
+    )
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("Ta", "kd", "komega", "P_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return VirtualInertia(;
         ta=_openapi_field_ta,
@@ -64,7 +68,7 @@ end
 _encode(_openapi_value::VirtualInertia) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-ed00d26914255d6d77a0.json",
+        resource="https://openapi.invalid/schema/external-deada64929c3dcfc2f3e.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

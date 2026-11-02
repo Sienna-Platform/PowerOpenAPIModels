@@ -18,7 +18,7 @@ function _decode(::Type{FixedForcedOutage}, _openapi_raw, _openapi_validate::Boo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-b11d9771efe617badb10.json",
+            resource="https://openapi.invalid/schema/external-f42090a0a06478bbe58e.json",
             pointer="",
         ),
         _openapi_raw,
@@ -27,22 +27,22 @@ function _decode(::Type{FixedForcedOutage}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_object = _object(_openapi_raw, "FixedForcedOutage")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "FixedForcedOutage"), false)
-    _openapi_field_outage_status = _decode(
+        _decode_zoned(Int64, _required(_openapi_object, "id", "FixedForcedOutage"), false)
+    _openapi_field_outage_status = _decode_zoned(
         Float64,
         _required(_openapi_object, "outage_status", "FixedForcedOutage"),
         false,
     )
     _openapi_field_monitored_components =
         haskey(_openapi_object, "monitored_components") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["monitored_components"],
             false,
         ) : ABSENT
     _openapi_field_identifier =
         haskey(_openapi_object, "identifier") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Nothing, String}},
             _openapi_object["identifier"],
             false,
@@ -52,7 +52,7 @@ function _decode(::Type{FixedForcedOutage}, _openapi_raw, _openapi_validate::Boo
         String(_openapi_key) in
         ("id", "outage_status", "monitored_components", "identifier") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return FixedForcedOutage(;
         id=_openapi_field_id,
@@ -89,7 +89,7 @@ end
 _encode(_openapi_value::FixedForcedOutage) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-b11d9771efe617badb10.json",
+        resource="https://openapi.invalid/schema/external-f42090a0a06478bbe58e.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

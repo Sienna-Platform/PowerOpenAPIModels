@@ -51,7 +51,7 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-97a297c5d1102e8e6458.json",
+            resource="https://openapi.invalid/schema/external-2a058ad9cbda6cdb4798.json",
             pointer="",
         ),
         _openapi_raw,
@@ -59,87 +59,105 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ThreeWindingTransformer")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "ThreeWindingTransformer"), false)
-    _openapi_field_name = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "ThreeWindingTransformer"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
         String,
         _required(_openapi_object, "name", "ThreeWindingTransformer"),
         false,
     )
-    _openapi_field_primary_circuit = _decode(
+    _openapi_field_primary_circuit = _decode_zoned(
         Int64,
         _required(_openapi_object, "primary_circuit", "ThreeWindingTransformer"),
         false,
     )
-    _openapi_field_secondary_circuit = _decode(
+    _openapi_field_secondary_circuit = _decode_zoned(
         Int64,
         _required(_openapi_object, "secondary_circuit", "ThreeWindingTransformer"),
         false,
     )
-    _openapi_field_tertiary_circuit = _decode(
+    _openapi_field_tertiary_circuit = _decode_zoned(
         Int64,
         _required(_openapi_object, "tertiary_circuit", "ThreeWindingTransformer"),
         false,
     )
-    _openapi_field_star_bus = _decode(
+    _openapi_field_star_bus = _decode_zoned(
         Int64,
         _required(_openapi_object, "star_bus", "ThreeWindingTransformer"),
         false,
     )
     _openapi_field_parameter_units =
         haskey(_openapi_object, "parameter_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, ImpedanceUnitBasis, Nothing},
             _openapi_object["parameter_units"],
             false,
         ) : ABSENT
     _openapi_field_r_12 =
         haskey(_openapi_object, "r_12") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["r_12"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["r_12"], false) :
+        ABSENT
     _openapi_field_x_12 =
         haskey(_openapi_object, "x_12") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["x_12"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["x_12"], false) :
+        ABSENT
     _openapi_field_r_23 =
         haskey(_openapi_object, "r_23") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["r_23"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["r_23"], false) :
+        ABSENT
     _openapi_field_x_23 =
         haskey(_openapi_object, "x_23") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["x_23"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["x_23"], false) :
+        ABSENT
     _openapi_field_r_31 =
         haskey(_openapi_object, "r_31") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["r_31"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["r_31"], false) :
+        ABSENT
     _openapi_field_x_31 =
         haskey(_openapi_object, "x_31") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["x_31"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["x_31"], false) :
+        ABSENT
     _openapi_field_base_power_12 =
         haskey(_openapi_object, "base_power_12") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_power_12"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["base_power_12"],
+            false,
+        ) : ABSENT
     _openapi_field_base_power_23 =
         haskey(_openapi_object, "base_power_23") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_power_23"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["base_power_23"],
+            false,
+        ) : ABSENT
     _openapi_field_base_power_31 =
         haskey(_openapi_object, "base_power_31") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["base_power_31"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["base_power_31"],
+            false,
+        ) : ABSENT
     _openapi_field_admittance_units =
         haskey(_openapi_object, "admittance_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, AdmittanceUnitBasis, Nothing},
             _openapi_object["admittance_units"],
             false,
         ) : ABSENT
     _openapi_field_magnetizing_shunt =
         haskey(_openapi_object, "magnetizing_shunt") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, ComplexNumber},
             _openapi_object["magnetizing_shunt"],
             false,
         ) : ABSENT
     _openapi_field_shunt_location =
         haskey(_openapi_object, "shunt_location") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, ThreeWindingTransformerShuntLocation},
             _openapi_object["shunt_location"],
             false,
@@ -168,7 +186,7 @@ function _decode(::Type{ThreeWindingTransformer}, _openapi_raw, _openapi_validat
             "shunt_location",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ThreeWindingTransformer(;
         id=_openapi_field_id,
@@ -266,7 +284,7 @@ end
 _encode(_openapi_value::ThreeWindingTransformer) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-97a297c5d1102e8e6458.json",
+        resource="https://openapi.invalid/schema/external-2a058ad9cbda6cdb4798.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

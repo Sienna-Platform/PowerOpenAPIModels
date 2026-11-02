@@ -18,7 +18,7 @@ function _decode(::Type{IncrementalCurve}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/IncrementalCurve",
         ),
         _openapi_raw,
@@ -26,27 +26,36 @@ function _decode(::Type{IncrementalCurve}, _openapi_raw, _openapi_validate::Bool
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "IncrementalCurve")
-    _openapi_field_curve_type =
-        _decode(String, _required(_openapi_object, "curve_type", "IncrementalCurve"), false)
-    _openapi_field_function_data = _decode(
+    _openapi_field_curve_type = _decode_zoned(
+        String,
+        _required(_openapi_object, "curve_type", "IncrementalCurve"),
+        false,
+    )
+    _openapi_field_function_data = _decode_zoned(
         IncrementalCurveFunctionData,
         _required(_openapi_object, "function_data", "IncrementalCurve"),
         false,
     )
     _openapi_field_initial_input =
         haskey(_openapi_object, "initial_input") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["initial_input"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["initial_input"],
+            false,
+        ) : ABSENT
     _openapi_field_input_at_zero =
         haskey(_openapi_object, "input_at_zero") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["input_at_zero"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["input_at_zero"],
+            false,
+        ) : ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("curve_type", "function_data", "initial_input", "input_at_zero") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return IncrementalCurve(;
         curve_type=_openapi_field_curve_type,
@@ -85,7 +94,7 @@ end
 _encode(_openapi_value::IncrementalCurve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/IncrementalCurve",
     ),
     _encode_unvalidated(_openapi_value),

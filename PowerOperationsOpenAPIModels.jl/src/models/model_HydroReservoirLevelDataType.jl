@@ -12,14 +12,14 @@ function _decode(::Type{HydroReservoirLevelDataType}, value, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-561192d415378b6442c0.json",
+            resource="https://openapi.invalid/schema/external-3f82357977e9fad971f3.json",
             pointer="/properties/level_data_type",
         ),
         value,
         "decoding HydroReservoirLevelDataType";
         direction=:neutral,
     )
-    return HydroReservoirLevelDataType(_decode(String, value, false))
+    return HydroReservoirLevelDataType(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::HydroReservoirLevelDataType)
     output = _encode_unvalidated(value.value)
@@ -28,7 +28,7 @@ end
 _encode(value::HydroReservoirLevelDataType) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-561192d415378b6442c0.json",
+        resource="https://openapi.invalid/schema/external-3f82357977e9fad971f3.json",
         pointer="/properties/level_data_type",
     ),
     _encode_unvalidated(value),

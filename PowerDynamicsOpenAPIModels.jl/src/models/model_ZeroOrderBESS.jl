@@ -36,7 +36,7 @@ function _decode(::Type{ZeroOrderBESS}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-f0a0edae1b5007a7bd6f.json",
+            resource="https://openapi.invalid/schema/external-3ec5ce1cf0325f5050d0.json",
             pointer="",
         ),
         _openapi_raw,
@@ -44,49 +44,50 @@ function _decode(::Type{ZeroOrderBESS}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ZeroOrderBESS")
-    _openapi_field_rated_voltage = _decode(
+    _openapi_field_rated_voltage = _decode_zoned(
         Float64,
         _required(_openapi_object, "rated_voltage", "ZeroOrderBESS"),
         false,
     )
-    _openapi_field_rated_current = _decode(
+    _openapi_field_rated_current = _decode_zoned(
         Float64,
         _required(_openapi_object, "rated_current", "ZeroOrderBESS"),
         false,
     )
-    _openapi_field_battery_voltage = _decode(
+    _openapi_field_battery_voltage = _decode_zoned(
         Float64,
         _required(_openapi_object, "battery_voltage", "ZeroOrderBESS"),
         false,
     )
-    _openapi_field_battery_resistance = _decode(
+    _openapi_field_battery_resistance = _decode_zoned(
         Float64,
         _required(_openapi_object, "battery_resistance", "ZeroOrderBESS"),
         false,
     )
-    _openapi_field_dc_dc_inductor = _decode(
+    _openapi_field_dc_dc_inductor = _decode_zoned(
         Float64,
         _required(_openapi_object, "dc_dc_inductor", "ZeroOrderBESS"),
         false,
     )
-    _openapi_field_dc_link_capacitance = _decode(
+    _openapi_field_dc_link_capacitance = _decode_zoned(
         Float64,
         _required(_openapi_object, "dc_link_capacitance", "ZeroOrderBESS"),
         false,
     )
     _openapi_field_fs =
-        _decode(Float64, _required(_openapi_object, "fs", "ZeroOrderBESS"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "fs", "ZeroOrderBESS"), false)
     _openapi_field_kpv =
-        _decode(Float64, _required(_openapi_object, "kpv", "ZeroOrderBESS"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "kpv", "ZeroOrderBESS"), false)
     _openapi_field_kiv =
-        _decode(Float64, _required(_openapi_object, "kiv", "ZeroOrderBESS"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "kiv", "ZeroOrderBESS"), false)
     _openapi_field_kpi =
-        _decode(Float64, _required(_openapi_object, "kpi", "ZeroOrderBESS"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "kpi", "ZeroOrderBESS"), false)
     _openapi_field_kii =
-        _decode(Float64, _required(_openapi_object, "kii", "ZeroOrderBESS"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "kii", "ZeroOrderBESS"), false)
     _openapi_field_vdc_ref =
         haskey(_openapi_object, "Vdc_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["Vdc_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["Vdc_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -104,7 +105,7 @@ function _decode(::Type{ZeroOrderBESS}, _openapi_raw, _openapi_validate::Bool)
             "Vdc_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ZeroOrderBESS(;
         rated_voltage=_openapi_field_rated_voltage,
@@ -173,7 +174,7 @@ end
 _encode(_openapi_value::ZeroOrderBESS) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-f0a0edae1b5007a7bd6f.json",
+        resource="https://openapi.invalid/schema/external-3ec5ce1cf0325f5050d0.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

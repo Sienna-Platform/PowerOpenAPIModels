@@ -30,7 +30,7 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7cd174a1aa6d0ce95912.json",
+            resource="https://openapi.invalid/schema/external-2d1904731cefe137ee44.json",
             pointer="",
         ),
         _openapi_raw,
@@ -38,44 +38,49 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "Area")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "Area"), false)
-    _openapi_field_name = _decode(String, _required(_openapi_object, "name", "Area"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "Area"), false)
+    _openapi_field_name =
+        _decode_zoned(String, _required(_openapi_object, "name", "Area"), false)
     _openapi_field_peak_active_power =
         haskey(_openapi_object, "peak_active_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["peak_active_power"],
             false,
         ) : ABSENT
     _openapi_field_peak_reactive_power =
         haskey(_openapi_object, "peak_reactive_power") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["peak_reactive_power"],
             false,
         ) : ABSENT
     _openapi_field_load_response =
         haskey(_openapi_object, "load_response") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["load_response"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["load_response"],
+            false,
+        ) : ABSENT
     _openapi_field_scheduled_net_interchange =
         haskey(_openapi_object, "scheduled_net_interchange") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["scheduled_net_interchange"],
             false,
         ) : ABSENT
     _openapi_field_out_of_area_load_ids =
         haskey(_openapi_object, "out_of_area_load_ids") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, Vector{Int64}},
             _openapi_object["out_of_area_load_ids"],
             false,
         ) : ABSENT
     _openapi_field_base_power =
-        _decode(Float64, _required(_openapi_object, "base_power", "Area"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "base_power", "Area"), false)
     _openapi_field_power_units =
-        _decode(UnitSystem, _required(_openapi_object, "power_units", "Area"), false)
+        _decode_zoned(UnitSystem, _required(_openapi_object, "power_units", "Area"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -90,7 +95,7 @@ function _decode(::Type{Area}, _openapi_raw, _openapi_validate::Bool)
             "power_units",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return Area(;
         id=_openapi_field_id,
@@ -148,7 +153,7 @@ end
 _encode(_openapi_value::Area) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7cd174a1aa6d0ce95912.json",
+        resource="https://openapi.invalid/schema/external-2d1904731cefe137ee44.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

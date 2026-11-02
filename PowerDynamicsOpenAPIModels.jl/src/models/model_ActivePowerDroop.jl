@@ -9,7 +9,7 @@ function _decode(::Type{ActivePowerDroop}, _openapi_raw, _openapi_validate::Bool
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dac9ce42b066db71fa72.json",
+            resource="https://openapi.invalid/schema/external-9c87f0a98b94d8b3b7b5.json",
             pointer="",
         ),
         _openapi_raw,
@@ -18,17 +18,21 @@ function _decode(::Type{ActivePowerDroop}, _openapi_raw, _openapi_validate::Bool
     )
     _openapi_object = _object(_openapi_raw, "ActivePowerDroop")
     _openapi_field_rp =
-        _decode(Float64, _required(_openapi_object, "Rp", "ActivePowerDroop"), false)
-    _openapi_field_omegaz =
-        _decode(Float64, _required(_openapi_object, "omegaz", "ActivePowerDroop"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Rp", "ActivePowerDroop"), false)
+    _openapi_field_omegaz = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "omegaz", "ActivePowerDroop"),
+        false,
+    )
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("Rp", "omegaz", "P_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ActivePowerDroop(;
         rp=_openapi_field_rp,
@@ -58,7 +62,7 @@ end
 _encode(_openapi_value::ActivePowerDroop) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-dac9ce42b066db71fa72.json",
+        resource="https://openapi.invalid/schema/external-9c87f0a98b94d8b3b7b5.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

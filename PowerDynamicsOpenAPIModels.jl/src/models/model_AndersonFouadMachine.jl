@@ -36,7 +36,7 @@ function _decode(::Type{AndersonFouadMachine}, _openapi_raw, _openapi_validate::
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-dd0966e08f16a38f8542.json",
+            resource="https://openapi.invalid/schema/external-3dfd9fbf699190bcb4f6.json",
             pointer="",
         ),
         _openapi_raw,
@@ -44,32 +44,62 @@ function _decode(::Type{AndersonFouadMachine}, _openapi_raw, _openapi_validate::
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "AndersonFouadMachine")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "AndersonFouadMachine"), false)
-    _openapi_field_r =
-        _decode(Float64, _required(_openapi_object, "R", "AndersonFouadMachine"), false)
-    _openapi_field_xd =
-        _decode(Float64, _required(_openapi_object, "Xd", "AndersonFouadMachine"), false)
-    _openapi_field_xq =
-        _decode(Float64, _required(_openapi_object, "Xq", "AndersonFouadMachine"), false)
-    _openapi_field_xd_p =
-        _decode(Float64, _required(_openapi_object, "Xd_p", "AndersonFouadMachine"), false)
-    _openapi_field_xq_p =
-        _decode(Float64, _required(_openapi_object, "Xq_p", "AndersonFouadMachine"), false)
-    _openapi_field_xd_pp =
-        _decode(Float64, _required(_openapi_object, "Xd_pp", "AndersonFouadMachine"), false)
-    _openapi_field_xq_pp =
-        _decode(Float64, _required(_openapi_object, "Xq_pp", "AndersonFouadMachine"), false)
-    _openapi_field_td0_p =
-        _decode(Float64, _required(_openapi_object, "Td0_p", "AndersonFouadMachine"), false)
-    _openapi_field_tq0_p =
-        _decode(Float64, _required(_openapi_object, "Tq0_p", "AndersonFouadMachine"), false)
-    _openapi_field_td0_pp = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_r = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_xd = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_xq = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xq", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_xd_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd_p", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_xq_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xq_p", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_xd_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xd_pp", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_xq_pp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Xq_pp", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_td0_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Td0_p", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_tq0_p = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "Tq0_p", "AndersonFouadMachine"),
+        false,
+    )
+    _openapi_field_td0_pp = _decode_zoned(
         Float64,
         _required(_openapi_object, "Td0_pp", "AndersonFouadMachine"),
         false,
     )
-    _openapi_field_tq0_pp = _decode(
+    _openapi_field_tq0_pp = _decode_zoned(
         Float64,
         _required(_openapi_object, "Tq0_pp", "AndersonFouadMachine"),
         false,
@@ -91,7 +121,7 @@ function _decode(::Type{AndersonFouadMachine}, _openapi_raw, _openapi_validate::
             "Tq0_pp",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return AndersonFouadMachine(;
         id=_openapi_field_id,
@@ -148,7 +178,7 @@ end
 _encode(_openapi_value::AndersonFouadMachine) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-dd0966e08f16a38f8542.json",
+        resource="https://openapi.invalid/schema/external-3dfd9fbf699190bcb4f6.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

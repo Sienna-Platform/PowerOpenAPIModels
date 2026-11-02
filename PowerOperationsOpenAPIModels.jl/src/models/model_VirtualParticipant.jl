@@ -26,7 +26,7 @@ function _decode(::Type{VirtualParticipant}, _openapi_raw, _openapi_validate::Bo
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-10a33e7c61eb1216ac89.json",
+            resource="https://openapi.invalid/schema/external-5506f41815e6650ebea1.json",
             pointer="",
         ),
         _openapi_raw,
@@ -35,29 +35,35 @@ function _decode(::Type{VirtualParticipant}, _openapi_raw, _openapi_validate::Bo
     )
     _openapi_object = _object(_openapi_raw, "VirtualParticipant")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "VirtualParticipant"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "VirtualParticipant"), false)
-    _openapi_field_available =
-        _decode(Bool, _required(_openapi_object, "available", "VirtualParticipant"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "VirtualParticipant"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "VirtualParticipant"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
+        Bool,
+        _required(_openapi_object, "available", "VirtualParticipant"),
+        false,
+    )
     _openapi_field_settlement_point_id =
         haskey(_openapi_object, "settlement_point_id") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["settlement_point_id"],
             false,
         ) : ABSENT
-    _openapi_field_max_supply = _decode(
+    _openapi_field_max_supply = _decode_zoned(
         Float64,
         _required(_openapi_object, "max_supply", "VirtualParticipant"),
         false,
     )
-    _openapi_field_max_demand = _decode(
+    _openapi_field_max_demand = _decode_zoned(
         Float64,
         _required(_openapi_object, "max_demand", "VirtualParticipant"),
         false,
     )
-    _openapi_field_operation_cost = _decode(
+    _openapi_field_operation_cost = _decode_zoned(
         VirtualParticipantOperationCost,
         _required(_openapi_object, "operation_cost", "VirtualParticipant"),
         false,
@@ -74,7 +80,7 @@ function _decode(::Type{VirtualParticipant}, _openapi_raw, _openapi_validate::Bo
             "operation_cost",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return VirtualParticipant(;
         id=_openapi_field_id,
@@ -120,7 +126,7 @@ end
 _encode(_openapi_value::VirtualParticipant) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-10a33e7c61eb1216ac89.json",
+        resource="https://openapi.invalid/schema/external-5506f41815e6650ebea1.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

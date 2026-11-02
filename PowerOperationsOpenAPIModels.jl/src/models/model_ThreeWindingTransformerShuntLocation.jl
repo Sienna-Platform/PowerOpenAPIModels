@@ -24,14 +24,14 @@ function _decode(
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+            resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
             pointer="/\$defs/ThreeWindingTransformerShuntLocation",
         ),
         value,
         "decoding ThreeWindingTransformerShuntLocation";
         direction=:neutral,
     )
-    return ThreeWindingTransformerShuntLocation(_decode(String, value, false))
+    return ThreeWindingTransformerShuntLocation(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::ThreeWindingTransformerShuntLocation)
     output = _encode_unvalidated(value.value)
@@ -40,7 +40,7 @@ end
 _encode(value::ThreeWindingTransformerShuntLocation) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+        resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
         pointer="/\$defs/ThreeWindingTransformerShuntLocation",
     ),
     _encode_unvalidated(value),

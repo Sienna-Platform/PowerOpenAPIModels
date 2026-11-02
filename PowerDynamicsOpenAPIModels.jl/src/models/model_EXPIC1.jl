@@ -54,7 +54,7 @@ function _decode(::Type{EXPIC1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-e13250dcbc2413be002b.json",
+            resource="https://openapi.invalid/schema/external-ace0948c15b6ce553ab3.json",
             pointer="",
         ),
         _openapi_raw,
@@ -62,39 +62,50 @@ function _decode(::Type{EXPIC1}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "EXPIC1")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "EXPIC1"), false)
-    _openapi_field_tr = _decode(Float64, _required(_openapi_object, "Tr", "EXPIC1"), false)
-    _openapi_field_ka = _decode(Float64, _required(_openapi_object, "Ka", "EXPIC1"), false)
-    _openapi_field_ta = _decode(Float64, _required(_openapi_object, "Ta", "EXPIC1"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "EXPIC1"), false)
+    _openapi_field_tr =
+        _decode_zoned(Float64, _required(_openapi_object, "Tr", "EXPIC1"), false)
+    _openapi_field_ka =
+        _decode_zoned(Float64, _required(_openapi_object, "Ka", "EXPIC1"), false)
+    _openapi_field_ta =
+        _decode_zoned(Float64, _required(_openapi_object, "Ta", "EXPIC1"), false)
     _openapi_field_va_lim =
-        _decode(MinMax, _required(_openapi_object, "Va_lim", "EXPIC1"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Va_lim", "EXPIC1"), false)
     _openapi_field_ta_2 =
-        _decode(Float64, _required(_openapi_object, "Ta_2", "EXPIC1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Ta_2", "EXPIC1"), false)
     _openapi_field_ta_3 =
-        _decode(Float64, _required(_openapi_object, "Ta_3", "EXPIC1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Ta_3", "EXPIC1"), false)
     _openapi_field_ta_4 =
-        _decode(Float64, _required(_openapi_object, "Ta_4", "EXPIC1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Ta_4", "EXPIC1"), false)
     _openapi_field_vr_lim =
-        _decode(MinMax, _required(_openapi_object, "Vr_lim", "EXPIC1"), false)
-    _openapi_field_kf = _decode(Float64, _required(_openapi_object, "Kf", "EXPIC1"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Vr_lim", "EXPIC1"), false)
+    _openapi_field_kf =
+        _decode_zoned(Float64, _required(_openapi_object, "Kf", "EXPIC1"), false)
     _openapi_field_tf_1 =
-        _decode(Float64, _required(_openapi_object, "Tf_1", "EXPIC1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tf_1", "EXPIC1"), false)
     _openapi_field_tf_2 =
-        _decode(Float64, _required(_openapi_object, "Tf_2", "EXPIC1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "Tf_2", "EXPIC1"), false)
     _openapi_field_efd_lim =
-        _decode(MinMax, _required(_openapi_object, "Efd_lim", "EXPIC1"), false)
-    _openapi_field_ke = _decode(Float64, _required(_openapi_object, "Ke", "EXPIC1"), false)
-    _openapi_field_te = _decode(Float64, _required(_openapi_object, "Te", "EXPIC1"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Efd_lim", "EXPIC1"), false)
+    _openapi_field_ke =
+        _decode_zoned(Float64, _required(_openapi_object, "Ke", "EXPIC1"), false)
+    _openapi_field_te =
+        _decode_zoned(Float64, _required(_openapi_object, "Te", "EXPIC1"), false)
     _openapi_field_e_sat =
-        _decode(Vector{Float64}, _required(_openapi_object, "E_sat", "EXPIC1"), false)
+        _decode_zoned(Vector{Float64}, _required(_openapi_object, "E_sat", "EXPIC1"), false)
     _openapi_field_se =
-        _decode(Vector{Float64}, _required(_openapi_object, "Se", "EXPIC1"), false)
-    _openapi_field_kp = _decode(Float64, _required(_openapi_object, "Kp", "EXPIC1"), false)
-    _openapi_field_ki = _decode(Float64, _required(_openapi_object, "Ki", "EXPIC1"), false)
-    _openapi_field_kc = _decode(Float64, _required(_openapi_object, "Kc", "EXPIC1"), false)
+        _decode_zoned(Vector{Float64}, _required(_openapi_object, "Se", "EXPIC1"), false)
+    _openapi_field_kp =
+        _decode_zoned(Float64, _required(_openapi_object, "Kp", "EXPIC1"), false)
+    _openapi_field_ki =
+        _decode_zoned(Float64, _required(_openapi_object, "Ki", "EXPIC1"), false)
+    _openapi_field_kc =
+        _decode_zoned(Float64, _required(_openapi_object, "Kc", "EXPIC1"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -121,7 +132,7 @@ function _decode(::Type{EXPIC1}, _openapi_raw, _openapi_validate::Bool)
             "V_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return EXPIC1(;
         id=_openapi_field_id,
@@ -205,7 +216,7 @@ end
 _encode(_openapi_value::EXPIC1) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-e13250dcbc2413be002b.json",
+        resource="https://openapi.invalid/schema/external-ace0948c15b6ce553ab3.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

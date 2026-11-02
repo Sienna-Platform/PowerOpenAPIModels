@@ -30,7 +30,7 @@ function _decode(::Type{TGTypeI}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-da2d6a3103ac453e6f3f.json",
+            resource="https://openapi.invalid/schema/external-7fc8c40b1402b973b8a1.json",
             pointer="",
         ),
         _openapi_raw,
@@ -38,28 +38,36 @@ function _decode(::Type{TGTypeI}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TGTypeI")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "TGTypeI"), false)
-    _openapi_field_r = _decode(Float64, _required(_openapi_object, "R", "TGTypeI"), false)
-    _openapi_field_ts = _decode(Float64, _required(_openapi_object, "Ts", "TGTypeI"), false)
-    _openapi_field_tc = _decode(Float64, _required(_openapi_object, "Tc", "TGTypeI"), false)
-    _openapi_field_t3 = _decode(Float64, _required(_openapi_object, "T3", "TGTypeI"), false)
-    _openapi_field_t4 = _decode(Float64, _required(_openapi_object, "T4", "TGTypeI"), false)
-    _openapi_field_t5 = _decode(Float64, _required(_openapi_object, "T5", "TGTypeI"), false)
-    _openapi_field_valve_position_limits = _decode(
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "TGTypeI"), false)
+    _openapi_field_r =
+        _decode_zoned(Float64, _required(_openapi_object, "R", "TGTypeI"), false)
+    _openapi_field_ts =
+        _decode_zoned(Float64, _required(_openapi_object, "Ts", "TGTypeI"), false)
+    _openapi_field_tc =
+        _decode_zoned(Float64, _required(_openapi_object, "Tc", "TGTypeI"), false)
+    _openapi_field_t3 =
+        _decode_zoned(Float64, _required(_openapi_object, "T3", "TGTypeI"), false)
+    _openapi_field_t4 =
+        _decode_zoned(Float64, _required(_openapi_object, "T4", "TGTypeI"), false)
+    _openapi_field_t5 =
+        _decode_zoned(Float64, _required(_openapi_object, "T5", "TGTypeI"), false)
+    _openapi_field_valve_position_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "valve_position_limits", "TGTypeI"),
         false,
     )
     _openapi_field_p_ref =
         haskey(_openapi_object, "P_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["P_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in
         ("id", "R", "Ts", "Tc", "T3", "T4", "T5", "valve_position_limits", "P_ref") &&
             continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TGTypeI(;
         id=_openapi_field_id,
@@ -109,7 +117,7 @@ end
 _encode(_openapi_value::TGTypeI) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-da2d6a3103ac453e6f3f.json",
+        resource="https://openapi.invalid/schema/external-7fc8c40b1402b973b8a1.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

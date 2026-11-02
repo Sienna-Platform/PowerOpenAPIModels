@@ -27,7 +27,7 @@ function _decode(::Type{FuelCurve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/FuelCurve",
         ),
         _openapi_raw,
@@ -37,37 +37,46 @@ function _decode(::Type{FuelCurve}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "FuelCurve")
     _openapi_field_fuel_cost =
         haskey(_openapi_object, "fuel_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Float64, Nothing}},
             _openapi_object["fuel_cost"],
             false,
         ) : ABSENT
     _openapi_field_fuel_cost_time_series =
         haskey(_openapi_object, "fuel_cost_time_series") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["fuel_cost_time_series"],
             false,
         ) : ABSENT
-    _openapi_field_fuel_units =
-        _decode(FuelUnit, _required(_openapi_object, "fuel_units", "FuelCurve"), false)
-    _openapi_field_power_units =
-        _decode(UnitSystem, _required(_openapi_object, "power_units", "FuelCurve"), false)
+    _openapi_field_fuel_units = _decode_zoned(
+        FuelUnit,
+        _required(_openapi_object, "fuel_units", "FuelCurve"),
+        false,
+    )
+    _openapi_field_power_units = _decode_zoned(
+        UnitSystem,
+        _required(_openapi_object, "power_units", "FuelCurve"),
+        false,
+    )
     _openapi_field_startup_fuel_offtake =
         haskey(_openapi_object, "startup_fuel_offtake") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, InputOutputCurve, Nothing},
             _openapi_object["startup_fuel_offtake"],
             false,
         ) : ABSENT
-    _openapi_field_value_curve =
-        _decode(ValueCurve, _required(_openapi_object, "value_curve", "FuelCurve"), false)
-    _openapi_field_variable_cost_type = _decode(
+    _openapi_field_value_curve = _decode_zoned(
+        ValueCurve,
+        _required(_openapi_object, "value_curve", "FuelCurve"),
+        false,
+    )
+    _openapi_field_variable_cost_type = _decode_zoned(
         String,
         _required(_openapi_object, "variable_cost_type", "FuelCurve"),
         false,
     )
-    _openapi_field_vom_cost = _decode(
+    _openapi_field_vom_cost = _decode_zoned(
         InputOutputCurve,
         _required(_openapi_object, "vom_cost", "FuelCurve"),
         false,
@@ -85,7 +94,7 @@ function _decode(::Type{FuelCurve}, _openapi_raw, _openapi_validate::Bool)
             "vom_cost",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return FuelCurve(;
         fuel_cost=_openapi_field_fuel_cost,
@@ -136,7 +145,7 @@ end
 _encode(_openapi_value::FuelCurve) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/FuelCurve",
     ),
     _encode_unvalidated(_openapi_value),

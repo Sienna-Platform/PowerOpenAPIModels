@@ -69,7 +69,7 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-6a44d75cd1531efb3c19.json",
+            resource="https://openapi.invalid/schema/external-ef609b8df678f5cfaecd.json",
             pointer="",
         ),
         _openapi_raw,
@@ -77,45 +77,54 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "EnergyReservoirStorage")
-    _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "EnergyReservoirStorage"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "EnergyReservoirStorage"), false)
-    _openapi_field_available = _decode(
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "EnergyReservoirStorage"),
+        false,
+    )
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "EnergyReservoirStorage"),
+        false,
+    )
+    _openapi_field_available = _decode_zoned(
         Bool,
         _required(_openapi_object, "available", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_bus =
-        _decode(Int64, _required(_openapi_object, "bus", "EnergyReservoirStorage"), false)
-    _openapi_field_prime_mover_type = _decode(
+    _openapi_field_bus = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "bus", "EnergyReservoirStorage"),
+        false,
+    )
+    _openapi_field_prime_mover_type = _decode_zoned(
         PrimeMovers,
         _required(_openapi_object, "prime_mover_type", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_storage_technology_type = _decode(
+    _openapi_field_storage_technology_type = _decode_zoned(
         StorageTech,
         _required(_openapi_object, "storage_technology_type", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_storage_capacity = _decode(
+    _openapi_field_storage_capacity = _decode_zoned(
         Float64,
         _required(_openapi_object, "storage_capacity", "EnergyReservoirStorage"),
         false,
     )
     _openapi_field_energy_units =
         haskey(_openapi_object, "energy_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, EnergyUnitBasis, Nothing},
             _openapi_object["energy_units"],
             false,
         ) : ABSENT
-    _openapi_field_storage_level_limits = _decode(
+    _openapi_field_storage_level_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "storage_level_limits", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_initial_storage_capacity_level = _decode(
+    _openapi_field_initial_storage_capacity_level = _decode_zoned(
         Float64,
         _required(
             _openapi_object,
@@ -124,88 +133,103 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
         ),
         false,
     )
-    _openapi_field_rating = _decode(
+    _openapi_field_rating = _decode_zoned(
         Float64,
         _required(_openapi_object, "rating", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_active_power = _decode(
+    _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_input_active_power_limits = _decode(
+    _openapi_field_input_active_power_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "input_active_power_limits", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_output_active_power_limits = _decode(
+    _openapi_field_output_active_power_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "output_active_power_limits", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_efficiency = _decode(
+    _openapi_field_efficiency = _decode_zoned(
         InOut,
         _required(_openapi_object, "efficiency", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_reactive_power = _decode(
+    _openapi_field_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power", "EnergyReservoirStorage"),
         false,
     )
     _openapi_field_reactive_power_limits =
         haskey(_openapi_object, "reactive_power_limits") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, MinMax, Nothing},
             _openapi_object["reactive_power_limits"],
             false,
         ) : ABSENT
-    _openapi_field_base_power = _decode(
+    _openapi_field_base_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "base_power", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_power_units = _decode(
+    _openapi_field_power_units = _decode_zoned(
         UnitSystem,
         _required(_openapi_object, "power_units", "EnergyReservoirStorage"),
         false,
     )
-    _openapi_field_operation_cost = _decode(
+    _openapi_field_operation_cost = _decode_zoned(
         EnergyReservoirStorageOperationCost,
         _required(_openapi_object, "operation_cost", "EnergyReservoirStorage"),
         false,
     )
     _openapi_field_conversion_factor =
         haskey(_openapi_object, "conversion_factor") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["conversion_factor"],
             false,
         ) : ABSENT
     _openapi_field_storage_target =
         haskey(_openapi_object, "storage_target") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["storage_target"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["storage_target"],
+            false,
+        ) : ABSENT
     _openapi_field_cycle_limits =
         haskey(_openapi_object, "cycle_limits") ?
-        _decode(Union{Absent, Int64, Nothing}, _openapi_object["cycle_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Int64, Nothing},
+            _openapi_object["cycle_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_ramp_limits =
         haskey(_openapi_object, "ramp_limits") ?
-        _decode(Union{Absent, UpDown, Nothing}, _openapi_object["ramp_limits"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, UpDown, Nothing},
+            _openapi_object["ramp_limits"],
+            false,
+        ) : ABSENT
     _openapi_field_self_discharge =
         haskey(_openapi_object, "self_discharge") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["self_discharge"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["self_discharge"],
+            false,
+        ) : ABSENT
     _openapi_field_standing_loss =
         haskey(_openapi_object, "standing_loss") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["standing_loss"], false) :
-        ABSENT
+        _decode_zoned(
+            Union{Absent, Float64, Nothing},
+            _openapi_object["standing_loss"],
+            false,
+        ) : ABSENT
     _openapi_field_dynamic_injector =
         haskey(_openapi_object, "dynamic_injector") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
             _openapi_object["dynamic_injector"],
             false,
@@ -242,7 +266,7 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return EnergyReservoirStorage(;
         id=_openapi_field_id,
@@ -374,7 +398,7 @@ end
 _encode(_openapi_value::EnergyReservoirStorage) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-6a44d75cd1531efb3c19.json",
+        resource="https://openapi.invalid/schema/external-ef609b8df678f5cfaecd.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

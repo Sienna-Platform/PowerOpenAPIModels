@@ -22,7 +22,7 @@ function _decode(::Type{StorageCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+            resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
             pointer="/\$defs/StorageCost",
         ),
         _openapi_raw,
@@ -32,40 +32,43 @@ function _decode(::Type{StorageCost}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "StorageCost")
     _openapi_field_cost_type =
         haskey(_openapi_object, "cost_type") ?
-        _decode(String, _openapi_object["cost_type"], false) : "STORAGE"
+        _decode_zoned(String, _openapi_object["cost_type"], false) : "STORAGE"
     _openapi_field_charge_variable_cost =
         haskey(_openapi_object, "charge_variable_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CostCurve, Nothing},
             _openapi_object["charge_variable_cost"],
             false,
         ) : ABSENT
     _openapi_field_discharge_variable_cost =
         haskey(_openapi_object, "discharge_variable_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, CostCurve, Nothing},
             _openapi_object["discharge_variable_cost"],
             false,
         ) : ABSENT
     _openapi_field_fixed =
-        _decode(Float64, _required(_openapi_object, "fixed", "StorageCost"), false)
-    _openapi_field_shut_down =
-        _decode(Float64, _required(_openapi_object, "shut_down", "StorageCost"), false)
-    _openapi_field_start_up = _decode(
+        _decode_zoned(Float64, _required(_openapi_object, "fixed", "StorageCost"), false)
+    _openapi_field_shut_down = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "shut_down", "StorageCost"),
+        false,
+    )
+    _openapi_field_start_up = _decode_zoned(
         StorageCostStartUp,
         _required(_openapi_object, "start_up", "StorageCost"),
         false,
     )
     _openapi_field_energy_shortage_cost =
         haskey(_openapi_object, "energy_shortage_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["energy_shortage_cost"],
             false,
         ) : ABSENT
     _openapi_field_energy_surplus_cost =
         haskey(_openapi_object, "energy_surplus_cost") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Float64, Nothing},
             _openapi_object["energy_surplus_cost"],
             false,
@@ -83,7 +86,7 @@ function _decode(::Type{StorageCost}, _openapi_raw, _openapi_validate::Bool)
             "energy_surplus_cost",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return StorageCost(;
         cost_type=_openapi_field_cost_type,
@@ -136,7 +139,7 @@ end
 _encode(_openapi_value::StorageCost) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-3e112e0f84e55d01dc3d.json",
+        resource="https://openapi.invalid/schema/external-51c57f44618e4da906cb.json",
         pointer="/\$defs/StorageCost",
     ),
     _encode_unvalidated(_openapi_value),

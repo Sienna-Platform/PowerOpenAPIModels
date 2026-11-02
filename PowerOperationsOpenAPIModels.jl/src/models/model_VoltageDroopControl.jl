@@ -30,7 +30,7 @@ function _decode(::Type{VoltageDroopControl}, _openapi_raw, _openapi_validate::B
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-9dd6b0cf4752984d3b66.json",
+            resource="https://openapi.invalid/schema/external-11c612c99bc9f897d549.json",
             pointer="",
         ),
         _openapi_raw,
@@ -39,40 +39,44 @@ function _decode(::Type{VoltageDroopControl}, _openapi_raw, _openapi_validate::B
     )
     _openapi_object = _object(_openapi_raw, "VoltageDroopControl")
     _openapi_field_id =
-        _decode(Int64, _required(_openapi_object, "id", "VoltageDroopControl"), false)
-    _openapi_field_name =
-        _decode(String, _required(_openapi_object, "name", "VoltageDroopControl"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "VoltageDroopControl"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "VoltageDroopControl"),
+        false,
+    )
     _openapi_field_available =
         haskey(_openapi_object, "available") ?
-        _decode(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) : ABSENT
-    _openapi_field_regulated_bus_id = _decode(
+        _decode_zoned(Union{Absent, Bool, Nothing}, _openapi_object["available"], false) :
+        ABSENT
+    _openapi_field_regulated_bus_id = _decode_zoned(
         Int64,
         _required(_openapi_object, "regulated_bus_id", "VoltageDroopControl"),
         false,
     )
-    _openapi_field_reactive_power_limits = _decode(
+    _openapi_field_reactive_power_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "reactive_power_limits", "VoltageDroopControl"),
         false,
     )
-    _openapi_field_deadband_reactive_power = _decode(
+    _openapi_field_deadband_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "deadband_reactive_power", "VoltageDroopControl"),
         false,
     )
     _openapi_field_voltage_units =
         haskey(_openapi_object, "voltage_units") ?
-        _decode(
+        _decode_zoned(
             Union{Absent, Nothing, VoltageUnitBasis},
             _openapi_object["voltage_units"],
             false,
         ) : ABSENT
-    _openapi_field_deadband_voltage_limits = _decode(
+    _openapi_field_deadband_voltage_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "deadband_voltage_limits", "VoltageDroopControl"),
         false,
     )
-    _openapi_field_voltage_limits = _decode(
+    _openapi_field_voltage_limits = _decode_zoned(
         MinMax,
         _required(_openapi_object, "voltage_limits", "VoltageDroopControl"),
         false,
@@ -91,7 +95,7 @@ function _decode(::Type{VoltageDroopControl}, _openapi_raw, _openapi_validate::B
             "voltage_limits",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return VoltageDroopControl(;
         id=_openapi_field_id,
@@ -151,7 +155,7 @@ end
 _encode(_openapi_value::VoltageDroopControl) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-9dd6b0cf4752984d3b66.json",
+        resource="https://openapi.invalid/schema/external-11c612c99bc9f897d549.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),

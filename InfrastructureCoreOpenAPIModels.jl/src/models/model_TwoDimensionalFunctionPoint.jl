@@ -17,7 +17,7 @@ function _decode(::Type{TwoDimensionalFunctionPoint}, _openapi_raw, _openapi_val
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+            resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
             pointer="/\$defs/TwoDimensionalFunctionPoint",
         ),
         _openapi_raw,
@@ -25,12 +25,12 @@ function _decode(::Type{TwoDimensionalFunctionPoint}, _openapi_raw, _openapi_val
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "TwoDimensionalFunctionPoint")
-    _openapi_field_x = _decode(
+    _openapi_field_x = _decode_zoned(
         Float64,
         _required(_openapi_object, "x", "TwoDimensionalFunctionPoint"),
         false,
     )
-    _openapi_field_y = _decode(
+    _openapi_field_y = _decode_zoned(
         Float64,
         _required(_openapi_object, "y", "TwoDimensionalFunctionPoint"),
         false,
@@ -39,7 +39,7 @@ function _decode(::Type{TwoDimensionalFunctionPoint}, _openapi_raw, _openapi_val
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in ("x", "y") && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return TwoDimensionalFunctionPoint(;
         x=_openapi_field_x,
@@ -66,7 +66,7 @@ end
 _encode(_openapi_value::TwoDimensionalFunctionPoint) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-7de623570ee8edd1de00.json",
+        resource="https://openapi.invalid/schema/external-316bc6f410b2df42f150.json",
         pointer="/\$defs/TwoDimensionalFunctionPoint",
     ),
     _encode_unvalidated(_openapi_value),

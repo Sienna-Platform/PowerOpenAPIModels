@@ -27,14 +27,14 @@ function _decode(::Type{SwitchedAdmittanceControlMode}, value, _openapi_validate
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+            resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
             pointer="/\$defs/SwitchedAdmittanceControlMode",
         ),
         value,
         "decoding SwitchedAdmittanceControlMode";
         direction=:neutral,
     )
-    return SwitchedAdmittanceControlMode(_decode(String, value, false))
+    return SwitchedAdmittanceControlMode(_decode_zoned(String, value, false))
 end
 function _encode_unvalidated(value::SwitchedAdmittanceControlMode)
     output = _encode_unvalidated(value.value)
@@ -43,7 +43,7 @@ end
 _encode(value::SwitchedAdmittanceControlMode) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-78d2af7f707125adba7e.json",
+        resource="https://openapi.invalid/schema/external-ff7be472003e477ad03e.json",
         pointer="/\$defs/SwitchedAdmittanceControlMode",
     ),
     _encode_unvalidated(value),

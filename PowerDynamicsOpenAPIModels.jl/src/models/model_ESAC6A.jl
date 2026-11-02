@@ -54,7 +54,7 @@ function _decode(::Type{ESAC6A}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-af0d6dc0052e9298649b.json",
+            resource="https://openapi.invalid/schema/external-6b44f234c49736b1cb9b.json",
             pointer="",
         ),
         _openapi_raw,
@@ -62,35 +62,50 @@ function _decode(::Type{ESAC6A}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ESAC6A")
-    _openapi_field_id = _decode(Int64, _required(_openapi_object, "id", "ESAC6A"), false)
-    _openapi_field_tr = _decode(Float64, _required(_openapi_object, "Tr", "ESAC6A"), false)
-    _openapi_field_ka = _decode(Float64, _required(_openapi_object, "Ka", "ESAC6A"), false)
-    _openapi_field_ta = _decode(Float64, _required(_openapi_object, "Ta", "ESAC6A"), false)
-    _openapi_field_tk = _decode(Float64, _required(_openapi_object, "Tk", "ESAC6A"), false)
-    _openapi_field_tb = _decode(Float64, _required(_openapi_object, "Tb", "ESAC6A"), false)
-    _openapi_field_tc = _decode(Float64, _required(_openapi_object, "Tc", "ESAC6A"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "ESAC6A"), false)
+    _openapi_field_tr =
+        _decode_zoned(Float64, _required(_openapi_object, "Tr", "ESAC6A"), false)
+    _openapi_field_ka =
+        _decode_zoned(Float64, _required(_openapi_object, "Ka", "ESAC6A"), false)
+    _openapi_field_ta =
+        _decode_zoned(Float64, _required(_openapi_object, "Ta", "ESAC6A"), false)
+    _openapi_field_tk =
+        _decode_zoned(Float64, _required(_openapi_object, "Tk", "ESAC6A"), false)
+    _openapi_field_tb =
+        _decode_zoned(Float64, _required(_openapi_object, "Tb", "ESAC6A"), false)
+    _openapi_field_tc =
+        _decode_zoned(Float64, _required(_openapi_object, "Tc", "ESAC6A"), false)
     _openapi_field_va_lim =
-        _decode(MinMax, _required(_openapi_object, "Va_lim", "ESAC6A"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Va_lim", "ESAC6A"), false)
     _openapi_field_vr_lim =
-        _decode(MinMax, _required(_openapi_object, "Vr_lim", "ESAC6A"), false)
-    _openapi_field_te = _decode(Float64, _required(_openapi_object, "Te", "ESAC6A"), false)
+        _decode_zoned(MinMax, _required(_openapi_object, "Vr_lim", "ESAC6A"), false)
+    _openapi_field_te =
+        _decode_zoned(Float64, _required(_openapi_object, "Te", "ESAC6A"), false)
     _openapi_field_vfe_lim =
-        _decode(Float64, _required(_openapi_object, "VFE_lim", "ESAC6A"), false)
-    _openapi_field_kh = _decode(Float64, _required(_openapi_object, "Kh", "ESAC6A"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "VFE_lim", "ESAC6A"), false)
+    _openapi_field_kh =
+        _decode_zoned(Float64, _required(_openapi_object, "Kh", "ESAC6A"), false)
     _openapi_field_vh_max =
-        _decode(Float64, _required(_openapi_object, "VH_max", "ESAC6A"), false)
-    _openapi_field_th = _decode(Float64, _required(_openapi_object, "Th", "ESAC6A"), false)
-    _openapi_field_tj = _decode(Float64, _required(_openapi_object, "Tj", "ESAC6A"), false)
-    _openapi_field_kc = _decode(Float64, _required(_openapi_object, "Kc", "ESAC6A"), false)
-    _openapi_field_kd = _decode(Float64, _required(_openapi_object, "Kd", "ESAC6A"), false)
-    _openapi_field_ke = _decode(Float64, _required(_openapi_object, "Ke", "ESAC6A"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "VH_max", "ESAC6A"), false)
+    _openapi_field_th =
+        _decode_zoned(Float64, _required(_openapi_object, "Th", "ESAC6A"), false)
+    _openapi_field_tj =
+        _decode_zoned(Float64, _required(_openapi_object, "Tj", "ESAC6A"), false)
+    _openapi_field_kc =
+        _decode_zoned(Float64, _required(_openapi_object, "Kc", "ESAC6A"), false)
+    _openapi_field_kd =
+        _decode_zoned(Float64, _required(_openapi_object, "Kd", "ESAC6A"), false)
+    _openapi_field_ke =
+        _decode_zoned(Float64, _required(_openapi_object, "Ke", "ESAC6A"), false)
     _openapi_field_e_sat =
-        _decode(Vector{Float64}, _required(_openapi_object, "E_sat", "ESAC6A"), false)
+        _decode_zoned(Vector{Float64}, _required(_openapi_object, "E_sat", "ESAC6A"), false)
     _openapi_field_se =
-        _decode(Vector{Float64}, _required(_openapi_object, "Se", "ESAC6A"), false)
+        _decode_zoned(Vector{Float64}, _required(_openapi_object, "Se", "ESAC6A"), false)
     _openapi_field_v_ref =
         haskey(_openapi_object, "V_ref") ?
-        _decode(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) : ABSENT
+        _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["V_ref"], false) :
+        ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -117,7 +132,7 @@ function _decode(::Type{ESAC6A}, _openapi_raw, _openapi_validate::Bool)
             "V_ref",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
-            _decode(Any, _openapi_item, false)
+            _decode_zoned(Any, _openapi_item, false)
     end
     return ESAC6A(;
         id=_openapi_field_id,
@@ -201,7 +216,7 @@ end
 _encode(_openapi_value::ESAC6A) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-af0d6dc0052e9298649b.json",
+        resource="https://openapi.invalid/schema/external-6b44f234c49736b1cb9b.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
