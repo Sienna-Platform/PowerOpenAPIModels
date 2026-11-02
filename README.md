@@ -41,6 +41,22 @@ Pkg.add("PowerOpenAPIModels")
 using PowerOpenAPIModels
 ```
 
+## Schema defaults are not filled in
+
+A schema `default` documents the value a consumer assumes when a field is absent. No SDK
+inserts it: this package and the Python, TypeScript and Rust packages behave the same way.
+
+- An omitted optional field decodes to `ABSENT`, and encoding leaves it out. Reading and
+  writing a document never adds a value the producer did not write, and `ABSENT` tells a
+  field that was not given from one set to its default value.
+- A field the schema marks `required` stays required, even when it has a default
+  (`CostCurve.vom_cost`, the portfolio financial rates).
+- A `const` field, such as a discriminator (`time_series_type`, `curve_type`, `cost_type`),
+  is set to its fixed value, whether the schema marks it required or optional.
+
+To use a default, apply it where you read the field. The schema reference lists every
+default.
+
 ## Regenerating Stubs
 
 Models are auto-generated from OpenAPI schemas in [SiennaSchemas](https://github.com/Sienna-Platform/SiennaSchemas), via OpenAPI.jl 1.0's native pure-Julia generator (`OpenAPI.client`) -- no Java, no Docker required for a local run. There are two ways to regenerate:
