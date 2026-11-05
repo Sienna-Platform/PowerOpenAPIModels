@@ -4,8 +4,7 @@
 # container, `PortfolioDocument.components` is a map from type name to an array of
 # heterogeneous component objects (the portfolio's regional aggregations, policy requirements,
 # and candidate technologies), resolved by name through the InfrastructureCore model-type
-# registry. `financial_data` and `requirements_associations` are concrete types from this
-# package; `time_series_associations` is the one concretely typed foreign table, hence the
+# registry. `requirements_associations` is a concrete type from this package; `time_series_associations` is the one concretely typed foreign table, hence the
 # InfrastructureTimeSeries dependency.
 #
 # `SiennaSchemas/Investments/PortfolioDocument.json` stays authoritative for the shape (and for
@@ -19,8 +18,7 @@
 # PortfolioDocument-specific code is here.
 #
 # Differences from SystemDocument, per the schema:
-#   adds    `data_source`, `aggregation` (required), `financial_data`, `investment_schedule`,
-#           `base_system_file`
+#   adds    `data_source`, `aggregation` (required), `investment_schedule`, `base_system_file`
 #   keeps   `requirements_associations`, an Investments-layer `RequirementAssociation` table
 #           linking each policy requirement to a member subject to it, with its own
 #           `requirements_membership` dedup cache
@@ -75,8 +73,7 @@ import InfrastructureCoreOpenAPIModels:
     _require,
     _row,
     _rows,
-    _typed_attribute,
-    _encode_optional
+    _typed_attribute
 using InfrastructureTimeSeriesOpenAPIModels: TimeSeriesAssociation
 
 # ── the container ────────────────────────────────────────────────────────────────
@@ -84,8 +81,7 @@ using InfrastructureTimeSeriesOpenAPIModels: TimeSeriesAssociation
 """
 A whole serialized investment portfolio: candidate technologies, regional aggregations, and
 policy requirements bucketed by type name, the supplemental attributes describing them, the
-association tables linking them, the portfolio-wide financial parameters, and the names of the
-sidecar files holding the base power system and the time series values.
+association tables linking them, and the names of the sidecar files holding the base power system and the time series values.
 
 There is no document-level unit system or base power: every value is recorded in natural units.
 The only unit marker that ever appears is an embedded cost payload's own `power_units` (on a
@@ -114,8 +110,7 @@ member the requirement applies to. Callers construct the row and hand it to
 regions by — a type identifier resolved by the consumer, not a component in the document, and
 required.
 
-`name`, `description`, `data_source`, `financial_data`, `investment_schedule`,
-`base_system_file`, and `time_series_storage_file` are `nothing` when the document omits them.
+`name`, `description`, `data_source`, `investment_schedule`, `base_system_file`, and `time_series_storage_file` are `nothing` when the document omits them.
 `base_system_file` and `time_series_storage_file` are required keys with nullable values, so
 they are always emitted (as JSON `null` when absent); the rest are omitted entirely when
 `nothing`. `investment_schedule` is a model output — the schedule of capacity installations
@@ -127,7 +122,6 @@ struct PortfolioDocument <: AbstractDocument
     description::Union{Nothing, String}
     data_source::Union{Nothing, String}
     aggregation::String
-    financial_data::Union{Nothing, PortfolioFinancialData}
     components::Dict{String, Vector}
     supplemental_attributes::Vector{Any}
     supplemental_attribute_associations::Vector{SupplementalAttributeAssociation}
@@ -153,7 +147,6 @@ function PortfolioDocument(
     name=nothing,
     description=nothing,
     data_source=nothing,
-    financial_data=nothing,
     investment_schedule=nothing,
     base_system_file=nothing,
     time_series_storage_file=nothing,
@@ -163,7 +156,6 @@ function PortfolioDocument(
         _optional_string(description),
         _optional_string(data_source),
         String(aggregation),
-        financial_data,
         Dict{String, Vector}(),
         Vector{Any}(),
         Vector{SupplementalAttributeAssociation}(),
@@ -185,7 +177,6 @@ _optional_schedule(value::AbstractDict) = Dict{String, Any}(value)
 
 get_data_source(doc::PortfolioDocument) = doc.data_source
 get_aggregation(doc::PortfolioDocument) = doc.aggregation
-get_financial_data(doc::PortfolioDocument) = doc.financial_data
 get_investment_schedule(doc::PortfolioDocument) = doc.investment_schedule
 get_base_system_file(doc::PortfolioDocument) = doc.base_system_file
 
@@ -325,7 +316,7 @@ The document as a tree of plain JSON-safe values, ready for a single JSON encodi
 
 `base_system_file` and `time_series_storage_file` are required-but-nullable keys, so they are
 always present (as JSON `null` when absent); `name`/`description`/`data_source`/
-`financial_data`/`investment_schedule` are omitted entirely when unset; `ext` is always
+`investment_schedule` are omitted entirely when unset; `ext` is always
 written. `schema_version` comes first, then the remaining keys sorted.
 """
 function document_tree(
@@ -342,7 +333,6 @@ function document_tree(
     _put_optional!(tree, "description", doc.description)
     _put_optional!(tree, "data_source", doc.data_source)
     tree["aggregation"] = doc.aggregation
-    _put_optional!(tree, "financial_data", _encode_optional(doc.financial_data))
     tree["components"] = components
     # Every array goes through `_bucket`, exactly as `system_document.jl`'s SystemDocument tree
     # does. Handing the structs over raw instead would serialize each one field by field,
@@ -383,14 +373,11 @@ function _portfolio_document_from_json(
     reader::AbstractString,
 )
     doc_version = _checked_schema_version(raw, reader)
-    financial_data_raw = _optional(raw, "financial_data")
     doc = PortfolioDocument(
         String(_require(raw, "aggregation", source));
         name=_optional(raw, "name"),
         description=_optional(raw, "description"),
         data_source=_optional(raw, "data_source"),
-        financial_data=isnothing(financial_data_raw) ? nothing :
-                       _row(PortfolioFinancialData, financial_data_raw),
         investment_schedule=_optional(raw, "investment_schedule"),
         base_system_file=_require(raw, "base_system_file", source),
         time_series_storage_file=_require(raw, "time_series_storage_file", source),

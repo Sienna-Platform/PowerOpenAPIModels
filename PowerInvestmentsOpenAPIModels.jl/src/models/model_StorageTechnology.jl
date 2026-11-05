@@ -33,7 +33,7 @@ Base.@kwdef struct StorageTechnology <: APIModel
     power_systems_type::String
     min_discharge_fraction::Union{Absent, Float64, Nothing} = ABSENT
     prime_mover_type::Union{Absent, Nothing, PrimeMovers} = ABSENT
-    storage_tech::StorageTech
+    storage_tech::Union{Absent, Nothing, StorageTech} = ABSENT
     capital_costs::Union{Absent, Nothing, StorageCapitalCost} = ABSENT
     operation_costs::Union{Absent, Nothing, StorageCost} = ABSENT
     unit_size_discharge::Union{Absent, Float64, Nothing} = ABSENT
@@ -106,11 +106,13 @@ function _decode(::Type{StorageTechnology}, _openapi_raw, _openapi_validate::Boo
             _openapi_object["prime_mover_type"],
             false,
         ) : ABSENT
-    _openapi_field_storage_tech = _decode_zoned(
-        StorageTech,
-        _required(_openapi_object, "storage_tech", "StorageTechnology"),
-        false,
-    )
+    _openapi_field_storage_tech =
+        haskey(_openapi_object, "storage_tech") ?
+        _decode_zoned(
+            Union{Absent, Nothing, StorageTech},
+            _openapi_object["storage_tech"],
+            false,
+        ) : ABSENT
     _openapi_field_capital_costs =
         haskey(_openapi_object, "capital_costs") ?
         _decode_zoned(

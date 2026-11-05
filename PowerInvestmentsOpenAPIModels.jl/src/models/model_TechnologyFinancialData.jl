@@ -1,14 +1,17 @@
 """
     TechnologyFinancialData
 
-Financial data for a candidate technology: the capital recovery period used to derive overnight capital cost from annualized investment cost, the dollar-year its cost data is reported in, and the debt fraction, debt rate, return on equity, and tax rate that together set its cost of capital.
+Financial data for a candidate technology: the capital recovery period used to derive overnight capital cost from annualized investment cost, the dollar-year its cost data is reported in, the debt fraction, debt rate, return on equity, and tax rate that together set its cost of capital, and the discount, inflation, and interest rates used to convert its costs to a net present value in the model base year.
 
   - `capital_recovery_period`: Period over which capital costs are recovered for net present value calculations. Units: yr.
-  - `technology_base_year`: Base year for technology cost data used in NPV calculations.
+  - `technology_base_year`: Year the technology's cost data is reported in. Costs are converted from this year to the model base year using the inflation rate.
   - `debt_fraction`: Fraction of capital costs financed through debt. Units: 1.
   - `debt_rate`: Interest rate on debt financing. Units: 1.
   - `return_on_equity`: Required rate of return on equity financing. Units: 1.
   - `tax_rate`: Tax rate applied to equity returns. Units: 1.
+  - `discount_rate`: Discount rate used to convert this technology's future costs to a net present value in the model base year. Units: 1.
+  - `inflation_rate`: Inflation rate used to convert this technology's costs from its base year to the model base year. Units: 1.
+  - `interest_rate`: Interest rate for financing calculations. Units: 1.
 """
 Base.@kwdef struct TechnologyFinancialData <: APIModel
     capital_recovery_period::Int64
@@ -17,6 +20,9 @@ Base.@kwdef struct TechnologyFinancialData <: APIModel
     debt_rate::Float64
     return_on_equity::Float64
     tax_rate::Float64
+    discount_rate::Float64
+    inflation_rate::Float64
+    interest_rate::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
 _decode(::Type{TechnologyFinancialData}, value) =
@@ -63,6 +69,21 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
         _required(_openapi_object, "tax_rate", "TechnologyFinancialData"),
         false,
     )
+    _openapi_field_discount_rate = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "discount_rate", "TechnologyFinancialData"),
+        false,
+    )
+    _openapi_field_inflation_rate = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "inflation_rate", "TechnologyFinancialData"),
+        false,
+    )
+    _openapi_field_interest_rate = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "interest_rate", "TechnologyFinancialData"),
+        false,
+    )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
@@ -72,6 +93,9 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
             "debt_rate",
             "return_on_equity",
             "tax_rate",
+            "discount_rate",
+            "inflation_rate",
+            "interest_rate",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
@@ -83,6 +107,9 @@ function _decode(::Type{TechnologyFinancialData}, _openapi_raw, _openapi_validat
         debt_rate=_openapi_field_debt_rate,
         return_on_equity=_openapi_field_return_on_equity,
         tax_rate=_openapi_field_tax_rate,
+        discount_rate=_openapi_field_discount_rate,
+        inflation_rate=_openapi_field_inflation_rate,
+        interest_rate=_openapi_field_interest_rate,
         additional_properties=_openapi_additional_properties,
     )
 end
@@ -108,6 +135,18 @@ function _encode_unvalidated(_openapi_value::TechnologyFinancialData)
     )
     _openapi_value.tax_rate isa Absent ||
         (_openapi_output["tax_rate"] = _encode_unvalidated(_openapi_value.tax_rate))
+    _openapi_value.discount_rate isa Absent || (
+        _openapi_output["discount_rate"] =
+            _encode_unvalidated(_openapi_value.discount_rate)
+    )
+    _openapi_value.inflation_rate isa Absent || (
+        _openapi_output["inflation_rate"] =
+            _encode_unvalidated(_openapi_value.inflation_rate)
+    )
+    _openapi_value.interest_rate isa Absent || (
+        _openapi_output["interest_rate"] =
+            _encode_unvalidated(_openapi_value.interest_rate)
+    )
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
         haskey(_openapi_output, _openapi_key) && throw(
             ArgumentError(
@@ -147,6 +186,12 @@ function _form_fields(_openapi_value::TechnologyFinancialData)
         push!(_openapi_output, "return_on_equity" => _openapi_value.return_on_equity)
     _openapi_value.tax_rate isa Absent ||
         push!(_openapi_output, "tax_rate" => _openapi_value.tax_rate)
+    _openapi_value.discount_rate isa Absent ||
+        push!(_openapi_output, "discount_rate" => _openapi_value.discount_rate)
+    _openapi_value.inflation_rate isa Absent ||
+        push!(_openapi_output, "inflation_rate" => _openapi_value.inflation_rate)
+    _openapi_value.interest_rate isa Absent ||
+        push!(_openapi_output, "interest_rate" => _openapi_value.interest_rate)
     append!(_openapi_output, collect(_openapi_value.additional_properties))
     return _openapi_output
 end

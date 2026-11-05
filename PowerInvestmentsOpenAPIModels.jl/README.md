@@ -2,7 +2,7 @@
 
 The capacity-expansion domain: candidate technologies (`SupplyTechnology`,
 `StorageTechnology`, `DemandSideTechnology`, the transport technologies), financial data
-(`TechnologyFinancialData`, `PortfolioFinancialData`), policy requirements (carbon caps and
+(`TechnologyFinancialData`), policy requirements (carbon caps and
 taxes, capacity reserve margins, energy-share and hourly-matching requirements), and the
 `RequirementAssociation` rows that bind a requirement to the entities subject to it.
 
