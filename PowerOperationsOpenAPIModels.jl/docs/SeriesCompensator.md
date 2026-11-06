@@ -1,6 +1,6 @@
-# SeriesAdmittance
+# SeriesCompensator
 
-A fixed series admittance on an `Arc`: a series capacitor or reactor, or an AC line without charging susceptance, with constant `r` and `x` (the CIM `SeriesCompensator`). `bypassed` shorts the device into a zero-impedance tie; `available = false` takes it out of service. Controllable series devices are not covered.
+A fixed series compensator on an `Arc` (the CIM `SeriesCompensator`): a series capacitor or reactor, or an AC line without charging susceptance, with constant `r` and `x`. `bypassed` shorts the device into a zero-impedance tie; `available = false` takes it out of service. Controllable series devices are not covered.
 
 ## Properties
 Name | Type | Description | Notes
@@ -8,12 +8,12 @@ Name | Type | Description | Notes
 **`id`** | **`Int64`** | Unique integer identifier for this component. | [required]
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
-**`active_power_flow`** | **`Float64`** | Initial condition of active power flow through the device. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
-**`reactive_power_flow`** | **`Float64`** | Initial condition of reactive power flow through the device. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [required]
+**`active_power_flow`** | **`Float64`** | Initial condition of active power flow through the compensator. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
+**`reactive_power_flow`** | **`Float64`** | Initial condition of reactive power flow through the compensator. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [required]
 **`arc`** | **`Int64`** | An `Arc` defining this line `from` a bus `to` another bus. | [required]
 **`r`** | **`Float64`** | Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [required]
 **`x`** | **`Float64`** | Series reactance; negative for a capacitor. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [required]
-**`rating`** | **`Float64`** | Thermal rating. Flow through the device must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [required]
+**`rating`** | **`Float64`** | Thermal rating. Flow through the compensator must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [required]
 **`bypassed`** | **`Union{Absent,Bool,Nothing}`** | Whether the device is bypassed: shorted into a zero-impedance tie between the `from` and `to` buses. `r` and `x` keep the impedance it has when in service. | [optional]
 **`rating_b`** | **`Union{Absent,Float64,Nothing}`** | Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
 **`rating_c`** | **`Union{Absent,Float64,Nothing}`** | Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]

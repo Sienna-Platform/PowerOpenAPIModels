@@ -3931,231 +3931,231 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:base_power},
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:active_power_flow},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:active_power_flow},
 ) = :power_units
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:active_power_flow},
     ::Val{:NATURAL_UNITS},
 ) = "MW"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:active_power_flow},
     ::Val{:NATURAL_UNITS},
 ) = "ActivePower"
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:active_power_flow},
     ::Val{:COMPONENT_BASE},
 ) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:active_power_flow},
     ::Val{:COMPONENT_BASE},
 ) = "ActivePower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:reactive_power_flow},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:reactive_power_flow},
 ) = :power_units
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:reactive_power_flow},
     ::Val{:NATURAL_UNITS},
 ) = "MVAr"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:reactive_power_flow},
     ::Val{:NATURAL_UNITS},
 ) = "ReactivePower"
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:reactive_power_flow},
     ::Val{:COMPONENT_BASE},
 ) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:reactive_power_flow},
     ::Val{:COMPONENT_BASE},
 ) = "ReactivePower"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SeriesAdmittance}, ::Val{:r}) =
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SeriesCompensator}, ::Val{:r}) =
     true
-InfrastructureCoreOpenAPIModels.unit_discriminator(::Type{SeriesAdmittance}, ::Val{:r}) =
+InfrastructureCoreOpenAPIModels.unit_discriminator(::Type{SeriesCompensator}, ::Val{:r}) =
     :parameter_units
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:r},
     ::Val{:NATURAL_UNITS},
 ) = "ohm"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:r},
     ::Val{:NATURAL_UNITS},
 ) = "Resistance"
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:r},
     ::Val{:COMPONENT_BASE},
 ) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:r},
     ::Val{:COMPONENT_BASE},
 ) = "Resistance"
-InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SeriesAdmittance}, ::Val{:x}) =
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{SeriesCompensator}, ::Val{:x}) =
     true
-InfrastructureCoreOpenAPIModels.unit_discriminator(::Type{SeriesAdmittance}, ::Val{:x}) =
+InfrastructureCoreOpenAPIModels.unit_discriminator(::Type{SeriesCompensator}, ::Val{:x}) =
     :parameter_units
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:x},
     ::Val{:NATURAL_UNITS},
 ) = "ohm"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:x},
     ::Val{:NATURAL_UNITS},
 ) = "Reactance"
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:x},
     ::Val{:COMPONENT_BASE},
 ) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:x},
     ::Val{:COMPONENT_BASE},
 ) = "Reactance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating},
 ) = :power_units
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating},
     ::Val{:NATURAL_UNITS},
 ) = "MVA"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating},
     ::Val{:NATURAL_UNITS},
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating},
     ::Val{:COMPONENT_BASE},
 ) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating},
     ::Val{:COMPONENT_BASE},
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_b},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_b},
 ) = :power_units
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_b},
     ::Val{:NATURAL_UNITS},
 ) = "MVA"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_b},
     ::Val{:NATURAL_UNITS},
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_b},
     ::Val{:COMPONENT_BASE},
 ) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_b},
     ::Val{:COMPONENT_BASE},
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_c},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_c},
 ) = :power_units
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_c},
     ::Val{:NATURAL_UNITS},
 ) = "MVA"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_c},
     ::Val{:NATURAL_UNITS},
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_c},
     ::Val{:COMPONENT_BASE},
 ) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:rating_c},
     ::Val{:COMPONENT_BASE},
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:operational_flow_limit},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:operational_flow_limit},
 ) = :power_units
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:operational_flow_limit},
     ::Val{:NATURAL_UNITS},
 ) = "MW"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:operational_flow_limit},
     ::Val{:NATURAL_UNITS},
 ) = "ActivePower"
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:operational_flow_limit},
     ::Val{:COMPONENT_BASE},
 ) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:operational_flow_limit},
     ::Val{:COMPONENT_BASE},
 ) = "ActivePower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:base_power},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:base_power},
 ) = "MVA"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesAdmittance},
+    ::Type{SeriesCompensator},
     ::Val{:base_power},
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(

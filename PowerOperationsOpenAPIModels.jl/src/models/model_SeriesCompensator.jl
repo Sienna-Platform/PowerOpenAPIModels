@@ -1,17 +1,17 @@
 """
-    SeriesAdmittance
+    SeriesCompensator
 
-A fixed series admittance on an `Arc`: a series capacitor or reactor, or an AC line without charging susceptance, with constant `r` and `x` (the CIM `SeriesCompensator`). `bypassed` shorts the device into a zero-impedance tie; `available = false` takes it out of service. Controllable series devices are not covered.
+A fixed series compensator on an `Arc` (the CIM `SeriesCompensator`): a series capacitor or reactor, or an AC line without charging susceptance, with constant `r` and `x`. `bypassed` shorts the device into a zero-impedance tie; `available = false` takes it out of service. Controllable series devices are not covered.
 
   - `id`: Unique integer identifier for this component.
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
-  - `active_power_flow`: Initial condition of active power flow through the device. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `reactive_power_flow`: Initial condition of reactive power flow through the device. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+  - `active_power_flow`: Initial condition of active power flow through the compensator. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `reactive_power_flow`: Initial condition of reactive power flow through the compensator. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `arc`: An `Arc` defining this line `from` a bus `to` another bus.
   - `r`: Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `x`: Series reactance; negative for a capacitor. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
-  - `rating`: Thermal rating. Flow through the device must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating`: Thermal rating. Flow through the compensator must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `bypassed`: Whether the device is bypassed: shorted into a zero-impedance tie between the `from` and `to` buses. `r` and `x` keep the impedance it has when in service.
   - `rating_b`: Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `rating_c`: Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
@@ -20,7 +20,7 @@ A fixed series admittance on an `Arc`: a series capacitor or reactor, or an AC l
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `parameter_units`: Unit basis for r and x. COMPONENT_BASE is per-unit on this component's base_power, which records the system base.
 """
-Base.@kwdef struct SeriesAdmittance <: APIModel
+Base.@kwdef struct SeriesCompensator <: APIModel
     id::Int64
     name::String
     available::Bool
@@ -39,47 +39,50 @@ Base.@kwdef struct SeriesAdmittance <: APIModel
     parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
-_decode(::Type{SeriesAdmittance}, value) = _decode(SeriesAdmittance, value, true)
-function _decode(::Type{SeriesAdmittance}, _openapi_raw, _openapi_validate::Bool)
+_decode(::Type{SeriesCompensator}, value) = _decode(SeriesCompensator, value, true)
+function _decode(::Type{SeriesCompensator}, _openapi_raw, _openapi_validate::Bool)
     _openapi_validate && _validate_schema(
         _SPEC,
         (
-            resource="https://openapi.invalid/schema/external-8f7356655c967e8930e5.json",
+            resource="https://openapi.invalid/schema/external-3c193ab2bbf145ff72b8.json",
             pointer="",
         ),
         _openapi_raw,
-        "decoding SeriesAdmittance";
+        "decoding SeriesCompensator";
         direction=:neutral,
     )
-    _openapi_object = _object(_openapi_raw, "SeriesAdmittance")
+    _openapi_object = _object(_openapi_raw, "SeriesCompensator")
     _openapi_field_id =
-        _decode_zoned(Int64, _required(_openapi_object, "id", "SeriesAdmittance"), false)
-    _openapi_field_name =
-        _decode_zoned(String, _required(_openapi_object, "name", "SeriesAdmittance"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "id", "SeriesCompensator"), false)
+    _openapi_field_name = _decode_zoned(
+        String,
+        _required(_openapi_object, "name", "SeriesCompensator"),
+        false,
+    )
     _openapi_field_available = _decode_zoned(
         Bool,
-        _required(_openapi_object, "available", "SeriesAdmittance"),
+        _required(_openapi_object, "available", "SeriesCompensator"),
         false,
     )
     _openapi_field_active_power_flow = _decode_zoned(
         Float64,
-        _required(_openapi_object, "active_power_flow", "SeriesAdmittance"),
+        _required(_openapi_object, "active_power_flow", "SeriesCompensator"),
         false,
     )
     _openapi_field_reactive_power_flow = _decode_zoned(
         Float64,
-        _required(_openapi_object, "reactive_power_flow", "SeriesAdmittance"),
+        _required(_openapi_object, "reactive_power_flow", "SeriesCompensator"),
         false,
     )
     _openapi_field_arc =
-        _decode_zoned(Int64, _required(_openapi_object, "arc", "SeriesAdmittance"), false)
+        _decode_zoned(Int64, _required(_openapi_object, "arc", "SeriesCompensator"), false)
     _openapi_field_r =
-        _decode_zoned(Float64, _required(_openapi_object, "r", "SeriesAdmittance"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "r", "SeriesCompensator"), false)
     _openapi_field_x =
-        _decode_zoned(Float64, _required(_openapi_object, "x", "SeriesAdmittance"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "x", "SeriesCompensator"), false)
     _openapi_field_rating = _decode_zoned(
         Float64,
-        _required(_openapi_object, "rating", "SeriesAdmittance"),
+        _required(_openapi_object, "rating", "SeriesCompensator"),
         false,
     )
     _openapi_field_bypassed =
@@ -103,12 +106,12 @@ function _decode(::Type{SeriesAdmittance}, _openapi_raw, _openapi_validate::Bool
         ) : ABSENT
     _openapi_field_base_power = _decode_zoned(
         Float64,
-        _required(_openapi_object, "base_power", "SeriesAdmittance"),
+        _required(_openapi_object, "base_power", "SeriesCompensator"),
         false,
     )
     _openapi_field_power_units = _decode_zoned(
         UnitSystem,
-        _required(_openapi_object, "power_units", "SeriesAdmittance"),
+        _required(_openapi_object, "power_units", "SeriesCompensator"),
         false,
     )
     _openapi_field_parameter_units =
@@ -141,7 +144,7 @@ function _decode(::Type{SeriesAdmittance}, _openapi_raw, _openapi_validate::Bool
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
-    return SeriesAdmittance(;
+    return SeriesCompensator(;
         id=_openapi_field_id,
         name=_openapi_field_name,
         available=_openapi_field_available,
@@ -161,7 +164,7 @@ function _decode(::Type{SeriesAdmittance}, _openapi_raw, _openapi_validate::Bool
         additional_properties=_openapi_additional_properties,
     )
 end
-function _encode_unvalidated(_openapi_value::SeriesAdmittance)
+function _encode_unvalidated(_openapi_value::SeriesCompensator)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.id isa Absent ||
         (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
@@ -213,18 +216,18 @@ function _encode_unvalidated(_openapi_value::SeriesAdmittance)
     end
     return _openapi_output
 end
-_encode(_openapi_value::SeriesAdmittance) = _validate_schema(
+_encode(_openapi_value::SeriesCompensator) = _validate_schema(
     _SPEC,
     (
-        resource="https://openapi.invalid/schema/external-8f7356655c967e8930e5.json",
+        resource="https://openapi.invalid/schema/external-3c193ab2bbf145ff72b8.json",
         pointer="",
     ),
     _encode_unvalidated(_openapi_value),
-    "encoding SeriesAdmittance";
+    "encoding SeriesCompensator";
     direction=:neutral,
 )
 
-function _form_fields(_openapi_value::SeriesAdmittance)
+function _form_fields(_openapi_value::SeriesCompensator)
     _openapi_output = Pair{String, Any}[]
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.name isa Absent || push!(_openapi_output, "name" => _openapi_value.name)
