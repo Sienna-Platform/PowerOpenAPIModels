@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **`r`** | **`Float64`** | Resistance. Per-unit on `base_power`, which records the system base. Units: pu. | [required]
 **`x`** | **`Float64`** | Reactance. Per-unit on `base_power`, which records the system base. Units: pu. | [required]
 **`rating`** | **`Float64`** | Thermal rating. Flow on the branch must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [required]
+**`rating_b`** | **`Union{Absent,Float64,Nothing}`** | Short-term thermal rating (Rate B in PSS/E), the flow allowed for a limited time, such as after a contingency. Absent means no short-term rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
+**`rating_c`** | **`Union{Absent,Float64,Nothing}`** | Emergency thermal rating (Rate C in PSS/E), the highest flow allowed for a brief period. Absent means no emergency rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
 **`operational_flow_limit`** | **`Union{Absent,OperationalFlowLimit,Nothing}`** | Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
 **`discrete_branch_type`** | **`Union{Absent,DiscreteControlledACBranchDiscreteBranchType,Nothing}`** | Type of discrete control. | [optional]
 **`branch_status`** | **`Union{Absent,DiscreteControlledACBranchBranchStatus,Nothing}`** | Open or Close status. | [optional]

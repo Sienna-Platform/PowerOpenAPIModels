@@ -1,6 +1,6 @@
-# DemandSideTechnologyShiftVariableCost
+# ProjectedDemandShiftCost
 
-Variable operation and maintenance costs associated with flexible demand deferral/advancement. Units: USD/MWh.
+Cost of shifting demand, per MWh shifted. Units: USD/MWh.
 
 ## Properties
 Name | Type | Description | Notes

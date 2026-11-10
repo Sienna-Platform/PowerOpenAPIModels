@@ -1245,6 +1245,14 @@
           "description": "Thermal rating. Flow on the branch must be between -`rating` and `rating`. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
           "type": "number"
         },
+        "rating_b": {
+          "description": "Short-term thermal rating (Rate B in PSS/E), the flow allowed for a limited time, such as after a contingency. Absent means no short-term rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
+          "type": "number"
+        },
+        "rating_c": {
+          "description": "Emergency thermal rating (Rate C in PSS/E), the highest flow allowed for a brief period. Absent means no emergency rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
+          "type": "number"
+        },
         "reactive_power_flow": {
           "description": "Initial condition of reactive power flow on the line. Units: per power_units \u2014 NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .",
           "type": "number"
@@ -3697,11 +3705,11 @@
           "type": "number"
         },
         "rating_b": {
-          "description": "Second current rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
+          "description": "Short-term thermal rating (Rate B in PSS/E), the flow allowed for a limited time, such as after a contingency. Absent means no short-term rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
           "type": "number"
         },
         "rating_c": {
-          "description": "Third current rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
+          "description": "Emergency thermal rating (Rate C in PSS/E), the highest flow allowed for a brief period. Absent means no emergency rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
           "type": "number"
         },
         "reactive_power_flow": {
@@ -7691,11 +7699,11 @@
           "type": "number"
         },
         "rating_b": {
-          "description": "Second current rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
+          "description": "Short-term thermal rating (Rate B in PSS/E), the flow allowed for a limited time, such as after a contingency. Absent means no short-term rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
           "type": "number"
         },
         "rating_c": {
-          "description": "Third current rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
+          "description": "Emergency thermal rating (Rate C in PSS/E), the highest flow allowed for a brief period. Absent means no emergency rating. Units: per power_units \u2014 NATURAL_UNITS: MVA, COMPONENT_BASE: pu .",
           "type": "number"
         },
         "reactive_power_flow": {

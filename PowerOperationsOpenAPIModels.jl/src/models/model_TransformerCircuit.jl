@@ -22,8 +22,8 @@ A `TwoWindingTransformer` has one circuit; a `ThreeWindingTransformer` has three
   - `controlled_active_power_flow_limits`: Regulated active-power-flow target band (PSS/E VMA/VMI). `null` unless `control_objective` selects it. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `number_of_tap_positions`: Number of tap positions (PSS/E NTP).
   - `rating`: Thermal rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `rating_b`: Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `rating_c`: Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_b`: Short-term thermal rating (Rate B in PSS/E), the flow allowed for a limited time, such as after a contingency. Absent means no short-term rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_c`: Emergency thermal rating (Rate C in PSS/E), the highest flow allowed for a brief period. Absent means no emergency rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_flow`: Initial condition of active power flow through this circuit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power_flow`: Initial condition of reactive power flow through this circuit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .

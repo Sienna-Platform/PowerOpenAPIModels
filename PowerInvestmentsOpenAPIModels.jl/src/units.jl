@@ -128,53 +128,65 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:inverter_supply_ratio},
 ) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandRequirement},
-    ::Val{:growth_rate},
+    ::Type{DemandSideTechnology},
+    ::Val{:capacity_limits},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandRequirement},
-    ::Val{:growth_rate},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandRequirement},
-    ::Val{:growth_rate},
-) = "Fraction"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandRequirement},
-    ::Val{:new_demand_mw},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandRequirement},
-    ::Val{:new_demand_mw},
+    ::Type{DemandSideTechnology},
+    ::Val{:capacity_limits},
 ) = "MW"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandRequirement},
-    ::Val{:new_demand_mw},
+    ::Type{DemandSideTechnology},
+    ::Val{:capacity_limits},
 ) = "ActivePower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandRequirement},
-    ::Val{:value_of_lost_load},
+    ::Type{DemandSideTechnology},
+    ::Val{:unit_size},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandRequirement},
-    ::Val{:value_of_lost_load},
+    ::Type{DemandSideTechnology},
+    ::Val{:unit_size},
+) = "MW"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DemandSideTechnology},
+    ::Val{:unit_size},
+) = "ActivePower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{DemandSideTechnology},
+    ::Val{:operation_costs},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DemandSideTechnology},
+    ::Val{:operation_costs},
 ) = "USD/MWh"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandRequirement},
-    ::Val{:value_of_lost_load},
+    ::Type{DemandSideTechnology},
+    ::Val{:operation_costs},
 ) = "CostPerEnergy"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandRequirement},
-    ::Val{:unserved_demand_curve},
+    ::Type{DemandSideTechnology},
+    ::Val{:min_power},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandRequirement},
-    ::Val{:unserved_demand_curve},
-) = "USD/MWh"
+    ::Type{DemandSideTechnology},
+    ::Val{:min_power},
+) = "1"
 InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandRequirement},
-    ::Val{:unserved_demand_curve},
-) = "CostPerEnergy"
+    ::Type{DemandSideTechnology},
+    ::Val{:min_power},
+) = "Fraction"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{DemandSideTechnology},
+    ::Val{:ramp_limits},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DemandSideTechnology},
+    ::Val{:ramp_limits},
+) = "MW/min"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DemandSideTechnology},
+    ::Val{:ramp_limits},
+) = "ActivePowerChangeRate"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{DemandSideTechnology},
     ::Val{:technology_efficiency},
@@ -186,7 +198,7 @@ InfrastructureCoreOpenAPIModels.declared_unit(
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{DemandSideTechnology},
     ::Val{:technology_efficiency},
-) = "Fraction"
+) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{DemandSideTechnology},
     ::Val{:price_per_unit},
@@ -201,100 +213,16 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "CostPerMass"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{DemandSideTechnology},
-    ::Val{:min_power},
+    ::Val{:lifetime},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{DemandSideTechnology},
-    ::Val{:min_power},
-) = "1"
+    ::Val{:lifetime},
+) = "yr"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{DemandSideTechnology},
-    ::Val{:min_power},
-) = "Fraction"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:peak_demand_mw},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:peak_demand_mw},
-) = "MW"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandSideTechnology},
-    ::Val{:peak_demand_mw},
-) = "ActivePower"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_delay},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_delay},
-) = "min"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_delay},
-) = "OperationalDuration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_advance},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_advance},
-) = "min"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_advance},
-) = "OperationalDuration"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:demand_energy_efficiency},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:demand_energy_efficiency},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandSideTechnology},
-    ::Val{:demand_energy_efficiency},
-) = "Fraction"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:shift_variable_cost},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:shift_variable_cost},
-) = "USD/MWh"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandSideTechnology},
-    ::Val{:shift_variable_cost},
-) = "CostPerEnergy"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:curtailment_cost},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:curtailment_cost},
-) = "USD/MWh"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandSideTechnology},
-    ::Val{:curtailment_cost},
-) = "CostPerEnergy"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_curtailment},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_curtailment},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{DemandSideTechnology},
-    ::Val{:max_demand_curtailment},
-) = "Fraction"
+    ::Val{:lifetime},
+) = "CalendarPeriod"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{EnergyShareRequirements},
     ::Val{:generation_fraction_requirement},
@@ -464,6 +392,126 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:interest_rate},
 ) = "Fraction"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:peak_demand_mw},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:peak_demand_mw},
+) = "MW"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:peak_demand_mw},
+) = "ActivePower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:growth_rate},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:growth_rate},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:growth_rate},
+) = "Fraction"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_curtailment},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_curtailment},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_curtailment},
+) = "Fraction"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:curtailment_cost},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:curtailment_cost},
+) = "USD/MWh"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:curtailment_cost},
+) = "CostPerEnergy"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:value_of_lost_load},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:value_of_lost_load},
+) = "USD/MWh"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:value_of_lost_load},
+) = "CostPerEnergy"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:flexible_fraction},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:flexible_fraction},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:flexible_fraction},
+) = "Fraction"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_delay},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_delay},
+) = "min"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_delay},
+) = "OperationalDuration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_advance},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_advance},
+) = "min"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:max_demand_advance},
+) = "OperationalDuration"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:shift_efficiency},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:shift_efficiency},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:shift_efficiency},
+) = "Fraction"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:shift_cost},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ProjectedDemand},
+    ::Val{:shift_cost},
+) = "USD/MWh"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ProjectedDemand},
+    ::Val{:shift_cost},
+) = "CostPerEnergy"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{RetirementPotential},
     ::Val{:retirement_cost},
 ) = true
@@ -477,15 +525,15 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "CostPerCapacity"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{RetrofitPotential},
-    ::Val{:retrofit_fraction},
+    ::Val{:retrofit_efficiency},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
     ::Type{RetrofitPotential},
-    ::Val{:retrofit_fraction},
+    ::Val{:retrofit_efficiency},
 ) = "1"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{RetrofitPotential},
-    ::Val{:retrofit_fraction},
+    ::Val{:retrofit_efficiency},
 ) = "Fraction"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{RetrofitPotential},

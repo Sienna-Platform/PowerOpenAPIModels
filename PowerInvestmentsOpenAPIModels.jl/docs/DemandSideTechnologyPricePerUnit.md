@@ -1,6 +1,6 @@
 # DemandSideTechnologyPricePerUnit
 
-Price or value per unit of output. Ex: USD per ton of hydrogen for electrolyzers. Units: USD/t.
+Price or value per unit of product. Ex: USD per tonne of hydrogen for electrolyzers. Units: USD/t.
 
 ## Properties
 Name | Type | Description | Notes

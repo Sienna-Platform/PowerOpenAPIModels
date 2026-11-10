@@ -12,18 +12,8 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(
         ColocatedSupplyStorageTechnologyOperationCostsInverter,
     )
-    InfrastructureCoreOpenAPIModels.register_model_type!(DemandRequirement)
-    InfrastructureCoreOpenAPIModels.register_model_type!(
-        DemandRequirementUnservedDemandCurve,
-    )
     InfrastructureCoreOpenAPIModels.register_model_type!(DemandSideTechnology)
-    InfrastructureCoreOpenAPIModels.register_model_type!(
-        DemandSideTechnologyCurtailmentCost,
-    )
     InfrastructureCoreOpenAPIModels.register_model_type!(DemandSideTechnologyPricePerUnit)
-    InfrastructureCoreOpenAPIModels.register_model_type!(
-        DemandSideTechnologyShiftVariableCost,
-    )
     InfrastructureCoreOpenAPIModels.register_model_type!(EnergyShareRequirements)
     InfrastructureCoreOpenAPIModels.register_model_type!(ExistingDevices)
     InfrastructureCoreOpenAPIModels.register_model_type!(HourlyMatching)
@@ -35,6 +25,9 @@ function __init__()
         NodalHVDCTransportTechnologyLineLoss,
     )
     InfrastructureCoreOpenAPIModels.register_model_type!(PortfolioFinancialData)
+    InfrastructureCoreOpenAPIModels.register_model_type!(ProjectedDemand)
+    InfrastructureCoreOpenAPIModels.register_model_type!(ProjectedDemandCurtailmentCost)
+    InfrastructureCoreOpenAPIModels.register_model_type!(ProjectedDemandShiftCost)
     InfrastructureCoreOpenAPIModels.register_model_type!(RequirementAssociation)
     InfrastructureCoreOpenAPIModels.register_model_type!(RetirementPotential)
     InfrastructureCoreOpenAPIModels.register_model_type!(RetirementPotentialBuildYear)

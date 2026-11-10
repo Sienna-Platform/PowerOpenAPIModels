@@ -211,6 +211,62 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+) = true
+InfrastructureCoreOpenAPIModels.unit_discriminator(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+) = :power_units
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+    ::Val{:NATURAL_UNITS},
+) = "MVA"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+    ::Val{:NATURAL_UNITS},
+) = "ApparentPower"
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+    ::Val{:COMPONENT_BASE},
+) = "pu"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+    ::Val{:COMPONENT_BASE},
+) = "ApparentPower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+) = true
+InfrastructureCoreOpenAPIModels.unit_discriminator(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+) = :power_units
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+    ::Val{:NATURAL_UNITS},
+) = "MVA"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+    ::Val{:NATURAL_UNITS},
+) = "ApparentPower"
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+    ::Val{:COMPONENT_BASE},
+) = "pu"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+    ::Val{:COMPONENT_BASE},
+) = "ApparentPower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{DiscreteControlledACBranch},
     ::Val{:operational_flow_limit},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(

@@ -1,9 +1,9 @@
 """
-    DemandSideTechnologyCurtailmentCost
+    ProjectedDemandCurtailmentCost
 
-Energy cost of curtailed demand, USD per MWh. Units: USD/MWh.
+Cost of voluntary curtailment. A linear curve is a single price for all curtailable demand; a piecewise incremental curve gives tiers whose x coordinates are fractions of demand, from 0 to `max_demand_curtailment`, and whose slopes are prices. Units: USD/MWh.
 """
-struct DemandSideTechnologyCurtailmentCost <: OneOfAPIModel
+struct ProjectedDemandCurtailmentCost <: OneOfAPIModel
     value::Union{
         AverageRateCurve,
         IncrementalCurve,
@@ -13,20 +13,16 @@ struct DemandSideTechnologyCurtailmentCost <: OneOfAPIModel
         TimeSeriesInputOutputCurve,
     }
 end
-_decode(::Type{DemandSideTechnologyCurtailmentCost}, value) =
-    _decode(DemandSideTechnologyCurtailmentCost, value, true)
-function _decode(
-    ::Type{DemandSideTechnologyCurtailmentCost},
-    value,
-    _openapi_validate::Bool,
-)
-    object = _object(value, "DemandSideTechnologyCurtailmentCost")
+_decode(::Type{ProjectedDemandCurtailmentCost}, value) =
+    _decode(ProjectedDemandCurtailmentCost, value, true)
+function _decode(::Type{ProjectedDemandCurtailmentCost}, value, _openapi_validate::Bool)
+    object = _object(value, "ProjectedDemandCurtailmentCost")
     tag = get(object, "curve_type", ABSENT)
     tag isa Absent ||
         tag isa AbstractString ||
         throw(
             DecodeError(
-                "discriminator value must be a string for DemandSideTechnologyCurtailmentCost",
+                "discriminator value must be a string for ProjectedDemandCurtailmentCost",
             ),
         )
     selected = get(
@@ -79,20 +75,20 @@ function _decode(
     )
     selected === nothing && throw(
         DecodeError(
-            "unknown discriminator value $(repr(tag)) for DemandSideTechnologyCurtailmentCost",
+            "unknown discriminator value $(repr(tag)) for ProjectedDemandCurtailmentCost",
         ),
     )
     _openapi_validate && _validate_schema(
         _SPEC,
         selected[2],
         value,
-        "decoding DemandSideTechnologyCurtailmentCost";
+        "decoding ProjectedDemandCurtailmentCost";
         direction=:neutral,
     )
-    return DemandSideTechnologyCurtailmentCost(_decode(selected[1], value, false))
+    return ProjectedDemandCurtailmentCost(_decode(selected[1], value, false))
 end
-function _encode_unvalidated(value::DemandSideTechnologyCurtailmentCost)
+function _encode_unvalidated(value::ProjectedDemandCurtailmentCost)
     output = _encode_unvalidated(value.value)
     return output
 end
-_encode(value::DemandSideTechnologyCurtailmentCost) = _encode(value.value)
+_encode(value::ProjectedDemandCurtailmentCost) = _encode(value.value)
