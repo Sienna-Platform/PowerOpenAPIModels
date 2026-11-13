@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
 **`status`** | **`OperationalStates`** | Operating state of the unit at the start of a simulation. | [required]
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [required]
+**`remote_regulated_bus`** | **`Union{Absent,Union{Int64,Nothing}}`** | ID of the bus whose voltage this device regulates, to the `voltage_setpoint` of that bus, while the device regulates voltage; null regulates the bus this device is connected to. A value equal to `bus` is invalid. | [optional]
 **`active_power`** | **`Float64`** | Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [required]
 **`reactive_power`** | **`Float64`** | Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [required]
 **`base_power`** | **`Float64`** | Base power of the unit for per unitization, which is commonly the same as `interconnection_rating`. Units: MVA. | [required]

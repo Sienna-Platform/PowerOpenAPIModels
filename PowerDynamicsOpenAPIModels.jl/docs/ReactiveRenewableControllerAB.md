@@ -5,6 +5,7 @@ Parameters of Reactive Power Controller including REPCA1 and REECB1.
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`bus_control`** | **`Int64`** | ACBus identification number for voltage control. `0` identifies the local bus connected to this component. | [required]
 **`from_branch_control`** | **`Int64`** | Monitored branch FROM bus identification number for line drop compensation (if 0 generator power will be used). | [required]
 **`to_branch_control`** | **`Int64`** | Monitored branch TO bus identification number for line drop compensation (if 0 generator power will be used). | [required]

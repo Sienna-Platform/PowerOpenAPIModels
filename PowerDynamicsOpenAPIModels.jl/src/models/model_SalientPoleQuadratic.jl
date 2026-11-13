@@ -4,7 +4,7 @@
 3-states salient-pole synchronous machine with quadratic saturation: IEEE Std 1110 §5.3.2 (Model 2.1). GENSAL in PSSE and PSLF
 
   - `id`: Unique integer identifier for this component
-  - `base_machine`: Salient pole machine parameters
+  - `base_machine`: ID of the SalientPoleMachine function block that holds the base parameters of this machine.
   - `saturation_coeffs`: Derived saturation coefficients for the quadratic saturation model, computed from the Se input
 """
 Base.@kwdef struct SalientPoleQuadratic <: APIModel

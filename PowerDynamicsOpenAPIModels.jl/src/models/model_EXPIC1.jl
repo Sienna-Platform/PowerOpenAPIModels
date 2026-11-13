@@ -4,20 +4,20 @@
 Generic Proportional/Integral Excitation System
 
   - `id`: Unique integer identifier for this component
-  - `tr`: Regulator input filter time constant
+  - `tr`: Regulator input filter time constant. Units: s.
   - `ka`: Voltage regulator gain
-  - `ta`: Voltage regulator time constant
-  - `va_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `ta_2`: Voltage regulator time constant
-  - `ta_3`: Voltage regulator time constant
-  - `ta_4`: Voltage regulator time constant
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `ta`: Voltage regulator time constant. Units: s.
+  - `va_lim`: Limits for pi controller
+  - `ta_2`: Voltage regulator time constant. Units: s.
+  - `ta_3`: Voltage regulator time constant. Units: s.
+  - `ta_4`: Voltage regulator time constant. Units: s.
+  - `vr_lim`: Voltage regulator limits (regulator output)
   - `kf`: Rate feedback excitation system stabilizer gain
-  - `tf_1`: Rate feedback time constant
-  - `tf_2`: Rate feedback time constant
-  - `efd_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `tf_1`: Rate feedback time constant. Units: s.
+  - `tf_2`: Rate feedback time constant. Units: s.
+  - `efd_lim`: Field voltage regulator limits (regulator output)
   - `ke`: Exciter constant
-  - `te`: Exciter time constant
+  - `te`: Exciter time constant. Units: s.
   - `e_sat`: Exciter output voltage for saturation factor
   - `se`: Exciter saturation factor at exciter output voltage
   - `kp`: Potential source gain

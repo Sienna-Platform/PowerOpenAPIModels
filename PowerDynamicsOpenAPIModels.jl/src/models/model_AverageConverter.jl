@@ -3,10 +3,12 @@
 
 Parameters of an average converter model
 
+  - `id`: Unique integer identifier for this component
   - `rated_voltage`: Rated voltage (V)
   - `rated_current`: Rated current (A)
 """
 Base.@kwdef struct AverageConverter <: APIModel
+    id::Int64
     rated_voltage::Float64
     rated_current::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -24,6 +26,8 @@ function _decode(::Type{AverageConverter}, _openapi_raw, _openapi_validate::Bool
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "AverageConverter")
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "AverageConverter"), false)
     _openapi_field_rated_voltage = _decode_zoned(
         Float64,
         _required(_openapi_object, "rated_voltage", "AverageConverter"),
@@ -36,11 +40,12 @@ function _decode(::Type{AverageConverter}, _openapi_raw, _openapi_validate::Bool
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("rated_voltage", "rated_current") && continue
+        String(_openapi_key) in ("id", "rated_voltage", "rated_current") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return AverageConverter(;
+        id=_openapi_field_id,
         rated_voltage=_openapi_field_rated_voltage,
         rated_current=_openapi_field_rated_current,
         additional_properties=_openapi_additional_properties,
@@ -48,6 +53,8 @@ function _decode(::Type{AverageConverter}, _openapi_raw, _openapi_validate::Bool
 end
 function _encode_unvalidated(_openapi_value::AverageConverter)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.rated_voltage isa Absent || (
         _openapi_output["rated_voltage"] =
             _encode_unvalidated(_openapi_value.rated_voltage)
@@ -79,6 +86,7 @@ _encode(_openapi_value::AverageConverter) = _validate_schema(
 
 function _form_fields(_openapi_value::AverageConverter)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.rated_voltage isa Absent ||
         push!(_openapi_output, "rated_voltage" => _openapi_value.rated_voltage)
     _openapi_value.rated_current isa Absent ||

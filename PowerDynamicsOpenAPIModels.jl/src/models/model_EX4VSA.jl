@@ -8,14 +8,14 @@ IEEE Excitation System for Voltage Security Assesment
   - `d`: OEL parameter d
   - `f`: OEL parameter f
   - `spar`: OEL parameter Spar
-  - `k1`: OEL delay time constant
+  - `k1`: OEL delay time constant. Units: s.
   - `k2`: OEL parameter K2
-  - `oel_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `oel_lim`: OEL integrator limits
   - `g`: AVR exciter gain
-  - `ta`: Numerator lead-lag (lead) time constant
-  - `tb`: Denominator lead-lag (lag) time constant
-  - `te`: Exciter time constant
-  - `e_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `ta`: Numerator lead-lag (lead) time constant. Units: s.
+  - `tb`: Denominator lead-lag (lag) time constant. Units: s.
+  - `te`: Exciter time constant. Units: s.
+  - `e_lim`: Voltage regulator limits (regulator output)
   - `v_ref`: Reference voltage set-point
 """
 Base.@kwdef struct EX4VSA <: APIModel

@@ -1,11 +1,22 @@
 """
     RECurrentControlB
 
-  - `vdip_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `dbd_pnts`: A pair of deadband thresholds `(dbd1, dbd2)` on a voltage or reactive-power error signal, inside which the controller does not act.
-  - `iqinj_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `id`: Unique integer identifier for this component
+  - `q_flag`: Q Flag used for I_qinj
+  - `pq_flag`: PQ Flag used for the Current Limit Logic
+  - `vdip_lim`: Limits for Voltage Dip Logic `(Vdip, Vup)`
+  - `t_rv`: Voltage Filter Time Constant. Units: s.
+  - `dbd_pnts`: Voltage error deadband thresholds `(dbd1, dbd2)`
+  - `k_qv`: Reactive current injection gain during over and undervoltage conditions
+  - `iqinj_lim`: Limits for Iqinj `(I_qh1, I_ql1)`
+  - `v_ref0`: User defined reference. If 0, it is initialized to the initial terminal voltage
+  - `k_vp`: Voltage regulator proportional gain (used when QFlag = 1)
+  - `k_vi`: Voltage regulator integral gain (used when QFlag = 1)
+  - `t_iq`: Time constant for low-pass filter for state q_V when QFlag = 0. Units: s.
+  - `i_max`: Maximum limit on total converter current
 """
 Base.@kwdef struct RECurrentControlB <: APIModel
+    id::Int64
     q_flag::Bool
     pq_flag::Bool
     vdip_lim::MinMax
@@ -33,6 +44,8 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RECurrentControlB")
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "RECurrentControlB"), false)
     _openapi_field_q_flag = _decode_zoned(
         Bool,
         _required(_openapi_object, "Q_Flag", "RECurrentControlB"),
@@ -96,6 +109,7 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
+            "id",
             "Q_Flag",
             "PQ_Flag",
             "Vdip_lim",
@@ -113,6 +127,7 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
             _decode_zoned(Any, _openapi_item, false)
     end
     return RECurrentControlB(;
+        id=_openapi_field_id,
         q_flag=_openapi_field_q_flag,
         pq_flag=_openapi_field_pq_flag,
         vdip_lim=_openapi_field_vdip_lim,
@@ -130,6 +145,8 @@ function _decode(::Type{RECurrentControlB}, _openapi_raw, _openapi_validate::Boo
 end
 function _encode_unvalidated(_openapi_value::RECurrentControlB)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.q_flag isa Absent ||
         (_openapi_output["Q_Flag"] = _encode_unvalidated(_openapi_value.q_flag))
     _openapi_value.pq_flag isa Absent ||
@@ -177,6 +194,7 @@ _encode(_openapi_value::RECurrentControlB) = _validate_schema(
 
 function _form_fields(_openapi_value::RECurrentControlB)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.q_flag isa Absent ||
         push!(_openapi_output, "Q_Flag" => _openapi_value.q_flag)
     _openapi_value.pq_flag isa Absent ||

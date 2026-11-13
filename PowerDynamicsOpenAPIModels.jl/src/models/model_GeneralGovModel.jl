@@ -7,20 +7,20 @@ GE General Governor/Turbine Model. The GeneralGovModel (GGOV1) model is a genera
   - `rselect`: Feedback signal for governor droop
   - `fuel_flag`: Flag switch for fuel source characteristic
   - `r`: Speed droop parameter
-  - `tpelec`: Electrical power transducer time constant
-  - `speed_error_signal`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `tpelec`: Electrical power transducer time constant. Units: s.
+  - `speed_error_signal`: Speed error signal limits
   - `kp_gov`: Governor proportional gain
   - `ki_gov`: Governor integral gain
   - `kd_gov`: Governor derivative gain
-  - `td_gov`: Governor derivative time constant
-  - `valve_position_limits`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `t_act`: Actuator time constant
+  - `td_gov`: Governor derivative time constant. Units: s.
+  - `valve_position_limits`: Valve position limits
+  - `t_act`: Actuator time constant. Units: s.
   - `k_turb`: Turbine gain
   - `wf_nl`: No load fuel flow
-  - `tb`: Turbine lag time constant
-  - `tc`: Turbine lead time constant
-  - `t_eng`: Transport lag time constant for diesel engine
-  - `tf_load`: Load limiter time constant
+  - `tb`: Turbine lag time constant. Units: s.
+  - `tc`: Turbine lead time constant. Units: s.
+  - `t_eng`: Transport lag time constant for diesel engine. Units: s.
+  - `tf_load`: Load limiter time constant. Units: s.
   - `kp_load`: Load limiter proportional gain for PI controller
   - `ki_load`: Load integral gain for PI controller
   - `ld_ref`: Load limiter integral gain for PI controller
@@ -30,12 +30,12 @@ GE General Governor/Turbine Model. The GeneralGovModel (GGOV1) model is a genera
   - `ki_mw`: Power controller (reset) gain
   - `a_set`: Acceleration limiter setpoint
   - `ka`: Acceleration limiter gain
-  - `ta`: Acceleration limiter time constant
+  - `ta`: Acceleration limiter time constant. Units: s.
   - `t_rate`: Turbine rating
   - `db`: Speed governor deadband
-  - `tsa`: Temperature detection lead time constant
-  - `tsb`: Temperature detection lag time constant
-  - `r_lim`: A pair of values, one for the upward (`up`) and one for the downward (`down`) direction of a quantity.
+  - `tsa`: Temperature detection lead time constant. Units: s.
+  - `tsb`: Temperature detection lag time constant. Units: s.
+  - `r_lim`: Maximum rate of load increase
   - `p_ref`: Reference power set-point
 """
 Base.@kwdef struct GeneralGovModel <: APIModel

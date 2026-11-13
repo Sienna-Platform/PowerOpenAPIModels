@@ -4,18 +4,18 @@
 Parameters of 4-states synchronous machine: Simplified Marconato model The derivative of stator fluxes (ψd and ψq) is neglected and ωψd = ψd and ωψq = ψq is assumed (i.e. ω=1.0). This is standard when transmission network dynamics is neglected
 
   - `id`: Unique integer identifier for this component
-  - `r`: Resistance after EMF
-  - `xd`: Reactance after EMF in d-axis
-  - `xq`: Reactance after EMF in q-axis
-  - `xd_p`: Transient reactance after EMF in d-axis
-  - `xq_p`: Transient reactance after EMF in q-axis
-  - `xd_pp`: Sub-Transient reactance after EMF in d-axis
-  - `xq_pp`: Sub-Transient reactance after EMF in q-axis
-  - `td0_p`: Time constant of transient d-axis voltage
-  - `tq0_p`: Time constant of transient q-axis voltage
-  - `td0_pp`: Time constant of sub-transient d-axis voltage
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage
-  - `t_aa`: Time constant of d-axis additional leakage
+  - `r`: Resistance after EMF. Units: pu.
+  - `xd`: Reactance after EMF in d-axis. Units: pu.
+  - `xq`: Reactance after EMF in q-axis. Units: pu.
+  - `xd_p`: Transient reactance after EMF in d-axis. Units: pu.
+  - `xq_p`: Transient reactance after EMF in q-axis. Units: pu.
+  - `xd_pp`: Sub-Transient reactance after EMF in d-axis. Units: pu.
+  - `xq_pp`: Sub-Transient reactance after EMF in q-axis. Units: pu.
+  - `td0_p`: Time constant of transient d-axis voltage. Units: s.
+  - `tq0_p`: Time constant of transient q-axis voltage. Units: s.
+  - `td0_pp`: Time constant of sub-transient d-axis voltage. Units: s.
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage. Units: s.
+  - `t_aa`: Time constant of d-axis additional leakage. Units: s.
 """
 Base.@kwdef struct SimpleMarconatoMachine <: APIModel
     id::Int64

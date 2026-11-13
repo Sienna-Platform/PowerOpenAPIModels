@@ -6,19 +6,19 @@ This excitation system supplies power through a transformer from the generator t
   - `id`: Unique integer identifier for this component
   - `uel_flags`: Code input for Underexcitization limiter (UEL) entry
   - `pss_flags`: Code input for Power System Stabilizer (PSS) or (VOS) entry
-  - `tr`: Regulator input filter time constant
+  - `tr`: Regulator input filter time constant. Units: s.
   - `vi_lim`: Voltage error limits (regulator input)
-  - `tc`: First regulator numerator (lead) time constant
-  - `tb`: First regulator denominator (lag) time constant
-  - `tc1`: Second regulator numerator (lead) time constant
-  - `tb1`: Second regulator denominator (lag) time constant
+  - `tc`: First regulator numerator (lead) time constant. Units: s.
+  - `tb`: First regulator denominator (lag) time constant. Units: s.
+  - `tc1`: Second regulator numerator (lead) time constant. Units: s.
+  - `tb1`: Second regulator denominator (lag) time constant. Units: s.
   - `ka`: Voltage regulator gain
-  - `ta`: Voltage regulator time constant
-  - `va_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `ta`: Voltage regulator time constant. Units: s.
+  - `va_lim`: Limits for regulator output
+  - `vr_lim`: Limits for excitor output
   - `kc`: Rectifier loading factor proportional to commutating reactance
   - `kf`: Rate feedback gain
-  - `tf`: Rate feedback time constant
+  - `tf`: Rate feedback time constant. Units: s.
   - `k_lr`: Exciter output current limiter gain
   - `i_lr`: Exciter output current limit reference
   - `v_ref`: Reference voltage set-point

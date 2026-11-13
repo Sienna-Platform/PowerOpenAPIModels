@@ -7,16 +7,17 @@ A hydropower pumped turbine that needs to have two `HydroReservoir`s attached, s
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `bus`: ID of the bus that this component is connected to.
+  - `remote_regulated_bus`: ID of the bus whose voltage this device regulates, to the `voltage_setpoint` of that bus, while the device regulates voltage; null regulates the bus this device is connected to. A value equal to `bus` is invalid.
   - `active_power`: Initial active power set point of the turbine unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `active_power_limits`: Minimum and maximum stable active power levels for the turbine. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+  - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `active_power_limits_pump`: Minimum and maximum stable active power levels for the pump. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
-  - `outflow_limits`: Turbine/Pump outflow limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: m3/s.
+  - `outflow_limits`: Turbine/Pump outflow limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing. Units: m3/s.
   - `powerhouse_elevation`: Height level above the sea level of the powerhouse on which the turbine is installed. Units: m.
-  - `ramp_limits`: Ramp up and ramp down limits. in psy5 a required param with an option to be nothing Units: per power_units — NATURAL_UNITS: MW/min, COMPONENT_BASE: pu/min .
-  - `time_limits`: Minimum up and minimum down time limits. in psy5 a required param with an option to be nothing Units: min.
+  - `ramp_limits`: Ramp up and ramp down limits. in psy5 a required param with an option to be nothing. Units: per power_units — NATURAL_UNITS: MW/min, COMPONENT_BASE: pu/min .
+  - `time_limits`: Minimum up and minimum down time limits. in psy5 a required param with an option to be nothing. Units: min.
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `operating_mode`: Which mode the pumped-storage unit is operating in at the start of a simulation: pumping, generating, or idle.
@@ -38,6 +39,7 @@ Base.@kwdef struct HydroPumpTurbine <: APIModel
     name::String
     available::Bool
     bus::Int64
+    remote_regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
     active_power::Float64
     reactive_power::Float64
     rating::Float64
@@ -89,6 +91,13 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
     )
     _openapi_field_bus =
         _decode_zoned(Int64, _required(_openapi_object, "bus", "HydroPumpTurbine"), false)
+    _openapi_field_remote_regulated_bus =
+        haskey(_openapi_object, "remote_regulated_bus") ?
+        _decode_zoned(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus"],
+            false,
+        ) : ABSENT
     _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "HydroPumpTurbine"),
@@ -253,6 +262,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
             "name",
             "available",
             "bus",
+            "remote_regulated_bus",
             "active_power",
             "reactive_power",
             "rating",
@@ -287,6 +297,7 @@ function _decode(::Type{HydroPumpTurbine}, _openapi_raw, _openapi_validate::Bool
         name=_openapi_field_name,
         available=_openapi_field_available,
         bus=_openapi_field_bus,
+        remote_regulated_bus=_openapi_field_remote_regulated_bus,
         active_power=_openapi_field_active_power,
         reactive_power=_openapi_field_reactive_power,
         rating=_openapi_field_rating,
@@ -325,6 +336,10 @@ function _encode_unvalidated(_openapi_value::HydroPumpTurbine)
         (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.bus isa Absent ||
         (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
+    _openapi_value.remote_regulated_bus isa Absent || (
+        _openapi_output["remote_regulated_bus"] =
+            _encode_unvalidated(_openapi_value.remote_regulated_bus)
+    )
     _openapi_value.active_power isa Absent ||
         (_openapi_output["active_power"] = _encode_unvalidated(_openapi_value.active_power))
     _openapi_value.reactive_power isa Absent || (
@@ -433,6 +448,10 @@ function _form_fields(_openapi_value::HydroPumpTurbine)
     _openapi_value.available isa Absent ||
         push!(_openapi_output, "available" => _openapi_value.available)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.remote_regulated_bus isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus" => _openapi_value.remote_regulated_bus,
+    )
     _openapi_value.active_power isa Absent ||
         push!(_openapi_output, "active_power" => _openapi_value.active_power)
     _openapi_value.reactive_power isa Absent ||

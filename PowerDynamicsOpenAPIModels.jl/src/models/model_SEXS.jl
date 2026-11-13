@@ -8,7 +8,7 @@ Parameters of Simplified Excitation System Model - SEXS in PSSE
   - `tb`: Lag time constant. Units: s.
   - `k`: Gain
   - `te`: Field circuit time constant. Units: s.
-  - `v_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `v_lim`: Field voltage limits
   - `v_ref`: Reference voltage set-point
 """
 Base.@kwdef struct SEXS <: APIModel

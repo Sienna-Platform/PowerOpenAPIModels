@@ -6,11 +6,11 @@ Parameters of 5 mass-spring shaft model. It contains a High-Pressure (HP) steam 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
-**`h`** | **`Float64`** | Rotor inertia constant in MWs/MVA | [required]
-**`h_hp`** | **`Float64`** | High pressure turbine inertia constant in MWs/MVA | [required]
-**`h_ip`** | **`Float64`** | Intermediate pressure turbine inertia constant in MWs/MVA | [required]
-**`h_lp`** | **`Float64`** | Low pressure turbine inertia constant in MWs/MVA | [required]
-**`h_ex`** | **`Float64`** | Exciter inertia constant in MWs/MVA | [required]
+**`h`** | **`Float64`** | Rotor inertia constant in MWs/MVA. Units: s. | [required]
+**`h_hp`** | **`Float64`** | High pressure turbine inertia constant in MWs/MVA. Units: s. | [required]
+**`h_ip`** | **`Float64`** | Intermediate pressure turbine inertia constant in MWs/MVA. Units: s. | [required]
+**`h_lp`** | **`Float64`** | Low pressure turbine inertia constant in MWs/MVA. Units: s. | [required]
+**`h_ex`** | **`Float64`** | Exciter inertia constant in MWs/MVA. Units: s. | [required]
 **`d`** | **`Float64`** | Rotor natural damping | [required]
 **`d_hp`** | **`Float64`** | High pressure turbine natural damping | [required]
 **`d_ip`** | **`Float64`** | Intermediate pressure turbine natural damping | [required]

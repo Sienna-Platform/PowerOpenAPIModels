@@ -5,4 +5,5 @@ Parameters of a Fixed Frequency Estimator (i.e. no PLL)
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`frequency`** | **`Union{Absent,Float64,Nothing}`** | Reference frequency | [optional]
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
+**`frequency`** | **`Float64`** | Reference frequency, in natural units. Units: Hz. | [required]

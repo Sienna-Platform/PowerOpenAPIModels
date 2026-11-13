@@ -6,8 +6,8 @@ Parameters of a turbine governor type II
   - `id`: Unique integer identifier for this component
   - `r`: Droop parameter
   - `t1`: Transient gain time constant
-  - `t2`: Power fraction time constant
-  - `tau_limits`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `t2`: Power fraction time constant. Units: s.
+  - `tau_limits`: Power limits into the governor
   - `p_ref`: Reference power set-point
 """
 Base.@kwdef struct TGTypeII <: APIModel

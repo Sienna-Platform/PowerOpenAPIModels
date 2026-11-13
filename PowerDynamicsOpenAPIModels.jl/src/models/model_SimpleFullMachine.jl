@@ -4,18 +4,18 @@
 Parameter of a full order flux stator-rotor model without zero sequence flux in the stator. The derivative of stator fluxes (ψd and ψq) is neglected. This is standard when transmission network dynamics is neglected. Only one q-axis damping circuit is considered. All per unit are in machine per unit. Refer to Chapter 3 of Power System Stability and Control by P. Kundur or Chapter 11 of Power System Dynamics: Stability and Control, by J. Machowski, J. Bialek and J. Bumby, for more details. Note that the models are somewhat different (but equivalent) due to the different Park Transformation used in both books
 
   - `id`: Unique integer identifier for this component
-  - `r`: Resistance after EMF
-  - `r_f`: Field motor winding resistance
-  - `r_1d`: Damping rotor winding resistance on d-axis, denoted as RD in Machowski
-  - `r_1q`: Damping rotor winding resistance on q-axis, denoted as RQ in Machowski
-  - `l_d`: Inductance of fictitious damping that represent the effect of the three-phase stator winding in the d-axis of the rotor, in per unit. This value is denoted as Lad + Ll in Kundur (and Ld in Machowski)
-  - `l_q`: Inductance of fictitious damping that represent the effect of the three-phase stator winding in the q-axis of the rotor, in per unit. This value is denoted as Laq + Ll in Kundur
-  - `l_ad`: Mutual inductance between stator winding and rotor field (and damping) winding inductance on d-axis
-  - `l_aq`: Mutual inductance between stator winding and rotor damping winding inductance on q-axi
-  - `l_f1d`: Mutual inductance between rotor field winding and rotor damping winding inductance on d-axis
-  - `l_ff`: Field rotor winding inductance
-  - `l_1d`: Inductance of the d-axis rotor damping circuit
-  - `l_1q`: Inductance of the q-axis rotor damping circuit
+  - `r`: Resistance after EMF. Units: pu.
+  - `r_f`: Field motor winding resistance. Units: pu.
+  - `r_1d`: Damping rotor winding resistance on d-axis, denoted as RD in Machowski. Units: pu.
+  - `r_1q`: Damping rotor winding resistance on q-axis, denoted as RQ in Machowski. Units: pu.
+  - `l_d`: Inductance of fictitious damping that represent the effect of the three-phase stator winding in the d-axis of the rotor, in per unit. This value is denoted as Lad + Ll in Kundur (and Ld in Machowski). Units: pu.
+  - `l_q`: Inductance of fictitious damping that represent the effect of the three-phase stator winding in the q-axis of the rotor, in per unit. This value is denoted as Laq + Ll in Kundur. Units: pu.
+  - `l_ad`: Mutual inductance between stator winding and rotor field (and damping) winding inductance on d-axis. Units: pu.
+  - `l_aq`: Mutual inductance between stator winding and rotor damping winding inductance on q-axi. Units: pu.
+  - `l_f1d`: Mutual inductance between rotor field winding and rotor damping winding inductance on d-axis. Units: pu.
+  - `l_ff`: Field rotor winding inductance. Units: pu.
+  - `l_1d`: Inductance of the d-axis rotor damping circuit. Units: pu.
+  - `l_1q`: Inductance of the q-axis rotor damping circuit. Units: pu.
 """
 Base.@kwdef struct SimpleFullMachine <: APIModel
     id::Int64

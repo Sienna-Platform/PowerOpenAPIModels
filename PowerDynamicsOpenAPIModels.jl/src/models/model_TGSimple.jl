@@ -5,7 +5,7 @@ Parameters of a Simple one-state Turbine Governor
 
   - `id`: Unique integer identifier for this component
   - `d_t`: Inverse droop parameter
-  - `tm`: Turbine governor low-pass time constant
+  - `tm`: Turbine governor low-pass time constant. Units: s.
   - `p_ref`: Reference power set-point
 """
 Base.@kwdef struct TGSimple <: APIModel

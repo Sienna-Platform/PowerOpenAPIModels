@@ -5,6 +5,7 @@ Parameters of a renewable energy generator/converter model, this model correspon
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`t_g`** | **`Float64`** | Converter time constant. Units: s. | [required]
 **`rrpwr`** | **`Float64`** | Low Voltage Power Logic (LVPL) ramp rate limit. | [required]
 **`brkpt`** | **`Float64`** | LVPL characteristic voltage 2. | [required]

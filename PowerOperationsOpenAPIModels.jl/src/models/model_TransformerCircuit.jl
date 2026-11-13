@@ -14,7 +14,8 @@ A `TwoWindingTransformer` has one circuit; a `ThreeWindingTransformer` has three
   - `r`: Circuit resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `x`: Circuit reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `control_objective`: Tap-changer / phase-shifter control objective (PSS/E COD). `UNDEFINED` means this circuit has no control block.
-  - `regulated_bus_number`: Controlled bus number (PSS/E CONT; sign = regulation side).
+  - `regulated_bus`: ID of the bus whose voltage this circuit's tap changer regulates (PSS/E CONT), within `controlled_voltage_limits`. It may be an end of `arc` or a remote bus. Used only when `control_objective` is `VOLTAGE` or `VOLTAGE_DISABLED`; null otherwise, or when no regulated bus is stated.
+  - `regulated_bus_orientation`: Direction the tap adjustment assumes for `regulated_bus`, replacing the sign of PSS/E CONT. Stated only when `regulated_bus` is not an end of `arc`; `UNDEFINED` when it is an end of `arc` or null, because the connections already give the direction.
   - `tap_ratio_limits`: Tap-ratio actuator band (PSS/E RMA/RMI) when `control_objective` moves the tap; `null` otherwise. Under the tap-moving objectives it may be omitted and then defaults to 0.9 to 1.1, PSS/E's own RMI/RMA defaults, which is why it is the one band the conditional blocks do not require. Units: 1.
   - `phase_angle_limits`: Phase-shift actuator band (PSS/E RMA/RMI when the objective moves the angle). `null` unless `control_objective` selects it. Units: rad.
   - `controlled_voltage_limits`: Regulated-voltage target band (PSS/E VMA/VMI), per unit of the regulated bus's base voltage. `null` unless `control_objective` selects it. Units: pu.
@@ -22,8 +23,8 @@ A `TwoWindingTransformer` has one circuit; a `ThreeWindingTransformer` has three
   - `controlled_active_power_flow_limits`: Regulated active-power-flow target band (PSS/E VMA/VMI). `null` unless `control_objective` selects it. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `number_of_tap_positions`: Number of tap positions (PSS/E NTP).
   - `rating`: Thermal rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `rating_b`: Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `rating_c`: Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_b`: Short-term thermal rating (Rate B in PSS/E), the flow allowed for a limited time, such as after a contingency. Absent means no short-term rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
+  - `rating_c`: Emergency thermal rating (Rate C in PSS/E), the highest flow allowed for a brief period. Absent means no emergency rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction, applied in addition to `rating`. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `active_power_flow`: Initial condition of active power flow through this circuit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power_flow`: Initial condition of reactive power flow through this circuit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
@@ -42,7 +43,9 @@ Base.@kwdef struct TransformerCircuit <: APIModel
     r::Union{Absent, Float64, Nothing} = ABSENT
     x::Union{Absent, Float64, Nothing} = ABSENT
     control_objective::Union{Absent, Nothing, TransformerControlObjective} = ABSENT
-    regulated_bus_number::Union{Absent, Int64, Nothing} = ABSENT
+    regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    regulated_bus_orientation::Union{Absent, Nothing, TransformerRegulationOrientation} =
+        ABSENT
     tap_ratio_limits::Union{Absent, Nothing, MinMax} = ABSENT
     phase_angle_limits::Union{Absent, Nothing, MinMax} = ABSENT
     controlled_voltage_limits::Union{Absent, Nothing, MinMax} = ABSENT
@@ -111,11 +114,18 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["control_objective"],
             false,
         ) : ABSENT
-    _openapi_field_regulated_bus_number =
-        haskey(_openapi_object, "regulated_bus_number") ?
+    _openapi_field_regulated_bus =
+        haskey(_openapi_object, "regulated_bus") ?
         _decode_zoned(
-            Union{Absent, Int64, Nothing},
-            _openapi_object["regulated_bus_number"],
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["regulated_bus"],
+            false,
+        ) : ABSENT
+    _openapi_field_regulated_bus_orientation =
+        haskey(_openapi_object, "regulated_bus_orientation") ?
+        _decode_zoned(
+            Union{Absent, Nothing, TransformerRegulationOrientation},
+            _openapi_object["regulated_bus_orientation"],
             false,
         ) : ABSENT
     _openapi_field_tap_ratio_limits =
@@ -232,7 +242,8 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
             "r",
             "x",
             "control_objective",
-            "regulated_bus_number",
+            "regulated_bus",
+            "regulated_bus_orientation",
             "tap_ratio_limits",
             "phase_angle_limits",
             "controlled_voltage_limits",
@@ -263,7 +274,8 @@ function _decode(::Type{TransformerCircuit}, _openapi_raw, _openapi_validate::Bo
         r=_openapi_field_r,
         x=_openapi_field_x,
         control_objective=_openapi_field_control_objective,
-        regulated_bus_number=_openapi_field_regulated_bus_number,
+        regulated_bus=_openapi_field_regulated_bus,
+        regulated_bus_orientation=_openapi_field_regulated_bus_orientation,
         tap_ratio_limits=_openapi_field_tap_ratio_limits,
         phase_angle_limits=_openapi_field_phase_angle_limits,
         controlled_voltage_limits=_openapi_field_controlled_voltage_limits,
@@ -307,9 +319,13 @@ function _encode_unvalidated(_openapi_value::TransformerCircuit)
         _openapi_output["control_objective"] =
             _encode_unvalidated(_openapi_value.control_objective)
     )
-    _openapi_value.regulated_bus_number isa Absent || (
-        _openapi_output["regulated_bus_number"] =
-            _encode_unvalidated(_openapi_value.regulated_bus_number)
+    _openapi_value.regulated_bus isa Absent || (
+        _openapi_output["regulated_bus"] =
+            _encode_unvalidated(_openapi_value.regulated_bus)
+    )
+    _openapi_value.regulated_bus_orientation isa Absent || (
+        _openapi_output["regulated_bus_orientation"] =
+            _encode_unvalidated(_openapi_value.regulated_bus_orientation)
     )
     _openapi_value.tap_ratio_limits isa Absent || (
         _openapi_output["tap_ratio_limits"] =
@@ -401,9 +417,11 @@ function _form_fields(_openapi_value::TransformerCircuit)
     _openapi_value.x isa Absent || push!(_openapi_output, "x" => _openapi_value.x)
     _openapi_value.control_objective isa Absent ||
         push!(_openapi_output, "control_objective" => _openapi_value.control_objective)
-    _openapi_value.regulated_bus_number isa Absent || push!(
+    _openapi_value.regulated_bus isa Absent ||
+        push!(_openapi_output, "regulated_bus" => _openapi_value.regulated_bus)
+    _openapi_value.regulated_bus_orientation isa Absent || push!(
         _openapi_output,
-        "regulated_bus_number" => _openapi_value.regulated_bus_number,
+        "regulated_bus_orientation" => _openapi_value.regulated_bus_orientation,
     )
     _openapi_value.tap_ratio_limits isa Absent ||
         push!(_openapi_output, "tap_ratio_limits" => _openapi_value.tap_ratio_limits)

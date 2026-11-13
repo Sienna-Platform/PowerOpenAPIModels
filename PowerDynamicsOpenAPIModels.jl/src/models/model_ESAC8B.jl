@@ -4,15 +4,15 @@
 Excitation System AC8B. Used to represent the Basler Digital Excitation Control System (DECS) with PID controller in PSSE
 
   - `id`: Unique integer identifier for this component
-  - `tr`: Regulator input filter time constant
+  - `tr`: Regulator input filter time constant. Units: s.
   - `kp`: Regulator proportional PID gain
   - `ki`: Regulator integral PID gain
   - `kd`: Regulator derivative PID gain
-  - `td`: Regulator derivative PID time constant
+  - `td`: Regulator derivative PID time constant. Units: s.
   - `ka`: Regulator output gain
-  - `ta`: Regulator output lag time constant
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `te`: Exciter field time constant
+  - `ta`: Regulator output lag time constant. Units: s.
+  - `vr_lim`: Limits for excitor field voltage
+  - `te`: Exciter field time constant. Units: s.
   - `ke`: Exciter field proportional constant
   - `e_sat`: Exciter output voltage for saturation factor
   - `se`: Exciter saturation factor at exciter output voltage

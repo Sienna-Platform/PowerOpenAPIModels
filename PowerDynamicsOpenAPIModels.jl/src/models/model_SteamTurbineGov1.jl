@@ -6,7 +6,7 @@ Steam Turbine-Governor. This model considers both TGOV1 or TGOV1DU in PSS/E
   - `id`: Unique integer identifier for this component
   - `r`: Droop parameter
   - `t1`: Governor time constant. Units: s.
-  - `valve_position_limits`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `valve_position_limits`: Valve position limits
   - `t2`: Lead-lag lead time constant. Units: s.
   - `t3`: Lead-lag lag time constant. Units: s.
   - `d_t`: Turbine damping
