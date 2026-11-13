@@ -6,7 +6,7 @@ using InfrastructureCoreOpenAPIModels
 # JSONSchema.jl stops at the first failure per validation, so a document that fails as a whole
 # is walked: each object's `required`/`additionalProperties` are checked here directly, while
 # every other node is validated on its own, stripped of its structural keywords, against its
-# sub-schema with the bundle's `definitions` attached so local `$ref`s resolve. An `allOf`
+# sub-schema with the bundle's `$defs` attached so local `$ref`s resolve. An `allOf`
 # stays on the stripped node as a constraint. For `oneOf`/`anyOf` the branch matching the
 # row's discriminator or title is walked, else the branch with the fewest problems.
 
@@ -28,7 +28,7 @@ const _STRUCTURAL = ("properties", "required", "additionalProperties", "items")
 
 function _compile(sub::AbstractDict, definitions, drop)
     root = Dict{String, Any}(String(k) => v for (k, v) in sub if !(k in drop))
-    root["definitions"] = definitions
+    root["\$defs"] = definitions
     return JSONSchema.Schema(root)
 end
 
@@ -195,8 +195,8 @@ function InfrastructureCoreOpenAPIModels._bundle_problems(
     if _is_valid(JSONSchema.validate(JSONSchema.Schema(bundle), tree))
         return problems
     end
-    root = Dict{String, Any}(String(k) => v for (k, v) in bundle if k != "definitions")
-    _walk!(Walker(bundle["definitions"]), problems, root, tree, "")
+    root = Dict{String, Any}(String(k) => v for (k, v) in bundle if k != "\$defs")
+    _walk!(Walker(bundle["\$defs"]), problems, root, tree, "")
     return sort!(problems)
 end
 
