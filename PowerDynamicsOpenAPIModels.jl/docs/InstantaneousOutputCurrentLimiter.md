@@ -5,5 +5,6 @@ Parameters of Instantaneous (Square) Current Controller Limiter. Regulates inver
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`id_max`** | **`Float64`** | Maximum limit on d-axis current controller input current | [required]
 **`iq_max`** | **`Float64`** | Maximum limit on q-axis current controller input current | [required]

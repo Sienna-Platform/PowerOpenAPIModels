@@ -34,7 +34,6 @@ function __init__()
     InfrastructureCoreOpenAPIModels.register_model_type!(
         NodalHVDCTransportTechnologyLineLoss,
     )
-    InfrastructureCoreOpenAPIModels.register_model_type!(PortfolioFinancialData)
     InfrastructureCoreOpenAPIModels.register_model_type!(RequirementAssociation)
     InfrastructureCoreOpenAPIModels.register_model_type!(RetirementPotential)
     InfrastructureCoreOpenAPIModels.register_model_type!(RetirementPotentialBuildYear)

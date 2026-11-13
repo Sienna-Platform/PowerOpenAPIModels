@@ -4,20 +4,20 @@
 This excitation systems consists of an alternator main exciter feeding its output via non-controlled rectifiers. The exciter does not employ self-excitation, and the voltage regulator power is taken from a source that is not affected by external transients. Parameters of IEEE Std 421.5 Type AC6A Excitacion System. ESAC6A in PSSE and PSLF
 
   - `id`: Unique integer identifier for this component
-  - `tr`: Regulator input filter time constant
+  - `tr`: Regulator input filter time constant. Units: s.
   - `ka`: Regulator output gain
-  - `ta`: Regulator output lag time constant
-  - `tk`: Voltage regulator lead time constant
-  - `tb`: Regulator denominator (lag) time constant
-  - `tc`: Regulator numerator (lead) time constant
-  - `va_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `te`: Exciter field time constant
+  - `ta`: Regulator output lag time constant. Units: s.
+  - `tk`: Voltage regulator lead time constant. Units: s.
+  - `tb`: Regulator denominator (lag) time constant. Units: s.
+  - `tc`: Regulator numerator (lead) time constant. Units: s.
+  - `va_lim`: Limits for regulator output
+  - `vr_lim`: Limits for excitor field voltage
+  - `te`: Exciter field time constant. Units: s.
   - `vfe_lim`: Exciter field current limiter reference
   - `kh`: Exciter field current regulator feedback gain
   - `vh_max`: Exciter field current limiter maximum output
-  - `th`: Exciter field current limiter denominator (lag) time constant
-  - `tj`: Exciter field current limiter (lead) time constant
+  - `th`: Exciter field current limiter denominator (lag) time constant. Units: s.
+  - `tj`: Exciter field current limiter (lead) time constant. Units: s.
   - `kc`: Rectifier loading factor proportional to commutating reactance
   - `kd`: Demagnetizing factor, function of exciter alternator reactances
   - `ke`: Exciter field proportional constant

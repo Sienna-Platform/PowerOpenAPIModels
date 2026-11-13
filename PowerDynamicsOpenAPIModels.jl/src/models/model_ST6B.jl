@@ -5,20 +5,20 @@ In these excitation systems, voltage (and also current in compounded systems) is
 
   - `id`: Unique integer identifier for this component
   - `oel_flag`: OEL Flag for ST6B: 1: before HV gate, 2: after HV gate
-  - `tr`: Regulator input filter time constant
+  - `tr`: Regulator input filter time constant. Units: s.
   - `k_pa`: Regulator proportional gain
   - `k_ia`: Regulator integral gain
   - `k_da`: Regulator derivative gain
-  - `t_da`: Voltage regulator derivative channel time constant
-  - `va_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `t_da`: Voltage regulator derivative channel time constant. Units: s.
+  - `va_lim`: Regulator output limits
   - `k_ff`: Pre-control gain of the inner loop field regulator
   - `k_m`: Forward gain of the inner loop field regulator
   - `k_ci`: Exciter output current limit adjustment gain
   - `k_lr`: Exciter output current limiter gain
   - `i_lr`: Exciter current limiter reference
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `vr_lim`: Voltage regulator limits
   - `kg`: Feedback gain constant of the inner loop field regulator
-  - `tg`: Feedback time constant of the inner loop field voltage regulator
+  - `tg`: Feedback time constant of the inner loop field voltage regulator. Units: s.
   - `v_ref`: Reference voltage set-point
 """
 Base.@kwdef struct ST6B <: APIModel

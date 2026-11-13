@@ -7,9 +7,10 @@ A Synchronous Machine connected to the system to provide inertia or reactive pow
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `bus`: ID of the bus that this component is connected to.
+  - `remote_regulated_bus`: ID of the bus whose voltage this device regulates, to the `voltage_setpoint` of that bus, while the device regulates voltage; null regulates the bus this device is connected to. A value equal to `bus` is invalid.
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
+  - `reactive_power_limits`: Minimum and maximum reactive power limits. Set to `null` if not applicable. in psy5 a required param with an option to be nothing. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `base_power`: Base power of the unit for per unitization. Units: MVA.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
   - `active_power_losses`: Active power loss incurred by having the unit online. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
@@ -20,6 +21,7 @@ Base.@kwdef struct SynchronousCondenser <: APIModel
     name::String
     available::Bool
     bus::Int64
+    remote_regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
     reactive_power::Float64
     rating::Float64
     reactive_power_limits::Union{Absent, Nothing, MinMax} = ABSENT
@@ -62,6 +64,13 @@ function _decode(::Type{SynchronousCondenser}, _openapi_raw, _openapi_validate::
         _required(_openapi_object, "bus", "SynchronousCondenser"),
         false,
     )
+    _openapi_field_remote_regulated_bus =
+        haskey(_openapi_object, "remote_regulated_bus") ?
+        _decode_zoned(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus"],
+            false,
+        ) : ABSENT
     _openapi_field_reactive_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "reactive_power", "SynchronousCondenser"),
@@ -110,6 +119,7 @@ function _decode(::Type{SynchronousCondenser}, _openapi_raw, _openapi_validate::
             "name",
             "available",
             "bus",
+            "remote_regulated_bus",
             "reactive_power",
             "rating",
             "reactive_power_limits",
@@ -126,6 +136,7 @@ function _decode(::Type{SynchronousCondenser}, _openapi_raw, _openapi_validate::
         name=_openapi_field_name,
         available=_openapi_field_available,
         bus=_openapi_field_bus,
+        remote_regulated_bus=_openapi_field_remote_regulated_bus,
         reactive_power=_openapi_field_reactive_power,
         rating=_openapi_field_rating,
         reactive_power_limits=_openapi_field_reactive_power_limits,
@@ -146,6 +157,10 @@ function _encode_unvalidated(_openapi_value::SynchronousCondenser)
         (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.bus isa Absent ||
         (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
+    _openapi_value.remote_regulated_bus isa Absent || (
+        _openapi_output["remote_regulated_bus"] =
+            _encode_unvalidated(_openapi_value.remote_regulated_bus)
+    )
     _openapi_value.reactive_power isa Absent || (
         _openapi_output["reactive_power"] =
             _encode_unvalidated(_openapi_value.reactive_power)
@@ -196,6 +211,10 @@ function _form_fields(_openapi_value::SynchronousCondenser)
     _openapi_value.available isa Absent ||
         push!(_openapi_output, "available" => _openapi_value.available)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.remote_regulated_bus isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus" => _openapi_value.remote_regulated_bus,
+    )
     _openapi_value.reactive_power isa Absent ||
         push!(_openapi_output, "reactive_power" => _openapi_value.reactive_power)
     _openapi_value.rating isa Absent ||

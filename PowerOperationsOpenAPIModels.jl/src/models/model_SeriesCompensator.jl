@@ -1,7 +1,7 @@
 """
     SeriesCompensator
 
-A series compensator on an `Arc`: a series capacitor or reactor, or a thyristor-controlled or static synchronous series compensator, with one series reactance. Devices that also inject at a bus, such as a UPFC, are not covered.
+A fixed series compensator on an `Arc` (the CIM `SeriesCompensator`): a series capacitor or reactor, or an AC line without charging susceptance, with constant `r` and `x`. `bypassed` shorts the device into a zero-impedance tie; `available = false` takes it out of service. Controllable series devices are not covered.
 
   - `id`: Unique integer identifier for this component.
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
@@ -10,11 +10,9 @@ A series compensator on an `Arc`: a series capacitor or reactor, or a thyristor-
   - `reactive_power_flow`: Initial condition of reactive power flow through the compensator. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `arc`: An `Arc` defining this line `from` a bus `to` another bus.
   - `r`: Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
-  - `x`: Series reactance; negative for a capacitor. Under `DISPATCHABLE` and `ACTIVE_POWER_FLOW`, the present value. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+  - `x`: Series reactance; negative for a capacitor. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
   - `rating`: Thermal rating. Flow through the compensator must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
-  - `control_mode`: How the series reactance is set. `FIXED` holds `x`; `BYPASSED` shorts the compensator into a zero-impedance tie; `DISPATCHABLE` makes the reactance a decision within `reactance_limits`; `ACTIVE_POWER_FLOW` sets it to hold `active_power_flow_setpoint`.
-  - `reactance_limits`: Minimum and maximum series reactance. Required when `control_mode` is `DISPATCHABLE` or `ACTIVE_POWER_FLOW`. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
-  - `active_power_flow_setpoint`: Active power flow, from the `from` bus to the `to` bus, the compensator holds. Required when `control_mode` is `ACTIVE_POWER_FLOW`. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
+  - `bypassed`: Whether the device is bypassed: shorted into a zero-impedance tie between the `from` and `to` buses. `r` and `x` keep the impedance it has when in service.
   - `rating_b`: Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `rating_c`: Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
   - `operational_flow_limit`: Operator-set minimum and maximum flow in each direction. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
@@ -32,9 +30,7 @@ Base.@kwdef struct SeriesCompensator <: APIModel
     r::Float64
     x::Float64
     rating::Float64
-    control_mode::Union{Absent, Nothing, SeriesCompensatorControlMode} = ABSENT
-    reactance_limits::Union{Absent, Nothing, MinMax} = ABSENT
-    active_power_flow_setpoint::Union{Absent, Float64, Nothing} = ABSENT
+    bypassed::Union{Absent, Bool, Nothing} = ABSENT
     rating_b::Union{Absent, Float64, Nothing} = ABSENT
     rating_c::Union{Absent, Float64, Nothing} = ABSENT
     operational_flow_limit::Union{Absent, Nothing, OperationalFlowLimit} = ABSENT
@@ -89,27 +85,10 @@ function _decode(::Type{SeriesCompensator}, _openapi_raw, _openapi_validate::Boo
         _required(_openapi_object, "rating", "SeriesCompensator"),
         false,
     )
-    _openapi_field_control_mode =
-        haskey(_openapi_object, "control_mode") ?
-        _decode_zoned(
-            Union{Absent, Nothing, SeriesCompensatorControlMode},
-            _openapi_object["control_mode"],
-            false,
-        ) : ABSENT
-    _openapi_field_reactance_limits =
-        haskey(_openapi_object, "reactance_limits") ?
-        _decode_zoned(
-            Union{Absent, Nothing, MinMax},
-            _openapi_object["reactance_limits"],
-            false,
-        ) : ABSENT
-    _openapi_field_active_power_flow_setpoint =
-        haskey(_openapi_object, "active_power_flow_setpoint") ?
-        _decode_zoned(
-            Union{Absent, Float64, Nothing},
-            _openapi_object["active_power_flow_setpoint"],
-            false,
-        ) : ABSENT
+    _openapi_field_bypassed =
+        haskey(_openapi_object, "bypassed") ?
+        _decode_zoned(Union{Absent, Bool, Nothing}, _openapi_object["bypassed"], false) :
+        ABSENT
     _openapi_field_rating_b =
         haskey(_openapi_object, "rating_b") ?
         _decode_zoned(Union{Absent, Float64, Nothing}, _openapi_object["rating_b"], false) :
@@ -154,9 +133,7 @@ function _decode(::Type{SeriesCompensator}, _openapi_raw, _openapi_validate::Boo
             "r",
             "x",
             "rating",
-            "control_mode",
-            "reactance_limits",
-            "active_power_flow_setpoint",
+            "bypassed",
             "rating_b",
             "rating_c",
             "operational_flow_limit",
@@ -177,9 +154,7 @@ function _decode(::Type{SeriesCompensator}, _openapi_raw, _openapi_validate::Boo
         r=_openapi_field_r,
         x=_openapi_field_x,
         rating=_openapi_field_rating,
-        control_mode=_openapi_field_control_mode,
-        reactance_limits=_openapi_field_reactance_limits,
-        active_power_flow_setpoint=_openapi_field_active_power_flow_setpoint,
+        bypassed=_openapi_field_bypassed,
         rating_b=_openapi_field_rating_b,
         rating_c=_openapi_field_rating_c,
         operational_flow_limit=_openapi_field_operational_flow_limit,
@@ -213,16 +188,8 @@ function _encode_unvalidated(_openapi_value::SeriesCompensator)
         (_openapi_output["x"] = _encode_unvalidated(_openapi_value.x))
     _openapi_value.rating isa Absent ||
         (_openapi_output["rating"] = _encode_unvalidated(_openapi_value.rating))
-    _openapi_value.control_mode isa Absent ||
-        (_openapi_output["control_mode"] = _encode_unvalidated(_openapi_value.control_mode))
-    _openapi_value.reactance_limits isa Absent || (
-        _openapi_output["reactance_limits"] =
-            _encode_unvalidated(_openapi_value.reactance_limits)
-    )
-    _openapi_value.active_power_flow_setpoint isa Absent || (
-        _openapi_output["active_power_flow_setpoint"] =
-            _encode_unvalidated(_openapi_value.active_power_flow_setpoint)
-    )
+    _openapi_value.bypassed isa Absent ||
+        (_openapi_output["bypassed"] = _encode_unvalidated(_openapi_value.bypassed))
     _openapi_value.rating_b isa Absent ||
         (_openapi_output["rating_b"] = _encode_unvalidated(_openapi_value.rating_b))
     _openapi_value.rating_c isa Absent ||
@@ -275,14 +242,8 @@ function _form_fields(_openapi_value::SeriesCompensator)
     _openapi_value.x isa Absent || push!(_openapi_output, "x" => _openapi_value.x)
     _openapi_value.rating isa Absent ||
         push!(_openapi_output, "rating" => _openapi_value.rating)
-    _openapi_value.control_mode isa Absent ||
-        push!(_openapi_output, "control_mode" => _openapi_value.control_mode)
-    _openapi_value.reactance_limits isa Absent ||
-        push!(_openapi_output, "reactance_limits" => _openapi_value.reactance_limits)
-    _openapi_value.active_power_flow_setpoint isa Absent || push!(
-        _openapi_output,
-        "active_power_flow_setpoint" => _openapi_value.active_power_flow_setpoint,
-    )
+    _openapi_value.bypassed isa Absent ||
+        push!(_openapi_output, "bypassed" => _openapi_value.bypassed)
     _openapi_value.rating_b isa Absent ||
         push!(_openapi_output, "rating_b" => _openapi_value.rating_b)
     _openapi_value.rating_c isa Absent ||

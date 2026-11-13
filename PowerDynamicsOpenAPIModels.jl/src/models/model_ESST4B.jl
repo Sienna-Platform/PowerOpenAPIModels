@@ -3,15 +3,15 @@
 
 In these excitation systems, voltage (and also current in compounded systems) is transformed to an appropriate level. Rectifiers, either controlled or non-controlled, provide the necessary direct current for the generator field. Parameters of IEEE Std 421.5 Type ST4B Excitacion System. ESST4B in PSSE and PSLF
 
-  - `tr`: Regulator input filter time constant
+  - `tr`: Regulator input filter time constant. Units: s.
   - `id`: Unique integer identifier for this component
   - `k_pr`: Regulator proportional gain
   - `k_ir`: Regulator integral gain
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `ta`: Voltage regulator time constant
+  - `vr_lim`: Voltage regulator limits
+  - `ta`: Voltage regulator time constant. Units: s.
   - `k_pm`: Voltage regulator proportional gain output
   - `k_im`: Voltage regulator integral gain output
-  - `vm_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `vm_lim`: Limits for inner loop output
   - `kg`: Feedback gain constant of the inner loop field regulator
   - `kp`: Potential circuit (voltage) gain coefficient
   - `ki`: Compound circuit (current) gain coefficient

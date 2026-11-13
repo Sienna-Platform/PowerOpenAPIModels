@@ -4,15 +4,15 @@
 Modified ESAC1A. This excitation systems consists of an alternator main exciter feeding its output via non-controlled rectifiers. The exciter does not employ self-excitation, and the voltage regulator power is taken from a source that is not affected by external transients. Parameters of IEEE Std 421.5 Type AC1A. EXAC1 in PSSE and PSLF
 
   - `id`: Unique integer identifier for this component
-  - `tr`: Regulator input filter time constant
-  - `tb`: Regulator denominator (lag) time constant
-  - `tc`: Regulator numerator (lead) time constant
+  - `tr`: Regulator input filter time constant. Units: s.
+  - `tb`: Regulator denominator (lag) time constant. Units: s.
+  - `tc`: Regulator numerator (lead) time constant. Units: s.
   - `ka`: Regulator output gain
-  - `ta`: Regulator output time constant
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `te`: Exciter field time constant
+  - `ta`: Regulator output time constant. Units: s.
+  - `vr_lim`: Limits for regulator output
+  - `te`: Exciter field time constant. Units: s.
   - `kf`: Rate feedback excitation system stabilizer gain
-  - `tf`: Rate feedback time constant
+  - `tf`: Rate feedback time constant. Units: s.
   - `kc`: Rectifier loading factor proportional to commutating reactance
   - `kd`: Demagnetizing factor, function of exciter alternator reactances
   - `ke`: Exciter field proportional constant

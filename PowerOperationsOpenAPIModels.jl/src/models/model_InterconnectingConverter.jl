@@ -1,7 +1,7 @@
 """
     InterconnectingConverter
 
-Interconnecting Power Converter (IPC) for transforming power from an ACBus to a DCBus. Voltage and voltage-droop fields are natural units only: there is no conventional DC base voltage from which to per-unitize them. `rated_dc_voltage` and `rated_ac_voltage` record the voltage bases, so a consumer can convert the voltage fields to per unit.
+Interconnecting Power Converter (IPC) for transforming power from an ACBus to a DCBus. Voltage and voltage-droop fields are natural units only: there is no conventional DC base voltage from which to per-unitize them. `rated_dc_voltage` records the DC voltage base, so a consumer can convert the DC voltage fields to per unit.
 
   - `id`: Unique integer identifier for this component.
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
@@ -23,10 +23,9 @@ Interconnecting Power Converter (IPC) for transforming power from an ACBus to a 
   - `dc_voltage_setpoint`: DC-side voltage target of the converter, used when `dc_control` is `DC_VOLTAGE` or `DC_VOLTAGE_DROOP`; `null` otherwise. Units: kV.
   - `rated_dc_voltage`: Rated DC voltage of the converter, the base for `dc_voltage_setpoint` and `voltage_limits`; 0.0 means unspecified. Units: kV.
   - `power_factor_setpoint`: Power-factor setpoint of the converter, used when `ac_control` is `AC_REACTIVE_POWER`; `null` otherwise. Units: 1.
-  - `ac_voltage_setpoint`: AC-side voltage magnitude target of the converter, used when `ac_control` is `AC_VOLTAGE`; `null` otherwise. Units: kV.
-  - `rated_ac_voltage`: Rated AC voltage at the converter's AC terminal, the base for `ac_voltage_setpoint`; 0.0 means unspecified. Units: kV.
+  - `rated_ac_voltage`: Rated AC voltage at the converter's AC terminal; 0.0 means unspecified. Units: kV.
   - `dc_voltage_droop`: DC-voltage droop gain on the converter, used when `dc_control` is `DC_VOLTAGE_DROOP`: `V_dc = dc_voltage_setpoint - dc_voltage_droop * P_c`, with `V_dc` in kV and `P_c` in MW regardless of `power_units`. A value of 0.0 disables droop. Units: kV/MW.
-  - `remote_bus_control`: Number of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE`; null regulates its own terminal bus.
+  - `remote_regulated_bus`: ID of the AC bus whose voltage the converter regulates when `ac_control` is `AC_VOLTAGE`, to the `voltage_setpoint` of that bus; null regulates the converter's own AC bus. A value equal to `bus` is invalid.
   - `power_factor_weighting_fraction`: Power weighting factor fraction used in reducing the active power order and either the reactive power order when the converter rating is violated. When is 0.0, only the active power is reduced; when is 1.0, only the reactive power is reduced; otherwise, a weighted reduction of both active and reactive power is applied. Units: 1.
   - `voltage_limits`: Minimum and maximum voltage at the DC bus. Units: kV.
   - `dynamic_injector`: ID of the corresponding dynamic injection device, if any.
@@ -52,10 +51,9 @@ Base.@kwdef struct InterconnectingConverter <: APIModel
     dc_voltage_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
     rated_dc_voltage::Union{Absent, Float64, Nothing} = ABSENT
     power_factor_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
-    ac_voltage_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
     rated_ac_voltage::Union{Absent, Float64, Nothing} = ABSENT
     dc_voltage_droop::Union{Absent, Float64, Nothing} = ABSENT
-    remote_bus_control::Union{Absent, Union{Int64, Nothing}} = ABSENT
+    remote_regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
     power_factor_weighting_fraction::Union{Absent, Float64, Nothing} = ABSENT
     voltage_limits::Union{Absent, MinMax, Nothing} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
@@ -195,13 +193,6 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["power_factor_setpoint"],
             false,
         ) : ABSENT
-    _openapi_field_ac_voltage_setpoint =
-        haskey(_openapi_object, "ac_voltage_setpoint") ?
-        _decode_zoned(
-            Union{Absent, Union{Float64, Nothing}},
-            _openapi_object["ac_voltage_setpoint"],
-            false,
-        ) : ABSENT
     _openapi_field_rated_ac_voltage =
         haskey(_openapi_object, "rated_ac_voltage") ?
         _decode_zoned(
@@ -216,11 +207,11 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             _openapi_object["dc_voltage_droop"],
             false,
         ) : ABSENT
-    _openapi_field_remote_bus_control =
-        haskey(_openapi_object, "remote_bus_control") ?
+    _openapi_field_remote_regulated_bus =
+        haskey(_openapi_object, "remote_regulated_bus") ?
         _decode_zoned(
             Union{Absent, Union{Int64, Nothing}},
-            _openapi_object["remote_bus_control"],
+            _openapi_object["remote_regulated_bus"],
             false,
         ) : ABSENT
     _openapi_field_power_factor_weighting_fraction =
@@ -267,10 +258,9 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
             "dc_voltage_setpoint",
             "rated_dc_voltage",
             "power_factor_setpoint",
-            "ac_voltage_setpoint",
             "rated_ac_voltage",
             "dc_voltage_droop",
-            "remote_bus_control",
+            "remote_regulated_bus",
             "power_factor_weighting_fraction",
             "voltage_limits",
             "dynamic_injector",
@@ -299,10 +289,9 @@ function _decode(::Type{InterconnectingConverter}, _openapi_raw, _openapi_valida
         dc_voltage_setpoint=_openapi_field_dc_voltage_setpoint,
         rated_dc_voltage=_openapi_field_rated_dc_voltage,
         power_factor_setpoint=_openapi_field_power_factor_setpoint,
-        ac_voltage_setpoint=_openapi_field_ac_voltage_setpoint,
         rated_ac_voltage=_openapi_field_rated_ac_voltage,
         dc_voltage_droop=_openapi_field_dc_voltage_droop,
-        remote_bus_control=_openapi_field_remote_bus_control,
+        remote_regulated_bus=_openapi_field_remote_regulated_bus,
         power_factor_weighting_fraction=_openapi_field_power_factor_weighting_fraction,
         voltage_limits=_openapi_field_voltage_limits,
         dynamic_injector=_openapi_field_dynamic_injector,
@@ -367,10 +356,6 @@ function _encode_unvalidated(_openapi_value::InterconnectingConverter)
         _openapi_output["power_factor_setpoint"] =
             _encode_unvalidated(_openapi_value.power_factor_setpoint)
     )
-    _openapi_value.ac_voltage_setpoint isa Absent || (
-        _openapi_output["ac_voltage_setpoint"] =
-            _encode_unvalidated(_openapi_value.ac_voltage_setpoint)
-    )
     _openapi_value.rated_ac_voltage isa Absent || (
         _openapi_output["rated_ac_voltage"] =
             _encode_unvalidated(_openapi_value.rated_ac_voltage)
@@ -379,9 +364,9 @@ function _encode_unvalidated(_openapi_value::InterconnectingConverter)
         _openapi_output["dc_voltage_droop"] =
             _encode_unvalidated(_openapi_value.dc_voltage_droop)
     )
-    _openapi_value.remote_bus_control isa Absent || (
-        _openapi_output["remote_bus_control"] =
-            _encode_unvalidated(_openapi_value.remote_bus_control)
+    _openapi_value.remote_regulated_bus isa Absent || (
+        _openapi_output["remote_regulated_bus"] =
+            _encode_unvalidated(_openapi_value.remote_regulated_bus)
     )
     _openapi_value.power_factor_weighting_fraction isa Absent || (
         _openapi_output["power_factor_weighting_fraction"] =
@@ -459,14 +444,14 @@ function _form_fields(_openapi_value::InterconnectingConverter)
         _openapi_output,
         "power_factor_setpoint" => _openapi_value.power_factor_setpoint,
     )
-    _openapi_value.ac_voltage_setpoint isa Absent ||
-        push!(_openapi_output, "ac_voltage_setpoint" => _openapi_value.ac_voltage_setpoint)
     _openapi_value.rated_ac_voltage isa Absent ||
         push!(_openapi_output, "rated_ac_voltage" => _openapi_value.rated_ac_voltage)
     _openapi_value.dc_voltage_droop isa Absent ||
         push!(_openapi_output, "dc_voltage_droop" => _openapi_value.dc_voltage_droop)
-    _openapi_value.remote_bus_control isa Absent ||
-        push!(_openapi_output, "remote_bus_control" => _openapi_value.remote_bus_control)
+    _openapi_value.remote_regulated_bus isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus" => _openapi_value.remote_regulated_bus,
+    )
     _openapi_value.power_factor_weighting_fraction isa Absent || push!(
         _openapi_output,
         "power_factor_weighting_fraction" =>

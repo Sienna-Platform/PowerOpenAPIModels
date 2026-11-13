@@ -4,14 +4,14 @@
 1968 IEEE type 1 excitation system model
 
   - `id`: Unique integer identifier for this component
-  - `tr`: Voltage measurement time constant
+  - `tr`: Voltage measurement time constant. Units: s.
   - `ka`: Amplifier gain
-  - `ta`: Amplifier time constant
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `ta`: Amplifier time constant. Units: s.
+  - `vr_lim`: Voltage regulator limits (regulator output)
   - `ke`: Exciter constant related to self-excited field
-  - `te`: Exciter time constant, integration rate associated with exciter control
+  - `te`: Exciter time constant, integration rate associated with exciter control. Units: s.
   - `kf`: Excitation control system stabilizer gain
-  - `tf`: Excitation control system stabilizer time constant
+  - `tf`: Excitation control system stabilizer time constant. Units: s.
   - `switch`: Switch
   - `e_sat`: Exciter output voltage for saturation factor
   - `se`: Exciter saturation factor at exciter output voltage

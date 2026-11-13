@@ -5,5 +5,6 @@ Parameters of Priority-Based Current Controller Limiter. Regulates the magnitude
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`i_max`** | **`Float64`** | Maximum limit on current controller input current | [required]
 **`phi_i`** | **`Float64`** | Pre-defined angle (measured against the d-axis) for Iref once limit Imax is hit | [required]

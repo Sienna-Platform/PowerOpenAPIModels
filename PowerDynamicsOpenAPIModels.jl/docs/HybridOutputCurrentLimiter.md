@@ -5,6 +5,7 @@ Parameters of Hybrid Current Controller Limiter. Regulates the magnitude of the 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`i_max`** | **`Float64`** | Maximum limit on current controller input current | [required]
 **`rv`** | **`Float64`** | Real part of the virtual impedance | [required]
 **`lv`** | **`Float64`** | Imaginary part of the virtual impedance | [required]

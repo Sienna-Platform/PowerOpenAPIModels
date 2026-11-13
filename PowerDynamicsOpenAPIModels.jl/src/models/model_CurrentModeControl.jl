@@ -1,4 +1,13 @@
+"""
+    CurrentModeControl
+
+  - `id`: Unique integer identifier for this component
+  - `kpc`: Current controller proportional gain
+  - `kic`: Current controller integral gain
+  - `kffv`: Gain to enable feed-forward gain of voltage
+"""
 Base.@kwdef struct CurrentModeControl <: APIModel
+    id::Int64
     kpc::Float64
     kic::Float64
     kffv::Float64
@@ -17,6 +26,8 @@ function _decode(::Type{CurrentModeControl}, _openapi_raw, _openapi_validate::Bo
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "CurrentModeControl")
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "CurrentModeControl"), false)
     _openapi_field_kpc = _decode_zoned(
         Float64,
         _required(_openapi_object, "kpc", "CurrentModeControl"),
@@ -34,11 +45,12 @@ function _decode(::Type{CurrentModeControl}, _openapi_raw, _openapi_validate::Bo
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("kpc", "kic", "kffv") && continue
+        String(_openapi_key) in ("id", "kpc", "kic", "kffv") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return CurrentModeControl(;
+        id=_openapi_field_id,
         kpc=_openapi_field_kpc,
         kic=_openapi_field_kic,
         kffv=_openapi_field_kffv,
@@ -47,6 +59,8 @@ function _decode(::Type{CurrentModeControl}, _openapi_raw, _openapi_validate::Bo
 end
 function _encode_unvalidated(_openapi_value::CurrentModeControl)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.kpc isa Absent ||
         (_openapi_output["kpc"] = _encode_unvalidated(_openapi_value.kpc))
     _openapi_value.kic isa Absent ||
@@ -76,6 +90,7 @@ _encode(_openapi_value::CurrentModeControl) = _validate_schema(
 
 function _form_fields(_openapi_value::CurrentModeControl)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.kpc isa Absent || push!(_openapi_output, "kpc" => _openapi_value.kpc)
     _openapi_value.kic isa Absent || push!(_openapi_output, "kic" => _openapi_value.kic)
     _openapi_value.kffv isa Absent || push!(_openapi_output, "kffv" => _openapi_value.kffv)

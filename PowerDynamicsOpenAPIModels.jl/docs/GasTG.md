@@ -7,9 +7,9 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`r`** | **`Float64`** | Speed droop parameter | [required]
-**`t1`** | **`Float64`** | Governor time constant | [required]
-**`t2`** | **`Float64`** | Combustion chamber time constant | [required]
-**`t3`** | **`Float64`** | Load limit time constant (exhaust gas measurement time) | [required]
+**`t1`** | **`Float64`** | Governor time constant. Units: s. | [required]
+**`t2`** | **`Float64`** | Combustion chamber time constant. Units: s. | [required]
+**`t3`** | **`Float64`** | Load limit time constant (exhaust gas measurement time). Units: s. | [required]
 **`at`** | **`Float64`** | Ambient temperature load limit | [required]
 **`kt`** | **`Float64`** | Load limit feedback gain | [required]
 **`v_lim`** | **`Vector{Float64}`** | Operational control limits on fuel valve opening (Vmin, Vmax) | [required]

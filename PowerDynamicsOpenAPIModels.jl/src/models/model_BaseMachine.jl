@@ -4,8 +4,8 @@
 Parameters of a Classic Machine: GENCLS in PSSE and PSLF
 
   - `id`: Unique integer identifier for this component
-  - `r`: Resistance after EMF
-  - `xd_p`: Reactance after EMF
+  - `r`: Resistance after EMF. Units: pu.
+  - `xd_p`: Reactance after EMF. Units: pu.
   - `eq_p`: Fixed EMF behind the impedance
 """
 Base.@kwdef struct BaseMachine <: APIModel

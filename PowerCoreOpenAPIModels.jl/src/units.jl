@@ -11,6 +11,20 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_unit_base(::Type{ACBus}, ::Val{:magnitude}) = true
 InfrastructureCoreOpenAPIModels.unit_base(::Type{ACBus}, ::Val{:magnitude}) = :base_voltage
+InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{ACBus}, ::Val{:voltage_setpoint}) =
+    true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{ACBus},
+    ::Val{:voltage_setpoint},
+) = "pu"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{ACBus},
+    ::Val{:voltage_setpoint},
+) = "Voltage"
+InfrastructureCoreOpenAPIModels.has_unit_base(::Type{ACBus}, ::Val{:voltage_setpoint}) =
+    true
+InfrastructureCoreOpenAPIModels.unit_base(::Type{ACBus}, ::Val{:voltage_setpoint}) =
+    :base_voltage
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{ACBus}, ::Val{:voltage_limits}) =
     true
 InfrastructureCoreOpenAPIModels.declared_unit(::Type{ACBus}, ::Val{:voltage_limits}) = "pu"

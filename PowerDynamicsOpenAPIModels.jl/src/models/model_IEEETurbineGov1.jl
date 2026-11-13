@@ -7,28 +7,28 @@ IEEE Type 1 Speed-Governing Model
   - `k`: Governor gain
   - `t1`: Input filter lag
   - `t2`: Input filter lead
-  - `t3`: Valve position time constant
+  - `t3`: Valve position time constant. Units: s.
   - `u0`: Maximum valve opening rate
   - `u_c`: Maximum valve closing rate
-  - `valve_position_limits`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `t4`: Time constant inlet steam
+  - `valve_position_limits`: Valve position limits
+  - `t4`: Time constant inlet steam. Units: s.
   - `k1`: Fraction of high pressure shaft power
   - `k2`: Fraction of low pressure shaft power
-  - `t5`: Time constant for second boiler pass
+  - `t5`: Time constant for second boiler pass. Units: s.
   - `k3`: Fraction of high pressure shaft power second boiler pass
   - `k4`: Fraction of low pressure shaft power second boiler pass
-  - `t6`: Time constant for third boiler pass
+  - `t6`: Time constant for third boiler pass. Units: s.
   - `k5`: Fraction of high pressure shaft power third boiler pass
   - `k6`: Fraction of low pressure shaft power third boiler pass
-  - `t7`: Time constant for fourth boiler pass
+  - `t7`: Time constant for fourth boiler pass. Units: s.
   - `k7`: Fraction of high pressure shaft power fourth boiler pass
   - `k8`: Fraction of low pressure shaft power fourth boiler pass
   - `p_ref`: Reference power set-point
 """
 Base.@kwdef struct IEEETurbineGov1 <: APIModel
     id::Int64
-    k::Int64
-    t1::Int64
+    k::Float64
+    t1::Float64
     t2::Float64
     t3::Float64
     u0::Float64
@@ -65,9 +65,9 @@ function _decode(::Type{IEEETurbineGov1}, _openapi_raw, _openapi_validate::Bool)
     _openapi_field_id =
         _decode_zoned(Int64, _required(_openapi_object, "id", "IEEETurbineGov1"), false)
     _openapi_field_k =
-        _decode_zoned(Int64, _required(_openapi_object, "K", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "K", "IEEETurbineGov1"), false)
     _openapi_field_t1 =
-        _decode_zoned(Int64, _required(_openapi_object, "T1", "IEEETurbineGov1"), false)
+        _decode_zoned(Float64, _required(_openapi_object, "T1", "IEEETurbineGov1"), false)
     _openapi_field_t2 =
         _decode_zoned(Float64, _required(_openapi_object, "T2", "IEEETurbineGov1"), false)
     _openapi_field_t3 =

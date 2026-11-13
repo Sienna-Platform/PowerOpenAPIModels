@@ -8,6 +8,6 @@ Name | Type | Description | Notes
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`r`** | **`Float64`** | Droop parameter | [required]
 **`t1`** | **`Float64`** | Transient gain time constant | [required]
-**`t2`** | **`Float64`** | Power fraction time constant | [required]
-**`tau_limits`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
+**`t2`** | **`Float64`** | Power fraction time constant. Units: s. | [required]
+**`tau_limits`** | **`MinMax`** | Power limits into the governor | [required]
 **`p_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference power set-point | [optional]

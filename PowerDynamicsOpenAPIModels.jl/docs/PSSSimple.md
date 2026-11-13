@@ -6,5 +6,5 @@ Parameters of a PSS that returns a proportional droop voltage to add to the refe
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
-**`k_omega`** | **`Float64`** | Proportional gain for frequency | [required]
+**`k_frequency`** | **`Float64`** | Proportional gain for frequency | [required]
 **`k_p`** | **`Float64`** | Proportional gain for active power | [required]

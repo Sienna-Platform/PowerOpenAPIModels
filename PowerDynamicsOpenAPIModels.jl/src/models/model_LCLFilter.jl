@@ -3,13 +3,15 @@
 
 Parameters of a LCL filter outside the converter, the states are in the grid's reference frame
 
-  - `lf`: Series inductance of converter filter
-  - `rf`: Series resistance of converter filter
-  - `cf`: Shunt capacitance of converter filter
-  - `lg`: Series inductance of converter filter to the grid
-  - `rg`: Series resistance of converter filter to the grid
+  - `id`: Unique integer identifier for this component
+  - `lf`: Series inductance of converter filter. Units: pu.
+  - `rf`: Series resistance of converter filter. Units: pu.
+  - `cf`: Shunt capacitance of converter filter. Units: pu.
+  - `lg`: Series inductance of converter filter to the grid. Units: pu.
+  - `rg`: Series resistance of converter filter to the grid. Units: pu.
 """
 Base.@kwdef struct LCLFilter <: APIModel
+    id::Int64
     lf::Float64
     rf::Float64
     cf::Float64
@@ -30,6 +32,8 @@ function _decode(::Type{LCLFilter}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "LCLFilter")
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "LCLFilter"), false)
     _openapi_field_lf =
         _decode_zoned(Float64, _required(_openapi_object, "lf", "LCLFilter"), false)
     _openapi_field_rf =
@@ -42,11 +46,12 @@ function _decode(::Type{LCLFilter}, _openapi_raw, _openapi_validate::Bool)
         _decode_zoned(Float64, _required(_openapi_object, "rg", "LCLFilter"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("lf", "rf", "cf", "lg", "rg") && continue
+        String(_openapi_key) in ("id", "lf", "rf", "cf", "lg", "rg") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return LCLFilter(;
+        id=_openapi_field_id,
         lf=_openapi_field_lf,
         rf=_openapi_field_rf,
         cf=_openapi_field_cf,
@@ -57,6 +62,8 @@ function _decode(::Type{LCLFilter}, _openapi_raw, _openapi_validate::Bool)
 end
 function _encode_unvalidated(_openapi_value::LCLFilter)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.lf isa Absent ||
         (_openapi_output["lf"] = _encode_unvalidated(_openapi_value.lf))
     _openapi_value.rf isa Absent ||
@@ -90,6 +97,7 @@ _encode(_openapi_value::LCLFilter) = _validate_schema(
 
 function _form_fields(_openapi_value::LCLFilter)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.lf isa Absent || push!(_openapi_output, "lf" => _openapi_value.lf)
     _openapi_value.rf isa Absent || push!(_openapi_output, "rf" => _openapi_value.rf)
     _openapi_value.cf isa Absent || push!(_openapi_output, "cf" => _openapi_value.cf)

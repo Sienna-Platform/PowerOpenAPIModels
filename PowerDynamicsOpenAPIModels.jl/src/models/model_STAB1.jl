@@ -5,11 +5,11 @@ Speed-sensitive stabilizing model
 
   - `id`: Unique integer identifier for this component
   - `kt`: K/T for washout filter
-  - `t`: Time constant for washout filter
+  - `t`: Time constant for washout filter. Units: s.
   - `t1t3`: Time constant division T1/T3
-  - `t3`: Time constant
+  - `t3`: Time constant. Units: s.
   - `t2t4`: Time constant division T2/T4
-  - `t4`: Time constant
+  - `t4`: Time constant. Units: s.
   - `h_lim`: PSS output limit
 """
 Base.@kwdef struct STAB1 <: APIModel

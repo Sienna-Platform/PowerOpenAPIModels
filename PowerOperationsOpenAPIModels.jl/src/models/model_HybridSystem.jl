@@ -8,6 +8,7 @@ A hybrid system co-locating a thermal unit, electric load, storage, and/or renew
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `status`: Operating state of the unit at the start of a simulation.
   - `bus`: ID of the bus that this component is connected to.
+  - `remote_regulated_bus`: ID of the bus whose voltage this device regulates, to the `voltage_setpoint` of that bus, while the device regulates voltage; null regulates the bus this device is connected to. A value equal to `bus` is invalid.
   - `active_power`: Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `base_power`: Base power of the unit for per unitization, which is commonly the same as `interconnection_rating`. Units: MVA.
@@ -31,6 +32,7 @@ Base.@kwdef struct HybridSystem <: APIModel
     available::Bool
     status::OperationalStates
     bus::Int64
+    remote_regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
     active_power::Float64
     reactive_power::Float64
     base_power::Float64
@@ -75,6 +77,13 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
     )
     _openapi_field_bus =
         _decode_zoned(Int64, _required(_openapi_object, "bus", "HybridSystem"), false)
+    _openapi_field_remote_regulated_bus =
+        haskey(_openapi_object, "remote_regulated_bus") ?
+        _decode_zoned(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus"],
+            false,
+        ) : ABSENT
     _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "HybridSystem"),
@@ -185,6 +194,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
             "available",
             "status",
             "bus",
+            "remote_regulated_bus",
             "active_power",
             "reactive_power",
             "base_power",
@@ -211,6 +221,7 @@ function _decode(::Type{HybridSystem}, _openapi_raw, _openapi_validate::Bool)
         available=_openapi_field_available,
         status=_openapi_field_status,
         bus=_openapi_field_bus,
+        remote_regulated_bus=_openapi_field_remote_regulated_bus,
         active_power=_openapi_field_active_power,
         reactive_power=_openapi_field_reactive_power,
         base_power=_openapi_field_base_power,
@@ -242,6 +253,10 @@ function _encode_unvalidated(_openapi_value::HybridSystem)
         (_openapi_output["status"] = _encode_unvalidated(_openapi_value.status))
     _openapi_value.bus isa Absent ||
         (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
+    _openapi_value.remote_regulated_bus isa Absent || (
+        _openapi_output["remote_regulated_bus"] =
+            _encode_unvalidated(_openapi_value.remote_regulated_bus)
+    )
     _openapi_value.active_power isa Absent ||
         (_openapi_output["active_power"] = _encode_unvalidated(_openapi_value.active_power))
     _openapi_value.reactive_power isa Absent || (
@@ -326,6 +341,10 @@ function _form_fields(_openapi_value::HybridSystem)
     _openapi_value.status isa Absent ||
         push!(_openapi_output, "status" => _openapi_value.status)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.remote_regulated_bus isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus" => _openapi_value.remote_regulated_bus,
+    )
     _openapi_value.active_power isa Absent ||
         push!(_openapi_output, "active_power" => _openapi_value.active_power)
     _openapi_value.reactive_power isa Absent ||

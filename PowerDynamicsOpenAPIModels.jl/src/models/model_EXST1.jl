@@ -4,16 +4,16 @@
 IEEE Type ST1 Excitation System (PTI version)
 
   - `id`: Unique integer identifier for this component
-  - `tr`: Voltage measurement time constant
-  - `vi_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `tc`: Numerator lead-lag (lead) time constant
-  - `tb`: Denominator lead-lag (lag) time constant
+  - `tr`: Voltage measurement time constant. Units: s.
+  - `vi_lim`: Voltage input limits
+  - `tc`: Numerator lead-lag (lead) time constant. Units: s.
+  - `tb`: Denominator lead-lag (lag) time constant. Units: s.
   - `ka`: Amplifier gain
-  - `ta`: Amplifier time constant
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `ta`: Amplifier time constant. Units: s.
+  - `vr_lim`: Voltage regulator limits (regulator output)
   - `kc`: Current field constant limiter multiplier
   - `kf`: Excitation control system stabilizer gain
-  - `tf`: Excitation control system stabilizer time constant
+  - `tf`: Excitation control system stabilizer time constant. Units: s.
   - `v_ref`: Reference voltage set-point
 """
 Base.@kwdef struct EXST1 <: APIModel

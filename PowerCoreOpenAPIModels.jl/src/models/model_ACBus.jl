@@ -7,9 +7,10 @@ An AC bus.
   - `number`: A unique bus identification number (positive integer).
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. This field should not be confused with the ISOLATED enum value.
-  - `bustype`: Used to describe the connectivity and behavior of this bus. in psy5 a required param with an option to be nothing
-  - `angle`: Angle of the bus. Units: rad.
-  - `magnitude`: Voltage as a multiple of `base_voltage`. Units: pu.
+  - `bustype`: Power flow classification of this bus. It does not by itself say which bus voltage is held; the regulating devices and the bus `voltage_setpoint` say that.
+  - `angle`: Solved voltage angle from the last power flow, or the start value for the next solve. Units: rad.
+  - `magnitude`: Solved voltage magnitude from the last power flow, or the start value for the next solve, as a multiple of `base_voltage`. This is a result, not a control target; the target is `voltage_setpoint`. Units: pu.
+  - `voltage_setpoint`: Scheduled voltage magnitude for this bus, as a multiple of `base_voltage`. It is the target of every device that regulates this bus, at the bus or from a remote terminal. The devices that regulate this bus hold it at this value unless a droop or a reactive power limit prevents it. `null` when no device regulates this bus. Units: pu.
   - `voltage_limits`: Limits on the voltage variation as multiples of `base_voltage`. Units: pu.
   - `base_voltage`: The base voltage. Units: kV.
   - `area`: ID of the area containing the bus.
@@ -23,6 +24,7 @@ Base.@kwdef struct ACBus <: APIModel
     bustype::Union{ACBusType, Absent, Nothing} = ABSENT
     angle::Union{Absent, Float64, Nothing} = ABSENT
     magnitude::Union{Absent, Float64, Nothing} = ABSENT
+    voltage_setpoint::Union{Absent, Union{Float64, Nothing}} = ABSENT
     voltage_limits::Union{MinMax, Absent, Nothing} = ABSENT
     base_voltage::Union{Absent, Float64, Nothing} = ABSENT
     area::Union{Absent, Int64, Nothing} = ABSENT
@@ -68,6 +70,13 @@ function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
             _openapi_object["magnitude"],
             false,
         ) : ABSENT
+    _openapi_field_voltage_setpoint =
+        haskey(_openapi_object, "voltage_setpoint") ?
+        _decode_zoned(
+            Union{Absent, Union{Float64, Nothing}},
+            _openapi_object["voltage_setpoint"],
+            false,
+        ) : ABSENT
     _openapi_field_voltage_limits =
         haskey(_openapi_object, "voltage_limits") ?
         _decode_zoned(
@@ -100,6 +109,7 @@ function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
             "bustype",
             "angle",
             "magnitude",
+            "voltage_setpoint",
             "voltage_limits",
             "base_voltage",
             "area",
@@ -116,6 +126,7 @@ function _decode(::Type{ACBus}, _openapi_raw, _openapi_validate::Bool)
         bustype=_openapi_field_bustype,
         angle=_openapi_field_angle,
         magnitude=_openapi_field_magnitude,
+        voltage_setpoint=_openapi_field_voltage_setpoint,
         voltage_limits=_openapi_field_voltage_limits,
         base_voltage=_openapi_field_base_voltage,
         area=_openapi_field_area,
@@ -139,6 +150,10 @@ function _encode_unvalidated(_openapi_value::ACBus)
         (_openapi_output["angle"] = _encode_unvalidated(_openapi_value.angle))
     _openapi_value.magnitude isa Absent ||
         (_openapi_output["magnitude"] = _encode_unvalidated(_openapi_value.magnitude))
+    _openapi_value.voltage_setpoint isa Absent || (
+        _openapi_output["voltage_setpoint"] =
+            _encode_unvalidated(_openapi_value.voltage_setpoint)
+    )
     _openapi_value.voltage_limits isa Absent || (
         _openapi_output["voltage_limits"] =
             _encode_unvalidated(_openapi_value.voltage_limits)
@@ -184,6 +199,8 @@ function _form_fields(_openapi_value::ACBus)
         push!(_openapi_output, "angle" => _openapi_value.angle)
     _openapi_value.magnitude isa Absent ||
         push!(_openapi_output, "magnitude" => _openapi_value.magnitude)
+    _openapi_value.voltage_setpoint isa Absent ||
+        push!(_openapi_output, "voltage_setpoint" => _openapi_value.voltage_setpoint)
     _openapi_value.voltage_limits isa Absent ||
         push!(_openapi_output, "voltage_limits" => _openapi_value.voltage_limits)
     _openapi_value.base_voltage isa Absent ||

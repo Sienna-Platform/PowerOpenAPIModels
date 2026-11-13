@@ -4,7 +4,7 @@
 Parameters of single mass shaft model. Typically represents the rotor mass
 
   - `id`: Unique integer identifier for this component
-  - `h`: Rotor inertia constant in MWs/MVA
+  - `h`: Rotor inertia constant in MWs/MVA. Units: s.
   - `d`: Rotor natural damping
 """
 Base.@kwdef struct SingleMass <: APIModel

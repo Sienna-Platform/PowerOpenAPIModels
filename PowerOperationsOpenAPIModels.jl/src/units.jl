@@ -211,6 +211,62 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+) = true
+InfrastructureCoreOpenAPIModels.unit_discriminator(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+) = :power_units
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+    ::Val{:NATURAL_UNITS},
+) = "MVA"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+    ::Val{:NATURAL_UNITS},
+) = "ApparentPower"
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+    ::Val{:COMPONENT_BASE},
+) = "pu"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_b},
+    ::Val{:COMPONENT_BASE},
+) = "ApparentPower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+) = true
+InfrastructureCoreOpenAPIModels.unit_discriminator(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+) = :power_units
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+    ::Val{:NATURAL_UNITS},
+) = "MVA"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+    ::Val{:NATURAL_UNITS},
+) = "ApparentPower"
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+    ::Val{:COMPONENT_BASE},
+) = "pu"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{DiscreteControlledACBranch},
+    ::Val{:rating_c},
+    ::Val{:COMPONENT_BASE},
+) = "ApparentPower"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{DiscreteControlledACBranch},
     ::Val{:operational_flow_limit},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
@@ -687,34 +743,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ReactivePower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{FACTSControlDevice},
-    ::Val{:voltage_setpoint},
-) = true
-InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{FACTSControlDevice},
-    ::Val{:voltage_setpoint},
-) = :voltage_setpoint_units
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{FACTSControlDevice},
-    ::Val{:voltage_setpoint},
-    ::Val{:NATURAL_UNITS},
-) = "kV"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{FACTSControlDevice},
-    ::Val{:voltage_setpoint},
-    ::Val{:NATURAL_UNITS},
-) = "Voltage"
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{FACTSControlDevice},
-    ::Val{:voltage_setpoint},
-    ::Val{:COMPONENT_BASE},
-) = "pu"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{FACTSControlDevice},
-    ::Val{:voltage_setpoint},
-    ::Val{:COMPONENT_BASE},
-) = "Voltage"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{FACTSControlDevice},
     ::Val{:max_shunt_current},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
@@ -781,18 +809,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:max_reactive_power},
     ::Val{:COMPONENT_BASE},
 ) = "ReactivePower"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{FACTSControlDevice},
-    ::Val{:regulated_bus_number},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{FACTSControlDevice},
-    ::Val{:regulated_bus_number},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{FACTSControlDevice},
-    ::Val{:regulated_bus_number},
-) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{FACTSControlDevice},
     ::Val{:base_power},
@@ -938,51 +954,17 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{GenericArcImpedance}, ::Val{:r}) =
     true
-InfrastructureCoreOpenAPIModels.unit_discriminator(::Type{GenericArcImpedance}, ::Val{:r}) =
-    :parameter_units
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{GenericArcImpedance},
-    ::Val{:r},
-    ::Val{:NATURAL_UNITS},
-) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{GenericArcImpedance}, ::Val{:r}) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{GenericArcImpedance},
     ::Val{:r},
-    ::Val{:NATURAL_UNITS},
-) = "Resistance"
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{GenericArcImpedance},
-    ::Val{:r},
-    ::Val{:COMPONENT_BASE},
-) = "pu"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{GenericArcImpedance},
-    ::Val{:r},
-    ::Val{:COMPONENT_BASE},
 ) = "Resistance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(::Type{GenericArcImpedance}, ::Val{:x}) =
     true
-InfrastructureCoreOpenAPIModels.unit_discriminator(::Type{GenericArcImpedance}, ::Val{:x}) =
-    :parameter_units
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{GenericArcImpedance},
-    ::Val{:x},
-    ::Val{:NATURAL_UNITS},
-) = "ohm"
+InfrastructureCoreOpenAPIModels.declared_unit(::Type{GenericArcImpedance}, ::Val{:x}) = "pu"
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{GenericArcImpedance},
     ::Val{:x},
-    ::Val{:NATURAL_UNITS},
-) = "Reactance"
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{GenericArcImpedance},
-    ::Val{:x},
-    ::Val{:COMPONENT_BASE},
-) = "pu"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{GenericArcImpedance},
-    ::Val{:x},
-    ::Val{:COMPONENT_BASE},
 ) = "Reactance"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{GeometricDistributionForcedOutage},
@@ -2548,18 +2530,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "PowerFactor"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{InterconnectingConverter},
-    ::Val{:ac_voltage_setpoint},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{InterconnectingConverter},
-    ::Val{:ac_voltage_setpoint},
-) = "kV"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{InterconnectingConverter},
-    ::Val{:ac_voltage_setpoint},
-) = "Voltage"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{InterconnectingConverter},
     ::Val{:rated_ac_voltage},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
@@ -4064,62 +4034,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "ApparentPower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{SeriesCompensator},
-    ::Val{:reactance_limits},
-) = true
-InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{SeriesCompensator},
-    ::Val{:reactance_limits},
-) = :parameter_units
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesCompensator},
-    ::Val{:reactance_limits},
-    ::Val{:NATURAL_UNITS},
-) = "ohm"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesCompensator},
-    ::Val{:reactance_limits},
-    ::Val{:NATURAL_UNITS},
-) = "Reactance"
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesCompensator},
-    ::Val{:reactance_limits},
-    ::Val{:COMPONENT_BASE},
-) = "pu"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesCompensator},
-    ::Val{:reactance_limits},
-    ::Val{:COMPONENT_BASE},
-) = "Reactance"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesCompensator},
-    ::Val{:active_power_flow_setpoint},
-) = true
-InfrastructureCoreOpenAPIModels.unit_discriminator(
-    ::Type{SeriesCompensator},
-    ::Val{:active_power_flow_setpoint},
-) = :power_units
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesCompensator},
-    ::Val{:active_power_flow_setpoint},
-    ::Val{:NATURAL_UNITS},
-) = "MW"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesCompensator},
-    ::Val{:active_power_flow_setpoint},
-    ::Val{:NATURAL_UNITS},
-) = "ActivePower"
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SeriesCompensator},
-    ::Val{:active_power_flow_setpoint},
-    ::Val{:COMPONENT_BASE},
-) = "pu"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SeriesCompensator},
-    ::Val{:active_power_flow_setpoint},
-    ::Val{:COMPONENT_BASE},
-) = "ActivePower"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SeriesCompensator},
     ::Val{:rating_b},
 ) = true
 InfrastructureCoreOpenAPIModels.unit_discriminator(
@@ -4995,18 +4909,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{SwitchedAdmittance},
     ::Val{:reactive_power_range_limits},
 ) = "Fraction"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{SwitchedAdmittance},
-    ::Val{:regulated_bus_number},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{SwitchedAdmittance},
-    ::Val{:regulated_bus_number},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{SwitchedAdmittance},
-    ::Val{:regulated_bus_number},
-) = "Dimensionless"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{SynchronousCondenser},
     ::Val{:reactive_power},
@@ -7208,18 +7110,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
 ) = "PowerFactor"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
-    ::Val{:ac_voltage_setpoint_from},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:ac_voltage_setpoint_from},
-) = "kV"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:ac_voltage_setpoint_from},
-) = "Voltage"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalVSCLine},
     ::Val{:rated_ac_voltage_from},
 ) = true
 InfrastructureCoreOpenAPIModels.declared_unit(
@@ -7414,18 +7304,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TwoTerminalVSCLine},
     ::Val{:power_factor_setpoint_to},
 ) = "PowerFactor"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:ac_voltage_setpoint_to},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:ac_voltage_setpoint_to},
-) = "kV"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{TwoTerminalVSCLine},
-    ::Val{:ac_voltage_setpoint_to},
-) = "Voltage"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{TwoTerminalVSCLine},
     ::Val{:rated_ac_voltage_to},

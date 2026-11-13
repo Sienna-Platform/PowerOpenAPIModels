@@ -3,6 +3,7 @@
 
 Parameters of a renewable energy generator/converter model, this model corresponds to REGCA1 in PSSE.
 
+  - `id`: Unique integer identifier for this component
   - `t_g`: Converter time constant. Units: s.
   - `rrpwr`: Low Voltage Power Logic (LVPL) ramp rate limit.
   - `brkpt`: LVPL characteristic voltage 2.
@@ -21,6 +22,7 @@ Parameters of a renewable energy generator/converter model, this model correspon
   - `x_source`: Output reactance used for the Thevenin Equivalent.
 """
 Base.@kwdef struct RenewableEnergyConverterTypeA <: APIModel
+    id::Int64
     t_g::Float64
     rrpwr::Float64
     brkpt::Float64
@@ -57,6 +59,11 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "RenewableEnergyConverterTypeA")
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "RenewableEnergyConverterTypeA"),
+        false,
+    )
     _openapi_field_t_g = _decode_zoned(
         Float64,
         _required(_openapi_object, "T_g", "RenewableEnergyConverterTypeA"),
@@ -137,6 +144,7 @@ function _decode(
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
+            "id",
             "T_g",
             "Rrpwr",
             "Brkpt",
@@ -158,6 +166,7 @@ function _decode(
             _decode_zoned(Any, _openapi_item, false)
     end
     return RenewableEnergyConverterTypeA(;
+        id=_openapi_field_id,
         t_g=_openapi_field_t_g,
         rrpwr=_openapi_field_rrpwr,
         brkpt=_openapi_field_brkpt,
@@ -179,6 +188,8 @@ function _decode(
 end
 function _encode_unvalidated(_openapi_value::RenewableEnergyConverterTypeA)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.t_g isa Absent ||
         (_openapi_output["T_g"] = _encode_unvalidated(_openapi_value.t_g))
     _openapi_value.rrpwr isa Absent ||
@@ -234,6 +245,7 @@ _encode(_openapi_value::RenewableEnergyConverterTypeA) = _validate_schema(
 
 function _form_fields(_openapi_value::RenewableEnergyConverterTypeA)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.t_g isa Absent || push!(_openapi_output, "T_g" => _openapi_value.t_g)
     _openapi_value.rrpwr isa Absent ||
         push!(_openapi_output, "Rrpwr" => _openapi_value.rrpwr)

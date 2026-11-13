@@ -12,9 +12,8 @@ A generic branch defined by a series impedance on an `Arc` between two buses.
   - `arc`: An `Arc` defining this line `from` a bus `to` another bus.
   - `base_power`: System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA.
   - `power_units`: Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit.
-  - `parameter_units`: Unit basis for r and x. COMPONENT_BASE is per-unit on this component's base_power, which records the system base.
-  - `r`: Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
-  - `x`: Reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu .
+  - `r`: Resistance. Per-unit on `base_power`, which records the system base. Units: pu.
+  - `x`: Reactance. Per-unit on `base_power`, which records the system base. Units: pu.
 """
 Base.@kwdef struct GenericArcImpedance <: APIModel
     id::Int64
@@ -26,7 +25,6 @@ Base.@kwdef struct GenericArcImpedance <: APIModel
     arc::Int64
     base_power::Float64
     power_units::UnitSystem
-    parameter_units::Union{Absent, ImpedanceUnitBasis, Nothing} = ABSENT
     r::Float64
     x::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -88,13 +86,6 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
         _required(_openapi_object, "power_units", "GenericArcImpedance"),
         false,
     )
-    _openapi_field_parameter_units =
-        haskey(_openapi_object, "parameter_units") ?
-        _decode_zoned(
-            Union{Absent, ImpedanceUnitBasis, Nothing},
-            _openapi_object["parameter_units"],
-            false,
-        ) : ABSENT
     _openapi_field_r = _decode_zoned(
         Float64,
         _required(_openapi_object, "r", "GenericArcImpedance"),
@@ -117,7 +108,6 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
             "arc",
             "base_power",
             "power_units",
-            "parameter_units",
             "r",
             "x",
         ) && continue
@@ -134,7 +124,6 @@ function _decode(::Type{GenericArcImpedance}, _openapi_raw, _openapi_validate::B
         arc=_openapi_field_arc,
         base_power=_openapi_field_base_power,
         power_units=_openapi_field_power_units,
-        parameter_units=_openapi_field_parameter_units,
         r=_openapi_field_r,
         x=_openapi_field_x,
         additional_properties=_openapi_additional_properties,
@@ -166,10 +155,6 @@ function _encode_unvalidated(_openapi_value::GenericArcImpedance)
         (_openapi_output["base_power"] = _encode_unvalidated(_openapi_value.base_power))
     _openapi_value.power_units isa Absent ||
         (_openapi_output["power_units"] = _encode_unvalidated(_openapi_value.power_units))
-    _openapi_value.parameter_units isa Absent || (
-        _openapi_output["parameter_units"] =
-            _encode_unvalidated(_openapi_value.parameter_units)
-    )
     _openapi_value.r isa Absent ||
         (_openapi_output["r"] = _encode_unvalidated(_openapi_value.r))
     _openapi_value.x isa Absent ||
@@ -214,8 +199,6 @@ function _form_fields(_openapi_value::GenericArcImpedance)
         push!(_openapi_output, "base_power" => _openapi_value.base_power)
     _openapi_value.power_units isa Absent ||
         push!(_openapi_output, "power_units" => _openapi_value.power_units)
-    _openapi_value.parameter_units isa Absent ||
-        push!(_openapi_output, "parameter_units" => _openapi_value.parameter_units)
     _openapi_value.r isa Absent || push!(_openapi_output, "r" => _openapi_value.r)
     _openapi_value.x isa Absent || push!(_openapi_output, "x" => _openapi_value.x)
     append!(_openapi_output, collect(_openapi_value.additional_properties))

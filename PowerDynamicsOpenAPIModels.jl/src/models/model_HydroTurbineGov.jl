@@ -4,14 +4,14 @@
 Hydro turbine-governor
 
   - `id`: Unique integer identifier for this component
-  - `r`: Permanent droop parameter
-  - `r_2`: Temporary droop
-  - `tr`: Governor time constant
-  - `tf`: Filter time constant
-  - `tg`: Servo time constant
+  - `r_big`: Permanent droop, in pu.
+  - `r_small`: Temporary droop, in pu.
+  - `tr`: Governor time constant. Units: s.
+  - `tf`: Filter time constant. Units: s.
+  - `tg`: Servo time constant. Units: s.
   - `velm`: Gate velocity limit
-  - `gate_position_limits`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `tw`: Water time constant
+  - `gate_position_limits`: Gate position limits
+  - `tw`: Water time constant. Units: s.
   - `at`: Turbine gain
   - `d_t`: Turbine damping
   - `q_nl`: No power flow
@@ -19,8 +19,8 @@ Hydro turbine-governor
 """
 Base.@kwdef struct HydroTurbineGov <: APIModel
     id::Int64
-    r::Float64
-    r_2::Float64
+    r_big::Float64
+    r_small::Float64
     tr::Float64
     tf::Float64
     tg::Float64
@@ -48,10 +48,16 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
     _openapi_object = _object(_openapi_raw, "HydroTurbineGov")
     _openapi_field_id =
         _decode_zoned(Int64, _required(_openapi_object, "id", "HydroTurbineGov"), false)
-    _openapi_field_r =
-        _decode_zoned(Float64, _required(_openapi_object, "R", "HydroTurbineGov"), false)
-    _openapi_field_r_2 =
-        _decode_zoned(Float64, _required(_openapi_object, "r", "HydroTurbineGov"), false)
+    _openapi_field_r_big = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R_BIG", "HydroTurbineGov"),
+        false,
+    )
+    _openapi_field_r_small = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "R_SMALL", "HydroTurbineGov"),
+        false,
+    )
     _openapi_field_tr =
         _decode_zoned(Float64, _required(_openapi_object, "Tr", "HydroTurbineGov"), false)
     _openapi_field_tf =
@@ -81,8 +87,8 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
             "id",
-            "R",
-            "r",
+            "R_BIG",
+            "R_SMALL",
             "Tr",
             "Tf",
             "Tg",
@@ -99,8 +105,8 @@ function _decode(::Type{HydroTurbineGov}, _openapi_raw, _openapi_validate::Bool)
     end
     return HydroTurbineGov(;
         id=_openapi_field_id,
-        r=_openapi_field_r,
-        r_2=_openapi_field_r_2,
+        r_big=_openapi_field_r_big,
+        r_small=_openapi_field_r_small,
         tr=_openapi_field_tr,
         tf=_openapi_field_tf,
         tg=_openapi_field_tg,
@@ -118,10 +124,10 @@ function _encode_unvalidated(_openapi_value::HydroTurbineGov)
     _openapi_output = JSON.Object{String, Any}()
     _openapi_value.id isa Absent ||
         (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
-    _openapi_value.r isa Absent ||
-        (_openapi_output["R"] = _encode_unvalidated(_openapi_value.r))
-    _openapi_value.r_2 isa Absent ||
-        (_openapi_output["r"] = _encode_unvalidated(_openapi_value.r_2))
+    _openapi_value.r_big isa Absent ||
+        (_openapi_output["R_BIG"] = _encode_unvalidated(_openapi_value.r_big))
+    _openapi_value.r_small isa Absent ||
+        (_openapi_output["R_SMALL"] = _encode_unvalidated(_openapi_value.r_small))
     _openapi_value.tr isa Absent ||
         (_openapi_output["Tr"] = _encode_unvalidated(_openapi_value.tr))
     _openapi_value.tf isa Absent ||
@@ -168,8 +174,10 @@ _encode(_openapi_value::HydroTurbineGov) = _validate_schema(
 function _form_fields(_openapi_value::HydroTurbineGov)
     _openapi_output = Pair{String, Any}[]
     _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
-    _openapi_value.r isa Absent || push!(_openapi_output, "R" => _openapi_value.r)
-    _openapi_value.r_2 isa Absent || push!(_openapi_output, "r" => _openapi_value.r_2)
+    _openapi_value.r_big isa Absent ||
+        push!(_openapi_output, "R_BIG" => _openapi_value.r_big)
+    _openapi_value.r_small isa Absent ||
+        push!(_openapi_output, "R_SMALL" => _openapi_value.r_small)
     _openapi_value.tr isa Absent || push!(_openapi_output, "Tr" => _openapi_value.tr)
     _openapi_value.tf isa Absent || push!(_openapi_output, "Tf" => _openapi_value.tf)
     _openapi_value.tg isa Absent || push!(_openapi_output, "Tg" => _openapi_value.tg)

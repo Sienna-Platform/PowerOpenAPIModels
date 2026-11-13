@@ -4,7 +4,7 @@
 4-states round-rotor synchronous machine with quadratic saturation: IEEE Std 1110 §5.3.2 (Model 2.2). GENROU model in PSSE and PSLF
 
   - `id`: Unique integer identifier for this component
-  - `base_machine`: Round Rotor machine parameters
+  - `base_machine`: ID of the RoundRotorMachine function block that holds the base parameters of this machine.
   - `saturation_coeffs`: Derived saturation coefficients for the quadratic saturation model, computed from the Se input
 """
 Base.@kwdef struct RoundRotorQuadratic <: APIModel
