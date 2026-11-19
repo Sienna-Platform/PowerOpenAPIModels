@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **`power_systems_type`** | **`String`** | Corresponding type to be used in PCM modeling. | [required]
 **`min_discharge_fraction`** | **`Union{Absent,Float64,Nothing}`** | Minimum discharge as a fraction of total discharge capacity. Units: 1. | [optional]
 **`prime_mover_type`** | **`Union{Absent,Nothing,PrimeMovers}`** | Prime mover for generator. | [optional]
-**`storage_tech`** | **`StorageTech`** | Storage Technology Type. | [required]
+**`storage_tech`** | **`Union{Absent,Nothing,StorageTech}`** | Storage Technology Type. | [optional]
 **`capital_costs`** | **`Union{Absent,Nothing,StorageCapitalCost}`** | Capital and interconnection cost for investing in a storage technology's charge, discharge, and energy capacity (charge and discharge in USD/MW, energy in USD/MWh). | [optional]
 **`operation_costs`** | **`Union{Absent,Nothing,StorageCost}`** | Fixed and variable O&M costs for a storage technology. Units: USD/MWh. | [optional]
 **`unit_size_discharge`** | **`Union{Absent,Float64,Nothing}`** | Used for discrete investment decisions. Size of each unit of discharging capacity being built. Units: MW. | [optional]

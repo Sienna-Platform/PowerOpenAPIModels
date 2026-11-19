@@ -5,13 +5,13 @@ A DC bus.
 
   - `area`: ID of the area containing the DC bus.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
-  - `base_voltage`: The base voltage. in psy5 a required param with an option to be nothing Units: kV.
+  - `base_voltage`: The base voltage. in psy5 a required param with an option to be nothing. Units: kV.
   - `id`: Unique integer identifier for this component.
   - `load_zone`: ID of the load zone containing the DC bus.
-  - `magnitude`: Voltage as a multiple of `base_voltage`. in psy5 a required param with an option to be nothing Units: pu.
+  - `magnitude`: Voltage as a multiple of `base_voltage`. in psy5 a required param with an option to be nothing. Units: pu.
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `number`: A unique bus identification number (positive integer).
-  - `voltage_limits`: Limits on the voltage variation as multiples of `base_voltage`. in psy5 a required param with an option to be nothing Units: pu.
+  - `voltage_limits`: Limits on the voltage variation as multiples of `base_voltage`. in psy5 a required param with an option to be nothing. Units: pu.
 """
 Base.@kwdef struct DCBus <: APIModel
     area::Union{Absent, Int64, Nothing} = ABSENT

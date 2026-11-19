@@ -5,9 +5,9 @@ Parameters of Gas Turbine-Governor. GAST in PSSE and GAST_PTI in PowerWorld
 
   - `id`: Unique integer identifier for this component
   - `r`: Speed droop parameter
-  - `t1`: Governor time constant
-  - `t2`: Combustion chamber time constant
-  - `t3`: Load limit time constant (exhaust gas measurement time)
+  - `t1`: Governor time constant. Units: s.
+  - `t2`: Combustion chamber time constant. Units: s.
+  - `t3`: Load limit time constant (exhaust gas measurement time). Units: s.
   - `at`: Ambient temperature load limit
   - `kt`: Load limit feedback gain
   - `v_lim`: Operational control limits on fuel valve opening (Vmin, Vmax)

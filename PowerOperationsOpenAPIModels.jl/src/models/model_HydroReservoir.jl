@@ -5,10 +5,10 @@ A hydropower reservoir feeding, or fed by, the turbines attached to it. Storage 
 
   - `storage_level_limits`: Units: per level_data_type — USABLE_VOLUME: m3, TOTAL_VOLUME: m3, HEAD: m, ENERGY: MWh .
   - `initial_level`: Units: per level_data_type — USABLE_VOLUME: m3, TOTAL_VOLUME: m3, HEAD: m, ENERGY: MWh .
-  - `spillage_limits`: in psy5 a required param with an option to be nothing Units: per level_data_type — USABLE_VOLUME: m3/s, TOTAL_VOLUME: m3/s, HEAD: m/s, ENERGY: MW .
+  - `spillage_limits`: in psy5 a required param with an option to be nothing. Units: per level_data_type — USABLE_VOLUME: m3/s, TOTAL_VOLUME: m3/s, HEAD: m/s, ENERGY: MW .
   - `inflow`: Units: per level_data_type — USABLE_VOLUME: m3/s, TOTAL_VOLUME: m3/s, HEAD: m/s, ENERGY: MW .
   - `outflow`: Units: per level_data_type — USABLE_VOLUME: m3/s, TOTAL_VOLUME: m3/s, HEAD: m/s, ENERGY: MW .
-  - `level_targets`: in psy5 a required param with an option to be nothing Units: per level_data_type — USABLE_VOLUME: m3, TOTAL_VOLUME: m3, HEAD: m, ENERGY: MWh .
+  - `level_targets`: in psy5 a required param with an option to be nothing. Units: per level_data_type — USABLE_VOLUME: m3, TOTAL_VOLUME: m3, HEAD: m, ENERGY: MWh .
   - `intake_elevation`: Units: m.
   - `head_to_volume_factor`: `FunctionData` mapping reservoir head to stored volume.
   - `evaporative_loss`: Standing loss from evaporation as a fraction of the reservoir's stored volume/energy lost per hour. Units: 1.

@@ -10,5 +10,5 @@ Name | Type | Description | Notes
 **`tb`** | **`Float64`** | Lag time constant. Units: s. | [required]
 **`k`** | **`Float64`** | Gain | [required]
 **`te`** | **`Float64`** | Field circuit time constant. Units: s. | [required]
-**`v_lim`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
+**`v_lim`** | **`MinMax`** | Field voltage limits | [required]
 **`v_ref`** | **`Union{Absent,Float64,Nothing}`** | Reference voltage set-point | [optional]

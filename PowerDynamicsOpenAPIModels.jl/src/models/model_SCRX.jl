@@ -7,8 +7,8 @@ This exciter is based on an IEEE type SCRX solid state exciter. The output field
   - `ta_tb`: Lead input constant ratio
   - `tb`: Lag input constant
   - `k`: Regulator gain
-  - `te`: Regulator time constant
-  - `efd_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `te`: Regulator time constant. Units: s.
+  - `efd_lim`: Field voltage regulator limits (regulator output)
   - `switch`: Switch
   - `rc_rfd`: Field current capability. Set = 0 for negative current capability. Typical value 10
   - `v_ref`: Reference voltage set-point

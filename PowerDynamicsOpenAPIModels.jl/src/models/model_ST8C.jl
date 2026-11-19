@@ -8,18 +8,18 @@ In these excitation systems, voltage (and also current in compounded systems) is
   - `uel_flag`: UEL Flag for ST8C: <2: Summation at voltage error, 2: UEL takeover at gate
   - `scl_flag`: SCL Flag for ST8C: <2: Summation at voltage error, 2: SCL takeover at UEL and OEL gates
   - `sw1_flag`: SW1 Flag for power source selector for ST8C: <2: Source from generator terminal voltage, 2: Independent power source
-  - `tr`: Regulator input filter time constant
+  - `tr`: Regulator input filter time constant. Units: s.
   - `k_pr`: Regulator proportional gain
   - `k_ir`: Regulator integral gain
-  - `vpi_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `vpi_lim`: Regulator input limits
   - `k_pa`: Field current regulator proportional gain
   - `k_ia`: Field current regulator integral gain
-  - `va_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `va_lim`: Field current regulator output limits
   - `k_a`: Field current regulator proportional gain
-  - `t_a`: Controlled rectifier bridge equivalent time constant
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `t_a`: Controlled rectifier bridge equivalent time constant. Units: s.
+  - `vr_lim`: Voltage regulator limits
   - `k_f`: Exciter field current feedback gain
-  - `t_f`: Field current feedback time constant
+  - `t_f`: Field current feedback time constant. Units: s.
   - `k_c1`: Rectifier loading factor proportional to commutating reactance
   - `k_p`: Potential circuit (voltage) gain coefficient
   - `k_i1`: Potential circuit (current) gain coefficient

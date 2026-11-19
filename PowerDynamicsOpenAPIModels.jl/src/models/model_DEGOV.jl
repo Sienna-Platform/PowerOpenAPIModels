@@ -4,14 +4,14 @@
 Parameters Woodward Diesel Governor Model. DEGOV in PowerWorld
 
   - `id`: Unique integer identifier for this component
-  - `t1`: Governor mechanism time constant
-  - `t2`: Turbine power time constant
-  - `t3`: Turbine exhaust temperature time constant
+  - `t1`: Governor mechanism time constant. Units: s.
+  - `t2`: Turbine power time constant. Units: s.
+  - `t3`: Turbine exhaust temperature time constant. Units: s.
   - `k`: Governor gain (reciproical of droop)
-  - `t4`: Governor lead time constant
-  - `t5`: Governor lag time constant
-  - `t6`: Actuator time constant
-  - `td`: Engine time delay
+  - `t4`: Governor lead time constant. Units: s.
+  - `t5`: Governor lag time constant. Units: s.
+  - `t6`: Actuator time constant. Units: s.
+  - `td`: Engine time delay. Units: s.
   - `p_ref`: Reference power set-point
 """
 Base.@kwdef struct DEGOV <: APIModel

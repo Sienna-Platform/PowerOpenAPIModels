@@ -11,6 +11,7 @@ Renewable generators do not have a `max_active_power` parameter, which is instea
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `bus`: ID of the bus that this component is connected to.
+  - `remote_regulated_bus`: ID of the bus whose voltage this device regulates, to the `voltage_setpoint` of that bus, while the device regulates voltage; null regulates the bus this device is connected to. A value equal to `bus` is invalid.
   - `active_power`: Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit, used in some production cost modeling simulations. To set the reactive power in a load flow, use `power_factor`. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
@@ -27,6 +28,7 @@ Base.@kwdef struct RenewableDispatch <: APIModel
     name::String
     available::Bool
     bus::Int64
+    remote_regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
     active_power::Float64
     reactive_power::Float64
     rating::Float64
@@ -66,6 +68,13 @@ function _decode(::Type{RenewableDispatch}, _openapi_raw, _openapi_validate::Boo
     )
     _openapi_field_bus =
         _decode_zoned(Int64, _required(_openapi_object, "bus", "RenewableDispatch"), false)
+    _openapi_field_remote_regulated_bus =
+        haskey(_openapi_object, "remote_regulated_bus") ?
+        _decode_zoned(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus"],
+            false,
+        ) : ABSENT
     _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "RenewableDispatch"),
@@ -127,6 +136,7 @@ function _decode(::Type{RenewableDispatch}, _openapi_raw, _openapi_validate::Boo
             "name",
             "available",
             "bus",
+            "remote_regulated_bus",
             "active_power",
             "reactive_power",
             "rating",
@@ -146,6 +156,7 @@ function _decode(::Type{RenewableDispatch}, _openapi_raw, _openapi_validate::Boo
         name=_openapi_field_name,
         available=_openapi_field_available,
         bus=_openapi_field_bus,
+        remote_regulated_bus=_openapi_field_remote_regulated_bus,
         active_power=_openapi_field_active_power,
         reactive_power=_openapi_field_reactive_power,
         rating=_openapi_field_rating,
@@ -169,6 +180,10 @@ function _encode_unvalidated(_openapi_value::RenewableDispatch)
         (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.bus isa Absent ||
         (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
+    _openapi_value.remote_regulated_bus isa Absent || (
+        _openapi_output["remote_regulated_bus"] =
+            _encode_unvalidated(_openapi_value.remote_regulated_bus)
+    )
     _openapi_value.active_power isa Absent ||
         (_openapi_output["active_power"] = _encode_unvalidated(_openapi_value.active_power))
     _openapi_value.reactive_power isa Absent || (
@@ -227,6 +242,10 @@ function _form_fields(_openapi_value::RenewableDispatch)
     _openapi_value.available isa Absent ||
         push!(_openapi_output, "available" => _openapi_value.available)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.remote_regulated_bus isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus" => _openapi_value.remote_regulated_bus,
+    )
     _openapi_value.active_power isa Absent ||
         push!(_openapi_output, "active_power" => _openapi_value.active_power)
     _openapi_value.reactive_power isa Absent ||

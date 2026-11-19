@@ -5,13 +5,13 @@ Parameters of an Automatic Voltage Regulator Type II - Typical static exciter mo
 
   - `id`: Unique integer identifier for this component
   - `k0`: Regulator gain
-  - `t1`: First pole in s
-  - `t2`: First zero in s
-  - `t3`: First pole in s
-  - `t4`: First zero in s
-  - `te`: Field circuit time constant
-  - `tr`: Voltage measurement time constant
-  - `va_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `t1`: First pole in s. Units: s.
+  - `t2`: First zero in s. Units: s.
+  - `t3`: First pole in s. Units: s.
+  - `t4`: First zero in s. Units: s.
+  - `te`: Field circuit time constant. Units: s.
+  - `tr`: Voltage measurement time constant. Units: s.
+  - `va_lim`: Limits for pi controller
   - `ae`: 1st ceiling coefficient
   - `be`: 2nd ceiling coefficient
   - `v_ref`: Reference voltage set-point

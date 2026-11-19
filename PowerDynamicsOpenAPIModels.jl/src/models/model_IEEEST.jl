@@ -12,12 +12,12 @@ IEEE stabilizing model PSS
   - `a4`: Filter coefficient
   - `a5`: Filter coefficient
   - `a6`: Filter coefficient
-  - `t1`: Time constant
-  - `t2`: Time constant
-  - `t3`: Time constant
-  - `t4`: Time constant
-  - `t5`: Time constant
-  - `t6`: Time constant
+  - `t1`: Time constant. Units: s.
+  - `t2`: Time constant. Units: s.
+  - `t3`: Time constant. Units: s.
+  - `t4`: Time constant. Units: s.
+  - `t5`: Time constant. Units: s.
+  - `t6`: Time constant. Units: s.
   - `ks`: Proportional gain
   - `ls_lim`: PSS output limits for regulator output (Ls_min, Ls_max)
   - `vcu`: Cutoff limiter upper bound

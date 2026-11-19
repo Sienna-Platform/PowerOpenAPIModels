@@ -5,6 +5,7 @@ Parameters for the DC-side with a Battery Energy Storage System from 'Grid-Coupl
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`rated_voltage`** | **`Float64`** | Rated voltage (V) | [required]
 **`rated_current`** | **`Float64`** | Rated current (A) | [required]
 **`battery_voltage`** | **`Float64`** | Battery voltage | [required]

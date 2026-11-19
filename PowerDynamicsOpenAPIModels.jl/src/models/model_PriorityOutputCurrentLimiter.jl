@@ -3,10 +3,12 @@
 
 Parameters of Priority-Based Current Controller Limiter. Regulates the magnitude of the inverter output current and prioritizes a specific angle for the resultant current signal
 
+  - `id`: Unique integer identifier for this component
   - `i_max`: Maximum limit on current controller input current
   - `phi_i`: Pre-defined angle (measured against the d-axis) for Iref once limit Imax is hit
 """
 Base.@kwdef struct PriorityOutputCurrentLimiter <: APIModel
+    id::Int64
     i_max::Float64
     phi_i::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -29,6 +31,11 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "PriorityOutputCurrentLimiter")
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "PriorityOutputCurrentLimiter"),
+        false,
+    )
     _openapi_field_i_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "I_max", "PriorityOutputCurrentLimiter"),
@@ -41,11 +48,12 @@ function _decode(
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("I_max", "phi_I") && continue
+        String(_openapi_key) in ("id", "I_max", "phi_I") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return PriorityOutputCurrentLimiter(;
+        id=_openapi_field_id,
         i_max=_openapi_field_i_max,
         phi_i=_openapi_field_phi_i,
         additional_properties=_openapi_additional_properties,
@@ -53,6 +61,8 @@ function _decode(
 end
 function _encode_unvalidated(_openapi_value::PriorityOutputCurrentLimiter)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.i_max isa Absent ||
         (_openapi_output["I_max"] = _encode_unvalidated(_openapi_value.i_max))
     _openapi_value.phi_i isa Absent ||
@@ -80,6 +90,7 @@ _encode(_openapi_value::PriorityOutputCurrentLimiter) = _validate_schema(
 
 function _form_fields(_openapi_value::PriorityOutputCurrentLimiter)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.i_max isa Absent ||
         push!(_openapi_output, "I_max" => _openapi_value.i_max)
     _openapi_value.phi_i isa Absent ||

@@ -4,11 +4,11 @@
 Parameters of 5 mass-spring shaft model. It contains a High-Pressure (HP) steam turbine, Intermediate-Pressure (IP) steam turbine, Low-Pressure (LP) steam turbine, the Rotor and an Exciter (EX) mover
 
   - `id`: Unique integer identifier for this component
-  - `h`: Rotor inertia constant in MWs/MVA
-  - `h_hp`: High pressure turbine inertia constant in MWs/MVA
-  - `h_ip`: Intermediate pressure turbine inertia constant in MWs/MVA
-  - `h_lp`: Low pressure turbine inertia constant in MWs/MVA
-  - `h_ex`: Exciter inertia constant in MWs/MVA
+  - `h`: Rotor inertia constant in MWs/MVA. Units: s.
+  - `h_hp`: High pressure turbine inertia constant in MWs/MVA. Units: s.
+  - `h_ip`: Intermediate pressure turbine inertia constant in MWs/MVA. Units: s.
+  - `h_lp`: Low pressure turbine inertia constant in MWs/MVA. Units: s.
+  - `h_ex`: Exciter inertia constant in MWs/MVA. Units: s.
   - `d`: Rotor natural damping
   - `d_hp`: High pressure turbine natural damping
   - `d_ip`: Intermediate pressure turbine natural damping

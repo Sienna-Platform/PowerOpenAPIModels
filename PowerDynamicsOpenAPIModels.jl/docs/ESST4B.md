@@ -5,15 +5,15 @@ In these excitation systems, voltage (and also current in compounded systems) is
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**`tr`** | **`Float64`** | Regulator input filter time constant | [required]
+**`tr`** | **`Float64`** | Regulator input filter time constant. Units: s. | [required]
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`k_pr`** | **`Float64`** | Regulator proportional gain | [required]
 **`k_ir`** | **`Float64`** | Regulator integral gain | [required]
-**`vr_lim`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
-**`ta`** | **`Float64`** | Voltage regulator time constant | [required]
+**`vr_lim`** | **`MinMax`** | Voltage regulator limits | [required]
+**`ta`** | **`Float64`** | Voltage regulator time constant. Units: s. | [required]
 **`k_pm`** | **`Float64`** | Voltage regulator proportional gain output | [required]
 **`k_im`** | **`Float64`** | Voltage regulator integral gain output | [required]
-**`vm_lim`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
+**`vm_lim`** | **`MinMax`** | Limits for inner loop output | [required]
 **`kg`** | **`Float64`** | Feedback gain constant of the inner loop field regulator | [required]
 **`kp`** | **`Float64`** | Potential circuit (voltage) gain coefficient | [required]
 **`ki`** | **`Float64`** | Compound circuit (current) gain coefficient | [required]

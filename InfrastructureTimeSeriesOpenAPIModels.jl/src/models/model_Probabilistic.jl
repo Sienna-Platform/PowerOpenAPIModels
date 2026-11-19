@@ -17,7 +17,8 @@ A probabilistic forecast: per-percentile, per-window horizon arrays. Adds a perc
   - `array_shape`: Full native shape of the stored array, in the order the store holds it: the first axis is the array's length and the trailing axes end with `element_shape`. Static types are `[length, *element_shape]`; a deterministic forecast stacks windows as `[horizon_count, count, *element_shape]`; probabilistic and scenarios forecasts add a percentile or scenario axis in front of that. Optional, and redundant for the static types, where it is exactly `[length] + element_shape`. It earns its place on the forecasts, whose array layout is a convention the producing package owns rather than a rule this layer enforces, so the stored geometry cannot be reconstructed from `horizon`, `count`, `percentiles`, and `scenario_count` alone. A consumer that has it should prefer it; one that does not falls back to those fields, which is exact for the static types and a best effort for the forecasts.
   - `units`: Unit label for the series values. Set by whoever creates the series and returned unchanged; not part of the series' identity, so two series differing only in this label are duplicates. Meaningless on its own when `unit_system` is a per-unit basis, where the values are dimensionless. By convention drawn from the unit vocabulary in Core/units.json, though this field is a free-text label the store does not validate against it.
   - `quantity_kind`: Kind of physical quantity the values measure (e.g. ActivePower, ReactivePower, ElectricalEnergy). Coarser than `units` but finer than a dimension: ActivePower, ReactivePower, and ApparentPower share the dimension {M:1,L:2,T:-3}, so a dimension cannot tell them apart and a quantity kind can. It is also the only record of what the values measure when `unit_system` is a per-unit basis.
-  - `unit_system`: Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a COMPONENT_BASE series back to natural units needs the owning component's base_power. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS.
+  - `unit_system`: Basis the series values are already expressed in. A declaration, not a conversion: nothing here rescales values, and converting a COMPONENT_BASE series back to natural units needs the owning component's field that `per_unit_of` names. Absent means unspecified, which is deliberately not the same as NATURAL_UNITS.
+  - `per_unit_of`: The field on the owning component that the values are a fraction of when `unit_system` is COMPONENT_BASE (e.g. base_power, storage_capacity). Completes the per-unit declaration: it names which of the owner's fields converts the values back to natural units, so a consumer need not know the owner's conventions. Free-form: it names a field in the consumer's own object model, and nothing here checks it against `unit_system`. Not part of the series' identity.
   - `time_reference`: How this series' timestamps were spelled, so a read hands back what the write declared instead of relabelling everything UTC. Absent means unspecified, which is not a claim the timestamps were written as UTC.
   - `interval_alignment`: Position of each timestamp in the period it represents.
   - `component_field`: The field on the owning component or supplemental attribute whose value these values are the time-varying form of (e.g. max_active_power, rating). Free-form: it names a field in the consumer's own object model. Records what the values are for, where `name` only says which series they are.
@@ -45,6 +46,7 @@ Base.@kwdef struct Probabilistic <: APIModel
     units::Union{Absent, Nothing, String} = ABSENT
     quantity_kind::Union{Absent, Nothing, String} = ABSENT
     unit_system::Union{Absent, Nothing, UnitSystem} = ABSENT
+    per_unit_of::Union{Absent, Nothing, String} = ABSENT
     time_reference::Union{Absent, Nothing, String} = ABSENT
     interval_alignment::Union{Absent, IntervalAlignment, Nothing} = ABSENT
     component_field::Union{Absent, Nothing, String} = ABSENT
@@ -140,6 +142,13 @@ function _decode(::Type{Probabilistic}, _openapi_raw, _openapi_validate::Bool)
             _openapi_object["unit_system"],
             false,
         ) : ABSENT
+    _openapi_field_per_unit_of =
+        haskey(_openapi_object, "per_unit_of") ?
+        _decode_zoned(
+            Union{Absent, Nothing, String},
+            _openapi_object["per_unit_of"],
+            false,
+        ) : ABSENT
     _openapi_field_time_reference =
         haskey(_openapi_object, "time_reference") ?
         _decode_zoned(
@@ -210,6 +219,7 @@ function _decode(::Type{Probabilistic}, _openapi_raw, _openapi_validate::Bool)
             "units",
             "quantity_kind",
             "unit_system",
+            "per_unit_of",
             "time_reference",
             "interval_alignment",
             "component_field",
@@ -240,6 +250,7 @@ function _decode(::Type{Probabilistic}, _openapi_raw, _openapi_validate::Bool)
         units=_openapi_field_units,
         quantity_kind=_openapi_field_quantity_kind,
         unit_system=_openapi_field_unit_system,
+        per_unit_of=_openapi_field_per_unit_of,
         time_reference=_openapi_field_time_reference,
         interval_alignment=_openapi_field_interval_alignment,
         component_field=_openapi_field_component_field,
@@ -295,6 +306,8 @@ function _encode_unvalidated(_openapi_value::Probabilistic)
     )
     _openapi_value.unit_system isa Absent ||
         (_openapi_output["unit_system"] = _encode_unvalidated(_openapi_value.unit_system))
+    _openapi_value.per_unit_of isa Absent ||
+        (_openapi_output["per_unit_of"] = _encode_unvalidated(_openapi_value.per_unit_of))
     _openapi_value.time_reference isa Absent || (
         _openapi_output["time_reference"] =
             _encode_unvalidated(_openapi_value.time_reference)
@@ -376,6 +389,8 @@ function _form_fields(_openapi_value::Probabilistic)
         push!(_openapi_output, "quantity_kind" => _openapi_value.quantity_kind)
     _openapi_value.unit_system isa Absent ||
         push!(_openapi_output, "unit_system" => _openapi_value.unit_system)
+    _openapi_value.per_unit_of isa Absent ||
+        push!(_openapi_output, "per_unit_of" => _openapi_value.per_unit_of)
     _openapi_value.time_reference isa Absent ||
         push!(_openapi_output, "time_reference" => _openapi_value.time_reference)
     _openapi_value.interval_alignment isa Absent ||

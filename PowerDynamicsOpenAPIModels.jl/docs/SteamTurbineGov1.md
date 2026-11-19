@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
 **`r`** | **`Float64`** | Droop parameter | [required]
 **`t1`** | **`Float64`** | Governor time constant. Units: s. | [required]
-**`valve_position_limits`** | **`MinMax`** | A pair of values bounding a quantity from below (`min`) and from above (`max`). | [required]
+**`valve_position_limits`** | **`MinMax`** | Valve position limits | [required]
 **`t2`** | **`Float64`** | Lead-lag lead time constant. Units: s. | [required]
 **`t3`** | **`Float64`** | Lead-lag lag time constant. Units: s. | [required]
 **`d_t`** | **`Float64`** | Turbine damping | [required]

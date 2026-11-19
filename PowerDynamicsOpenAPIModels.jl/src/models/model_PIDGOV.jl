@@ -6,19 +6,19 @@ Hydro Turbine-Governor with PID controller
   - `id`: Unique integer identifier for this component
   - `feedback_flag`: Feedback signal for governor droop: 0 for electrical power, and 1 for gate position
   - `rperm`: Speed permanent droop parameter
-  - `t_reg`: Speed detector time constant
+  - `t_reg`: Speed detector time constant. Units: s.
   - `kp`: Governor proportional gain
   - `ki`: Governor integral gain
   - `kd`: Governor derivative gain
-  - `ta`: Governor derivative time constant
-  - `tb`: Gate-servo time constant
+  - `ta`: Governor derivative time constant. Units: s.
+  - `tb`: Gate-servo time constant. Units: s.
   - `d_turb`: Turbine damping factor
   - `gate_openings`: Gate opening speed at different loads
   - `power_gate_openings`: Power at gate_openings
-  - `g_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `g_lim`: Minimum and maximum gate openings
   - `a_tw`: Factor multiplying Tw
-  - `tw`: Water inertia time constant
-  - `v_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `tw`: Water inertia time constant. Units: s.
+  - `v_lim`: Gate opening velocity limits
   - `p_ref`: Reference load set-point
 """
 Base.@kwdef struct PIDGOV <: APIModel

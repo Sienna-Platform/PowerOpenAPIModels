@@ -3,6 +3,7 @@
 
 Parameters of Reactive Power Controller including REPCA1 and REECB1.
 
+  - `id`: Unique integer identifier for this component
   - `bus_control`: ACBus identification number for voltage control. `0` identifies the local bus connected to this component.
   - `from_branch_control`: Monitored branch FROM bus identification number for line drop compensation (if 0 generator power will be used).
   - `to_branch_control`: Monitored branch TO bus identification number for line drop compensation (if 0 generator power will be used).
@@ -32,6 +33,7 @@ Parameters of Reactive Power Controller including REPCA1 and REECB1.
   - `v_ref`: Reference Voltage Set-point.
 """
 Base.@kwdef struct ReactiveRenewableControllerAB <: APIModel
+    id::Int64
     bus_control::Int64
     from_branch_control::Int64
     to_branch_control::Int64
@@ -79,6 +81,11 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ReactiveRenewableControllerAB")
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "ReactiveRenewableControllerAB"),
+        false,
+    )
     _openapi_field_bus_control = _decode_zoned(
         Int64,
         _required(_openapi_object, "bus_control", "ReactiveRenewableControllerAB"),
@@ -215,6 +222,7 @@ function _decode(
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
         String(_openapi_key) in (
+            "id",
             "bus_control",
             "from_branch_control",
             "to_branch_control",
@@ -247,6 +255,7 @@ function _decode(
             _decode_zoned(Any, _openapi_item, false)
     end
     return ReactiveRenewableControllerAB(;
+        id=_openapi_field_id,
         bus_control=_openapi_field_bus_control,
         from_branch_control=_openapi_field_from_branch_control,
         to_branch_control=_openapi_field_to_branch_control,
@@ -279,6 +288,8 @@ function _decode(
 end
 function _encode_unvalidated(_openapi_value::ReactiveRenewableControllerAB)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.bus_control isa Absent ||
         (_openapi_output["bus_control"] = _encode_unvalidated(_openapi_value.bus_control))
     _openapi_value.from_branch_control isa Absent || (
@@ -362,6 +373,7 @@ _encode(_openapi_value::ReactiveRenewableControllerAB) = _validate_schema(
 
 function _form_fields(_openapi_value::ReactiveRenewableControllerAB)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.bus_control isa Absent ||
         push!(_openapi_output, "bus_control" => _openapi_value.bus_control)
     _openapi_value.from_branch_control isa Absent ||

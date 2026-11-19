@@ -6,10 +6,10 @@ Parameters of 4-states synchronous machine: Simplified Marconato model The deriv
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
-**`r`** | **`Float64`** | Resistance after EMF | [required]
-**`xd`** | **`Float64`** | Reactance after EMF in d-axis | [required]
-**`xq`** | **`Float64`** | Reactance after EMF in q-axis | [required]
-**`xd_p`** | **`Float64`** | Transient reactance after EMF in d-axis | [required]
-**`xq_p`** | **`Float64`** | Transient reactance after EMF in q-axis | [required]
-**`td0_p`** | **`Float64`** | Time constant of transient d-axis voltage | [required]
-**`tq0_p`** | **`Float64`** | Time constant of transient q-axis voltage | [required]
+**`r`** | **`Float64`** | Resistance after EMF. Units: pu. | [required]
+**`xd`** | **`Float64`** | Reactance after EMF in d-axis. Units: pu. | [required]
+**`xq`** | **`Float64`** | Reactance after EMF in q-axis. Units: pu. | [required]
+**`xd_p`** | **`Float64`** | Transient reactance after EMF in d-axis. Units: pu. | [required]
+**`xq_p`** | **`Float64`** | Transient reactance after EMF in q-axis. Units: pu. | [required]
+**`td0_p`** | **`Float64`** | Time constant of transient d-axis voltage. Units: s. | [required]
+**`tq0_p`** | **`Float64`** | Time constant of transient q-axis voltage. Units: s. | [required]

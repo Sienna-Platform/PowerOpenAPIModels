@@ -4,17 +4,17 @@
 Woodward PID Hydro Governor
 
   - `id`: Unique integer identifier for this component
-  - `t_reg`: Input time constant of the governor
+  - `t_reg`: Input time constant of the governor. Units: s.
   - `reg`: Input governor gain
   - `kp`: Governor proportional gain
   - `ki`: Governor integral gain
   - `kd`: Governor derivative gain
-  - `ta`: Governor derivative/high-frequency time constant
-  - `tb`: Gate-servo time constant
-  - `v_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `g_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `tw`: Water inertia time constant
-  - `p_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `ta`: Governor derivative/high-frequency time constant. Units: s.
+  - `tb`: Gate-servo time constant. Units: s.
+  - `v_lim`: Gate opening velocity limits
+  - `g_lim`: Minimum and maximum gate velocity
+  - `tw`: Water inertia time constant. Units: s.
+  - `p_lim`: Minimum and maximum gate openings
   - `d`: Turbine damping coefficient
   - `gate_openings`: Gate opening speed at different loads
   - `power_gate_openings`: Power at gate_openings

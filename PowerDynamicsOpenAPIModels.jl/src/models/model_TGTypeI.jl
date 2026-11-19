@@ -5,12 +5,12 @@ Parameters of a turbine governor type I
 
   - `id`: Unique integer identifier for this component
   - `r`: Droop parameter
-  - `ts`: Governor time constant
-  - `tc`: Servo time constant
+  - `ts`: Governor time constant. Units: s.
+  - `tc`: Servo time constant. Units: s.
   - `t3`: Transient gain time constant
-  - `t4`: Power fraction time constant
-  - `t5`: Reheat time constant
-  - `valve_position_limits`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `t4`: Power fraction time constant. Units: s.
+  - `t5`: Reheat time constant. Units: s.
+  - `valve_position_limits`: Valve position limits
   - `p_ref`: Reference power set-point
 """
 Base.@kwdef struct TGTypeI <: APIModel

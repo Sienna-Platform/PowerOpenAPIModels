@@ -3,10 +3,12 @@
 
 Parameters of Instantaneous (Square) Current Controller Limiter. Regulates inverter output current on the d and q axis separately
 
+  - `id`: Unique integer identifier for this component
   - `id_max`: Maximum limit on d-axis current controller input current
   - `iq_max`: Maximum limit on q-axis current controller input current
 """
 Base.@kwdef struct InstantaneousOutputCurrentLimiter <: APIModel
+    id::Int64
     id_max::Float64
     iq_max::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -29,6 +31,11 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "InstantaneousOutputCurrentLimiter")
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "InstantaneousOutputCurrentLimiter"),
+        false,
+    )
     _openapi_field_id_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "Id_max", "InstantaneousOutputCurrentLimiter"),
@@ -41,11 +48,12 @@ function _decode(
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("Id_max", "Iq_max") && continue
+        String(_openapi_key) in ("id", "Id_max", "Iq_max") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return InstantaneousOutputCurrentLimiter(;
+        id=_openapi_field_id,
         id_max=_openapi_field_id_max,
         iq_max=_openapi_field_iq_max,
         additional_properties=_openapi_additional_properties,
@@ -53,6 +61,8 @@ function _decode(
 end
 function _encode_unvalidated(_openapi_value::InstantaneousOutputCurrentLimiter)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.id_max isa Absent ||
         (_openapi_output["Id_max"] = _encode_unvalidated(_openapi_value.id_max))
     _openapi_value.iq_max isa Absent ||
@@ -80,6 +90,7 @@ _encode(_openapi_value::InstantaneousOutputCurrentLimiter) = _validate_schema(
 
 function _form_fields(_openapi_value::InstantaneousOutputCurrentLimiter)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.id_max isa Absent ||
         push!(_openapi_output, "Id_max" => _openapi_value.id_max)
     _openapi_value.iq_max isa Absent ||

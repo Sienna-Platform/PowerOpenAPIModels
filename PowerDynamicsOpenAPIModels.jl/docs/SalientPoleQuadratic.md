@@ -6,5 +6,5 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **`id`** | **`Int64`** | Unique integer identifier for this component | [required]
-**`base_machine`** | **`Int64`** | Salient pole machine parameters | [required]
+**`base_machine`** | **`Int64`** | ID of the SalientPoleMachine function block that holds the base parameters of this machine. | [required]
 **`saturation_coeffs`** | **`Vector{Float64}`** | Derived saturation coefficients for the quadratic saturation model, computed from the Se input | [required]

@@ -3,12 +3,14 @@
 
 Parameters of a Phase-Locked Loop (PLL) based on 'Operation of a phase locked loop system under distorted utility conditions' by Vikram Kaura, and Vladimir Blasko
 
-  - `omega_lp`: PLL low-pass filter frequency
+  - `id`: Unique integer identifier for this component
+  - `frequency_lp`: PLL low-pass filter cutoff frequency, in natural units. Units: Hz.
   - `kp_pll`: PLL proportional gain
   - `ki_pll`: PLL integral gain
 """
 Base.@kwdef struct KauraPLL <: APIModel
-    omega_lp::Float64
+    id::Int64
+    frequency_lp::Float64
     kp_pll::Float64
     ki_pll::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -26,20 +28,26 @@ function _decode(::Type{KauraPLL}, _openapi_raw, _openapi_validate::Bool)
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "KauraPLL")
-    _openapi_field_omega_lp =
-        _decode_zoned(Float64, _required(_openapi_object, "omega_lp", "KauraPLL"), false)
+    _openapi_field_id =
+        _decode_zoned(Int64, _required(_openapi_object, "id", "KauraPLL"), false)
+    _openapi_field_frequency_lp = _decode_zoned(
+        Float64,
+        _required(_openapi_object, "frequency_lp", "KauraPLL"),
+        false,
+    )
     _openapi_field_kp_pll =
         _decode_zoned(Float64, _required(_openapi_object, "kp_pll", "KauraPLL"), false)
     _openapi_field_ki_pll =
         _decode_zoned(Float64, _required(_openapi_object, "ki_pll", "KauraPLL"), false)
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("omega_lp", "kp_pll", "ki_pll") && continue
+        String(_openapi_key) in ("id", "frequency_lp", "kp_pll", "ki_pll") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return KauraPLL(;
-        omega_lp=_openapi_field_omega_lp,
+        id=_openapi_field_id,
+        frequency_lp=_openapi_field_frequency_lp,
         kp_pll=_openapi_field_kp_pll,
         ki_pll=_openapi_field_ki_pll,
         additional_properties=_openapi_additional_properties,
@@ -47,8 +55,10 @@ function _decode(::Type{KauraPLL}, _openapi_raw, _openapi_validate::Bool)
 end
 function _encode_unvalidated(_openapi_value::KauraPLL)
     _openapi_output = JSON.Object{String, Any}()
-    _openapi_value.omega_lp isa Absent ||
-        (_openapi_output["omega_lp"] = _encode_unvalidated(_openapi_value.omega_lp))
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
+    _openapi_value.frequency_lp isa Absent ||
+        (_openapi_output["frequency_lp"] = _encode_unvalidated(_openapi_value.frequency_lp))
     _openapi_value.kp_pll isa Absent ||
         (_openapi_output["kp_pll"] = _encode_unvalidated(_openapi_value.kp_pll))
     _openapi_value.ki_pll isa Absent ||
@@ -76,8 +86,9 @@ _encode(_openapi_value::KauraPLL) = _validate_schema(
 
 function _form_fields(_openapi_value::KauraPLL)
     _openapi_output = Pair{String, Any}[]
-    _openapi_value.omega_lp isa Absent ||
-        push!(_openapi_output, "omega_lp" => _openapi_value.omega_lp)
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
+    _openapi_value.frequency_lp isa Absent ||
+        push!(_openapi_output, "frequency_lp" => _openapi_value.frequency_lp)
     _openapi_value.kp_pll isa Absent ||
         push!(_openapi_output, "kp_pll" => _openapi_value.kp_pll)
     _openapi_value.ki_pll isa Absent ||

@@ -3,11 +3,13 @@
 
 Parameters of Hybrid Current Controller Limiter. Regulates the magnitude of the inverter output current, but with a closed loop feedback regulated by a virtual impedance which provides ant-windup. Described in: Novel Hybrid Current Limiter for Grid-Forming Inverter Control During Unbalanced Faults by Baeckland and Seo, 2023
 
+  - `id`: Unique integer identifier for this component
   - `i_max`: Maximum limit on current controller input current
   - `rv`: Real part of the virtual impedance
   - `lv`: Imaginary part of the virtual impedance
 """
 Base.@kwdef struct HybridOutputCurrentLimiter <: APIModel
+    id::Int64
     i_max::Float64
     rv::Float64
     lv::Float64
@@ -27,6 +29,11 @@ function _decode(::Type{HybridOutputCurrentLimiter}, _openapi_raw, _openapi_vali
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "HybridOutputCurrentLimiter")
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "HybridOutputCurrentLimiter"),
+        false,
+    )
     _openapi_field_i_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "I_max", "HybridOutputCurrentLimiter"),
@@ -44,11 +51,12 @@ function _decode(::Type{HybridOutputCurrentLimiter}, _openapi_raw, _openapi_vali
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("I_max", "rv", "lv") && continue
+        String(_openapi_key) in ("id", "I_max", "rv", "lv") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return HybridOutputCurrentLimiter(;
+        id=_openapi_field_id,
         i_max=_openapi_field_i_max,
         rv=_openapi_field_rv,
         lv=_openapi_field_lv,
@@ -57,6 +65,8 @@ function _decode(::Type{HybridOutputCurrentLimiter}, _openapi_raw, _openapi_vali
 end
 function _encode_unvalidated(_openapi_value::HybridOutputCurrentLimiter)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.i_max isa Absent ||
         (_openapi_output["I_max"] = _encode_unvalidated(_openapi_value.i_max))
     _openapi_value.rv isa Absent ||
@@ -86,6 +96,7 @@ _encode(_openapi_value::HybridOutputCurrentLimiter) = _validate_schema(
 
 function _form_fields(_openapi_value::HybridOutputCurrentLimiter)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.i_max isa Absent ||
         push!(_openapi_output, "I_max" => _openapi_value.i_max)
     _openapi_value.rv isa Absent || push!(_openapi_output, "rv" => _openapi_value.rv)

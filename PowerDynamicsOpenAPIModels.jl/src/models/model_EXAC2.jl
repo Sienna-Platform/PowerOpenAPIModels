@@ -4,19 +4,19 @@
 Modified AC2. This excitation systems consists of an alternator main exciter feeding its output via non-controlled rectifiers. The exciter does not employ self-excitation, and the voltage regulator power is taken from a source that is not affected by external transients. Parameters of IEEE Std 421.5 Type AC2A Excitacion System. The alternator main exciter is used, feeding its output via non-controlled rectifiers. The Type AC2C model is similar to that of Type AC1C except for the inclusion of exciter time constant compensation and exciter field current limiting elements. EXAC2 in PSSE and PSLF
 
   - `id`: Unique integer identifier for this component
-  - `tr`: Regulator input filter time constant
-  - `tb`: Regulator denominator (lag) time constant
-  - `tc`: Regulator numerator (lead) time constant
+  - `tr`: Regulator input filter time constant. Units: s.
+  - `tb`: Regulator denominator (lag) time constant. Units: s.
+  - `tc`: Regulator numerator (lead) time constant. Units: s.
   - `ka`: Regulator output gain
-  - `ta`: Regulator output time constant
-  - `va_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `ta`: Regulator output time constant. Units: s.
+  - `va_lim`: Limits for regulator output
   - `kb`: Second stage regulator gain
-  - `vr_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
-  - `te`: Exciter field time constant
+  - `vr_lim`: Limits for exciter field voltage
+  - `te`: Exciter field time constant. Units: s.
   - `kl`: Exciter field current limiter gain
   - `kh`: Exciter field current regulator feedback gain
   - `kf`: Rate feedback excitation system stabilizer gain
-  - `tf`: Rate feedback time constant
+  - `tf`: Rate feedback time constant. Units: s.
   - `kc`: Rectifier loading factor proportional to commutating reactance
   - `kd`: Demagnetizing factor, function of exciter alternator reactances
   - `ke`: Exciter field proportional constant

@@ -17,7 +17,7 @@ Most often used in power flow studies, iterating over the steps to see impacts o
   - `voltage_limits`: Regulated-voltage band (PSS/E VSWLO/VSWHI) at the regulated bus, per unit of its base voltage. `null` unless `control_mode` selects it. Units: pu.
   - `reactive_power_range_limits`: Regulated reactive-power band (PSS/E VSWLO/VSWHI) as a fraction of the regulated device's reactive power range, the plant, converter or FACTS shunt at the regulated bus; 0.2 to 0.8 means 20 to 80 percent of that device's Qmin-to-Qmax span. `null` unless `control_mode` selects it. Units: 1.
   - `control_mode`: Switched-shunt control mode (PSS/E MODSW). Voltage modes use `voltage_limits`, reactive modes use `reactive_power_range_limits`; `UNDEFINED` and `FIXED` use neither.
-  - `regulated_bus_number`: Bus number whose voltage/quantity this shunt regulates; 0 means local bus (PSS/E SWREM/NREG). Units: 1.
+  - `remote_regulated_bus`: ID of the bus this shunt regulates (PSS/E SWREM in v33, SWREG in v34 and later): under the voltage modes, the bus whose voltage it holds within `voltage_limits`; under the reactive modes, the bus of the device whose reactive quantity it regulates. null means the bus this shunt is connected to. A value equal to `bus` is invalid.
   - `dynamic_injector`: ID of the corresponding dynamic injection model for admittance, if any.
 """
 Base.@kwdef struct SwitchedAdmittance <: APIModel
@@ -33,7 +33,7 @@ Base.@kwdef struct SwitchedAdmittance <: APIModel
     voltage_limits::Union{Absent, Nothing, MinMax} = ABSENT
     reactive_power_range_limits::Union{Absent, Nothing, MinMax} = ABSENT
     control_mode::Union{Absent, Nothing, SwitchedAdmittanceControlMode} = ABSENT
-    regulated_bus_number::Union{Absent, Int64, Nothing} = ABSENT
+    remote_regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
     dynamic_injector::Union{Absent, Union{Int64, Nothing}} = ABSENT
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -120,11 +120,11 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             _openapi_object["control_mode"],
             false,
         ) : ABSENT
-    _openapi_field_regulated_bus_number =
-        haskey(_openapi_object, "regulated_bus_number") ?
+    _openapi_field_remote_regulated_bus =
+        haskey(_openapi_object, "remote_regulated_bus") ?
         _decode_zoned(
-            Union{Absent, Int64, Nothing},
-            _openapi_object["regulated_bus_number"],
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus"],
             false,
         ) : ABSENT
     _openapi_field_dynamic_injector =
@@ -149,7 +149,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
             "voltage_limits",
             "reactive_power_range_limits",
             "control_mode",
-            "regulated_bus_number",
+            "remote_regulated_bus",
             "dynamic_injector",
         ) && continue
         _openapi_additional_properties[String(_openapi_key)] =
@@ -168,7 +168,7 @@ function _decode(::Type{SwitchedAdmittance}, _openapi_raw, _openapi_validate::Bo
         voltage_limits=_openapi_field_voltage_limits,
         reactive_power_range_limits=_openapi_field_reactive_power_range_limits,
         control_mode=_openapi_field_control_mode,
-        regulated_bus_number=_openapi_field_regulated_bus_number,
+        remote_regulated_bus=_openapi_field_remote_regulated_bus,
         dynamic_injector=_openapi_field_dynamic_injector,
         additional_properties=_openapi_additional_properties,
     )
@@ -211,9 +211,9 @@ function _encode_unvalidated(_openapi_value::SwitchedAdmittance)
     )
     _openapi_value.control_mode isa Absent ||
         (_openapi_output["control_mode"] = _encode_unvalidated(_openapi_value.control_mode))
-    _openapi_value.regulated_bus_number isa Absent || (
-        _openapi_output["regulated_bus_number"] =
-            _encode_unvalidated(_openapi_value.regulated_bus_number)
+    _openapi_value.remote_regulated_bus isa Absent || (
+        _openapi_output["remote_regulated_bus"] =
+            _encode_unvalidated(_openapi_value.remote_regulated_bus)
     )
     _openapi_value.dynamic_injector isa Absent || (
         _openapi_output["dynamic_injector"] =
@@ -265,9 +265,9 @@ function _form_fields(_openapi_value::SwitchedAdmittance)
     )
     _openapi_value.control_mode isa Absent ||
         push!(_openapi_output, "control_mode" => _openapi_value.control_mode)
-    _openapi_value.regulated_bus_number isa Absent || push!(
+    _openapi_value.remote_regulated_bus isa Absent || push!(
         _openapi_output,
-        "regulated_bus_number" => _openapi_value.regulated_bus_number,
+        "remote_regulated_bus" => _openapi_value.remote_regulated_bus,
     )
     _openapi_value.dynamic_injector isa Absent ||
         push!(_openapi_output, "dynamic_injector" => _openapi_value.dynamic_injector)

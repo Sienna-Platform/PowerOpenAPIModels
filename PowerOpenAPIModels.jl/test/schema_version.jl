@@ -364,13 +364,13 @@ end
             ),
         )
         bundle = Dict{String, Any}(
-            "definitions" => Dict{String, Any}("MinMax" => minmax),
+            "\$defs" => Dict{String, Any}("MinMax" => minmax),
             "type" => "object",
             "properties" => Dict{String, Any}(
                 "m" => Dict{String, Any}(
                     "type" => "object",
                     "additionalProperties" =>
-                        Dict{String, Any}("\$ref" => "#/definitions/MinMax"),
+                        Dict{String, Any}("\$ref" => "#/\$defs/MinMax"),
                 ),
                 "kind" => Dict("type" => "string", "enum" => ["a"]),
             ),

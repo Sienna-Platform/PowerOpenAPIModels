@@ -1,6 +1,6 @@
 # SeriesCompensator
 
-A series compensator on an `Arc`: a series capacitor or reactor, or a thyristor-controlled or static synchronous series compensator, with one series reactance. Devices that also inject at a bus, such as a UPFC, are not covered.
+A fixed series compensator on an `Arc` (the CIM `SeriesCompensator`): a series capacitor or reactor, or an AC line without charging susceptance, with constant `r` and `x`. `bypassed` shorts the device into a zero-impedance tie; `available = false` takes it out of service. Controllable series devices are not covered.
 
 ## Properties
 Name | Type | Description | Notes
@@ -12,11 +12,9 @@ Name | Type | Description | Notes
 **`reactive_power_flow`** | **`Float64`** | Initial condition of reactive power flow through the compensator. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu . | [required]
 **`arc`** | **`Int64`** | An `Arc` defining this line `from` a bus `to` another bus. | [required]
 **`r`** | **`Float64`** | Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [required]
-**`x`** | **`Float64`** | Series reactance; negative for a capacitor. Under `DISPATCHABLE` and `ACTIVE_POWER_FLOW`, the present value. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [required]
+**`x`** | **`Float64`** | Series reactance; negative for a capacitor. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [required]
 **`rating`** | **`Float64`** | Thermal rating. Flow through the compensator must be between -`rating` and `rating`. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [required]
-**`control_mode`** | **`Union{Absent,Nothing,SeriesCompensatorControlMode}`** | How the series reactance is set. `FIXED` holds `x`; `BYPASSED` shorts the compensator into a zero-impedance tie; `DISPATCHABLE` makes the reactance a decision within `reactance_limits`; `ACTIVE_POWER_FLOW` sets it to hold `active_power_flow_setpoint`. | [optional]
-**`reactance_limits`** | **`Union{Absent,Nothing,MinMax}`** | Minimum and maximum series reactance. Required when `control_mode` is `DISPATCHABLE` or `ACTIVE_POWER_FLOW`. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [optional]
-**`active_power_flow_setpoint`** | **`Union{Absent,Float64,Nothing}`** | Active power flow, from the `from` bus to the `to` bus, the compensator holds. Required when `control_mode` is `ACTIVE_POWER_FLOW`. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]
+**`bypassed`** | **`Union{Absent,Bool,Nothing}`** | Whether the device is bypassed: shorted into a zero-impedance tie between the `from` and `to` buses. `r` and `x` keep the impedance it has when in service. | [optional]
 **`rating_b`** | **`Union{Absent,Float64,Nothing}`** | Second current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
 **`rating_c`** | **`Union{Absent,Float64,Nothing}`** | Third current rating. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu . | [optional]
 **`operational_flow_limit`** | **`Union{Absent,Nothing,OperationalFlowLimit}`** | Operator-set minimum and maximum flow in each direction. Absent means no operational limit. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu . | [optional]

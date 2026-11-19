@@ -3,9 +3,11 @@
 
 Parameters of Magnitude (Circular) Current Controller Limiter. Regulates only the magnitude of the inverter output current
 
+  - `id`: Unique integer identifier for this component
   - `i_max`: Maximum limit on current controller input current
 """
 Base.@kwdef struct MagnitudeOutputCurrentLimiter <: APIModel
+    id::Int64
     i_max::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
 end
@@ -27,6 +29,11 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "MagnitudeOutputCurrentLimiter")
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "MagnitudeOutputCurrentLimiter"),
+        false,
+    )
     _openapi_field_i_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "I_max", "MagnitudeOutputCurrentLimiter"),
@@ -34,17 +41,20 @@ function _decode(
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("I_max",) && continue
+        String(_openapi_key) in ("id", "I_max") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return MagnitudeOutputCurrentLimiter(;
+        id=_openapi_field_id,
         i_max=_openapi_field_i_max,
         additional_properties=_openapi_additional_properties,
     )
 end
 function _encode_unvalidated(_openapi_value::MagnitudeOutputCurrentLimiter)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.i_max isa Absent ||
         (_openapi_output["I_max"] = _encode_unvalidated(_openapi_value.i_max))
     for (_openapi_key, _openapi_item) in _openapi_value.additional_properties
@@ -70,6 +80,7 @@ _encode(_openapi_value::MagnitudeOutputCurrentLimiter) = _validate_schema(
 
 function _form_fields(_openapi_value::MagnitudeOutputCurrentLimiter)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.i_max isa Absent ||
         push!(_openapi_output, "I_max" => _openapi_value.i_max)
     append!(_openapi_output, collect(_openapi_value.additional_properties))

@@ -5,17 +5,17 @@ Parameters Woodward Diesel Governor Model. DEGOV1 in PSSE
 
   - `id`: Unique integer identifier for this component
   - `droop_flag`: Droop control Flag. 0 for throttle feedback and 1 for electric power feedback
-  - `t1`: Governor mechanism time constant
-  - `t2`: Turbine power time constant
-  - `t3`: Turbine exhaust temperature time constant
+  - `t1`: Governor mechanism time constant. Units: s.
+  - `t2`: Turbine power time constant. Units: s.
+  - `t3`: Turbine exhaust temperature time constant. Units: s.
   - `k`: Governor gain for actuator
-  - `t4`: Governor lead time constant
-  - `t5`: Governor lag time constant
-  - `t6`: Actuator time constant
-  - `td`: Engine time delay
+  - `t4`: Governor lead time constant. Units: s.
+  - `t5`: Governor lag time constant. Units: s.
+  - `t6`: Actuator time constant. Units: s.
+  - `td`: Engine time delay. Units: s.
   - `t_lim`: Operational control limits on actuator (Tmin, Tmax)
   - `r`: Steady state droop parameter
-  - `te`: Power transducer time constant
+  - `te`: Power transducer time constant. Units: s.
   - `p_ref`: Reference power set-point
 """
 Base.@kwdef struct DEGOV1 <: APIModel

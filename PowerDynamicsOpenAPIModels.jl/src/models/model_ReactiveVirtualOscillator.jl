@@ -1,4 +1,13 @@
+"""
+    ReactiveVirtualOscillator
+
+  - `id`: Unique integer identifier for this component
+  - `k2`: VOC voltage-amplitude control gain
+  - `v_ref`: Reference Voltage Set-point (pu). Units: pu.
+  - `q_ref`: Reference Reactive Power Set-point (pu). Units: pu.
+"""
 Base.@kwdef struct ReactiveVirtualOscillator <: APIModel
+    id::Int64
     k2::Float64
     v_ref::Union{Absent, Float64, Nothing} = ABSENT
     q_ref::Union{Absent, Float64, Nothing} = ABSENT
@@ -18,6 +27,11 @@ function _decode(::Type{ReactiveVirtualOscillator}, _openapi_raw, _openapi_valid
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "ReactiveVirtualOscillator")
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "ReactiveVirtualOscillator"),
+        false,
+    )
     _openapi_field_k2 = _decode_zoned(
         Float64,
         _required(_openapi_object, "k2", "ReactiveVirtualOscillator"),
@@ -33,11 +47,12 @@ function _decode(::Type{ReactiveVirtualOscillator}, _openapi_raw, _openapi_valid
         ABSENT
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("k2", "V_ref", "Q_ref") && continue
+        String(_openapi_key) in ("id", "k2", "V_ref", "Q_ref") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return ReactiveVirtualOscillator(;
+        id=_openapi_field_id,
         k2=_openapi_field_k2,
         v_ref=_openapi_field_v_ref,
         q_ref=_openapi_field_q_ref,
@@ -46,6 +61,8 @@ function _decode(::Type{ReactiveVirtualOscillator}, _openapi_raw, _openapi_valid
 end
 function _encode_unvalidated(_openapi_value::ReactiveVirtualOscillator)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.k2 isa Absent ||
         (_openapi_output["k2"] = _encode_unvalidated(_openapi_value.k2))
     _openapi_value.v_ref isa Absent ||
@@ -75,6 +92,7 @@ _encode(_openapi_value::ReactiveVirtualOscillator) = _validate_schema(
 
 function _form_fields(_openapi_value::ReactiveVirtualOscillator)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.k2 isa Absent || push!(_openapi_output, "k2" => _openapi_value.k2)
     _openapi_value.v_ref isa Absent ||
         push!(_openapi_output, "V_ref" => _openapi_value.v_ref)

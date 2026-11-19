@@ -9,6 +9,7 @@ This is suitable for modeling storage charging and discharging with average effi
   - `name`: Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name.
   - `available`: Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations.
   - `bus`: ID of the bus that this component is connected to.
+  - `remote_regulated_bus`: ID of the bus whose voltage this device regulates, to the `voltage_setpoint` of that bus, while the device regulates voltage; null regulates the bus this device is connected to. A value equal to `bus` is invalid.
   - `prime_mover_type`: Prime mover technology according to EIA 923.
   - `storage_technology_type`: Storage Technology Complementary to EIA 923.
   - `storage_capacity`: Maximum storage capacity (can be in units of, e.g., MWh for batteries or liters for hydrogen). Divided by base_power this gives an approximate duration, assuming unity power factor: in hours under MWH, in minutes under MWMIN. Units: per energy_units — MWH: MWh, MWMIN: MWmin .
@@ -38,6 +39,7 @@ Base.@kwdef struct EnergyReservoirStorage <: APIModel
     name::String
     available::Bool
     bus::Int64
+    remote_regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
     prime_mover_type::PrimeMovers
     storage_technology_type::StorageTech
     storage_capacity::Float64
@@ -97,6 +99,13 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
         _required(_openapi_object, "bus", "EnergyReservoirStorage"),
         false,
     )
+    _openapi_field_remote_regulated_bus =
+        haskey(_openapi_object, "remote_regulated_bus") ?
+        _decode_zoned(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus"],
+            false,
+        ) : ABSENT
     _openapi_field_prime_mover_type = _decode_zoned(
         PrimeMovers,
         _required(_openapi_object, "prime_mover_type", "EnergyReservoirStorage"),
@@ -241,6 +250,7 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
             "name",
             "available",
             "bus",
+            "remote_regulated_bus",
             "prime_mover_type",
             "storage_technology_type",
             "storage_capacity",
@@ -273,6 +283,7 @@ function _decode(::Type{EnergyReservoirStorage}, _openapi_raw, _openapi_validate
         name=_openapi_field_name,
         available=_openapi_field_available,
         bus=_openapi_field_bus,
+        remote_regulated_bus=_openapi_field_remote_regulated_bus,
         prime_mover_type=_openapi_field_prime_mover_type,
         storage_technology_type=_openapi_field_storage_technology_type,
         storage_capacity=_openapi_field_storage_capacity,
@@ -309,6 +320,10 @@ function _encode_unvalidated(_openapi_value::EnergyReservoirStorage)
         (_openapi_output["available"] = _encode_unvalidated(_openapi_value.available))
     _openapi_value.bus isa Absent ||
         (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
+    _openapi_value.remote_regulated_bus isa Absent || (
+        _openapi_output["remote_regulated_bus"] =
+            _encode_unvalidated(_openapi_value.remote_regulated_bus)
+    )
     _openapi_value.prime_mover_type isa Absent || (
         _openapi_output["prime_mover_type"] =
             _encode_unvalidated(_openapi_value.prime_mover_type)
@@ -413,6 +428,10 @@ function _form_fields(_openapi_value::EnergyReservoirStorage)
     _openapi_value.available isa Absent ||
         push!(_openapi_output, "available" => _openapi_value.available)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.remote_regulated_bus isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus" => _openapi_value.remote_regulated_bus,
+    )
     _openapi_value.prime_mover_type isa Absent ||
         push!(_openapi_output, "prime_mover_type" => _openapi_value.prime_mover_type)
     _openapi_value.storage_technology_type isa Absent || push!(

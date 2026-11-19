@@ -1,11 +1,11 @@
 """
     VoltageDroopControl
 
-Supplemental attribute for a voltage droop controller (PSS/E voltage droop control): a set of generators jointly regulating the reactive power at one bus along a Q–V characteristic. While the controller is available its regulated bus and characteristic override each member's own voltage target; while it is unavailable the members fall back to their own targets. Membership and each member's relative reactive power weight are VoltageControlAssociation rows. The characteristic holds `reactive_power_limits.max` below `voltage_limits.min`, ramps to `deadband_reactive_power` at `deadband_voltage_limits.min`, holds it through `deadband_voltage_limits.max`, ramps to `reactive_power_limits.min` at `voltage_limits.max`, and holds it above.
+Supplemental attribute for a voltage droop controller (PSS/E voltage droop control): a set of generators jointly regulating the reactive power at one bus along a Q–V characteristic. While the controller is available, its regulated bus and characteristic replace each member's own voltage regulation. While it is unavailable, each member holds the bus it regulates, its `remote_regulated_bus` or the bus it is connected to, at that bus's `voltage_setpoint`. Membership and each member's relative reactive power weight are VoltageControlAssociation rows. The characteristic holds `reactive_power_limits.max` below `voltage_limits.min`, ramps to `deadband_reactive_power` at `deadband_voltage_limits.min`, holds it through `deadband_voltage_limits.max`, ramps to `reactive_power_limits.min` at `voltage_limits.max`, and holds it above.
 
   - `id`: Unique integer identifier for this supplemental attribute.
   - `name`: Name of the voltage droop controller.
-  - `available`: Whether the controller is in service (PSS/E STATUS). While false, members regulate their own targets.
+  - `available`: Whether the controller is in service (PSS/E STATUS). While false, each member holds the bus it regulates at that bus's `voltage_setpoint`.
   - `regulated_bus_id`: ID of the bus whose reactive power the controller regulates; overrides every member's own regulated bus while the controller is available.
   - `reactive_power_limits`: Reactive power held below `voltage_limits.min` (max, PSS/E QMAX) and above `voltage_limits.max` (min, PSS/E QMIN). Units: MVAr.
   - `deadband_reactive_power`: Reactive power held while the regulated bus voltage is inside `deadband_voltage_limits` (PSS/E QDB). Must lie strictly between `reactive_power_limits.min` and `reactive_power_limits.max`. Units: MVAr.

@@ -7,11 +7,11 @@ Parameters of an Automatic Voltage Regulator Type I - Resembles IEEE Type DC1
   - `ka`: Amplifier gain
   - `ke`: Field circuit integral deviation
   - `kf`: Stabilizer gain
-  - `ta`: Amplifier time constant
-  - `te`: Field circuit time constant
-  - `tf`: Stabilizer time constant
-  - `tr`: Voltage measurement time constant
-  - `va_lim`: A pair of values bounding a quantity from below (`min`) and from above (`max`).
+  - `ta`: Amplifier time constant. Units: s.
+  - `te`: Field circuit time constant. Units: s.
+  - `tf`: Stabilizer time constant. Units: s.
+  - `tr`: Voltage measurement time constant. Units: s.
+  - `va_lim`: Limits for pi controller
   - `ae`: 1st ceiling coefficient
   - `be`: 2nd ceiling coefficient
   - `v_ref`: Reference voltage set-point

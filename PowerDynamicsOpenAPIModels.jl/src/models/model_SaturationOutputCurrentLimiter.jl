@@ -3,10 +3,12 @@
 
 Parameters of Saturation Current Controller Limiter. Regulates the magnitude of the inverter output current, and applies a closed loop feedback regulated by a static gain which provides ant-windup
 
+  - `id`: Unique integer identifier for this component
   - `i_max`: Maximum limit on current controller input current
   - `kw`: Defined feedback gain
 """
 Base.@kwdef struct SaturationOutputCurrentLimiter <: APIModel
+    id::Int64
     i_max::Float64
     kw::Float64
     additional_properties::Dict{String, Any} = Dict{String, Any}()
@@ -29,6 +31,11 @@ function _decode(
         direction=:neutral,
     )
     _openapi_object = _object(_openapi_raw, "SaturationOutputCurrentLimiter")
+    _openapi_field_id = _decode_zoned(
+        Int64,
+        _required(_openapi_object, "id", "SaturationOutputCurrentLimiter"),
+        false,
+    )
     _openapi_field_i_max = _decode_zoned(
         Float64,
         _required(_openapi_object, "I_max", "SaturationOutputCurrentLimiter"),
@@ -41,11 +48,12 @@ function _decode(
     )
     _openapi_additional_properties = Dict{String, Any}()
     for (_openapi_key, _openapi_item) in _openapi_object
-        String(_openapi_key) in ("I_max", "kw") && continue
+        String(_openapi_key) in ("id", "I_max", "kw") && continue
         _openapi_additional_properties[String(_openapi_key)] =
             _decode_zoned(Any, _openapi_item, false)
     end
     return SaturationOutputCurrentLimiter(;
+        id=_openapi_field_id,
         i_max=_openapi_field_i_max,
         kw=_openapi_field_kw,
         additional_properties=_openapi_additional_properties,
@@ -53,6 +61,8 @@ function _decode(
 end
 function _encode_unvalidated(_openapi_value::SaturationOutputCurrentLimiter)
     _openapi_output = JSON.Object{String, Any}()
+    _openapi_value.id isa Absent ||
+        (_openapi_output["id"] = _encode_unvalidated(_openapi_value.id))
     _openapi_value.i_max isa Absent ||
         (_openapi_output["I_max"] = _encode_unvalidated(_openapi_value.i_max))
     _openapi_value.kw isa Absent ||
@@ -80,6 +90,7 @@ _encode(_openapi_value::SaturationOutputCurrentLimiter) = _validate_schema(
 
 function _form_fields(_openapi_value::SaturationOutputCurrentLimiter)
     _openapi_output = Pair{String, Any}[]
+    _openapi_value.id isa Absent || push!(_openapi_output, "id" => _openapi_value.id)
     _openapi_value.i_max isa Absent ||
         push!(_openapi_output, "I_max" => _openapi_value.i_max)
     _openapi_value.kw isa Absent || push!(_openapi_output, "kw" => _openapi_value.kw)

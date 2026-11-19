@@ -4,15 +4,15 @@
 Parameters of 3-states salient-pole synchronous machine with quadratic/exponential saturation: IEEE Std 1110 §5.3.1 (Model 2.1). GENSAL or GENSAE model in PSSE and PSLF
 
   - `id`: Unique integer identifier for this component
-  - `r`: Armature resistance
-  - `td0_p`: Time constant of transient d-axis voltage Units: s.
-  - `td0_pp`: Time constant of sub-transient d-axis voltage Units: s.
-  - `tq0_pp`: Time constant of sub-transient q-axis voltage Units: s.
-  - `xd`: Reactance after EMF in d-axis
-  - `xq`: Reactance after EMF in q-axis
-  - `xd_p`: Transient reactance after EMF in d-axis
-  - `xd_pp`: Sub-Transient reactance after EMF in d-axis. Note: Xd_pp = Xq_pp
-  - `xl`: Stator leakage reactance
+  - `r`: Armature resistance. Units: pu.
+  - `td0_p`: Time constant of transient d-axis voltage. Units: s.
+  - `td0_pp`: Time constant of sub-transient d-axis voltage. Units: s.
+  - `tq0_pp`: Time constant of sub-transient q-axis voltage. Units: s.
+  - `xd`: Reactance after EMF in d-axis. Units: pu.
+  - `xq`: Reactance after EMF in q-axis. Units: pu.
+  - `xd_p`: Transient reactance after EMF in d-axis. Units: pu.
+  - `xd_pp`: Sub-Transient reactance after EMF in d-axis. Note: Xd_pp = Xq_pp. Units: pu.
+  - `xl`: Stator leakage reactance. Units: pu.
   - `se`: Saturation factor at 1 and 1.2 pu flux: Se(eqp) = B(eqp-A)^2
 """
 Base.@kwdef struct SalientPoleMachine <: APIModel

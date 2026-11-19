@@ -10,31 +10,31 @@ IEEE 421.5 2016 PSS2C IEEE Dual-Input Stabilizer Model
   - `remote_bus_control_2`: Second input remote bus identification number for control. 0 identifies the local bus connected to this component
   - `m_rtf`: M parameter for ramp tracking filter
   - `n_rtf`: N parameter for ramp tracking filter
-  - `tw1`: Time constant for first washout filter for first input
-  - `tw2`: Time constant for second washout filter for first input
-  - `t6`: Time constant for low-pass filter for first input
-  - `tw3`: Time constant for first washout filter for second input
-  - `tw4`: Time constant for second washout filter for second input
-  - `t7`: Time constant for low-pass filter for second input
+  - `tw1`: Time constant for first washout filter for first input. Units: s.
+  - `tw2`: Time constant for second washout filter for first input. Units: s.
+  - `t6`: Time constant for low-pass filter for first input. Units: s.
+  - `tw3`: Time constant for first washout filter for second input. Units: s.
+  - `tw4`: Time constant for second washout filter for second input. Units: s.
+  - `t7`: Time constant for low-pass filter for second input. Units: s.
   - `ks2`: Gain for low-pass filter for second input
   - `ks3`: Gain for second input
-  - `t8`: Time constant for ramp tracking filter
-  - `t9`: Time constant for ramp tracking filter
+  - `t8`: Time constant for ramp tracking filter. Units: s.
+  - `t9`: Time constant for ramp tracking filter. Units: s.
   - `ks1`: Gain before lead-lag blocks
-  - `t1`: Time constant for first lead-lag block
-  - `t2`: Time constant for first lead-lag block
-  - `t3`: Time constant for second lead-lag block
-  - `t4`: Time constant for second lead-lag block
-  - `t10`: Time constant for third lead-lag block
-  - `t11`: Time constant for third lead-lag block
+  - `t1`: Time constant for first lead-lag block. Units: s.
+  - `t2`: Time constant for first lead-lag block. Units: s.
+  - `t3`: Time constant for second lead-lag block. Units: s.
+  - `t4`: Time constant for second lead-lag block. Units: s.
+  - `t10`: Time constant for third lead-lag block. Units: s.
+  - `t11`: Time constant for third lead-lag block. Units: s.
   - `vs1_lim`: First input limits (Vs1_min, Vs1_max)
   - `vs2_lim`: Second input limits (Vs2_min, Vs2_max)
   - `vst_lim`: PSS output limits (Vst_min, Vst_max)
-  - `t12`: Time constant for fourth lead-lag block
-  - `t13`: Time constant for fourth lead-lag block
+  - `t12`: Time constant for fourth lead-lag block. Units: s.
+  - `t13`: Time constant for fourth lead-lag block. Units: s.
   - `pss_hysteresis_param`: PSS output hysteresis parameters (PSSOFF, PSSON)
   - `xcomp`: Stator leakage reactance
-  - `tcomp`: Time measured with compensated frequency
+  - `tcomp`: Time measured with compensated frequency. Units: s.
   - `hysteresis_binary_logic`: Hysteresis memory variable
 """
 Base.@kwdef struct PSS2C <: APIModel

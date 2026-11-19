@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **`name`** | **`String`** | Name of the component. Components of the same type (e.g., `PowerLoad`) must have unique names, but components of different types (e.g., `PowerLoad` and `ACBus`) can have the same name. | [required]
 **`available`** | **`Bool`** | Indicator of whether the component is connected and online (`true`) or disconnected, offline, or down (`false`). Unavailable components are excluded during simulations. | [required]
 **`bus`** | **`Int64`** | ID of the bus that this component is connected to. | [required]
+**`remote_regulated_bus`** | **`Union{Absent,Union{Int64,Nothing}}`** | ID of the bus whose voltage this device regulates, to the `voltage_setpoint` of that bus, while the device regulates voltage; null regulates the bus this device is connected to. A value equal to `bus` is invalid. | [optional]
 **`prime_mover_type`** | **`PrimeMovers`** | Prime mover technology according to EIA 923. | [required]
 **`storage_technology_type`** | **`StorageTech`** | Storage Technology Complementary to EIA 923. | [required]
 **`storage_capacity`** | **`Float64`** | Maximum storage capacity (can be in units of, e.g., MWh for batteries or liters for hydrogen). Divided by base_power this gives an approximate duration, assuming unity power factor: in hours under MWH, in minutes under MWMIN. Units: per energy_units — MWH: MWh, MWMIN: MWmin . | [required]

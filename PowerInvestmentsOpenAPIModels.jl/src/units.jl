@@ -356,42 +356,6 @@ InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Val{:unit_size},
 ) = "ActivePower"
 InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{PortfolioFinancialData},
-    ::Val{:discount_rate},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{PortfolioFinancialData},
-    ::Val{:discount_rate},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{PortfolioFinancialData},
-    ::Val{:discount_rate},
-) = "Fraction"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{PortfolioFinancialData},
-    ::Val{:inflation_rate},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{PortfolioFinancialData},
-    ::Val{:inflation_rate},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{PortfolioFinancialData},
-    ::Val{:inflation_rate},
-) = "Fraction"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
-    ::Type{PortfolioFinancialData},
-    ::Val{:interest_rate},
-) = true
-InfrastructureCoreOpenAPIModels.declared_unit(
-    ::Type{PortfolioFinancialData},
-    ::Val{:interest_rate},
-) = "1"
-InfrastructureCoreOpenAPIModels.declared_quantity(
-    ::Type{PortfolioFinancialData},
-    ::Val{:interest_rate},
-) = "Fraction"
-InfrastructureCoreOpenAPIModels.has_declared_unit(
     ::Type{ProjectedDemand},
     ::Val{:peak_demand_mw},
 ) = true
@@ -870,4 +834,40 @@ InfrastructureCoreOpenAPIModels.declared_unit(
 InfrastructureCoreOpenAPIModels.declared_quantity(
     ::Type{TechnologyFinancialData},
     ::Val{:tax_rate},
+) = "Fraction"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TechnologyFinancialData},
+    ::Val{:discount_rate},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TechnologyFinancialData},
+    ::Val{:discount_rate},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TechnologyFinancialData},
+    ::Val{:discount_rate},
+) = "Fraction"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TechnologyFinancialData},
+    ::Val{:inflation_rate},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TechnologyFinancialData},
+    ::Val{:inflation_rate},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TechnologyFinancialData},
+    ::Val{:inflation_rate},
+) = "Fraction"
+InfrastructureCoreOpenAPIModels.has_declared_unit(
+    ::Type{TechnologyFinancialData},
+    ::Val{:interest_rate},
+) = true
+InfrastructureCoreOpenAPIModels.declared_unit(
+    ::Type{TechnologyFinancialData},
+    ::Val{:interest_rate},
+) = "1"
+InfrastructureCoreOpenAPIModels.declared_quantity(
+    ::Type{TechnologyFinancialData},
+    ::Val{:interest_rate},
 ) = "Fraction"

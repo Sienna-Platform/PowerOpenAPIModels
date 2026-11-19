@@ -14,6 +14,5 @@ Name | Type | Description | Notes
 **`arc`** | **`Int64`** | An `Arc` defining this line `from` a bus `to` another bus. | [required]
 **`base_power`** | **`Float64`** | System base power for per-unitization of this component's per-unit fields, recorded per component in lieu of a system-level table. Units: MVA. | [required]
 **`power_units`** | **`UnitSystem`** | Unit basis for this component's power-family fields (active/reactive/apparent power, ratings, limits, ramp rates). COMPONENT_BASE: per unit on this component's own base_power. NATURAL_UNITS: the field's physical unit. | [required]
-**`parameter_units`** | **`Union{Absent,ImpedanceUnitBasis,Nothing}`** | Unit basis for r and x. COMPONENT_BASE is per-unit on this component's base_power, which records the system base. | [optional]
-**`r`** | **`Float64`** | Resistance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [required]
-**`x`** | **`Float64`** | Reactance. Units: per parameter_units — NATURAL_UNITS: ohm, COMPONENT_BASE: pu . | [required]
+**`r`** | **`Float64`** | Resistance. Per-unit on `base_power`, which records the system base. Units: pu. | [required]
+**`x`** | **`Float64`** | Reactance. Per-unit on `base_power`, which records the system base. Units: pu. | [required]

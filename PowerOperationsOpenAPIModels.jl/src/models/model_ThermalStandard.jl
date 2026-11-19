@@ -11,6 +11,7 @@ This is a standard representation with options to include a minimum up time, min
   - `status`: Operating state of the unit at the start of a simulation.
   - `commitment_mode`: Commitment mode of the unit.
   - `bus`: ID of the bus that this component is connected to.
+  - `remote_regulated_bus`: ID of the bus whose voltage this device regulates, to the `voltage_setpoint` of that bus, while the device regulates voltage; null regulates the bus this device is connected to. A value equal to `bus` is invalid.
   - `active_power`: Initial active power set point of the unit. For power flow, this is the steady state operating point of the system. For production cost modeling, this may or may not be used as the initial starting point for the solver, depending on the solver used. Units: per power_units — NATURAL_UNITS: MW, COMPONENT_BASE: pu .
   - `reactive_power`: Initial reactive power set point of the unit. Units: per power_units — NATURAL_UNITS: MVAr, COMPONENT_BASE: pu .
   - `rating`: Maximum AC side output power rating of the unit. Not to be confused with base_power. Units: per power_units — NATURAL_UNITS: MVA, COMPONENT_BASE: pu .
@@ -34,6 +35,7 @@ Base.@kwdef struct ThermalStandard <: APIModel
     status::OperationalStates
     commitment_mode::Union{Absent, CommitmentModes, Nothing} = ABSENT
     bus::Int64
+    remote_regulated_bus::Union{Absent, Union{Int64, Nothing}} = ABSENT
     active_power::Float64
     reactive_power::Float64
     rating::Float64
@@ -87,6 +89,13 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
         ) : ABSENT
     _openapi_field_bus =
         _decode_zoned(Int64, _required(_openapi_object, "bus", "ThermalStandard"), false)
+    _openapi_field_remote_regulated_bus =
+        haskey(_openapi_object, "remote_regulated_bus") ?
+        _decode_zoned(
+            Union{Absent, Union{Int64, Nothing}},
+            _openapi_object["remote_regulated_bus"],
+            false,
+        ) : ABSENT
     _openapi_field_active_power = _decode_zoned(
         Float64,
         _required(_openapi_object, "active_power", "ThermalStandard"),
@@ -187,6 +196,7 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
             "status",
             "commitment_mode",
             "bus",
+            "remote_regulated_bus",
             "active_power",
             "reactive_power",
             "rating",
@@ -213,6 +223,7 @@ function _decode(::Type{ThermalStandard}, _openapi_raw, _openapi_validate::Bool)
         status=_openapi_field_status,
         commitment_mode=_openapi_field_commitment_mode,
         bus=_openapi_field_bus,
+        remote_regulated_bus=_openapi_field_remote_regulated_bus,
         active_power=_openapi_field_active_power,
         reactive_power=_openapi_field_reactive_power,
         rating=_openapi_field_rating,
@@ -247,6 +258,10 @@ function _encode_unvalidated(_openapi_value::ThermalStandard)
     )
     _openapi_value.bus isa Absent ||
         (_openapi_output["bus"] = _encode_unvalidated(_openapi_value.bus))
+    _openapi_value.remote_regulated_bus isa Absent || (
+        _openapi_output["remote_regulated_bus"] =
+            _encode_unvalidated(_openapi_value.remote_regulated_bus)
+    )
     _openapi_value.active_power isa Absent ||
         (_openapi_output["active_power"] = _encode_unvalidated(_openapi_value.active_power))
     _openapi_value.reactive_power isa Absent || (
@@ -325,6 +340,10 @@ function _form_fields(_openapi_value::ThermalStandard)
     _openapi_value.commitment_mode isa Absent ||
         push!(_openapi_output, "commitment_mode" => _openapi_value.commitment_mode)
     _openapi_value.bus isa Absent || push!(_openapi_output, "bus" => _openapi_value.bus)
+    _openapi_value.remote_regulated_bus isa Absent || push!(
+        _openapi_output,
+        "remote_regulated_bus" => _openapi_value.remote_regulated_bus,
+    )
     _openapi_value.active_power isa Absent ||
         push!(_openapi_output, "active_power" => _openapi_value.active_power)
     _openapi_value.reactive_power isa Absent ||

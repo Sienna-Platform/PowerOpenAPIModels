@@ -4,13 +4,13 @@
 Parameters of 4-states synchronous machine: Simplified Marconato model The derivative of stator fluxes (ψd and ψq) is neglected and ωψd = ψd and ωψq = ψq is assumed (i.e. ω=1.0). This is standard when transmission network dynamics is neglected
 
   - `id`: Unique integer identifier for this component
-  - `r`: Resistance after EMF
-  - `xd`: Reactance after EMF in d-axis
-  - `xq`: Reactance after EMF in q-axis
-  - `xd_p`: Transient reactance after EMF in d-axis
-  - `xq_p`: Transient reactance after EMF in q-axis
-  - `td0_p`: Time constant of transient d-axis voltage
-  - `tq0_p`: Time constant of transient q-axis voltage
+  - `r`: Resistance after EMF. Units: pu.
+  - `xd`: Reactance after EMF in d-axis. Units: pu.
+  - `xq`: Reactance after EMF in q-axis. Units: pu.
+  - `xd_p`: Transient reactance after EMF in d-axis. Units: pu.
+  - `xq_p`: Transient reactance after EMF in q-axis. Units: pu.
+  - `td0_p`: Time constant of transient d-axis voltage. Units: s.
+  - `tq0_p`: Time constant of transient q-axis voltage. Units: s.
 """
 Base.@kwdef struct OneDOneQMachine <: APIModel
     id::Int64
