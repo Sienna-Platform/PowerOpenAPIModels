@@ -4073,15 +4073,6 @@
           },
           "type": "array"
         },
-<<<<<<< HEAD:InfrastructureCoreOpenAPIModels.jl/bundles/0.4.0/PortfolioDocument.json
-=======
-        "DemandRequirement": {
-          "items": {
-            "$ref": "#/$defs/DemandRequirement"
-          },
-          "type": "array"
-        },
->>>>>>> origin/main:InfrastructureCoreOpenAPIModels.jl/bundles/0.5.0/PortfolioDocument.json
         "DemandSideTechnology": {
           "items": {
             "$ref": "#/$defs/DemandSideTechnology"
